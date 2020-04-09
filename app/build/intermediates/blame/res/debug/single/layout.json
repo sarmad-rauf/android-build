@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "D:\\AndroidStudioProjects\\Maroc\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_main.xml",
+        "source": "D:\\AndroidStudioProjects\\Maroc\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "D:\\AndroidStudioProjects\\Maroc\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\acitivty_splash.xml",
+        "source": "D:\\AndroidStudioProjects\\Maroc\\app\\src\\main\\res\\layout\\acitivty_splash.xml"
+    }
+]
