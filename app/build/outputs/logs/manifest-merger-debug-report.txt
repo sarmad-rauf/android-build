@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:1-22:12
-INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:1-22:12
-INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:1-22:12
-INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:1-22:12
+ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:1-23:12
+INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:1-23:12
+INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:1-23:12
+INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:1-23:12
 MERGED from [androidx.databinding:databinding-adapters:3.5.3] C:\Users\Zia\.gradle\caches\transforms-2\files-2.1\fe58d87a8b19b8812635b179f2e7f0d2\databinding-adapters-3.5.3\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.databinding:databinding-runtime:3.5.3] C:\Users\Zia\.gradle\caches\transforms-2\files-2.1\549c9c617b0dded8ccd25338c7272a25\databinding-runtime-3.5.3\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.appcompat:appcompat:1.0.2] C:\Users\Zia\.gradle\caches\transforms-2\files-2.1\a3dd40076fb1aa4032dab9e86677200c\appcompat-1.0.2\AndroidManifest.xml:17:1-22:12
@@ -40,25 +40,25 @@ MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Zia\.gradle\cach
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Zia\.gradle\caches\transforms-2\files-2.1\c9eb4efc2103a05ad6203fd4d78919fe\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.print:print:1.0.0] C:\Users\Zia\.gradle\caches\transforms-2\files-2.1\a7ac5d9832a55e02f327cca94b1b2adb\print-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Zia\.gradle\caches\transforms-2\files-2.1\225c82d8c731985fb415caed199cb7eb\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
-INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:1-22:12
-INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:1-22:12
-INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:1-22:12
+INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:1-23:12
+INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:1-23:12
+INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:1-23:12
 	package
 		ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:3:5-28
 		INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml
 		INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml
-		ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:1-22:12
+		ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:1-23:12
 		INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml
-		ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:1-22:12
+		ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:1-23:12
 		INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:2:11-69
 application
-ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:5:5-20:19
+ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:5:5-21:19
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\Zia\.gradle\caches\transforms-2\files-2.1\140e197d83343f156dc84b9dfd575292\constraintlayout-1.1.3\AndroidManifest.xml:9:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\Zia\.gradle\caches\transforms-2\files-2.1\140e197d83343f156dc84b9dfd575292\constraintlayout-1.1.3\AndroidManifest.xml:9:5-20
 MERGED from [androidx.lifecycle:lifecycle-extensions:2.2.0] C:\Users\Zia\.gradle\caches\transforms-2\files-2.1\09078dfb4d8ada927e5020fa973d2a34\lifecycle-extensions-2.2.0\AndroidManifest.xml:24:5-25:19
@@ -82,25 +82,27 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\Zi
 	android:allowBackup
 		ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:6:9-35
 	android:theme
-		ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:11:9-40
+		ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:12:9-40
+	android:name
+		ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:11:9-41
 activity#com.ens.maroc.usecase.splash.SplashActivity
-ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:12:9-18:20
+ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:13:9-19:20
 	android:name
-		ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:12:19-64
+		ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:13:19-64
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:13:13-17:29
+ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:14:13-18:29
 action#android.intent.action.MAIN
-ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:14:17-69
+ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:15:17-69
 	android:name
-		ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:14:25-66
+		ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:15:25-66
 category#android.intent.category.LAUNCHER
-ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:16:17-77
+ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:17:17-77
 	android:name
-		ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:16:27-74
+		ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:17:27-74
 activity#com.ens.maroc.usecase.dashboard.MainActivity
-ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:19:9-67
+ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:20:9-67
 	android:name
-		ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:19:19-65
+		ADDED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:20:19-65
 uses-sdk
 INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml

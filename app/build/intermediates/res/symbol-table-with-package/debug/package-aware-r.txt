@@ -635,8 +635,10 @@ drawable abc_textfield_search_activated_mtrl_alpha
 drawable abc_textfield_search_default_mtrl_alpha
 drawable abc_textfield_search_material
 drawable abc_vector_test
+drawable blue_geometric_png_8
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+drawable m_tcash_logo_white
 drawable notification_action_background
 drawable notification_bg
 drawable notification_bg_low

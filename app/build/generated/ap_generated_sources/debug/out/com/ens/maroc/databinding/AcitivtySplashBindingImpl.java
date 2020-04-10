@@ -17,7 +17,7 @@ public class AcitivtySplashBindingImpl extends AcitivtySplashBinding  {
     }
     // views
     @NonNull
-    private final android.widget.LinearLayout mboundView0;
+    private final androidx.constraintlayout.widget.ConstraintLayout mboundView0;
     // variables
     // values
     // listeners
@@ -29,7 +29,7 @@ public class AcitivtySplashBindingImpl extends AcitivtySplashBinding  {
     private AcitivtySplashBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
         super(bindingComponent, root, 0
             );
-        this.mboundView0 = (android.widget.LinearLayout) bindings[0];
+        this.mboundView0 = (androidx.constraintlayout.widget.ConstraintLayout) bindings[0];
         this.mboundView0.setTag(null);
         setRootTag(root);
         // listeners

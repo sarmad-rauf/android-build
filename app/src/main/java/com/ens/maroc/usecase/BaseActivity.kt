@@ -113,6 +113,22 @@ abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
         }
 
     }
+
+    fun startActivityAfterLanguageChange(activity: Activity, clazz: Class<*>) {
+        try {
+            /*if (Tools.isActivityActive(activity)) {*/
+                activity.finish()
+                /*RootValues.getInstance().TIME_STAMP_FOR_INTENT_INJECTION = System.currentTimeMillis().toString()*/
+                val intent = Intent(activity, clazz)
+              /*  intent.putExtra(KEY_INJECTION_EXTRA_STRING,
+                    BASE_EXTRA_TEXT_FOR_INTENT_INJECTION + RootValues.getInstance().TIME_STAMP_FOR_INTENT_INJECTION)*/
+                activity.startActivity(intent)
+            /*}*/
+        } catch (e: Exception) {
+            Logger.debugLog(Logger.TAG_CATCH_LOGS, e.message!!)
+        }
+
+    }
     /*override fun onDestroy() {
 
         System.gc()//?
