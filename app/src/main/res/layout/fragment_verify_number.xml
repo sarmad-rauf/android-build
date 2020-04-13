@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.ens.maroc.usecase.login.LoginActivityViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".usecase.login.VerifyNumberFragment">
+
+        <include android:id="@+id/verifyNumberHeader"
+            layout="@layout/layout_login_header" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_verify_otp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/verifyNumberHeader"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:layout_marginStart="@dimen/_32sdp"
+            android:layout_marginEnd="@dimen/_32sdp"
+            >
+            <EditText
+                android:id="@+id/input_verify_otp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="12"
+                android:inputType="phone"
+                android:hint="@string/enter_otp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.ens.maroc.widgets.MarocMediumTextView
+            android:id="@+id/txtOtpNotRecieved"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_32sdp"
+            android:text="@string/otp_not_recieved"
+            android:textColor="@color/colorTextGreyDark"
+            android:textSize="@dimen/_14ssp"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_verify_otp"
+            app:layout_constraintStart_toStartOf="@+id/input_layout_verify_otp" />
+        <com.ens.maroc.widgets.MarocMediumTextView
+            android:id="@+id/txtResend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextOrange"
+            android:textSize="@dimen/_14ssp"
+            android:text="@string/resend"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:layout_marginStart="4dp"
+            app:layout_constraintStart_toEndOf="@+id/txtOtpNotRecieved"
+            app:layout_constraintBottom_toBottomOf="@id/txtOtpNotRecieved"
+            />
+
+        <Button
+            android:id="@+id/btnVerifyOtp"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="wrap_content"
+            android:text="@string/verify"
+            android:textSize="@dimen/_16ssp"
+            android:textAllCaps="false"
+            android:background="@drawable/button_enable"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintTop_toBottomOf="@+id/txtOtpNotRecieved"
+            app:layout_constraintEnd_toEndOf="@+id/input_layout_verify_otp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

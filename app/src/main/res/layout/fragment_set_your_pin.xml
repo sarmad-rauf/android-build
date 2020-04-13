@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.ens.maroc.usecase.login.LoginActivityViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".usecase.login.SetYourPinFragment">
+
+        <include android:id="@+id/setYourPinHeader"
+            layout="@layout/layout_login_header" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_enter_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/setYourPinHeader"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:layout_marginStart="@dimen/_32sdp"
+            android:layout_marginEnd="@dimen/_32sdp"
+            >
+            <EditText
+                android:id="@+id/input_enter_pin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberPassword"
+                android:hint="@string/enter_pin" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_confrim_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_enter_pin"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_32sdp"
+            android:layout_marginEnd="@dimen/_32sdp"
+            >
+            <EditText
+                android:id="@+id/input_confirm_pin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberPassword"
+                android:hint="@string/confirm_pin" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnPinChange"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up"
+            android:textSize="@dimen/_16ssp"
+            android:textAllCaps="false"
+            android:background="@drawable/button_enable"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_confrim_pin"
+            app:layout_constraintEnd_toEndOf="@+id/input_layout_confrim_pin"
+            app:layout_constraintStart_toStartOf="@+id/input_layout_confrim_pin"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

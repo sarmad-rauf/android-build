@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- you can use any color you want I used here gray color-->
+    <solid android:color="@color/colorWhite"/>
+    <stroke android:color="@color/colorBtnDisable"
+        android:width="@dimen/_1sdp"/>
+
+    <corners
+        android:bottomLeftRadius="@dimen/_20sdp"
+        android:bottomRightRadius="@dimen/_20sdp"
+        android:topLeftRadius="@dimen/_20sdp"
+        android:topRightRadius="@dimen/_20sdp" />
+</shape>

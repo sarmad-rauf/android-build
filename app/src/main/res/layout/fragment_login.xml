@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.ens.maroc.usecase.login.LoginActivityViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        >
+
+        <include android:id="@+id/loginHeader"
+            layout="@layout/layout_login_header" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/loginHeader"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:layout_marginStart="@dimen/_32sdp"
+            android:layout_marginEnd="@dimen/_32sdp"
+            >
+            <EditText
+                android:id="@+id/input_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="12"
+                android:inputType="phone"
+                android:hint="@string/enter_mobile_number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_phone_number"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_32sdp"
+            android:layout_marginEnd="@dimen/_32sdp"
+            >
+            <EditText
+                android:id="@+id/input_pin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="12"
+                android:inputType="numberPassword"
+                android:hint="@string/pin" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.ens.maroc.widgets.MarocLightTextView
+            android:id="@+id/txtForgotPin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/colorTextGreyDark"
+            android:text="@string/forgot_pin"
+            app:layout_constraintEnd_toEndOf="@+id/input_layout_pin"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_pin"
+            />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_btn"
+            android:text="@string/login"
+            android:textColor="@color/colorWhite"
+            android:padding="@dimen/_8sdp"
+            android:textSize="@dimen/_16ssp"
+            android:layout_marginTop="@dimen/_32sdp"
+            app:layout_constraintStart_toStartOf="@+id/input_layout_pin"
+            app:layout_constraintEnd_toEndOf="@+id/input_layout_pin"
+            app:layout_constraintTop_toBottomOf="@+id/txtForgotPin"
+            />
+
+        <com.ens.maroc.widgets.MarocMediumTextView
+            android:id="@+id/txtAnyAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_32sdp"
+            android:text="@string/don_t_have_an_account"
+            android:textColor="@color/colorTextGreyDark"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.32"
+            app:layout_constraintStart_toStartOf="parent" />
+        <com.ens.maroc.widgets.MarocMediumTextView
+            android:id="@+id/txtSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextOrange"
+            android:textSize="@dimen/_14ssp"
+            android:text="@string/sign_up"
+            android:layout_marginStart="4dp"
+            app:layout_constraintStart_toEndOf="@+id/txtAnyAccount"
+            app:layout_constraintBottom_toBottomOf="@id/txtAnyAccount"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

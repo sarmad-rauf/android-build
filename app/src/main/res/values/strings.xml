@@ -1,3 +1,34 @@
 <resources>
     <string name="app_name">Maroc</string>
+    <string name="back">Back</string>
+    <string name="create_your_account">Create your account</string>
+    <string name="login_into_your_account">Login into your account</string>
+    <string name="enter_mobile_number">ENTER MOBILE NUMBER</string>
+    <string name="pin">PIN</string>
+    <string name="forgot_pin">FORGOT PIN?</string>
+    <string name="forgot_pinn">FORGOT PIN</string>
+    <string name="login">Login</string>
+    <string name="don_t_have_an_account">DON’T HAVE AN ACCOUNT?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="next">Next</string>
+    <string name="enter_otp">ENTER OTP</string>
+    <string name="resend">Resend</string>
+    <string name="otp_not_recieved">OTP NOT RECIEVED?</string>
+    <string name="verify">Verify</string>
+    <string name="verify_your_number">Verify your number</string>
+    <string name="enter_pin">ENTER PIN</string>
+    <string name="confirm_pin">CONFIRM PIN</string>
+    <string name="change_pin">Change Pin</string>
+    <string name="set_your_pin">Set your PIN</string>
+    <string name="pin_will_be_sent_on_your_mobile_number">Pin will be sent on your mobile number</string>
+    <string name="enter_national_identity_number">ENTER NATIONAL IDENTITY NUMBER</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_first_name">ENTER FIRST NAME</string>
+    <string name="enter_last_name">ENTER LAST NAME</string>
+    <string name="enter_date_of_birth">ENTER DATE OF BIRTH</string>
+    <string name="select_gender">SELECT GENDER</string>
+    <string name="enter_email">ENTER EMAIL</string>
+    <string name="enter_address">Enter Address</string>
 </resources>

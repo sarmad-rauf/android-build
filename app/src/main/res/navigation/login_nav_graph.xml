@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.ens.maroc.usecase.login.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login"
+        >
+        <action
+            android:id="@+id/action_loginFragment_to_signUpNumberFragment"
+            app:destination="@id/signUpNumberFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpNumberFragment"
+        android:name="com.ens.maroc.usecase.login.signup.SignUpNumberFragment"
+        android:label="SignUpNumberFragment"
+        tools:layout="@layout/fragment_sign_up_number"
+        >
+        <action
+            android:id="@+id/action_signUpNumberFragment_to_signUpDetailFragment"
+            app:destination="@id/signUpDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpDetailFragment"
+        android:name="com.ens.maroc.usecase.login.signup.SignUpDetailFragment"
+        android:label="SignUpDetailFragment"
+        tools:layout="@layout/fragment_sign_up_detail"
+        >
+        <action
+            android:id="@+id/action_signUpDetailFragment_to_verifyNumberFragment"
+            app:destination="@id/verifyNumberFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/verifyNumberFragment"
+        android:name="com.ens.maroc.usecase.login.VerifyNumberFragment"
+        android:label="VerifyNumberFragment"
+        tools:layout="@layout/fragment_verify_number"
+        >
+        <action
+            android:id="@+id/action_verifyNumberFragment_to_setYourPinFragment"
+            app:destination="@id/setYourPinFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setYourPinFragment"
+        android:name="com.ens.maroc.usecase.login.SetYourPinFragment"
+        android:label="SetYourPinFragment"
+        tools:layout="@layout/fragment_set_your_pin"
+        />
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.ens.maroc.usecase.login.forgotpassword.ForgotPasswordFragment"
+        android:label="ForgotPasswordFragment"
+        tools:layout="@layout/fragment_forgot_password"
+        >
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_verifyNumberFragment"
+            app:destination="@id/verifyNumberFragment" />
+    </fragment>
+</navigation>
