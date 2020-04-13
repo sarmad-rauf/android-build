@@ -6,64 +6,67 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="19"
-8-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml
+8-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="29" />
-9-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml
+9-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml
 10
 11    <application
-11-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:5:5-23:19
+11-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:5:5-24:19
 12        android:name="com.ens.maroc.ApplicationClass"
-12-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:6:9-41
+12-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:6:9-41
 13        android:allowBackup="true"
-13-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:7:9-35
+13-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:7:9-35
 14        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-14-->[androidx.core:core:1.2.0] C:\Users\Usama Nasir\.gradle\caches\transforms-2\files-2.1\4cea45bd005ddf160f2992f5d484b3c7\core-1.2.0\AndroidManifest.xml:24:18-86
+14-->[androidx.core:core:1.2.0] C:\Users\Zia\.gradle\caches\transforms-2\files-2.1\4cea45bd005ddf160f2992f5d484b3c7\core-1.2.0\AndroidManifest.xml:24:18-86
 15        android:debuggable="true"
 16        android:icon="@mipmap/ic_launcher"
-16-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:8:9-43
+16-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:8:9-43
 17        android:label="@string/app_name"
-17-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:9:9-41
+17-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:9:9-41
 18        android:roundIcon="@mipmap/ic_launcher_round"
-18-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:10:9-54
+18-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:10:9-54
 19        android:supportsRtl="true"
-19-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:11:9-35
+19-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:11:9-35
 20        android:testOnly="true"
 21        android:theme="@style/AppTheme" >
-21-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:12:9-40
+21-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:12:9-40
 22        <activity
-22-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:13:9-14:81
+22-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:13:9-14:81
 23            android:name="com.ens.maroc.usecase.login.LoginActivity"
-23-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:13:19-62
+23-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:13:19-62
 24            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-24-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:14:13-69
-25        <activity android:name="com.ens.maroc.usecase.splash.SplashActivity" >
-25-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:15:9-21:20
-25-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:15:19-64
-26            <intent-filter>
-26-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:16:13-20:29
-27                <action android:name="android.intent.action.MAIN" />
-27-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:17:17-69
-27-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:17:25-66
-28
-29                <category android:name="android.intent.category.LAUNCHER" />
-29-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:19:17-77
-29-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:19:27-74
-30            </intent-filter>
-31        </activity>
-32        <activity android:name="com.ens.maroc.usecase.dashboard.MainActivity" />
-32-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:22:9-68
-32-->E:\Android_WorkSpace\MTCash\maroc-app-android\app\src\main\AndroidManifest.xml:22:19-65
-33
-34        <provider
-34-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Usama Nasir\.gradle\caches\transforms-2\files-2.1\a6511e21a7fbe5087afe20d2c7ae1b69\lifecycle-process-2.2.0\AndroidManifest.xml:25:9-29:43
-35            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
-35-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Usama Nasir\.gradle\caches\transforms-2\files-2.1\a6511e21a7fbe5087afe20d2c7ae1b69\lifecycle-process-2.2.0\AndroidManifest.xml:26:13-79
-36            android:authorities="com.ens.maroc.lifecycle-process"
-36-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Usama Nasir\.gradle\caches\transforms-2\files-2.1\a6511e21a7fbe5087afe20d2c7ae1b69\lifecycle-process-2.2.0\AndroidManifest.xml:27:13-69
-37            android:exported="false"
-37-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Usama Nasir\.gradle\caches\transforms-2\files-2.1\a6511e21a7fbe5087afe20d2c7ae1b69\lifecycle-process-2.2.0\AndroidManifest.xml:28:13-37
-38            android:multiprocess="true" />
-38-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Usama Nasir\.gradle\caches\transforms-2\files-2.1\a6511e21a7fbe5087afe20d2c7ae1b69\lifecycle-process-2.2.0\AndroidManifest.xml:29:13-40
-39    </application>
-40
-41</manifest>
+24-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:14:13-69
+25        <activity
+25-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:15:9-22:20
+26            android:name="com.ens.maroc.usecase.splash.SplashActivity"
+26-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:15:19-64
+27            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+27-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:16:13-69
+28            <intent-filter>
+28-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:17:13-21:29
+29                <action android:name="android.intent.action.MAIN" />
+29-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:18:17-69
+29-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:18:25-66
+30
+31                <category android:name="android.intent.category.LAUNCHER" />
+31-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:20:17-77
+31-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:20:27-74
+32            </intent-filter>
+33        </activity>
+34        <activity android:name="com.ens.maroc.usecase.dashboard.MainActivity" />
+34-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:23:9-68
+34-->D:\AndroidStudioProjects\Maroc\app\src\main\AndroidManifest.xml:23:19-65
+35
+36        <provider
+36-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Zia\.gradle\caches\transforms-2\files-2.1\a6511e21a7fbe5087afe20d2c7ae1b69\lifecycle-process-2.2.0\AndroidManifest.xml:25:9-29:43
+37            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+37-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Zia\.gradle\caches\transforms-2\files-2.1\a6511e21a7fbe5087afe20d2c7ae1b69\lifecycle-process-2.2.0\AndroidManifest.xml:26:13-79
+38            android:authorities="com.ens.maroc.lifecycle-process"
+38-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Zia\.gradle\caches\transforms-2\files-2.1\a6511e21a7fbe5087afe20d2c7ae1b69\lifecycle-process-2.2.0\AndroidManifest.xml:27:13-69
+39            android:exported="false"
+39-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Zia\.gradle\caches\transforms-2\files-2.1\a6511e21a7fbe5087afe20d2c7ae1b69\lifecycle-process-2.2.0\AndroidManifest.xml:28:13-37
+40            android:multiprocess="true" />
+40-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Zia\.gradle\caches\transforms-2\files-2.1\a6511e21a7fbe5087afe20d2c7ae1b69\lifecycle-process-2.2.0\AndroidManifest.xml:29:13-40
+41    </application>
+42
+43</manifest>

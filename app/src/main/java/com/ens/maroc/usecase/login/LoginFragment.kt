@@ -18,7 +18,7 @@ import com.ens.maroc.usecase.dashboard.MainActivity
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 
 
-class LoginFragment : BaseFragment<FragmentLoginBinding>(), AdapterView.OnItemSelectedListener {
+class LoginFragment : BaseFragment<FragmentLoginBinding>(), AdapterView.OnItemSelectedListener,LoginClickListener {
 
     lateinit var mActivityViewModel: LoginActivityViewModel
     lateinit var mActivity : LoginActivity
@@ -32,12 +32,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), AdapterView.OnItemSe
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel
+            listener = this@LoginFragment
         }
 
         mDataBinding.root.languageSpinner.visibility = View.VISIBLE
         mDataBinding.root.languageSpinner.onItemSelectedListener = this
 
-        initListner()
+        //initListner()
 
         mActivity = activity as LoginActivity
 
@@ -67,6 +68,20 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), AdapterView.OnItemSe
     override fun onItemSelected(parent: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         val mySpinnerText = parent?.getChildAt(0)as TextView?
         mySpinnerText?.setTextColor(Color.WHITE)
+    }
+
+    override fun onLoginButtonClick(view: View) {
+        startActivity(Intent(activity,MainActivity::class.java))
+    }
+
+    override fun onForgotPinClick(view: View) {
+        mActivityViewModel.isSignUpFlow.set(false)
+        mActivity.navController.navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+    }
+
+    override fun onSignUpClick(view: View) {
+        mActivityViewModel.isSignUpFlow.set(true)
+        mActivity.navController.navigate(R.id.action_loginFragment_to_signUpNumberFragment)
     }
 
 
