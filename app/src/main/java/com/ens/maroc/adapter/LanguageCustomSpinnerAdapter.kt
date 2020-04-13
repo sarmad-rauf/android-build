@@ -9,7 +9,10 @@ import android.widget.TextView
 import com.ens.maroc.R
 
 
-class LanguageCustomSpinnerAdapter(val applicationContext : Context,var languages: Array<String?> ) : BaseAdapter() {
+class LanguageCustomSpinnerAdapter(
+    val applicationContext: Context,
+    var languages: Array<String>
+) : BaseAdapter() {
 
     private val mInflater: LayoutInflater = LayoutInflater.from(applicationContext)
 

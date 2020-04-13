@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.layout_login_header.view.*
 /**
  * A simple [Fragment] subclass.
  */
-class SignUpNumberFragment : BaseFragment<FragmentSignUpNumberBinding>() {
+class SignUpNumberFragment : BaseFragment<FragmentSignUpNumberBinding>(),SignUpClickListner {
 
     lateinit var mActivityViewModel: LoginActivityViewModel
 
@@ -32,21 +32,24 @@ class SignUpNumberFragment : BaseFragment<FragmentSignUpNumberBinding>() {
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel
+            listener = this@SignUpNumberFragment
         }
 
         mDataBinding.root.txtHeaderTitle.text = getString(R.string.create_your_account)
 
-        intiListner()
     }
 
-    private fun intiListner() {
-        mDataBinding.btnBack.setOnClickListener{
-            (activity as LoginActivity).navController.navigateUp()
-        }
 
-        mDataBinding.btnNext.setOnClickListener{
-            (activity as LoginActivity).navController.navigate(R.id.action_signUpNumberFragment_to_signUpDetailFragment)
-        }
+    override fun onNextButtonClick(view: View) {
+        (activity as LoginActivity).navController.navigate(R.id.action_signUpNumberFragment_to_signUpDetailFragment)
+    }
+
+    override fun onBackButtonClick(view: View) {
+        (activity as LoginActivity).navController.navigateUp()
+    }
+
+    override fun onCalenderCalenderClick(view: View) {
+
     }
 
 }

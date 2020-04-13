@@ -16,7 +16,7 @@ import com.ens.maroc.usecase.login.LoginActivity
 import com.ens.maroc.usecase.login.LoginActivityViewModel
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 
-class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(){
+class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), ForgotPasswordClickListner{
 
     lateinit var mActivityViewModel: LoginActivityViewModel
 
@@ -29,21 +29,19 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(){
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel
+            listener = this@ForgotPasswordFragment
         }
 
         mDataBinding.root.txtHeaderTitle.text = getString(R.string.forgot_pinn)
 
-        initListner()
     }
 
-    private fun initListner() {
-        mDataBinding.btnBack.setOnClickListener{
-            (activity as LoginActivity).navController.navigateUp()
-        }
+    override fun onBackButtonClick(view: View) {
+        (activity as LoginActivity).navController.navigateUp()
+    }
 
-        mDataBinding.btnNext.setOnClickListener{
-            (activity as LoginActivity).navController.navigate(R.id.action_forgotPasswordFragment_to_verifyNumberFragment)
-        }
+    override fun onNextButtonClick(view: View) {
+        (activity as LoginActivity).navController.navigate(R.id.action_forgotPasswordFragment_to_verifyNumberFragment)
     }
 
 

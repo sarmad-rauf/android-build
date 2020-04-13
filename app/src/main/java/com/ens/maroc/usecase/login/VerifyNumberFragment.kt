@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.layout_login_header.view.*
 /**
  * A simple [Fragment] subclass.
  */
-class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>() {
+class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(), VerifyOTPClickListner {
 
     lateinit var mActivityViewModel: LoginActivityViewModel
 
@@ -30,19 +30,11 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>() {
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel
+            listener = this@VerifyNumberFragment
         }
 
         mDataBinding.root.groupBack.visibility = View.VISIBLE
         mDataBinding.root.txtHeaderTitle.text = getString(R.string.verify_your_number)
-
-        initListner()
-    }
-
-    private fun initListner() {
-        mDataBinding.btnVerifyOtp.setOnClickListener{
-            (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_setYourPinFragment)
-        }
-
         mDataBinding.root.txtBack.setOnClickListener{
             (activity as LoginActivity).navController.navigateUp()
         }
@@ -50,6 +42,11 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>() {
         mDataBinding.root.imgBackButton.setOnClickListener{
             (activity as LoginActivity).navController.navigateUp()
         }
+
+    }
+
+    override fun onOTPVerifyClick(view: View) {
+        (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_setYourPinFragment)
     }
 
 }

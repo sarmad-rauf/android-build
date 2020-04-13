@@ -10,6 +10,10 @@
             name="viewmodel"
             type="com.ens.maroc.usecase.login.LoginActivityViewModel" />
 
+        <variable
+            name="listener"
+            type="com.ens.maroc.usecase.login.LoginClickListener" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,27 +65,28 @@
             android:id="@+id/txtForgotPin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_14ssp"
-            android:textColor="@color/colorTextGreyDark"
             android:text="@string/forgot_pin"
+            android:textColor="@color/colorTextGreyDark"
+            android:textSize="@dimen/_14ssp"
+            android:onClick="@{listener::onForgotPinClick}"
             app:layout_constraintEnd_toEndOf="@+id/input_layout_pin"
-            app:layout_constraintTop_toBottomOf="@id/input_layout_pin"
-            />
+            app:layout_constraintTop_toBottomOf="@id/input_layout_pin" />
 
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
             android:background="@drawable/login_btn"
-            android:text="@string/login"
-            android:textColor="@color/colorWhite"
             android:padding="@dimen/_8sdp"
+            android:text="@string/login"
+            android:onClick="@{listener::onLoginButtonClick}"
+            android:textColor="@color/colorWhite"
             android:textSize="@dimen/_16ssp"
-            android:layout_marginTop="@dimen/_32sdp"
-            app:layout_constraintStart_toStartOf="@+id/input_layout_pin"
             app:layout_constraintEnd_toEndOf="@+id/input_layout_pin"
-            app:layout_constraintTop_toBottomOf="@+id/txtForgotPin"
-            />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/input_layout_pin"
+            app:layout_constraintTop_toBottomOf="@+id/txtForgotPin" />
 
         <com.ens.maroc.widgets.MarocMediumTextView
             android:id="@+id/txtAnyAccount"
@@ -102,6 +107,7 @@
             android:textColor="@color/colorTextOrange"
             android:textSize="@dimen/_14ssp"
             android:text="@string/sign_up"
+            android:onClick="@{listener::onSignUpClick}"
             android:layout_marginStart="4dp"
             app:layout_constraintStart_toEndOf="@+id/txtAnyAccount"
             app:layout_constraintBottom_toBottomOf="@id/txtAnyAccount"

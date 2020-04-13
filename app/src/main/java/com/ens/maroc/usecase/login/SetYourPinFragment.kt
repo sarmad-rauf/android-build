@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.layout_login_header.view.*
 /**
  * A simple [Fragment] subclass.
  */
-class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>() {
+class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(), EnterPinClickListner {
 
     lateinit var mActivityViewModel: LoginActivityViewModel
 
@@ -30,6 +30,7 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>() {
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel
+            listener = this@SetYourPinFragment
         }
 
         mDataBinding.root.groupBack.visibility = View.VISIBLE
@@ -41,14 +42,6 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>() {
             mDataBinding.btnPinChange.text = getString(R.string.change_pin)
         }
 
-        initListner()
-    }
-
-    private fun initListner() {
-        mDataBinding.btnPinChange.setOnClickListener{
-            (activity as LoginActivity).navController.popBackStack(R.id.loginFragment,false)
-        }
-
         mDataBinding.root.txtBack.setOnClickListener{
             (activity as LoginActivity).navController.navigateUp()
         }
@@ -56,6 +49,12 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>() {
         mDataBinding.root.imgBackButton.setOnClickListener{
             (activity as LoginActivity).navController.navigateUp()
         }
+
+    }
+
+    override fun onPinOrSignUpClick(view: View) {
+        (activity as LoginActivity).navController.popBackStack(R.id.loginFragment,false)
+
     }
 
 

@@ -19,7 +19,7 @@ import java.util.*
 /**
  * A simple [Fragment] subclass.
  */
-class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>() {
+class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUpClickListner {
 
     lateinit var mActivityViewModel: LoginActivityViewModel
 
@@ -32,18 +32,11 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>() {
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel
+            listener = this@SignUpDetailFragment
         }
 
         mDataBinding.root.groupBack.visibility = View.VISIBLE
         mDataBinding.root.txtHeaderTitle.text = getString(R.string.create_your_account)
-
-        initListner()
-    }
-
-    private fun initListner() {
-        mDataBinding.btnNextDetailFragment.setOnClickListener {
-            (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_verifyNumberFragment)
-        }
 
         mDataBinding.root.txtBack.setOnClickListener {
             (activity as LoginActivity).navController.navigateUp()
@@ -53,13 +46,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>() {
             (activity as LoginActivity).navController.navigateUp()
         }
 
-        mDataBinding.imgShowCalender.setOnClickListener {
-            showDatePickerDialog()
-        }
 
-        mDataBinding.inputDateOfBirth.setOnClickListener{
-            showDatePickerDialog()
-        }
     }
 
     private fun showDatePickerDialog() {
@@ -78,6 +65,18 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>() {
         )
 
         datePickerDialog.show()
+    }
+
+    override fun onNextButtonClick(view: View) {
+        (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_verifyNumberFragment)
+    }
+
+    override fun onBackButtonClick(view: View) {
+
+    }
+
+    override fun onCalenderCalenderClick(view: View) {
+        showDatePickerDialog()
     }
 
 

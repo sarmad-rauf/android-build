@@ -11,6 +11,10 @@
             name="viewmodel"
             type="com.ens.maroc.usecase.login.LoginActivityViewModel" />
 
+        <variable
+            name="listener"
+            type="com.ens.maroc.usecase.login.signup.SignUpClickListner" />
+
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,6 +50,7 @@
         android:text="@string/back"
         android:textSize="@dimen/_16ssp"
         android:textAllCaps="false"
+        android:onClick="@{listener::onBackButtonClick}"
         android:background="@drawable/button_disable"
         android:layout_marginTop="@dimen/_16sdp"
         android:textColor="@color/colorTextGreyDark"
@@ -60,6 +65,7 @@
         android:text="@string/next"
         android:textSize="@dimen/_16ssp"
         android:textAllCaps="false"
+        android:onClick="@{listener::onNextButtonClick}"
         android:background="@drawable/button_enable"
         android:layout_marginTop="@dimen/_16sdp"
         android:textColor="@color/colorWhite"
