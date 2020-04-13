@@ -35,7 +35,7 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>() {
         mDataBinding.root.groupBack.visibility = View.VISIBLE
         mDataBinding.root.txtHeaderTitle.text = getString(R.string.set_your_pin)
 
-        if(mActivityViewModel.isSignUpFlow){
+        if(mActivityViewModel.isSignUpFlow.get()!!){
             mDataBinding.btnPinChange.text = getString(R.string.sign_up)
         }else{
             mDataBinding.btnPinChange.text = getString(R.string.change_pin)

@@ -45,12 +45,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), AdapterView.OnItemSe
 
     private fun initListner() {
         mDataBinding.txtSignUp.setOnClickListener{
-            mActivityViewModel.isSignUpFlow = true
+            mActivityViewModel.isSignUpFlow.set(true)
             mActivity.navController.navigate(R.id.action_loginFragment_to_signUpNumberFragment)
         }
 
         mDataBinding.txtForgotPin.setOnClickListener{
-            mActivityViewModel.isSignUpFlow = false
+            mActivityViewModel.isSignUpFlow.set(false)
             mActivity.navController.navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
 
         }
