@@ -20,6 +20,9 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.ens.maroc.usecase.login.LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name="com.ens.maroc.usecase.splash.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

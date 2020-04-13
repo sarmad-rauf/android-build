@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.ens.maroc.usecase.login.LoginActivityViewModel" />
+
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".usecase.login.signup.SignUpNumberFragment">
+
+    <include android:id="@+id/loginHeader"
+        layout="@layout/layout_login_header" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/loginHeader"
+        android:layout_marginTop="@dimen/_32sdp"
+        android:layout_marginStart="@dimen/_32sdp"
+        android:layout_marginEnd="@dimen/_32sdp"
+        >
+        <EditText
+            android:id="@+id/input_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="12"
+            android:inputType="phone"
+            android:hint="@string/enter_mobile_number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        android:textSize="@dimen/_16ssp"
+        android:textAllCaps="false"
+        android:background="@drawable/button_disable"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:textColor="@color/colorTextGreyDark"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout_phone_number"
+        app:layout_constraintStart_toStartOf="@+id/input_layout_phone_number"
+        />
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="wrap_content"
+        android:text="@string/next"
+        android:textSize="@dimen/_16ssp"
+        android:textAllCaps="false"
+        android:background="@drawable/button_enable"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout_phone_number"
+        app:layout_constraintEnd_toEndOf="@+id/input_layout_phone_number"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
