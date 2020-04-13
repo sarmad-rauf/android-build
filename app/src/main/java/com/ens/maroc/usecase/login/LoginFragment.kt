@@ -38,27 +38,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), AdapterView.OnItemSe
         mDataBinding.root.languageSpinner.visibility = View.VISIBLE
         mDataBinding.root.languageSpinner.onItemSelectedListener = this
 
-        //initListner()
-
         mActivity = activity as LoginActivity
 
-    }
-
-    private fun initListner() {
-        mDataBinding.txtSignUp.setOnClickListener{
-            mActivityViewModel.isSignUpFlow.set(true)
-            mActivity.navController.navigate(R.id.action_loginFragment_to_signUpNumberFragment)
-        }
-
-        mDataBinding.txtForgotPin.setOnClickListener{
-            mActivityViewModel.isSignUpFlow.set(false)
-            mActivity.navController.navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
-
-        }
-
-        mDataBinding.btnLogin.setOnClickListener{
-            startActivity(Intent(activity,MainActivity::class.java))
-        }
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
