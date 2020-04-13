@@ -48,7 +48,7 @@
                     android:layout_marginEnd="@dimen/_32sdp"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <EditText
+                    <com.ens.maroc.widgets.MarocEditText
                         android:id="@+id/input_first_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                     android:layout_marginEnd="@dimen/_32sdp"
                     app:layout_constraintTop_toBottomOf="@+id/input_layout_first_name">
 
-                    <EditText
+                    <com.ens.maroc.widgets.MarocEditText
                         android:id="@+id/input_last_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                     android:layout_marginEnd="@dimen/_32sdp"
                     app:layout_constraintTop_toBottomOf="@+id/input_layout_last_name">
 
-                    <EditText
+                    <com.ens.maroc.widgets.MarocEditText
                         android:id="@+id/input_date_of_birth"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
                     android:layout_marginEnd="@dimen/_32sdp"
                     app:layout_constraintTop_toBottomOf="@+id/input_layout_date_of_birth">
 
-                    <EditText
+                    <com.ens.maroc.widgets.MarocEditText
                         android:id="@+id/input_forgot_national_ID"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
                     android:layout_marginEnd="@dimen/_32sdp"
                     app:layout_constraintTop_toBottomOf="@+id/input_layout_national_ID">
 
-                    <EditText
+                    <com.ens.maroc.widgets.MarocEditText
                         android:id="@+id/input_gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
                     android:layout_marginEnd="@dimen/_32sdp"
                     app:layout_constraintTop_toBottomOf="@+id/input_layout_gender">
 
-                    <EditText
+                    <com.ens.maroc.widgets.MarocEditText
                         android:id="@+id/input_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -178,14 +178,14 @@
                     android:layout_marginEnd="@dimen/_32sdp"
                     app:layout_constraintTop_toBottomOf="@+id/input_layout_email">
 
-                    <EditText
+                    <com.ens.maroc.widgets.MarocEditText
                         android:id="@+id/input_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/enter_address" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <Button
+                <com.ens.maroc.widgets.MarocButton
                     android:id="@+id/btnNextDetailFragment"
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="wrap_content"

@@ -34,7 +34,7 @@
             android:layout_marginStart="@dimen/_32sdp"
             android:layout_marginEnd="@dimen/_32sdp"
             >
-            <EditText
+            <com.ens.maroc.widgets.MarocEditText
                 android:id="@+id/input_enter_pin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             android:layout_marginStart="@dimen/_32sdp"
             android:layout_marginEnd="@dimen/_32sdp"
             >
-            <EditText
+            <com.ens.maroc.widgets.MarocEditText
                 android:id="@+id/input_confirm_pin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
                 android:hint="@string/confirm_pin" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <com.ens.maroc.widgets.MarocButton
             android:id="@+id/btnPinChange"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

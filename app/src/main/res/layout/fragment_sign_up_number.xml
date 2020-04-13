@@ -34,7 +34,7 @@
         android:layout_marginStart="@dimen/_32sdp"
         android:layout_marginEnd="@dimen/_32sdp"
         >
-        <EditText
+        <com.ens.maroc.widgets.MarocEditText
             android:id="@+id/input_phone_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:hint="@string/enter_mobile_number" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <com.ens.maroc.widgets.MarocButton
         android:id="@+id/btnBack"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
         app:layout_constraintStart_toStartOf="@+id/input_layout_phone_number"
         />
 
-    <Button
+    <com.ens.maroc.widgets.MarocButton
         android:id="@+id/btnNext"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="wrap_content"

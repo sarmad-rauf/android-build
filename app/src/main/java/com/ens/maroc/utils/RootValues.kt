@@ -30,10 +30,10 @@ class RootValues private constructor() {
     fun initializeFonts(context: Context) {
         try {
             context?.assets?.let {
-                fontRubikBold = Typeface.createFromAsset(context.assets, "font/Rubik-Bold.ttf")
-                fontRubikLight = Typeface.createFromAsset(context.assets, "font/Rubik-Light.ttf")
-                fontRubikMedium = Typeface.createFromAsset(context.assets, "font/Rubik-Medium.ttf")
-                fontRubikRegular = Typeface.createFromAsset(context.assets, "font/Rubik-Regular.ttf")
+                fontRubikBold = Typeface.createFromAsset(context.assets, "fonts/Rubik-Bold.ttf")
+                fontRubikLight = Typeface.createFromAsset(context.assets, "fonts/Rubik-Light.ttf")
+                fontRubikMedium = Typeface.createFromAsset(context.assets, "fonts/Rubik-Medium.ttf")
+                fontRubikRegular = Typeface.createFromAsset(context.assets, "fonts/Rubik-Regular.ttf")
             }
         } catch (e: Exception) {
         }

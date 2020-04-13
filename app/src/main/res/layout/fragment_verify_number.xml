@@ -34,13 +34,14 @@
             android:layout_marginStart="@dimen/_32sdp"
             android:layout_marginEnd="@dimen/_32sdp"
             >
-            <EditText
+
+            <com.ens.maroc.widgets.MarocEditText
                 android:id="@+id/input_verify_otp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="12"
+                android:hint="@string/enter_otp"
                 android:inputType="phone"
-                android:hint="@string/enter_otp" />
+                android:maxLength="12" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.ens.maroc.widgets.MarocMediumTextView
@@ -68,7 +69,7 @@
             app:layout_constraintBottom_toBottomOf="@id/txtOtpNotRecieved"
             />
 
-        <Button
+        <com.ens.maroc.widgets.MarocButton
             android:id="@+id/btnVerifyOtp"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="wrap_content"
