@@ -1808,6 +1808,7 @@ drawable design_password_eye
 drawable design_snackbar_background
 drawable ic_arrow_back_white
 drawable ic_dropdown
+drawable ic_dropdownarrow_white
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable ic_mtrl_chip_checked_black
@@ -1979,6 +1980,7 @@ id image
 id imgBackButton
 id imgGenderDropDown
 id imgShowCalender
+id imgSpinnerDropDown
 id info
 id input_address
 id input_confirm_pin
@@ -2140,6 +2142,7 @@ id txtHeaderTitle
 id txtOtpNotRecieved
 id txtResend
 id txtSignUp
+id txtSpinnerItemText
 id uniform
 id unlabeled
 id up
@@ -2224,6 +2227,7 @@ layout fragment_set_your_pin
 layout fragment_sign_up_detail
 layout fragment_sign_up_number
 layout fragment_verify_number
+layout layout_custom_language_spinner
 layout layout_login_header
 layout mtrl_layout_snackbar
 layout mtrl_layout_snackbar_include

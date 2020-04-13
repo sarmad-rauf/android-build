@@ -1,19 +1,20 @@
 package com.ens.maroc.usecase.login.signup
 
 
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-
 import com.ens.maroc.R
 import com.ens.maroc.databinding.FragmentSignUpDetailBinding
 import com.ens.maroc.usecase.BaseFragment
 import com.ens.maroc.usecase.login.LoginActivity
 import com.ens.maroc.usecase.login.LoginActivityViewModel
 import kotlinx.android.synthetic.main.layout_login_header.view.*
+import java.util.*
+
 
 /**
  * A simple [Fragment] subclass.
@@ -40,17 +41,43 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>() {
     }
 
     private fun initListner() {
-        mDataBinding.btnNextDetailFragment.setOnClickListener{
+        mDataBinding.btnNextDetailFragment.setOnClickListener {
             (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_verifyNumberFragment)
         }
 
-        mDataBinding.root.txtBack.setOnClickListener{
+        mDataBinding.root.txtBack.setOnClickListener {
             (activity as LoginActivity).navController.navigateUp()
         }
 
-        mDataBinding.root.imgBackButton.setOnClickListener{
+        mDataBinding.root.imgBackButton.setOnClickListener {
             (activity as LoginActivity).navController.navigateUp()
         }
+
+        mDataBinding.imgShowCalender.setOnClickListener {
+            showDatePickerDialog()
+        }
+
+        mDataBinding.inputDateOfBirth.setOnClickListener{
+            showDatePickerDialog()
+        }
+    }
+
+    private fun showDatePickerDialog() {
+        val calendar: Calendar = Calendar.getInstance()
+        val year: Int = calendar.get(Calendar.YEAR)
+        val month: Int = calendar.get(Calendar.MONTH)
+        val dayOfMonth: Int = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            activity as LoginActivity,
+            OnDateSetListener { datePicker, year, month, day ->
+                var monthVal = (month+1).toString()
+                var selectedDate = "$day/$monthVal/$year"
+                mDataBinding.inputDateOfBirth.setText(selectedDate)
+            }, year, month, dayOfMonth
+        )
+
+        datePickerDialog.show()
     }
 
 
