@@ -6,4 +6,5 @@ interface SignUpClickListner{
     fun onNextButtonClick(view: View)
     fun onBackButtonClick(view: View)
     fun onCalenderCalenderClick(view: View)
+    fun onGenderSelectionClick(view: View)
 }

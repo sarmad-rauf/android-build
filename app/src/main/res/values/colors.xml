@@ -5,10 +5,12 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#030303</color>
+    <color name="colorRed">#ff0000</color>
     <color name="colorTextGreyDark">#6f6f6f</color>
     <color name="colorTextGreyLight">#c7c7c7</color>
     <color name="colorTextOrange">#ff6600</color>
     <color name="colorBtnDisable">#c7c7c7</color>
     <color name="colorBtnEnable">#ff6600</color>
     <color name="colorBtnGreyLight">#efefef</color>
+    <color name="colorEditTextGreyMedium">#c7c7c7</color>
 </resources>

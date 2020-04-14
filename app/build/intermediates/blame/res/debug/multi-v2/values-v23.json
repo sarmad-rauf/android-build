@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\AndroidStudioProjects\\Maroc\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v23\\values-v23.xml",
+            "outputFile": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v23\\values-v23.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Zia\\.gradle\\caches\\transforms-2\\files-2.1\\dfb1f22e942c156be6987681931b441d\\cardview-1.0.0\\res\\values-v23\\values-v23.xml",
+                    "source": "C:\\Users\\Usama Nasir\\.gradle\\caches\\transforms-2\\files-2.1\\dfb1f22e942c156be6987681931b441d\\cardview-1.0.0\\res\\values-v23\\values-v23.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Zia\\.gradle\\caches\\transforms-2\\files-2.1\\a3dd40076fb1aa4032dab9e86677200c\\appcompat-1.0.2\\res\\values-v23\\values-v23.xml",
+                    "source": "C:\\Users\\Usama Nasir\\.gradle\\caches\\transforms-2\\files-2.1\\a3dd40076fb1aa4032dab9e86677200c\\appcompat-1.0.2\\res\\values-v23\\values-v23.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,19,32,33,34,35,36",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4",

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -12,4 +12,32 @@
         <item name="backgroundTint">@color/colorWhite</item>
         <item name="android:textColor">@color/colorWhite</item>
     </style>
+
+    <style name="Widget.Design.TextInputLayout" parent="AppTheme">
+        <item name="hintTextAppearance">@style/AppTheme.TextFloatLabelAppearance</item>
+        <item name="errorTextAppearance">@style/AppTheme.TextErrorAppearance</item>
+        <item name="counterTextAppearance">@style/TextAppearance.Design.Counter</item>
+        <item name="counterOverflowTextAppearance">@style/TextAppearance.Design.Counter.Overflow</item>
+    </style>
+
+    <style name="myTextInputLabel" parent="TextAppearance.AppCompat">
+        <!-- Customize your theme here. -->
+        <item name="android:textSize">@dimen/_16ssp</item>
+        <item name="colorControlNormal">@color/colorEditTextGreyMedium</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppTheme.TextFloatLabelAppearance" parent="TextAppearance.Design.Hint">
+        <!-- Floating label appearance here -->
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/_16ssp</item>
+
+    </style>
+
+    <style name="AppTheme.TextErrorAppearance" parent="TextAppearance.Design.Error">
+        <!-- Error message appearance here -->
+        <item name="android:textColor">@color/colorRed</item>
+        <item name="android:textSize">@dimen/_16ssp</item>
+    </style>
+
 </resources>

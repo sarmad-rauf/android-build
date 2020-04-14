@@ -1,38 +1,38 @@
 [
     {
-        "merged": "D:\\AndroidStudioProjects\\Maroc\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_login.xml",
-        "source": "D:\\AndroidStudioProjects\\Maroc\\app\\src\\main\\res\\layout\\fragment_login.xml"
+        "merged": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_verify_number.xml",
+        "source": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\src\\main\\res\\layout\\fragment_verify_number.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Maroc\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_main.xml",
-        "source": "D:\\AndroidStudioProjects\\Maroc\\app\\src\\main\\res\\layout\\activity_main.xml"
+        "merged": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_main.xml",
+        "source": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\src\\main\\res\\layout\\activity_main.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Maroc\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_set_your_pin.xml",
-        "source": "D:\\AndroidStudioProjects\\Maroc\\app\\src\\main\\res\\layout\\fragment_set_your_pin.xml"
+        "merged": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_login.xml",
+        "source": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\src\\main\\res\\layout\\activity_login.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Maroc\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_sign_up_number.xml",
-        "source": "D:\\AndroidStudioProjects\\Maroc\\app\\src\\main\\res\\layout\\fragment_sign_up_number.xml"
+        "merged": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_sign_up_number.xml",
+        "source": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\src\\main\\res\\layout\\fragment_sign_up_number.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Maroc\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_login.xml",
-        "source": "D:\\AndroidStudioProjects\\Maroc\\app\\src\\main\\res\\layout\\activity_login.xml"
+        "merged": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_set_your_pin.xml",
+        "source": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\src\\main\\res\\layout\\fragment_set_your_pin.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Maroc\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_sign_up_detail.xml",
-        "source": "D:\\AndroidStudioProjects\\Maroc\\app\\src\\main\\res\\layout\\fragment_sign_up_detail.xml"
+        "merged": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\acitivty_splash.xml",
+        "source": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\src\\main\\res\\layout\\acitivty_splash.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Maroc\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_forgot_password.xml",
-        "source": "D:\\AndroidStudioProjects\\Maroc\\app\\src\\main\\res\\layout\\fragment_forgot_password.xml"
+        "merged": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_forgot_password.xml",
+        "source": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\src\\main\\res\\layout\\fragment_forgot_password.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Maroc\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\acitivty_splash.xml",
-        "source": "D:\\AndroidStudioProjects\\Maroc\\app\\src\\main\\res\\layout\\acitivty_splash.xml"
+        "merged": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_login.xml",
+        "source": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\src\\main\\res\\layout\\fragment_login.xml"
     },
     {
-        "merged": "D:\\AndroidStudioProjects\\Maroc\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_verify_number.xml",
-        "source": "D:\\AndroidStudioProjects\\Maroc\\app\\src\\main\\res\\layout\\fragment_verify_number.xml"
+        "merged": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\fragment_sign_up_detail.xml",
+        "source": "E:\\Android_WorkSpace\\MTCash\\maroc-app-android\\app\\src\\main\\res\\layout\\fragment_sign_up_detail.xml"
     }
 ]

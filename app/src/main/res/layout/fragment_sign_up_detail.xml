@@ -52,6 +52,7 @@
                         android:id="@+id/input_first_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:theme="@style/myTextInputLabel"
                         android:hint="@string/enter_first_name"
                         android:inputType="textPersonName" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -69,6 +70,7 @@
                         android:id="@+id/input_last_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:theme="@style/myTextInputLabel"
                         android:hint="@string/enter_last_name"
                         android:inputType="textPersonName" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -86,6 +88,7 @@
                         android:id="@+id/input_date_of_birth"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:theme="@style/myTextInputLabel"
                         android:clickable="false"
                         android:editable="false"
                         android:focusable="false"
@@ -118,6 +121,7 @@
                         android:id="@+id/input_forgot_national_ID"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:theme="@style/myTextInputLabel"
                         android:hint="@string/enter_national_identity_number"
                         android:inputType="numberDecimal" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -135,6 +139,8 @@
                         android:id="@+id/input_gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:theme="@style/myTextInputLabel"
+                        android:onClick="@{listener::onGenderSelectionClick}"
                         android:clickable="false"
                         android:editable="false"
                         android:focusable="false"
@@ -148,6 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:src="@drawable/ic_dropdown"
+                    android:onClick="@{listener::onGenderSelectionClick}"
                     app:layout_constraintBottom_toTopOf="@+id/input_layout_gender"
                     app:layout_constraintEnd_toEndOf="@+id/input_layout_gender"
                     app:layout_constraintTop_toBottomOf="@+id/input_layout_gender" />
@@ -165,6 +172,7 @@
                         android:id="@+id/input_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:theme="@style/myTextInputLabel"
                         android:hint="@string/enter_email"
                         android:inputType="textEmailAddress" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -182,6 +190,7 @@
                         android:id="@+id/input_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:theme="@style/myTextInputLabel"
                         android:hint="@string/enter_address" />
                 </com.google.android.material.textfield.TextInputLayout>
 

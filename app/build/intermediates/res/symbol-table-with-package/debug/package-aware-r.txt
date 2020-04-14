@@ -36,6 +36,7 @@ animator mtrl_fab_hide_motion_spec
 animator mtrl_fab_show_motion_spec
 animator mtrl_fab_transformation_sheet_collapse_spec
 animator mtrl_fab_transformation_sheet_expand_spec
+array dialog_gender_choice_array
 array languageSpinnerItems
 attr action
 attr actionBarDivider
@@ -640,8 +641,10 @@ color colorBlack
 color colorBtnDisable
 color colorBtnEnable
 color colorBtnGreyLight
+color colorEditTextGreyMedium
 color colorPrimary
 color colorPrimaryDark
+color colorRed
 color colorTextGreyDark
 color colorTextGreyLight
 color colorTextOrange
@@ -2348,6 +2351,8 @@ style Animation_AppCompat_DropDownUp
 style Animation_AppCompat_Tooltip
 style Animation_Design_BottomSheetDialog
 style AppTheme
+style AppTheme_TextErrorAppearance
+style AppTheme_TextFloatLabelAppearance
 style Base_AlertDialog_AppCompat
 style Base_AlertDialog_AppCompat_Light
 style Base_Animation_AppCompat_Dialog
@@ -2843,6 +2848,7 @@ style Widget_MaterialComponents_TextInputLayout_OutlinedBox
 style Widget_MaterialComponents_TextInputLayout_OutlinedBox_Dense
 style Widget_MaterialComponents_Toolbar
 style Widget_Support_CoordinatorLayout
+style myTextInputLabel
 styleable ActionBar background backgroundSplit backgroundStacked contentInsetEnd contentInsetEndWithActions contentInsetLeft contentInsetRight contentInsetStart contentInsetStartWithNavigation customNavigationLayout displayOptions divider elevation height hideOnContentScroll homeAsUpIndicator homeLayout icon indeterminateProgressStyle itemPadding logo navigationMode popupTheme progressBarPadding progressBarStyle subtitle subtitleTextStyle title titleTextStyle
 styleable ActionBarLayout android_layout_gravity
 styleable ActionMenuItemView android_minWidth

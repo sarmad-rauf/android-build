@@ -39,6 +39,7 @@
                 android:id="@+id/input_verify_otp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:theme="@style/myTextInputLabel"
                 android:hint="@string/enter_otp"
                 android:inputType="phone"
                 android:maxLength="12" />

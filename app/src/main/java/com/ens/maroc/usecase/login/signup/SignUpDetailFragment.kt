@@ -1,10 +1,13 @@
 package com.ens.maroc.usecase.login.signup
 
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.ens.maroc.R
@@ -67,6 +70,26 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
         datePickerDialog.show()
     }
 
+    private fun showGenderDialog(){
+        val singleChoiceItems =
+            resources.getStringArray(R.array.dialog_gender_choice_array)
+        val itemSelected = 0
+        AlertDialog.Builder(activity)
+            .setTitle("Select your gender")
+            .setSingleChoiceItems(
+                singleChoiceItems,
+                itemSelected,
+                DialogInterface.OnClickListener { dialogInterface, selectedIndex ->
+                    when(selectedIndex){
+                        0-> mDataBinding.inputGender.setText("Male")
+                        1-> mDataBinding.inputGender.setText("Female")
+                        2-> mDataBinding.inputGender.setText("Other")
+                    }
+                })
+            .setPositiveButton("Ok", null)
+            .show()
+    }
+
     override fun onNextButtonClick(view: View) {
         (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_verifyNumberFragment)
     }
@@ -77,6 +100,11 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
     override fun onCalenderCalenderClick(view: View) {
         showDatePickerDialog()
+    }
+
+    override fun onGenderSelectionClick(view: View) {
+        mDataBinding.inputGender.setText("Male")
+        showGenderDialog()
     }
 
 

@@ -52,4 +52,8 @@ class SignUpNumberFragment : BaseFragment<FragmentSignUpNumberBinding>(),SignUpC
 
     }
 
+    override fun onGenderSelectionClick(view: View) {
+
+    }
+
 }
