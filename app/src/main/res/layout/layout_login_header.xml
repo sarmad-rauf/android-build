@@ -51,7 +51,7 @@
     <com.ens.maroc.widgets.MarocBoldTextView
         android:id="@+id/txtHeaderTitle"
         android:layout_width="@dimen/_179sdp"
-        android:layout_height="@dimen/_76sdp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_32sdp"
         android:layout_marginBottom="@dimen/_38sdp"
         android:text="@string/login_into_your_account"
