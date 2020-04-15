@@ -12,6 +12,7 @@ import com.es.marocapp.adapter.LanguageCustomSpinnerAdapter
 import com.es.marocapp.databinding.FragmentLoginBinding
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.dashboard.MainActivity
+import kotlinx.android.synthetic.main.layout_login_header.view.*
 
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(), AdapterView.OnItemSelectedListener,LoginClickListener {

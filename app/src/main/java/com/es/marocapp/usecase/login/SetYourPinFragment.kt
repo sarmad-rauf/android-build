@@ -10,6 +10,7 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentSetYourPinBinding
 import com.es.marocapp.databinding.FragmentVerifyNumberBinding
 import com.es.marocapp.usecase.BaseFragment
+import kotlinx.android.synthetic.main.layout_login_header.view.*
 
 /**
  * A simple [Fragment] subclass.

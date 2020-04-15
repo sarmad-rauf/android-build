@@ -9,6 +9,7 @@ import com.es.marocapp.databinding.FragmentForgotPasswordBinding
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
+import kotlinx.android.synthetic.main.layout_login_header.view.*
 
 class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), ForgotPasswordClickListner{
 
