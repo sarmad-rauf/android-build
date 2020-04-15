@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.ens.maroc.widgets.MarocRegularTextView
+    <com.es.marocapp.widgets.MarocRegularTextView
         android:id="@+id/txtBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         android:visibility="gone"
         app:constraint_referenced_ids="imgBackButton,txtBack" />
 
-    <com.ens.maroc.widgets.MarocBoldTextView
+    <com.es.marocapp.widgets.MarocBoldTextView
         android:id="@+id/txtHeaderTitle"
         android:layout_width="@dimen/_179sdp"
         android:layout_height="wrap_content"

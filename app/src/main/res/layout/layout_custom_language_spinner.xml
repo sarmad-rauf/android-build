@@ -6,7 +6,7 @@
     android:padding="@dimen/_8sdp"
     android:orientation="vertical">
 
-    <com.ens.maroc.widgets.MarocRegularTextView
+    <com.es.marocapp.widgets.MarocRegularTextView
         android:id="@+id/txtSpinnerItemText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

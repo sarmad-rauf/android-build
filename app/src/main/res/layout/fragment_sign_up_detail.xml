@@ -9,11 +9,11 @@
 
         <variable
             name="viewmodel"
-            type="com.ens.maroc.usecase.login.LoginActivityViewModel" />
+            type="com.es.marocapp.usecase.login.LoginActivityViewModel" />
 
         <variable
             name="listener"
-            type="com.ens.maroc.usecase.login.signup.SignUpClickListner" />
+            type="com.es.marocapp.usecase.login.signup.SignUpClickListner" />
 
     </data>
 
@@ -48,7 +48,7 @@
                     android:layout_marginEnd="@dimen/_32sdp"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <com.ens.maroc.widgets.MarocEditText
+                    <com.es.marocapp.widgets.MarocEditText
                         android:id="@+id/input_first_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                     android:layout_marginEnd="@dimen/_32sdp"
                     app:layout_constraintTop_toBottomOf="@+id/input_layout_first_name">
 
-                    <com.ens.maroc.widgets.MarocEditText
+                    <com.es.marocapp.widgets.MarocEditText
                         android:id="@+id/input_last_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
                     android:layout_marginEnd="@dimen/_32sdp"
                     app:layout_constraintTop_toBottomOf="@+id/input_layout_last_name">
 
-                    <com.ens.maroc.widgets.MarocEditText
+                    <com.es.marocapp.widgets.MarocEditText
                         android:id="@+id/input_date_of_birth"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
                     android:layout_marginEnd="@dimen/_32sdp"
                     app:layout_constraintTop_toBottomOf="@+id/input_layout_date_of_birth">
 
-                    <com.ens.maroc.widgets.MarocEditText
+                    <com.es.marocapp.widgets.MarocEditText
                         android:id="@+id/input_forgot_national_ID"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
                     android:layout_marginEnd="@dimen/_32sdp"
                     app:layout_constraintTop_toBottomOf="@+id/input_layout_national_ID">
 
-                    <com.ens.maroc.widgets.MarocEditText
+                    <com.es.marocapp.widgets.MarocEditText
                         android:id="@+id/input_gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -168,7 +168,7 @@
                     android:layout_marginEnd="@dimen/_32sdp"
                     app:layout_constraintTop_toBottomOf="@+id/input_layout_gender">
 
-                    <com.ens.maroc.widgets.MarocEditText
+                    <com.es.marocapp.widgets.MarocEditText
                         android:id="@+id/input_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -186,7 +186,7 @@
                     android:layout_marginEnd="@dimen/_32sdp"
                     app:layout_constraintTop_toBottomOf="@+id/input_layout_email">
 
-                    <com.ens.maroc.widgets.MarocEditText
+                    <com.es.marocapp.widgets.MarocEditText
                         android:id="@+id/input_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -194,7 +194,7 @@
                         android:hint="@string/enter_address" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.ens.maroc.widgets.MarocButton
+                <com.es.marocapp.widgets.MarocButton
                     android:id="@+id/btnNextDetailFragment"
                     android:layout_width="@dimen/_120sdp"
                     android:layout_height="wrap_content"

@@ -9,7 +9,7 @@
 
         <variable
             name="viewmodel"
-            type="com.ens.maroc.usecase.login.LoginActivityViewModel" />
+            type="com.es.marocapp.usecase.login.LoginActivityViewModel" />
 
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout

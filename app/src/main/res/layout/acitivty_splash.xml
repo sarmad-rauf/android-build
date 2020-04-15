@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="com.ens.maroc.usecase.splash.SplashActivityViewModel" />
+            type="com.es.marocapp.usecase.splash.SplashActivityViewModel" />
 
     </data>
 

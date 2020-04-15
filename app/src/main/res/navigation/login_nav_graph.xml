@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.ens.maroc.usecase.login.LoginFragment"
+        android:name="com.es.marocapp.usecase.login.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login"
         >
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpNumberFragment"
-        android:name="com.ens.maroc.usecase.login.signup.SignUpNumberFragment"
+        android:name="com.es.marocapp.usecase.login.signup.SignUpNumberFragment"
         android:label="SignUpNumberFragment"
         tools:layout="@layout/fragment_sign_up_number"
         >
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpDetailFragment"
-        android:name="com.ens.maroc.usecase.login.signup.SignUpDetailFragment"
+        android:name="com.es.marocapp.usecase.login.signup.SignUpDetailFragment"
         android:label="SignUpDetailFragment"
         tools:layout="@layout/fragment_sign_up_detail"
         >
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/verifyNumberFragment"
-        android:name="com.ens.maroc.usecase.login.VerifyNumberFragment"
+        android:name="com.es.marocapp.usecase.login.VerifyNumberFragment"
         android:label="VerifyNumberFragment"
         tools:layout="@layout/fragment_verify_number"
         >
@@ -50,13 +50,13 @@
     </fragment>
     <fragment
         android:id="@+id/setYourPinFragment"
-        android:name="com.ens.maroc.usecase.login.SetYourPinFragment"
+        android:name="com.es.marocapp.usecase.login.SetYourPinFragment"
         android:label="SetYourPinFragment"
         tools:layout="@layout/fragment_set_your_pin"
         />
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.ens.maroc.usecase.login.forgotpassword.ForgotPasswordFragment"
+        android:name="com.es.marocapp.usecase.login.forgotpassword.ForgotPasswordFragment"
         android:label="ForgotPasswordFragment"
         tools:layout="@layout/fragment_forgot_password"
         >
