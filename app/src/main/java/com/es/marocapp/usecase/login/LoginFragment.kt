@@ -11,7 +11,7 @@ import com.es.marocapp.R
 import com.es.marocapp.adapter.LanguageCustomSpinnerAdapter
 import com.es.marocapp.databinding.FragmentLoginBinding
 import com.es.marocapp.usecase.BaseFragment
-import com.es.marocapp.usecase.dashboard.MainActivity
+import com.es.marocapp.usecase.MainActivity
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 
 
@@ -59,7 +59,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), AdapterView.OnItemSe
             mDataBinding.inputLayoutPhoneNumber.error = "Please Enter Valid Mobile Number"
             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
         }else{
-            startActivity(Intent(activity,MainActivity::class.java))
+            startActivity(Intent(activity, MainActivity::class.java))
         }
     }
 

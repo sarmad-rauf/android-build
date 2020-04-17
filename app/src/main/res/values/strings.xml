@@ -31,4 +31,9 @@
     <string name="select_gender">SELECT GENDER</string>
     <string name="enter_email">ENTER EMAIL</string>
     <string name="enter_address">Enter Address</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_transaction">Transaction</string>
+    <string name="title_pin">Pin</string>
+    <string name="title_approvals">Approvals</string>
 </resources>
