@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "123544678825",
+    "firebase_url": "https://maroctel-c656a.firebaseio.com",
+    "project_id": "maroctel-c656a",
+    "storage_bucket": "maroctel-c656a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123544678825:android:f00b756a7cde37b7dbd4b8",
+        "android_client_info": {
+          "package_name": "com.ens.maroc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123544678825-lpalc27l73cvlrck47ms2und9t5m6uus.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ens.maroc",
+            "certificate_hash": "b267296ae26415e89d275df42857246073b13a8c"
+          }
+        },
+        {
+          "client_id": "123544678825-s8fsjmcg83ueamhkfe0q3mskukuar8p2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLESQWPqJobNSwV3wk4pMFXfiRFMf0v4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123544678825-s8fsjmcg83ueamhkfe0q3mskukuar8p2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "123544678825-o9n41f53hdno9uk60fvekmuvd94mcm70.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.es.marocapp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123544678825:android:ae27cb759c300751dbd4b8",
+        "android_client_info": {
+          "package_name": "com.es.marocapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123544678825-s8fsjmcg83ueamhkfe0q3mskukuar8p2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLESQWPqJobNSwV3wk4pMFXfiRFMf0v4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123544678825-s8fsjmcg83ueamhkfe0q3mskukuar8p2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "123544678825-o9n41f53hdno9uk60fvekmuvd94mcm70.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.es.marocapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
