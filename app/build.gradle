@@ -73,4 +73,10 @@ dependencies {
     implementation 'com.intuit.ssp:ssp-android:1.0.6'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
 
+    //---------------------CardView Library------------------------------------------
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+    //---------------------CardSlider Library-------------------------------------
+    implementation 'com.github.IslamKhSh:CardSlider:1.0.1'
+
 }

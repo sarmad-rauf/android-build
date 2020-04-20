@@ -12,5 +12,6 @@
     <color name="colorBtnDisable">#c7c7c7</color>
     <color name="colorBtnEnable">#ff6600</color>
     <color name="colorBtnGreyLight">#efefef</color>
+    <color name="colorBtnBlue">#0283c6</color>
     <color name="colorEditTextGreyMedium">#c7c7c7</color>
 </resources>

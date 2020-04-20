@@ -3,23 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
-
+    app:startDestination="@id/navigation_home">
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.es.marocapp.usecase.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
-
+        android:label="HomeFragment" />
     <fragment
         android:id="@+id/navigation_transaction"
         android:name="com.es.marocapp.usecase.transaction.TransactionFragment"
-        android:label="@string/title_transaction"
-        tools:layout="@layout/fragment_transaction" />
-
+        android:label="TransactionFragment" />
     <fragment
         android:id="@+id/navigation_pin"
         android:name="com.es.marocapp.usecase.pin.PinFragment"
-        android:label="@string/title_pin"
-        tools:layout="@layout/fragment_pin" />
+        android:label="PinFragment" />
+    <fragment
+        android:id="@+id/navigation_approval"
+        android:name="com.es.marocapp.usecase.approvals.ApprovalFragment"
+        android:label="ApprovalFragment" />
 </navigation>

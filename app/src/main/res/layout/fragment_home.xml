@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -12,21 +13,136 @@
 
 
     </data>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text_home"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.github.islamkhsh.CardSliderViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_150sdp"
+                    app:cardSlider_indicator="@id/indicator"
+                    app:cardSlider_otherPagesWidth="@dimen/_16sdp"
+                    app:cardSlider_pageMargin="@dimen/_12sdp"
+                    app:cardSlider_smallAlphaFactor="0.4"
+                    app:cardSlider_smallScaleFactor="0.8"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_editor_absoluteX="-3" />
+
+                <!--    <androidx.constraintlayout.widget.Guideline-->
+                <!--        android:id="@+id/guideline"-->
+                <!--        android:layout_width="wrap_content"-->
+                <!--        android:layout_height="wrap_content"-->
+                <!--        android:orientation="horizontal"-->
+                <!--        app:layout_constraintGuide_percent="0.3" />-->
+
+                <com.github.islamkhsh.CardSliderIndicator
+                    android:id="@+id/indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:foregroundGravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/viewPager" />
+
+                <ImageView
+                    android:id="@+id/quickRechargeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_100sdp"
+                    android:layout_marginStart="@dimen/_32sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_32sdp"
+                    android:src="@drawable/using_smart_phone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/indicator" />
+
+                <com.es.marocapp.widgets.MarocMediumTextView
+                    android:id="@+id/textTitleQuickRecharge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/quick_recharge"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_16ssp"
+                    app:layout_constraintStart_toStartOf="@id/quickRechargeContainer"
+                    app:layout_constraintTop_toTopOf="@+id/quickRechargeContainer" />
+
+                <com.es.marocapp.widgets.MarocButton
+                    android:id="@+id/btnQuickRecharge1"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@drawable/button_quick_recharge"
+                    android:text="DH5"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_14sdp"
+                    app:layout_constraintStart_toStartOf="@+id/textTitleQuickRecharge"
+                    app:layout_constraintTop_toBottomOf="@+id/textTitleQuickRecharge" />
+
+                <com.es.marocapp.widgets.MarocButton
+                    android:id="@+id/btnQuickRecharge2"
+                    android:layout_width="@dimen/_55sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@drawable/button_quick_recharge"
+                    android:text="DH10"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_14sdp"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnQuickRecharge1"
+                    app:layout_constraintStart_toEndOf="@+id/btnQuickRecharge1" />
+
+                <com.es.marocapp.widgets.MarocButton
+                    android:id="@+id/btnQuickRecharge3"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@drawable/button_quick_recharge"
+                    android:text="DH100"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_14sdp"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnQuickRecharge1"
+                    app:layout_constraintStart_toEndOf="@+id/btnQuickRecharge2" />
+
+                <com.es.marocapp.widgets.MarocButton
+                    android:id="@+id/btnQuickRecharge4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:background="@drawable/button_quick_recharge_state"
+                    android:text="@string/recharge"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_14sdp"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnQuickRecharge3"
+                    app:layout_constraintStart_toEndOf="@+id/btnQuickRecharge3" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/useCasesRecyclerView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/_16sdp"
+                    android:paddingBottom="@dimen/_16sdp"
+                    app:layout_constraintEnd_toEndOf="@+id/quickRechargeContainer"
+                    app:layout_constraintStart_toStartOf="@+id/quickRechargeContainer"
+                    app:layout_constraintTop_toBottomOf="@+id/quickRechargeContainer" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

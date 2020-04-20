@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- you can use any color you want I used here gray color-->
+<!--    <solid android:color="@color/colorWhite"/>-->
+    <stroke android:color="@color/colorWhite"
+        android:width="@dimen/_1sdp"/>
+
+    <corners
+        android:bottomLeftRadius="@dimen/_20sdp"
+        android:bottomRightRadius="@dimen/_20sdp"
+        android:topLeftRadius="@dimen/_20sdp"
+        android:topRightRadius="@dimen/_20sdp" />
+</shape>
+
+<!--<selector xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--<item android:state_pressed="false" >-->
+<!--    <shape>-->
+<!--&lt;!&ndash;        <solid&ndash;&gt;-->
+<!--&lt;!&ndash;            android:color="@color/colorBtnGreyLight" />&ndash;&gt;-->
+<!--        <stroke-->
+<!--            android:width="@dimen/_1sdp"-->
+<!--            android:color="@color/colorWhite" />-->
+<!--        <corners android:radius="@dimen/_20sdp" />-->
+<!--    </shape>-->
+<!--</item>-->
+<!--<item android:state_pressed="true" >-->
+<!--    <shape>-->
+<!--        <solid-->
+<!--            android:color="@color/colorBtnBlue" />-->
+<!--        <stroke-->
+<!--            android:width="@dimen/_1sdp"-->
+<!--            android:color="@color/colorBtnBlue" />-->
+<!--        <corners android:radius="20dp" />-->
+<!--    </shape>-->
+<!--</item>-->
+<!--</selector>-->

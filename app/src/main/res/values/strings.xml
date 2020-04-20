@@ -23,7 +23,6 @@
     <string name="pin_will_be_sent_on_your_mobile_number">Pin will be sent on your mobile number</string>
     <string name="enter_national_identity_number">ENTER NATIONAL IDENTITY NUMBER</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="enter_first_name">ENTER FIRST NAME</string>
     <string name="enter_last_name">ENTER LAST NAME</string>
@@ -32,8 +31,16 @@
     <string name="enter_email">ENTER EMAIL</string>
     <string name="enter_address">Enter Address</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_transaction">Transaction</string>
-    <string name="title_pin">Pin</string>
-    <string name="title_approvals">Approvals</string>
+    <string name="title_home_cap">HOME</string>
+    <string name="title_transaction_cap">TRANSACTION</string>
+    <string name="title_pin_cap">PIN</string>
+    <string name="title_approval_cap">APPROVALS</string>
+    <string name="quick_recharge">Quick Recharge</string>
+    <string name="recharge">Recharge</string>
+    <string name="send_money">Send Money</string>
+    <string name="transfer">Transfer</string>
+    <string name="payments">Payments</string>
+    <string name="qr">QR</string>
+    <string name="accounts">Accounts</string>
+
 </resources>
