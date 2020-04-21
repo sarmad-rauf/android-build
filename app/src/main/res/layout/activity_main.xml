@@ -10,13 +10,12 @@
     <nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
         android:id="@+id/drawer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <nl.psdcompany.duonavigationdrawer.views.DuoMenuView
+            android:id="@+id/menuViewDrawer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/menuViewDrawer"
             android:orientation="vertical"
             android:tag="menu"
             app:footer="@layout/layout_drawer_footer"
@@ -25,9 +24,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container"
-            android:tag="content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:tag="content">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -35,9 +34,8 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorWhite"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_constraintTop_toTopOf="parent"
-                />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/nav_view"
@@ -58,8 +56,7 @@
                 app:layout_constraintBottom_toTopOf="@id/nav_view"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
             <fragment
                 android:id="@+id/nav_host_fragment"
@@ -76,4 +73,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout>
+
 </layout>
