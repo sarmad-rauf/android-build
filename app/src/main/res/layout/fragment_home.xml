@@ -14,30 +14,26 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_12sdp"
+               >
 
                 <com.github.islamkhsh.CardSliderViewPager
                     android:id="@+id/viewPager"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_150sdp"
+                    android:layout_height="0dp"
+                    app:layout_constraintVertical_weight=".3"
                     app:cardSlider_indicator="@id/indicator"
-                    app:cardSlider_otherPagesWidth="@dimen/_16sdp"
-                    app:cardSlider_pageMargin="@dimen/_12sdp"
+                    app:cardSlider_otherPagesWidth="@dimen/_8sdp"
+                    app:cardSlider_pageMargin="@dimen/_6sdp"
                     app:cardSlider_smallAlphaFactor="0.4"
                     app:cardSlider_smallScaleFactor="0.8"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:layout_editor_absoluteX="-3" />
+                    app:layout_constraintBottom_toTopOf="@+id/indicator"
+                    />
 
                 <!--    <androidx.constraintlayout.widget.Guideline-->
                 <!--        android:id="@+id/guideline"-->
@@ -54,70 +50,94 @@
                     android:gravity="center_horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/viewPager" />
+                    app:layout_constraintTop_toBottomOf="@+id/viewPager"
+                    app:layout_constraintBottom_toTopOf="@+id/quickRechargeContainer"/>
 
-                <ImageView
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/quickRechargeContainer"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_100sdp"
-                    android:layout_marginStart="@dimen/_32sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_32sdp"
-                    android:src="@drawable/using_smart_phone"
+                    android:layout_height="0dp"
+                    app:layout_constraintVertical_weight=".15"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:paddingBottom="@dimen/_8sdp"
+                    android:background="@drawable/using_smart_phone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/indicator" />
+                    app:layout_constraintTop_toBottomOf="@+id/indicator"
+                    app:layout_constraintBottom_toTopOf="@+id/useCasesRecyclerView">
 
                 <com.es.marocapp.widgets.MarocMediumTextView
                     android:id="@+id/textTitleQuickRecharge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
                     android:text="@string/quick_recharge"
-                    android:textAllCaps="true"
                     android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_16ssp"
+                    android:textSize="@dimen/_14ssp"
                     app:layout_constraintStart_toStartOf="@id/quickRechargeContainer"
                     app:layout_constraintTop_toTopOf="@+id/quickRechargeContainer" />
 
                 <com.es.marocapp.widgets.MarocButton
                     android:id="@+id/btnQuickRecharge1"
-                    android:layout_width="@dimen/_50sdp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:paddingStart="@dimen/_6sdp"
+                    android:paddingEnd="@dimen/_6sdp"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:background="@drawable/button_quick_recharge"
                     android:text="DH5"
                     android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_14sdp"
+                    android:textSize="@dimen/_14ssp"
                     app:layout_constraintStart_toStartOf="@+id/textTitleQuickRecharge"
-                    app:layout_constraintTop_toBottomOf="@+id/textTitleQuickRecharge" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                   />
 
                 <com.es.marocapp.widgets.MarocButton
                     android:id="@+id/btnQuickRecharge2"
-                    android:layout_width="@dimen/_55sdp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:layout_marginTop="@dimen/_8sdp"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:paddingStart="@dimen/_6sdp"
+                    android:paddingEnd="@dimen/_6sdp"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_4sdp"
                     android:background="@drawable/button_quick_recharge"
                     android:text="DH10"
                     android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_14sdp"
+                    android:textSize="@dimen/_14ssp"
                     app:layout_constraintBottom_toBottomOf="@+id/btnQuickRecharge1"
-                    app:layout_constraintStart_toEndOf="@+id/btnQuickRecharge1" />
+                    app:layout_constraintStart_toEndOf="@+id/btnQuickRecharge1"
+                    app:layout_constraintEnd_toStartOf="@id/btnQuickRecharge3"/>
 
                 <com.es.marocapp.widgets.MarocButton
                     android:id="@+id/btnQuickRecharge3"
-                    android:layout_width="@dimen/_60sdp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_4sdp"
                     android:layout_marginTop="@dimen/_8sdp"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:paddingStart="@dimen/_6sdp"
+                    android:paddingEnd="@dimen/_6sdp"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_4sdp"
                     android:background="@drawable/button_quick_recharge"
                     android:text="DH100"
                     android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_14sdp"
+                    android:textSize="@dimen/_14ssp"
                     app:layout_constraintBottom_toBottomOf="@+id/btnQuickRecharge1"
-                    app:layout_constraintStart_toEndOf="@+id/btnQuickRecharge2" />
+                    app:layout_constraintStart_toEndOf="@+id/btnQuickRecharge2"
+                    app:layout_constraintEnd_toStartOf="@id/btnQuickRecharge4"/>
 
                 <com.es.marocapp.widgets.MarocButton
                     android:id="@+id/btnQuickRecharge4"
@@ -127,22 +147,31 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:background="@drawable/button_quick_recharge_state"
                     android:text="@string/recharge"
+                    android:textAllCaps="false"
                     android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_14sdp"
+                    android:textSize="@dimen/_14ssp"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:paddingStart="@dimen/_6sdp"
+                    android:paddingEnd="@dimen/_6sdp"
+                    android:paddingTop="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_4sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/btnQuickRecharge3"
-                    app:layout_constraintStart_toEndOf="@+id/btnQuickRecharge3" />
+                    app:layout_constraintStart_toEndOf="@+id/btnQuickRecharge3"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/useCasesRecyclerView"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    app:layout_constraintVertical_weight=".3"
                     android:layout_marginTop="@dimen/_16sdp"
-                    android:layout_marginBottom="@dimen/_16sdp"
-                    android:paddingBottom="@dimen/_16sdp"
                     app:layout_constraintEnd_toEndOf="@+id/quickRechargeContainer"
                     app:layout_constraintStart_toStartOf="@+id/quickRechargeContainer"
-                    app:layout_constraintTop_toBottomOf="@+id/quickRechargeContainer" />
+                    app:layout_constraintTop_toBottomOf="@+id/quickRechargeContainer"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.core.widget.NestedScrollView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

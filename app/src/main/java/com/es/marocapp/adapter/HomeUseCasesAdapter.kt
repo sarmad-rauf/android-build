@@ -24,10 +24,10 @@ class HomeUseCasesAdapter(private val usecases : ArrayList<HomeUseCasesModel>) :
         holder.useCaseImage.setImageResource(usecases[position].useCaseImage)
 
         if(position==4){
-            holder.useCaseParenttLayout.setBackgroundResource(R.color.colorBtnBlue)
+           // holder.useCaseParenttLayout.setBackgroundResource(R.color.colorBtnBlue)
             holder.useCaseChildtLayout.setBackgroundResource(R.color.colorBtnBlue)
         }else{
-            holder.useCaseParenttLayout.setBackgroundResource(R.color.colorWhite)
+           // holder.useCaseParenttLayout.setBackgroundResource(R.color.colorWhite)
             holder.useCaseChildtLayout.setBackgroundResource(R.color.colorWhite)
         }
     }
