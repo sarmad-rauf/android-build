@@ -12,4 +12,10 @@
         <item>Others</item>
     </string-array>
 
+    <array name="navigation_drawer_options">
+        <item>Notifications</item>
+        <item>Settings</item>
+        <item>Log Out</item>
+    </array>
+
 </resources>

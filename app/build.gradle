@@ -7,6 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -78,5 +79,12 @@ dependencies {
 
     //---------------------CardSlider Library-------------------------------------
     implementation 'com.github.IslamKhSh:CardSlider:1.0.1'
+
+//    //---------------------Duo Navigation Drawer Used As Module-----------------------------------
+//    implementation 'nl.psdcompany:duo-navigation-drawer:3.0.0'
+    implementation project(':duo-navigation-drawer')
+
+    //---------------------Circular ImageView----------------------------------
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
 }
