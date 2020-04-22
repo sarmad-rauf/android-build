@@ -47,4 +47,6 @@
     <string name="notifications">Notifications</string>
 
     <string name="tag_menu">menu</string>
+    <string name="balance">Balance</string>
+    <string name="welcome_back">Welcome Back</string>
 </resources>

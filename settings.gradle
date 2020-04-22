@@ -1,2 +1,2 @@
-include ':app', ':duo-navigation-drawer'
+include ':app'
 rootProject.name='Maroc'

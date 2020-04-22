@@ -1,23 +1,21 @@
 package com.es.marocapp.usecase.home
 
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager.widget.ViewPager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.HomeCardAdapter
 import com.es.marocapp.adapter.HomeUseCasesAdapter
 import com.es.marocapp.databinding.FragmentHomeBinding
-import com.es.marocapp.model.CardModel
 import com.es.marocapp.model.HomeUseCasesModel
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
-import com.github.islamkhsh.CardSliderIndicator
-import com.github.islamkhsh.CardSliderViewPager
-import kotlinx.android.synthetic.main.fragment_home.*
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(),ViewPager.OnPageChangeListener,
+    HomeFragmentClickListners {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var mCardAdapter : HomeCardAdapter
@@ -32,6 +30,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         mDataBinding.apply {
             viewmodel = homeViewModel
+            listener = this@HomeFragment
         }
 
         homeViewModel.text.observe(this, Observer {
@@ -59,20 +58,39 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun populateHomeCardView() {
-        val cards = ArrayList<CardModel>().apply{
-            // add items to arraylist
-            this.add(CardModel("Credit Card","**** **** **** 1234","DH 1,200"))
-            this.add(CardModel("Bank Card","**** **** **** 3333","DH 200"))
-            this.add(CardModel("Loyalty Card","**** **** **** 2222","DH 2,000"))
-            this.add(CardModel("Credit Card","**** **** **** 1234","DH 1,200"))
-            this.add(CardModel("Bank Card","**** **** **** 3333","DH 200"))
-
-        }
-        mCardAdapter = HomeCardAdapter(cards)
-        mDataBinding.viewPager.apply {
+        mCardAdapter = HomeCardAdapter((activity as MainActivity).supportFragmentManager)
+        mDataBinding.viewpager.apply {
             adapter = mCardAdapter
+            pageMargin = 16
         }
 
-        mDataBinding.indicator.indicatorsToShow = cards.size
+        mDataBinding.flexibleIndicator.initViewPager(mDataBinding.viewpager)
+    }
+
+    override fun onPageScrollStateChanged(state: Int) {
+    }
+
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+    }
+
+    override fun onPageSelected(position: Int) {
+        when (position) {
+            0 -> mDataBinding.leftNav.visibility = View.GONE
+            2 -> mDataBinding.rightNav.visibility = View.GONE
+            else -> {
+                mDataBinding.leftNav.visibility = View.VISIBLE
+                mDataBinding.rightNav.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    override fun onNextBalanceCardClick(view: View) {
+        val nPosition: Int = mDataBinding.viewpager.currentItem
+        mDataBinding.viewpager.currentItem = nPosition + 1
+    }
+
+    override fun onPreviousBalanceCardClick(view: View) {
+        val nPosition: Int = mDataBinding.viewpager.currentItem
+        mDataBinding.viewpager.currentItem = nPosition - 1
     }
 }

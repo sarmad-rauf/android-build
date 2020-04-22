@@ -11,6 +11,10 @@
             name="viewmodel"
             type="com.es.marocapp.usecase.home.HomeViewModel" />
 
+        <variable
+            name="listener"
+            type="com.es.marocapp.usecase.home.HomeFragmentClickListners"/> />
+
 
     </data>
 
@@ -21,37 +25,79 @@
                 android:layout_marginBottom="@dimen/_12sdp"
                >
 
-                <com.github.islamkhsh.CardSliderViewPager
-                    android:id="@+id/viewPager"
-                    android:layout_width="match_parent"
+<!--                <androidx.viewpager2.widget.ViewPager2-->
+<!--                    android:id="@+id/viewPager"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    app:layout_constraintVertical_weight=".3"-->
+<!--                    app:cardSlider_indicator="@id/indicator"-->
+<!--                    app:cardSlider_otherPagesWidth="@dimen/_8sdp"-->
+<!--                    app:cardSlider_pageMargin="@dimen/_6sdp"-->
+<!--                    app:cardSlider_smallAlphaFactor="0.4"-->
+<!--                    app:cardSlider_smallScaleFactor="0.8"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:layout_constraintBottom_toTopOf="@+id/indicator"-->
+<!--                    />-->
+
+<!--                <-->
+<!--                    android:id="@+id/indicator"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:foregroundGravity="center_horizontal"-->
+<!--                    android:gravity="center_horizontal"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/viewPager"-->
+<!--                    app:layout_constraintBottom_toTopOf="@+id/quickRechargeContainer"/>-->
+
+                <FrameLayout
+                    android:id="@+id/View"
+                    android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_constraintVertical_weight=".3"
-                    app:cardSlider_indicator="@id/indicator"
-                    app:cardSlider_otherPagesWidth="@dimen/_8sdp"
-                    app:cardSlider_pageMargin="@dimen/_6sdp"
-                    app:cardSlider_smallAlphaFactor="0.4"
-                    app:cardSlider_smallScaleFactor="0.8"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/indicator"
-                    />
-
-                <!--    <androidx.constraintlayout.widget.Guideline-->
-                <!--        android:id="@+id/guideline"-->
-                <!--        android:layout_width="wrap_content"-->
-                <!--        android:layout_height="wrap_content"-->
-                <!--        android:orientation="horizontal"-->
-                <!--        app:layout_constraintGuide_percent="0.3" />-->
-
-                <com.github.islamkhsh.CardSliderIndicator
-                    android:id="@+id/indicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:foregroundGravity="center_horizontal"
-                    android:gravity="center_horizontal"
+                    android:background="@android:color/black"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/viewPager"
-                    app:layout_constraintBottom_toTopOf="@+id/quickRechargeContainer"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/quickRechargeContainer"
+                    >
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/viewpager"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/left_nav"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{listener::onPreviousBalanceCardClick}"
+                        android:layout_gravity="center_vertical|start"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        app:srcCompat="@drawable/ic_back" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/right_nav"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{listener::onNextBalanceCardClick}"
+                        android:layout_gravity="center_vertical|end"
+                        android:layout_marginEnd="@dimen/_12sdp"
+                        app:srcCompat="@drawable/ic_forward" />
+
+                    <com.merhold.extensiblepageindicator.ExtensiblePageIndicator
+                        android:id="@+id/flexibleIndicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="@dimen/_4sdp"
+                        app:indicatorPadding="@dimen/_8sdp"
+                        app:indicatorRadius="@dimen/_2sdp" />
+                </FrameLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/quickRechargeContainer"
@@ -65,7 +111,7 @@
                     android:background="@drawable/using_smart_phone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/indicator"
+                    app:layout_constraintTop_toBottomOf="@+id/View"
                     app:layout_constraintBottom_toTopOf="@+id/useCasesRecyclerView">
 
                 <com.es.marocapp.widgets.MarocMediumTextView
