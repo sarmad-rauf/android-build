@@ -16,7 +16,7 @@
         android:src="@drawable/blue_geometric_png_8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
         tools:layout_editor_absoluteX="0dp" />
 
     <ImageView

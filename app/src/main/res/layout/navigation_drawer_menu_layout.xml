@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:padding="@dimen/_8sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary">
@@ -19,7 +19,6 @@
         android:src="@drawable/ic_notifications"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         />
 
     <com.es.marocapp.widgets.MarocRegularTextView
@@ -40,7 +39,6 @@
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
         android:src="@drawable/ic_settings"
-        android:visibility="gone"
         android:layout_marginTop="@dimen/_8sdp"
         app:layout_constraintTop_toBottomOf="@+id/imgDrawerNotifications"
         app:layout_constraintStart_toStartOf="@+id/imgDrawerNotifications"
@@ -52,7 +50,6 @@
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_14ssp"
         android:text="@string/settings"
-        android:visibility="gone"
         android:layout_marginStart="@dimen/_8sdp"
         app:layout_constraintTop_toBottomOf="@+id/imgDrawerSettings"
         app:layout_constraintBottom_toTopOf="@+id/imgDrawerSettings"
@@ -65,7 +62,6 @@
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
         android:src="@drawable/ic_log_out"
-        android:visibility="gone"
         android:layout_marginTop="@dimen/_8sdp"
         app:layout_constraintTop_toBottomOf="@+id/imgDrawerSettings"
         app:layout_constraintStart_toStartOf="@+id/imgDrawerSettings"
@@ -75,7 +71,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorWhite"
-        android:visibility="gone"
         android:textSize="@dimen/_14ssp"
         android:text="@string/log_out"
         android:layout_marginStart="@dimen/_8sdp"
@@ -84,9 +79,13 @@
         app:layout_constraintStart_toEndOf="@+id/imgDrawerLogOut"
         />
 
-<!--    <include android:id="@+id/drawer_footer"-->
-<!--        layout="@layout/layout_drawer_footer"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        />-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/m_tcash_logo_white"
+        android:padding="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
