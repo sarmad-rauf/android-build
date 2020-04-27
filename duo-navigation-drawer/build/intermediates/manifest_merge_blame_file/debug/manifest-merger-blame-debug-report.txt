@@ -1,0 +1,20 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="nl.psdcompany.psd.duonavigationdrawer"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="15"
+8-->D:\AndroidStudioProjects\Maroc\duo-navigation-drawer\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="28" />
+9-->D:\AndroidStudioProjects\Maroc\duo-navigation-drawer\src\main\AndroidManifest.xml
+10
+11    <application
+11-->D:\AndroidStudioProjects\Maroc\duo-navigation-drawer\src\main\AndroidManifest.xml:5:5-7:43
+12        android:allowBackup="true"
+12-->D:\AndroidStudioProjects\Maroc\duo-navigation-drawer\src\main\AndroidManifest.xml:6:9-35
+13        android:label="@string/app_name" />
+13-->D:\AndroidStudioProjects\Maroc\duo-navigation-drawer\src\main\AndroidManifest.xml:7:9-41
+14
+15</manifest>

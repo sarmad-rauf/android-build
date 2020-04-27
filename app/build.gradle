@@ -7,6 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 
+def baseUrlType = 3 //1:Production,2:Staging,3:Development
 
 android {
     compileSdkVersion 29
@@ -19,14 +20,33 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        multiDexEnabled true
+        def today = new Date().format('dd-MMM-yyyy-HHmmss').toString()
+        project.ext.set("archivesBaseName", "Maroc-Android-Build-" + today + "-V" + version + "-" + versionCode + "-Api-" + baseUrlType)
     }
     buildTypes {
 
         debug {
+            if (baseUrlType == 1) {//Production
+                buildConfigField "String", "SERVER_URL", "\"https://jsonplaceholder.typicode.com/\""
+            } else if (baseUrlType == 2) {// Staging
+                buildConfigField "String", "SERVER_URL", "\"https://jsonplaceholder.typicode.com/\""
+            } else if (baseUrlType == 3) {// Development
+                buildConfigField "String", "SERVER_URL", "\"https://jsonplaceholder.typicode.com/\""
+            }
+
             buildConfigField "boolean", "SSL_ENABLED", "false"
             buildConfigField "boolean", "LOG_ENABLED", "true"
         }
         release {
+            if (baseUrlType == 1) {//Production
+                buildConfigField "String", "SERVER_URL", "\"https://jsonplaceholder.typicode.com/\""
+            } else if (baseUrlType == 2) {// Staging
+                buildConfigField "String", "SERVER_URL", "\"https://jsonplaceholder.typicode.com/\""
+            } else if (baseUrlType == 3) {// Development
+                buildConfigField "String", "SERVER_URL", "\"https://jsonplaceholder.typicode.com/\""
+            }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
@@ -89,5 +109,16 @@ dependencies {
 
     //---------------------Circular ImageView----------------------------------
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    implementation 'com.android.support:multidex:1.0.3'
+
+    api 'com.squareup.retrofit2:retrofit:2.4.0'
+    api 'io.reactivex.rxjava2:rxjava:2.1.14'
+    api 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    api 'com.squareup.moshi:moshi-kotlin:1.5.0'
+    api 'com.squareup.retrofit2:converter-moshi:2.3.0'
+    api 'com.squareup.okhttp3:okhttp:3.10.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 
 }

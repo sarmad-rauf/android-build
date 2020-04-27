@@ -23,6 +23,8 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
             viewmodel = approvalViewModel
         }
 
+        approvalViewModel.requestForApprovalsApi(context)
+
 
         approvalViewModel.text.observe(this, Observer {
             text_notifications.text = it

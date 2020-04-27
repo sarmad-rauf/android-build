@@ -1,0 +1,42 @@
+R_DEF: Internal format may change without notice
+local
+attr? background
+attr? clickToCloseScale
+attr? content
+attr? contentScaleClosed
+attr? contentScaleOpen
+attr? footer
+attr? header
+attr? marginFactor
+attr? menu
+attr? menuAlphaClosed
+attr? menuAlphaOpen
+attr? menuScaleClosed
+attr? menuScaleOpen
+drawable duo_shape_circled_white
+drawable duo_shape_rectangled_red
+drawable duo_shape_rectangled_rounded_color_accent
+id duo_view_footer_text
+id duo_view_header_border
+id duo_view_header_text_sub_title
+id duo_view_header_text_title
+id duo_view_menu_background
+id duo_view_menu_footer_layout
+id duo_view_menu_header_layout
+id duo_view_menu_options_layout
+id duo_view_option_selector
+id duo_view_option_selector_side
+id duo_view_option_text
+id view_option_text_layout
+layout duo_overlay
+layout duo_view_footer
+layout duo_view_header
+layout duo_view_menu
+layout duo_view_option
+string app_name
+string navigation_drawer_close
+string navigation_drawer_open
+string tag_content
+string tag_menu
+styleable DuoDrawerLayout menu content contentScaleClosed clickToCloseScale contentScaleOpen menuScaleClosed menuScaleOpen menuAlphaClosed menuAlphaOpen marginFactor
+styleable DuoMenuView header footer background
