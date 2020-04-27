@@ -12,7 +12,6 @@ import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
 import com.es.marocapp.usecase.approvals.model.response.ResponseApprovals
-import com.es.marocapp.usecase.approvals.model.response.TermsAndConditions
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.Tools
 import io.reactivex.disposables.Disposable
@@ -23,7 +22,7 @@ class ApprovalViewModel(application: Application) : AndroidViewModel(application
     lateinit var disposable: Disposable
     var isLoading = ObservableField<Boolean>()
     var errorText = MutableLiveData<String>()
-    var approvalsData = MutableLiveData<List<TermsAndConditions>?>()
+    var approvalsData = MutableLiveData<List<ResponseApprovals>?>()
 
 
     private val _text = MutableLiveData<String>().apply {
