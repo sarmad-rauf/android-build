@@ -82,7 +82,7 @@
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_1sdp"
                     android:text="@string/welcome_back"
-                    android:textColor="@color/colorTextGreyLight"
+                    android:textColor="@color/colorTextGreyMedium"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintStart_toEndOf="@+id/toolbar_profile_image"
                     app:layout_constraintTop_toBottomOf="@+id/toolbar_name" />

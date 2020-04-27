@@ -1,5 +1,6 @@
 package com.es.marocapp.usecase.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -13,6 +14,7 @@ import com.es.marocapp.databinding.FragmentHomeBinding
 import com.es.marocapp.model.HomeUseCasesModel
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.payments.PaymentsActivity
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(),ViewPager.OnPageChangeListener,
     HomeFragmentClickListners {
@@ -50,7 +52,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),ViewPager.OnPageChangeL
             this.add(HomeUseCasesModel(getString(R.string.accounts),R.drawable.ic_accounts))
         }
 
-        mUseCasesAdapter = HomeUseCasesAdapter(useCases)
+        mUseCasesAdapter = HomeUseCasesAdapter(useCases,object : HomeUseCasesAdapter.HomeUseCasesClickListner{
+            override fun onHomeUseCaseClick() {
+                startActivity(Intent(activity as MainActivity,PaymentsActivity::class.java))
+            }
+
+        })
         mDataBinding.useCasesRecyclerView.apply {
             adapter = mUseCasesAdapter
             layoutManager = GridLayoutManager(activity as MainActivity,3)

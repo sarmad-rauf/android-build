@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.es.marocapp.R
 import com.es.marocapp.model.HomeUseCasesModel
 
-class HomeUseCasesAdapter(private val usecases : ArrayList<HomeUseCasesModel>) : RecyclerView.Adapter<HomeUseCasesAdapter.HomeUseCasesViewHolder>() {
+class HomeUseCasesAdapter(private val usecases : ArrayList<HomeUseCasesModel>, var listener : HomeUseCasesClickListner) : RecyclerView.Adapter<HomeUseCasesAdapter.HomeUseCasesViewHolder>() {
 
     override fun getItemCount() = usecases.size
 
@@ -30,6 +30,10 @@ class HomeUseCasesAdapter(private val usecases : ArrayList<HomeUseCasesModel>) :
            // holder.useCaseParenttLayout.setBackgroundResource(R.color.colorWhite)
             holder.useCaseChildtLayout.setBackgroundResource(R.color.colorWhite)
         }
+
+        holder.useCaseChildtLayout.setOnClickListener {
+            listener.onHomeUseCaseClick()
+        }
     }
 
     class HomeUseCasesViewHolder(view: View) : RecyclerView.ViewHolder(view){
@@ -39,4 +43,7 @@ class HomeUseCasesAdapter(private val usecases : ArrayList<HomeUseCasesModel>) :
         var useCaseChildtLayout : ConstraintLayout = view.findViewById(R.id.useCaseChildLayout)
     }
 
+    interface HomeUseCasesClickListner{
+        fun onHomeUseCaseClick()
+    }
 }

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/payment_nav_graph"
+    app:startDestination="@id/billPaymentTypeFragment">
+
+    <fragment
+        android:id="@+id/billPaymentTypeFragment"
+        android:name="com.es.marocapp.usecase.payments.billpayment.BillPaymentTypeFragment"
+        android:label="BillPaymentTypeFragment"
+        tools:layout="@layout/fragment_bill_payment_type"
+        >
+        <action
+            android:id="@+id/action_billPaymentTypeFragment_to_billTypeFragment"
+            app:destination="@id/billTypeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/billTypeFragment"
+        android:name="com.es.marocapp.usecase.payments.billpayment.BillTypeFragment"
+        android:label="BillTypeFragment"
+        tools:layout="@layout/fragment_bill_type"
+        >
+        <action
+            android:id="@+id/action_billTypeFragment_to_companyTypeFragment"
+            app:destination="@id/companyTypeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/companyTypeFragment"
+        android:name="com.es.marocapp.usecase.payments.billpayment.CompanyTypeFragment"
+        android:label="CompanyTypeFragment"
+        tools:layout="@layout/fragment_company_type"
+        >
+        <action
+            android:id="@+id/action_companyTypeFragment_to_enterContactFragment"
+            app:destination="@id/enterContactFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentConfirmationFragment"
+        android:name="com.es.marocapp.usecase.payments.billpayment.PaymentConfirmationFragment"
+        android:label="PaymentConfirmationFragment"
+        tools:layout="@layout/layout_confirmation_bill_payment"
+        >
+        <action
+            android:id="@+id/action_paymentConfirmationFragment_to_paymentSuccessFragment"
+            app:destination="@id/paymentSuccessFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/paymentSuccessFragment"
+        android:name="com.es.marocapp.usecase.payments.billpayment.PaymentSuccessFragment"
+        android:label="PaymentSuccessFragment"
+        tools:layout="@layout/layout_success_bill_payment"
+        />
+    <fragment
+        android:id="@+id/enterContactFragment"
+        android:name="com.es.marocapp.usecase.payments.billpayment.EnterContactFragment"
+        android:label="EnterContactFragment"
+        tools:layout="@layout/fragment_enter_contact"
+        >
+        <action
+            android:id="@+id/action_enterContactFragment_to_paymentConfirmationFragment"
+            app:destination="@id/paymentConfirmationFragment" />
+    </fragment>
+</navigation>

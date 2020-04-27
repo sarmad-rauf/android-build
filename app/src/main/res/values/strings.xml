@@ -49,4 +49,24 @@
     <string name="tag_menu">menu</string>
     <string name="balance">Balance</string>
     <string name="welcome_back">Welcome Back</string>
+    <string name="payment_type">Payment Type</string>
+    <string name="bill_type">Bill Type</string>
+    <string name="company_type">Company Type</string>
+    <string name="enter_contact_number">Enter Contact Number</string>
+    <string name="validate">Validate</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="company_name">Company Name</string>
+    <string name="owner_name">Owner Name</string>
+    <string name="contact_number">Contact Number</string>
+    <string name="receipt_code">Receipt code</string>
+    <string name="fee_loyalty">Fee(Loyalty)</string>
+    <string name="amount">Amount</string>
+    <string name="discount_amount">Discount Amount</string>
+    <string name="loyalty">Loyalty</string>
+    <string name="pay">Pay</string>
+    <string name="cancel">cancel</string>
+    <string name="bill_payment">Bill Payment</string>
+    <string name="your_new_balance_is">Your new balance is</string>
+    <string name="ok">ok</string>
+    <string name="success">SUCCESS</string>
 </resources>
