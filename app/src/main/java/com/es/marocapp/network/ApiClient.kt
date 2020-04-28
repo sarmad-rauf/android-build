@@ -69,11 +69,14 @@ public class ApiClient() : Dependencies() {
 
         headerParams.clear()
 
-        headerParams.put("content-type", "application/json")
-        headerParams.put("channel", "android")
-        headerParams.put("deviceid", "")
-        headerParams.put("language", "")
-        headerParams.put("authorization", "")
+        headerParams.put("Accept" , "application/json")
+        headerParams.put("X-Forwarded-For", "124.109.32.135")
+        headerParams.put("token", "202004278427")
+//        headerParams.put("content-type", "application/json")
+//        headerParams.put("channel", "android")
+//        headerParams.put("deviceid", "")
+//        headerParams.put("language", "")
+//        headerParams.put("authorization", "")
 
         return headerParams
     }

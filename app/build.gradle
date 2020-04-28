@@ -33,7 +33,7 @@ android {
             } else if (baseUrlType == 2) {// Staging
                 buildConfigField "String", "SERVER_URL", "\"https://jsonplaceholder.typicode.com/\""
             } else if (baseUrlType == 3) {// Development
-                buildConfigField "String", "SERVER_URL", "\"https://jsonplaceholder.typicode.com/\""
+                buildConfigField "String", "SERVER_URL", "\"http://124.109.32.135:8080/mobileapi/\""
             }
 
             buildConfigField "boolean", "SSL_ENABLED", "false"
@@ -45,7 +45,7 @@ android {
             } else if (baseUrlType == 2) {// Staging
                 buildConfigField "String", "SERVER_URL", "\"https://jsonplaceholder.typicode.com/\""
             } else if (baseUrlType == 3) {// Development
-                buildConfigField "String", "SERVER_URL", "\"https://jsonplaceholder.typicode.com/\""
+                buildConfigField "String", "SERVER_URL", "\"http://124.109.32.135:8080/mobileapi/\""
             }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

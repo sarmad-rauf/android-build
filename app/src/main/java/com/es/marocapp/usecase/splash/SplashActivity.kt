@@ -6,6 +6,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.AcitivtySplashBinding
+import com.es.marocapp.model.responses.GetPreLoginDataResponse
+import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.login.LoginActivity
 
@@ -29,6 +31,8 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 
         }
 
+        mActivityViewModel.requestForGetPreLoginDataApi(this@SplashActivity)
+
         subscribe()
 
     }
@@ -37,7 +41,17 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
         val resultObserver = Observer<Boolean> {
             startNewActivityAndClear(this@SplashActivity, LoginActivity::class.java)
         }
+
+        val preLoginDataObserver = Observer<GetPreLoginDataResponse> {
+            if(it.responseCode.equals(ApiConstant.API_SUCCESS, true)){
+                startNewActivityAndClear(this@SplashActivity, LoginActivity::class.java)
+            }else{
+                startNewActivityAndClear(this@SplashActivity, LoginActivity::class.java)
+            }
+        }
+
         mActivityViewModel.mHandler.observe(this, resultObserver)
+        mActivityViewModel.preLoginDataResponseListener.observe(this, preLoginDataObserver)
     }
 
 
