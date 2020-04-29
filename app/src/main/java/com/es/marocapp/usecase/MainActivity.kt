@@ -1,10 +1,8 @@
 package com.es.marocapp.usecase
 
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -12,11 +10,12 @@ import androidx.navigation.ui.setupWithNavController
 import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
+import com.google.firebase.analytics.FirebaseAnalytics
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListeners {
 
+    private var mFirebaseAnalytics: FirebaseAnalytics? = null
     override fun init(savedInstanceState: Bundle?) {
 
         mDataBinding.apply {
@@ -38,6 +37,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         )
 //        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     override fun setLayout(): Int {
