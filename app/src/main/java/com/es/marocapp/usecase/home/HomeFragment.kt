@@ -38,6 +38,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),ViewPager.OnPageChangeL
         homeViewModel.text.observe(this, Observer {
         })
 
+        (activity as MainActivity).setHomeToolbarVisibility(true)
+
         populateHomeCardView()
         populateHomeUseCase()
     }

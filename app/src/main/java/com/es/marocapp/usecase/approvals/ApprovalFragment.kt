@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentApprovalBinding
 import com.es.marocapp.usecase.BaseFragment
+import com.es.marocapp.usecase.MainActivity
 import kotlinx.android.synthetic.main.fragment_pin.*
 
 class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
@@ -24,6 +25,8 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
         }
 
         approvalViewModel.requestForApprovalsApi(context)
+
+        (activity as MainActivity).setHomeToolbarVisibility(false)
 
 
         approvalViewModel.text.observe(this, Observer {

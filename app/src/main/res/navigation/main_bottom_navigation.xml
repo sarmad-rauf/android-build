@@ -7,17 +7,25 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.es.marocapp.usecase.home.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home"
+        />
     <fragment
         android:id="@+id/navigation_transaction"
         android:name="com.es.marocapp.usecase.transaction.TransactionFragment"
-        android:label="TransactionFragment" />
+        android:label="TransactionFragment"
+        tools:layout="@layout/fragment_transaction"
+        />
     <fragment
         android:id="@+id/navigation_pin"
         android:name="com.es.marocapp.usecase.pin.PinFragment"
-        android:label="PinFragment" />
+        android:label="PinFragment"
+        tools:layout="@layout/fragment_pin"
+        />
     <fragment
         android:id="@+id/navigation_approval"
         android:name="com.es.marocapp.usecase.approvals.ApprovalFragment"
-        android:label="ApprovalFragment" />
+        android:label="ApprovalFragment"
+        tools:layout="@layout/fragment_approval"
+        />
 </navigation>

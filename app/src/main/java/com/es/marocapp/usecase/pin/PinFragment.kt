@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentPinBinding
 import com.es.marocapp.usecase.BaseFragment
+import com.es.marocapp.usecase.MainActivity
 import kotlinx.android.synthetic.main.fragment_pin.*
 
 class PinFragment : BaseFragment<FragmentPinBinding>() {
@@ -23,6 +24,7 @@ class PinFragment : BaseFragment<FragmentPinBinding>() {
             viewmodel = pinViewModel
         }
 
+        (activity as MainActivity).setHomeToolbarVisibility(false)
 
         pinViewModel.text.observe(this, Observer {
             text_notifications.text = it

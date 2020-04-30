@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.GravityCompat
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityMainBinding
+import com.es.marocapp.usecase.accountdetails.AccountDetailsActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 
@@ -16,6 +19,11 @@ import com.google.firebase.analytics.FirebaseAnalytics
 class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListeners {
 
     private var mFirebaseAnalytics: FirebaseAnalytics? = null
+
+    lateinit var navController: NavController
+
+    lateinit var navHostFragment: NavHostFragment
+
     override fun init(savedInstanceState: Bundle?) {
 
         mDataBinding.apply {
@@ -23,6 +31,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         }
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
+
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
 
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
@@ -63,4 +74,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         Toast.makeText(this, "Log Out clicked", Toast.LENGTH_SHORT).show()
 
     }
+
+    override fun onAccountDetailClick(view: View) {
+        startNewActivity(this@MainActivity,AccountDetailsActivity::class.java)
+    }
+
+    fun setHomeToolbarVisibility(isVisible : Boolean){
+        if(isVisible){
+            mDataBinding.toolbarContainer.visibility = View.VISIBLE
+        }else{
+            mDataBinding.toolbarContainer.visibility = View.GONE
+        }
+    }
+
 }

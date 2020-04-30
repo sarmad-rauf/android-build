@@ -14,8 +14,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     lateinit var navController: NavController
 
-    lateinit var navHostFragment: NavHostFragment
 
+    lateinit var navHostFragment: NavHostFragment
     override fun setLayout(): Int {
         return R.layout.activity_login
     }

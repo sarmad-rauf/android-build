@@ -35,6 +35,8 @@ class SplashActivityViewModel(application: Application) : AndroidViewModel(appli
 
     fun requestForGetPreLoginDataApi(context: Context?) {
 
+        Toast.makeText(context,"API called",Toast.LENGTH_SHORT).show()
+
         if (Tools.checkNetworkStatus(getApplication())) {
 
             isLoading.set(true)

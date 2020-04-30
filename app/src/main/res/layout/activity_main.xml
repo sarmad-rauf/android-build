@@ -70,6 +70,7 @@
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_2sdp"
                     android:text="Hi, John Perucci!"
+                    android:onClick="@{listener::onAccountDetailClick}"
                     android:textColor="@color/colorGreyDark"
                     android:textSize="@dimen/_14ssp"
                     app:layout_constraintStart_toEndOf="@+id/toolbar_profile_image"

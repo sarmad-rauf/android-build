@@ -7,4 +7,5 @@ interface MainActivityClickListeners {
     fun onDrawerMenuNotificationsClick(view : View)
     fun onDrawerMenuSettingsClick(view : View)
     fun onDrawerMenuLogOutClick(view : View)
+    fun onAccountDetailClick(view : View)
 }
