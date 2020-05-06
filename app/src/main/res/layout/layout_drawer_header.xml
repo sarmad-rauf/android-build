@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/colorSideNavBlue"
-    android:paddingBottom="@dimen/_16sdp"
+    android:paddingTop="@dimen/_32sdp"
+    android:paddingBottom="@dimen/_32sdp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -13,6 +14,7 @@
         android:layout_height="@dimen/_60sdp"
         android:src="@drawable/dummy_profile_image"
         android:layout_marginTop="@dimen/_27sdp"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

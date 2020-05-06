@@ -70,7 +70,7 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
     }
 
     override fun onBackBtnClick(view: View) {
-        (activity as MainActivity).navController.navigateUp()
+        (activity as MainActivity).navController.popBackStack(R.id.navigation_home,false)
     }
 
     override fun onSortBtnClick(view: View) {
