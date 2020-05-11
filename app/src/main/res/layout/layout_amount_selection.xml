@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="listener"
+            type="com.es.marocapp.usecase.payments.billpayment.BillPaymentClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGreyLight">
+
+        <com.es.marocapp.widgets.MarocMediumTextView
+            android:id="@+id/tvAmountSelection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="@string/amount"
+            android:textColor="@color/colorTextGreyMedium"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/amountContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:layout_constraintTop_toBottomOf="@+id/tvAmountSelection">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:focusable="true"
+                >
+
+                <com.es.marocapp.widgets.MarocEditText
+                    android:id="@+id/etAmountEntered"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginBottom="@dimen/_12sdp"
+                    android:background="@android:color/transparent"
+                    android:hint="0.00"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_35sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <com.es.marocapp.widgets.MarocRegularTextView
+            android:id="@+id/tvRemainingBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4,23,400.45"
+            android:textColor="@color/colorTextGreyMedium"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toEndOf="@+id/amountContainer"
+            app:layout_constraintTop_toBottomOf="@+id/amountContainer" />
+
+        <com.es.marocapp.widgets.MarocRegularTextView
+            android:id="@+id/tvTitleWalletBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:text="@string/wallet_balance"
+            android:textColor="@color/colorTextGreyMedium"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvRemainingBalance"
+            app:layout_constraintEnd_toStartOf="@+id/tvRemainingBalance" />
+
+        <ImageView
+            android:id="@+id/minuAmountTotal"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:src="@drawable/minu_btn_orange"
+            app:layout_constraintStart_toStartOf="@+id/tvAmountSelection"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitleWalletBalance" />
+
+        <ImageView
+            android:id="@+id/plusAmountTotal"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:src="@drawable/plus_btn_orange"
+            app:layout_constraintEnd_toEndOf="@id/amountContainer"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitleWalletBalance" />
+
+        <SeekBar
+            android:id="@+id/AmountSeekBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:progressDrawable="@drawable/seek_bar"
+            android:thumb="@drawable/seekbar_slider"
+            app:layout_constraintBottom_toTopOf="@+id/plusAmountTotal"
+            app:layout_constraintEnd_toStartOf="@+id/plusAmountTotal"
+            app:layout_constraintStart_toEndOf="@+id/minuAmountTotal"
+            app:layout_constraintTop_toBottomOf="@+id/plusAmountTotal" />
+
+        <com.es.marocapp.widgets.MarocMediumTextView
+            android:id="@+id/tvQuickAmountTitle"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="@string/quick_amount"
+            android:textColor="@color/colorTextGreyMedium"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintStart_toStartOf="@+id/tvAmountSelection"
+            app:layout_constraintTop_toBottomOf="@+id/AmountSeekBar" />
+
+
+        <com.es.marocapp.widgets.MarocMediumTextView
+            android:id="@+id/quickRechargeBtnOne"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            android:background="@drawable/button_quick_recharge_disable"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:text="DH50"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextGreyMedium"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintHorizontal_weight="1.5"
+            app:layout_constraintEnd_toStartOf="@+id/quickRechargeBtnTwo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvQuickAmountTitle" />
+
+        <com.es.marocapp.widgets.MarocMediumTextView
+            android:id="@+id/quickRechargeBtnTwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_quick_recharge_disable"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:text="DH100"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextGreyMedium"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintHorizontal_weight="1.5"
+            app:layout_constraintBottom_toBottomOf="@+id/quickRechargeBtnOne"
+            app:layout_constraintEnd_toStartOf="@+id/quickRechargeBtnThree"
+            app:layout_constraintStart_toEndOf="@id/quickRechargeBtnOne" />
+
+        <com.es.marocapp.widgets.MarocMediumTextView
+            android:id="@+id/quickRechargeBtnThree"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_quick_recharge_disable"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:text="DH200"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextGreyMedium"
+            android:textSize="@dimen/_16ssp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:layout_constraintHorizontal_weight="1.7"
+            app:layout_constraintBottom_toBottomOf="@+id/quickRechargeBtnOne"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/quickRechargeBtnTwo" />
+
+        <com.es.marocapp.widgets.MarocMediumTextView
+            android:id="@+id/quickRechargeBtnFour"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:background="@drawable/button_quick_recharge_enable"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:text="DH500"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintStart_toStartOf="@+id/quickRechargeBtnOne"
+            app:layout_constraintTop_toBottomOf="@+id/quickRechargeBtnOne" />
+
+        <com.es.marocapp.widgets.MarocButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:background="@drawable/button_enable_blue"
+            android:text="@string/next"
+            android:onClick="@{listener::onValidateClick}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

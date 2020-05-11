@@ -82,4 +82,6 @@
     <string name="daily_sending_limit">Daily Sending Limit</string>
     <string name="daily_receiving_limit">Daily Receiving Limit</string>
     <string name="transaction_history">transaction history</string>
+    <string name="wallet_balance">Wallet Balance:</string>
+    <string name="quick_amount">Quick Amount</string>
 </resources>

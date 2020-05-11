@@ -34,7 +34,7 @@ class EnterContactFragment : BaseFragment<FragmentEnterContactBinding>(),
     }
 
     override fun onValidateClick(view: View) {
-        (activity as PaymentsActivity).navController.navigate(R.id.action_enterContactFragment_to_paymentConfirmationFragment)
+        (activity as PaymentsActivity).navController.navigate(R.id.action_enterContactFragment_to_amountSelectionFragment)
     }
 
 

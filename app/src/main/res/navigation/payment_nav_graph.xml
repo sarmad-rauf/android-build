@@ -58,7 +58,17 @@
         tools:layout="@layout/fragment_enter_contact"
         >
         <action
-            android:id="@+id/action_enterContactFragment_to_paymentConfirmationFragment"
+            android:id="@+id/action_enterContactFragment_to_amountSelectionFragment"
+            app:destination="@id/amountSelectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/amountSelectionFragment"
+        android:name="com.es.marocapp.usecase.payments.billpayment.AmountSelectionFragment"
+        android:label="AmountSelectionFragment"
+        tools:layout="@layout/layout_amount_selection"
+        >
+        <action
+            android:id="@+id/action_amountSelectionFragment_to_paymentConfirmationFragment"
             app:destination="@id/paymentConfirmationFragment" />
     </fragment>
 </navigation>
