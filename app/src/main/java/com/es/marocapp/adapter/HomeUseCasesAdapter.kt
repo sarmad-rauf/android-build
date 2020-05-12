@@ -1,16 +1,18 @@
 package com.es.marocapp.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.es.marocapp.R
 import com.es.marocapp.model.HomeUseCasesModel
 
-class HomeUseCasesAdapter(private val usecases : ArrayList<HomeUseCasesModel>, var listener : HomeUseCasesClickListner) : RecyclerView.Adapter<HomeUseCasesAdapter.HomeUseCasesViewHolder>() {
+class HomeUseCasesAdapter(private val usecases : ArrayList<HomeUseCasesModel>, var listener : HomeUseCasesClickListner, var context : Context) : RecyclerView.Adapter<HomeUseCasesAdapter.HomeUseCasesViewHolder>() {
 
     override fun getItemCount() = usecases.size
 
@@ -24,10 +26,10 @@ class HomeUseCasesAdapter(private val usecases : ArrayList<HomeUseCasesModel>, v
         holder.useCaseImage.setImageResource(usecases[position].useCaseImage)
 
         if(position==4){
-           // holder.useCaseParenttLayout.setBackgroundResource(R.color.colorBtnBlue)
+            holder.useCaseCardView.setCardBackgroundColor(context.resources.getColor(R.color.colorBtnBlue))
             holder.useCaseChildtLayout.setBackgroundResource(R.color.colorBtnBlue)
         }else{
-           // holder.useCaseParenttLayout.setBackgroundResource(R.color.colorWhite)
+            holder.useCaseCardView.setCardBackgroundColor(context.resources.getColor(R.color.colorWhite))
             holder.useCaseChildtLayout.setBackgroundResource(R.color.colorWhite)
         }
 
@@ -39,7 +41,7 @@ class HomeUseCasesAdapter(private val usecases : ArrayList<HomeUseCasesModel>, v
     class HomeUseCasesViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var useCaseTitle : TextView = view.findViewById(R.id.useCaseTitle)
         var useCaseImage : ImageView = view.findViewById(R.id.useCaseImageView)
-        var useCaseParenttLayout : ConstraintLayout = view.findViewById(R.id.useCasesParentLayout)
+        var useCaseCardView : CardView = view.findViewById(R.id.useCaseCardView)
         var useCaseChildtLayout : ConstraintLayout = view.findViewById(R.id.useCaseChildLayout)
     }
 

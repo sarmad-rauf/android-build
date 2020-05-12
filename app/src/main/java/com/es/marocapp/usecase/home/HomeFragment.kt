@@ -46,12 +46,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),ViewPager.OnPageChangeL
 
     private fun populateHomeUseCase() {
         val useCases = ArrayList<HomeUseCasesModel>().apply {
-            this.add(HomeUseCasesModel(getString(R.string.recharge),R.drawable.ic_recharge))
-            this.add(HomeUseCasesModel(getString(R.string.send_money),R.drawable.ic_send_money))
-            this.add(HomeUseCasesModel(getString(R.string.transfer),R.drawable.ic_transfer))
-            this.add(HomeUseCasesModel(getString(R.string.payments),R.drawable.ic_payment))
-            this.add(HomeUseCasesModel(getString(R.string.qr),R.drawable.ic_qr_white))
-            this.add(HomeUseCasesModel(getString(R.string.accounts),R.drawable.ic_accounts))
+            this.add(HomeUseCasesModel(getString(R.string.recharge_newLine),R.drawable.ic_recharge))
+            this.add(HomeUseCasesModel(getString(R.string.send_money_newLine),R.drawable.ic_send_money))
+            this.add(HomeUseCasesModel(getString(R.string.transfer_newLine),R.drawable.ic_transfer))
+            this.add(HomeUseCasesModel(getString(R.string.payments_newline),R.drawable.ic_payment))
+            this.add(HomeUseCasesModel(getString(R.string.qr_newLine),R.drawable.ic_qr_white))
+            this.add(HomeUseCasesModel(getString(R.string.accounts_newLine),R.drawable.ic_accounts))
         }
 
         mUseCasesAdapter = HomeUseCasesAdapter(useCases,object : HomeUseCasesAdapter.HomeUseCasesClickListner{
@@ -59,7 +59,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),ViewPager.OnPageChangeL
                 startActivity(Intent(activity as MainActivity,PaymentsActivity::class.java))
             }
 
-        })
+        }, activity as MainActivity)
         mDataBinding.useCasesRecyclerView.apply {
             adapter = mUseCasesAdapter
             layoutManager = GridLayoutManager(activity as MainActivity,3)
