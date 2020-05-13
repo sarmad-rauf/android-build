@@ -14,9 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".usecase.accountdetails.AccountDetailsActivity"
+        <activity android:name=".usecase.favorites.FavoritesActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             ></activity>
+        <activity
+            android:name=".usecase.accountdetails.AccountDetailsActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".usecase.payments.PaymentsActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

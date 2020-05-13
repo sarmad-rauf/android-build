@@ -29,7 +29,7 @@ class SplashActivityViewModel(application: Application) : AndroidViewModel(appli
 
     init {
 
-//        postDelay()
+        postDelay()
 
     }
 

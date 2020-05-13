@@ -90,4 +90,16 @@
     <string name="transaction_history">transaction history</string>
     <string name="wallet_balance">Wallet Balance:</string>
     <string name="quick_amount">Quick Amount</string>
+    <string name="my_approvals">My Approvals</string>
+    <string name="all_approvals">All Approvals</string>
+    <string name="request_initiator">Request Initiator</string>
+    <string name="initiator_name">Initiator Name</string>
+    <string name="approval_type">Approval Type</string>
+    <string name="approval_id">Approval ID</string>
+    <string name="exourt">Exourt</string>
+    <string name="transaction_fee">Transaction Fee</string>
+    <string name="total">TOTAL</string>
+    <string name="approve">Approve</string>
+    <string name="favorites">Favorites</string>
+    <string name="select_payment_type">Select payment type</string>
 </resources>

@@ -32,7 +32,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 
         }
 
-        mActivityViewModel.requestForGetPreLoginDataApi(this@SplashActivity)
+//        mActivityViewModel.requestForGetPreLoginDataApi(this@SplashActivity)
 
         subscribe()
 

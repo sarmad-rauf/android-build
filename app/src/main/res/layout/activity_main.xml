@@ -182,14 +182,39 @@
                     />
 
                 <ImageView
+                    android:id="@+id/imgDrawerFavorites"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:src="@drawable/ic_favorites"
+                    android:onClick="@{listener::onDrawerMenuFavoritesClick}"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/imgDrawerNotifications"
+                    app:layout_constraintStart_toStartOf="@+id/imgDrawerNotifications"
+                    />
+
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/textDrawerFavorites"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{listener::onDrawerMenuFavoritesClick}"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_14ssp"
+                    android:text="@string/favorites"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/imgDrawerFavorites"
+                    app:layout_constraintBottom_toTopOf="@+id/imgDrawerFavorites"
+                    app:layout_constraintStart_toEndOf="@+id/imgDrawerFavorites"
+                    />
+
+                <ImageView
                     android:id="@+id/imgDrawerSettings"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     android:src="@drawable/ic_settings"
                     android:onClick="@{listener::onDrawerMenuSettingsClick}"
                     android:layout_marginTop="@dimen/_8sdp"
-                    app:layout_constraintTop_toBottomOf="@+id/imgDrawerNotifications"
-                    app:layout_constraintStart_toStartOf="@+id/imgDrawerNotifications"
+                    app:layout_constraintTop_toBottomOf="@+id/imgDrawerFavorites"
+                    app:layout_constraintStart_toStartOf="@+id/imgDrawerFavorites"
                     />
 
                 <com.es.marocapp.widgets.MarocRegularTextView

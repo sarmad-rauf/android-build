@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityMainBinding
 import com.es.marocapp.usecase.accountdetails.AccountDetailsActivity
+import com.es.marocapp.usecase.favorites.FavoritesActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 
@@ -68,6 +69,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
     override fun onDrawerMenuSettingsClick(view: View) {
         Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDrawerMenuFavoritesClick(view: View) {
+        startNewActivity(this@MainActivity,FavoritesActivity::class.java)
     }
 
     override fun onDrawerMenuLogOutClick(view: View) {
