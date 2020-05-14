@@ -8,6 +8,10 @@
             name="viewmodel"
             type="com.es.marocapp.usecase.favorites.FavoritesViewModel" />
 
+        <variable
+            name="listener"
+            type="com.es.marocapp.usecase.favorites.FavoritesPaymentClickListener" />
+
     </data>
 
 
@@ -32,6 +36,7 @@
         />
 
     <Spinner
+        android:id="@+id/spinnerSelectPayment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
@@ -42,6 +47,103 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+    <ImageView
+        android:id="@+id/divider1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/colorTextGreyMedium"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerSelectPayment"
+        app:layout_constraintStart_toStartOf="@+id/spinnerSelectPayment"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerSelectPayment"
+        />
+
+    <com.es.marocapp.widgets.MarocRegularTextView
+        android:id="@+id/selectBillTypeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_bill_type"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/colorTextGreyMedium"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@+id/divider1"
+        app:layout_constraintStart_toStartOf="@+id/selectPaymentTypeTitle"
+        app:textAllCaps="true"
+        />
+
+    <Spinner
+        android:id="@+id/spinnerSelectBillType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_32sdp"
+        android:background="@drawable/spinner_icon_background_grey"
+        app:layout_constraintTop_toBottomOf="@+id/selectBillTypeTitle"
+        app:layout_constraintStart_toStartOf="@+id/selectBillTypeTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/divider2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/colorTextGreyMedium"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerSelectBillType"
+        app:layout_constraintStart_toStartOf="@+id/spinnerSelectBillType"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerSelectBillType"
+        />
+
+    <com.es.marocapp.widgets.MarocRegularTextView
+        android:id="@+id/selectCompanyTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_bill_type"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/colorTextGreyMedium"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@+id/divider2"
+        app:layout_constraintStart_toStartOf="@+id/selectPaymentTypeTitle"
+        app:textAllCaps="true"
+        />
+
+    <Spinner
+        android:id="@+id/spinnerSelectCompany"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_32sdp"
+        android:background="@drawable/spinner_icon_background_grey"
+        app:layout_constraintTop_toBottomOf="@+id/selectCompanyTitle"
+        app:layout_constraintStart_toStartOf="@+id/selectCompanyTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/divider3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/colorTextGreyMedium"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerSelectCompany"
+        app:layout_constraintStart_toStartOf="@+id/spinnerSelectCompany"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerSelectCompany"
+        />
+
+
+    <com.es.marocapp.widgets.MarocButton
+        android:id="@+id/btnNext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:text="@string/next"
+        android:textSize="@dimen/_16ssp"
+        android:onClick="@{listener::onNextButtonClick}"
+        android:textAllCaps="false"
+        android:background="@drawable/button_enable_blue"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

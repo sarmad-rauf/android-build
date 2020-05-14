@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.es.marocapp.widgets.MarocMediumTextView android:id="@+id/textViewSpinnerItem"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:padding="@dimen/_8sdp"
+    android:gravity="left|center_vertical"
+    android:text="payments"
+    android:textColor="@color/colorGreyDark"
+    android:textSize="@dimen/_16ssp"
+    android:textStyle="bold"
+    app:textAllCaps="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"/>

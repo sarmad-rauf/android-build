@@ -59,7 +59,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), AdapterView.OnItemSe
             mDataBinding.inputLayoutPhoneNumber.error = "Please Enter Valid Mobile Number"
             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
         }else{
-            startActivity(Intent(activity, MainActivity::class.java))
+            (activity as LoginActivity).startNewActivityAndClear(activity as LoginActivity, MainActivity::class.java)
         }
     }
 

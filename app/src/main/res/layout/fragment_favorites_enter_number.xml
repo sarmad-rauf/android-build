@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.es.marocapp.usecase.favorites.FavoritesViewModel" />
+
+        <variable
+            name="listener"
+            type="com.es.marocapp.usecase.favorites.FavoritesPaymentClickListener" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            >
+
+            <com.es.marocapp.widgets.MarocEditText
+                android:id="@+id/input_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/myTextInputLabel"
+                android:hint="@string/enter_contact_number"
+                android:inputType="phone"
+                android:maxLength="12" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.es.marocapp.widgets.MarocButton
+            android:id="@+id/btnAddToFavorites"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:background="@drawable/button_enable_blue"
+            android:onClick="@{listener::onNextButtonClick}"
+            android:text="@string/add_to_favorites"
+            android:textAllCaps="true"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
