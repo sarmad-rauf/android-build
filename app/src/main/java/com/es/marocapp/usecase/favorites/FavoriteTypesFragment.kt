@@ -15,6 +15,7 @@ class FavoriteTypesFragment : BaseFragment<FragmentFavoritesTypeBinding>(){
     lateinit var mActivityViewModel: FavoritesViewModel
     private lateinit var mFavoritesItemTypeAdapter: FavoritesTypeItemAdapter
     private var mFavoritesTypes: ArrayList<String>  = ArrayList()
+    private var mFavoritesTypesIcon: ArrayList<Int>  = ArrayList()
 
     override fun setLayout(): Int {
         return R.layout.fragment_favorites_type
@@ -38,7 +39,13 @@ class FavoriteTypesFragment : BaseFragment<FragmentFavoritesTypeBinding>(){
             add("Transfer")
         }
 
-        mFavoritesItemTypeAdapter = FavoritesTypeItemAdapter(mFavoritesTypes, object : FavoritesTypeItemAdapter.FavoritesItemTypeClickListner{
+        mFavoritesTypesIcon.apply {
+            add(R.drawable.ic_favorite_payments)
+            add(R.drawable.ic_favorite_transfers)
+        }
+
+        mFavoritesItemTypeAdapter = FavoritesTypeItemAdapter(mFavoritesTypes,mFavoritesTypesIcon ,
+            object : FavoritesTypeItemAdapter.FavoritesItemTypeClickListner{
             override fun onFavoriteItemTypeClick(itemType: String) {
                 if(itemType.equals("Payments",true)){
                     (activity as FavoritesActivity).mDataBinding.tvFavoritesTitle.text = "Payments"
