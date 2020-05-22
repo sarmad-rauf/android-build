@@ -104,4 +104,8 @@
     <string name="select_payment_type">Select payment type</string>
     <string name="select_bill_type">Select bill type</string>
     <string name="add_to_favorites">add to favorites</string>
+    <string name="faqs">FAQs</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="terms_amp_conditions"><![CDATA[Terms & Conditions]]></string>
+    <string name="dummyText">All users on MySpace will know that there are millions of people out there. Every day besides so many people joining this community, there are many others who will be looking out for friends. This will mean that they are naturally looking out for good people who are interesting enough. For this, the profile has to be very interesting.</string>
 </resources>

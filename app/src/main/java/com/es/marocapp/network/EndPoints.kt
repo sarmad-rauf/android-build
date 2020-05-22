@@ -7,4 +7,17 @@ object EndPoints {
 
     // GetPreLoginData
     const val getprelogindata = "getprelogindata"
+
+    //GetAccountHolderInformation
+    const val getaccountholderinformation = "getaccountholderinformation"
+
+    //GetInitialAuthDetials
+    const val getinitialauthdetails = "getinitialauthdetails"
+
+    //GetOTPForRegistration
+    const val getotpforregistration = "getotpforregistration"
+
+    //RegisterUser
+    const val registeruser = "registeruser"
+
 }

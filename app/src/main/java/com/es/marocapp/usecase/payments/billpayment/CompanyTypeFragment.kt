@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.PaymentItemsAdapter
+import com.es.marocapp.adapter.PaymentItemsCustomImageAdapter
 import com.es.marocapp.databinding.FragmentCompanyTypeBinding
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.payments.PaymentsActivity

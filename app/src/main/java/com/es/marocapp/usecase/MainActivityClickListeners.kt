@@ -7,6 +7,9 @@ interface MainActivityClickListeners {
     fun onDrawerMenuNotificationsClick(view : View)
     fun onDrawerMenuSettingsClick(view : View)
     fun onDrawerMenuFavoritesClick(view : View)
+    fun onDrawerMenuContactUsClick(view : View)
+    fun onDrawerMenuFAQsClick(view : View)
+    fun onDrawerMenuTermsAndConditionClick(view : View)
     fun onDrawerMenuLogOutClick(view : View)
     fun onAccountDetailClick(view : View)
 }

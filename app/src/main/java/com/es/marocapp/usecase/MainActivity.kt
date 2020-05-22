@@ -13,6 +13,7 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityMainBinding
 import com.es.marocapp.usecase.accountdetails.AccountDetailsActivity
 import com.es.marocapp.usecase.favorites.FavoritesActivity
+import com.es.marocapp.usecase.termsandcondiitons.TermsAndConditions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 
@@ -73,6 +74,24 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
     override fun onDrawerMenuFavoritesClick(view: View) {
         startNewActivity(this@MainActivity,FavoritesActivity::class.java)
+    }
+
+    override fun onDrawerMenuContactUsClick(view: View) {
+        var myBundle : Bundle = Bundle()
+        myBundle.putString("title","Contact Us")
+        startNewActivity(this@MainActivity,TermsAndConditions::class.java,myBundle)
+    }
+
+    override fun onDrawerMenuFAQsClick(view: View) {
+        var myBundle : Bundle = Bundle()
+        myBundle.putString("title","FAQs")
+        startNewActivity(this@MainActivity,TermsAndConditions::class.java,myBundle)
+    }
+
+    override fun onDrawerMenuTermsAndConditionClick(view: View) {
+        var myBundle : Bundle = Bundle()
+        myBundle.putString("title","Term & Conditions")
+        startNewActivity(this@MainActivity,TermsAndConditions::class.java,myBundle)
     }
 
     override fun onDrawerMenuLogOutClick(view: View) {

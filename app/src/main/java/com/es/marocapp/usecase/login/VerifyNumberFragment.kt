@@ -4,10 +4,13 @@ package com.es.marocapp.usecase.login
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentVerifyNumberBinding
+import com.es.marocapp.model.responses.GetOtpForRegistrationResponse
+import com.es.marocapp.model.responses.RegisterUserResponse
 import com.es.marocapp.usecase.BaseFragment
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 
@@ -40,10 +43,23 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(), Verify
             (activity as LoginActivity).navController.navigateUp()
         }
 
+        subscribeObserver()
+
+    }
+
+    private fun subscribeObserver() {
+        val mRegisterUserResonseObserver = Observer<RegisterUserResponse>{
+
+        }
+
+        mActivityViewModel.getRegisterUserResponseListner.observe(this,mRegisterUserResonseObserver)
     }
 
     override fun onOTPVerifyClick(view: View) {
-        (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_setYourPinFragment)
+        mActivityViewModel.requestForRegisterUserApi(activity,"John","Smith","12345688","1993-08-10","male",
+        "Street 11","abc@gmail.com","11111")
+        //For Without API Calling Uncomment Below Line
+//        (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_setYourPinFragment)
     }
 
 }

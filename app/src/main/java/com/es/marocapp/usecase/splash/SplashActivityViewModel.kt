@@ -29,7 +29,7 @@ class SplashActivityViewModel(application: Application) : AndroidViewModel(appli
 
     init {
 
-        postDelay()
+//        postDelay()
 
     }
 
@@ -42,7 +42,7 @@ class SplashActivityViewModel(application: Application) : AndroidViewModel(appli
             isLoading.set(true)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPreLoginData(
-                GetPreLoginDataRequest("subapp01","3.5.0.56")
+                GetPreLoginDataRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,"1.0.0")
             )
                 .compose(applyIOSchedulers())
                 .subscribe(

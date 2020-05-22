@@ -207,14 +207,89 @@
                     />
 
                 <ImageView
+                    android:id="@+id/imgFAQs"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:src="@drawable/ic_settings"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:onClick="@{listener::onDrawerMenuFAQsClick}"
+                    app:layout_constraintTop_toBottomOf="@+id/imgDrawerFavorites"
+                    app:layout_constraintStart_toStartOf="@+id/imgDrawerFavorites"
+                    />
+
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/textFAQs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_14ssp"
+                    android:onClick="@{listener::onDrawerMenuFAQsClick}"
+                    android:text="@string/faqs"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/imgFAQs"
+                    app:layout_constraintBottom_toTopOf="@+id/imgFAQs"
+                    app:layout_constraintStart_toEndOf="@+id/imgFAQs"
+                    />
+
+                <ImageView
+                    android:id="@+id/imgContactUs"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:src="@drawable/ic_settings"
+                    android:onClick="@{listener::onDrawerMenuContactUsClick}"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/imgFAQs"
+                    app:layout_constraintStart_toStartOf="@+id/imgFAQs"
+                    />
+
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/textContactUs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_14ssp"
+                    android:text="@string/contact_us"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:onClick="@{listener::onDrawerMenuContactUsClick}"
+                    app:layout_constraintTop_toBottomOf="@+id/imgContactUs"
+                    app:layout_constraintBottom_toTopOf="@+id/imgContactUs"
+                    app:layout_constraintStart_toEndOf="@+id/imgContactUs"
+                    />
+
+                <ImageView
+                    android:id="@+id/imgTermsandConditions"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:src="@drawable/ic_settings"
+                    android:onClick="@{listener::onDrawerMenuTermsAndConditionClick}"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/imgContactUs"
+                    app:layout_constraintStart_toStartOf="@+id/imgContactUs"
+                    />
+
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/textTermsandConditions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_14ssp"
+                    android:text="@string/terms_amp_conditions"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:onClick="@{listener::onDrawerMenuTermsAndConditionClick}"
+                    app:layout_constraintTop_toBottomOf="@+id/imgTermsandConditions"
+                    app:layout_constraintBottom_toTopOf="@+id/imgTermsandConditions"
+                    app:layout_constraintStart_toEndOf="@+id/imgTermsandConditions"
+                    />
+
+                <ImageView
                     android:id="@+id/imgDrawerSettings"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     android:src="@drawable/ic_settings"
                     android:onClick="@{listener::onDrawerMenuSettingsClick}"
                     android:layout_marginTop="@dimen/_8sdp"
-                    app:layout_constraintTop_toBottomOf="@+id/imgDrawerFavorites"
-                    app:layout_constraintStart_toStartOf="@+id/imgDrawerFavorites"
+                    app:layout_constraintTop_toBottomOf="@+id/imgTermsandConditions"
+                    app:layout_constraintStart_toStartOf="@+id/imgTermsandConditions"
                     />
 
                 <com.es.marocapp.widgets.MarocRegularTextView

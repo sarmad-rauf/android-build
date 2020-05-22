@@ -2,8 +2,12 @@ package com.es.marocapp.network
 
 import android.content.Context
 import com.es.marocapp.BuildConfig
+import com.es.marocapp.utils.Constants
 import java.io.InputStream
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.collections.ArrayList
 
 public class ApiClient() : Dependencies() {
 
@@ -69,9 +73,10 @@ public class ApiClient() : Dependencies() {
 
         headerParams.clear()
 
+
         headerParams.put("Accept" , "application/json")
-        headerParams.put("X-Forwarded-For", "124.109.32.135")
-        headerParams.put("token", "202004278427")
+        headerParams.put("X-Forwarded-For", Constants.getIPAddress())
+        headerParams.put("token", Constants.createUserToken())
 //        headerParams.put("content-type", "application/json")
 //        headerParams.put("channel", "android")
 //        headerParams.put("deviceid", "")

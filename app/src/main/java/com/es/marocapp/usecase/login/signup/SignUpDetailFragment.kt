@@ -6,12 +6,19 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentSignUpDetailBinding
+import com.es.marocapp.model.responses.GetAccountHolderInformationResponse
+import com.es.marocapp.model.responses.GetInitialAuthDetailsReponse
+import com.es.marocapp.model.responses.GetOtpForRegistrationResponse
+import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
+import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import kotlinx.android.synthetic.main.layout_login_header.view.*
@@ -48,7 +55,25 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
             (activity as LoginActivity).navController.navigateUp()
         }
 
+        subscribeObserver()
 
+    }
+
+    private fun subscribeObserver() {
+        val mInitialAuthDetailsResonseObserver = Observer<GetInitialAuthDetailsReponse>{
+            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                mActivityViewModel.requestForGetOTPForRegistrationApi(activity,"John","Smith","12345688")
+            }
+        }
+
+        val mOTPForRegistrationResonseObserver = Observer<GetOtpForRegistrationResponse>{
+            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_verifyNumberFragment)
+            }
+        }
+
+        mActivityViewModel.getInitialAuthDetailsResponseListner.observe(this,mInitialAuthDetailsResonseObserver)
+        mActivityViewModel.getOtpForRegistrationResponseListner.observe(this,mOTPForRegistrationResonseObserver)
     }
 
     private fun showDatePickerDialog() {
@@ -90,7 +115,9 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
     }
 
     override fun onNextButtonClick(view: View) {
-        (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_verifyNumberFragment)
+        mActivityViewModel.requestForeGetInitialAuthDetailsApi(activity)
+        //For Without API Calling Uncomment Below Line
+//        (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_verifyNumberFragment)
     }
 
     override fun onBackButtonClick(view: View) {
