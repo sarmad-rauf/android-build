@@ -8,14 +8,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.es.marocapp.R
 import com.es.marocapp.model.requests.*
-import com.es.marocapp.model.responses.GetAccountHolderInformationResponse
-import com.es.marocapp.model.responses.GetInitialAuthDetailsReponse
-import com.es.marocapp.model.responses.GetOtpForRegistrationResponse
-import com.es.marocapp.model.responses.RegisterUserResponse
+import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.SingleLiveEvent
 import com.es.marocapp.utils.Tools
 import io.reactivex.disposables.Disposable
 import retrofit2.HttpException
@@ -31,11 +29,21 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
     var mUserMsisdn = ""
     var mEncryptedNonce : String? = ""
+    var DOB = ""
+    var identificationNumber  = ""
+    var firstName = ""
+    var gender = ""
+    var postalAddress = ""
+    var lastName = ""
+    var email = ""
 
-    var getAccountHolderInformationResponseListner = MutableLiveData<GetAccountHolderInformationResponse>()
-    var getInitialAuthDetailsResponseListner = MutableLiveData<GetInitialAuthDetailsReponse>()
-    var getOtpForRegistrationResponseListner = MutableLiveData<GetOtpForRegistrationResponse>()
-    var getRegisterUserResponseListner = MutableLiveData<RegisterUserResponse>()
+    var getAccountHolderInformationResponseListner = SingleLiveEvent<GetAccountHolderInformationResponse>()
+    var getInitialAuthDetailsResponseListner = SingleLiveEvent<GetInitialAuthDetailsReponse>()
+    var getOtpForRegistrationResponseListner = SingleLiveEvent<GetOtpForRegistrationResponse>()
+    var getRegisterUserResponseListner = SingleLiveEvent<RegisterUserResponse>()
+    var getActivateUserResponseListner = SingleLiveEvent<ActivateUserResponse>()
+    var getOTPResponseListner = SingleLiveEvent<GetOptResponse>()
+    var getValidateOtpAndUpdateAliasResponseListner = SingleLiveEvent<ValidateOtpAndUpdateAliasesResponse>()
 
     private fun postDelay() {
 
@@ -60,7 +68,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
             mUserMsisdn = userMsisdn
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAccountHolderInformation(
-                GetAccountHolderInformationRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,userMsisdn)
+                GetAccountHolderInformationRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(userMsisdn))
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -114,8 +122,9 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
             isLoading.set(true)
 
+            //TODO NonceKey Hardcoded need to resolve
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getInitialAuthDetials(
-                GetInitialAuthDetailsRequest(mUserMsisdn,"0f0fd1e1a9c07932c350368910f8871d230cdf0bf52c550b1f4f03bee9a7b68a")
+                GetInitialAuthDetailsRequest(Constants.getNumberMsisdn(mUserMsisdn),"0f0fd1e1a9c07932c350368910f8871d230cdf0bf52c550b1f4f03bee9a7b68a")
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -169,9 +178,10 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
             isLoading.set(true)
 
+            //TODO authorization & MSISDN parameter pending
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getOTPForRegistration(
                 GetOtpForRegistrationRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,"NzgzMzU3MTI0",mEncryptedNonce!!,
-                firstName,identificationNumber,Constants.Identificationtype,Constants.getNumberMsisdn(mUserMsisdn),lastName)
+                firstName,identificationNumber,Constants.IDENTIFICATION_TYPE,Constants.getNumberMsisdn(mUserMsisdn),lastName)
 
             )
                 .compose(applyIOSchedulers())
@@ -216,13 +226,6 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     // API Called on SignUp Detail Fragment For Registration Purpose
     fun requestForRegisterUserApi(
         context: Context?,
-        firstName : String,
-        lastName : String,
-        identificationNumber : String,
-        DOB : String,
-        gender : String,
-        postalAddress : String,
-        email : String,
         otp : String
     ) {
 
@@ -230,9 +233,10 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
             isLoading.set(true)
 
+            //TODO hardcoded Value need to Resolve
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getRegisterUser(
                 RegisterUserRequest(Accountholder(DOB,identificationNumber,firstName,gender,postalAddress,lastName),
-                    ApiConstant.CONTEXT_BEFORE_LOGIN,"123456789",email,Constants.getNumberMsisdn(mUserMsisdn),otp)
+                    ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.CURRENT_DEVICE_ID,email,Constants.getNumberMsisdn(mUserMsisdn),otp)
 
             )
                 .compose(applyIOSchedulers())
@@ -245,6 +249,166 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                             )
                         ) {
                             getRegisterUserResponseListner.postValue(result)
+
+                        } else {
+                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_network) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_network))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+
+    // API Called on SetYourPin Fragment For Pin Registration Purpose
+    fun requestForActivateUserApi(
+        context: Context?,
+        seceret : String
+    ) {
+
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            //TODO hardcoded Value need to Resolve
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getActivateUser(
+                ActivateUserRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(mUserMsisdn),seceret,Constants.SECRET_TYPE)
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getActivateUserResponseListner.postValue(result)
+
+                        } else {
+                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_network) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_network))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    // API Called on LOGIN Fragment IF Device ID Is CHanged or not Matched
+    fun requestForGetOtpApi(
+        context: Context?
+    ) {
+
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            //TODO hardcoded Value need to Resolve
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getOTP(
+                GetOptRequest("NzgzMzU3MTI0",ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(mUserMsisdn))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getOTPResponseListner.postValue(result)
+
+                        } else {
+                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_network) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_network))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    // API Called on LOGIN Fragment To Add New Device ID
+    fun requestForVerifyOtpAndUpdateAliaseAPI(
+        context: Context?,
+        deviceID : String,
+        otp : String
+    ) {
+
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            //TODO hardcoded Value need to Resolve
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getValidateOtpAndUpdateAliases(
+                ValidateOtpAndUpdateAliasesRequest(deviceID,ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(mUserMsisdn),otp)
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getValidateOtpAndUpdateAliasResponseListner.postValue(result)
 
                         } else {
                             errorText.postValue(Constants.SHOW_SERVER_ERROR)

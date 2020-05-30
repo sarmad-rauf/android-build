@@ -34,5 +34,17 @@ interface NetworkApi {
     @POST(EndPoints.registeruser)
     fun getRegisterUser(@Body request : RegisterUserRequest) : Observable<RegisterUserResponse>
 
+    //Request for ActivateUserCall
+    @POST(EndPoints.activate)
+    fun getActivateUser(@Body request : ActivateUserRequest) : Observable<ActivateUserResponse>
+
+    //Request for VerifyOtpAndUpdateAliases
+    @POST(EndPoints.verifyotpandupdatealias)
+    fun getValidateOtpAndUpdateAliases(@Body request : ValidateOtpAndUpdateAliasesRequest) : Observable<ValidateOtpAndUpdateAliasesResponse>
+
+    //Request for GetOtp
+    @POST(EndPoints.getotp)
+    fun getOTP(@Body request : GetOptRequest) : Observable<GetOptResponse>
+
 
 }

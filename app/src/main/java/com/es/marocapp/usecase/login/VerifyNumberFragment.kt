@@ -4,6 +4,7 @@ package com.es.marocapp.usecase.login
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
@@ -11,6 +12,7 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentVerifyNumberBinding
 import com.es.marocapp.model.responses.GetOtpForRegistrationResponse
 import com.es.marocapp.model.responses.RegisterUserResponse
+import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 
@@ -26,7 +28,7 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(), Verify
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        mActivityViewModel = ViewModelProvider(this).get(LoginActivityViewModel::class.java)
+        mActivityViewModel = ViewModelProvider(activity as LoginActivity).get(LoginActivityViewModel::class.java)
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel
@@ -49,15 +51,19 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(), Verify
 
     private fun subscribeObserver() {
         val mRegisterUserResonseObserver = Observer<RegisterUserResponse>{
-
+            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_setYourPinFragment)
+            }else{
+                Toast.makeText(activity as LoginActivity,"Failed", Toast.LENGTH_SHORT).show()
+            }
         }
 
         mActivityViewModel.getRegisterUserResponseListner.observe(this,mRegisterUserResonseObserver)
     }
 
     override fun onOTPVerifyClick(view: View) {
-        mActivityViewModel.requestForRegisterUserApi(activity,"John","Smith","12345688","1993-08-10","male",
-        "Street 11","abc@gmail.com","11111")
+        //TODO Hardcoded issue need to resolve
+        mActivityViewModel.requestForRegisterUserApi(activity,mDataBinding.inputVerifyOtp.text.toString().trim())
         //For Without API Calling Uncomment Below Line
 //        (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_setYourPinFragment)
     }

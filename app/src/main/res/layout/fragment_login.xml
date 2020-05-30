@@ -52,7 +52,7 @@
                         android:theme="@style/myTextInputLabel"
                         android:hint="@string/enter_mobile_number"
                         android:inputType="phone"
-                        android:maxLength="12" />
+                        />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout

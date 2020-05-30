@@ -20,4 +20,13 @@ object EndPoints {
     //RegisterUser
     const val registeruser = "registeruser"
 
+    //Activate
+    const val activate = "activate"
+
+    //verifyotpandupdatealias
+    const val verifyotpandupdatealias = "verifyotpandupdatealias"
+
+    //getotp
+    const val getotp = "getotp"
+
 }

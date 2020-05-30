@@ -16,10 +16,11 @@
     <string name="otp_not_recieved">OTP NOT RECIEVED?</string>
     <string name="verify">Verify</string>
     <string name="verify_your_number">Verify your number</string>
-    <string name="enter_pin">ENTER PIN</string>
-    <string name="confirm_pin">CONFIRM PIN</string>
-    <string name="change_pin">Change Pin</string>
+    <string name="enter_pin">ENTER PASSWORD</string>
+    <string name="confirm_pin">CONFIRM PASSWORD</string>
+    <string name="change_pin">Change Password</string>
     <string name="set_your_pin">Set your PIN</string>
+    <string name="set_your_password">Set your password</string>
     <string name="pin_will_be_sent_on_your_mobile_number">Pin will be sent on your mobile number</string>
     <string name="enter_national_identity_number">ENTER NATIONAL IDENTITY NUMBER</string>
 
@@ -108,4 +109,6 @@
     <string name="contact_us">Contact Us</string>
     <string name="terms_amp_conditions"><![CDATA[Terms & Conditions]]></string>
     <string name="dummyText">All users on MySpace will know that there are millions of people out there. Every day besides so many people joining this community, there are many others who will be looking out for friends. This will mean that they are naturally looking out for good people who are interesting enough. For this, the profile has to be very interesting.</string>
+    <string name="enter_password_caps">ENTER PASSWORD</string>
+    <string name="confirm_password_caps">CONFIRM PASSWORD</string>
 </resources>

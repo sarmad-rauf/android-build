@@ -6,6 +6,9 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.DialogInterface
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputFilter
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -21,14 +24,17 @@ import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
+import com.es.marocapp.utils.Constants
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 import java.util.*
+import java.util.regex.Pattern
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUpClickListner {
+class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUpClickListner,
+    TextWatcher {
 
     lateinit var mActivityViewModel: LoginActivityViewModel
 
@@ -37,7 +43,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        mActivityViewModel = ViewModelProvider(this).get(LoginActivityViewModel::class.java)
+        mActivityViewModel = ViewModelProvider(activity as LoginActivity).get(LoginActivityViewModel::class.java)
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel
@@ -54,6 +60,12 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
         mDataBinding.root.imgBackButton.setOnClickListener {
             (activity as LoginActivity).navController.navigateUp()
         }
+        mDataBinding.inputNationalID.filters = arrayOf<InputFilter>(
+            InputFilter.LengthFilter(
+                Constants.APP_CN_LENGTH.toInt()
+            )
+        )
+        mDataBinding.inputNationalID.addTextChangedListener(this)
 
         subscribeObserver()
 
@@ -62,7 +74,9 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
     private fun subscribeObserver() {
         val mInitialAuthDetailsResonseObserver = Observer<GetInitialAuthDetailsReponse>{
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                mActivityViewModel.requestForGetOTPForRegistrationApi(activity,"John","Smith","12345688")
+                //TODO first, last name and CNIC Hardcoded Issue need to reolve
+                mActivityViewModel.requestForGetOTPForRegistrationApi(activity,mDataBinding.inputFirstName.text.toString().trim(),mDataBinding.inputLastName.text.toString().trim()
+                    ,mDataBinding.inputNationalID.text.toString().trim())
             }
         }
 
@@ -105,9 +119,9 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
                 itemSelected,
                 DialogInterface.OnClickListener { dialogInterface, selectedIndex ->
                     when(selectedIndex){
-                        0-> mDataBinding.inputGender.setText("Male")
-                        1-> mDataBinding.inputGender.setText("Female")
-                        2-> mDataBinding.inputGender.setText("Other")
+                        0-> mDataBinding.inputGender.setText("MALE")
+                        1-> mDataBinding.inputGender.setText("FEMALE")
+                        2-> mDataBinding.inputGender.setText("OTHER")
                     }
                 })
             .setPositiveButton("Ok", null)
@@ -115,6 +129,16 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
     }
 
     override fun onNextButtonClick(view: View) {
+
+        //todo Validation needed to add
+        mActivityViewModel.DOB = mDataBinding.inputDateOfBirth.text.toString().trim()
+        mActivityViewModel.identificationNumber = mDataBinding.inputNationalID.text.toString().trim()
+        mActivityViewModel.firstName = mDataBinding.inputFirstName.text.toString().trim()
+        mActivityViewModel.gender = mDataBinding.inputGender.text.toString().trim()
+        mActivityViewModel.postalAddress = mDataBinding.inputAddress.text.toString().trim()
+        mActivityViewModel.lastName = mDataBinding.inputLastName.text.toString().trim()
+        mActivityViewModel.email = mDataBinding.inputEmail.text.toString().trim()
+
         mActivityViewModel.requestForeGetInitialAuthDetailsApi(activity)
         //For Without API Calling Uncomment Below Line
 //        (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_verifyNumberFragment)
@@ -131,6 +155,22 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
     override fun onGenderSelectionClick(view: View) {
         mDataBinding.inputGender.setText("Male")
         showGenderDialog()
+    }
+
+    override fun afterTextChanged(p0: Editable?) {
+        var cnic = mDataBinding.inputNationalID.text.toString().trim()
+        var cnicLength = cnic.length
+        if(cnicLength > 0 && !Pattern.matches(Constants.APP_CN_REGEX, cnic)) {
+            Log.d("CNIC","Cnic Matches")
+        }else{
+            Log.d("CNIC","Cnic NOt Match")
+        }
+    }
+
+    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    }
+
+    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
     }
 
 

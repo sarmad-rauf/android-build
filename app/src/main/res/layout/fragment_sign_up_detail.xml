@@ -118,7 +118,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/input_layout_date_of_birth">
 
                     <com.es.marocapp.widgets.MarocEditText
-                        android:id="@+id/input_forgot_national_ID"
+                        android:id="@+id/input_national_ID"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:theme="@style/myTextInputLabel"

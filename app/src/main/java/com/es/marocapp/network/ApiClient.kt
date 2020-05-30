@@ -75,7 +75,7 @@ public class ApiClient() : Dependencies() {
 
 
         headerParams.put("Accept" , "application/json")
-        headerParams.put("X-Forwarded-For", Constants.getIPAddress())
+        headerParams.put("X-Forwarded-For", Constants.APPLICATION_IP_ADDRESS)
         headerParams.put("token", Constants.createUserToken())
 //        headerParams.put("content-type", "application/json")
 //        headerParams.put("channel", "android")
