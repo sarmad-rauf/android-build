@@ -29,4 +29,25 @@ object EndPoints {
     //getotp
     const val getotp = "getotp"
 
+    //createcredentials
+    const val createcredentials = "createcredentials"
+
+    //forgotpassword
+    const val forgotpassword = "forgotpassword"
+
+    //loginwithcert
+    const val loginwithcert = "loginwithcert"
+
+    //getbalanceinfoandlimits
+    const val getbalanceinfoandlimits = "getbalanceinfoandlimits"
+
+    //changepassword
+    const val changepassword = "changepassword"
+
+    //getapprovals
+    const val getapprovals = "getapprovals"
+
+    //userapproval
+    const val userapproval = "userapproval"
+
 }

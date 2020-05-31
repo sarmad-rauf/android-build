@@ -100,7 +100,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
             activity as LoginActivity,
             OnDateSetListener { datePicker, year, month, day ->
                 var monthVal = (month+1).toString()
-                var selectedDate = "$day/$monthVal/$year"
+                var selectedDate = "$year-$monthVal-$day"
                 mDataBinding.inputDateOfBirth.setText(selectedDate)
             }, year, month, dayOfMonth
         )

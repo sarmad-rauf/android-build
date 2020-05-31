@@ -1,4 +1,4 @@
-package com.es.marocapp.usecase.login
+package com.es.marocapp.usecase.login.login
 
 
 import android.os.Bundle
@@ -10,16 +10,18 @@ import androidx.lifecycle.ViewModelProvider
 
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentVerifyNumberBinding
-import com.es.marocapp.model.responses.GetOtpForRegistrationResponse
 import com.es.marocapp.model.responses.RegisterUserResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
+import com.es.marocapp.usecase.login.LoginActivity
+import com.es.marocapp.usecase.login.LoginActivityViewModel
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(), VerifyOTPClickListner {
+class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
+    VerifyOTPClickListner {
 
     lateinit var mActivityViewModel: LoginActivityViewModel
 
@@ -28,7 +30,8 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(), Verify
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        mActivityViewModel = ViewModelProvider(activity as LoginActivity).get(LoginActivityViewModel::class.java)
+        mActivityViewModel = ViewModelProvider(activity as LoginActivity).get(
+            LoginActivityViewModel::class.java)
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel

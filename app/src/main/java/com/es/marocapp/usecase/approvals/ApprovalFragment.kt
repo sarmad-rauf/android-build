@@ -1,16 +1,16 @@
 package com.es.marocapp.usecase.approvals
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.ApprovalsItemAdapter
-import com.es.marocapp.adapter.PaymentItemsAdapter
 import com.es.marocapp.databinding.FragmentApprovalBinding
+import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
-import kotlinx.android.synthetic.main.fragment_pin.*
 
 class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
 
@@ -24,7 +24,7 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        approvalViewModel = ViewModelProvider(this).get(ApprovalViewModel::class.java)
+        approvalViewModel = ViewModelProvider(activity as MainActivity).get(ApprovalViewModel::class.java)
 
         mDataBinding.apply {
             viewmodel = approvalViewModel
@@ -43,6 +43,8 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
             add("Withdrawal")
             add("DEBIT")
         }
+
+        approvalViewModel.requestForGetApprovalsApi(activity)
 
         mApprovalsItemAdapter = ApprovalsItemAdapter(mApprovalName,mApprovalType, object : ApprovalsItemAdapter.ApprovalItemClickListner{
             override fun onApprovalItemTypeClick() {
@@ -63,8 +65,12 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
     }
 
     private fun subscribeObserver() {
-        approvalViewModel.text.observe(this, Observer {
-
+        approvalViewModel.getApprovalResponseListner.observe(this, Observer {
+            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                approvalViewModel.requestForUserApprovalsApi(activity,"01","true")
+            }else{
+                Toast.makeText(activity,"Get Approvals APi Failed",Toast.LENGTH_SHORT).show()
+            }
         })
     }
 }

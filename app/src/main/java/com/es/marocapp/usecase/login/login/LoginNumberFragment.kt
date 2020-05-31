@@ -1,10 +1,9 @@
-package com.es.marocapp.usecase.login
+package com.es.marocapp.usecase.login.login
 
 
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.lifecycle.Observer
@@ -17,12 +16,14 @@ import com.es.marocapp.model.responses.GetOptResponse
 import com.es.marocapp.model.responses.ValidateOtpAndUpdateAliasesResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
-import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.login.LoginActivity
+import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 
 
-class LoginFragment : BaseFragment<FragmentLoginBinding>(), AdapterView.OnItemSelectedListener,LoginClickListener {
+class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(), AdapterView.OnItemSelectedListener,
+    LoginClickListener {
 
     lateinit var mActivityViewModel: LoginActivityViewModel
     lateinit var mActivity : LoginActivity
@@ -33,12 +34,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), AdapterView.OnItemSe
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        mActivityViewModel = ViewModelProvider(activity as LoginActivity).get(LoginActivityViewModel::class.java)
+        mActivityViewModel = ViewModelProvider(activity as LoginActivity).get(
+            LoginActivityViewModel::class.java)
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel
-            listener = this@LoginFragment
+            listener = this@LoginNumberFragment
         }
+
+        mDataBinding.root.txtHeaderTitle.text = getString(R.string.enter_your_number)
 
         mDataBinding.root.languageSpinner.visibility = View.VISIBLE
         mDataBinding.root.languageSpinner.onItemSelectedListener = this
@@ -94,8 +98,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), AdapterView.OnItemSe
     }
 
     override fun onForgotPinClick(view: View) {
-        mActivityViewModel.isSignUpFlow.set(false)
-        mActivity.navController.navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
     }
 
     override fun onSignUpClick(view: View) {
@@ -106,35 +108,71 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(), AdapterView.OnItemSe
     fun subscribe(){
         val mAccountHolderInfoResonseObserver = Observer<GetAccountHolderInformationResponse>{
             if(it.responseCode == ApiConstant.API_SUCCESS){
-                if(it.deviceId.equals(Constants.CURRENT_DEVICE_ID)){
+                mActivityViewModel.isSignUpFlow.set(false)
+                var deviceID = it.deviceId
+                deviceID = deviceID.removePrefix("ID:")
+                deviceID = deviceID.removeSuffix("@device/ALIAS")
+
+                deviceID= deviceID.trim()
+
+                if(deviceID.equals(Constants.CURRENT_DEVICE_ID)){
                     //todo check for Register Pin Active User Pending
-                    (activity as LoginActivity).startNewActivityAndClear(activity as LoginActivity, MainActivity::class.java)
+                    mActivityViewModel.accountHolderInfoResponse = it
+                    checkUserRegsitrationAndActicationSenario(it)
                 }else{
+                    mActivityViewModel.previousDeviceId = deviceID
                     mActivityViewModel.requestForGetOtpApi(activity)
                 }
             }else{
                 mActivityViewModel.isSignUpFlow.set(true)
-                Log.d("Value",mActivityViewModel.isSignUpFlow.toString())
                 mActivity.navController.navigate(R.id.action_loginFragment_to_signUpDetailFragment)
             }
         }
 
         val mGetOtpResponseListner = Observer<GetOptResponse>{
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                mActivityViewModel.requestForVerifyOtpAndUpdateAliaseAPI(activity,Constants.CURRENT_DEVICE_ID,"11111")
+                mActivityViewModel.requestForVerifyOtpAndUpdateAliaseAPI(activity,mActivityViewModel.previousDeviceId,Constants.CURRENT_DEVICE_ID,"11111")
             }
         }
 
         val mValidateOtpandAliasesResponseListner = Observer<ValidateOtpAndUpdateAliasesResponse> {
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                //todo check for Register Pin Active User Pending
-                (activity as LoginActivity).startNewActivityAndClear(activity as LoginActivity, MainActivity::class.java)
+                checkUserRegsitrationAndActicationSenario(mActivityViewModel.accountHolderInfoResponse)
             }
         }
 
         mActivityViewModel.getAccountHolderInformationResponseListner.observe(this,mAccountHolderInfoResonseObserver)
         mActivityViewModel.getOTPResponseListner.observe(this,mGetOtpResponseListner)
         mActivityViewModel.getValidateOtpAndUpdateAliasResponseListner.observe(this,mValidateOtpandAliasesResponseListner)
+    }
+
+    fun checkUserRegsitrationAndActicationSenario(response: GetAccountHolderInformationResponse) {
+        if(response.accountHolderStatus.equals("ACTIVE",true)){
+            for(i in response.credentialList.credentials.indices){
+                if(response.credentialList.credentials[i].credentialtype.equals("password",true) && response.credentialList.credentials[i].credentialstatus.equals("ACTIVE",true)){
+                    // this check means that User is Register and in active state with password set for his account so direct login api is called
+                    //LoginwithCert APi is called
+                    mActivityViewModel.activeUserWithoutPasswordType.set(false)
+                    mActivityViewModel.activeUserWithoutPassword.set(false)
+
+                    (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_signUpNumberFragment)
+                }else{
+                    // Create Crednetial Api is Called
+                    //this check means user is register with state Active but didn't registered Password as his account having credetial type pin
+                    mActivityViewModel.activeUserWithoutPasswordType.set(true)
+                    mActivityViewModel.activeUserWithoutPassword.set(false)
+
+                    (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_setYourPinFragment)
+                }
+            }
+        }else{
+            //activation Api is called on next screens
+            // This Check Means User Register Itself verifies OTP but Close App before setting his/her pin so user is redirected to setup Pin Fragment
+            mActivityViewModel.activeUserWithoutPassword.set(true)
+            mActivityViewModel.activeUserWithoutPasswordType.set(false)
+
+            (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_setYourPinFragment)
+        }
     }
 
 }

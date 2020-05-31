@@ -12,7 +12,7 @@
 
         <variable
             name="listener"
-            type="com.es.marocapp.usecase.login.LoginClickListener" />
+            type="com.es.marocapp.usecase.login.login.LoginClickListener" />
 
     </data>
 
@@ -93,9 +93,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_42sdp"
-                    android:background="@drawable/login_btn"
+                    android:background="@drawable/button_enable"
                     android:padding="@dimen/_8sdp"
-                    android:text="@string/login"
+                    android:text="@string/next"
                     android:onClick="@{listener::onLoginButtonClick}"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/_16ssp"

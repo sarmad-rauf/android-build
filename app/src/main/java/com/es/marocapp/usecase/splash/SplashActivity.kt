@@ -2,7 +2,6 @@ package com.es.marocapp.usecase.splash
 
 
 import android.annotation.SuppressLint
-import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -13,6 +12,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.es.marocapp.BuildConfig
 import com.es.marocapp.R
 import com.es.marocapp.databinding.AcitivtySplashBinding
 import com.es.marocapp.model.responses.GetPreLoginDataResponse
@@ -64,7 +64,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
             val telephonyManager =
                 application.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
             Constants.CURRENT_DEVICE_ID = telephonyManager!!.deviceId
-            mActivityViewModel.requestForGetPreLoginDataApi(this@SplashActivity)
+            mActivityViewModel.requestForGetPreLoginDataApi(this@SplashActivity,BuildConfig.VERSION_NAME)
         }
     }
 
@@ -96,7 +96,10 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
             }
         }
 
-        mActivityViewModel.requestForGetPreLoginDataApi(this@SplashActivity)
+        mActivityViewModel.requestForGetPreLoginDataApi(
+            this@SplashActivity,
+            BuildConfig.VERSION_NAME
+        )
     }
 
     private fun subscribe() {

@@ -7,26 +7,29 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.es.marocapp.usecase.login.LoginFragment"
+        android:name="com.es.marocapp.usecase.login.login.LoginNumberFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login"
         >
         <action
-            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
-            app:destination="@id/forgotPasswordFragment" />
-        <action
             android:id="@+id/action_loginFragment_to_signUpDetailFragment"
             app:destination="@id/signUpDetailFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_signUpNumberFragment"
+            app:destination="@id/signUpNumberFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_setYourPinFragment"
+            app:destination="@id/setYourPinFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpNumberFragment"
-        android:name="com.es.marocapp.usecase.login.signup.SignUpNumberFragment"
+        android:name="com.es.marocapp.usecase.login.login.LoginUserFragment"
         android:label="SignUpNumberFragment"
         tools:layout="@layout/fragment_sign_up_number"
         >
         <action
-            android:id="@+id/action_signUpNumberFragment_to_signUpDetailFragment"
-            app:destination="@id/signUpDetailFragment" />
+            android:id="@+id/action_signUpNumberFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpDetailFragment"
@@ -40,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/verifyNumberFragment"
-        android:name="com.es.marocapp.usecase.login.VerifyNumberFragment"
+        android:name="com.es.marocapp.usecase.login.login.VerifyNumberFragment"
         android:label="VerifyNumberFragment"
         tools:layout="@layout/fragment_verify_number"
         >
@@ -50,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/setYourPinFragment"
-        android:name="com.es.marocapp.usecase.login.SetYourPinFragment"
+        android:name="com.es.marocapp.usecase.login.login.SetYourPinFragment"
         android:label="SetYourPinFragment"
         tools:layout="@layout/fragment_set_your_pin"
         />
@@ -59,9 +62,5 @@
         android:name="com.es.marocapp.usecase.login.forgotpassword.ForgotPasswordFragment"
         android:label="ForgotPasswordFragment"
         tools:layout="@layout/fragment_forgot_password"
-        >
-        <action
-            android:id="@+id/action_forgotPasswordFragment_to_verifyNumberFragment"
-            app:destination="@id/verifyNumberFragment" />
-    </fragment>
+        />
 </navigation>

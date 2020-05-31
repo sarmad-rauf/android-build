@@ -33,14 +33,14 @@ class SplashActivityViewModel(application: Application) : AndroidViewModel(appli
 
     }
 
-    fun requestForGetPreLoginDataApi(context: Context?) {
+    fun requestForGetPreLoginDataApi(context: Context?, versionName: String) {
 
         if (Tools.checkNetworkStatus(getApplication())) {
 
             isLoading.set(true)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPreLoginData(
-                GetPreLoginDataRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,"1.0.0")
+                GetPreLoginDataRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,versionName)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(

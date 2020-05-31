@@ -23,6 +23,9 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     private val SPLASH_DISPLAY_LENGTH = 1000
     val mHandler = MutableLiveData<Boolean>()
     var isSignUpFlow : ObservableField<Boolean> = ObservableField(false)
+    var activeUserWithoutPassword : ObservableField<Boolean> = ObservableField(false)
+    var activeUserWithoutPasswordType : ObservableField<Boolean> = ObservableField(false)
+    lateinit var accountHolderInfoResponse : GetAccountHolderInformationResponse
     var isLoading = ObservableField<Boolean>()
     var errorText = MutableLiveData<String>()
     lateinit var disposable: Disposable
@@ -36,6 +39,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     var postalAddress = ""
     var lastName = ""
     var email = ""
+    var previousDeviceId = ""
 
     var getAccountHolderInformationResponseListner = SingleLiveEvent<GetAccountHolderInformationResponse>()
     var getInitialAuthDetailsResponseListner = SingleLiveEvent<GetInitialAuthDetailsReponse>()
@@ -44,6 +48,10 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     var getActivateUserResponseListner = SingleLiveEvent<ActivateUserResponse>()
     var getOTPResponseListner = SingleLiveEvent<GetOptResponse>()
     var getValidateOtpAndUpdateAliasResponseListner = SingleLiveEvent<ValidateOtpAndUpdateAliasesResponse>()
+    var getForgotPasswordResponseListner = SingleLiveEvent<ForgotPasswordResponse>()
+    var getCreateCredentialsResponseListner = SingleLiveEvent<CreateCredentialResponse>()
+    var getLoginWithCertResponseListner = SingleLiveEvent<LoginWithCertResponse>()
+    var getBalanceInforAndLimitResponseListner = SingleLiveEvent<BalanceInfoAndLimitResponse>()
 
     private fun postDelay() {
 
@@ -233,7 +241,6 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
             isLoading.set(true)
 
-            //TODO hardcoded Value need to Resolve
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getRegisterUser(
                 RegisterUserRequest(Accountholder(DOB,identificationNumber,firstName,gender,postalAddress,lastName),
                     ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.CURRENT_DEVICE_ID,email,Constants.getNumberMsisdn(mUserMsisdn),otp)
@@ -289,7 +296,6 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
             isLoading.set(true)
 
-            //TODO hardcoded Value need to Resolve
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getActivateUser(
                 ActivateUserRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(mUserMsisdn),seceret,Constants.SECRET_TYPE)
             )
@@ -387,7 +393,8 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     // API Called on LOGIN Fragment To Add New Device ID
     fun requestForVerifyOtpAndUpdateAliaseAPI(
         context: Context?,
-        deviceID : String,
+        previousDeviceID : String,
+        newDeviceID : String,
         otp : String
     ) {
 
@@ -395,9 +402,8 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
             isLoading.set(true)
 
-            //TODO hardcoded Value need to Resolve
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getValidateOtpAndUpdateAliases(
-                ValidateOtpAndUpdateAliasesRequest(deviceID,ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(mUserMsisdn),otp)
+                ValidateOtpAndUpdateAliasesRequest(previousDeviceID,newDeviceID,ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(mUserMsisdn),otp)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -437,6 +443,218 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
         }
 
     }
+
+    // API For Forgot Password
+    fun requestForForgotPasswordAPI(
+        context: Context?,
+        newSecret : String,
+        otp : String
+    ) {
+
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getForgotPasswordCall(
+                ForgotPasswordRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,ApiConstant.APP_CREDENTIAL_TYPE,Constants.getNumberMsisdn(mUserMsisdn),newSecret,otp,newSecret)
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getForgotPasswordResponseListner.postValue(result)
+
+                        } else {
+                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_network) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_network))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    // API For Create Credential API
+    fun requestForCreateCredentialsAPI(
+        context: Context?,
+        newSecret : String
+    ) {
+
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getCreateCredentialCall(
+                CreateCredentialRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(mUserMsisdn),newSecret,ApiConstant.APP_CREDENTIAL_TYPE)
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getCreateCredentialsResponseListner.postValue(result)
+
+                        } else {
+                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_network) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_network))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    // API For Login With Cert API
+    fun requestForLogigWithCertAPI(
+        context: Context?,
+        secret : String,
+        versionName : String
+    ) {
+
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            //todo remove hardcoded value
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getLoginWithCertCall(
+                LoginWithCertRequest(versionName,"MzU3ODc2Nzgz",ApiConstant.CONTEXT_AFTER_LOGIN,Constants.CURRENT_DEVICE_ID,Constants.getNumberMsisdn(mUserMsisdn),secret,ApiConstant.APP_CREDENTIAL_TYPE,"CODE_LOGIN_S2_")
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getLoginWithCertResponseListner.postValue(result)
+
+                        } else {
+                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_network) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_network))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    // API For BalanceInfoAndLimit API
+    fun requestForBalanceInfoAndLimtsAPI(
+        context: Context?
+    ) {
+
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            //todo remove hardcoded value
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBalancesInfoAndLimtCall(
+                BalanceInfoAndLimtRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(mUserMsisdn))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getBalanceInforAndLimitResponseListner.postValue(result)
+
+                        } else {
+                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_network) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_network))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
 
 
 }

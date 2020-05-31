@@ -13,14 +13,14 @@
 
         <variable
             name="listener"
-            type="com.es.marocapp.usecase.login.EnterPinClickListner" />
+            type="com.es.marocapp.usecase.login.login.EnterPinClickListner" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".usecase.login.SetYourPinFragment">
+        tools:context=".usecase.login.login.SetYourPinFragment">
 
         <include android:id="@+id/setYourPinHeader"
             layout="@layout/layout_login_header" />

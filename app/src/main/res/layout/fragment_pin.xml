@@ -7,6 +7,10 @@
         <import type="android.view.View" />
 
         <variable
+            name="listner"
+            type="com.es.marocapp.usecase.pin.ChangePasswordClickListener" />
+
+        <variable
             name="viewmodel"
             type="com.es.marocapp.usecase.pin.PinViewModel" />
 
@@ -16,17 +20,111 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text_notifications"
+
+    <ImageView
+        android:id="@+id/topHeaderContainer"
         android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorCerulean"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.es.marocapp.widgets.MarocRegularTextView
+        android:id="@+id/tvChangeTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:text="@string/change_pin"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/_19ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:textAllCaps="true" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgBackButton"
+        android:layout_width="@dimen/_32sdp"
+        android:layout_height="@dimen/_32sdp"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toTopOf="@+id/tvChangeTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvChangeTitle" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_old_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/topHeaderContainer"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        >
+
+        <com.es.marocapp.widgets.MarocEditText
+            android:id="@+id/input_old_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/myTextInputLabel"
+            android:hint="@string/enter_old_password_caps"
+            android:inputType="textPassword"
+            android:maxLength="12" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_new_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout_old_password"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        >
+
+        <com.es.marocapp.widgets.MarocEditText
+            android:id="@+id/input_new_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/myTextInputLabel"
+            android:hint="@string/enter_new_password_caps"
+            android:inputType="textPassword"
+            android:maxLength="12" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_confirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout_new_password"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        >
+
+        <com.es.marocapp.widgets.MarocEditText
+            android:id="@+id/input_confirm_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/myTextInputLabel"
+            android:hint="@string/confirm_new_password_caps"
+            android:inputType="textPassword"
+            android:maxLength="12" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.es.marocapp.widgets.MarocButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_enable_blue"
+        android:textColor="@color/colorWhite"
+        android:text="@string/change"
+        android:onClick="@{listner::onChangePasswordClickListner}"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

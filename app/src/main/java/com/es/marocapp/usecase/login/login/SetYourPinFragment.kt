@@ -1,4 +1,4 @@
-package com.es.marocapp.usecase.login
+package com.es.marocapp.usecase.login.login
 
 
 import android.os.Bundle
@@ -10,17 +10,19 @@ import androidx.lifecycle.ViewModelProvider
 
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentSetYourPinBinding
-import com.es.marocapp.databinding.FragmentVerifyNumberBinding
 import com.es.marocapp.model.responses.ActivateUserResponse
+import com.es.marocapp.model.responses.CreateCredentialResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
-import com.es.marocapp.utils.Constants
+import com.es.marocapp.usecase.login.LoginActivity
+import com.es.marocapp.usecase.login.LoginActivityViewModel
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(), EnterPinClickListner {
+class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
+    EnterPinClickListner {
 
     lateinit var mActivityViewModel: LoginActivityViewModel
 
@@ -29,7 +31,7 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(), EnterPinCl
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        mActivityViewModel = ViewModelProvider(this).get(LoginActivityViewModel::class.java)
+        mActivityViewModel = ViewModelProvider(activity as LoginActivity).get(LoginActivityViewModel::class.java)
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel
@@ -59,18 +61,32 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(), EnterPinCl
     private fun subscribeObserver() {
         val mActivateUserObserver = Observer<ActivateUserResponse>{
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                Toast.makeText(activity as LoginActivity,"Success",Toast.LENGTH_SHORT).show()
                 (activity as LoginActivity).navController.popBackStack(R.id.loginFragment,false)
+            }else{
+                Toast.makeText(activity,"API Failed",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        val mCreateCredentialObserver = Observer<CreateCredentialResponse>{
+            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                (activity as LoginActivity).navController.popBackStack(R.id.loginFragment,false)
+            }else{
+                Toast.makeText(activity,"API Failed",Toast.LENGTH_SHORT).show()
             }
         }
 
         mActivityViewModel.getActivateUserResponseListner.observe(this@SetYourPinFragment,mActivateUserObserver)
+        mActivityViewModel.getCreateCredentialsResponseListner.observe(this@SetYourPinFragment,mCreateCredentialObserver)
     }
 
     override fun onPinOrSignUpClick(view: View) {
         //Without API Call Below Use Line
 //        (activity as LoginActivity).navController.popBackStack(R.id.loginFragment,false)
-        mActivityViewModel.requestForActivateUserApi(activity,mDataBinding.inputEnterPin.toString().trim())
+        if(mActivityViewModel.isSignUpFlow.get()!! || mActivityViewModel.activeUserWithoutPassword.get()!!){
+            mActivityViewModel.requestForActivateUserApi(activity,mDataBinding.inputEnterPin.toString().trim())
+        }else{
+            mActivityViewModel.requestForCreateCredentialsAPI(activity,mDataBinding.inputEnterPin.text.toString().trim())
+        }
     }
 
 

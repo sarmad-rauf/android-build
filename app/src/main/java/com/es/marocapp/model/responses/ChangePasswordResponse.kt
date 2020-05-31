@@ -1,7 +1,6 @@
 package com.es.marocapp.model.responses
 
-data class ActivateUserResponse(
+class ChangePasswordResponse (
     val description: String,
     val responseCode: String
-
 )

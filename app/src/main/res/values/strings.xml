@@ -111,4 +111,13 @@
     <string name="dummyText">All users on MySpace will know that there are millions of people out there. Every day besides so many people joining this community, there are many others who will be looking out for friends. This will mean that they are naturally looking out for good people who are interesting enough. For this, the profile has to be very interesting.</string>
     <string name="enter_password_caps">ENTER PASSWORD</string>
     <string name="confirm_password_caps">CONFIRM PASSWORD</string>
+    <string name="enter_your_number">Enter Your Number</string>
+    <string name="password">Password</string>
+    <string name="password_caps">PASSWORD</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="forgot_password_caps">FORGOT PASSWORD?</string>
+    <string name="change">Change</string>
+    <string name="enter_old_password_caps">ENTER OLD PASSWORD</string>
+    <string name="confirm_new_password_caps">CONFIRM NEW PASSWORD</string>
+    <string name="enter_new_password_caps">ENTER NEW PASSWORD</string>
 </resources>

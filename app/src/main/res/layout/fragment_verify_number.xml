@@ -13,14 +13,14 @@
 
         <variable
             name="listener"
-            type="com.es.marocapp.usecase.login.VerifyOTPClickListner" />
+            type="com.es.marocapp.usecase.login.login.VerifyOTPClickListner" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".usecase.login.VerifyNumberFragment">
+        tools:context=".usecase.login.login.VerifyNumberFragment">
 
         <include android:id="@+id/verifyNumberHeader"
             layout="@layout/layout_login_header" />

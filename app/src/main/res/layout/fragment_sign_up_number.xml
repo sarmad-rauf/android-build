@@ -13,14 +13,14 @@
 
         <variable
             name="listener"
-            type="com.es.marocapp.usecase.login.signup.SignUpClickListner" />
+            type="com.es.marocapp.usecase.login.login.LoginClickListener" />
 
     </data>
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".usecase.login.signup.SignUpNumberFragment">
+    tools:context=".usecase.login.login.LoginUserFragment">
 
     <include android:id="@+id/loginHeader"
         layout="@layout/layout_login_header" />
@@ -39,39 +39,61 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/myTextInputLabel"
+            android:enabled="false"
+            android:clickable="false"
+            android:editable="false"
             android:maxLength="12"
             android:inputType="phone"
             android:hint="@string/enter_mobile_number" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.es.marocapp.widgets.MarocButton
-        android:id="@+id/btnBack"
-        android:layout_width="@dimen/_100sdp"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_pin"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/back"
-        android:textSize="@dimen/_16ssp"
-        android:textAllCaps="false"
-        android:onClick="@{listener::onBackButtonClick}"
-        android:background="@drawable/button_disable"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:textColor="@color/colorTextGreyDark"
         app:layout_constraintTop_toBottomOf="@+id/input_layout_phone_number"
-        app:layout_constraintStart_toStartOf="@+id/input_layout_phone_number"
-        />
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_32sdp"
+        android:layout_marginEnd="@dimen/_32sdp"
+        >
+
+        <com.es.marocapp.widgets.MarocEditText
+            android:id="@+id/input_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/myTextInputLabel"
+            android:hint="@string/password_caps"
+            android:inputType="textPassword"
+            android:maxLength="12" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.es.marocapp.widgets.MarocLightTextView
+        android:id="@+id/txtForgotPin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/forgot_password_caps"
+        android:textColor="@color/colorTextGreyDark"
+        android:textSize="@dimen/_14ssp"
+        android:onClick="@{listener::onForgotPinClick}"
+        app:layout_constraintEnd_toEndOf="@+id/input_layout_pin"
+        app:layout_constraintTop_toBottomOf="@id/input_layout_pin" />
+
 
     <com.es.marocapp.widgets.MarocButton
-        android:id="@+id/btnNext"
-        android:layout_width="@dimen/_100sdp"
+        android:id="@+id/btnLoginIN"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/next"
+        android:text="@string/login"
         android:textSize="@dimen/_16ssp"
         android:textAllCaps="false"
-        android:onClick="@{listener::onNextButtonClick}"
+        android:onClick="@{listener::onLoginButtonClick}"
         android:background="@drawable/button_enable"
         android:layout_marginTop="@dimen/_16sdp"
         android:textColor="@color/colorWhite"
-        app:layout_constraintTop_toBottomOf="@+id/input_layout_phone_number"
-        app:layout_constraintEnd_toEndOf="@+id/input_layout_phone_number"
+        app:layout_constraintTop_toBottomOf="@+id/txtForgotPin"
+        app:layout_constraintStart_toStartOf="@+id/input_layout_pin"
+        app:layout_constraintEnd_toEndOf="@+id/input_layout_pin"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

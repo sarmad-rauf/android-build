@@ -1,4 +1,4 @@
-package com.es.marocapp.usecase.login
+package com.es.marocapp.usecase.login.login
 
 import android.view.View
 

@@ -46,5 +46,34 @@ interface NetworkApi {
     @POST(EndPoints.getotp)
     fun getOTP(@Body request : GetOptRequest) : Observable<GetOptResponse>
 
+    //Request for CreateCredentials
+    @POST(EndPoints.createcredentials)
+    fun getCreateCredentialCall(@Body request : CreateCredentialRequest) : Observable<CreateCredentialResponse>
+
+    //Request for ForgotPassword
+    @POST(EndPoints.forgotpassword)
+    fun getForgotPasswordCall(@Body request : ForgotPasswordRequest) : Observable<ForgotPasswordResponse>
+
+    //Request for LoginWithCert
+    @POST(EndPoints.loginwithcert)
+    fun getLoginWithCertCall(@Body request : LoginWithCertRequest) : Observable<LoginWithCertResponse>
+
+    //Request for GetBalanceInfoAndLimits
+    @POST(EndPoints.getbalanceinfoandlimits)
+    fun getBalancesInfoAndLimtCall(@Body request : BalanceInfoAndLimtRequest) : Observable<BalanceInfoAndLimitResponse>
+
+    //Request for ChangePassword
+    @POST(EndPoints.changepassword)
+    fun getChangePasswordCall(@Body request : ChangePasswordRequest) : Observable<ChangePasswordResponse>
+
+    //Request for GetApprovals
+    @POST(EndPoints.getapprovals)
+    fun getApprovalsCall(@Body request : GetApprovalRequest) : Observable<GetApprovalsResponse>
+
+    //Request for UserApprovals
+    @POST(EndPoints.userapproval)
+    fun getUserApprovalsCall(@Body request : UserApprovalRequest) : Observable<UserApprovalResponse>
+
+
 
 }

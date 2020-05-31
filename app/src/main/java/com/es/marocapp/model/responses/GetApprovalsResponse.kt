@@ -1,7 +1,7 @@
 package com.es.marocapp.model.responses
 
-data class ActivateUserResponse(
+data class GetApprovalsResponse(
+    val approvaldetails: List<Any>,
     val description: String,
     val responseCode: String
-
 )
