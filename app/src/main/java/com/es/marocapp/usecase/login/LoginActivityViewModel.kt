@@ -37,6 +37,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     var firstName = ""
     var gender = ""
     var postalAddress = ""
+
     var lastName = ""
     var email = ""
     var previousDeviceId = ""
