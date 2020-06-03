@@ -15,13 +15,14 @@ import com.es.marocapp.model.HomeUseCasesModel
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.payments.PaymentsActivity
+import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(),ViewPager.OnPageChangeListener,
+class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChangeListener,
     HomeFragmentClickListners {
 
     private lateinit var homeViewModel: HomeViewModel
-    private lateinit var mCardAdapter : HomeCardAdapter
-    private lateinit var mUseCasesAdapter : HomeUseCasesAdapter
+    private lateinit var mCardAdapter: HomeCardAdapter
+    private lateinit var mUseCasesAdapter: HomeUseCasesAdapter
 
     override fun setLayout(): Int {
         return R.layout.fragment_home
@@ -46,23 +47,48 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(),ViewPager.OnPageChangeL
 
     private fun populateHomeUseCase() {
         val useCases = ArrayList<HomeUseCasesModel>().apply {
-            this.add(HomeUseCasesModel(getString(R.string.recharge_newLine),R.drawable.ic_recharge))
-            this.add(HomeUseCasesModel(getString(R.string.send_money_newLine),R.drawable.ic_send_money))
-            this.add(HomeUseCasesModel(getString(R.string.transfer_newLine),R.drawable.ic_transfer))
-            this.add(HomeUseCasesModel(getString(R.string.payments_newline),R.drawable.ic_payment))
-            this.add(HomeUseCasesModel(getString(R.string.qr_newLine),R.drawable.ic_qr_white))
-            this.add(HomeUseCasesModel(getString(R.string.accounts_newLine),R.drawable.ic_accounts))
+            this.add(HomeUseCasesModel(getString(R.string.payments_newline), R.drawable.ic_payment))
+            this.add(HomeUseCasesModel(getString(R.string.mobile_recharge), R.drawable.ic_recharge))
+            this.add(
+                HomeUseCasesModel(
+                    getString(R.string.send_money_newLine),
+                    R.drawable.ic_send_money
+                )
+            )
+            this.add(HomeUseCasesModel(getString(R.string.cash_service), R.drawable.ic_transfer))
+            this.add(HomeUseCasesModel(getString(R.string.qr_newLine), R.drawable.ic_qr_white))
+            this.add(
+                HomeUseCasesModel(
+                    getString(R.string.accounts_newLine),
+                    R.drawable.ic_accounts
+                )
+            )
         }
 
-        mUseCasesAdapter = HomeUseCasesAdapter(useCases,object : HomeUseCasesAdapter.HomeUseCasesClickListner{
-            override fun onHomeUseCaseClick() {
-                startActivity(Intent(activity as MainActivity,PaymentsActivity::class.java))
-            }
+        mUseCasesAdapter =
+            HomeUseCasesAdapter(useCases, object : HomeUseCasesAdapter.HomeUseCasesClickListner {
+                override fun onHomeUseCaseClick(position: Int) {
+                    when (position) {
+                        2 -> startActivity(
+                            Intent(
+                                activity as MainActivity,
+                                SendMoneyActivity::class.java
+                            )
+                        )
+                        else -> startActivity(
+                            Intent(
+                                activity as MainActivity,
+                                PaymentsActivity::class.java
+                            )
+                        )
 
-        }, activity as MainActivity)
+                    }
+                }
+
+            }, activity as MainActivity)
         mDataBinding.useCasesRecyclerView.apply {
             adapter = mUseCasesAdapter
-            layoutManager = GridLayoutManager(activity as MainActivity,3)
+            layoutManager = GridLayoutManager(activity as MainActivity, 3)
         }
     }
 

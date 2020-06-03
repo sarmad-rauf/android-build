@@ -72,7 +72,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(), AdapterView.On
     override fun onLoginButtonClick(view: View) {
         //For Proper Flow un Comment all this section
         //TODO need to implement proper check for lenght of number
-        if(mDataBinding.inputPhoneNumber.text.toString() == "" || mDataBinding.inputPhoneNumber.text.length<12-2){
+        if(mDataBinding.inputPhoneNumber.text.toString() == "" || mDataBinding.inputPhoneNumber.text.length<Constants.APP_MSISDN_LENGTH.toInt()-2){
             mDataBinding.inputLayoutPhoneNumber.error = "Please Enter Valid Mobile Number"
             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
         }else{
@@ -86,6 +86,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(), AdapterView.On
                 var userMSISDNwithPrefix = userMsisdn.removePrefix("0")
                 userMSISDNwithPrefix = Constants.APP_MSISDN_PREFIX + userMSISDNwithPrefix
                 userMSISDNwithPrefix = userMSISDNwithPrefix.removePrefix("+")
+                Constants.CURRENT_NUMBER_DEVICE_ID = userMSISDNwithPrefix +"-" + Constants.CURRENT_DEVICE_ID
                 mActivityViewModel.requestForGetAccountHolderInformationApi(context,userMSISDNwithPrefix)
             }else{
                 mDataBinding.inputLayoutPhoneNumber.error = "Please Enter Valid Mobile Number"
@@ -115,11 +116,11 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(), AdapterView.On
 
                 deviceID= deviceID.trim()
 
-                if(deviceID.equals(Constants.CURRENT_DEVICE_ID)){
-                    //todo check for Register Pin Active User Pending
-                    mActivityViewModel.accountHolderInfoResponse = it
+                if(deviceID.equals(Constants.CURRENT_NUMBER_DEVICE_ID)){
                     checkUserRegsitrationAndActicationSenario(it)
                 }else{
+                    mActivityViewModel.accountHolderInfoResponse = it
+
                     mActivityViewModel.previousDeviceId = deviceID
                     mActivityViewModel.requestForGetOtpApi(activity)
                 }
@@ -131,7 +132,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(), AdapterView.On
 
         val mGetOtpResponseListner = Observer<GetOptResponse>{
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                mActivityViewModel.requestForVerifyOtpAndUpdateAliaseAPI(activity,mActivityViewModel.previousDeviceId,Constants.CURRENT_DEVICE_ID,"11111")
+                mActivityViewModel.requestForVerifyOtpAndUpdateAliaseAPI(activity,mActivityViewModel.previousDeviceId,Constants.CURRENT_NUMBER_DEVICE_ID,"11111")
             }
         }
 

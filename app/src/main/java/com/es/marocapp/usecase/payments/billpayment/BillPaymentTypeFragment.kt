@@ -21,13 +21,14 @@ class BillPaymentTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
     lateinit var mActivityViewModel: PaymentsViewModel
     private lateinit var mPaymentItemTypeAdapter: PaymentItemsAdapter
     private var mPaymentTypes: ArrayList<String> = ArrayList()
+    private var mPaymentTypesIcons: ArrayList<Int> = ArrayList()
 
     override fun setLayout(): Int {
         return R.layout.fragment_bill_payment_type
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        mActivityViewModel = ViewModelProvider(this).get(PaymentsViewModel::class.java)
+        mActivityViewModel = ViewModelProvider(activity as PaymentsActivity).get(PaymentsViewModel::class.java)
         mDataBinding.apply {
         }
 
@@ -41,8 +42,15 @@ class BillPaymentTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
             add("Ticket")
         }
 
-        mPaymentItemTypeAdapter = PaymentItemsAdapter(mPaymentTypes, object : PaymentItemsAdapter.PaymentItemTypeClickListner{
-            override fun onPaymentItemTypeClick() {
+        mPaymentTypesIcons.apply {
+            add(R.drawable.ic_favorite_payments)
+            add(R.drawable.ic_favorite_transfers)
+            add(R.drawable.ic_favorite_payments)
+            add(R.drawable.ic_favorite_transfers)
+        }
+
+        mPaymentItemTypeAdapter = PaymentItemsAdapter(mPaymentTypes, mPaymentTypesIcons,object : PaymentItemsAdapter.PaymentItemTypeClickListner{
+            override fun onPaymentItemTypeClick(paymentItems: String) {
                 (activity as PaymentsActivity).navController.navigate(R.id.action_billPaymentTypeFragment_to_billTypeFragment)
             }
 

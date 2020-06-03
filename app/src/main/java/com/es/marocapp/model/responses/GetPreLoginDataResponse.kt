@@ -18,6 +18,7 @@ data class GetPreLoginDataResponse(
     val msisdnLength: String,
     val msisdnPrefix: String,
     val publicKey: Any,
+    val quickAmounts: List<String>,
     val responseCode: String,
     val url: String,
     val version: String

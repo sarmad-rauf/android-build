@@ -48,7 +48,7 @@ class ApprovalViewModel(application: Application) : AndroidViewModel(application
 
             isLoading.set(true)
 
-            //todo remove hardcoded value
+
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getApprovalsCall(
                 GetApprovalRequest(ApiConstant.CONTEXT_AFTER_LOGIN)
             )
@@ -102,7 +102,7 @@ class ApprovalViewModel(application: Application) : AndroidViewModel(application
 
             isLoading.set(true)
 
-            //todo remove hardcoded value
+
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getUserApprovalsCall(
                 UserApprovalRequest(approveID,approved,ApiConstant.CONTEXT_AFTER_LOGIN)
             )

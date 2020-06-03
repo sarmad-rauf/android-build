@@ -74,6 +74,16 @@ interface NetworkApi {
     @POST(EndPoints.userapproval)
     fun getUserApprovalsCall(@Body request : UserApprovalRequest) : Observable<UserApprovalResponse>
 
+    //Request for AccountHolderAdditionalInformation
+    @POST(EndPoints.getaccountholderadditionalinformation)
+    fun getAccountHolderAddtionalInfoCall(@Body request : GetAccountHolderInformationRequest) : Observable<AccountHolderAdditionalInformationResponse>
 
+    //Request for transfer
+    @POST(EndPoints.transfer)
+    fun getTransferCall(@Body request : TransferRequest) : Observable<TransferResponse>
+
+    //Request for transferQoute
+    @POST(EndPoints.transfer_quote)
+    fun getTransferQouteCall(@Body request : TransferQouteRequest) : Observable<TransferQouteResponse>
 
 }

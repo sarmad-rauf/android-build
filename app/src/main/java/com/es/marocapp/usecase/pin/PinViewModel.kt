@@ -40,8 +40,6 @@ class PinViewModel(application: Application) : AndroidViewModel(application) {
         if (Tools.checkNetworkStatus(getApplication())) {
 
             isLoading.set(true)
-
-            //todo remove hardcoded value
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getChangePasswordCall(
                 ChangePasswordRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),
                 oldCredential,newCredential,Constants.SECRET_TYPE)

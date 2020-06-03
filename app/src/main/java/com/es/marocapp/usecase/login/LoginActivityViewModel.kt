@@ -41,6 +41,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     var email = ""
     var previousDeviceId = ""
 
+
     var getAccountHolderInformationResponseListner = SingleLiveEvent<GetAccountHolderInformationResponse>()
     var getInitialAuthDetailsResponseListner = SingleLiveEvent<GetInitialAuthDetailsReponse>()
     var getOtpForRegistrationResponseListner = SingleLiveEvent<GetOtpForRegistrationResponse>()
@@ -234,6 +235,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     // API Called on SignUp Detail Fragment For Registration Purpose
     fun requestForRegisterUserApi(
         context: Context?,
+        deviceID_UserMsisdn : String,
         otp : String
     ) {
 
@@ -243,7 +245,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getRegisterUser(
                 RegisterUserRequest(Accountholder(DOB,identificationNumber,firstName,gender,postalAddress,lastName),
-                    ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.CURRENT_DEVICE_ID,email,Constants.getNumberMsisdn(mUserMsisdn),otp)
+                    ApiConstant.CONTEXT_BEFORE_LOGIN,deviceID_UserMsisdn,email,Constants.getNumberMsisdn(mUserMsisdn),otp)
 
             )
                 .compose(applyIOSchedulers())
@@ -562,7 +564,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
             //todo remove hardcoded value
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getLoginWithCertCall(
-                LoginWithCertRequest(versionName,"MzU3ODc2Nzgz",ApiConstant.CONTEXT_AFTER_LOGIN,Constants.CURRENT_DEVICE_ID,Constants.getNumberMsisdn(mUserMsisdn),secret,ApiConstant.APP_CREDENTIAL_TYPE,"CODE_LOGIN_S2_")
+                LoginWithCertRequest(versionName,"MzU3ODc2Nzgz",ApiConstant.CONTEXT_AFTER_LOGIN,Constants.CURRENT_NUMBER_DEVICE_ID,Constants.getNumberMsisdn(mUserMsisdn),secret,ApiConstant.APP_CREDENTIAL_TYPE,"CODE_LOGIN_S2_")
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -612,7 +614,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
             isLoading.set(true)
 
-            //todo remove hardcoded value
+
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBalancesInfoAndLimtCall(
                 BalanceInfoAndLimtRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(mUserMsisdn))
             )

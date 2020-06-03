@@ -7,6 +7,10 @@
 
         <import type="android.view.View" />
 
+        <variable
+            name="viewmodel"
+            type="com.es.marocapp.usecase.accountdetails.AccoutDetailsViewModel" />
+
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -59,6 +63,7 @@
                 android:layout_marginTop="@dimen/_16sdp"
                 android:src="@drawable/dummy_profile_image"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvAccountDetailTitle" />
 
@@ -80,15 +85,29 @@
                 app:layout_constraintVertical_bias="0.23" />
 
             <com.es.marocapp.widgets.MarocMediumTextView
+                android:id="@+id/account_detail_hi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="@string/hi"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_16ssp"
+                app:layout_constraintEnd_toStartOf="@+id/account_detail_name"
+                app:layout_constraintStart_toStartOf="@+id/account_detail_profile_image"
+                app:layout_constraintTop_toBottomOf="@+id/account_detail_profile_image" />
+
+
+            <com.es.marocapp.widgets.MarocMediumTextView
                 android:id="@+id/account_detail_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:text="Hi, John Perucci!"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:text="John Perucci!"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_16ssp"
-                app:layout_constraintEnd_toStartOf="@+id/account_detail_profile_image"
-                app:layout_constraintStart_toEndOf="@+id/account_detail_profile_image"
+                android:layout_marginStart="@dimen/_4sdp"
+                app:layout_constraintEnd_toEndOf="@+id/account_detail_profile_image"
+                app:layout_constraintStart_toEndOf="@+id/account_detail_hi"
                 app:layout_constraintTop_toBottomOf="@+id/account_detail_profile_image" />
 
             <com.es.marocapp.widgets.MarocRegularTextView
@@ -201,8 +220,8 @@
                         android:layout_height="1dp"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:background="@color/colorGreyLight"
-                        app:layout_constraintEnd_toEndOf="@+id/tvYearlyReceivingLimitVal"
-                        app:layout_constraintStart_toStartOf="@+id/tvYearlyReceivingLimitTitle"
+                        app:layout_constraintEnd_toEndOf="@+id/tvYearlySendingLimitVal"
+                        app:layout_constraintStart_toStartOf="@+id/tvYearlySendingLimitTitle"
                         app:layout_constraintTop_toBottomOf="@+id/appName_title_sen_rev_container" />
 
 
@@ -234,164 +253,164 @@
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/tvYearlySendingLimitTitle" />
 
-                    <ImageView
-                        android:id="@+id/divider1"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/colorGreyLight"
-                        app:layout_constraintEnd_toEndOf="@+id/tvYearlySendingLimitVal"
-                        app:layout_constraintStart_toStartOf="@+id/tvYearlySendingLimitTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/tvYearlySendingLimitVal" />
+                    <!--                    <ImageView-->
+                    <!--                        android:id="@+id/divider1"-->
+                    <!--                        android:layout_width="0dp"-->
+                    <!--                        android:layout_height="1dp"-->
+                    <!--                        android:layout_marginTop="@dimen/_8sdp"-->
+                    <!--                        android:background="@color/colorGreyLight"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="@+id/tvYearlySendingLimitVal"-->
+                    <!--                        app:layout_constraintStart_toStartOf="@+id/tvYearlySendingLimitTitle"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@+id/tvYearlySendingLimitVal" />-->
 
-                    <com.es.marocapp.widgets.MarocLightTextView
-                        android:id="@+id/tvYearlyReceivingLimitTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:text="@string/yearly_receiving_limit"
-                        android:textColor="@color/colorTextGreyDark"
-                        android:textSize="@dimen/_12sdp"
-                        app:layout_constraintStart_toStartOf="@+id/tvYearlySendingLimitTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/divider1" />
+                    <!--                    <com.es.marocapp.widgets.MarocLightTextView-->
+                    <!--                        android:id="@+id/tvYearlyReceivingLimitTitle"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="@dimen/_8sdp"-->
+                    <!--                        android:text="@string/yearly_receiving_limit"-->
+                    <!--                        android:textColor="@color/colorTextGreyDark"-->
+                    <!--                        android:textSize="@dimen/_12sdp"-->
+                    <!--                        app:layout_constraintStart_toStartOf="@+id/tvYearlySendingLimitTitle"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@+id/divider1" />-->
 
-                    <com.es.marocapp.widgets.MarocRegularTextView
-                        android:id="@+id/tvYearlyReceivingLimitVal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="DH250,000.00"
-                        android:textColor="@color/colorTextGreyDark"
-                        android:textSize="@dimen/_14sdp"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvYearlyReceivingLimitTitle"
-                        app:layout_constraintEnd_toEndOf="@+id/tvYearlySendingLimitVal" />
+                    <!--                    <com.es.marocapp.widgets.MarocRegularTextView-->
+                    <!--                        android:id="@+id/tvYearlyReceivingLimitVal"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:text="DH250,000.00"-->
+                    <!--                        android:textColor="@color/colorTextGreyDark"-->
+                    <!--                        android:textSize="@dimen/_14sdp"-->
+                    <!--                        app:layout_constraintBottom_toBottomOf="@+id/tvYearlyReceivingLimitTitle"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="@+id/tvYearlySendingLimitVal" />-->
 
-                    <ImageView
-                        android:id="@+id/divider2"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/colorGreyLight"
-                        app:layout_constraintEnd_toEndOf="@+id/tvYearlyReceivingLimitVal"
-                        app:layout_constraintStart_toStartOf="@+id/tvYearlyReceivingLimitTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/tvYearlyReceivingLimitVal" />
+                    <!--                    <ImageView-->
+                    <!--                        android:id="@+id/divider2"-->
+                    <!--                        android:layout_width="0dp"-->
+                    <!--                        android:layout_height="1dp"-->
+                    <!--                        android:layout_marginTop="@dimen/_8sdp"-->
+                    <!--                        android:background="@color/colorGreyLight"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="@+id/tvYearlyReceivingLimitVal"-->
+                    <!--                        app:layout_constraintStart_toStartOf="@+id/tvYearlyReceivingLimitTitle"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@+id/tvYearlyReceivingLimitVal" />-->
 
-                    <com.es.marocapp.widgets.MarocLightTextView
-                        android:id="@+id/tvMonthlySendingLimitTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:text="@string/monthly_sending_limit"
-                        android:textColor="@color/colorTextGreyDark"
-                        android:textSize="@dimen/_12sdp"
-                        app:layout_constraintStart_toStartOf="@+id/tvYearlyReceivingLimitTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+                    <!--                    <com.es.marocapp.widgets.MarocLightTextView-->
+                    <!--                        android:id="@+id/tvMonthlySendingLimitTitle"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="@dimen/_10sdp"-->
+                    <!--                        android:text="@string/monthly_sending_limit"-->
+                    <!--                        android:textColor="@color/colorTextGreyDark"-->
+                    <!--                        android:textSize="@dimen/_12sdp"-->
+                    <!--                        app:layout_constraintStart_toStartOf="@+id/tvYearlyReceivingLimitTitle"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@+id/divider2" />-->
 
-                    <com.es.marocapp.widgets.MarocRegularTextView
-                        android:id="@+id/tvMonthlySendingLimitVal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:text="DH10,000.00"
-                        android:textColor="@color/colorTextGreyDark"
-                        android:textSize="@dimen/_14sdp"
-                        app:layout_constraintEnd_toEndOf="@+id/tvYearlyReceivingLimitVal"
-                        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+                    <!--                    <com.es.marocapp.widgets.MarocRegularTextView-->
+                    <!--                        android:id="@+id/tvMonthlySendingLimitVal"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="@dimen/_8sdp"-->
+                    <!--                        android:text="DH10,000.00"-->
+                    <!--                        android:textColor="@color/colorTextGreyDark"-->
+                    <!--                        android:textSize="@dimen/_14sdp"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="@+id/tvYearlyReceivingLimitVal"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@+id/divider2" />-->
 
-                    <ImageView
-                        android:id="@+id/divider3"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/colorGreyLight"
-                        app:layout_constraintEnd_toEndOf="@+id/tvYearlyReceivingLimitVal"
-                        app:layout_constraintStart_toStartOf="@+id/tvYearlyReceivingLimitTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/tvMonthlySendingLimitVal" />
+                    <!--                    <ImageView-->
+                    <!--                        android:id="@+id/divider3"-->
+                    <!--                        android:layout_width="0dp"-->
+                    <!--                        android:layout_height="1dp"-->
+                    <!--                        android:layout_marginTop="@dimen/_8sdp"-->
+                    <!--                        android:background="@color/colorGreyLight"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="@+id/tvYearlyReceivingLimitVal"-->
+                    <!--                        app:layout_constraintStart_toStartOf="@+id/tvYearlyReceivingLimitTitle"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@+id/tvMonthlySendingLimitVal" />-->
 
-                    <com.es.marocapp.widgets.MarocLightTextView
-                        android:id="@+id/tvMonthlyReceivingLimitTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:text="@string/monthly_receiving_limit"
-                        android:textColor="@color/colorTextGreyDark"
-                        android:textSize="@dimen/_12sdp"
-                        app:layout_constraintStart_toStartOf="@+id/tvYearlyReceivingLimitTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/divider3" />
+                    <!--                    <com.es.marocapp.widgets.MarocLightTextView-->
+                    <!--                        android:id="@+id/tvMonthlyReceivingLimitTitle"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="@dimen/_10sdp"-->
+                    <!--                        android:text="@string/monthly_receiving_limit"-->
+                    <!--                        android:textColor="@color/colorTextGreyDark"-->
+                    <!--                        android:textSize="@dimen/_12sdp"-->
+                    <!--                        app:layout_constraintStart_toStartOf="@+id/tvYearlyReceivingLimitTitle"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@+id/divider3" />-->
 
-                    <com.es.marocapp.widgets.MarocRegularTextView
-                        android:id="@+id/tvMonthlyReceivingLimitVal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:text="DH10,000.00"
-                        android:textColor="@color/colorTextGreyDark"
-                        android:textSize="@dimen/_14sdp"
-                        app:layout_constraintEnd_toEndOf="@+id/tvYearlyReceivingLimitVal"
-                        app:layout_constraintTop_toBottomOf="@+id/divider3" />
+                    <!--                    <com.es.marocapp.widgets.MarocRegularTextView-->
+                    <!--                        android:id="@+id/tvMonthlyReceivingLimitVal"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="@dimen/_8sdp"-->
+                    <!--                        android:text="DH10,000.00"-->
+                    <!--                        android:textColor="@color/colorTextGreyDark"-->
+                    <!--                        android:textSize="@dimen/_14sdp"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="@+id/tvYearlyReceivingLimitVal"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@+id/divider3" />-->
 
-                    <ImageView
-                        android:id="@+id/divider4"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:background="@color/colorGreyLight"
-                        app:layout_constraintEnd_toEndOf="@+id/tvYearlyReceivingLimitVal"
-                        app:layout_constraintStart_toStartOf="@+id/tvYearlyReceivingLimitTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/tvMonthlyReceivingLimitVal" />
+                    <!--                    <ImageView-->
+                    <!--                        android:id="@+id/divider4"-->
+                    <!--                        android:layout_width="0dp"-->
+                    <!--                        android:layout_height="1dp"-->
+                    <!--                        android:layout_marginTop="@dimen/_10sdp"-->
+                    <!--                        android:background="@color/colorGreyLight"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="@+id/tvYearlyReceivingLimitVal"-->
+                    <!--                        app:layout_constraintStart_toStartOf="@+id/tvYearlyReceivingLimitTitle"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@+id/tvMonthlyReceivingLimitVal" />-->
 
-                    <com.es.marocapp.widgets.MarocLightTextView
-                        android:id="@+id/tvDailySendingLimitTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:text="@string/daily_sending_limit"
-                        android:textColor="@color/colorTextGreyDark"
-                        android:textSize="@dimen/_12sdp"
-                        app:layout_constraintStart_toStartOf="@+id/tvYearlyReceivingLimitTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/divider4" />
+                    <!--                    <com.es.marocapp.widgets.MarocLightTextView-->
+                    <!--                        android:id="@+id/tvDailySendingLimitTitle"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="@dimen/_10sdp"-->
+                    <!--                        android:text="@string/daily_sending_limit"-->
+                    <!--                        android:textColor="@color/colorTextGreyDark"-->
+                    <!--                        android:textSize="@dimen/_12sdp"-->
+                    <!--                        app:layout_constraintStart_toStartOf="@+id/tvYearlyReceivingLimitTitle"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@+id/divider4" />-->
 
-                    <com.es.marocapp.widgets.MarocRegularTextView
-                        android:id="@+id/tvDailySendingLimitVal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:text="DH5,000.00"
-                        android:textColor="@color/colorTextGreyDark"
-                        android:textSize="@dimen/_14sdp"
-                        app:layout_constraintEnd_toEndOf="@+id/tvYearlyReceivingLimitVal"
-                        app:layout_constraintTop_toBottomOf="@+id/divider4" />
+                    <!--                    <com.es.marocapp.widgets.MarocRegularTextView-->
+                    <!--                        android:id="@+id/tvDailySendingLimitVal"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="@dimen/_8sdp"-->
+                    <!--                        android:text="DH5,000.00"-->
+                    <!--                        android:textColor="@color/colorTextGreyDark"-->
+                    <!--                        android:textSize="@dimen/_14sdp"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="@+id/tvYearlyReceivingLimitVal"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@+id/divider4" />-->
 
-                    <ImageView
-                        android:id="@+id/divider5"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:background="@color/colorGreyLight"
-                        app:layout_constraintEnd_toEndOf="@+id/tvYearlyReceivingLimitVal"
-                        app:layout_constraintStart_toStartOf="@+id/tvYearlyReceivingLimitTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/tvDailySendingLimitVal" />
+                    <!--                    <ImageView-->
+                    <!--                        android:id="@+id/divider5"-->
+                    <!--                        android:layout_width="0dp"-->
+                    <!--                        android:layout_height="1dp"-->
+                    <!--                        android:layout_marginTop="@dimen/_8sdp"-->
+                    <!--                        android:background="@color/colorGreyLight"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="@+id/tvYearlyReceivingLimitVal"-->
+                    <!--                        app:layout_constraintStart_toStartOf="@+id/tvYearlyReceivingLimitTitle"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@+id/tvDailySendingLimitVal" />-->
 
-                    <com.es.marocapp.widgets.MarocLightTextView
-                        android:id="@+id/tvDailyReceivingLimitTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:text="@string/daily_receiving_limit"
-                        android:textColor="@color/colorTextGreyDark"
-                        android:textSize="@dimen/_12sdp"
-                        app:layout_constraintStart_toStartOf="@+id/tvYearlyReceivingLimitTitle"
-                        app:layout_constraintTop_toBottomOf="@+id/divider5" />
+                    <!--                    <com.es.marocapp.widgets.MarocLightTextView-->
+                    <!--                        android:id="@+id/tvDailyReceivingLimitTitle"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="@dimen/_10sdp"-->
+                    <!--                        android:text="@string/daily_receiving_limit"-->
+                    <!--                        android:textColor="@color/colorTextGreyDark"-->
+                    <!--                        android:textSize="@dimen/_12sdp"-->
+                    <!--                        app:layout_constraintStart_toStartOf="@+id/tvYearlyReceivingLimitTitle"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@+id/divider5" />-->
 
-                    <com.es.marocapp.widgets.MarocRegularTextView
-                        android:id="@+id/tvDailyReceivingLimitVal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
-                        android:text="DH5,000.00"
-                        android:textColor="@color/colorTextGreyDark"
-                        android:textSize="@dimen/_14sdp"
-                        app:layout_constraintEnd_toEndOf="@+id/tvYearlyReceivingLimitVal"
-                        app:layout_constraintTop_toBottomOf="@+id/divider5" />
+                    <!--                    <com.es.marocapp.widgets.MarocRegularTextView-->
+                    <!--                        android:id="@+id/tvDailyReceivingLimitVal"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="@dimen/_8sdp"-->
+                    <!--                        android:text="DH5,000.00"-->
+                    <!--                        android:textColor="@color/colorTextGreyDark"-->
+                    <!--                        android:textSize="@dimen/_14sdp"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="@+id/tvYearlyReceivingLimitVal"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@+id/divider5" />-->
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

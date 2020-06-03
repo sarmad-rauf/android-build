@@ -39,10 +39,12 @@
     <string name="quick_recharge">Quick Recharge</string>
     <string name="recharge">Recharge</string>
     <string name="recharge_newLine">\nRecharge</string>
+    <string name="mobile_recharge">Mobile Recharge</string>
     <string name="send_money">Send Money</string>
     <string name="send_money_newLine">Send \nMoney</string>
     <string name="transfer">Transfer</string>
     <string name="transfer_newLine">\nTransfer</string>
+    <string name="cash_service">Cash Service</string>
     <string name="payments">Payments</string>
     <string name="payments_newline">\nPayments</string>
     <string name="qr">QR</string>
@@ -120,4 +122,9 @@
     <string name="enter_old_password_caps">ENTER OLD PASSWORD</string>
     <string name="confirm_new_password_caps">CONFIRM NEW PASSWORD</string>
     <string name="enter_new_password_caps">ENTER NEW PASSWORD</string>
+    <string name="set_passwordd">Set Password</string>
+    <string name="hi">Hi,</string>
+    <string name="transfer_type">Transfer Type</string>
+    <string name="enter_receiver_s_mobile_number_caps">ENTER RECEIVER\'S MOBILE NUMBER</string>
+    <string name="select_favorite">SELECT FAVORITE</string>
 </resources>

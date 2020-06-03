@@ -15,6 +15,7 @@ import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
+import com.es.marocapp.utils.Constants
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 
 /**
@@ -65,8 +66,7 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
     }
 
     override fun onOTPVerifyClick(view: View) {
-        //TODO Hardcoded issue need to resolve
-        mActivityViewModel.requestForRegisterUserApi(activity,mDataBinding.inputVerifyOtp.text.toString().trim())
+        mActivityViewModel.requestForRegisterUserApi(activity,Constants.CURRENT_NUMBER_DEVICE_ID,mDataBinding.inputVerifyOtp.text.toString().trim())
         //For Without API Calling Uncomment Below Line
 //        (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_setYourPinFragment)
     }

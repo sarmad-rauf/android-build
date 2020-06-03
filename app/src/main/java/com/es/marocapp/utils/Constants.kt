@@ -5,6 +5,7 @@ import android.content.Context.WIFI_SERVICE
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.text.format.Formatter.formatIpAddress
+import com.es.marocapp.model.responses.BalanceInfoAndLimitResponse
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,6 +20,7 @@ object Constants {
     const val IDENTIFICATION_TYPE = "CNIC"
     const val SECRET_TYPE = "password"
 
+    //preLoginData
     var APP_DATE_FORMAT = "yyyy-mm-dd"
     var APP_CN_REGEX = "[a-zA-Z]{2}[0-9]{6}"
     var APP_CN_LENGTH = "8"
@@ -27,11 +29,15 @@ object Constants {
 
     var APPLICATION_IP_ADDRESS = ""
     var CURRENT_DEVICE_ID = ""
+    var CURRENT_NUMBER_DEVICE_ID = ""
 
     var HEADERS_AFTER_LOGINS = false
     var CURRENT_USER_MSISDN = ""
     var LOGGED_IN_USER = ""
     var LOGGED_IN_USER_COOKIE = ""
+
+    //Responses
+    lateinit var balanceInfoAndResponse : BalanceInfoAndLimitResponse
 
     fun createUserToken() : String{
         var token = SimpleDateFormat("yyyyMMddHHmmssSS")

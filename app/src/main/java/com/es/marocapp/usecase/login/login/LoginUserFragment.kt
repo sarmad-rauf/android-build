@@ -49,6 +49,7 @@ class LoginUserFragment : BaseFragment<FragmentSignUpNumberBinding>(), LoginClic
     private fun subscribeObserver() {
         val mBalanceInfoAndLimtListner = Observer<BalanceInfoAndLimitResponse> {
             if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                Constants.balanceInfoAndResponse = it
                 (activity as LoginActivity).startNewActivityAndClear(
                     activity as LoginActivity,
                     MainActivity::class.java

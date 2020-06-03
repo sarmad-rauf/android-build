@@ -3,14 +3,10 @@ package com.es.marocapp.usecase.payments.billpayment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.PaymentItemsAdapter
-import com.es.marocapp.adapter.PaymentItemsCustomImageAdapter
 import com.es.marocapp.databinding.FragmentCompanyTypeBinding
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.payments.PaymentsActivity
@@ -24,6 +20,7 @@ class CompanyTypeFragment  : BaseFragment<FragmentCompanyTypeBinding>() {
     lateinit var mActivityViewModel: PaymentsViewModel
     private lateinit var mPaymentItemTypeAdapter: PaymentItemsAdapter
     private var mPaymentTypes: ArrayList<String>  = ArrayList()
+    private var mPaymentTypesIcons: ArrayList<Int>  = ArrayList()
 
     override fun setLayout(): Int {
         return R.layout.fragment_company_type
@@ -43,8 +40,14 @@ class CompanyTypeFragment  : BaseFragment<FragmentCompanyTypeBinding>() {
             add("Company C")
         }
 
-        mPaymentItemTypeAdapter = PaymentItemsAdapter(mPaymentTypes, object : PaymentItemsAdapter.PaymentItemTypeClickListner{
-            override fun onPaymentItemTypeClick() {
+        mPaymentTypesIcons.apply {
+            add(R.drawable.ic_favorite_transfers)
+            add(R.drawable.push_bank)
+            add(R.drawable.initiate_merchant)
+        }
+
+        mPaymentItemTypeAdapter = PaymentItemsAdapter(mPaymentTypes, mPaymentTypesIcons ,object : PaymentItemsAdapter.PaymentItemTypeClickListner{
+            override fun onPaymentItemTypeClick(paymentItems: String) {
                 (activity as PaymentsActivity).navController.navigate(R.id.action_companyTypeFragment_to_enterContactFragment)
             }
 

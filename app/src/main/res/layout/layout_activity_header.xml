@@ -19,7 +19,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorActivityHeaderBlue"
-            android:padding="@dimen/_10sdp">
+            android:padding="@dimen/_10sdp"
+            >
 
             <com.es.marocapp.widgets.MarocRegularTextView
                 android:id="@+id/activityHeaderTitle"
@@ -110,7 +111,7 @@
         android:id="@+id/headerCompanyIconContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
+        android:visibility="gone"
         app:constraint_referenced_ids="headerContainerBottom,backgroundImg,guideline3"
         />
 

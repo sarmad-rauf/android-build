@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/send_money_nav_graph"
+    app:startDestination="@id/sendMoneyTypeFragment">
+
+    <fragment
+        android:id="@+id/sendMoneyTypeFragment"
+        android:name="com.es.marocapp.usecase.sendmoney.SendMoneyTypeFragment"
+        android:label="SendMoneyTypeFragment"
+        tools:layout="@layout/fragment_bill_payment_type"
+        >
+        <action
+            android:id="@+id/action_sendMoneyTypeFragment_to_fundsTransferMsisdnFragment"
+            app:destination="@id/fundsTransferMsisdnFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fundsTransferMsisdnFragment"
+        android:name="com.es.marocapp.usecase.sendmoney.tranferfundcase.FundsTransferMsisdnFragment"
+        android:label="FundsTransferMsisdnFragment"
+        tools:layout="@layout/fragment_funds_transfer_enter_msisdn"
+        >
+        <action
+            android:id="@+id/action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment"
+            app:destination="@id/fundsTransferAmountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fundsTransferAmountFragment"
+        android:name="com.es.marocapp.usecase.sendmoney.tranferfundcase.FundsTransferAmountFragment"
+        android:label="FundsTransferAmountFragment"
+        tools:layout="@layout/fragment_funds_amount_selection"
+        >
+        <action
+            android:id="@+id/action_fundsTransferAmountFragment_to_fundTransferConfirmationFragment"
+            app:destination="@id/fundTransferConfirmationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fundTransferConfirmationFragment"
+        android:name="com.es.marocapp.usecase.sendmoney.tranferfundcase.FundTransferConfirmationFragment"
+        android:label="FundTransferConfirmationFragment"
+        tools:layout="@layout/fragment_funds_transfer_confirmation"
+        >
+        <action
+            android:id="@+id/action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment"
+            app:destination="@id/fundsTrasnferSuccessFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fundsTrasnferSuccessFragment"
+        android:name="com.es.marocapp.usecase.sendmoney.tranferfundcase.FundsTrasnferSuccessFragment"
+        android:label="FundsTrasnferSuccessFragment"
+        tools:layout="@layout/fragment_funds_transfer_success"
+        />
+</navigation>

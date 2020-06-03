@@ -50,4 +50,13 @@ object EndPoints {
     //userapproval
     const val userapproval = "userapproval"
 
+    //getaccountholderadditionalinformation
+    const val getaccountholderadditionalinformation = "getaccountholderadditionalinformation"
+
+    //transfer
+    const val transfer = "transfer"
+
+    //transfer/quote
+    const val transfer_quote = "transfer/quote"
+
 }

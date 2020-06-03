@@ -44,7 +44,11 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
         if(mActivityViewModel.isSignUpFlow.get()!!){
             mDataBinding.btnPinChange.text = getString(R.string.sign_up)
         }else{
-            mDataBinding.btnPinChange.text = getString(R.string.change_pin)
+            if(mActivityViewModel.activeUserWithoutPassword.get()!!){
+                mDataBinding.btnPinChange.text = getString(R.string.set_passwordd)
+            }else{
+                mDataBinding.btnPinChange.text = getString(R.string.change_pin)
+            }
         }
 
         mDataBinding.root.txtBack.setOnClickListener{
@@ -83,7 +87,7 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
         //Without API Call Below Use Line
 //        (activity as LoginActivity).navController.popBackStack(R.id.loginFragment,false)
         if(mActivityViewModel.isSignUpFlow.get()!! || mActivityViewModel.activeUserWithoutPassword.get()!!){
-            mActivityViewModel.requestForActivateUserApi(activity,mDataBinding.inputEnterPin.toString().trim())
+            mActivityViewModel.requestForActivateUserApi(activity,mDataBinding.inputEnterPin.text.toString().trim())
         }else{
             mActivityViewModel.requestForCreateCredentialsAPI(activity,mDataBinding.inputEnterPin.text.toString().trim())
         }

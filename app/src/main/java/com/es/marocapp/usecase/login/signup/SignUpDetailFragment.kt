@@ -74,7 +74,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
     private fun subscribeObserver() {
         val mInitialAuthDetailsResonseObserver = Observer<GetInitialAuthDetailsReponse>{
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                //TODO first, last name and CNIC Hardcoded Issue need to reolve
+
                 mActivityViewModel.requestForGetOTPForRegistrationApi(activity,mDataBinding.inputFirstName.text.toString().trim(),mDataBinding.inputLastName.text.toString().trim()
                     ,mDataBinding.inputNationalID.text.toString().trim())
             }

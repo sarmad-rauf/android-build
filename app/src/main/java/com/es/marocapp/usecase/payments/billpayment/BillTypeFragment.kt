@@ -20,7 +20,8 @@ class BillTypeFragment : BaseFragment<FragmentBillTypeBinding>() {
 
     lateinit var mActivityViewModel: PaymentsViewModel
     private lateinit var mPaymentItemTypeAdapter: PaymentItemsAdapter
-    private var mPaymentTypes: ArrayList<String>  = ArrayList()
+    private var mBillTypes: ArrayList<String>  = ArrayList()
+    private var mBillTypesIcons: ArrayList<Int>  = ArrayList()
 
     override fun setLayout(): Int {
         return R.layout.fragment_bill_type
@@ -34,15 +35,22 @@ class BillTypeFragment : BaseFragment<FragmentBillTypeBinding>() {
         (activity as PaymentsActivity).setCompanyIconToolbarVisibility(false)
         (activity as PaymentsActivity).setToolabarVisibility(true)
 
-        mPaymentTypes.apply {
+        mBillTypes.apply {
             add("Electricity")
             add("Water")
             add("Internet")
             add("Others")
         }
 
-        mPaymentItemTypeAdapter = PaymentItemsAdapter(mPaymentTypes, object : PaymentItemsAdapter.PaymentItemTypeClickListner{
-            override fun onPaymentItemTypeClick() {
+        mBillTypesIcons.apply {
+            add(R.drawable.ic_favorite_payments)
+            add(R.drawable.ic_favorite_transfers)
+            add(R.drawable.ic_favorite_payments)
+            add(R.drawable.ic_favorite_transfers)
+        }
+
+        mPaymentItemTypeAdapter = PaymentItemsAdapter(mBillTypes, mBillTypesIcons ,object : PaymentItemsAdapter.PaymentItemTypeClickListner{
+            override fun onPaymentItemTypeClick(paymentItems: String) {
                 (activity as PaymentsActivity).navController.navigate(R.id.action_billTypeFragment_to_companyTypeFragment)
             }
 
