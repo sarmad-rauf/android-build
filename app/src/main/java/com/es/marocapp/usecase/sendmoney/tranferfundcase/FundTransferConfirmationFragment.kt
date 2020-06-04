@@ -8,6 +8,7 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentFundsTransferConfirmationBinding
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
+import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyViewModel
 import com.es.marocapp.utils.Constants
@@ -54,6 +55,19 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                 }
             })
 
+        mActivityViewModel.getMerchantPaymentResponseListner.observe(this@FundTransferConfirmationFragment,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    Constants.HEADERS_FOR_PAYEMNTS = false
+                    mActivityViewModel.senderBalanceAfter = it.senderBalanceAfter
+                    mActivityViewModel.transactionID = it.transactionId
+                    (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
+                }else{
+                    Constants.HEADERS_FOR_PAYEMNTS = false
+                    DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                }
+            })
+
         mActivityViewModel.getPaymentResponseListner.observe(this@FundTransferConfirmationFragment,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
@@ -80,11 +94,11 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
         var ReceiverName = mActivityViewModel.mAccountHolderInfoResponseObserver.get()?.firstName +" " +mActivityViewModel.mAccountHolderInfoResponseObserver.get()?.sureName
         mActivityViewModel.ReceiverName = ReceiverName
         mDataBinding.tvOwnerNameVal.text = ReceiverName
-        mDataBinding.tvReceiptCodeVal.text = Constants.CURRENT_CURRENCY_TYPE+" "+mActivityViewModel.amountToTransfer
-        mDataBinding.tvDHVal.text = Constants.CURRENT_CURRENCY_TYPE+" "+mActivityViewModel.feeAmount
+        mDataBinding.tvReceiptCodeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.amountToTransfer
+        mDataBinding.tvDHVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.feeAmount
 
         amountToTransfer = Constants.addAmountAndFee(mActivityViewModel.amountToTransfer.toDouble(),mActivityViewModel.feeAmount.toDouble())
-        mDataBinding.tvAmountVal.text =Constants.CURRENT_CURRENCY_TYPE+" "+amountToTransfer
+        mDataBinding.tvAmountVal.text =Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+amountToTransfer
 
     }
 
@@ -94,7 +108,13 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                 Constants.HEADERS_FOR_PAYEMNTS = true
                 Constants.CURRENT_USER_CREDENTIAL = password
                 if(mActivityViewModel.isUserRegistered.get()!!){
-                    mActivityViewModel.requestFoTransferApi(activity,mActivityViewModel.qouteId)
+                    if(mActivityViewModel.isFundTransferUseCase.get()!!){
+                        mActivityViewModel.requestFoTransferApi(activity,mActivityViewModel.qouteId)
+                    }
+
+                    if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
+                        mActivityViewModel.requestFoMerchantApi(activity,Constants.CURRENT_USER_MSISDN,mActivityViewModel.qouteId)
+                    }
                 }else{
                     mActivityViewModel.requestFoPayementApi(activity,mActivityViewModel.qouteId,Constants.CURRENT_USER_MSISDN)
                 }
@@ -103,6 +123,11 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
     }
 
     override fun onBackClickListner(view: View) {
+        mActivityViewModel.isUserRegistered.set(false)
+        mActivityViewModel.isFundTransferUseCase.set(false)
+        mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set(false)
+        (activity as SendMoneyActivity).startNewActivityAndClear(activity as SendMoneyActivity,
+            MainActivity::class.java)
     }
 
 }

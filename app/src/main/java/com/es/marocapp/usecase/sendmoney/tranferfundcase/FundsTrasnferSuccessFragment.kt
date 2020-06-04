@@ -53,14 +53,22 @@ class FundsTrasnferSuccessFragment : BaseFragment<FragmentFundsTransferSuccessBi
         var amountToTransfer = Constants.addAmountAndFee(mActivityViewModel.amountToTransfer.toDouble(),mActivityViewModel.feeAmount.toDouble())
         mDataBinding.tvDHVal.text =Constants.CURRENT_CURRENCY_TYPE+" "+amountToTransfer
 
+        Constants.balanceInfoAndResponse.balance = mActivityViewModel.senderBalanceAfter
+
         mDataBinding.newBalanceVal.text = mActivityViewModel.senderBalanceAfter
     }
 
     override fun onNextClickListner(view: View) {
+        mActivityViewModel.isUserRegistered.set(false)
+        mActivityViewModel.isFundTransferUseCase.set(false)
+        mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set(false)
         (activity as SendMoneyActivity).startNewActivityAndClear(activity as SendMoneyActivity,MainActivity::class.java)
     }
 
     override fun onBackClickListner(view: View) {
+        mActivityViewModel.isUserRegistered.set(false)
+        mActivityViewModel.isFundTransferUseCase.set(false)
+        mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set(false)
         (activity as SendMoneyActivity).startNewActivityAndClear(activity as SendMoneyActivity,MainActivity::class.java)
     }
 

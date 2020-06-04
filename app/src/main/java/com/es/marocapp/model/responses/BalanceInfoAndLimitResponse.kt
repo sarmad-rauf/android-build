@@ -1,7 +1,7 @@
 package com.es.marocapp.model.responses
 
 data class BalanceInfoAndLimitResponse(
-    val balance: String?,
+    var balance: String?,
     val currnecy: String?,
     val description: String?,
     val firstname: String?,

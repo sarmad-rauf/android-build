@@ -71,4 +71,7 @@ object EndPoints {
     //payment
     const val payment = "payment"
 
+    //gettransactionhistory
+    const val gettransactionhistory = "gettransactionhistory"
+
 }
