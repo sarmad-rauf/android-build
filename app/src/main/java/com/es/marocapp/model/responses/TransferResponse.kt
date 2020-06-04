@@ -6,6 +6,6 @@ data class TransferResponse(
     val financialTransactionId: Any,
     val responseCode: String,
     val scheduledTransactionId: Any,
-    val senderBalanceAfter: Any,
+    val senderBalanceAfter: String,
     val senderFee: Any
 )

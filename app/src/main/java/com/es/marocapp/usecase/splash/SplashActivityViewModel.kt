@@ -54,8 +54,7 @@ class SplashActivityViewModel(application: Application) : AndroidViewModel(appli
                             preLoginDataResponseListener.postValue(result)
 
                         } else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
-                            Toast.makeText(context,Constants.SHOW_SERVER_ERROR,Toast.LENGTH_SHORT).show()
+                            preLoginDataResponseListener.postValue(result)
                         }
 
 

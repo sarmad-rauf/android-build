@@ -16,6 +16,7 @@ import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
+import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 
 /**
@@ -63,11 +64,15 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
     }
 
     private fun subscribeObserver() {
+        mActivityViewModel.errorText.observe(this@SetYourPinFragment, Observer {
+            DialogUtils.showErrorDialoge(activity as LoginActivity,it)
+        })
+
         val mActivateUserObserver = Observer<ActivateUserResponse>{
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                 (activity as LoginActivity).navController.popBackStack(R.id.loginFragment,false)
             }else{
-                Toast.makeText(activity,"API Failed",Toast.LENGTH_SHORT).show()
+                DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
             }
         }
 
@@ -75,7 +80,7 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                 (activity as LoginActivity).navController.popBackStack(R.id.loginFragment,false)
             }else{
-                Toast.makeText(activity,"API Failed",Toast.LENGTH_SHORT).show()
+                DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
             }
         }
 
@@ -86,13 +91,49 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
     override fun onPinOrSignUpClick(view: View) {
         //Without API Call Below Use Line
 //        (activity as LoginActivity).navController.popBackStack(R.id.loginFragment,false)
-        if(mActivityViewModel.isSignUpFlow.get()!! || mActivityViewModel.activeUserWithoutPassword.get()!!){
-            mActivityViewModel.requestForActivateUserApi(activity,mDataBinding.inputEnterPin.text.toString().trim())
+
+        if(isValidForAll()){
+            if(mDataBinding.inputEnterPin.text.toString().trim().equals(mDataBinding.inputConfirmPin.text.toString().trim())){
+                mDataBinding.inputLayoutConfrimPin.error = ""
+                mDataBinding.inputLayoutConfrimPin.isErrorEnabled = false
+                if(mActivityViewModel.isSignUpFlow.get()!! || mActivityViewModel.activeUserWithoutPassword.get()!!){
+                    mActivityViewModel.requestForActivateUserApi(activity,mDataBinding.inputEnterPin.text.toString().trim())
+                }else{
+                    mActivityViewModel.requestForCreateCredentialsAPI(activity,mDataBinding.inputEnterPin.text.toString().trim())
+                }
+            }else{
+                mDataBinding.inputLayoutConfrimPin.error = "Password Not Same"
+                mDataBinding.inputLayoutConfrimPin.isErrorEnabled = true
+            }
         }else{
-            mActivityViewModel.requestForCreateCredentialsAPI(activity,mDataBinding.inputEnterPin.text.toString().trim())
+
         }
+
     }
 
+    private fun isValidForAll(): Boolean {
+        var isValidForAll = true
+
+        if(mDataBinding.inputEnterPin.text.isNullOrEmpty()){
+            isValidForAll = false
+            mDataBinding.inputLayoutEnterPin.error = "Please Enter Valid Mobile Number"
+            mDataBinding.inputLayoutEnterPin.isErrorEnabled = true
+        }else{
+            mDataBinding.inputLayoutEnterPin.error = ""
+            mDataBinding.inputLayoutEnterPin.isErrorEnabled = false
+        }
+
+        if(mDataBinding.inputConfirmPin.text.isNullOrEmpty()){
+            isValidForAll = false
+            mDataBinding.inputLayoutConfrimPin.error = "Please Enter Valid Mobile Number"
+            mDataBinding.inputLayoutConfrimPin.isErrorEnabled = true
+        }else{
+            mDataBinding.inputLayoutConfrimPin.error = ""
+            mDataBinding.inputLayoutConfrimPin.isErrorEnabled = false
+        }
+
+        return isValidForAll
+    }
 
 
 }

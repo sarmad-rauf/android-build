@@ -86,4 +86,20 @@ interface NetworkApi {
     @POST(EndPoints.transfer_quote)
     fun getTransferQouteCall(@Body request : TransferQouteRequest) : Observable<TransferQouteResponse>
 
+    //Request for merchantPayment
+    @POST(EndPoints.merchantpayment)
+    fun getMerchantPaymentCall(@Body request : MerchantPaymentRequest) : Observable<MerchantPaymentResponse>
+
+    //Request for merchantQoute
+    @POST(EndPoints.merchantpayment_quote)
+    fun getMerchantQouteCall(@Body request : MerchantPaymentQuoteRequest) : Observable<MerchantPaymentQuoteResponse>
+
+    //Request for Payment
+    @POST(EndPoints.payment)
+    fun getPaymentCall(@Body request : PaymentRequest) : Observable<PaymentResponse>
+
+    //Request for paymentQoute
+    @POST(EndPoints.merchantpayment_quote)
+    fun getPaymentQouteCall(@Body request : PaymentQuoteRequest) : Observable<PaymentQuoteResponse>
+
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/containerLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+
+        <com.es.marocapp.widgets.MarocMediumTextView
+            android:id="@+id/quickRechargeBtnOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_quick_recharge_disable"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:text="MAD1000"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextGreyMedium"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

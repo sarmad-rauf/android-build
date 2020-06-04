@@ -8,6 +8,7 @@ import android.text.format.Formatter.formatIpAddress
 import com.es.marocapp.model.responses.BalanceInfoAndLimitResponse
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 object Constants {
@@ -19,6 +20,7 @@ object Constants {
 
     const val IDENTIFICATION_TYPE = "CNIC"
     const val SECRET_TYPE = "password"
+    const val TRANSFER_TYPE_PAYMENT = "PAYMENT"
 
     //preLoginData
     var APP_DATE_FORMAT = "yyyy-mm-dd"
@@ -26,15 +28,20 @@ object Constants {
     var APP_CN_LENGTH = "8"
     var APP_MSISDN_PREFIX = "+000"
     var APP_MSISDN_LENGTH = "12"
+    var quickAmountsList : ArrayList<String> = arrayListOf()
 
     var APPLICATION_IP_ADDRESS = ""
     var CURRENT_DEVICE_ID = ""
     var CURRENT_NUMBER_DEVICE_ID = ""
+    var CURRENT_CURRENCY_TYPE = ""
 
     var HEADERS_AFTER_LOGINS = false
+    var HEADERS_FOR_PAYEMNTS = false
     var CURRENT_USER_MSISDN = ""
+    var CURRENT_USER_CREDENTIAL = ""
     var LOGGED_IN_USER = ""
     var LOGGED_IN_USER_COOKIE = ""
+
 
     //Responses
     lateinit var balanceInfoAndResponse : BalanceInfoAndLimitResponse
@@ -63,7 +70,7 @@ object Constants {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LOGGED_IN_USER_COOKIE = Base64.getEncoder().encodeToString(str.toByteArray())
         } else {
-            TODO("VERSION.SDK_INT < O")
+
         }
     }
 
@@ -78,7 +85,10 @@ object Constants {
     }
 
     fun getNumberMsisdn(number : String) : String{
-        CURRENT_USER_MSISDN = number
         return "$number/MSISDN"
+    }
+
+    fun addAmountAndFee(amount : Double, fee : Double): String{
+        return (amount+fee).toString()
     }
 }

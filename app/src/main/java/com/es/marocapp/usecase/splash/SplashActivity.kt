@@ -20,6 +20,7 @@ import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.DialogUtils
 
 
 class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
@@ -114,17 +115,26 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.APP_CN_LENGTH = it.cnLength
                 Constants.APP_CN_REGEX = it.cnRegex
                 Constants.APP_DATE_FORMAT = it.dateFormat
+                Constants.CURRENT_CURRENCY_TYPE = it.currency
+                if(it.quickAmounts.isNotEmpty()){
+                    Constants.quickAmountsList.addAll(it.quickAmounts)
+                }else{
+                    Constants.quickAmountsList.apply {
+                        add("50")
+                        add("100")
+                        add("250")
+                        add("500")
+                    }
+                }
 
                 startNewActivityAndClear(this@SplashActivity, LoginActivity::class.java)
             } else {
-                Toast.makeText(this@SplashActivity, "API Failed", Toast.LENGTH_SHORT).show()
+                DialogUtils.showErrorDialoge(this@SplashActivity,it.description)
             }
         }
 
         val errorText = Observer<String> {
-//            startNewActivityAndClear(this@SplashActivity, LoginActivity::class.java)
-            Toast.makeText(this@SplashActivity, "Error", Toast.LENGTH_SHORT).show()
-
+            DialogUtils.showErrorDialoge(this@SplashActivity,it)
         }
 
         mActivityViewModel.mHandler.observe(this, resultObserver)

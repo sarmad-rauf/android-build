@@ -5,9 +5,7 @@ import android.content.Context
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import com.es.marocapp.R
-import com.es.marocapp.model.requests.GetAccountHolderInformationRequest
-import com.es.marocapp.model.requests.TransferQouteRequest
-import com.es.marocapp.model.requests.TransferRequest
+import com.es.marocapp.model.requests.*
 import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
@@ -27,11 +25,23 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
     var getAccountHolderAdditionalInfoResponseListner = SingleLiveEvent<AccountHolderAdditionalInformationResponse>()
     var getTransferResponseListner = SingleLiveEvent<TransferResponse>()
     var getTransferQouteResponseListner = SingleLiveEvent<TransferQouteResponse>()
+    var getMerchantQouteResponseListner = SingleLiveEvent<MerchantPaymentQuoteResponse>()
+    var getMerchantPaymentResponseListner = SingleLiveEvent<MerchantPaymentResponse>()
+    var getPaymentQouteResponseListner = SingleLiveEvent<PaymentQuoteResponse>()
+    var getPaymentResponseListner = SingleLiveEvent<PaymentResponse>()
 
     var trasferTypeSelected = ObservableField<String>()
+    var isUserRegistered = ObservableField<Boolean>()
 
     var transferdAmountTo = ""
+    var amountToTransfer = ""
+    var feeAmount = ""
+    var qouteId = ""
+    var transactionID = ""
+    var ReceiverName =""
+    var senderBalanceAfter =""
     var mBalanceInforAndResponseObserver = ObservableField<BalanceInfoAndLimitResponse>()
+    var mAccountHolderInfoResponseObserver = ObservableField<GetAccountHolderInformationResponse>()
 
     init {
         mBalanceInforAndResponseObserver.set(Constants.balanceInfoAndResponse)
@@ -60,10 +70,12 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
                             )
                         ) {
                             getAccountHolderInformationResponseListner.postValue(result)
+                            mAccountHolderInfoResponseObserver.set(result)
 
                         }else if(result?.responseCode!=null && result.responseCode.equals(ApiConstant.API_FAILURE,true)){
                             // if response code is 1500 this means user  user isnot registered redirecting user to Registration flow
                             getAccountHolderInformationResponseListner.postValue(result)
+                            mAccountHolderInfoResponseObserver.set(result)
                         }
                         else {
                             errorText.postValue(Constants.SHOW_SERVER_ERROR)
@@ -105,7 +117,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAccountHolderAddtionalInfoCall(
-                GetAccountHolderInformationRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(transferdAmountTo))
+                GetAccountHolderInformationRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(transferdAmountTo))
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -149,17 +161,16 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
     //Request For Trasnfer Qoute
     fun requestFoTransferQouteApi(context: Context?,
-                                  receierMsisdn : String,
                                   amount : String
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
 
             isLoading.set(true)
-
+            amountToTransfer = amount
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getTransferQouteCall(
-                TransferQouteRequest(amount,ApiConstant.CONTEXT_AFTER_LOGIN,receierMsisdn)
+                TransferQouteRequest(amount,ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(transferdAmountTo))
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -173,7 +184,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
                             getTransferQouteResponseListner.postValue(result)
 
                         } else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                            getTransferQouteResponseListner.postValue(result)
                         }
 
 
@@ -202,8 +213,6 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
     //Request For Trasnfer
     fun requestFoTransferApi(context: Context?,
-                                  receierMsisdn : String,
-                                  amount : String,
                              qouteID : String
     )
     {
@@ -213,7 +222,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getTransferCall(
-                TransferRequest(amount,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,receierMsisdn)
+                TransferRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,Constants.getNumberMsisdn(transferdAmountTo))
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -227,7 +236,220 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
                             getTransferResponseListner.postValue(result)
 
                         } else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                            getTransferResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_network) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_network))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For Merchant Qoute
+    fun requestFoMerchantQouteApi(context: Context?,
+                                  amount : String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+            amountToTransfer = amount
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getMerchantQouteCall(
+                MerchantPaymentQuoteRequest(amount,ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(transferdAmountTo))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getMerchantQouteResponseListner.postValue(result)
+
+                        } else {
+                            getMerchantQouteResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_network) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_network))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For Merchant
+    fun requestFoMerchantApi(context: Context?,
+                             receierMsisdn : String,
+                             amount : String,
+                             qouteID : String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getMerchantPaymentCall(
+                MerchantPaymentRequest(amount,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,receierMsisdn)
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getMerchantPaymentResponseListner.postValue(result)
+
+                        } else {
+                            getMerchantPaymentResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_network) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_network))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For Payment Qoute
+    fun requestFoPaymentQouteApi(context: Context?,
+                                  amount : String,
+                                 sender :String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+            amountToTransfer = amount
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPaymentQouteCall(
+                PaymentQuoteRequest(amount,ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(transferdAmountTo),Constants.getNumberMsisdn(sender),Constants.TRANSFER_TYPE_PAYMENT)
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getPaymentQouteResponseListner.postValue(result)
+
+                        } else {
+                            getPaymentQouteResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_network) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_network))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For Payment
+    fun requestFoPayementApi(context: Context?,
+                             qouteID : String,
+                             sender: String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPaymentCall(
+                PaymentRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,Constants.getNumberMsisdn(transferdAmountTo),Constants.getNumberMsisdn(sender),Constants.TRANSFER_TYPE_PAYMENT)
+
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getPaymentResponseListner.postValue(result)
+
+                        } else {
+                            getPaymentResponseListner.postValue(result)
                         }
 
 

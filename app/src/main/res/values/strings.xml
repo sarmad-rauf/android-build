@@ -127,4 +127,16 @@
     <string name="transfer_type">Transfer Type</string>
     <string name="enter_receiver_s_mobile_number_caps">ENTER RECEIVER\'S MOBILE NUMBER</string>
     <string name="select_favorite">SELECT FAVORITE</string>
+    <string name="alert">Alert</string>
+    <string name="dear_customer">Dear Customer</string>
+    <string name="yes">Yes</string>
+    <string name="no">NO</string>
+    <string name="receiver_s_name">Receiver\'s Name</string>
+    <string name="receiver_s_mobile_number">Receiver\'s Number</string>
+    <string name="source">Source</string>
+    <string name="wallet">Wallet</string>
+    <string name="bill">Bill</string>
+    <string name="fee">Fee</string>
+    <string name="transaction_id">Transaction ID</string>
+    <string name="total_cost">Total Cost</string>
 </resources>

@@ -17,6 +17,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorGreyLight"
+    android:focusableInTouchMode="true"
     >
 
     <com.es.marocapp.widgets.MarocMediumTextView
@@ -55,8 +56,14 @@
                 android:layout_marginBottom="@dimen/_12sdp"
                 android:background="@android:color/transparent"
                 android:hint="0.00"
-                android:inputType="number"
+                android:imeOptions="actionDone"
+                android:focusableInTouchMode="true"
+                android:focusable="true"
+                android:inputType="numberDecimal"
+                android:digits="0123456789."
+                android:cursorVisible="false"
                 android:textAlignment="center"
+                android:textColorHint="@color/colorEditTextGreyMedium"
                 android:textColor="@color/colorGreyDark"
                 android:textSize="@dimen/_35sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -111,84 +118,96 @@
         app:layout_constraintTop_toBottomOf="@+id/AmountSeekBar" />
 
 
-    <com.es.marocapp.widgets.MarocMediumTextView
-        android:id="@+id/quickRechargeBtnOne"
-        android:layout_width="0sp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_16sdp"
+<!--    <com.es.marocapp.widgets.MarocMediumTextView-->
+<!--        android:id="@+id/quickRechargeBtnOne"-->
+<!--        android:layout_width="0sp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/_16sdp"-->
+<!--        android:layout_marginTop="@dimen/_16sdp"-->
+<!--        app:layout_constraintHorizontal_chainStyle="spread_inside"-->
+<!--        android:background="@drawable/button_quick_recharge_disable"-->
+<!--        android:paddingStart="@dimen/_16sdp"-->
+<!--        android:paddingTop="@dimen/_8sdp"-->
+<!--        android:paddingEnd="@dimen/_16sdp"-->
+<!--        android:paddingBottom="@dimen/_8sdp"-->
+<!--        android:text="DH50"-->
+<!--        android:layout_marginEnd="@dimen/_8sdp"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="@color/colorTextGreyMedium"-->
+<!--        android:textSize="@dimen/_16ssp"-->
+<!--        app:layout_constraintHorizontal_weight="1.5"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/quickRechargeBtnTwo"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tvQuickAmountTitle" />-->
+
+<!--    <com.es.marocapp.widgets.MarocMediumTextView-->
+<!--        android:id="@+id/quickRechargeBtnTwo"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/button_quick_recharge_disable"-->
+<!--        android:paddingStart="@dimen/_16sdp"-->
+<!--        android:paddingTop="@dimen/_8sdp"-->
+<!--        android:paddingEnd="@dimen/_16sdp"-->
+<!--        android:paddingBottom="@dimen/_8sdp"-->
+<!--        android:text="DH100"-->
+<!--        android:layout_marginEnd="@dimen/_8sdp"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="@color/colorTextGreyMedium"-->
+<!--        android:textSize="@dimen/_16ssp"-->
+<!--        app:layout_constraintHorizontal_weight="1.5"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/quickRechargeBtnOne"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/quickRechargeBtnThree"-->
+<!--        app:layout_constraintStart_toEndOf="@id/quickRechargeBtnOne" />-->
+
+<!--    <com.es.marocapp.widgets.MarocMediumTextView-->
+<!--        android:id="@+id/quickRechargeBtnThree"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/button_quick_recharge_disable"-->
+<!--        android:paddingStart="@dimen/_16sdp"-->
+<!--        android:paddingTop="@dimen/_8sdp"-->
+<!--        android:paddingEnd="@dimen/_16sdp"-->
+<!--        android:paddingBottom="@dimen/_8sdp"-->
+<!--        android:text="DH200"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="@color/colorTextGreyMedium"-->
+<!--        android:textSize="@dimen/_16ssp"-->
+<!--        android:layout_marginEnd="@dimen/_16sdp"-->
+<!--        app:layout_constraintHorizontal_weight="1.7"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/quickRechargeBtnOne"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@id/quickRechargeBtnTwo" />-->
+
+<!--    <com.es.marocapp.widgets.MarocMediumTextView-->
+<!--        android:id="@+id/quickRechargeBtnFour"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/_8sdp"-->
+<!--        android:background="@drawable/button_quick_recharge_disable"-->
+<!--        android:paddingStart="@dimen/_25sdp"-->
+<!--        android:paddingTop="@dimen/_8sdp"-->
+<!--        android:paddingEnd="@dimen/_25sdp"-->
+<!--        android:paddingBottom="@dimen/_8sdp"-->
+<!--        android:text="DH500"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="@color/colorTextGreyMedium"-->
+<!--        android:textSize="@dimen/_16ssp"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/quickRechargeBtnOne"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/quickRechargeBtnOne" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/quickAmountRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/_16sdp"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        android:background="@drawable/button_quick_recharge_disable"
-        android:paddingStart="@dimen/_16sdp"
-        android:paddingTop="@dimen/_8sdp"
-        android:paddingEnd="@dimen/_16sdp"
-        android:paddingBottom="@dimen/_8sdp"
-        android:text="DH50"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:textAlignment="center"
-        android:textColor="@color/colorTextGreyMedium"
-        android:textSize="@dimen/_16ssp"
-        app:layout_constraintHorizontal_weight="1.5"
-        app:layout_constraintEnd_toStartOf="@+id/quickRechargeBtnTwo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvQuickAmountTitle" />
-
-    <com.es.marocapp.widgets.MarocMediumTextView
-        android:id="@+id/quickRechargeBtnTwo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_quick_recharge_disable"
-        android:paddingStart="@dimen/_16sdp"
-        android:paddingTop="@dimen/_8sdp"
-        android:paddingEnd="@dimen/_16sdp"
-        android:paddingBottom="@dimen/_8sdp"
-        android:text="DH100"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:textAlignment="center"
-        android:textColor="@color/colorTextGreyMedium"
-        android:textSize="@dimen/_16ssp"
-        app:layout_constraintHorizontal_weight="1.5"
-        app:layout_constraintBottom_toBottomOf="@+id/quickRechargeBtnOne"
-        app:layout_constraintEnd_toStartOf="@+id/quickRechargeBtnThree"
-        app:layout_constraintStart_toEndOf="@id/quickRechargeBtnOne" />
-
-    <com.es.marocapp.widgets.MarocMediumTextView
-        android:id="@+id/quickRechargeBtnThree"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_quick_recharge_disable"
-        android:paddingStart="@dimen/_16sdp"
-        android:paddingTop="@dimen/_8sdp"
-        android:paddingEnd="@dimen/_16sdp"
-        android:paddingBottom="@dimen/_8sdp"
-        android:text="DH200"
-        android:textAlignment="center"
-        android:textColor="@color/colorTextGreyMedium"
-        android:textSize="@dimen/_16ssp"
+        android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_16sdp"
-        app:layout_constraintHorizontal_weight="1.7"
-        app:layout_constraintBottom_toBottomOf="@+id/quickRechargeBtnOne"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/quickRechargeBtnTwo" />
-
-    <com.es.marocapp.widgets.MarocMediumTextView
-        android:id="@+id/quickRechargeBtnFour"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:background="@drawable/button_quick_recharge_disable"
-        android:paddingStart="@dimen/_25sdp"
-        android:paddingTop="@dimen/_8sdp"
-        android:paddingEnd="@dimen/_25sdp"
-        android:paddingBottom="@dimen/_8sdp"
-        android:text="DH500"
-        android:textAlignment="center"
-        android:textColor="@color/colorTextGreyMedium"
-        android:textSize="@dimen/_16ssp"
-        app:layout_constraintStart_toStartOf="@+id/quickRechargeBtnOne"
-        app:layout_constraintTop_toBottomOf="@+id/quickRechargeBtnOne" />
+        app:layout_constraintTop_toBottomOf="@+id/tvQuickAmountTitle"
+        app:layout_constraintBottom_toTopOf="@+id/btnNext"
+        />
 
     <com.es.marocapp.widgets.MarocButton
+        android:id="@+id/btnNext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16sdp"

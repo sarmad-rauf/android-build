@@ -12,9 +12,11 @@ import com.es.marocapp.databinding.FragmentFundsTransferEnterMsisdnBinding
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.favorites.FavoritesActivity
+import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyViewModel
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.DialogUtils
 
 class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisdnBinding>(),
     FundsTrasnferClickLisntener {
@@ -55,12 +57,27 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
     }
 
     private fun subscribeObserver() {
+        mActivityViewModel.errorText.observe(this@FundsTransferMsisdnFragment, Observer {
+            DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it)
+        })
+
         mActivityViewModel.getAccountHolderAdditionalInfoResponseListner.observe(this@FundsTransferMsisdnFragment,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                    (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
+                    if(it.additionalinformation.isNullOrEmpty()){
+                        mActivityViewModel.isUserRegistered.set(false)
+                        (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
+                    }else{
+                        if(it.additionalinformation[0].value.equals("TRUE",true)){
+                            mActivityViewModel.isUserRegistered.set(true)
+                            (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
+                        }else{
+                            mActivityViewModel.isUserRegistered.set(false)
+                            (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
+                        }
+                    }
                 }else{
-                    Toast.makeText(activity,"API Failed",Toast.LENGTH_SHORT).show()
+                    DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
                 }
             }
         )
@@ -70,7 +87,8 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                     mActivityViewModel.requestForAccountHolderAddtionalInformationApi(activity)
                 }else{
-                    Toast.makeText(activity,"API Failed",Toast.LENGTH_SHORT).show()
+                    mActivityViewModel.isUserRegistered.set(false)
+                    (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
                 }
             }
         )

@@ -13,6 +13,7 @@ import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
+import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 
 class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), ForgotPasswordClickListner{
@@ -38,12 +39,15 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
     }
 
     private fun subsribeObserver() {
+        mActivityViewModel.errorText.observe(this@ForgotPasswordFragment, Observer {
+            DialogUtils.showErrorDialoge(activity as LoginActivity,it)
+        })
 
         val mForgotPasswordListener = Observer<ForgotPasswordResponse>{
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                (activity as LoginActivity).navController.popBackStack(R.id.forgotPasswordFragment,false)
+                (activity as LoginActivity).navController.popBackStack(R.id.signUpNumberFragment,false)
             }else{
-                Toast.makeText(activity,"API Failed",Toast.LENGTH_SHORT).show()
+                DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
             }
         }
 
@@ -51,7 +55,50 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
     }
 
     override fun onChangePasswordClickListner(view: View) {
-        mActivityViewModel.requestForForgotPasswordAPI(activity,mDataBinding.inputForgotPassword.text.toString().trim(),mDataBinding.inputForgotOtp.text.toString().trim())
+        if(isValidForAll()){
+            if(mDataBinding.inputForgotPassword.text.toString().trim().equals(mDataBinding.inputForgotConfirmPassword.text.toString().trim())){
+                mDataBinding.inputLayoutConfirmPassword.error = ""
+                mDataBinding.inputLayoutConfirmPassword.isErrorEnabled = false
+                mActivityViewModel.requestForForgotPasswordAPI(activity,mDataBinding.inputForgotPassword.text.toString().trim(),mDataBinding.inputForgotOtp.text.toString().trim())
+            }else{
+                mDataBinding.inputLayoutConfirmPassword.error = "Please Enter Same Password"
+                mDataBinding.inputLayoutConfirmPassword.isErrorEnabled = true
+            }
+        }
+    }
+
+    private fun isValidForAll(): Boolean {
+
+        var isValidForAll = true
+
+        if(mDataBinding.inputForgotOtp.text.isNullOrEmpty()){
+            isValidForAll = false
+            mDataBinding.inputLayoutOtp.error = "Please Enter Valid Mobile Number"
+            mDataBinding.inputLayoutOtp.isErrorEnabled = true
+        }else{
+            mDataBinding.inputLayoutOtp.error = ""
+            mDataBinding.inputLayoutOtp.isErrorEnabled = false
+        }
+
+        if(mDataBinding.inputForgotPassword.text.isNullOrEmpty()){
+            isValidForAll = false
+            mDataBinding.inputLayoutSetYourPassword.error = "Please Enter Valid Mobile Number"
+            mDataBinding.inputLayoutSetYourPassword.isErrorEnabled = true
+        }else{
+            mDataBinding.inputLayoutSetYourPassword.error = ""
+            mDataBinding.inputLayoutSetYourPassword.isErrorEnabled = false
+        }
+
+        if(mDataBinding.inputForgotConfirmPassword.text.isNullOrEmpty()){
+            isValidForAll = false
+            mDataBinding.inputLayoutConfirmPassword.error = "Please Enter Valid Mobile Number"
+            mDataBinding.inputLayoutConfirmPassword.isErrorEnabled = true
+        }else{
+            mDataBinding.inputLayoutConfirmPassword.error = ""
+            mDataBinding.inputLayoutConfirmPassword.isErrorEnabled = false
+        }
+
+        return isValidForAll
     }
 
 

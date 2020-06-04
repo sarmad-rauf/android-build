@@ -10,6 +10,8 @@ import com.es.marocapp.databinding.FragmentPinBinding
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.login.LoginActivity
+import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.fragment_pin.*
 
 class PinFragment : BaseFragment<FragmentPinBinding>(), ChangePasswordClickListener {
@@ -38,11 +40,15 @@ class PinFragment : BaseFragment<FragmentPinBinding>(), ChangePasswordClickListe
     }
 
     private fun subscribeObserver() {
+        pinViewModel.errorText.observe(this@PinFragment, Observer {
+            DialogUtils.showErrorDialoge(activity as MainActivity,it)
+        })
+
         pinViewModel.getChangePassResponseListner.observe(this@PinFragment, Observer {
             if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                 Toast.makeText(activity, "Password Changed Successfully", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(activity, "API Failed", Toast.LENGTH_SHORT).show()
+                DialogUtils.showErrorDialoge(activity as MainActivity,it.description)
             }
         })
     }

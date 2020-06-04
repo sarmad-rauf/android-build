@@ -25,6 +25,7 @@ import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 import java.util.*
 import java.util.regex.Pattern
@@ -72,17 +73,25 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
     }
 
     private fun subscribeObserver() {
+        mActivityViewModel.errorText.observe(this@SignUpDetailFragment, Observer {
+            DialogUtils.showErrorDialoge(activity as LoginActivity,it)
+        })
+
         val mInitialAuthDetailsResonseObserver = Observer<GetInitialAuthDetailsReponse>{
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
 
                 mActivityViewModel.requestForGetOTPForRegistrationApi(activity,mDataBinding.inputFirstName.text.toString().trim(),mDataBinding.inputLastName.text.toString().trim()
                     ,mDataBinding.inputNationalID.text.toString().trim())
+            }else{
+                DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
             }
         }
 
         val mOTPForRegistrationResonseObserver = Observer<GetOtpForRegistrationResponse>{
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                 (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_verifyNumberFragment)
+            }else{
+                DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
             }
         }
 

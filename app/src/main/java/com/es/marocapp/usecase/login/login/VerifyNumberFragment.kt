@@ -16,6 +16,7 @@ import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 
 /**
@@ -54,11 +55,15 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
     }
 
     private fun subscribeObserver() {
+        mActivityViewModel.errorText.observe(this@VerifyNumberFragment, Observer {
+            DialogUtils.showErrorDialoge(activity as LoginActivity,it)
+        })
+
         val mRegisterUserResonseObserver = Observer<RegisterUserResponse>{
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                 (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_setYourPinFragment)
             }else{
-                Toast.makeText(activity as LoginActivity,"Failed", Toast.LENGTH_SHORT).show()
+                DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
             }
         }
 

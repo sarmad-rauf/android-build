@@ -59,4 +59,16 @@ object EndPoints {
     //transfer/quote
     const val transfer_quote = "transfer/quote"
 
+    //merchantpayment/quote
+    const val merchantpayment_quote = "merchantpayment/quote"
+
+    //merchantpayment
+    const val merchantpayment = "merchantpayment"
+
+    //payment/quote
+    const val payment_quote = "payment/quote"
+
+    //payment
+    const val payment = "payment"
+
 }

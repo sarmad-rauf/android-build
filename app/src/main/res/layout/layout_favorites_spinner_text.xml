@@ -6,7 +6,7 @@
     android:gravity="left|center_vertical"
     android:text="payments"
     android:textColor="@color/colorGreyDark"
-    android:textSize="@dimen/_16ssp"
+    android:textSize="@dimen/_14ssp"
     android:textStyle="bold"
     app:textAllCaps="true"
     xmlns:android="http://schemas.android.com/apk/res/android"

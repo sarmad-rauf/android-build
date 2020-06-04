@@ -27,7 +27,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     var activeUserWithoutPasswordType : ObservableField<Boolean> = ObservableField(false)
     lateinit var accountHolderInfoResponse : GetAccountHolderInformationResponse
     var isLoading = ObservableField<Boolean>()
-    var errorText = MutableLiveData<String>()
+    var errorText = SingleLiveEvent<String>()
     lateinit var disposable: Disposable
 
     var mUserMsisdn = ""
@@ -579,7 +579,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                             getLoginWithCertResponseListner.postValue(result)
 
                         } else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                            getLoginWithCertResponseListner.postValue(result)
                         }
 
 

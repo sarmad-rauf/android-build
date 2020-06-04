@@ -93,7 +93,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_16sdp"
                             android:layout_marginTop="@dimen/_32sdp"
-                            android:text="@string/company_name"
+                            android:text="@string/source"
                             android:textColor="@color/colorTextGreyDark"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintEnd_toStartOf="@+id/tvCompanyNameVal"
@@ -107,7 +107,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/_16sdp"
-                            android:text="Company A"
+                            android:text="@string/wallet"
                             android:textColor="@color/colorTextGreyDark"
                             android:textSize="@dimen/_14sdp"
                             app:layout_constraintBottom_toBottomOf="@+id/tvCompanyNameTitle"
@@ -120,7 +120,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_16sdp"
-                            android:text="@string/owner_name"
+                            android:text="@string/transaction_id"
                             android:textColor="@color/colorTextGreyDark"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="@+id/tvCompanyNameTitle"
@@ -141,7 +141,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_16sdp"
-                            android:text="@string/contact_number"
+                            android:text="@string/receiver_s_name"
                             android:textColor="@color/colorTextGreyDark"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="@+id/tvOwnerNameTitle"
@@ -158,6 +158,28 @@
                             app:layout_constraintBottom_toBottomOf="@+id/tvContactNumTitle"
                             app:layout_constraintEnd_toEndOf="@+id/tvOwnerNameVal" />
 
+                        <com.es.marocapp.widgets.MarocLightTextView
+                            android:id="@+id/tvReceiverNumberTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:text="@string/receiver_s_mobile_number"
+                            android:textColor="@color/colorTextGreyDark"
+                            android:textSize="@dimen/_12sdp"
+                            app:layout_constraintStart_toStartOf="@+id/tvOwnerNameTitle"
+                            app:layout_constraintTop_toBottomOf="@+id/tvContactNumTitle" />
+
+                        <com.es.marocapp.widgets.MarocRegularTextView
+                            android:id="@+id/tvReceiverNumberVal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:text="+212 88716 9918"
+                            android:textColor="@color/colorTextGreyDark"
+                            android:textSize="@dimen/_14sdp"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvReceiverNumberTitle"
+                            app:layout_constraintEnd_toEndOf="@+id/tvOwnerNameVal" />
+
                         <ImageView
                             android:id="@+id/dottedLine1"
                             android:layout_width="match_parent"
@@ -165,14 +187,14 @@
                             android:layout_marginTop="@dimen/_16sdp"
                             android:layerType="software"
                             android:src="@drawable/dotted"
-                            app:layout_constraintTop_toBottomOf="@+id/tvContactNumVal" />
+                            app:layout_constraintTop_toBottomOf="@+id/tvReceiverNumberTitle" />
 
                         <com.es.marocapp.widgets.MarocLightTextView
                             android:id="@+id/tvOwnerNameTitle2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_16sdp"
-                            android:text="@string/owner_name"
+                            android:text="@string/amount"
                             android:textColor="@color/colorTextGreyDark"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="@+id/tvCompanyNameTitle"
@@ -193,7 +215,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_16sdp"
-                            android:text="@string/contact_number"
+                            android:text="@string/fee"
                             android:textColor="@color/colorTextGreyDark"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="@+id/tvOwnerNameTitle2"
@@ -224,7 +246,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:text="DH 10.00"
+                            android:text="@string/total_cost"
                             android:textColor="@color/colorTextGreyDark"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="@+id/tvOwnerNameTitle"
@@ -247,6 +269,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:text="DH 0.00"
+                            android:visibility="gone"
                             android:textColor="@color/colorTextGreyDark"
                             android:textSize="@dimen/_12sdp"
                             app:layout_constraintStart_toStartOf="@+id/tvOwnerNameTitle"
@@ -258,6 +281,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_8sdp"
                             android:text="DH 0.00"
+                            android:visibility="gone"
                             android:textColor="@color/colorTextGreyDark"
                             android:textSize="@dimen/_14sdp"
                             app:layout_constraintEnd_toEndOf="@+id/tvOwnerNameVal"

@@ -17,6 +17,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorGreyLight"
+    android:focusableInTouchMode="true"
     >
 
     <com.google.android.material.textfield.TextInputLayout
@@ -34,6 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/myTextInputLabel"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
             android:textSize="@dimen/_14ssp"
             android:hint="@string/enter_receiver_s_mobile_number_caps"
             android:inputType="phone"

@@ -19,6 +19,7 @@ import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.DialogUtils
 
 /**
  * A simple [Fragment] subclass.
@@ -47,6 +48,11 @@ class LoginUserFragment : BaseFragment<FragmentSignUpNumberBinding>(), LoginClic
     }
 
     private fun subscribeObserver() {
+
+        mActivityViewModel.errorText.observe(this@LoginUserFragment, Observer {
+            DialogUtils.showErrorDialoge(activity as LoginActivity,it)
+        })
+
         val mBalanceInfoAndLimtListner = Observer<BalanceInfoAndLimitResponse> {
             if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                 Constants.balanceInfoAndResponse = it
@@ -55,7 +61,7 @@ class LoginUserFragment : BaseFragment<FragmentSignUpNumberBinding>(), LoginClic
                     MainActivity::class.java
                 )
             } else {
-                Toast.makeText(activity, "Failed", Toast.LENGTH_SHORT).show()
+                DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
             }
         }
 
@@ -71,7 +77,7 @@ class LoginUserFragment : BaseFragment<FragmentSignUpNumberBinding>(), LoginClic
             } else {
                 Constants.HEADERS_AFTER_LOGINS = false
                 Constants.LOGGED_IN_USER = ""
-                Toast.makeText(activity, "Failed", Toast.LENGTH_SHORT).show()
+                DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
             }
         }
 
@@ -87,11 +93,11 @@ class LoginUserFragment : BaseFragment<FragmentSignUpNumberBinding>(), LoginClic
 
     override fun onLoginButtonClick(view: View) {
         if (mDataBinding.inputPin.text.toString() == "") {
-            mDataBinding.inputLayoutPhoneNumber.error = "Please Enter Valid Password"
-            mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+            mDataBinding.inputLayoutPin.error = "Please Enter Valid Password"
+            mDataBinding.inputLayoutPin.isErrorEnabled = true
         } else {
-            mDataBinding.inputLayoutPhoneNumber.error = ""
-            mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+            mDataBinding.inputLayoutPin.error = ""
+            mDataBinding.inputLayoutPin.isErrorEnabled = false
 
             //For Testing For without API Calling moving to Next Fragment uncomment below LineE
 //            (activity as LoginActivity).startNewActivityAndClear(activity as LoginActivity, MainActivity::class.java)
