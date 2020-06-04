@@ -14,6 +14,7 @@ import com.es.marocapp.databinding.ActivityMainBinding
 import com.es.marocapp.usecase.accountdetails.AccountDetailsActivity
 import com.es.marocapp.usecase.favorites.FavoritesActivity
 import com.es.marocapp.usecase.termsandcondiitons.TermsAndConditions
+import com.es.marocapp.utils.Constants
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 
@@ -52,7 +53,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         navView.setupWithNavController(navController)
 
         // Obtain the FirebaseAnalytics instance.
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
+        mDataBinding.toolbarName.text = "Hi, ${Constants.balanceInfoAndResponse.firstname} ${Constants.balanceInfoAndResponse.surname}"
     }
 
     override fun setLayout(): Int {
@@ -77,18 +80,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     }
 
     override fun onDrawerMenuContactUsClick(view: View) {
+        mDataBinding.drawerLayout.closeDrawer(GravityCompat.START)
         var myBundle : Bundle = Bundle()
         myBundle.putString("title","Contact Us")
         startNewActivity(this@MainActivity,TermsAndConditions::class.java,myBundle)
     }
 
     override fun onDrawerMenuFAQsClick(view: View) {
+        mDataBinding.drawerLayout.closeDrawer(GravityCompat.START)
+
         var myBundle : Bundle = Bundle()
         myBundle.putString("title","FAQs")
         startNewActivity(this@MainActivity,TermsAndConditions::class.java,myBundle)
     }
 
     override fun onDrawerMenuTermsAndConditionClick(view: View) {
+        mDataBinding.drawerLayout.closeDrawer(GravityCompat.START)
         var myBundle : Bundle = Bundle()
         myBundle.putString("title","Term & Conditions")
         startNewActivity(this@MainActivity,TermsAndConditions::class.java,myBundle)

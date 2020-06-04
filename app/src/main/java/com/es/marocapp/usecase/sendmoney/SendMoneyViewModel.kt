@@ -32,6 +32,8 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
     var trasferTypeSelected = ObservableField<String>()
     var isUserRegistered = ObservableField<Boolean>()
+    var isFundTransferUseCase = ObservableField<Boolean>()
+    var isInitiatePaymenetToMerchantUseCase = ObservableField<Boolean>()
 
     var transferdAmountTo = ""
     var amountToTransfer = ""
@@ -317,8 +319,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
     //Request For Merchant
     fun requestFoMerchantApi(context: Context?,
-                             receierMsisdn : String,
-                             amount : String,
+                             sender : String,
                              qouteID : String
     )
     {
@@ -328,7 +329,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getMerchantPaymentCall(
-                MerchantPaymentRequest(amount,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,receierMsisdn)
+                MerchantPaymentRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,Constants.getNumberMsisdn(sender),Constants.getNumberMsisdn(transferdAmountTo))
             )
                 .compose(applyIOSchedulers())
                 .subscribe(

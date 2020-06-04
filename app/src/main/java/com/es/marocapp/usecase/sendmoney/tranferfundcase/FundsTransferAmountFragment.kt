@@ -100,6 +100,19 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
             }
         })
 
+        mActivityViewModel.getMerchantQouteResponseListner.observe(this@FundsTransferAmountFragment,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    if(it.quoteList.isNotEmpty()){
+                        mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
+                        mActivityViewModel.qouteId = it.quoteList[0].quoteid
+                    }
+                    (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferAmountFragment_to_fundTransferConfirmationFragment)
+                }else{
+                    DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                }
+            })
+
         mActivityViewModel.getPaymentQouteResponseListner.observe(this@FundsTransferAmountFragment,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
@@ -122,7 +135,13 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
             return
         }
         if(mActivityViewModel.isUserRegistered.get()!!){
-            mActivityViewModel.requestFoTransferQouteApi(activity,sAmount)
+            if(mActivityViewModel.isFundTransferUseCase.get()!!){
+                mActivityViewModel.requestFoTransferQouteApi(activity,sAmount)
+            }
+
+            if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
+                mActivityViewModel.requestFoMerchantQouteApi(activity,sAmount)
+            }
         }else{
             mActivityViewModel.requestFoPaymentQouteApi(activity,sAmount,Constants.CURRENT_USER_MSISDN)
         }

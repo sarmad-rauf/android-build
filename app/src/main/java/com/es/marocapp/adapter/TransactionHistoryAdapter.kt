@@ -9,7 +9,9 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.es.marocapp.R
 import com.es.marocapp.model.CustomModelHistoryItem
+import com.es.marocapp.utils.Constants
 import java.util.*
+import kotlin.collections.ArrayList
 
 class TransactionHistoryAdapter(
     models: ArrayList<CustomModelHistoryItem>?,
@@ -19,6 +21,7 @@ class TransactionHistoryAdapter(
     private var models: ArrayList<CustomModelHistoryItem>?
     var context: Context? = null
     var listner: HistoryDetailListner
+
     fun updateList(arrayList: ArrayList<CustomModelHistoryItem>?) {
         models = arrayList
         notifyDataSetChanged()
@@ -56,9 +59,9 @@ class TransactionHistoryAdapter(
             holder.headerTextViewLabel!!.visibility = View.GONE
             holder.dataContainer!!.visibility = View.VISIBLE
 
-            holder.tvBillType?.text = models!![position].billType
-            holder.tvCompanyName?.text = models!![position].companyName
-            holder.tvBillAmount?.text = models!![position].amount
+            holder.tvBillType?.text = models!![position].historyList.transfertype
+            holder.tvCompanyName?.text = models!![position].historyList.toname
+            holder.tvBillAmount?.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+models!![position].historyList.fromamount
             holder.tvBillDate?.text = models!![position].date
         }
     }
@@ -69,6 +72,11 @@ class TransactionHistoryAdapter(
         } else {
             0
         }
+    }
+
+    fun updateHistoryList(newList : ArrayList<CustomModelHistoryItem>){
+        models?.addAll(newList)
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {

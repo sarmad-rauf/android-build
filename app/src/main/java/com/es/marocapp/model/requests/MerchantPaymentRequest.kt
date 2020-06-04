@@ -4,5 +4,6 @@ data class MerchantPaymentRequest(
     val amount: String,
     val context: String,
     val quoteid: String,
-    val `receiver`: String
+    val sender: String,
+    val receiver: String
 )

@@ -8,7 +8,6 @@ import android.text.format.Formatter.formatIpAddress
 import com.es.marocapp.model.responses.BalanceInfoAndLimitResponse
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 object Constants {
@@ -46,6 +45,16 @@ object Constants {
 
     //Responses
     lateinit var balanceInfoAndResponse : BalanceInfoAndLimitResponse
+
+    fun getCurrentDate() : String{
+        val calendar = Calendar.getInstance(TimeZone.getDefault())
+
+        val currentYear = calendar[Calendar.YEAR].toString()
+        val currentMonth = (calendar[Calendar.MONTH] + 1).toString()
+        val currentDay = calendar[Calendar.DAY_OF_MONTH].toString()
+        var formattedDate = "$currentYear-$currentMonth-$currentDay"
+        return formattedDate
+    }
 
     fun createUserToken() : String{
         var token = SimpleDateFormat("yyyyMMddHHmmssSS")

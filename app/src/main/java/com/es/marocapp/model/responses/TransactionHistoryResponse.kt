@@ -1,31 +1,37 @@
-package com.es.marocapp.model
+package com.es.marocapp.model.responses
 
-import com.es.marocapp.model.responses.History
+data class TransactionHistoryResponse(
+    val description: String,
+    val historyResponse: List<HistoryResponse>,
+    val indexoffset: String,
+    val responseCode: String,
+    val totalCount: String
+)
 
-class CustomModelHistoryItem(var typeOfData : Int,
-                             var date : String,
-                             val historyList: History
-                             )
+data class HistoryResponse(
+    val date: String,
+    val historyList: List<History>
+)
 
 data class History(
     val communicationchannel: String,
     val date: String,
     val fromaccount: String,
-    val fromaccountholder: String,
+    val fromaccountholder: Any,
     val fromamount: String,
     val fromavailablebalance: String,
-    val fromcommittedbalance: String,
+    val fromcommittedbalance: Any,
     val fromfee: String,
-    val fromfri: String,
+    val fromfri: Any,
     val fromname: String,
-    val fromnote: String,
-    val fromposmsisdn: String,
+    val fromnote: Any,
+    val fromposmsisdn: Any,
     val fromtotalbalance: String,
-    val initiatingaccountholder: String,
-    val initiatinguser: String,
+    val initiatingaccountholder: Any,
+    val initiatinguser: Any,
     val originalamount: String,
-    val providercategory: String,
-    val realuser: String,
+    val providercategory: Any,
+    val realuser: Any,
     val toaccount: String,
     val toaccountholder: String,
     val toamount: String,
@@ -33,9 +39,9 @@ data class History(
     val tocommittedbalance: String,
     val tofee: String,
     val tofri: String,
-    val tomessage: String,
+    val tomessage: Any,
     val toname: String,
-    val toposmsisdn: String,
+    val toposmsisdn: Any,
     val tototalbalance: String,
     val transactionid: String,
     val transactionstatus: String,
