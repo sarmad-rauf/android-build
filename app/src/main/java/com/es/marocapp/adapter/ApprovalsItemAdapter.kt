@@ -7,10 +7,10 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.es.marocapp.R
+import com.es.marocapp.model.responses.Approvaldetail
 
-class ApprovalsItemAdapter(private val approvalsItems : ArrayList<String>,
-                           private val approvalsItemsType : ArrayList<String>,
-                           var listner : ApprovalItemClickListner) : RecyclerView.Adapter<ApprovalsItemAdapter.ApprovalsItemViewHolder>() {
+class ApprovalsItemAdapter(private val approvalsItems: ArrayList<Approvaldetail>,
+                           var listner: ApprovalItemClickListner) : RecyclerView.Adapter<ApprovalsItemAdapter.ApprovalsItemViewHolder>() {
 
     override fun getItemCount() = approvalsItems.size
 
@@ -20,8 +20,8 @@ class ApprovalsItemAdapter(private val approvalsItems : ArrayList<String>,
     }
 
     override fun onBindViewHolder(holder: ApprovalsItemViewHolder, position: Int) {
-        holder.approvalItemName.text = approvalsItems[position]
-        holder.approvalItemType.text = approvalsItemsType[position]
+        holder.approvalItemName.text = approvalsItems[position].approvaltype
+       // holder.approvalItemType.text = approvalsItemsType[position]
 
         holder.mApprovalsItemLayout.setOnClickListener {
             listner.onApprovalItemTypeClick()

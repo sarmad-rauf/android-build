@@ -32,15 +32,6 @@ class ApprovalViewModel(application: Application) : AndroidViewModel(application
     var getUsersApprovalResponseListner = SingleLiveEvent<UserApprovalResponse>()
 
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is Approvals Fragment"
-    }
-    val text: LiveData<String> = _text
-
-    init {
-
-    }
-
     //Request For Get Approvals
     fun requestForGetApprovalsApi(context: Context?)
     {

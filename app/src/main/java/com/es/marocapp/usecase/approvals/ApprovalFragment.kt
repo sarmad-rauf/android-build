@@ -1,23 +1,27 @@
 package com.es.marocapp.usecase.approvals
 
 import android.os.Bundle
-import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.ApprovalsItemAdapter
 import com.es.marocapp.databinding.FragmentApprovalBinding
+import com.es.marocapp.model.responses.Approvaldetail
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
 
 class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
 
+    companion object{
+        const val SELECTED_APPROVAL_KEY="selected_approval"
+    }
+
     private lateinit var approvalViewModel: ApprovalViewModel
     private lateinit var mApprovalsItemAdapter: ApprovalsItemAdapter
-    private var mApprovalName : ArrayList<String> = ArrayList()
-    private var mApprovalType : ArrayList<String> = ArrayList()
+    private var mApprovalsList : ArrayList<Approvaldetail> = ArrayList()
 
     override fun setLayout(): Int {
         return R.layout.fragment_approval
@@ -32,23 +36,14 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
 
 //        approvalViewModel.requestForApprovalsApi(context)
 
-        mApprovalName.apply {
-            add("Marketplace")
-            add("Operations")
-            add("Marketplace")
-        }
-
-        mApprovalType.apply {
-            add("DEBIT")
-            add("Withdrawal")
-            add("DEBIT")
-        }
-
         approvalViewModel.requestForGetApprovalsApi(activity)
 
-        mApprovalsItemAdapter = ApprovalsItemAdapter(mApprovalName,mApprovalType, object : ApprovalsItemAdapter.ApprovalItemClickListner{
+        mApprovalsItemAdapter = ApprovalsItemAdapter(mApprovalsList, object : ApprovalsItemAdapter.ApprovalItemClickListner{
             override fun onApprovalItemTypeClick() {
-                (activity as MainActivity).navController.navigate(R.id.action_navigation_approval_to_approvalDetailFragment)
+              //  val bundle= bundleOf("data",mApprovalsList.get(0) as ArrayList<Approvaldetail>)
+                val b = Bundle()
+                b.putParcelable(SELECTED_APPROVAL_KEY, mApprovalsList.get(0) as Approvaldetail)
+                (activity as MainActivity).navController.navigate(R.id.action_navigation_approval_to_approvalDetailFragment,b)
             }
 
         })
@@ -60,16 +55,20 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
 
         (activity as MainActivity).setHomeToolbarVisibility(false)
 
-        subscribeObserver()
+        subsribeForApprovalsDataObserver()
 
     }
 
-    private fun subscribeObserver() {
+    private fun subsribeForApprovalsDataObserver() {
         approvalViewModel.getApprovalResponseListner.observe(this, Observer {
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                approvalViewModel.requestForUserApprovalsApi(activity,"01","true")
+               // approvalViewModel.requestForUserApprovalsApi(activity,"01","true")
+                mApprovalsList.apply {
+                    addAll(it.approvaldetails as ArrayList<Approvaldetail>)
+                    mApprovalsItemAdapter.notifyDataSetChanged()
+                }
             }else{
-                Toast.makeText(activity,"Get Approvals APi Failed",Toast.LENGTH_SHORT).show()
+              //  Toast.makeText(activity,"Get Approvals APi Failed",Toast.LENGTH_SHORT).show()
             }
         })
     }

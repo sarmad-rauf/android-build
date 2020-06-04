@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,6 +8,10 @@
         <variable
             name="viewmodel"
             type="com.es.marocapp.usecase.approvals.ApprovalViewModel" />
+
+        <variable
+            name="listener"
+            type="com.es.marocapp.usecase.approvals.ApprovalClickListener" />
 
 
     </data>
@@ -45,6 +49,7 @@
             android:layout_height="@dimen/_32sdp"
             android:layout_marginStart="@dimen/_12sdp"
             android:src="@drawable/ic_back"
+            android:onClick="@{listener::onCancelButtonClick}"
             app:layout_constraintBottom_toTopOf="@+id/tvApprovalDetailsTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvApprovalDetailsTitle" />
@@ -87,7 +92,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_16sdp"
-                    android:text="Marketplace"
+                    tools:text="Marketplace"
                     android:textColor="@color/colorTextGreyDark"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/tvRequestIndicatorTitle"
@@ -111,7 +116,7 @@
                     android:id="@+id/tvIndicatorVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Marketplace"
+                    tools:text="Marketplace"
                     android:textColor="@color/colorTextGreyDark"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/tvIndicatorName"
@@ -141,7 +146,7 @@
                     android:id="@+id/tvApprovalTypeVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Debit"
+                    tools:text="Debit"
                     android:textColor="@color/colorTextGreyDark"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/tvApprovalTypeTitle"
@@ -162,7 +167,7 @@
                     android:id="@+id/tvApprovalIDVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="220002211"
+                    tools:text="220002211"
                     android:textColor="@color/colorTextGreyDark"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/tvApprovalIDTitle"
@@ -183,7 +188,7 @@
                     android:id="@+id/tvExourtVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="30 April 2020"
+                    tools:text="30 April 2020"
                     android:textColor="@color/colorTextGreyDark"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/tvExourtTitle"
@@ -213,7 +218,7 @@
                     android:id="@+id/tvTransactionFeeVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="DH0.00"
+                    tools:text="DH0.00"
                     android:textColor="@color/colorTextGreyDark"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/tvTransactionFeeTitle"
@@ -235,7 +240,7 @@
                     android:id="@+id/tvTotalVal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="DH 820.00"
+                    tools:text="DH 820.00"
                     android:textColor="@color/colorCerulean"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/tvTotalTitle"
@@ -252,6 +257,7 @@
             android:background="@drawable/button_enable_blue"
             android:padding="@dimen/_8sdp"
             android:text="@string/approve"
+            android:onClick="@{listener::onApproveButtonClick}"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/_16ssp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -268,6 +274,7 @@
             android:background="@drawable/button_disable"
             android:padding="@dimen/_8sdp"
             android:text="@string/cancel"
+            android:onClick="@{listener::onCancelButtonClick}"
             android:textColor="@color/colorTextGreyMedium"
             android:textSize="@dimen/_16ssp"
             app:layout_constraintBottom_toBottomOf="parent"
