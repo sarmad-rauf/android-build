@@ -46,8 +46,23 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                     Constants.HEADERS_FOR_PAYEMNTS = false
                     mActivityViewModel.senderBalanceAfter = it.senderBalanceAfter
+                    mActivityViewModel.transactionID = it.financialTransactionId
                     (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
                 }else{
+                    Constants.HEADERS_FOR_PAYEMNTS = false
+                    DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                }
+            })
+
+        mActivityViewModel.getPaymentResponseListner.observe(this@FundTransferConfirmationFragment,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    Constants.HEADERS_FOR_PAYEMNTS = false
+                    mActivityViewModel.senderBalanceAfter = it.senderBalanceafter
+                    mActivityViewModel.transactionID = it.transactionId
+                    (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
+                }else{
+                    Constants.HEADERS_FOR_PAYEMNTS = false
                     DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
                 }
             })

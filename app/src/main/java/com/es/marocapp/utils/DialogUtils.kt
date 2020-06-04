@@ -82,6 +82,7 @@ object DialogUtils{
                 passwordFieldInput.error = ""
                 passwordFieldInput.isErrorEnabled = false
                 listner.onDialogYesClickListner(password)
+                addDialog.dismiss()
             }
         }
     }

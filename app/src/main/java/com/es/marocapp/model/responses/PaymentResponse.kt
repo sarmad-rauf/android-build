@@ -6,13 +6,13 @@ data class PaymentResponse(
     val description: String,
     val discount: Any,
     val feeAmount: Any,
-    val financialReceiptResponse: Any,
+    val financialReceiptResponse: String,
     val masterPassTransactionId: Any,
     val responseCode: String,
-    val senderBalanceafter: Any,
+    val senderBalanceafter: String,
     val transDate: Any,
     val transTime: Any,
-    val transactionId: Any
+    val transactionId: String
 )
 
 data class Argument(
