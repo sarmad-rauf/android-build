@@ -10,11 +10,7 @@ import retrofit2.http.*
 
 interface NetworkApi {
 
-    // Request for Approvals Data
-    @GET(EndPoints.approvals)
-    fun getApprovals(): Observable<ResponseApprovals>
-
-    //Request for GetPreLoginDataCall
+     //Request for GetPreLoginDataCall
     @POST(EndPoints.getprelogindata)
     fun getPreLoginData(@Body request : GetPreLoginDataRequest) : Observable<GetPreLoginDataResponse>
 
@@ -113,4 +109,8 @@ interface NetworkApi {
     //Request for getmultipletransactionhistory
     @POST(EndPoints.gettransactionhistory)
     fun getMultipleTrasactionHistoryCall(@Body request : TransactionHistoryMultiplePaymentRequest) : Observable<TransactionHistoryResponse>
+
+    //Request for GetBalance
+    @POST(EndPoints.getbalance)
+    fun getBalance(@Body request : BalanceInfoAndLimtRequest) : Observable<GetBalanceResponse>
 }

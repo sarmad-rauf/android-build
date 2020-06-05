@@ -44,7 +44,7 @@
 
     <fragment
         android:id="@+id/approvalSuccessFragment"
-        android:name="com.es.marocapp.usecase.approvals.ApprovalSuccessFragment"
+        android:name="com.es.marocapp.usecase.approvals.approvalsuccess.ApprovalSuccessFragment"
         android:label="ApprovalSuccessFragment"
         tools:layout="@layout/fragment_approval_success">
     </fragment>

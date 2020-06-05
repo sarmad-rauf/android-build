@@ -5,10 +5,13 @@
 
     <data>
 
-
         <variable
-            name="listner"
-            type="com.es.marocapp.usecase.sendmoney.tranferfundcase.FundsTrasnferClickLisntener" />
+            name="viewmodel"
+            type="com.es.marocapp.usecase.approvals.ApprovalViewModel" />
+        <variable
+            name="listener"
+            type="com.es.marocapp.usecase.approvals.approvalsuccess.ApprovalSuccessClickListener" />
+
 
     </data>
 
@@ -51,7 +54,7 @@
                 android:layout_height="@dimen/_32sdp"
                 android:layout_margin="@dimen/_12sdp"
                 android:src="@drawable/ic_back"
-                android:onClick="@{listner::onBackClickListner}"
+                android:onClick="@{listener::onBackClickListener}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -340,6 +343,7 @@
                 android:background="@drawable/button_enable_blue"
                 android:padding="@dimen/_8sdp"
                 android:text="@string/ok"
+                android:onClick="@{listener::onOkClickListener}"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_16ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
