@@ -32,8 +32,10 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
     var trasferTypeSelected = ObservableField<String>()
     var isUserRegistered = ObservableField<Boolean>()
+    var isUserUnRegisteredSpecialCase = ObservableField<Boolean>()
     var isFundTransferUseCase = ObservableField<Boolean>()
     var isInitiatePaymenetToMerchantUseCase = ObservableField<Boolean>()
+    var isAccountHolderInformationFailed = ObservableField<Boolean>()
 
     var transferdAmountTo = ""
     var amountToTransfer = ""
@@ -381,8 +383,23 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
             isLoading.set(true)
             amountToTransfer = amount
 
+            var transferType = ""
+            var receiver = ""
+
+            if(isInitiatePaymenetToMerchantUseCase.get()!!){
+                transferType = Constants.MERCHANT_TYPE_PAYMENT
+                receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
+            }else if(isFundTransferUseCase.get()!!){
+                transferType = Constants.TRANSFER_TYPE_PAYMENT
+                receiver = Constants.getTransferReceiverAlias(transferdAmountTo)
+            }else{
+                transferType = Constants.TYPE_PAYMENT
+                receiver = Constants.getNumberMsisdn(transferdAmountTo)
+            }
+
+
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPaymentQouteCall(
-                PaymentQuoteRequest(amount,ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(transferdAmountTo),Constants.getNumberMsisdn(sender),Constants.TRANSFER_TYPE_PAYMENT)
+                PaymentQuoteRequest(amount,ApiConstant.CONTEXT_AFTER_LOGIN,receiver,Constants.getNumberMsisdn(sender),transferType,Constants.balanceInfoAndResponse.profilename.toString())
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -433,9 +450,162 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
             isLoading.set(true)
 
+            var transferType = ""
+            var receiver = ""
+
+            if(isInitiatePaymenetToMerchantUseCase.get()!!){
+                transferType = Constants.MERCHANT_TYPE_PAYMENT
+                receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
+            }else if(isFundTransferUseCase.get()!!){
+                transferType = Constants.TRANSFER_TYPE_PAYMENT
+                receiver = Constants.getTransferReceiverAlias(transferdAmountTo)
+            }else{
+                transferType = Constants.TYPE_PAYMENT
+                receiver = Constants.getNumberMsisdn(transferdAmountTo)
+            }
+
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPaymentCall(
-                PaymentRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,Constants.getNumberMsisdn(transferdAmountTo),Constants.getNumberMsisdn(sender),Constants.TRANSFER_TYPE_PAYMENT)
+                PaymentRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,receiver,Constants.getNumberMsisdn(sender),transferType,Constants.balanceInfoAndResponse.profilename.toString())
+
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getPaymentResponseListner.postValue(result)
+
+                        } else {
+                            getPaymentResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_network) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_network))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+
+    //___________________----------------_______________-------------------__________________//
+
+    //Request For Payment Qoute
+    fun requestForSimplePaymentQouteApi(context: Context?,
+                                 amount : String,
+                                 sender :String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+            amountToTransfer = amount
+
+            var transferType = ""
+            var receiver = ""
+
+            if(isInitiatePaymenetToMerchantUseCase.get()!!){
+                transferType = Constants.MERCHANT_TYPE_PAYMENT
+                receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
+            }else if(isFundTransferUseCase.get()!!){
+                transferType = Constants.TRANSFER_TYPE_PAYMENT
+                receiver = Constants.getTransferReceiverAlias(transferdAmountTo)
+            }else{
+                transferType = Constants.TYPE_PAYMENT
+                receiver = Constants.getNumberMsisdn(transferdAmountTo)
+            }
+
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getSimplePaymentQouteCall(
+                SimplePaymentQuoteRequest(amount,ApiConstant.CONTEXT_AFTER_LOGIN,receiver,Constants.getNumberMsisdn(sender),transferType)
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getPaymentQouteResponseListner.postValue(result)
+
+                        } else {
+                            getPaymentQouteResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_network) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_network))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For Payment
+    fun requestForSimplePayementApi(context: Context?,
+                             qouteID : String,
+                             sender: String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            var transferType = ""
+            var receiver = ""
+
+            if(isInitiatePaymenetToMerchantUseCase.get()!!){
+                transferType = Constants.MERCHANT_TYPE_PAYMENT
+                receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
+            }else if(isFundTransferUseCase.get()!!){
+                transferType = Constants.TRANSFER_TYPE_PAYMENT
+                receiver = Constants.getTransferReceiverAlias(transferdAmountTo)
+            }else{
+                transferType = Constants.TYPE_PAYMENT
+                receiver = Constants.getNumberMsisdn(transferdAmountTo)
+            }
+
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getSimplePaymentCall(
+                SimplePaymentRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,receiver,Constants.getNumberMsisdn(sender),transferType)
 
             )
                 .compose(applyIOSchedulers())

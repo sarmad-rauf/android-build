@@ -85,8 +85,10 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         mActivityViewModel.getAccountHolderInformationResponseListner.observe(this@FundsTransferMsisdnFragment,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    mActivityViewModel.isAccountHolderInformationFailed.set(false)
                     mActivityViewModel.requestForAccountHolderAddtionalInformationApi(activity)
                 }else{
+                    mActivityViewModel.isAccountHolderInformationFailed.set(true)
                     mActivityViewModel.isUserRegistered.set(false)
                     (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
                 }

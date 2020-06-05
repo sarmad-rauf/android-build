@@ -116,7 +116,11 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                         mActivityViewModel.requestFoMerchantApi(activity,Constants.CURRENT_USER_MSISDN,mActivityViewModel.qouteId)
                     }
                 }else{
-                    mActivityViewModel.requestFoPayementApi(activity,mActivityViewModel.qouteId,Constants.CURRENT_USER_MSISDN)
+                    if(mActivityViewModel.isAccountHolderInformationFailed.get()!!){
+                        mActivityViewModel.requestForSimplePayementApi(activity,mActivityViewModel.qouteId,Constants.CURRENT_USER_MSISDN)
+                    }else{
+                        mActivityViewModel.requestFoPayementApi(activity,mActivityViewModel.qouteId,Constants.CURRENT_USER_MSISDN)
+                    }
                 }
             }
         })

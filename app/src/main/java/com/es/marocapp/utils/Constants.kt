@@ -19,7 +19,9 @@ object Constants {
 
     const val IDENTIFICATION_TYPE = "CNIC"
     const val SECRET_TYPE = "password"
-    const val TRANSFER_TYPE_PAYMENT = "PAYMENT"
+    const val TRANSFER_TYPE_PAYMENT = "INTEROP_TRANSFER"
+    const val MERCHANT_TYPE_PAYMENT = "INTEROP_TRANSFER_SEND"
+    const val TYPE_PAYMENT = "PAYMENT"
 
     //preLoginData
     var APP_DATE_FORMAT = "yyyy-mm-dd"
@@ -96,6 +98,14 @@ object Constants {
 
     fun getNumberMsisdn(number : String) : String{
         return "$number/MSISDN"
+    }
+
+    fun getTransferReceiverAlias(number: String) : String{
+        return "$number@hpss.sub.sp/SP"
+    }
+
+    fun getMerchantReceiverAlias(number: String) : String{
+        return "$number@hpss.mer.sp/SP"
     }
 
     fun addAmountAndFee(amount : Double, fee : Double): String{

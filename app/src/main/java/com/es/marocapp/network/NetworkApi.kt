@@ -98,6 +98,14 @@ interface NetworkApi {
     @POST(EndPoints.payment_quote)
     fun getPaymentQouteCall(@Body request : PaymentQuoteRequest) : Observable<PaymentQuoteResponse>
 
+    //Request for paymentQoute
+    @POST(EndPoints.payment_quote)
+    fun getSimplePaymentQouteCall(@Body request : SimplePaymentQuoteRequest) : Observable<PaymentQuoteResponse>
+
+    //Request for Payment
+    @POST(EndPoints.payment)
+    fun getSimplePaymentCall(@Body request : SimplePaymentRequest) : Observable<PaymentResponse>
+
     //Request for gettransactionhistory
     @POST(EndPoints.gettransactionhistory)
     fun getTrasactionHistoryCall(@Body request : TransactionHistoryRequest) : Observable<TransactionHistoryResponse>

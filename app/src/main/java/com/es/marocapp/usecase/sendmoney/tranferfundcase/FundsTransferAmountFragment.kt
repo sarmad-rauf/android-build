@@ -143,7 +143,11 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
                 mActivityViewModel.requestFoMerchantQouteApi(activity,sAmount)
             }
         }else{
-            mActivityViewModel.requestFoPaymentQouteApi(activity,sAmount,Constants.CURRENT_USER_MSISDN)
+            if(mActivityViewModel.isAccountHolderInformationFailed.get()!!){
+                mActivityViewModel.requestForSimplePaymentQouteApi(activity,sAmount,Constants.CURRENT_USER_MSISDN)
+            }else{
+                mActivityViewModel.requestFoPaymentQouteApi(activity,sAmount,Constants.CURRENT_USER_MSISDN)
+            }
         }
     }
 
