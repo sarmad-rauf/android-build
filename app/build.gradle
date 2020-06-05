@@ -25,7 +25,8 @@ android {
 
         multiDexEnabled true
         def today = new Date().format('dd-MMM-yyyy-HHmmss').toString()
-        project.ext.set("archivesBaseName", "Maroc-Android-Build-" + today + "-V" + version + "-" + versionCode + "-Api-" + baseUrlType)
+       // project.ext.set("archivesBaseName", "Maroc-Android-Build-" + today + "-V" + version + "-" + versionCode + "-Api-" + baseUrlType)
+        project.ext.set("archivesBaseName", "Maroc-Android-Build-" + today)
     }
         lintOptions {
             abortOnError false
