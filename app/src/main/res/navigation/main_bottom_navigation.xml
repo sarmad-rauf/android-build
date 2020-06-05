@@ -37,6 +37,16 @@
         android:name="com.es.marocapp.usecase.approvals.ApprovalDetailFragment"
         android:label="ApprovalDetailFragment"
         tools:layout="@layout/fragment_approval_details">
+        <action
+            android:id="@+id/action_navigation_approvalDetails_to_approvalSuccessFragment"
+            app:destination="@id/approvalSuccessFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/approvalSuccessFragment"
+        android:name="com.es.marocapp.usecase.approvals.ApprovalSuccessFragment"
+        android:label="ApprovalSuccessFragment"
+        tools:layout="@layout/fragment_approval_success">
     </fragment>
 
 </navigation>

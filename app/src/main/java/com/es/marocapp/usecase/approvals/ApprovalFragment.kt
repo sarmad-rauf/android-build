@@ -17,6 +17,7 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
 
     companion object{
         const val SELECTED_APPROVAL_KEY="selected_approval"
+        const val USER_APPROVAL_KEY="user_approval"
     }
 
     private lateinit var approvalViewModel: ApprovalViewModel
