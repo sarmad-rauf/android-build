@@ -74,4 +74,7 @@ object EndPoints {
     //gettransactionhistory
     const val gettransactionhistory = "gettransactionhistory"
 
+    //getbalance
+    const val getbalance = "getbalance_v12"
+
 }

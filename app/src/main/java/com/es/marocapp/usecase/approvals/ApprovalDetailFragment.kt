@@ -45,7 +45,7 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
         setUIData()
 
 
-        subsribeFoUserApprovalsResponseObserver()
+        subscribeFoUserApprovalsResponse()
     }
 
     private fun setUIData() {
@@ -56,7 +56,7 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
         tvTotalVal.text=selectedApprovalData?.amount?.currency.plus(selectedApprovalData?.amount?.amount)
     }
 
-    private fun subsribeFoUserApprovalsResponseObserver() {
+    private fun subscribeFoUserApprovalsResponse() {
         approvalViewModel.getUsersApprovalResponseListner.observe(this, Observer {
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                 val bundle = Bundle()

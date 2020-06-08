@@ -56,11 +56,11 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
 
         (activity as MainActivity).setHomeToolbarVisibility(false)
 
-        subsribeForApprovalsDataObserver()
+        subscribeForApprovalsResponse()
 
     }
 
-    private fun subsribeForApprovalsDataObserver() {
+    private fun subscribeForApprovalsResponse() {
         approvalViewModel.getApprovalResponseListner.observe(this, Observer {
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                // approvalViewModel.requestForUserApprovalsApi(activity,"01","true")

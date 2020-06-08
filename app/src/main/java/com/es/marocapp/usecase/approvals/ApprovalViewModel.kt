@@ -8,10 +8,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.es.marocapp.R
+import com.es.marocapp.model.requests.BalanceInfoAndLimtRequest
 import com.es.marocapp.model.requests.ChangePasswordRequest
 import com.es.marocapp.model.requests.GetApprovalRequest
 import com.es.marocapp.model.requests.UserApprovalRequest
 import com.es.marocapp.model.responses.GetApprovalsResponse
+import com.es.marocapp.model.responses.GetBalanceResponse
 import com.es.marocapp.model.responses.UserApprovalResponse
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
@@ -30,6 +32,7 @@ class ApprovalViewModel(application: Application) : AndroidViewModel(application
     var errorText = SingleLiveEvent<String>()
     var getApprovalResponseListner = SingleLiveEvent<GetApprovalsResponse>()
     var getUsersApprovalResponseListner = SingleLiveEvent<UserApprovalResponse>()
+    var getBalanceResponseListner = SingleLiveEvent<GetBalanceResponse>()
 
 
     //Request For Get Approvals
@@ -82,7 +85,7 @@ class ApprovalViewModel(application: Application) : AndroidViewModel(application
 
     }
 
-    //Request For Get Approvals
+    //Request For User Approvals
     fun requestForUserApprovalsApi(
         context: Context?,
         approveID : String,
@@ -107,6 +110,58 @@ class ApprovalViewModel(application: Application) : AndroidViewModel(application
                             )
                         ) {
                             getUsersApprovalResponseListner.postValue(result)
+
+                        } else {
+                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_network) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_network))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For Get Updated Balance
+    fun requestForGetBalanceApi(
+        context: Context?
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBalance(
+                BalanceInfoAndLimtRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getBalanceResponseListner.postValue(result)
 
                         } else {
                             errorText.postValue(Constants.SHOW_SERVER_ERROR)
