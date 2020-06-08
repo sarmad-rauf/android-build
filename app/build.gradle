@@ -125,6 +125,9 @@ dependencies {
     //---------------------MultiDex----------------------------------
     implementation 'com.android.support:multidex:1.0.3'
 
+    //------------------GIF----------------------------------
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.16'
+
     //---------------------Network Calling - Retrofit - Moshi----------------------------------
     api 'com.squareup.retrofit2:retrofit:2.4.0'
     api 'io.reactivex.rxjava2:rxjava:2.1.14'

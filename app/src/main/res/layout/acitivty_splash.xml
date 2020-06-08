@@ -37,6 +37,8 @@
         android:adjustViewBounds="true"
         app:layout_constraintBottom_toBottomOf="parent"
         android:src="@drawable/blue_geometric_png_8"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

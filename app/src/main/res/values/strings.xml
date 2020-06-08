@@ -139,4 +139,6 @@
     <string name="fee">Fee</string>
     <string name="transaction_id">Transaction ID</string>
     <string name="total_cost">Total Cost</string>
+    <string name="please_wait">PLEASE WAIT</string>
+    <string name="loading">LOADING</string>
 </resources>

@@ -41,22 +41,67 @@ class PinFragment : BaseFragment<FragmentPinBinding>(), ChangePasswordClickListe
 
     private fun subscribeObserver() {
         pinViewModel.errorText.observe(this@PinFragment, Observer {
-            DialogUtils.showErrorDialoge(activity as MainActivity,it)
+            DialogUtils.showErrorDialoge(activity as MainActivity, it)
         })
 
         pinViewModel.getChangePassResponseListner.observe(this@PinFragment, Observer {
             if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                 Toast.makeText(activity, "Password Changed Successfully", Toast.LENGTH_SHORT).show()
             } else {
-                DialogUtils.showErrorDialoge(activity as MainActivity,it.description)
+                DialogUtils.showErrorDialoge(activity as MainActivity, it.description)
             }
         })
     }
 
     override fun onChangePasswordClickListner(view: View) {
-        pinViewModel.requestForCahngePasswordAPI(
-            activity, mDataBinding.inputOldPassword.text.toString().trim(),
-            mDataBinding.inputNewPassword.text.toString().trim()
-        )
+        if (isValidForAll()) {
+            if (mDataBinding.inputNewPassword.text.toString().trim()
+                    .equals(mDataBinding.inputConfirmPassword.text.toString().trim())
+            ) {
+                mDataBinding.inputLayoutConfirmPassword.error = ""
+                mDataBinding.inputLayoutConfirmPassword.isErrorEnabled = false
+                pinViewModel.requestForCahngePasswordAPI(
+                    activity, mDataBinding.inputOldPassword.text.toString().trim(),
+                    mDataBinding.inputNewPassword.text.toString().trim()
+                )
+            } else {
+                mDataBinding.inputLayoutConfirmPassword.error = "Please Enter Same Password"
+                mDataBinding.inputLayoutConfirmPassword.isErrorEnabled = true
+            }
+        }
+    }
+
+    private fun isValidForAll(): Boolean {
+
+        var isValidForAll = true
+
+        if (mDataBinding.inputOldPassword.text.isNullOrEmpty()) {
+            isValidForAll = false
+            mDataBinding.inputLayoutOldPassword.error = "Please Enter Valid Password"
+            mDataBinding.inputLayoutOldPassword.isErrorEnabled = true
+        } else {
+            mDataBinding.inputLayoutOldPassword.error = ""
+            mDataBinding.inputLayoutOldPassword.isErrorEnabled = false
+        }
+
+        if (mDataBinding.inputNewPassword.text.isNullOrEmpty()) {
+            isValidForAll = false
+            mDataBinding.inputLayoutNewPassword.error = "Please Enter Valid Password"
+            mDataBinding.inputLayoutNewPassword.isErrorEnabled = true
+        } else {
+            mDataBinding.inputLayoutNewPassword.error = ""
+            mDataBinding.inputLayoutNewPassword.isErrorEnabled = false
+        }
+
+        if (mDataBinding.inputConfirmPassword.text.isNullOrEmpty()) {
+            isValidForAll = false
+            mDataBinding.inputLayoutConfirmPassword.error = "Please Enter Valid Password"
+            mDataBinding.inputLayoutConfirmPassword.isErrorEnabled = true
+        } else {
+            mDataBinding.inputLayoutConfirmPassword.error = ""
+            mDataBinding.inputLayoutConfirmPassword.isErrorEnabled = false
+        }
+
+        return isValidForAll
     }
 }
