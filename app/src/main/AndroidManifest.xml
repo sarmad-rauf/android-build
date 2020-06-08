@@ -18,30 +18,23 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
         <activity android:name=".usecase.sendmoney.SendMoneyActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             ></activity>
         <activity
-            android:name=".usecase.termsandcondiitons.TermsAndConditions"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:name=".usecase.termsandcondiitons.TermsAndConditions"/>
         <activity
-            android:name=".usecase.favorites.FavoritesActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:name=".usecase.favorites.FavoritesActivity"/>
         <activity
-            android:name=".usecase.accountdetails.AccountDetailsActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:name=".usecase.accountdetails.AccountDetailsActivity" />
         <activity
-            android:name=".usecase.payments.PaymentsActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:name=".usecase.payments.PaymentsActivity" />
         <activity
             android:name=".usecase.MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:label="@string/title_activity_main"/>
         <activity
             android:name=".usecase.login.LoginActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+             />
         <activity
-            android:name=".usecase.splash.SplashActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:name=".usecase.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
