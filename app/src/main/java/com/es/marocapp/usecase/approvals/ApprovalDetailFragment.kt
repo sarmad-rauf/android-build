@@ -15,6 +15,7 @@ import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.approvals.ApprovalFragment.Companion.SELECTED_APPROVAL_KEY
 import com.es.marocapp.usecase.approvals.ApprovalFragment.Companion.USER_APPROVAL_KEY
+import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.fragment_approval_details.*
 
 
@@ -63,7 +64,7 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
                 (activity as MainActivity).navController.navigate(R.id.action_navigation_approvalDetails_to_approvalSuccessFragment,bundle)
 
             }else{
-                //  Toast.makeText(activity,"Get Approvals APi Failed",Toast.LENGTH_SHORT).show()
+                DialogUtils.showErrorDialoge(activity,it.description)
             }
         })
     }

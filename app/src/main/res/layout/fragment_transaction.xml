@@ -77,6 +77,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             />
 
+        <include android:id="@+id/Gif_Loader"
+            layout="@layout/layout_dialog"
+            android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

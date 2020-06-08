@@ -122,6 +122,7 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                         mActivityViewModel.requestFoPayementApi(activity,mActivityViewModel.qouteId,Constants.CURRENT_USER_MSISDN)
                     }
                 }
+
             }
         })
     }

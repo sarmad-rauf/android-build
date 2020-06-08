@@ -6,6 +6,7 @@ import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
@@ -195,7 +196,10 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                         mActivityViewModel.activeUserWithoutPassword.set(false)
 
                         (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_signUpNumberFragment)
-                    } else {
+                    } else if(response.credentialList.credentials[i].credentialstatus.equals("BLOCKED",true) || response.credentialList.credentials[i].credentialstatus.equals("BLOCK",true)){
+                        DialogUtils.showErrorDialoge(activity,"User is Blocked")
+                    }
+                    else{
                         // Create Crednetial Api is Called
                         //this check means user is register with state Active but didn't registered Password as his account having credetial type pin
 
