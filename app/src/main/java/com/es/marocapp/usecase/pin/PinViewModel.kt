@@ -4,14 +4,9 @@ import android.app.Application
 import android.content.Context
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.es.marocapp.R
-import com.es.marocapp.model.requests.BalanceInfoAndLimtRequest
 import com.es.marocapp.model.requests.ChangePasswordRequest
 import com.es.marocapp.model.responses.ChangePasswordResponse
-import com.es.marocapp.model.responses.GetAccountHolderInformationResponse
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
@@ -67,10 +62,10 @@ class PinViewModel(application: Application) : AndroidViewModel(application) {
                         //Display Error Result Code with with Configure Message
                         try {
                             if (context != null && error != null) {
-                                errorText.postValue(context.getString(R.string.error_msg_network) + (error as HttpException).code())
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
                             }
                         } catch (e: Exception) {
-                            errorText.postValue(context!!.getString(R.string.error_msg_network))
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
                         }
 
                     })

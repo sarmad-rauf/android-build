@@ -4,13 +4,8 @@ import android.app.Application
 import android.content.Context
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.es.marocapp.R
-import com.es.marocapp.model.requests.GetApprovalRequest
 import com.es.marocapp.model.requests.TransactionHistoryRequest
-import com.es.marocapp.model.responses.GetApprovalsResponse
 import com.es.marocapp.model.responses.TransactionHistoryResponse
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
@@ -64,10 +59,10 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
                         //Display Error Result Code with with Configure Message
                         try {
                             if (context != null && error != null) {
-                                errorText.postValue(context.getString(R.string.error_msg_network) + (error as HttpException).code())
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
                             }
                         } catch (e: Exception) {
-                            errorText.postValue(context!!.getString(R.string.error_msg_network))
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
                         }
 
                     })

@@ -2,7 +2,6 @@ package com.es.marocapp.usecase.splash
 
 import android.app.Application
 import android.content.Context
-import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -65,10 +64,10 @@ class SplashActivityViewModel(application: Application) : AndroidViewModel(appli
                         //Display Error Result Code with with Configure Message
                         try {
                             if (context != null && error != null) {
-                                errorText.postValue(context.getString(R.string.error_msg_network) + (error as HttpException).code())
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
                             }
                         } catch (e: Exception) {
-                            errorText.postValue(context!!.getString(R.string.error_msg_network))
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
                         }
 
                     })
