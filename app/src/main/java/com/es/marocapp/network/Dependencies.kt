@@ -80,11 +80,7 @@ abstract class Dependencies {
                 override fun verify(hostname: String, session: SSLSession): Boolean {
                     try {
                         var certs = session.getPeerCertificates()
-                        if (checkIfCertificateMatch(hostname, certs)) {
-                            return true
-                        } else {
-                            return false
-                        }
+                        return checkIfCertificateMatch(hostname, certs)
                     } catch (e: Exception) {
                     }
                     return false

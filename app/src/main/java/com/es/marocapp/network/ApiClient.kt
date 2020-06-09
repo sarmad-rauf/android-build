@@ -84,11 +84,6 @@ public class ApiClient() : Dependencies() {
                 headerParams["authorization"] = Constants.LOGGED_IN_USER_COOKIE
             }
         }
-//        headerParams.put("content-type", "application/json")
-//        headerParams.put("channel", "android")
-//        headerParams.put("deviceid", "")
-//        headerParams.put("language", "")
-//        headerParams.put("authorization", "")
 
         return headerParams
     }
