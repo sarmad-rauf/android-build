@@ -85,9 +85,9 @@ object Constants {
             LOGGED_IN_USER_COOKIE = Base64.getEncoder().encodeToString(str.toByteArray())
             Log.d("Base64",Base64.getEncoder().encodeToString(str.toByteArray()));
         } else {
-            LOGGED_IN_USER_COOKIE = android.util.Base64.encodeToString(str.toByteArray(), android.util.Base64.DEFAULT)
+            LOGGED_IN_USER_COOKIE = android.util.Base64.encodeToString(str.toByteArray(), android.util.Base64.NO_WRAP)
         }
-        Log.d("Base64",android.util.Base64.encodeToString(str.toByteArray(), android.util.Base64.DEFAULT));
+        Log.d("Base64",android.util.Base64.encodeToString(str.toByteArray(), android.util.Base64.NO_WRAP));
 
 
     }
