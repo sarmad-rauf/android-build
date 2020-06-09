@@ -96,7 +96,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                             getAccountHolderInformationResponseListner.postValue(result)
                         }
                         else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                            getAccountHolderInformationResponseListner.postValue(result)
                         }
 
 
@@ -149,7 +149,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                             getInitialAuthDetailsResponseListner.postValue(result)
 
                         } else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                            getInitialAuthDetailsResponseListner.postValue(result)
                         }
 
 
@@ -206,7 +206,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                             getOtpForRegistrationResponseListner.postValue(result)
 
                         } else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                            getOtpForRegistrationResponseListner.postValue(result)
                         }
 
 
@@ -261,7 +261,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                             getRegisterUserResponseListner.postValue(result)
 
                         } else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                            getRegisterUserResponseListner.postValue(result)
                         }
 
 
@@ -314,7 +314,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                             getActivateUserResponseListner.postValue(result)
 
                         } else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                            getActivateUserResponseListner.postValue(result)
                         }
 
 
@@ -366,7 +366,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                             getOTPResponseListner.postValue(result)
 
                         } else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                            getOTPResponseListner.postValue(result)
                         }
 
 
@@ -420,7 +420,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                             getValidateOtpAndUpdateAliasResponseListner.postValue(result)
 
                         } else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                            getValidateOtpAndUpdateAliasResponseListner.postValue(result)
                         }
 
 
@@ -473,7 +473,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                             getForgotPasswordResponseListner.postValue(result)
 
                         } else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                            getForgotPasswordResponseListner.postValue(result)
                         }
 
 
@@ -525,7 +525,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                             getCreateCredentialsResponseListner.postValue(result)
 
                         } else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                            getCreateCredentialsResponseListner.postValue(result)
                         }
 
 
@@ -631,7 +631,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                             getBalanceInforAndLimitResponseListner.postValue(result)
 
                         } else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                            getBalanceInforAndLimitResponseListner.postValue(result)
                         }
 
 

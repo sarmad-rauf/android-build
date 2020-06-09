@@ -39,6 +39,8 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
     lateinit var mActivityViewModel: LoginActivityViewModel
 
+    var isCnicMatches = false
+
     override fun setLayout(): Int {
         return R.layout.fragment_sign_up_detail
     }
@@ -139,16 +141,17 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
     override fun onNextButtonClick(view: View) {
 
-        //todo Validation needed to add
-        mActivityViewModel.DOB = mDataBinding.inputDateOfBirth.text.toString().trim()
-        mActivityViewModel.identificationNumber = mDataBinding.inputNationalID.text.toString().trim()
-        mActivityViewModel.firstName = mDataBinding.inputFirstName.text.toString().trim()
-        mActivityViewModel.gender = mDataBinding.inputGender.text.toString().trim()
-        mActivityViewModel.postalAddress = mDataBinding.inputAddress.text.toString().trim()
-        mActivityViewModel.lastName = mDataBinding.inputLastName.text.toString().trim()
-        mActivityViewModel.email = mDataBinding.inputEmail.text.toString().trim()
+        if(isValidForAll()){
+            mActivityViewModel.DOB = mDataBinding.inputDateOfBirth.text.toString().trim()
+            mActivityViewModel.identificationNumber = mDataBinding.inputNationalID.text.toString().trim()
+            mActivityViewModel.firstName = mDataBinding.inputFirstName.text.toString().trim()
+            mActivityViewModel.gender = mDataBinding.inputGender.text.toString().trim()
+            mActivityViewModel.postalAddress = mDataBinding.inputAddress.text.toString().trim()
+            mActivityViewModel.lastName = mDataBinding.inputLastName.text.toString().trim()
+            mActivityViewModel.email = mDataBinding.inputEmail.text.toString().trim()
 
-        mActivityViewModel.requestForeGetInitialAuthDetailsApi(activity)
+            mActivityViewModel.requestForeGetInitialAuthDetailsApi(activity)
+        }
         //For Without API Calling Uncomment Below Line
 //        (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_verifyNumberFragment)
     }
@@ -169,11 +172,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
     override fun afterTextChanged(p0: Editable?) {
         var cnic = mDataBinding.inputNationalID.text.toString().trim()
         var cnicLength = cnic.length
-        if(cnicLength > 0 && !Pattern.matches(Constants.APP_CN_REGEX, cnic)) {
-            Log.d("CNIC","Cnic Matches")
-        }else{
-            Log.d("CNIC","Cnic NOt Match")
-        }
+        isCnicMatches = !(cnicLength > 0 && !Pattern.matches(Constants.APP_CN_REGEX, cnic))
     }
 
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -182,5 +181,84 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
     }
 
+    private fun isValidForAll(): Boolean {
+
+        var isValidForAll = true
+
+        if(mDataBinding.inputFirstName.text.isNullOrEmpty()){
+            isValidForAll = false
+            mDataBinding.inputLayoutFirstName.error = "Please Enter First Name"
+            mDataBinding.inputLayoutFirstName.isErrorEnabled = true
+        }else{
+            mDataBinding.inputLayoutFirstName.error = ""
+            mDataBinding.inputLayoutFirstName.isErrorEnabled = false
+        }
+
+        if(mDataBinding.inputLastName.text.isNullOrEmpty()){
+            isValidForAll = false
+            mDataBinding.inputLayoutLastName.error = "Please Enter Last Name"
+            mDataBinding.inputLayoutLastName.isErrorEnabled = true
+        }else{
+            mDataBinding.inputLayoutLastName.error = ""
+            mDataBinding.inputLayoutLastName.isErrorEnabled = false
+        }
+
+        if(mDataBinding.inputDateOfBirth.text.isNullOrEmpty()){
+            isValidForAll = false
+            mDataBinding.inputLayoutDateOfBirth.error = "Please Select Date"
+            mDataBinding.inputLayoutDateOfBirth.isErrorEnabled = true
+        }else{
+            mDataBinding.inputLayoutDateOfBirth.error = ""
+            mDataBinding.inputLayoutDateOfBirth.isErrorEnabled = false
+        }
+
+        if(mDataBinding.inputNationalID.text.isNullOrEmpty()){
+            isValidForAll = false
+            mDataBinding.inputLayoutNationalID.error = "Please Enter Identity Number"
+            mDataBinding.inputLayoutNationalID.isErrorEnabled = true
+        }else{
+            mDataBinding.inputLayoutNationalID.error = ""
+            mDataBinding.inputLayoutNationalID.isErrorEnabled = false
+
+            if(isCnicMatches){
+                mDataBinding.inputLayoutNationalID.error = ""
+                mDataBinding.inputLayoutNationalID.isErrorEnabled = false
+            }else{
+                isValidForAll = false
+                mDataBinding.inputLayoutNationalID.error = "Please Enter Valid Identity Number"
+                mDataBinding.inputLayoutNationalID.isErrorEnabled = true
+            }
+        }
+
+        if(mDataBinding.inputGender.text.isNullOrEmpty()){
+            isValidForAll = false
+            mDataBinding.inputLayoutGender.error = "Please Select Gender"
+            mDataBinding.inputLayoutGender.isErrorEnabled = true
+        }else{
+            mDataBinding.inputLayoutGender.error = ""
+            mDataBinding.inputLayoutGender.isErrorEnabled = false
+        }
+
+        if(mDataBinding.inputEmail.text.isNullOrEmpty()){
+            isValidForAll = false
+            mDataBinding.inputLayoutEmail.error = "Please Enter Email Address"
+            mDataBinding.inputLayoutEmail.isErrorEnabled = true
+        }else{
+            mDataBinding.inputLayoutEmail.error = ""
+            mDataBinding.inputLayoutEmail.isErrorEnabled = false
+        }
+
+        if(mDataBinding.inputAddress.text.isNullOrEmpty()){
+            isValidForAll = false
+            mDataBinding.inputLayoutAddress.error = "Please Enter Address"
+            mDataBinding.inputLayoutAddress.isErrorEnabled = true
+        }else{
+            mDataBinding.inputLayoutAddress.error = ""
+            mDataBinding.inputLayoutAddress.isErrorEnabled = false
+        }
+
+
+        return isValidForAll
+    }
 
 }

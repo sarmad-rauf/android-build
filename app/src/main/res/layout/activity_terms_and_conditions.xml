@@ -47,10 +47,8 @@
     <fragment
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:defaultNavHost="true"
         android:id="@+id/nav_termandcondition_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        app:navGraph="@navigation/terms_and_condition_nav_graph"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topHeaderContainer"

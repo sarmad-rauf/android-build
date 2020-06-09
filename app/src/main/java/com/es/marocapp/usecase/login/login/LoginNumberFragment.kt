@@ -139,9 +139,11 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                     mActivityViewModel.previousDeviceId = deviceID
                     mActivityViewModel.requestForGetOtpApi(activity)
                 }
-            } else {
+            } else if(it.responseCode == ApiConstant.API_FAILURE){
                 mActivityViewModel.isSignUpFlow.set(true)
                 mActivity.navController.navigate(R.id.action_loginFragment_to_signUpDetailFragment)
+            }else{
+                DialogUtils.showErrorDialoge(activity,it.description)
             }
         }
 
