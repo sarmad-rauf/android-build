@@ -5,8 +5,10 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.telephony.TelephonyManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
@@ -69,7 +71,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 //                application.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
 //            Constants.CURRENT_DEVICE_ID = telephonyManager!!.deviceId
 
-            Constants.CURRENT_DEVICE_ID = getPhoneIMEI(this@SplashActivity).toString()
+            setDeviceIMEI()
 
             mActivityViewModel.requestForGetPreLoginDataApi(this@SplashActivity,BuildConfig.VERSION_NAME)
         }
@@ -98,7 +100,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 } else {
 //                    val telephonyManager =
 //                        application.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
-                    Constants.CURRENT_DEVICE_ID = getPhoneIMEI(this@SplashActivity).toString()
+                    setDeviceIMEI()
                 }
             }
         }
@@ -147,6 +149,46 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
         mActivityViewModel.mHandler.observe(this, resultObserver)
         mActivityViewModel.preLoginDataResponseListener.observe(this, preLoginDataObserver)
         mActivityViewModel.errorText.observe(this, errorText)
+    }
+
+    fun setDeviceIMEI(){
+        var myuniqueID: String?
+        val myversion = Integer.valueOf(Build.VERSION.SDK)
+        if (myversion < 23) {
+            val manager =
+                applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+            val info = manager.connectionInfo
+            myuniqueID = info.macAddress
+            if (myuniqueID == null) {
+                val mngr =
+                    getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.READ_PHONE_STATE
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    return
+                }
+                myuniqueID = mngr.deviceId
+            }
+        } else if (myversion > 23 && myversion < 29) {
+            val mngr =
+                getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.READ_PHONE_STATE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return
+            }
+            myuniqueID = mngr.deviceId
+        } else {
+            val androidId: String =
+                Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
+            myuniqueID = androidId
+        }
+
+        Constants.CURRENT_DEVICE_ID = myuniqueID.toString()
     }
 
     fun getPhoneIMEI(context: Context): String? {

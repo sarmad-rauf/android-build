@@ -33,7 +33,8 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
 
     override fun init(savedInstanceState: Bundle?) {
         mActivityViewModel = ViewModelProvider(activity as LoginActivity).get(
-            LoginActivityViewModel::class.java)
+            LoginActivityViewModel::class.java
+        )
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel
@@ -42,12 +43,16 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
 
         mDataBinding.root.groupBack.visibility = View.VISIBLE
         mDataBinding.root.txtHeaderTitle.text = getString(R.string.verify_your_number)
-        mDataBinding.root.txtBack.setOnClickListener{
+        mDataBinding.root.txtBack.setOnClickListener {
             (activity as LoginActivity).navController.navigateUp()
         }
 
-        mDataBinding.root.imgBackButton.setOnClickListener{
+        mDataBinding.root.imgBackButton.setOnClickListener {
             (activity as LoginActivity).navController.navigateUp()
+        }
+
+        mDataBinding.txtResend.setOnClickListener {
+            mActivityViewModel.requestForGetOTPForRegistrationApi(context,mActivityViewModel.firstName,mActivityViewModel.lastName,mActivityViewModel.identificationNumber)
         }
 
         subscribeObserver()
@@ -56,22 +61,44 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
 
     private fun subscribeObserver() {
         mActivityViewModel.errorText.observe(this@VerifyNumberFragment, Observer {
-            DialogUtils.showErrorDialoge(activity as LoginActivity,it)
+            DialogUtils.showErrorDialoge(activity as LoginActivity, it)
         })
 
-        val mRegisterUserResonseObserver = Observer<RegisterUserResponse>{
-            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+        val mRegisterUserResonseObserver = Observer<RegisterUserResponse> {
+            if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                 (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_setYourPinFragment)
-            }else{
-                DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
+            } else {
+                DialogUtils.showErrorDialoge(activity as LoginActivity, it.description)
             }
         }
 
-        mActivityViewModel.getRegisterUserResponseListner.observe(this,mRegisterUserResonseObserver)
+        mActivityViewModel.getOtpForRegistrationResponseListner.observe(this@VerifyNumberFragment,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_FAILURE)){
+                    DialogUtils.showErrorDialoge(activity,it.description)
+                }
+            })
+
+        mActivityViewModel.getRegisterUserResponseListner.observe(
+            this,
+            mRegisterUserResonseObserver
+        )
     }
 
     override fun onOTPVerifyClick(view: View) {
-        mActivityViewModel.requestForRegisterUserApi(activity,Constants.CURRENT_NUMBER_DEVICE_ID,mDataBinding.inputVerifyOtp.text.toString().trim())
+        if (mDataBinding.inputVerifyOtp.text.isNullOrEmpty()) {
+            mDataBinding.inputLayoutVerifyOtp.error = "Please Enter First Name"
+            mDataBinding.inputLayoutVerifyOtp.isErrorEnabled = true
+        } else {
+            mDataBinding.inputLayoutVerifyOtp.error = ""
+            mDataBinding.inputLayoutVerifyOtp.isErrorEnabled = false
+
+            mActivityViewModel.requestForRegisterUserApi(
+                activity,
+                Constants.CURRENT_NUMBER_DEVICE_ID,
+                mDataBinding.inputVerifyOtp.text.toString().trim()
+            )
+        }
         //For Without API Calling Uncomment Below Line
 //        (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_setYourPinFragment)
     }
