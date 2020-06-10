@@ -29,6 +29,8 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
     var getMerchantPaymentResponseListner = SingleLiveEvent<MerchantPaymentResponse>()
     var getPaymentQouteResponseListner = SingleLiveEvent<PaymentQuoteResponse>()
     var getPaymentResponseListner = SingleLiveEvent<PaymentResponse>()
+    var getFloatTransferQuoteResponseListner = SingleLiveEvent<FloatTransferQuoteResponse>()
+    var getFloatTransferResponseListner = SingleLiveEvent<FloatTransferResponse>()
 
     var trasferTypeSelected = ObservableField<String>()
     var isUserRegistered = ObservableField<Boolean>()
@@ -621,6 +623,112 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
                         } else {
                             getPaymentResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For Payment
+    fun requestForFloatTransferQuoteApi(context: Context?,
+                                    amount : String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+            amountToTransfer = amount
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getFloatTransferQuoteCall(
+                FloatTransferQuoteRequest(amount,ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(transferdAmountTo))
+
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getFloatTransferQuoteResponseListner.postValue(result)
+
+                        } else {
+                            getFloatTransferQuoteResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+
+    //Request For Trasnfer
+    fun requestForFloatTransferApi(context: Context?,
+                             qouteID : String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getFloatTransferCall(
+                FloatTransferRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,Constants.getNumberMsisdn(transferdAmountTo))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getFloatTransferResponseListner.postValue(result)
+
+                        } else {
+                            getFloatTransferResponseListner.postValue(result)
                         }
 
 

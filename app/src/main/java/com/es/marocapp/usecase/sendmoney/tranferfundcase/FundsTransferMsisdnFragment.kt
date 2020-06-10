@@ -84,13 +84,33 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
 
         mActivityViewModel.getAccountHolderInformationResponseListner.observe(this@FundsTransferMsisdnFragment,
             Observer {
-                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                    mActivityViewModel.isAccountHolderInformationFailed.set(false)
-                    mActivityViewModel.requestForAccountHolderAddtionalInformationApi(activity)
+                if(Constants.IS_AGENT_USER){
+                    if(mActivityViewModel.isFundTransferUseCase.get()!!){
+                        if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                            (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
+                        }else{
+                            DialogUtils.showErrorDialoge(activity,it.description)
+                        }
+                    }
+                    if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
+                        if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                            mActivityViewModel.isAccountHolderInformationFailed.set(false)
+                            mActivityViewModel.requestForAccountHolderAddtionalInformationApi(activity)
+                        }else{
+                            mActivityViewModel.isAccountHolderInformationFailed.set(true)
+                            mActivityViewModel.isUserRegistered.set(false)
+                            (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
+                        }
+                    }
                 }else{
-                    mActivityViewModel.isAccountHolderInformationFailed.set(true)
-                    mActivityViewModel.isUserRegistered.set(false)
-                    (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
+                    if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                        mActivityViewModel.isAccountHolderInformationFailed.set(false)
+                        mActivityViewModel.requestForAccountHolderAddtionalInformationApi(activity)
+                    }else{
+                        mActivityViewModel.isAccountHolderInformationFailed.set(true)
+                        mActivityViewModel.isUserRegistered.set(false)
+                        (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
+                    }
                 }
             }
         )

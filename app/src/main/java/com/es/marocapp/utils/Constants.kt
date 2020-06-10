@@ -46,7 +46,11 @@ object Constants {
     var LOGGED_IN_USER = ""
     var LOGGED_IN_USER_COOKIE = ""
 
-
+    //USER_PROFILE
+    var IS_AGENT_USER = false
+    var IS_CONSUMER_USER = false
+    var IS_MERCHANT_USER = false
+    
     //Responses
     lateinit var balanceInfoAndResponse : BalanceInfoAndLimitResponse
 

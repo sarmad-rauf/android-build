@@ -42,6 +42,20 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
             Constants.HEADERS_FOR_PAYEMNTS = false
             DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it)
         })
+
+        mActivityViewModel.getFloatTransferResponseListner.observe(this@FundTransferConfirmationFragment,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    Constants.HEADERS_FOR_PAYEMNTS = false
+                    mActivityViewModel.senderBalanceAfter = it.senderBalanceAfter
+                    mActivityViewModel.transactionID = it.financialTransactionId
+                    (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
+                }else{
+                    Constants.HEADERS_FOR_PAYEMNTS = false
+                    DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                }
+            })
+
         mActivityViewModel.getTransferResponseListner.observe(this@FundTransferConfirmationFragment,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
@@ -107,22 +121,43 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
             override fun onDialogYesClickListner(password: String) {
                 Constants.HEADERS_FOR_PAYEMNTS = true
                 Constants.CURRENT_USER_CREDENTIAL = password
-                if(mActivityViewModel.isUserRegistered.get()!!){
+                if(Constants.IS_AGENT_USER){
                     if(mActivityViewModel.isFundTransferUseCase.get()!!){
-                        mActivityViewModel.requestFoTransferApi(activity,mActivityViewModel.qouteId)
+                        mActivityViewModel.requestForFloatTransferApi(activity,mActivityViewModel.qouteId)
                     }
 
                     if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
-                        mActivityViewModel.requestFoMerchantApi(activity,Constants.CURRENT_USER_MSISDN,mActivityViewModel.qouteId)
+                        if(mActivityViewModel.isUserRegistered.get()!!){
+                            if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
+                                mActivityViewModel.requestFoMerchantApi(activity,Constants.CURRENT_USER_MSISDN,mActivityViewModel.qouteId)
+                            }
+                        }else{
+                            if(mActivityViewModel.isAccountHolderInformationFailed.get()!!){
+                                mActivityViewModel.requestForSimplePayementApi(activity,mActivityViewModel.qouteId,Constants.CURRENT_USER_MSISDN)
+                            }else{
+                                mActivityViewModel.requestFoPayementApi(activity,mActivityViewModel.qouteId,Constants.CURRENT_USER_MSISDN)
+                            }
+                        }
                     }
-                }else{
-                    if(mActivityViewModel.isAccountHolderInformationFailed.get()!!){
-                        mActivityViewModel.requestForSimplePayementApi(activity,mActivityViewModel.qouteId,Constants.CURRENT_USER_MSISDN)
-                    }else{
-                        mActivityViewModel.requestFoPayementApi(activity,mActivityViewModel.qouteId,Constants.CURRENT_USER_MSISDN)
-                    }
-                }
 
+                }else{
+                    if(mActivityViewModel.isUserRegistered.get()!!){
+                        if(mActivityViewModel.isFundTransferUseCase.get()!!){
+                            mActivityViewModel.requestFoTransferApi(activity,mActivityViewModel.qouteId)
+                        }
+
+                        if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
+                            mActivityViewModel.requestFoMerchantApi(activity,Constants.CURRENT_USER_MSISDN,mActivityViewModel.qouteId)
+                        }
+                    }else{
+                        if(mActivityViewModel.isAccountHolderInformationFailed.get()!!){
+                            mActivityViewModel.requestForSimplePayementApi(activity,mActivityViewModel.qouteId,Constants.CURRENT_USER_MSISDN)
+                        }else{
+                            mActivityViewModel.requestFoPayementApi(activity,mActivityViewModel.qouteId,Constants.CURRENT_USER_MSISDN)
+                        }
+                    }
+
+                }
             }
         })
     }
