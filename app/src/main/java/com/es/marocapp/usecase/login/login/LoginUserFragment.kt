@@ -67,6 +67,12 @@ class LoginUserFragment : BaseFragment<FragmentSignUpNumberBinding>(), LoginClic
 
         val mloginWithCertListner = Observer<LoginWithCertResponse> {
             if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                //setting User TYpe
+                Constants.IS_AGENT_USER = it.profile.agentUser
+                Constants.IS_CONSUMER_USER = it.profile.consumerUser
+                Constants.IS_MERCHANT_USER = it.profile.merchantUser
+
+                //setting cookie for use in header
                 if (it.setCookie.isNotEmpty()) {
                     var cookie = it.setCookie
                     Constants.setBase64EncodedString(cookie)

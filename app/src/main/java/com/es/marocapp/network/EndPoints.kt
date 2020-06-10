@@ -77,4 +77,10 @@ object EndPoints {
     //getbalance
     const val getbalance = "getbalance_v12"
 
+    //floattransfer/quote
+    const val floattransfer_quote = "floattransfer/quote"
+
+    //floattransfer
+    const val floattransfer =  "floattransfer"
+
 }

@@ -88,6 +88,19 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
         mActivityViewModel.errorText.observe(this@FundsTransferAmountFragment, Observer {
             DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it)
         })
+
+        mActivityViewModel.getFloatTransferQuoteResponseListner.observe(this@FundsTransferAmountFragment, Observer {
+            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                if(it.quoteList.isNotEmpty()){
+                    mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
+                    mActivityViewModel.qouteId = it.quoteList[0].quoteid
+                }
+                (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferAmountFragment_to_fundTransferConfirmationFragment)
+            }else{
+                DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+            }
+        })
+
         mActivityViewModel.getTransferQouteResponseListner.observe(this@FundsTransferAmountFragment, Observer {
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                 if(it.quoteList.isNotEmpty()){
@@ -134,19 +147,39 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
             mDataBinding.etAmountEntered.error = "Please enter valid amount to proceed."
             return
         }
-        if(mActivityViewModel.isUserRegistered.get()!!){
+        if(Constants.IS_AGENT_USER){
             if(mActivityViewModel.isFundTransferUseCase.get()!!){
-                mActivityViewModel.requestFoTransferQouteApi(activity,sAmount)
+                mActivityViewModel.requestForFloatTransferQuoteApi(activity,sAmount)
             }
 
             if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
-                mActivityViewModel.requestFoMerchantQouteApi(activity,sAmount)
+                if(mActivityViewModel.isUserRegistered.get()!!){
+                    if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
+                        mActivityViewModel.requestFoMerchantQouteApi(activity,sAmount)
+                    }
+                }else{
+                    if(mActivityViewModel.isAccountHolderInformationFailed.get()!!){
+                        mActivityViewModel.requestForSimplePaymentQouteApi(activity,sAmount,Constants.CURRENT_USER_MSISDN)
+                    }else{
+                        mActivityViewModel.requestFoPaymentQouteApi(activity,sAmount,Constants.CURRENT_USER_MSISDN)
+                    }
+                }
             }
         }else{
-            if(mActivityViewModel.isAccountHolderInformationFailed.get()!!){
-                mActivityViewModel.requestForSimplePaymentQouteApi(activity,sAmount,Constants.CURRENT_USER_MSISDN)
+            if(mActivityViewModel.isUserRegistered.get()!!){
+                if(mActivityViewModel.isFundTransferUseCase.get()!!){
+                    mActivityViewModel.requestFoTransferQouteApi(activity,sAmount)
+                }
+
+                if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
+                    mActivityViewModel.requestFoMerchantQouteApi(activity,sAmount)
+                }
             }else{
-                mActivityViewModel.requestFoPaymentQouteApi(activity,sAmount,Constants.CURRENT_USER_MSISDN)
+                if(mActivityViewModel.isAccountHolderInformationFailed.get()!!){
+                    mActivityViewModel.requestForSimplePaymentQouteApi(activity,sAmount,Constants.CURRENT_USER_MSISDN)
+                }else{
+                    mActivityViewModel.requestFoPaymentQouteApi(activity,sAmount,Constants.CURRENT_USER_MSISDN)
+                }
             }
         }
     }

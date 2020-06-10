@@ -121,4 +121,13 @@ interface NetworkApi {
     //Request for GetBalance
     @POST(EndPoints.getbalance)
     fun getBalance(@Body request : BalanceInfoAndLimtRequest) : Observable<GetBalanceResponse>
+
+    //Request for FloatTransferQuote
+    @POST(EndPoints.floattransfer_quote)
+    fun getFloatTransferQuoteCall(@Body request : FloatTransferQuoteRequest) : Observable<FloatTransferQuoteResponse>
+
+    //Request for FloatTransfer
+    @POST(EndPoints.floattransfer)
+    fun getFloatTransferCall(@Body request : FloatTransferRequest) : Observable<FloatTransferResponse>
+
 }
