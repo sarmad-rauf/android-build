@@ -55,6 +55,8 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
         Constants.getIPAddress(application)
         subscribe()
 
+        subscribeForTranslationsApiResponse()
+
     }
 
     fun setupPermissions() {
@@ -135,8 +137,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                         add("500")
                     }
                 }
-
-                startNewActivityAndClear(this@SplashActivity, LoginActivity::class.java)
+                mActivityViewModel.requestForTranslationsApi(this)
             } else {
                 DialogUtils.showErrorDialoge(this@SplashActivity,it.description)
             }
@@ -149,6 +150,20 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
         mActivityViewModel.mHandler.observe(this, resultObserver)
         mActivityViewModel.preLoginDataResponseListener.observe(this, preLoginDataObserver)
         mActivityViewModel.errorText.observe(this, errorText)
+    }
+
+    private fun subscribeForTranslationsApiResponse() {
+        mActivityViewModel.translationApiResponseListener.observe(this, Observer {
+            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                startNewActivityAndClear(this@SplashActivity, LoginActivity::class.java)
+            /*    mApprovalsList.apply {
+                    addAll(it.approvaldetails as ArrayList<Approvaldetail>)
+                    mApprovalsItemAdapter.notifyDataSetChanged()
+                }*/
+            }else{
+                DialogUtils.showErrorDialoge(this@SplashActivity,it.description)
+            }
+        })
     }
 
     fun setDeviceIMEI(){

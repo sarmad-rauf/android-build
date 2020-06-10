@@ -3,6 +3,7 @@ package com.es.marocapp.network
 
 import com.es.marocapp.model.requests.*
 import com.es.marocapp.model.responses.*
+import com.es.marocapp.model.responses.translations.TranslationApiResponse
 import com.es.marocapp.usecase.approvals.model.response.ResponseApprovals
 import io.reactivex.Observable
 import retrofit2.http.*
@@ -121,4 +122,8 @@ interface NetworkApi {
     //Request for GetBalance
     @POST(EndPoints.getbalance)
     fun getBalance(@Body request : BalanceInfoAndLimtRequest) : Observable<GetBalanceResponse>
+
+    //Request for GetTranslations
+    @GET(EndPoints.getTranslations)
+    fun getTranslations() : Observable<TranslationApiResponse>
 }

@@ -77,4 +77,7 @@ object EndPoints {
     //getbalance
     const val getbalance = "getbalance_v12"
 
+    //getTranslations
+    const val getTranslations = "getlanguagelist"
+
 }
