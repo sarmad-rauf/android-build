@@ -73,7 +73,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
 
         if(mDataBinding.inputForgotOtp.text.isNullOrEmpty()){
             isValidForAll = false
-            mDataBinding.inputLayoutOtp.error = "Please Enter Valid Mobile Number"
+            mDataBinding.inputLayoutOtp.error = "Please enter OTP sent to your mobile number."
             mDataBinding.inputLayoutOtp.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutOtp.error = ""
@@ -82,7 +82,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
 
         if(mDataBinding.inputForgotPassword.text.isNullOrEmpty()){
             isValidForAll = false
-            mDataBinding.inputLayoutSetYourPassword.error = "Please Enter Valid Mobile Number"
+            mDataBinding.inputLayoutSetYourPassword.error = "Please enter valid password"
             mDataBinding.inputLayoutSetYourPassword.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutSetYourPassword.error = ""
@@ -91,7 +91,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
 
         if(mDataBinding.inputForgotConfirmPassword.text.isNullOrEmpty()){
             isValidForAll = false
-            mDataBinding.inputLayoutConfirmPassword.error = "Please Enter Valid Mobile Number"
+            mDataBinding.inputLayoutConfirmPassword.error = "Please enter valid password"
             mDataBinding.inputLayoutConfirmPassword.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutConfirmPassword.error = ""

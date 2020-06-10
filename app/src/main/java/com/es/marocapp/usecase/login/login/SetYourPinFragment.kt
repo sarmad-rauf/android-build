@@ -116,7 +116,7 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
 
         if(mDataBinding.inputEnterPin.text.isNullOrEmpty()){
             isValidForAll = false
-            mDataBinding.inputLayoutEnterPin.error = "Please Enter Valid Mobile Number"
+            mDataBinding.inputLayoutEnterPin.error = "Please enter valid password"
             mDataBinding.inputLayoutEnterPin.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutEnterPin.error = ""
@@ -125,7 +125,7 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
 
         if(mDataBinding.inputConfirmPin.text.isNullOrEmpty()){
             isValidForAll = false
-            mDataBinding.inputLayoutConfrimPin.error = "Please Enter Valid Mobile Number"
+            mDataBinding.inputLayoutConfrimPin.error = "Please enter valid password"
             mDataBinding.inputLayoutConfrimPin.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutConfrimPin.error = ""
