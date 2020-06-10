@@ -3,6 +3,7 @@ package com.es.marocapp.network
 
 import com.es.marocapp.model.requests.*
 import com.es.marocapp.model.responses.*
+import com.es.marocapp.model.responses.translations.TranslationApiResponse
 import com.es.marocapp.usecase.approvals.model.response.ResponseApprovals
 import io.reactivex.Observable
 import retrofit2.http.*
@@ -122,6 +123,7 @@ interface NetworkApi {
     @POST(EndPoints.getbalance)
     fun getBalance(@Body request : BalanceInfoAndLimtRequest) : Observable<GetBalanceResponse>
 
+
     //Request for FloatTransferQuote
     @POST(EndPoints.floattransfer_quote)
     fun getFloatTransferQuoteCall(@Body request : FloatTransferQuoteRequest) : Observable<FloatTransferQuoteResponse>
@@ -130,4 +132,8 @@ interface NetworkApi {
     @POST(EndPoints.floattransfer)
     fun getFloatTransferCall(@Body request : FloatTransferRequest) : Observable<FloatTransferResponse>
 
+
+    //Request for GetTranslations
+    @GET(EndPoints.getTranslations)
+    fun getTranslations() : Observable<TranslationApiResponse>
 }

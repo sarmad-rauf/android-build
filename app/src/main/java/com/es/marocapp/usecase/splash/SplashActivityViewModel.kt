@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.es.marocapp.R
 import com.es.marocapp.model.requests.GetPreLoginDataRequest
 import com.es.marocapp.model.responses.GetPreLoginDataResponse
+import com.es.marocapp.model.responses.translations.TranslationApiResponse
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
@@ -25,6 +26,7 @@ class SplashActivityViewModel(application: Application) : AndroidViewModel(appli
     var isLoading = ObservableField<Boolean>()
     var errorText = MutableLiveData<String>()
     var preLoginDataResponseListener = MutableLiveData<GetPreLoginDataResponse>()
+    var translationApiResponseListener = MutableLiveData<TranslationApiResponse>()
 
     init {
 
@@ -54,6 +56,54 @@ class SplashActivityViewModel(application: Application) : AndroidViewModel(appli
 
                         } else {
                             preLoginDataResponseListener.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    fun requestForTranslationsApi(context: Context?) {
+
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getTranslations(
+
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            translationApiResponseListener.postValue(result)
+
+                        } else {
+                            translationApiResponseListener.postValue(result)
                         }
 
 

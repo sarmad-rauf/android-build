@@ -83,4 +83,7 @@ object EndPoints {
     //floattransfer
     const val floattransfer =  "floattransfer"
 
+    //getTranslations
+    const val getTranslations = "getlanguagelist"
+
 }
