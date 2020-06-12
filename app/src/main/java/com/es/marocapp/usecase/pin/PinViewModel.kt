@@ -51,7 +51,7 @@ class PinViewModel(application: Application) : AndroidViewModel(application) {
                             getChangePassResponseListner.postValue(result)
 
                         } else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                            errorText.postValue(result?.description)
                         }
 
 

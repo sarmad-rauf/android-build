@@ -74,7 +74,6 @@
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_32sdp"
         android:background="@drawable/spinner_icon_background_grey"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/selectFavoriteTypeTitle"
         app:layout_constraintTop_toBottomOf="@+id/selectFavoriteTypeTitle" />
 

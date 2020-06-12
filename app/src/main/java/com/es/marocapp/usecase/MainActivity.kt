@@ -17,6 +17,7 @@ import com.es.marocapp.usecase.termsandcondiitons.TermsAndConditions
 import com.es.marocapp.utils.Constants
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
+import kotlinx.android.synthetic.main.layout_drawer_header.view.*
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListeners {
@@ -56,6 +57,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         mDataBinding.toolbarName.text = "Hi, ${Constants.balanceInfoAndResponse.firstname} ${Constants.balanceInfoAndResponse.surname}"
+
+        mDataBinding.navigationHeader.drawer_header_name.text=Constants.balanceInfoAndResponse.firstname.plus(Constants.balanceInfoAndResponse?.surname)
+        mDataBinding.navigationHeader.drawer_header_number.text=Constants.CURRENT_USER_MSISDN
     }
 
     override fun setLayout(): Int {
@@ -68,11 +72,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     }
 
     override fun onDrawerMenuNotificationsClick(view: View) {
-        Toast.makeText(this, "Notifications clicked", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Under Development", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDrawerMenuSettingsClick(view: View) {
-        Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Under Development", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDrawerMenuFavoritesClick(view: View) {
@@ -102,7 +106,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     }
 
     override fun onDrawerMenuLogOutClick(view: View) {
-        Toast.makeText(this, "Log Out clicked", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Under Development", Toast.LENGTH_SHORT).show()
 
     }
 
