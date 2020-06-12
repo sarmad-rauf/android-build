@@ -11,5 +11,7 @@ interface MainActivityClickListeners {
     fun onDrawerMenuFAQsClick(view : View)
     fun onDrawerMenuTermsAndConditionClick(view : View)
     fun onDrawerMenuLogOutClick(view : View)
+    fun onDrawerMenuGenerateQRClick(view : View)
     fun onAccountDetailClick(view : View)
+
 }

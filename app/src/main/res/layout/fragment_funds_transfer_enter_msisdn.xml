@@ -77,6 +77,33 @@
         app:layout_constraintStart_toStartOf="@+id/selectFavoriteTypeTitle"
         app:layout_constraintTop_toBottomOf="@+id/selectFavoriteTypeTitle" />
 
+    <com.es.marocapp.widgets.MarocRegularTextView
+        android:id="@+id/scanQRTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/scan_qr"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/colorTextGreyMedium"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerSelectFavorites"
+        app:layout_constraintStart_toStartOf="@+id/input_layout_phone_number"
+        app:textAllCaps="true"
+        />
+
+    <ImageView
+        android:id="@+id/scanQRImage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_32sdp"
+        android:src="@drawable/bitmap"
+        android:background="@color/colorWhite"
+        android:padding="@dimen/_8sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/scanQRTitle"
+        app:layout_constraintTop_toBottomOf="@+id/scanQRTitle" />
+
+
     <com.es.marocapp.widgets.MarocButton
         android:id="@+id/btnNext"
         android:layout_width="match_parent"

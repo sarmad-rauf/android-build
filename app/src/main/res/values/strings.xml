@@ -143,5 +143,7 @@
     <string name="total_cost">Total Cost</string>
     <string name="please_wait">PLEASE WAIT</string>
     <string name="loading">LOADING</string>
+    <string name="generateqr">Generate QR</string>
+    <string name="scan_qr">Or Scan QR</string>
     <string name="note">Note</string>
 </resources>
