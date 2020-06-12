@@ -55,7 +55,7 @@ class FundsTrasnferSuccessFragment : BaseFragment<FragmentFundsTransferSuccessBi
 
         Constants.balanceInfoAndResponse.balance = mActivityViewModel.senderBalanceAfter
 
-        mDataBinding.newBalanceVal.text = mActivityViewModel.senderBalanceAfter
+        mDataBinding.newBalanceVal.text = Constants.CURRENT_CURRENCY_TYPE+" "+mActivityViewModel.senderBalanceAfter
     }
 
     override fun onNextClickListner(view: View) {

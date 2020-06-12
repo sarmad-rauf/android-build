@@ -53,7 +53,7 @@ class ApprovalViewModel(application: Application) : AndroidViewModel(application
                             getApprovalResponseListner.postValue(result)
 
                         } else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                            getApprovalResponseListner.postValue(result)
                         }
 
 
@@ -107,7 +107,7 @@ class ApprovalViewModel(application: Application) : AndroidViewModel(application
                             getUsersApprovalResponseListner.postValue(result)
 
                         } else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                            getUsersApprovalResponseListner.postValue(result)
                         }
 
 
@@ -159,7 +159,7 @@ class ApprovalViewModel(application: Application) : AndroidViewModel(application
                             getBalanceResponseListner.postValue(result)
 
                         } else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                            getBalanceResponseListner.postValue(result)
                         }
 
 

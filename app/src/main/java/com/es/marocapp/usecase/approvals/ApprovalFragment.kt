@@ -12,6 +12,7 @@ import com.es.marocapp.model.responses.Approvaldetail
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.utils.DialogUtils
 
 class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
 
@@ -69,7 +70,7 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
                     mApprovalsItemAdapter.notifyDataSetChanged()
                 }
             }else{
-              //  Toast.makeText(activity,"Get Approvals APi Failed",Toast.LENGTH_SHORT).show()
+              DialogUtils.showErrorDialoge(activity,it.description)
             }
         })
     }

@@ -14,7 +14,7 @@ import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyViewModel
 import com.es.marocapp.utils.Constants
 
-class CashServicesSuccessFragment :BaseFragment<FragmentCashServicesSuccessBinding>(),
+class CashServicesSuccessFragment : BaseFragment<FragmentCashServicesSuccessBinding>(),
     CashServicesClickListner {
 
     private lateinit var mActivityViewModel: CashServicesViewModel
@@ -24,7 +24,8 @@ class CashServicesSuccessFragment :BaseFragment<FragmentCashServicesSuccessBindi
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        mActivityViewModel = ViewModelProvider(activity as CashServicesActivity).get(CashServicesViewModel::class.java)
+        mActivityViewModel =
+            ViewModelProvider(activity as CashServicesActivity).get(CashServicesViewModel::class.java)
         mDataBinding.apply {
             listner = this@CashServicesSuccessFragment
             viewmodel = mActivityViewModel
@@ -42,30 +43,38 @@ class CashServicesSuccessFragment :BaseFragment<FragmentCashServicesSuccessBindi
 
         mDataBinding.tvReceiverNumberVal.text = mActivityViewModel.transferdAmountTo
 
-        mDataBinding.tvOwnerNameVal2.text = Constants.CURRENT_CURRENCY_TYPE+" "+mActivityViewModel.amountToTransfer
-        mDataBinding.tvContactNumVal2.text = Constants.CURRENT_CURRENCY_TYPE+" "+mActivityViewModel.feeAmount
+        mDataBinding.tvOwnerNameVal2.text =
+            Constants.CURRENT_CURRENCY_TYPE + " " + mActivityViewModel.amountToTransfer
+        mDataBinding.tvContactNumVal2.text =
+            Constants.CURRENT_CURRENCY_TYPE + " " + mActivityViewModel.feeAmount
 
-        var amountToTransfer = Constants.addAmountAndFee(mActivityViewModel.amountToTransfer.toDouble(),mActivityViewModel.feeAmount.toDouble())
-        mDataBinding.tvDHVal.text = Constants.CURRENT_CURRENCY_TYPE+" "+amountToTransfer
+        var amountToTransfer = Constants.addAmountAndFee(
+            mActivityViewModel.amountToTransfer.toDouble(),
+            mActivityViewModel.feeAmount.toDouble()
+        )
+        mDataBinding.tvDHVal.text = Constants.CURRENT_CURRENCY_TYPE + " " + amountToTransfer
 
-        if(mActivityViewModel.isDepositUseCase.get()!!){
-            Constants.balanceInfoAndResponse.balance = mActivityViewModel.senderBalanceAfter
-            mDataBinding.newBalanceVal.text = mActivityViewModel.senderBalanceAfter
-        }
+        Constants.balanceInfoAndResponse.balance = mActivityViewModel.senderBalanceAfter
+        mDataBinding.newBalanceVal.text = Constants.CURRENT_CURRENCY_TYPE+" "+mActivityViewModel.senderBalanceAfter
+
     }
 
     override fun onNextClickListner(view: View) {
         mActivityViewModel.isDepositUseCase.set(false)
         mActivityViewModel.isWithdrawUseCase.set(false)
-        (activity as CashServicesActivity).startNewActivityAndClear(activity as CashServicesActivity,
-            MainActivity::class.java)
+        (activity as CashServicesActivity).startNewActivityAndClear(
+            activity as CashServicesActivity,
+            MainActivity::class.java
+        )
     }
 
     override fun onBackClickListner(view: View) {
         mActivityViewModel.isDepositUseCase.set(false)
         mActivityViewModel.isWithdrawUseCase.set(false)
-        (activity as CashServicesActivity).startNewActivityAndClear(activity as CashServicesActivity,
-            MainActivity::class.java)
+        (activity as CashServicesActivity).startNewActivityAndClear(
+            activity as CashServicesActivity,
+            MainActivity::class.java
+        )
     }
 
 }

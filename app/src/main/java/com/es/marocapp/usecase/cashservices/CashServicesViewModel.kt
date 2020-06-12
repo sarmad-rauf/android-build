@@ -43,6 +43,7 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
     var getCashInWithOtpQuoteResponseListner = SingleLiveEvent<CashInWithOtpQuoteResponse>()
     var getCashInWithOtpResponseListner = SingleLiveEvent<CashInWithOtpResponse>()
     var getGenerateOtpResponseListner = SingleLiveEvent<GenerateOtpResponse>()
+    var getBalanceResponseListner = SingleLiveEvent<GetBalanceResponse>()
 
     //Request For InitiateTrasnferQoute
     fun requestForInitiateTransferQouteApi(context: Context?,
@@ -294,6 +295,58 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
 
                         } else {
                             getGenerateOtpResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For Get Updated Balance
+    fun requestForGetBalanceApi(
+        context: Context?
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBalance(
+                BalanceInfoAndLimtRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getBalanceResponseListner.postValue(result)
+
+                        } else {
+                            getBalanceResponseListner.postValue(result)
                         }
 
 
