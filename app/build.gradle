@@ -138,4 +138,8 @@ dependencies {
     api 'com.squareup.okhttp3:okhttp:3.10.0'
     api 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 
+    //---------------------------------QR code------------------------------------
+    implementation 'org.apache.commons:commons-lang3:3.5'
+    implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
+
 }

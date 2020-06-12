@@ -1,7 +1,15 @@
 package com.es.marocapp.utils
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.ConnectivityManager
+import android.util.Log
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.WriterException
+import com.google.zxing.common.BitMatrix
+import com.google.zxing.qrcode.QRCodeWriter
+import kotlinx.android.synthetic.main.fragment_generate_qr.*
 
 object Tools {
 
@@ -39,5 +47,28 @@ object Tools {
         } catch (e: Exception) {
         }
         return isNetwork
+    }
+
+     fun generateQR(texto: String): Bitmap? {
+        val writer = QRCodeWriter()
+        try {
+            val bitMatrix: BitMatrix = writer.encode(texto, BarcodeFormat.QR_CODE, 512, 512)
+            val width = 512
+            val height = 512
+            val bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
+            for (x in 0 until width) {
+                for (y in 0 until height) {
+                    if (bitMatrix.get(x, y)) bmp.setPixel(x, y, Color.BLACK) else bmp.setPixel(
+                        x,
+                        y,
+                        Color.WHITE
+                    )
+                }
+            }
+            return bmp;
+        } catch (e: WriterException) {
+            Log.e("QR ERROR", e.toString())
+            return null
+        }
     }
 }

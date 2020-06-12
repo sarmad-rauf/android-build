@@ -13,6 +13,7 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityMainBinding
 import com.es.marocapp.usecase.accountdetails.AccountDetailsActivity
 import com.es.marocapp.usecase.favorites.FavoritesActivity
+import com.es.marocapp.usecase.qrcode.GenerateQrActivity
 import com.es.marocapp.usecase.termsandcondiitons.TermsAndConditions
 import com.es.marocapp.utils.Constants
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -108,6 +109,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     override fun onDrawerMenuLogOutClick(view: View) {
         Toast.makeText(this, "Under Development", Toast.LENGTH_SHORT).show()
 
+    }
+
+    override fun onDrawerMenuGenerateQRClick(view: View) {
+        startNewActivity(this@MainActivity,GenerateQrActivity::class.java)
     }
 
     override fun onAccountDetailClick(view: View) {

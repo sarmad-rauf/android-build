@@ -1,22 +1,23 @@
 package com.es.marocapp.usecase.sendmoney.tranferfundcase
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentFundsTransferEnterMsisdnBinding
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
-import com.es.marocapp.usecase.favorites.FavoritesActivity
-import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.google.zxing.integration.android.IntentIntegrator
+import kotlinx.android.synthetic.main.fragment_funds_transfer_enter_msisdn.*
+
 
 class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisdnBinding>(),
     FundsTrasnferClickLisntener {
@@ -52,6 +53,17 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                 Constants.APP_MSISDN_LENGTH.toInt() - 2
             )
         )
+
+        mDataBinding.scanQRImage.setOnClickListener{
+            val integrator = IntentIntegrator(activity)
+            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES)
+            integrator.setPrompt("")
+            integrator.setOrientationLocked(false)
+            integrator.setCameraId(0)
+            integrator.setBeepEnabled(false)
+            integrator.setBarcodeImageEnabled(false)
+            integrator.initiateScan()
+        }
 
         subscribeObserver()
     }
@@ -138,6 +150,24 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                 mDataBinding.inputLayoutPhoneNumber.error = "Please Enter Valid Mobile Number"
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val result =
+            IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (result != null) {
+            if (result.contents == null) {
+                DialogUtils.showErrorDialoge(activity, "Please scan valid QR.")
+            } else {
+                var sResult = result.contents
+                sResult = StringBuilder(sResult!!).insert(2, "-").insert(6, "-").toString()
+                input_phone_number.setText(sResult)
+            }
+        } else {
+            // This is important, otherwise the result will not be passed to the fragment
+            super.onActivityResult(requestCode, resultCode, data)
+            DialogUtils.showErrorDialoge(activity, "Please scan valid QR.")
         }
     }
 
