@@ -24,6 +24,7 @@ object Constants {
     const val TRANSFER_TYPE_PAYMENT = "INTEROP_TRANSFER"
     const val MERCHANT_TYPE_PAYMENT = "INTEROP_TRANSFER_SEND"
     const val TYPE_PAYMENT = "PAYMENT"
+    const val TYPE_CASH_IN = "CASH_IN"
 
     //preLoginData
     var APP_DATE_FORMAT = "yyyy-mm-dd"

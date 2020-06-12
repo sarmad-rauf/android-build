@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cash_services_nav_graph"
+    app:startDestination="@id/cashServicesTypeFragment">
+
+    <fragment
+        android:id="@+id/cashServicesTypeFragment"
+        android:name="com.es.marocapp.usecase.cashservices.CashServicesTypeFragment"
+        android:label="CashServicesTypeFragment"
+        tools:layout="@layout/fragment_bill_payment_type"
+        >
+        <action
+            android:id="@+id/action_cashServicesTypeFragment_to_cashMsisdnAndAmountFragment"
+            app:destination="@id/cashMsisdnAndAmountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cashMsisdnAndAmountFragment"
+        android:name="com.es.marocapp.usecase.cashservices.CashDepositAndWithdraw.CashServicesMsisdnAndAmountFragment"
+        android:label="CashMsisdnAndAmountFragment"
+        tools:layout="@layout/fragment_cash_services_number_amount"
+        >
+        <action
+            android:id="@+id/action_cashMsisdnAndAmountFragment_to_cashServicesConfirmationFragment"
+            app:destination="@id/cashServicesConfirmationFragment" />
+        <action
+            android:id="@+id/action_cashMsisdnAndAmountFragment_to_cashServicesVerifyOtpFragment"
+            app:destination="@id/cashServicesVerifyOtpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cashServicesConfirmationFragment"
+        android:name="com.es.marocapp.usecase.cashservices.CashDepositAndWithdraw.CashServicesConfirmationFragment"
+        android:label="CashServicesConfirmationFragment"
+        tools:layout="@layout/fragment_cash_service_confirmation"
+        >
+        <action
+            android:id="@+id/action_cashServicesConfirmationFragment_to_cashServicesSuccessFragment"
+            app:destination="@id/cashServicesSuccessFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cashServicesSuccessFragment"
+        android:name="com.es.marocapp.usecase.cashservices.CashDepositAndWithdraw.CashServicesSuccessFragment"
+        android:label="CashServicesSuccessFragment"
+        tools:layout="@layout/fragment_cash_services_success"
+        />
+    <fragment
+        android:id="@+id/cashServicesVerifyOtpFragment"
+        android:name="com.es.marocapp.usecase.cashservices.CashDepositAndWithdraw.CashServicesVerifyOtpFragment"
+        android:label="CashServicesVerifyOtpFragment"
+        tools:layout="@layout/fragment_cash_services_verify_otp"
+        >
+        <action
+            android:id="@+id/action_cashServicesVerifyOtpFragment_to_cashServicesConfirmationFragment"
+            app:destination="@id/cashServicesConfirmationFragment" />
+    </fragment>
+</navigation>

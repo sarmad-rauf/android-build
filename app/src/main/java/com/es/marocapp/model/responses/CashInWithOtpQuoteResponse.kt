@@ -1,18 +1,18 @@
 package com.es.marocapp.model.responses
 
-data class FloatTransferQuoteResponse(
-    val accountHolderInfoResponse: String,
+data class CashInWithOtpQuoteResponse(
+    val accountHolderInfoResponse: Any,
     val accountNumber: Any,
     val clearingNumber: Any,
     val description: String,
     val employeeId: Any,
-    val quoteList: List<FloatTransfeQuote>,
+    val quoteList: List<CashInWithOtpQuote>,
     val responseCode: String
 )
 
-data class FloatTransfeQuote(
-    val discount: String,
-    val fee: FloatTransfeFee,
+data class CashInWithOtpQuote(
+    val discount: Any,
+    val fee: CashInWithOtpFee,
     val feefri: String,
     val loyfee: Any,
     val loyfeefri: Any,
@@ -23,7 +23,7 @@ data class FloatTransfeQuote(
     val quoteid: String
 )
 
-data class FloatTransfeFee(
+data class CashInWithOtpFee(
     val amount: Double,
     val currency: String
 )
