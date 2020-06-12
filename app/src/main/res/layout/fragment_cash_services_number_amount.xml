@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="viewmodel"
+            type="com.es.marocapp.usecase.cashservices.CashServicesViewModel" />
+
+        <variable
+            name="listner"
+            type="com.es.marocapp.usecase.cashservices.CashServicesClickListner" />
+
+
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGreyLight"
+    >
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/_32sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        >
+
+        <com.es.marocapp.widgets.MarocEditText
+            android:id="@+id/input_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/myTextInputLabel"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
+            android:textSize="@dimen/_14ssp"
+            android:hint="@string/enter_receiver_s_mobile_number_caps"
+            android:inputType="phone"
+            android:maxLength="12" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout_phone_number"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        >
+
+        <com.es.marocapp.widgets.MarocEditText
+            android:id="@+id/input_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/myTextInputLabel"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
+            android:textSize="@dimen/_14ssp"
+            android:hint="@string/enter_amount_caps"
+            android:inputType="numberDecimal"
+            android:maxLength="12" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/note_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        app:layout_constraintStart_toStartOf="@+id/input_layout_amount"
+        app:layout_constraintEnd_toEndOf="@+id/input_layout_amount"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout_amount"
+        >
+
+        <com.es.marocapp.widgets.MarocEditText
+            android:id="@+id/input_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_4sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:gravity="top"
+            android:backgroundTint="@color/colorWhite"
+            android:hint="@string/note"
+            android:maxLines="5"
+            android:lines="5"
+            />
+
+    </androidx.cardview.widget.CardView>
+
+    <com.es.marocapp.widgets.MarocButton
+        android:id="@+id/btnNext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/next"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:onClick="@{listner::onNextClickListner}"
+        android:background="@drawable/button_enable_blue"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

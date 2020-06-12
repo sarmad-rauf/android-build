@@ -4,7 +4,6 @@ package com.es.marocapp.network
 import com.es.marocapp.model.requests.*
 import com.es.marocapp.model.responses.*
 import com.es.marocapp.model.responses.translations.TranslationApiResponse
-import com.es.marocapp.usecase.approvals.model.response.ResponseApprovals
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -136,4 +135,24 @@ interface NetworkApi {
     //Request for GetTranslations
     @GET(EndPoints.getTranslations)
     fun getTranslations() : Observable<TranslationApiResponse>
+
+    //Request for InitiateTransferQuote
+    @POST(EndPoints.initiatetransfer_quote)
+    fun getInitiateTransferQuoteCall(@Body request : InitiateTransferQuoteRequest) : Observable<InitiateTransferQuoteResponse>
+
+    //Request for InitiateTransfer
+    @POST(EndPoints.initiatetransfer)
+    fun getInitiateTransferCall(@Body request : InitiateTransferRequest) : Observable<InitiateTransferResponse>
+
+    //Request for GenerateOTP
+    @POST(EndPoints.generateotp)
+    fun getGenerateOtpCall(@Body request : GenerateOtpRequest) : Observable<GenerateOtpResponse>
+
+    //Request for CashInWithOtpQuote
+    @POST(EndPoints.cashinwithotp_quote)
+    fun getCashInWithOtpQuoteCall(@Body request : CashInWithOtpQuoteRequest) : Observable<CashInWithOtpQuoteResponse>
+
+    //Request for CashInWithOtp
+    @POST(EndPoints.cashinwithotp)
+    fun getCashInWithOtpCall(@Body request : CashInWithOtpRequest) : Observable<CashInWithOtpResponse>
 }

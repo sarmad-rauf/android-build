@@ -87,7 +87,7 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
 
     override fun onOTPVerifyClick(view: View) {
         if (mDataBinding.inputVerifyOtp.text.isNullOrEmpty()) {
-            mDataBinding.inputLayoutVerifyOtp.error = "Please Enter First Name"
+            mDataBinding.inputLayoutVerifyOtp.error = "Please Enter Valid OTP"
             mDataBinding.inputLayoutVerifyOtp.isErrorEnabled = true
         } else {
             mDataBinding.inputLayoutVerifyOtp.error = ""

@@ -45,6 +45,7 @@
     <string name="transfer">Transfer</string>
     <string name="transfer_newLine">\nTransfer</string>
     <string name="cash_service">Cash Service</string>
+    <string name="cash_services">Cash Services</string>
     <string name="payments">Payments</string>
     <string name="payments_newline">\nPayments</string>
     <string name="qr">QR</string>
@@ -70,6 +71,7 @@
     <string name="receipt_code">Receipt code</string>
     <string name="fee_loyalty">Fee(Loyalty)</string>
     <string name="amount">Amount</string>
+    <string name="enter_amount_caps">ENTER AMOUNT</string>
     <string name="discount_amount">Discount Amount</string>
     <string name="loyalty">Loyalty</string>
     <string name="pay">Pay</string>
@@ -141,4 +143,5 @@
     <string name="total_cost">Total Cost</string>
     <string name="please_wait">PLEASE WAIT</string>
     <string name="loading">LOADING</string>
+    <string name="note">Note</string>
 </resources>

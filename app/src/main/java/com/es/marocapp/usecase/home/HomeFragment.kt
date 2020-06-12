@@ -14,6 +14,7 @@ import com.es.marocapp.databinding.FragmentHomeBinding
 import com.es.marocapp.model.HomeUseCasesModel
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.cashservices.CashServicesActivity
 import com.es.marocapp.usecase.payments.PaymentsActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 
@@ -73,6 +74,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                             Intent(
                                 activity as MainActivity,
                                 SendMoneyActivity::class.java
+                            )
+                        )
+
+                        3 ->startActivity(
+                            Intent(
+                                activity as MainActivity,
+                                CashServicesActivity::class.java
                             )
                         )
                         else -> startActivity(

@@ -83,6 +83,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/next"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
         android:onClick="@{listener::onNextClickListner}"
         android:background="@drawable/button_enable_blue"
         android:layout_marginStart="@dimen/_16sdp"

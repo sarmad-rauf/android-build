@@ -86,4 +86,19 @@ object EndPoints {
     //getTranslations
     const val getTranslations = "getlanguagelist"
 
+    //initiatetransfer/quote
+    const val initiatetransfer_quote = "initiatetransfer/quote"
+
+    //initiatetransfer
+    const val initiatetransfer = "initiatetransfer"
+
+    //generateotp
+    const val generateotp = "generateotp"
+
+    //cashinwithotp/quote
+    const val cashinwithotp_quote = "cashinwithotp/quote"
+
+    //cashinwithotp
+    const val cashinwithotp = "cashinwithotp"
+
 }

@@ -62,6 +62,7 @@ class FundsTrasnferSuccessFragment : BaseFragment<FragmentFundsTransferSuccessBi
         mActivityViewModel.isUserRegistered.set(false)
         mActivityViewModel.isFundTransferUseCase.set(false)
         mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set(false)
+        Constants.HEADERS_FOR_PAYEMNTS = false
         (activity as SendMoneyActivity).startNewActivityAndClear(activity as SendMoneyActivity,MainActivity::class.java)
     }
 
@@ -69,6 +70,7 @@ class FundsTrasnferSuccessFragment : BaseFragment<FragmentFundsTransferSuccessBi
         mActivityViewModel.isUserRegistered.set(false)
         mActivityViewModel.isFundTransferUseCase.set(false)
         mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set(false)
+        Constants.HEADERS_FOR_PAYEMNTS = false
         (activity as SendMoneyActivity).startNewActivityAndClear(activity as SendMoneyActivity,MainActivity::class.java)
     }
 
