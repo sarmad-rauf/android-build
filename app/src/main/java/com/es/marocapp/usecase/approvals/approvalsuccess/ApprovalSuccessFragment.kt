@@ -12,6 +12,7 @@ import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.approvals.ApprovalFragment
 import com.es.marocapp.usecase.approvals.ApprovalViewModel
+import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.fragment_approval_success.*
 
 class ApprovalSuccessFragment : BaseFragment<FragmentApprovalSuccessBinding>(),
@@ -51,7 +52,7 @@ class ApprovalSuccessFragment : BaseFragment<FragmentApprovalSuccessBinding>(),
                 newBalanceVal.text=it.currnecy.plus(it.amount)
 
             }else{
-                //  Toast.makeText(activity,"Get Approvals APi Failed",Toast.LENGTH_SHORT).show()
+                DialogUtils.showErrorDialoge(activity,it.description)
             }
         })
     }

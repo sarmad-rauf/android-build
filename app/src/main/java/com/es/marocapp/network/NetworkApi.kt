@@ -163,4 +163,33 @@ interface NetworkApi {
     //Request for verifyOTPforSetDefaultAccountStatus
     @POST(EndPoints.getfinancialresourceinformationStep2)
     fun verifyOTPforSetDefaultAccountStatus(@Body request : VerifyOTPForDefaultAccountRequest) : Observable<VerifyOTPForDefaultAccountResponse>
+
+    //Request for LogOutUser
+    @POST(EndPoints.cashinwithotp)
+    fun getLogOutUserCall(@Body request : CashInWithOtpRequest) : Observable<CashInWithOtpResponse>
+
+    //Request for AirTimeUseCases
+    @POST(EndPoints.getairtimeusecases)
+    fun getAirTimeUseCasesCall(@Body request : GetAirTimeUseCasesRequest) : Observable<GetAirTimeUseCasesResponse>
+
+    //Request for FinancialResourceInfoOne
+    @POST(EndPoints.getfinancialresourceinformation_step1)
+    fun FinancialResourceInfoOneCall(@Body request : GetFinancialResourceInfoOneRequest) : Observable<GetFinancialResourceInfoOneResponse>
+
+    //Request for FinancialResourceInfoTwo
+    @POST(EndPoints.getfinancialresourceinformation_step2)
+    fun FinancialResourceInfoTwoCall(@Body request : GetFinancialResourceInfoTwoRequest) : Observable<GetFinancialResourceInfoTwoResponse>
+
+    //Request for AirTimeQuote
+    @POST(EndPoints.airtime_quote)
+    fun getAirTimeQuoteCall(@Body request : AirTimeQuoteRequest) : Observable<AirTimeQouteResponse>
+
+    //Request for AirTime
+    @POST(EndPoints.airtime)
+    fun getAirTimeCall(@Body request : AirTimeRequest) : Observable<AirTimeResponse>
+
+    //Request for GetUserSimpleProfile
+    @POST(EndPoints.getusertypeprofiles)
+    fun getUserSimpleProfile(@Body request : GetUserSimpleProfileRequest) : Observable<GetUserSimpleProfileResponse>
+
 }

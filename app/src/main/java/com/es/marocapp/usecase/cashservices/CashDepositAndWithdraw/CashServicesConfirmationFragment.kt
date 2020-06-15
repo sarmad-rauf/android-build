@@ -57,9 +57,8 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                     Constants.HEADERS_FOR_PAYEMNTS = false
-//                    mActivityViewModel.senderBalanceAfter = it.senderBalanceafter
                     mActivityViewModel.transactionID = it.financialTransactionId
-                    (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesConfirmationFragment_to_cashServicesSuccessFragment)
+                    mActivityViewModel.requestForGetBalanceApi(activity)
                 }else{
                     Constants.HEADERS_FOR_PAYEMNTS = false
                     DialogUtils.showErrorDialoge(activity,it.description)
@@ -80,6 +79,16 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
                 }
             }
         )
+
+        mActivityViewModel.getBalanceResponseListner.observe(this@CashServicesConfirmationFragment,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    mActivityViewModel.senderBalanceAfter = it.amount.toString()
+                    (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesConfirmationFragment_to_cashServicesSuccessFragment)
+                }else{
+                    DialogUtils.showErrorDialoge(activity,it.description)
+                }
+            })
     }
 
     private fun updateUI() {

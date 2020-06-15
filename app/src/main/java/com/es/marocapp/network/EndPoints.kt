@@ -107,4 +107,25 @@ object EndPoints {
     //getfinancialresourceinformationStep2//DefaultAccountStatus
     const val getfinancialresourceinformationStep2 = "getfinancialresourceinformation/step2"
 
+    //logout
+    const val logout = "logout"
+
+    //getairtimeusecases
+    const val getairtimeusecases = "getairtimeusecases"
+
+    //getusertypeprofiles
+    const val getusertypeprofiles = "getusertypeprofiles"
+
+    //getfinancialresourceinformation/step1
+    const val getfinancialresourceinformation_step1 = "getfinancialresourceinformation/step1"
+
+    //getfinancialresourceinformation/step2
+    const val getfinancialresourceinformation_step2 = "getfinancialresourceinformation/step2"
+
+    //airtime/quote
+    const val airtime_quote = "airtime/quote"
+
+    //airtime
+    const val airtime = "airtime"
+
 }
