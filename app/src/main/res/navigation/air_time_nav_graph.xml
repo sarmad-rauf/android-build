@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/air_time_nav_graph"
+    app:startDestination="@id/airTimeTypeFragment">
+
+    <fragment
+        android:id="@+id/airTimeTypeFragment"
+        android:name="com.es.marocapp.usecase.airtime.AirTimeTypeFragment"
+        android:label="AirTimeTypeFragment"
+        tools:layout="@layout/fragment_bill_type"
+        />
+</navigation>

@@ -46,6 +46,7 @@
     <string name="transfer_newLine">\nTransfer</string>
     <string name="cash_service">Cash Service</string>
     <string name="cash_services">Cash Services</string>
+    <string name="air_time">Air Time</string>
     <string name="payments">Payments</string>
     <string name="payments_newline">\nPayments</string>
     <string name="qr">QR</string>

@@ -14,6 +14,7 @@ import com.es.marocapp.databinding.FragmentHomeBinding
 import com.es.marocapp.model.HomeUseCasesModel
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.airtime.AirTimeActivity
 import com.es.marocapp.usecase.cashservices.CashServicesActivity
 import com.es.marocapp.usecase.payments.PaymentsActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
@@ -70,6 +71,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             HomeUseCasesAdapter(useCases, object : HomeUseCasesAdapter.HomeUseCasesClickListner {
                 override fun onHomeUseCaseClick(position: Int) {
                     when (position) {
+                        1-> startActivity(
+                            Intent(
+                                activity as MainActivity,
+                                AirTimeActivity::class.java
+                            )
+                        )
                         2 -> startActivity(
                             Intent(
                                 activity as MainActivity,
