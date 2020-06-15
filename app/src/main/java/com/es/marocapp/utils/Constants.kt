@@ -119,6 +119,10 @@ object Constants {
         return "$number@hpss.mer.sp/SP"
     }
 
+    fun getAgentReceiverAlias(number: String) : String{
+        return "$number@hpss.mer.sp/SP"
+    }
+
     fun addAmountAndFee(amount : Double, fee : Double): String{
         return (amount+fee).toString()
     }
