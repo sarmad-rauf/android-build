@@ -13,13 +13,14 @@ import android.telephony.TelephonyManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.BuildConfig
 import com.es.marocapp.R
 import com.es.marocapp.databinding.AcitivtySplashBinding
+import com.es.marocapp.locale.LocaleData
 import com.es.marocapp.model.responses.GetPreLoginDataResponse
+import com.es.marocapp.model.responses.translations.TranslationInnerObject
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.login.LoginActivity
@@ -155,6 +156,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
     private fun subscribeForTranslationsApiResponse() {
         mActivityViewModel.translationApiResponseListener.observe(this, Observer {
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                setTranslations(it.labelList)
                 startNewActivityAndClear(this@SplashActivity, LoginActivity::class.java)
             /*    mApprovalsList.apply {
                     addAll(it.approvaldetails as ArrayList<Approvaldetail>)
@@ -164,6 +166,14 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 DialogUtils.showErrorDialoge(this@SplashActivity,it.description)
             }
         })
+    }
+
+    private fun setTranslations(labelList: Map<String?, TranslationInnerObject?>?) {
+
+        LocaleData.stringsHashMap=labelList
+        var temp=labelList
+        Log.d("LableListObj",labelList.toString())
+
     }
 
     fun setDeviceIMEI(){

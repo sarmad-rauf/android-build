@@ -1,17 +1,21 @@
 package com.es.marocapp.usecase.login.login
 
 
+import android.app.Activity
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.view.View
 import android.widget.AdapterView
-import android.widget.Toast
+import android.widget.AdapterView.OnItemSelectedListener
+import androidx.core.view.get
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.adapter.LanguageCustomSpinnerAdapter
 import com.es.marocapp.databinding.FragmentLoginBinding
+import com.es.marocapp.locale.LocaleData
+import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.GetAccountHolderInformationResponse
 import com.es.marocapp.model.responses.GetOptResponse
 import com.es.marocapp.model.responses.ValidateOtpAndUpdateAliasesResponse
@@ -21,7 +25,10 @@ import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.layout_login_header.*
 import kotlinx.android.synthetic.main.layout_login_header.view.*
+import kotlinx.android.synthetic.main.layout_login_header.view.languageSpinner
 
 
 class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
@@ -53,26 +60,46 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
 
         mActivity = activity as LoginActivity
 
-        val languageItems = arrayOf("English", "Arabic", "Spanish", "Urdu")
+        val languageItems = arrayOf("English", "French")
         mLanguageSpinnerAdapter =
             LanguageCustomSpinnerAdapter(activity as LoginActivity, languageItems)
         mDataBinding.root.languageSpinner.apply {
             adapter = mLanguageSpinnerAdapter
+            if(LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_EN)){
+                setSelection(0)
+            }
+            else{
+                setSelection(1)
+            }
         }
+
 
         //todo also here remove lenght-2 check in max line
         mDataBinding.inputPhoneNumber.filters =
             arrayOf<InputFilter>(LengthFilter(Constants.APP_MSISDN_LENGTH.toInt() - 2))
         subscribe()
 
+        setStrings()
+
+    }
+
+    private fun setStrings() {
+        btnLogin.text=LocaleData.getStringValue("Water")
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
 
     }
 
-    override fun onItemSelected(parent: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
+    override fun onItemSelected(parent: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+        if( position==0 && !LocaleManager.selectedLanguage.equals("en")){
+            // LocaleManager.setAppLanguage(applicationContext, LocaleManager.KEY_LANGUAGE_EN)
+            LocaleManager.setLanguageAndUpdate(context as Activity,LocaleManager.KEY_LANGUAGE_EN,LoginActivity::class.java)
+        }
+        else if( position==1 && !LocaleManager.selectedLanguage.equals("fr")) {
+            //LocaleManager.setAppLanguage(applicationContext,LocaleManager.KEY_LANGUAGE_FR)
+            LocaleManager.setLanguageAndUpdate(context as Activity,LocaleManager.KEY_LANGUAGE_FR,LoginActivity::class.java)
+        }
     }
 
     override fun onLoginButtonClick(view: View) {

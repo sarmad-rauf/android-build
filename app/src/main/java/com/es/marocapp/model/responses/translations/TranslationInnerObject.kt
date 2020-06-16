@@ -1,6 +1,6 @@
 package com.es.marocapp.model.responses.translations
 
-data class Hello(
+data class TranslationInnerObject(
 	val arabic: String? = null,
 	val english: String? = null,
 	val screen: String? = null,
