@@ -3,7 +3,7 @@ package com.es.marocapp.locale
 import com.es.marocapp.model.responses.translations.TranslationInnerObject
 import kotlin.collections.HashMap
 
-object LocaleData{
+object LanguageData{
 
     var stringsHashMap: Map<String?, TranslationInnerObject?>? = HashMap()
 

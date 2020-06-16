@@ -18,7 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.BuildConfig
 import com.es.marocapp.R
 import com.es.marocapp.databinding.AcitivtySplashBinding
-import com.es.marocapp.locale.LocaleData
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.GetPreLoginDataResponse
 import com.es.marocapp.model.responses.translations.TranslationInnerObject
 import com.es.marocapp.network.ApiConstant
@@ -170,7 +170,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 
     private fun setTranslations(labelList: Map<String?, TranslationInnerObject?>?) {
 
-        LocaleData.stringsHashMap=labelList
+        LanguageData.stringsHashMap=labelList
         var temp=labelList
         Log.d("LableListObj",labelList.toString())
 

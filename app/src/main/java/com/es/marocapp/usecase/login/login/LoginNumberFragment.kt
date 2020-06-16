@@ -7,14 +7,12 @@ import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.view.View
 import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
-import androidx.core.view.get
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.adapter.LanguageCustomSpinnerAdapter
 import com.es.marocapp.databinding.FragmentLoginBinding
-import com.es.marocapp.locale.LocaleData
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.GetAccountHolderInformationResponse
 import com.es.marocapp.model.responses.GetOptResponse
@@ -26,7 +24,6 @@ import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.layout_login_header.*
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 import kotlinx.android.synthetic.main.layout_login_header.view.languageSpinner
 
@@ -84,7 +81,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
     }
 
     private fun setStrings() {
-        btnLogin.text=LocaleData.getStringValue("Water")
+        btnLogin.text=LanguageData.getStringValue("Water")
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
