@@ -101,6 +101,12 @@ object EndPoints {
     //cashinwithotp
     const val cashinwithotp = "cashinwithotp"
 
+    //getfinancialresourceinformationStep1//DefaultAccountStatus
+    const val getfinancialresourceinformationStep1 = "getfinancialresourceinformation/step1"
+
+    //getfinancialresourceinformationStep2//DefaultAccountStatus
+    const val getfinancialresourceinformationStep2 = "getfinancialresourceinformation/step2"
+
     //logout
     const val logout = "logout"
 

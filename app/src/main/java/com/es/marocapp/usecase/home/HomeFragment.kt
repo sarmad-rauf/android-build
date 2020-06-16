@@ -12,12 +12,15 @@ import com.es.marocapp.adapter.HomeCardAdapter
 import com.es.marocapp.adapter.HomeUseCasesAdapter
 import com.es.marocapp.databinding.FragmentHomeBinding
 import com.es.marocapp.model.HomeUseCasesModel
+import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.airtime.AirTimeActivity
 import com.es.marocapp.usecase.cashservices.CashServicesActivity
 import com.es.marocapp.usecase.payments.PaymentsActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
+import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.DialogUtils
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChangeListener,
     HomeFragmentClickListners {
@@ -25,6 +28,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var mCardAdapter: HomeCardAdapter
     private lateinit var mUseCasesAdapter: HomeUseCasesAdapter
+    var referenceNumber="";
 
     override fun setLayout(): Int {
         return R.layout.fragment_home
@@ -45,6 +49,80 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
 
         populateHomeCardView()
         populateHomeUseCase()
+
+        if(Constants.IS_CONSUMER_USER || Constants.IS_MERCHANT_USER){
+        homeViewModel.requestForAccountHolderAddtionalInformationApi(context)
+        subscribeForDefaultAccountStatus()
+        subscribeForSetDefaultAccountStatus()
+        subscribeForVerifyOTPForSetDefaultAccountStatus()
+        }
+    }
+
+    private fun subscribeForDefaultAccountStatus() {
+
+        homeViewModel.getAccountHolderAdditionalInfoResponseListner.observe(this@HomeFragment,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    if (it.additionalinformation.isNullOrEmpty()) {
+                        showPopUp()
+                    } else {
+                        if (it.additionalinformation[0].value.equals("FALSE", true)) {
+                            showPopUp()
+                        }
+                    }
+                }else{
+                    DialogUtils.showErrorDialoge(activity ,it.description)
+                }
+            }
+        )
+    }
+
+    private fun subscribeForSetDefaultAccountStatus() {
+
+        homeViewModel.setDefaultAccountResponseListener.observe(this@HomeFragment,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    referenceNumber=it.referenceNumber
+                  showOTPdialogue()
+                }else{
+                    DialogUtils.showErrorDialoge(activity ,it.description)
+                }
+            }
+        )
+    }
+
+    private fun subscribeForVerifyOTPForSetDefaultAccountStatus() {
+
+        homeViewModel.verifyOTPForDefaultAccountResponseListener.observe(this@HomeFragment,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    DialogUtils.successFailureDialogue(context,resources.getString(R.string.operation_success),0)
+                }else{
+                    DialogUtils.successFailureDialogue(context,resources.getString(R.string.operation_failure),1)
+                }
+            }
+        )
+    }
+
+    private fun showPopUp() {
+        val confirmationTxt=context?.resources?.getString(R.string.default_account_confirmation)
+        DialogUtils.showConfirmationDialogue(confirmationTxt!!,activity,object : DialogUtils.OnConfirmationDialogClickListner{
+            override fun onDialogYesClickListner() {
+                homeViewModel.requestForSetDefaultAccount(context)
+            }
+
+
+        })
+    }
+
+    private fun showOTPdialogue() {
+        DialogUtils.showOTPDialogue(activity,object : DialogUtils.OnOTPDialogClickListner{
+
+            override fun onOTPDialogYesClickListner(otp: String) {
+                homeViewModel.requestForVerifyOTPForSetDefaultAccount(context,referenceNumber,otp)
+            }
+
+        })
     }
 
     private fun populateHomeUseCase() {

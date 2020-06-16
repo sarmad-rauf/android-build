@@ -156,6 +156,14 @@ interface NetworkApi {
     @POST(EndPoints.cashinwithotp)
     fun getCashInWithOtpCall(@Body request : CashInWithOtpRequest) : Observable<CashInWithOtpResponse>
 
+    //Request for setDefaultAccountStatus
+    @POST(EndPoints.getfinancialresourceinformationStep1)
+    fun setDefaultAccountStatus(@Body request : SetDefaultAccountRequest) : Observable<SetDefaultAccountResponse>
+
+    //Request for verifyOTPforSetDefaultAccountStatus
+    @POST(EndPoints.getfinancialresourceinformationStep2)
+    fun verifyOTPforSetDefaultAccountStatus(@Body request : VerifyOTPForDefaultAccountRequest) : Observable<VerifyOTPForDefaultAccountResponse>
+
     //Request for LogOutUser
     @POST(EndPoints.logout)
     fun getLogOutUserCall(@Body request : LogoutUserRequest) : Observable<LogOutUserResponse>
