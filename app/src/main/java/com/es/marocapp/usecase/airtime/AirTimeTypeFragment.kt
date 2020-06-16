@@ -37,6 +37,7 @@ class AirTimeTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
         )
 
         (activity as AirTimeActivity).setHeaderVisibility(true)
+        (activity as AirTimeActivity).setCompanyIconToolbarVisibility(false)
 
         mActivityViewModel.popBackStackTo = -1
 
@@ -50,13 +51,13 @@ class AirTimeTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
                             mActivityViewModel.isRechargeFixeUseCase.set(true)
                             mActivityViewModel.isRechargeMobileUseCase.set(false)
                             mActivityViewModel.airTimeSelected.set("Recharge Fixe")
-//                            (activity as AirTimeActivity).navController.navigate(R.id.action_cashServicesTypeFragment_to_cashMsisdnAndAmountFragment)
+                            (activity as AirTimeActivity).navController.navigate(R.id.action_airTimeTypeFragment_to_airTimeAmountFragment)
                         }
                         "Recharge Mobile" -> {
                             mActivityViewModel.isRechargeFixeUseCase.set(false)
                             mActivityViewModel.isRechargeMobileUseCase.set(true)
                             mActivityViewModel.airTimeSelected.set("Recharge Mobile")
-//                            (activity as AirTimeActivity).navController.navigate(R.id.action_cashServicesTypeFragment_to_cashMsisdnAndAmountFragment)
+                            (activity as AirTimeActivity).navController.navigate(R.id.action_airTimeTypeFragment_to_airTimePlanFragment)
                         }
                         else -> Toast.makeText(activity, "Nothing Clicked", Toast.LENGTH_SHORT)
                             .show()
@@ -71,7 +72,6 @@ class AirTimeTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
         }
 
         subscribeObserver()
-
     }
 
     private fun subscribeObserver() {

@@ -31,9 +31,9 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
     var noteToSend = ""
     var feeAmount = ""
     var qouteId = ""
-    var mOTP = ""
     var transactionID = ""
     var senderBalanceAfter ="0.00"
+    var mOTP = ""
 
     var popBackStackTo = -1
     var isOTPFlow = ObservableField<Boolean>()

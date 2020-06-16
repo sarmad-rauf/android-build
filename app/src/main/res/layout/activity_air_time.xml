@@ -20,7 +20,7 @@
         tools:context=".usecase.airtime.AirTimeActivity">
 
         <include android:id="@+id/headerAirTime"
-            layout="@layout/layout_simple_header"
+            layout="@layout/layout_activity_header"
             />
 
         <fragment

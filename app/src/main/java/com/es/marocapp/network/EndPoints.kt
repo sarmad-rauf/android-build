@@ -116,10 +116,10 @@ object EndPoints {
     //getfinancialresourceinformation/step2
     const val getfinancialresourceinformation_step2 = "getfinancialresourceinformation/step2"
 
-    //airtime/quote
-    const val airtime_quote = "airtime/quote"
+    //payment/airtime/quote
+    const val payment_airtime_quote = "payment/airtime/quote"
 
-    //airtime
-    const val airtime = "airtime"
+    //payment/airtime
+    const val payment_airtime = "payment/airtime"
 
 }

@@ -1,12 +1,12 @@
 package com.es.marocapp.model.responses
 
-data class AirTimeQouteResponse(
+data class AirTimeQuoteResponse(
     val accountHolderInfoResponse: Any,
     val accountNumber: Any,
     val clearingNumber: Any,
-    val description: String,
     val employeeId: Any,
     val quoteList: List<Quote>,
+    val description: String,
     val responseCode: String
 )
 

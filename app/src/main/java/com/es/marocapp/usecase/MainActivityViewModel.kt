@@ -6,7 +6,9 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import com.es.marocapp.R
 import com.es.marocapp.model.requests.GetApprovalRequest
+import com.es.marocapp.model.requests.LogoutUserRequest
 import com.es.marocapp.model.responses.GetApprovalsResponse
+import com.es.marocapp.model.responses.LogOutUserResponse
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
@@ -21,7 +23,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     lateinit var disposable: Disposable
     var isLoading = ObservableField<Boolean>()
     var errorText = SingleLiveEvent<String>()
-    var getApprovalResponseListner = SingleLiveEvent<GetApprovalsResponse>()
+    var getLogOutUserResponseListner = SingleLiveEvent<LogOutUserResponse>()
 
     //Request For Log Out User
     fun requestForLogOutUserApi(context: Context?)
@@ -31,8 +33,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             isLoading.set(true)
 
 
-            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getApprovalsCall(
-                GetApprovalRequest(ApiConstant.CONTEXT_AFTER_LOGIN)
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getLogOutUserCall(
+                LogoutUserRequest(ApiConstant.CONTEXT_AFTER_LOGIN)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -43,10 +45,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                                 ApiConstant.API_SUCCESS, true
                             )
                         ) {
-                            getApprovalResponseListner.postValue(result)
+                            getLogOutUserResponseListner.postValue(result)
 
                         } else {
-                            getApprovalResponseListner.postValue(result)
+                            getLogOutUserResponseListner.postValue(result)
                         }
 
 

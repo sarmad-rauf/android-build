@@ -61,6 +61,7 @@
     <string name="balance">Balance</string>
     <string name="welcome_back">Welcome Back</string>
     <string name="payment_type">Payment Type</string>
+    <string name="plan_type">Plan Type</string>
     <string name="bill_type">Bill Type</string>
     <string name="company_type">Company Type</string>
     <string name="enter_contact_number">Enter Contact Number</string>
@@ -72,6 +73,7 @@
     <string name="receipt_code">Receipt code</string>
     <string name="fee_loyalty">Fee(Loyalty)</string>
     <string name="amount">Amount</string>
+    <string name="amounts">Amounts</string>
     <string name="enter_amount_caps">ENTER AMOUNT</string>
     <string name="discount_amount">Discount Amount</string>
     <string name="loyalty">Loyalty</string>
@@ -147,4 +149,5 @@
     <string name="generateqr">Generate QR</string>
     <string name="scan_qr">Or Scan QR</string>
     <string name="note">Note</string>
+    <string name="submit">Submit</string>
 </resources>

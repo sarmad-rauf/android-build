@@ -10,5 +10,57 @@
         android:name="com.es.marocapp.usecase.airtime.AirTimeTypeFragment"
         android:label="AirTimeTypeFragment"
         tools:layout="@layout/fragment_bill_type"
+        >
+        <action
+            android:id="@+id/action_airTimeTypeFragment_to_airTimePlanFragment"
+            app:destination="@id/airTimePlanFragment" />
+        <action
+            android:id="@+id/action_airTimeTypeFragment_to_airTimeAmountFragment"
+            app:destination="@id/airTimeAmountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/airTimePlanFragment"
+        android:name="com.es.marocapp.usecase.airtime.airtimeplansandamounts.AirTimePlanFragment"
+        android:label="AirTimePlanFragment"
+        tools:layout="@layout/fragment_bill_type"
+        >
+        <action
+            android:id="@+id/action_airTimePlanFragment_to_airTimeAmountFragment"
+            app:destination="@id/airTimeAmountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/airTimeAmountFragment"
+        android:name="com.es.marocapp.usecase.airtime.airtimeplansandamounts.AirTimeAmountFragment"
+        android:label="AirTimeAmountFragment"
+        tools:layout="@layout/fragment_bill_type">
+        <action
+            android:id="@+id/action_airTimeAmountFragment_to_airTimeMsisdnFragment"
+            app:destination="@id/airTimeMsisdnFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/airTimeMsisdnFragment"
+        android:name="com.es.marocapp.usecase.airtime.airtimeplansandamounts.AirTimeMsisdnFragment"
+        android:label="AirTimeMsisdnFragment"
+        tools:layout="@layout/fragment_air_time_msisdn"
+        >
+        <action
+            android:id="@+id/action_airTimeMsisdnFragment_to_airTimeConfirmationFragment"
+            app:destination="@id/airTimeConfirmationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/airTimeConfirmationFragment"
+        android:name="com.es.marocapp.usecase.airtime.airtimeplansandamounts.AirTimeConfirmationFragment"
+        android:label="AirTimeConfirmationFragment"
+        tools:layout="@layout/fragment_air_time_confirmation_layout"
+        >
+        <action
+            android:id="@+id/action_airTimeConfirmationFragment_to_airTimeSuccessFragment"
+            app:destination="@id/airTimeSuccessFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/airTimeSuccessFragment"
+        android:name="com.es.marocapp.usecase.airtime.airtimeplansandamounts.AirTimeSuccessFragment"
+        android:label="AirTimeSuccessFragment"
+        tools:layout="@layout/fragment_air_time_success_layout"
         />
 </navigation>

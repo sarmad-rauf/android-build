@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -11,11 +13,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityMainBinding
+import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.accountdetails.AccountDetailsActivity
 import com.es.marocapp.usecase.favorites.FavoritesActivity
+import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.qrcode.GenerateQrActivity
 import com.es.marocapp.usecase.termsandcondiitons.TermsAndConditions
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.DialogUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.layout_drawer_header.view.*
@@ -29,7 +34,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
     lateinit var navHostFragment: NavHostFragment
 
+    lateinit var mActivityViewModel: MainActivityViewModel
+
     override fun init(savedInstanceState: Bundle?) {
+        mActivityViewModel = ViewModelProvider(this@MainActivity).get(MainActivityViewModel::class.java)
 
         mDataBinding.apply {
             listener = this@MainActivity
@@ -61,6 +69,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         mDataBinding.navigationHeader.drawer_header_name.text=Constants.balanceInfoAndResponse.firstname.plus(Constants.balanceInfoAndResponse?.surname)
         mDataBinding.navigationHeader.drawer_header_number.text=Constants.CURRENT_USER_MSISDN
+
+        subscribeObserver()
+    }
+
+    private fun subscribeObserver() {
+        mActivityViewModel.getLogOutUserResponseListner.observe(this@MainActivity, Observer {
+            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                startNewActivityAndClear(this@MainActivity,LoginActivity::class.java)
+            }else{
+               DialogUtils.showErrorDialoge(this@MainActivity,it.description)
+            }
+        })
     }
 
     override fun setLayout(): Int {
@@ -107,8 +127,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     }
 
     override fun onDrawerMenuLogOutClick(view: View) {
-        Toast.makeText(this, "Under Development", Toast.LENGTH_SHORT).show()
-
+        mActivityViewModel.requestForLogOutUserApi(this@MainActivity)
     }
 
     override fun onDrawerMenuGenerateQRClick(view: View) {

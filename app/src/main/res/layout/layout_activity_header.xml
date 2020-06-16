@@ -26,19 +26,22 @@
                 android:id="@+id/activityHeaderTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:text="Bill Payment"
                 android:textAllCaps="true"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_20ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.29"
+                app:layout_constraintStart_toEndOf="@+id/activityHeaderBack"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/activityHeaderBack"
                 android:layout_width="@dimen/_32sdp"
                 android:layout_height="@dimen/_32sdp"
-                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:src="@drawable/ic_back"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -89,6 +92,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.es.marocapp.widgets.MarocRegularTextView
+                android:id="@+id/tv_company_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"

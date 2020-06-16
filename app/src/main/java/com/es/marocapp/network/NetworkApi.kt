@@ -157,8 +157,8 @@ interface NetworkApi {
     fun getCashInWithOtpCall(@Body request : CashInWithOtpRequest) : Observable<CashInWithOtpResponse>
 
     //Request for LogOutUser
-    @POST(EndPoints.cashinwithotp)
-    fun getLogOutUserCall(@Body request : CashInWithOtpRequest) : Observable<CashInWithOtpResponse>
+    @POST(EndPoints.logout)
+    fun getLogOutUserCall(@Body request : LogoutUserRequest) : Observable<LogOutUserResponse>
 
     //Request for AirTimeUseCases
     @POST(EndPoints.getairtimeusecases)
@@ -173,11 +173,11 @@ interface NetworkApi {
     fun FinancialResourceInfoTwoCall(@Body request : GetFinancialResourceInfoTwoRequest) : Observable<GetFinancialResourceInfoTwoResponse>
 
     //Request for AirTimeQuote
-    @POST(EndPoints.airtime_quote)
-    fun getAirTimeQuoteCall(@Body request : AirTimeQuoteRequest) : Observable<AirTimeQouteResponse>
+    @POST(EndPoints.payment_airtime_quote)
+    fun getAirTimeQuoteCall(@Body request : AirTimeQuoteRequest) : Observable<AirTimeQuoteResponse>
 
     //Request for AirTime
-    @POST(EndPoints.airtime)
+    @POST(EndPoints.payment_airtime)
     fun getAirTimeCall(@Body request : AirTimeRequest) : Observable<AirTimeResponse>
 
     //Request for GetUserSimpleProfile

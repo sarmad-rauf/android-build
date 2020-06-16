@@ -11,6 +11,7 @@ import com.es.marocapp.databinding.ActivityAirTimeBinding
 import com.es.marocapp.databinding.ActivityCashServicesBinding
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.cashservices.CashServicesViewModel
+import kotlinx.android.synthetic.main.layout_activity_header.view.*
 import kotlinx.android.synthetic.main.layout_simple_header.view.*
 
 class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
@@ -34,13 +35,15 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
 
         setHeaderTitle(resources.getString(R.string.air_time))
 
-        mDataBinding.root.simpleHeaderBack.setOnClickListener {
+        mDataBinding.root.activityHeaderBack.setOnClickListener {
             if (mActivityViewModel.popBackStackTo == -1) {
                 this@AirTimeActivity.finish()
             } else {
                 navController.popBackStack(mActivityViewModel.popBackStackTo, false)
             }
         }
+
+        setCompanyIconToolbarVisibility(false)
     }
 
     override fun setLayout(): Int {
@@ -48,7 +51,16 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
     }
 
     fun setHeaderTitle(title: String) {
-        mDataBinding.headerAirTime.rootView.simpleHeaderTitle.text = title
+        mDataBinding.headerAirTime.rootView.activityHeaderTitle.text = title
+    }
+
+    fun setCompanyIconToolbarVisibility(isVisible : Boolean){
+        if(isVisible){
+            mDataBinding.headerAirTime.rootView.headerCompanyIconContainer.visibility = View.VISIBLE
+        }
+        else{
+            mDataBinding.headerAirTime.rootView.headerCompanyIconContainer.visibility = View.GONE
+        }
     }
 
     fun setHeaderVisibility(isVisible: Boolean) {
