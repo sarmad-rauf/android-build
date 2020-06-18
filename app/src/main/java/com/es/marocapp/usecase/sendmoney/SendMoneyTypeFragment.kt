@@ -51,7 +51,7 @@ class SendMoneyTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
                         mActivityViewModel.isFundTransferUseCase.set(true)
                         mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set(false)
                         mActivityViewModel.trasferTypeSelected.set("Funds Transfer")
-                        (activity as SendMoneyActivity).navController.navigate(R.id.action_sendMoneyTypeFragment_to_fundsTransferMsisdnFragment)
+//                        (activity as SendMoneyActivity).navController.navigate(R.id.action_sendMoneyTypeFragment_to_fundsTransferMsisdnFragment)
                     }
                     "Push Bank" -> {
                         mActivityViewModel.trasferTypeSelected.set("Push Bank")
@@ -61,7 +61,7 @@ class SendMoneyTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
                         mActivityViewModel.isFundTransferUseCase.set(false)
                         mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set(true)
                         mActivityViewModel.trasferTypeSelected.set("Initiate Purchase to Merchant")
-                        (activity as SendMoneyActivity).navController.navigate(R.id.action_sendMoneyTypeFragment_to_fundsTransferMsisdnFragment)
+//                        (activity as SendMoneyActivity).navController.navigate(R.id.action_sendMoneyTypeFragment_to_fundsTransferMsisdnFragment)
                     }
                     else -> Toast.makeText(activity,"Nothing Clicked Clicked",Toast.LENGTH_SHORT).show()
 

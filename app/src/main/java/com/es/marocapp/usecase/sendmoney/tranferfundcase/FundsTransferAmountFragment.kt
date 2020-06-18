@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.QuickAmountAdapter
 import com.es.marocapp.databinding.FragmentFundsAmountSelectionBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.QuickAmountModel
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
@@ -81,7 +82,21 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
             layoutManager = GridLayoutManager(activity, 3)
         }
 
+
+        mActivityViewModel.popBackStackTo = R.id.fundsTransferMsisdnFragment
+
+        setStrings()
         subscribeObserver()
+    }
+
+    private fun setStrings() {
+        mDataBinding.tvAmountSelection.text = LanguageData.getStringValue("Amount")
+        mDataBinding.tvQuickAmountTitle.text = LanguageData.getStringValue("QuickAmount")
+        (activity as SendMoneyActivity).setHeaderTitle(
+            LanguageData.getStringValue("Amount").toString()
+        )
+
+        mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Next")
     }
 
     private fun subscribeObserver() {

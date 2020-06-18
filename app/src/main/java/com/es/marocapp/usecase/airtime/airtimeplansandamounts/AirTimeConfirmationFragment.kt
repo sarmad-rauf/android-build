@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentAirTimeConfirmationLayoutBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
@@ -47,10 +48,31 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
             )
         }
 
-
+        setStrings()
         updateUI()
         subscribeObserver()
     }
+
+    private fun setStrings() {
+        //        tvCompanyNameVal == ReceiverNumber
+//        tvOwnerNameVal == ReceiverName
+//        tvReceiptCodeVal = bill
+//        tvDHVal == Fee
+//
+//        tvAmountVal == AmountTotal
+
+        mDataBinding.tvCompanyNameTitle.text = LanguageData.getStringValue("ReceiverNumber")
+        mDataBinding.tvOwnerNameTitle.text = LanguageData.getStringValue("ReceiverName")
+        mDataBinding.tvReceiptCodeTitle.text = LanguageData.getStringValue("Bill")
+        mDataBinding.tvDHTitle.text = LanguageData.getStringValue("Fee")
+        mDataBinding.tvAmountTitle.text = LanguageData.getStringValue("TotalCost")
+
+        mDataBinding.tvConfirmationTitle.text = LanguageData.getStringValue("Confirmation")
+
+        mDataBinding.btnConfirmationCancel.text = LanguageData.getStringValue("BtnTitle_Cancel")
+        mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("BtnTitle_Pay")
+    }
+
 
     private fun subscribeObserver() {
         mActivityViewModel.getAirTimeResponseListner.observe(this@AirTimeConfirmationFragment,

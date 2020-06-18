@@ -11,6 +11,8 @@ import com.es.marocapp.R
 import com.es.marocapp.adapter.HomeCardAdapter
 import com.es.marocapp.adapter.HomeUseCasesAdapter
 import com.es.marocapp.databinding.FragmentHomeBinding
+import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.HomeUseCasesModel
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
@@ -56,6 +58,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         subscribeForSetDefaultAccountStatus()
         subscribeForVerifyOTPForSetDefaultAccountStatus()
         }
+
+        setStrings()
+    }
+
+    private fun setStrings() {
+        mDataBinding.textTitleQuickRecharge.text = LanguageData.getStringValue("QuickRecharge")
+        mDataBinding.btnQuickRecharge4.text = LanguageData.getStringValue("Recharge")
     }
 
     private fun subscribeForDefaultAccountStatus() {
@@ -96,16 +105,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         homeViewModel.verifyOTPForDefaultAccountResponseListener.observe(this@HomeFragment,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                    DialogUtils.successFailureDialogue(context,resources.getString(R.string.operation_success),0)
+                    DialogUtils.successFailureDialogue(context,LanguageData.getStringValue("OperationPerformedSuccessfullyDot"),0)
                 }else{
-                    DialogUtils.successFailureDialogue(context,resources.getString(R.string.operation_failure),1)
+                    DialogUtils.successFailureDialogue(context,LanguageData.getStringValue("FailedToPerformOperationDot"),1)
                 }
             }
         )
     }
 
     private fun showPopUp() {
-        val confirmationTxt=context?.resources?.getString(R.string.default_account_confirmation)
+        val confirmationTxt= LanguageData.getStringValue("DoYouWantToChooseThisMwalletMtCashDefaultForDoingOperationsQuestion")
         DialogUtils.showConfirmationDialogue(confirmationTxt!!,activity,object : DialogUtils.OnConfirmationDialogClickListner{
             override fun onDialogYesClickListner() {
                 homeViewModel.requestForSetDefaultAccount(context)
@@ -127,53 +136,86 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
 
     private fun populateHomeUseCase() {
         val useCases = ArrayList<HomeUseCasesModel>().apply {
-            this.add(HomeUseCasesModel(getString(R.string.payments_newline), R.drawable.ic_payment))
-            this.add(HomeUseCasesModel(getString(R.string.mobile_recharge), R.drawable.ic_recharge))
-            this.add(
-                HomeUseCasesModel(
-                    getString(R.string.send_money_newLine),
-                    R.drawable.ic_send_money
-                )
-            )
-            this.add(HomeUseCasesModel(getString(R.string.cash_service), R.drawable.ic_transfer))
-            this.add(HomeUseCasesModel(getString(R.string.qr_newLine), R.drawable.ic_qr_white))
-            this.add(
-                HomeUseCasesModel(
-                    getString(R.string.accounts_newLine),
-                    R.drawable.ic_accounts
-                )
-            )
+            this.add(HomeUseCasesModel(LanguageData.getStringValue("MerchantPayment").toString(), R.drawable.ic_payment))
+            this.add(HomeUseCasesModel(LanguageData.getStringValue("AirTime").toString(), R.drawable.ic_recharge))
+            this.add(HomeUseCasesModel(LanguageData.getStringValue("SendMoney").toString(),R.drawable.ic_send_money))
+            this.add(HomeUseCasesModel(LanguageData.getStringValue("BillPayment").toString(), R.drawable.ic_bill_payment))
+            this.add(HomeUseCasesModel(LanguageData.getStringValue("GenerateQr").toString(), R.drawable.ic_qr_white))
+            this.add(HomeUseCasesModel(LanguageData.getStringValue("CashService").toString(), R.drawable.ic_transfer))
         }
 
         mUseCasesAdapter =
             HomeUseCasesAdapter(useCases, object : HomeUseCasesAdapter.HomeUseCasesClickListner {
                 override fun onHomeUseCaseClick(position: Int) {
                     when (position) {
-                        1-> startActivity(
+
+                        0-> {
+                            val intent = Intent(activity as MainActivity,
+                                SendMoneyActivity::class.java)
+                            intent.putExtra("isFundTransferUseCase", false)
+                            intent.putExtra("isInitiatePaymenetToMerchantUseCase", true)
+                            intent.putExtra("useCaseType", LanguageData.getStringValue("InitiatePurchaseToMerchant"))
+
+                            startActivity(intent)
+                        }
+
+                        1-> {
                             Intent(
                                 activity as MainActivity,
                                 AirTimeActivity::class.java
                             )
-                        )
-                        2 -> startActivity(
-                            Intent(
-                                activity as MainActivity,
-                                SendMoneyActivity::class.java
-                            )
-                        )
+                        }
 
-                        3 ->startActivity(
+                        2 -> {
+                            val intent = Intent(activity as MainActivity,
+                                SendMoneyActivity::class.java)
+
+                            intent.putExtra("isFundTransferUseCase", true)
+                            intent.putExtra("isInitiatePaymenetToMerchantUseCase", false)
+                            intent.putExtra("useCaseType", LanguageData.getStringValue("FundsTransfer"))
+
+                            startActivity(intent)
+                        }
+
+                        3 -> {
                             Intent(
                                 activity as MainActivity,
                                 CashServicesActivity::class.java
                             )
-                        )
-                        else -> startActivity(
+                        }
+
+                        else -> {
                             Intent(
                                 activity as MainActivity,
                                 PaymentsActivity::class.java
                             )
-                        )
+                        }
+
+//                        1-> startActivity(
+//                            Intent(
+//                                activity as MainActivity,
+//                                AirTimeActivity::class.java
+//                            )
+//                        )
+//                        2 -> startActivity(
+//                            Intent(
+//                                activity as MainActivity,
+//                                SendMoneyActivity::class.java
+//                            )
+//                        )
+//
+//                        3 ->startActivity(
+//                            Intent(
+//                                activity as MainActivity,
+//                                CashServicesActivity::class.java
+//                            )
+//                        )
+//                        else -> startActivity(
+//                            Intent(
+//                                activity as MainActivity,
+//                                PaymentsActivity::class.java
+//                            )
+//                        )
 
                     }
                 }

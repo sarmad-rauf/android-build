@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentSetYourPinBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.ActivateUserResponse
 import com.es.marocapp.model.responses.CreateCredentialResponse
 import com.es.marocapp.network.ApiConstant
@@ -40,17 +41,6 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
         }
 
         mDataBinding.root.groupBack.visibility = View.VISIBLE
-        mDataBinding.root.txtHeaderTitle.text = getString(R.string.set_your_password)
-
-        if(mActivityViewModel.isSignUpFlow.get()!!){
-            mDataBinding.btnPinChange.text = getString(R.string.sign_up)
-        }else{
-            if(mActivityViewModel.activeUserWithoutPassword.get()!!){
-                mDataBinding.btnPinChange.text = getString(R.string.set_passwordd)
-            }else{
-                mDataBinding.btnPinChange.text = getString(R.string.change_pin)
-            }
-        }
 
         mDataBinding.root.txtBack.setOnClickListener{
             (activity as LoginActivity).navController.navigateUp()
@@ -61,6 +51,27 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
         }
 
         subscribeObserver()
+        setStrings()
+    }
+
+    private fun setStrings() {
+
+        if(mActivityViewModel.isSignUpFlow.get()!!){
+            mDataBinding.btnPinChange.text = LanguageData.getStringValue("BtnTitle_SignUp")
+        }else{
+            if(mActivityViewModel.activeUserWithoutPassword.get()!!){
+                mDataBinding.btnPinChange.text = LanguageData.getStringValue("ConfirmPassword")
+            }else{
+                mDataBinding.btnPinChange.text = LanguageData.getStringValue("ChangePassword")
+            }
+        }
+
+        mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("CreateYourPassword")
+        mDataBinding.setYourPinHeader.rootView.txtBack.text= LanguageData.getStringValue("BtnTitle_Back")
+
+        mDataBinding.inputLayoutEnterPin.hint = LanguageData.getStringValue("EnterPassword")
+        mDataBinding.inputLayoutConfrimPin.hint = LanguageData.getStringValue("ConfirmPassword")
+
     }
 
     private fun subscribeObserver() {
@@ -102,7 +113,7 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
                     mActivityViewModel.requestForCreateCredentialsAPI(activity,mDataBinding.inputEnterPin.text.toString().trim())
                 }
             }else{
-                mDataBinding.inputLayoutConfrimPin.error = "Password Not Same"
+                mDataBinding.inputLayoutConfrimPin.error = LanguageData.getStringValue("PasswordAndConfirmPasswordDoesntMatch")
                 mDataBinding.inputLayoutConfrimPin.isErrorEnabled = true
             }
         }else{
@@ -116,7 +127,7 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
 
         if(mDataBinding.inputEnterPin.text.isNullOrEmpty()){
             isValidForAll = false
-            mDataBinding.inputLayoutEnterPin.error = "Please enter valid password"
+            mDataBinding.inputLayoutEnterPin.error = LanguageData.getStringValue("PleaseEnterValidPassword")
             mDataBinding.inputLayoutEnterPin.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutEnterPin.error = ""
@@ -125,7 +136,7 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
 
         if(mDataBinding.inputConfirmPin.text.isNullOrEmpty()){
             isValidForAll = false
-            mDataBinding.inputLayoutConfrimPin.error = "Please enter valid password"
+            mDataBinding.inputLayoutConfrimPin.error = LanguageData.getStringValue("PleaseEnterValidPassword")
             mDataBinding.inputLayoutConfrimPin.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutConfrimPin.error = ""

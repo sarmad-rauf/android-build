@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.CustomizeIconsAdapter
 import com.es.marocapp.databinding.FragmentBillPaymentTypeBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.GetAirTimeUseCasesResponse
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.airtime.AirTimeActivity
@@ -31,7 +32,7 @@ class AirTimeAmountFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
         mDataBinding.apply {
         }
 
-        mDataBinding.tvPaymentType.text = activity!!.resources.getString(R.string.amounts)
+        mDataBinding.tvPaymentType.text = LanguageData.getStringValue("Amounts")
 
         (activity as AirTimeActivity).setHeaderVisibility(true)
         (activity as AirTimeActivity).setCompanyIconToolbarVisibility(false)
@@ -54,12 +55,12 @@ class AirTimeAmountFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
 
         mAirTimeAmountsTypes.apply {
             if(mActivityViewModel.isRechargeMobileUseCase.get()!!){
-                if(airTimeResponse.rechargeMobile.isNotEmpty()){
-                    for(index in airTimeResponse.rechargeMobile.indices){
-                        if(airTimeResponse.rechargeMobile[index].plan.equals(mActivityViewModel.airTimePlanSelected.get()!!)){
-                            mActivityViewModel.airTimeSelectedPlanCodeSelected.set(airTimeResponse.rechargeMobile[index].code.toString())
-                            for(amountIndex in airTimeResponse.rechargeMobile[index].amounts.indices){
-                                var airTimeAmount = airTimeResponse.rechargeMobile[index].amounts[amountIndex].removeSuffix("DH")
+                if(airTimeResponse.rechargeMobile.planList.isNotEmpty()){
+                    for(index in airTimeResponse.rechargeMobile.planList.indices){
+                        if(airTimeResponse.rechargeMobile.planList[index].plan.equals(mActivityViewModel.airTimePlanSelected.get()!!)){
+                            mActivityViewModel.airTimeSelectedPlanCodeSelected.set(airTimeResponse.rechargeMobile.planList[index].code.toString())
+                            for(amountIndex in airTimeResponse.rechargeMobile.planList[index].amounts.indices){
+                                var airTimeAmount = airTimeResponse.rechargeMobile.planList[index].amounts[amountIndex].removeSuffix("DH")
                                 mAirTimeAmountsTypes.add(airTimeAmount.trim())
                             }
                         }
@@ -68,9 +69,9 @@ class AirTimeAmountFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
             }
 
             if(mActivityViewModel.isRechargeFixeUseCase.get()!!){
-                if(airTimeResponse.rechargeFixe.isNotEmpty()){
-                    for(index in airTimeResponse.rechargeFixe.indices){
-                        var airTimeAmount = airTimeResponse.rechargeFixe[index].removeSuffix("DH")
+                if(airTimeResponse.rechargeFixe.planList.isNotEmpty()){
+                    for(index in airTimeResponse.rechargeFixe.planList.indices){
+                        var airTimeAmount = airTimeResponse.rechargeFixe.planList[index].removeSuffix("DH")
                         mAirTimeAmountsTypes.add(airTimeAmount.trim())
                     }
                 }

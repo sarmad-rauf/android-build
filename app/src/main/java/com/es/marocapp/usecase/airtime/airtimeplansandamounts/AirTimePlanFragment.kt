@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.CustomizeIconsAdapter
 import com.es.marocapp.databinding.FragmentBillPaymentTypeBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.GetAirTimeUseCasesResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
@@ -33,11 +34,6 @@ class AirTimePlanFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
         mDataBinding.apply {
         }
 
-        mDataBinding.tvPaymentType.text = activity!!.resources.getString(R.string.plan_type)
-        (activity as AirTimeActivity).setHeaderTitle(
-            mActivityViewModel.airTimeSelected.get()!!
-        )
-
         (activity as AirTimeActivity).setHeaderVisibility(true)
         (activity as AirTimeActivity).setCompanyIconToolbarVisibility(false)
 
@@ -47,9 +43,9 @@ class AirTimePlanFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
 
         mAirTimePlansTypes.apply {
             if(mActivityViewModel.isRechargeMobileUseCase.get()!!){
-                if(airTimeResponse.rechargeMobile.isNotEmpty()){
-                    for(index in airTimeResponse.rechargeMobile.indices){
-                           mAirTimePlansTypes.add(airTimeResponse.rechargeMobile[index].plan)
+                if(airTimeResponse.rechargeMobile.planList.isNotEmpty()){
+                    for(index in airTimeResponse.rechargeMobile.planList.indices){
+                           mAirTimePlansTypes.add(airTimeResponse.rechargeMobile.planList[index].plan)
                     }
                 }
             }
@@ -68,8 +64,16 @@ class AirTimePlanFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
             layoutManager = LinearLayoutManager(activity as AirTimeActivity)
         }
 
+        setStrings()
         subscribeObserver()
 
+    }
+
+    private fun setStrings() {
+        mDataBinding.tvPaymentType.text = LanguageData.getStringValue("PlanType")
+        (activity as AirTimeActivity).setHeaderTitle(
+            mActivityViewModel.airTimeSelected.get()!!
+        )
     }
 
     private fun subscribeObserver() {

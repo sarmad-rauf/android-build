@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.PaymentItemsAdapter
 import com.es.marocapp.databinding.FragmentBillPaymentTypeBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseFragment
-
 class CashServicesTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
 
     lateinit var mActivityViewModel: CashServicesViewModel
@@ -25,17 +25,13 @@ class CashServicesTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() 
         mDataBinding.apply {
         }
 
-        mDataBinding.tvPaymentType.text = activity!!.resources.getString(R.string.transfer_type)
-        (activity as CashServicesActivity).setHeaderTitle((activity as CashServicesActivity).resources.getString(
-            R.string.cash_services))
-
         (activity as CashServicesActivity).setHeaderVisibility(true)
 
         mActivityViewModel.popBackStackTo = -1
 
         mCashServicesTypes.apply {
-            add("Deposit")
-            add("Withdraw")
+            add(LanguageData.getStringValue("Deposit").toString())
+            add(LanguageData.getStringValue("Withdraw").toString())
         }
 
         mCashServicesTypesIcon.apply {
@@ -46,16 +42,16 @@ class CashServicesTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() 
         mCashServicesItemTypeAdapter = PaymentItemsAdapter(mCashServicesTypes, mCashServicesTypesIcon ,object : PaymentItemsAdapter.PaymentItemTypeClickListner{
             override fun onPaymentItemTypeClick(paymentItems: String) {
                 when(paymentItems){
-                    "Deposit" -> {
+                    LanguageData.getStringValue("Deposit").toString() -> {
                         mActivityViewModel.isDepositUseCase.set(true)
                         mActivityViewModel.isWithdrawUseCase.set(false)
-                        mActivityViewModel.trasferTypeSelected.set("Deposit")
+                        mActivityViewModel.trasferTypeSelected.set(LanguageData.getStringValue("Deposit").toString())
                         (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesTypeFragment_to_cashMsisdnAndAmountFragment)
                     }
-                    "Withdraw" ->{
+                    LanguageData.getStringValue("Withdraw").toString() ->{
                         mActivityViewModel.isDepositUseCase.set(false)
                         mActivityViewModel.isWithdrawUseCase.set(true)
-                        mActivityViewModel.trasferTypeSelected.set("Withdraw")
+                        mActivityViewModel.trasferTypeSelected.set(LanguageData.getStringValue("Withdraw").toString())
                         (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesTypeFragment_to_cashMsisdnAndAmountFragment)
                     }
                     else -> Toast.makeText(activity,"Nothing Clicked", Toast.LENGTH_SHORT).show()
@@ -69,6 +65,16 @@ class CashServicesTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() 
             layoutManager = LinearLayoutManager(activity as CashServicesActivity)
         }
 
+        setStrings()
+
     }
 
+    private fun setStrings() {
+        mDataBinding.tvPaymentType.text = LanguageData.getStringValue("TransferType")
+
+        (activity as CashServicesActivity).setHeaderTitle(LanguageData.getStringValue("CashService").toString())
+    }
+
+
 }
+

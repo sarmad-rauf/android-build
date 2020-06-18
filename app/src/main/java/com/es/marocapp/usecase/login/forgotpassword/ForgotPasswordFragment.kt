@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentForgotPasswordBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.ForgotPasswordResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
@@ -32,10 +33,30 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
             listener = this@ForgotPasswordFragment
         }
 
-        mDataBinding.root.txtHeaderTitle.text = getString(R.string.forgot_pinn)
+        mDataBinding.root.groupBack.visibility = View.VISIBLE
+
+        mDataBinding.root.txtBack.setOnClickListener {
+            (activity as LoginActivity).navController.navigateUp()
+        }
+
+        mDataBinding.root.imgBackButton.setOnClickListener {
+            (activity as LoginActivity).navController.navigateUp()
+        }
 
         subsribeObserver()
+        setStrings()
 
+    }
+
+    private fun setStrings() {
+        mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("ForgotPassword")
+        mDataBinding.root.txtBack.text= LanguageData.getStringValue("BtnTitle_Back")
+
+        mDataBinding.inputLayoutOtp.hint = LanguageData.getStringValue("EnterOTP")
+        mDataBinding.inputLayoutSetYourPassword.hint = LanguageData.getStringValue("EnterPassword")
+        mDataBinding.inputLayoutConfirmPassword.hint = LanguageData.getStringValue("ConfirmPassword")
+
+        mDataBinding.btnNext.text = LanguageData.getStringValue("ChangePassword")
     }
 
     private fun subsribeObserver() {
@@ -61,7 +82,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
                 mDataBinding.inputLayoutConfirmPassword.isErrorEnabled = false
                 mActivityViewModel.requestForForgotPasswordAPI(activity,mDataBinding.inputForgotPassword.text.toString().trim(),mDataBinding.inputForgotOtp.text.toString().trim())
             }else{
-                mDataBinding.inputLayoutConfirmPassword.error = "Please Enter Same Password"
+                mDataBinding.inputLayoutConfirmPassword.error = LanguageData.getStringValue("PasswordAndConfirmPasswordDoesntMatch")
                 mDataBinding.inputLayoutConfirmPassword.isErrorEnabled = true
             }
         }
@@ -73,7 +94,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
 
         if(mDataBinding.inputForgotOtp.text.isNullOrEmpty()){
             isValidForAll = false
-            mDataBinding.inputLayoutOtp.error = "Please enter OTP sent to your mobile number."
+            mDataBinding.inputLayoutOtp.error = LanguageData.getStringValue("PleaseEnterValidOTP")
             mDataBinding.inputLayoutOtp.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutOtp.error = ""
@@ -82,7 +103,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
 
         if(mDataBinding.inputForgotPassword.text.isNullOrEmpty()){
             isValidForAll = false
-            mDataBinding.inputLayoutSetYourPassword.error = "Please enter valid password"
+            mDataBinding.inputLayoutSetYourPassword.error = LanguageData.getStringValue("PleaseEnterValidPassword")
             mDataBinding.inputLayoutSetYourPassword.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutSetYourPassword.error = ""
@@ -91,7 +112,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
 
         if(mDataBinding.inputForgotConfirmPassword.text.isNullOrEmpty()){
             isValidForAll = false
-            mDataBinding.inputLayoutConfirmPassword.error = "Please enter valid password"
+            mDataBinding.inputLayoutConfirmPassword.error = LanguageData.getStringValue("PleaseEnterValidPassword")
             mDataBinding.inputLayoutConfirmPassword.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutConfirmPassword.error = ""

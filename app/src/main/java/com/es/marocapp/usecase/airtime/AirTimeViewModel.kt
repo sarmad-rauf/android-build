@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import com.es.marocapp.R
+import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.requests.AirTimeQuoteRequest
 import com.es.marocapp.model.requests.AirTimeRequest
 import com.es.marocapp.model.requests.GetAirTimeUseCasesRequest
@@ -55,9 +56,18 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
         if (Tools.checkNetworkStatus(getApplication())) {
 
             isLoading.set(true)
+            var userType = ""
+            if(Constants.IS_CONSUMER_USER){
+                userType = "consumer"
+            }else if(Constants.IS_MERCHANT_USER){
+                userType = "merchant"
+            }else if(Constants.IS_AGENT_USER){
+                userType = "agent"
+            }
+
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAirTimeUseCasesCall(
-                GetAirTimeUseCasesRequest(ApiConstant.CONTEXT_AFTER_LOGIN)
+                GetAirTimeUseCasesRequest(ApiConstant.CONTEXT_AFTER_LOGIN,LocaleManager.selectedLanguage,Constants.balanceInfoAndResponse.profilename!!,userType)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(

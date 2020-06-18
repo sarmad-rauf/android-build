@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentFundsTransferEnterMsisdnBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
@@ -40,12 +41,11 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         mDataBinding.spinnerSelectFavorites.apply {
             adapter = adapterFavoriteType
         }
+        mActivityViewModel.isFundTransferUseCase.set((activity as SendMoneyActivity).intent.getBooleanExtra("isFundTransferUseCase",false))
+        mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set((activity as SendMoneyActivity).intent.getBooleanExtra("isInitiatePaymenetToMerchantUseCase",false))
+        mActivityViewModel.trasferTypeSelected.set((activity as SendMoneyActivity).intent.getStringExtra("useCaseType"))
 
-        mActivityViewModel.trasferTypeSelected.get()?.let {
-            (activity as SendMoneyActivity).setHeaderTitle(
-                it
-            )
-        }
+
         (activity as SendMoneyActivity).setHeaderVisibility(true)
         //todo also here remove lenght-2 check in max line
         mDataBinding.inputPhoneNumber.filters = arrayOf<InputFilter>(
@@ -65,7 +65,25 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
             integrator.initiateScan()
         }
 
+        mActivityViewModel.popBackStackTo = -1
+
+        setStrings()
         subscribeObserver()
+    }
+
+    private fun setStrings() {
+        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+        mDataBinding.selectFavoriteTypeTitle.hint = LanguageData.getStringValue("SelectFavorite")
+        mDataBinding.scanQRTitle.hint = LanguageData.getStringValue("OrScanQr")
+
+        mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Next")
+
+        mActivityViewModel.trasferTypeSelected.get()?.let {
+            (activity as SendMoneyActivity).setHeaderTitle(
+                it
+            )
+        }
+
     }
 
     private fun subscribeObserver() {

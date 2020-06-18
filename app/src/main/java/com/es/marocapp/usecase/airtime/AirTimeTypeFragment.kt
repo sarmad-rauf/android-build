@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.CustomizeIconsAdapter
 import com.es.marocapp.databinding.FragmentBillPaymentTypeBinding
+import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.model.responses.GetAirTimeUseCasesResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.utils.DialogUtils
@@ -17,6 +19,8 @@ class AirTimeTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
     lateinit var mActivityViewModel: AirTimeViewModel
     private lateinit var mAirTimeItemTypeAdapter: CustomizeIconsAdapter
     private var mAirTimeTypes: ArrayList<String> = ArrayList()
+
+    private lateinit var mAirTimeUseCaseResponse : GetAirTimeUseCasesResponse
 
     override fun setLayout(): Int {
         return R.layout.fragment_bill_payment_type
@@ -47,16 +51,16 @@ class AirTimeTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
             object : CustomizeIconsAdapter.CustomizeItemClickListner {
                 override fun onCustomizeItemTypeClick(paymentItems: String) {
                     when (paymentItems) {
-                        "Recharge Fixe" -> {
+                        mAirTimeUseCaseResponse.rechargeFixe.titleName -> {
                             mActivityViewModel.isRechargeFixeUseCase.set(true)
                             mActivityViewModel.isRechargeMobileUseCase.set(false)
-                            mActivityViewModel.airTimeSelected.set("Recharge Fixe")
+                            mActivityViewModel.airTimeSelected.set(mAirTimeUseCaseResponse.rechargeFixe.titleName)
                             (activity as AirTimeActivity).navController.navigate(R.id.action_airTimeTypeFragment_to_airTimeAmountFragment)
                         }
-                        "Recharge Mobile" -> {
+                        mAirTimeUseCaseResponse.rechargeMobile.titleName -> {
                             mActivityViewModel.isRechargeFixeUseCase.set(false)
                             mActivityViewModel.isRechargeMobileUseCase.set(true)
-                            mActivityViewModel.airTimeSelected.set("Recharge Mobile")
+                            mActivityViewModel.airTimeSelected.set(mAirTimeUseCaseResponse.rechargeMobile.titleName)
                             (activity as AirTimeActivity).navController.navigate(R.id.action_airTimeTypeFragment_to_airTimePlanFragment)
                         }
                         else -> Toast.makeText(activity, "Nothing Clicked", Toast.LENGTH_SHORT)
@@ -71,22 +75,34 @@ class AirTimeTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
             layoutManager = LinearLayoutManager(activity as AirTimeActivity)
         }
 
+        setStrings()
         subscribeObserver()
+    }
+
+    private fun setStrings() {
+        mDataBinding.tvPaymentType.text =LanguageData.getStringValue("PaymentType").toString()
+        (activity as AirTimeActivity).setHeaderTitle(
+            LanguageData.getStringValue("AirTime").toString()
+        )
+
+
     }
 
     private fun subscribeObserver() {
         mActivityViewModel.getAirTimeUseCasesResponseListner.observe(this@AirTimeTypeFragment,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                    if (!it.rechargeFixe.isNullOrEmpty()) {
-                        mAirTimeTypes.add("Recharge Fixe")
+                    if (!it.rechargeFixe.planList.isNullOrEmpty()) {
+                        mAirTimeTypes.add(it.rechargeFixe.titleName)
                     }
 
-                    if (!it.rechargeMobile.isNullOrEmpty()) {
-                        mAirTimeTypes.add("Recharge Mobile")
+                    if (!it.rechargeMobile.planList.isNullOrEmpty()) {
+                        mAirTimeTypes.add(it.rechargeMobile.titleName)
                     }
 
                     mAirTimeItemTypeAdapter.notifyDataSetChanged()
+
+                    mAirTimeUseCaseResponse = it
                 } else {
                     DialogUtils.showErrorDialoge(activity, it.description)
                 }

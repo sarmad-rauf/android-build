@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityCashServicesBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseActivity
 import kotlinx.android.synthetic.main.layout_simple_header.view.*
 
@@ -29,7 +30,7 @@ class CashServicesActivity : BaseActivity<ActivityCashServicesBinding>() {
             supportFragmentManager.findFragmentById(R.id.nav_cash_services_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        setHeaderTitle(resources.getString(R.string.cash_services))
+        setHeaderTitle(LanguageData.getStringValue("CashService").toString())
 
         mDataBinding.root.simpleHeaderBack.setOnClickListener {
             if (mActivityViewModel.popBackStackTo == -1) {

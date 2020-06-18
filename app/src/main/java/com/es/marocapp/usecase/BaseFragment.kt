@@ -30,6 +30,4 @@ abstract class BaseFragment<T: ViewDataBinding>: Fragment()
     abstract fun init(savedInstanceState: Bundle?)
 
 
-
-
 }

@@ -151,7 +151,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                >
 
                 <include android:id="@+id/navigation_header"
                     layout="@layout/layout_drawer_header"/>
@@ -171,21 +172,23 @@
                     android:id="@+id/textDrawerNotifications"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorWhite"
-                    android:onClick="@{listener::onDrawerMenuNotificationsClick}"
-                    android:textSize="@dimen/_14ssp"
-                    android:text="@string/notifications"
                     android:layout_marginStart="@dimen/_8sdp"
-                    app:layout_constraintTop_toBottomOf="@+id/imgDrawerNotifications"
+                    android:onClick="@{listener::onDrawerMenuNotificationsClick}"
+                    android:text="@string/notifications"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_14ssp"
                     app:layout_constraintBottom_toTopOf="@+id/imgDrawerNotifications"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/imgDrawerNotifications"
-                    />
+                    app:layout_constraintTop_toBottomOf="@+id/imgDrawerNotifications" />
 
                 <ImageView
                     android:id="@+id/imgDrawerFavorites"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     android:src="@drawable/ic_favorites"
+                    android:visibility="gone"
                     android:onClick="@{listener::onDrawerMenuFavoritesClick}"
                     android:layout_marginTop="@dimen/_8sdp"
                     app:layout_constraintTop_toBottomOf="@+id/imgDrawerNotifications"
@@ -198,8 +201,11 @@
                     android:layout_height="wrap_content"
                     android:onClick="@{listener::onDrawerMenuFavoritesClick}"
                     android:textColor="@color/colorWhite"
+                    android:visibility="gone"
                     android:textSize="@dimen/_14ssp"
                     android:text="@string/favorites"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     android:layout_marginStart="@dimen/_8sdp"
                     app:layout_constraintTop_toBottomOf="@+id/imgDrawerFavorites"
                     app:layout_constraintBottom_toTopOf="@+id/imgDrawerFavorites"
@@ -211,6 +217,7 @@
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     android:src="@drawable/qr"
+                    android:visibility="gone"
                     android:onClick="@{listener::onDrawerMenuGenerateQRClick}"
                     android:layout_marginTop="@dimen/_8sdp"
                     app:layout_constraintTop_toBottomOf="@+id/imgDrawerFavorites"
@@ -223,6 +230,9 @@
                     android:layout_height="wrap_content"
                     android:onClick="@{listener::onDrawerMenuGenerateQRClick}"
                     android:textColor="@color/colorWhite"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     android:textSize="@dimen/_14ssp"
                     android:text="@string/generateqr"
                     android:layout_marginStart="@dimen/_8sdp"
@@ -238,7 +248,7 @@
                     android:src="@drawable/fa_qs"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:onClick="@{listener::onDrawerMenuFAQsClick}"
-                    app:layout_constraintTop_toBottomOf="@+id/textDrawerGenerateQR"
+                    app:layout_constraintTop_toBottomOf="@+id/imgDrawerNotifications"
                     app:layout_constraintStart_toStartOf="@+id/imgDrawerGenerateQR"
                     />
 
@@ -251,6 +261,8 @@
                     android:onClick="@{listener::onDrawerMenuFAQsClick}"
                     android:text="@string/faqs"
                     android:layout_marginStart="@dimen/_8sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintTop_toBottomOf="@+id/imgFAQs"
                     app:layout_constraintBottom_toTopOf="@+id/imgFAQs"
                     app:layout_constraintStart_toEndOf="@+id/imgFAQs"
@@ -261,6 +273,7 @@
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     android:src="@drawable/contact_us"
+                    android:visibility="gone"
                     android:onClick="@{listener::onDrawerMenuContactUsClick}"
                     android:layout_marginTop="@dimen/_8sdp"
                     app:layout_constraintTop_toBottomOf="@+id/imgFAQs"
@@ -274,6 +287,9 @@
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/_14ssp"
                     android:text="@string/contact_us"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:onClick="@{listener::onDrawerMenuContactUsClick}"
                     app:layout_constraintTop_toBottomOf="@+id/imgContactUs"
@@ -288,7 +304,7 @@
                     android:src="@drawable/terms"
                     android:onClick="@{listener::onDrawerMenuTermsAndConditionClick}"
                     android:layout_marginTop="@dimen/_8sdp"
-                    app:layout_constraintTop_toBottomOf="@+id/imgContactUs"
+                    app:layout_constraintTop_toBottomOf="@+id/imgFAQs"
                     app:layout_constraintStart_toStartOf="@+id/imgContactUs"
                     />
 
@@ -301,9 +317,38 @@
                     android:text="@string/terms_amp_conditions"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:onClick="@{listener::onDrawerMenuTermsAndConditionClick}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintTop_toBottomOf="@+id/imgTermsandConditions"
                     app:layout_constraintBottom_toTopOf="@+id/imgTermsandConditions"
                     app:layout_constraintStart_toEndOf="@+id/imgTermsandConditions"
+                    />
+
+                <ImageView
+                    android:id="@+id/imgClickToCall"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:src="@drawable/clickcall"
+                    android:onClick="@{listener::onDrawerMenuClickToCallClick}"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/imgTermsandConditions"
+                    app:layout_constraintStart_toStartOf="@+id/imgContactUs"
+                    />
+
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/textClickToCall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_14ssp"
+                    android:text="@string/click_to_call"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:onClick="@{listener::onDrawerMenuClickToCallClick}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintTop_toBottomOf="@+id/imgClickToCall"
+                    app:layout_constraintBottom_toTopOf="@+id/imgClickToCall"
+                    app:layout_constraintStart_toEndOf="@+id/imgClickToCall"
                     />
 
                 <ImageView
@@ -313,7 +358,7 @@
                     android:src="@drawable/ic_settings"
                     android:onClick="@{listener::onDrawerMenuSettingsClick}"
                     android:layout_marginTop="@dimen/_8sdp"
-                    app:layout_constraintTop_toBottomOf="@+id/imgTermsandConditions"
+                    app:layout_constraintTop_toBottomOf="@+id/imgClickToCall"
                     app:layout_constraintStart_toStartOf="@+id/imgTermsandConditions"
                     />
 
@@ -326,6 +371,8 @@
                     android:textSize="@dimen/_14ssp"
                     android:text="@string/settings"
                     android:layout_marginStart="@dimen/_8sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintTop_toBottomOf="@+id/imgDrawerSettings"
                     app:layout_constraintBottom_toTopOf="@+id/imgDrawerSettings"
                     app:layout_constraintStart_toEndOf="@+id/imgDrawerSettings"
@@ -352,6 +399,8 @@
                     android:textSize="@dimen/_14ssp"
                     android:text="@string/log_out"
                     android:layout_marginStart="@dimen/_8sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintTop_toBottomOf="@+id/imgDrawerLogOut"
                     app:layout_constraintBottom_toTopOf="@+id/imgDrawerLogOut"
                     app:layout_constraintStart_toEndOf="@+id/imgDrawerLogOut"

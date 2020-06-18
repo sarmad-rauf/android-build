@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentVerifyNumberBinding
+import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.RegisterUserResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
@@ -42,7 +44,7 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
         }
 
         mDataBinding.root.groupBack.visibility = View.VISIBLE
-        mDataBinding.root.txtHeaderTitle.text = getString(R.string.verify_your_number)
+
         mDataBinding.root.txtBack.setOnClickListener {
             (activity as LoginActivity).navController.navigateUp()
         }
@@ -56,6 +58,19 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
         }
 
         subscribeObserver()
+        setStrings()
+
+    }
+
+    private fun setStrings() {
+        mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("VerifyYourNumber")
+        mDataBinding.root.txtBack.text= LanguageData.getStringValue("BtnTitle_Back")
+
+        mDataBinding.inputLayoutVerifyOtp.hint = LanguageData.getStringValue("EnterOTP")
+        mDataBinding.txtOtpNotRecieved.text = LanguageData.getStringValue("OTPNotRecieved")+ " "
+        mDataBinding.txtResend.text = LanguageData.getStringValue("Resend")
+
+        mDataBinding.btnVerifyOtp.text = LanguageData.getStringValue("BtnTitle_Verify")
 
     }
 
@@ -87,7 +102,7 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
 
     override fun onOTPVerifyClick(view: View) {
         if (mDataBinding.inputVerifyOtp.text.isNullOrEmpty()) {
-            mDataBinding.inputLayoutVerifyOtp.error = "Please Enter Valid OTP"
+            mDataBinding.inputLayoutVerifyOtp.error = LanguageData.getStringValue("PleaseEnterValidOTP")
             mDataBinding.inputLayoutVerifyOtp.isErrorEnabled = true
         } else {
             mDataBinding.inputLayoutVerifyOtp.error = ""
@@ -99,8 +114,6 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
                 mDataBinding.inputVerifyOtp.text.toString().trim()
             )
         }
-        //For Without API Calling Uncomment Below Line
-//        (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_setYourPinFragment)
     }
 
 }

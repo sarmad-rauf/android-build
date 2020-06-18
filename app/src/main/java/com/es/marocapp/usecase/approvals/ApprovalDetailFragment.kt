@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentApprovalDetailsBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.Approvaldetail
 import com.es.marocapp.model.responses.UserApprovalResponse
 import com.es.marocapp.network.ApiConstant
@@ -43,9 +44,22 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
         selectedApprovalData = arguments?.getParcelable<Approvaldetail>(SELECTED_APPROVAL_KEY)!!
 
         setUIData()
-
+        setStrings()
 
         subscribeFoUserApprovalsResponse()
+    }
+
+    private fun setStrings() {
+        mDataBinding.tvApprovalDetailsTitle.text = LanguageData.getStringValue("MyApprovals")
+
+        mDataBinding.tvRequestIndicatorTitle.text = LanguageData.getStringValue("RequestInitiator")
+        mDataBinding.tvIndicatorName.text = LanguageData.getStringValue("InitiatorName")
+        mDataBinding.tvApprovalTypeTitle.text = LanguageData.getStringValue("ApprovalType")
+        mDataBinding.tvApprovalIDTitle.text = LanguageData.getStringValue("ApprovalID")
+        mDataBinding.tvExourtTitle.text = LanguageData.getStringValue("Exourt")
+        mDataBinding.tvTransactionFeeTitle.text = LanguageData.getStringValue("TransactionFee")
+        mDataBinding.tvTotalTitle.text = LanguageData.getStringValue("Total")
+
     }
 
     private fun setUIData() {

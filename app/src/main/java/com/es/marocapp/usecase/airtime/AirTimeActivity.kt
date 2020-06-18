@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityAirTimeBinding
 import com.es.marocapp.databinding.ActivityCashServicesBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.cashservices.CashServicesViewModel
 import kotlinx.android.synthetic.main.layout_activity_header.view.*
@@ -33,7 +34,7 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
             supportFragmentManager.findFragmentById(R.id.nav_air_time_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        setHeaderTitle(resources.getString(R.string.air_time))
+        setHeaderTitle(LanguageData.getStringValue("AirTime").toString())
 
         mDataBinding.root.activityHeaderBack.setOnClickListener {
             if (mActivityViewModel.popBackStackTo == -1) {

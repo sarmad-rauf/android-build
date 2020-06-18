@@ -13,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityMainBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.accountdetails.AccountDetailsActivity
 import com.es.marocapp.usecase.favorites.FavoritesActivity
@@ -65,12 +66,27 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
-        mDataBinding.toolbarName.text = "Hi, ${Constants.balanceInfoAndResponse.firstname} ${Constants.balanceInfoAndResponse.surname}"
+        subscribeObserver()
+        setStrings()
+    }
 
-        mDataBinding.navigationHeader.drawer_header_name.text=Constants.balanceInfoAndResponse.firstname.plus(Constants.balanceInfoAndResponse?.surname)
+    private fun setStrings() {
+        mDataBinding.toolbarName.text = "${LanguageData.getStringValue("Hi")} ${Constants.balanceInfoAndResponse.firstname} ${Constants.balanceInfoAndResponse.surname}"
+
+        mDataBinding.navigationHeader.drawer_header_name.text = "${LanguageData.getStringValue("Hi")} ${Constants.balanceInfoAndResponse.firstname} ${Constants.balanceInfoAndResponse.surname}"
         mDataBinding.navigationHeader.drawer_header_number.text=Constants.CURRENT_USER_MSISDN
 
-        subscribeObserver()
+        mDataBinding.textDrawerNotifications.text
+
+        mDataBinding.textDrawerNotifications.text = LanguageData.getStringValue("Notifications")
+        mDataBinding.textFAQs.text = LanguageData.getStringValue("Faqs")
+        mDataBinding.textTermsandConditions.text = LanguageData.getStringValue("TermsAndConditions")
+        mDataBinding.textClickToCall.text = LanguageData.getStringValue("ClickToCall")
+        mDataBinding.textDrawerSettings.text = LanguageData.getStringValue("Settings")
+        mDataBinding.textDrawerLogOut.text = LanguageData.getStringValue("LogOut")
+
+        mDataBinding.toolbarWelcomeBack.text = LanguageData.getStringValue("WelcomeBack")
+
     }
 
     private fun subscribeObserver() {
@@ -124,6 +140,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         var myBundle : Bundle = Bundle()
         myBundle.putString("title","Term & Conditions")
         startNewActivity(this@MainActivity,TermsAndConditions::class.java,myBundle)
+    }
+
+    override fun onDrawerMenuClickToCallClick(view: View) {
+        Toast.makeText(this, "Under Development", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDrawerMenuLogOutClick(view: View) {

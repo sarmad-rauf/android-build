@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentCashServicesNumberAmountBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.cashservices.CashServicesActivity
@@ -51,6 +52,15 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
         )
 
         subscribeObserver()
+        setStrings()
+    }
+
+    private fun setStrings() {
+        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+        mDataBinding.inputLayoutAmount.hint = LanguageData.getStringValue("EnterAmount")
+        mDataBinding.inputNote.hint = LanguageData.getStringValue("Note")
+
+        mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Next")
     }
 
     private fun subscribeObserver() {

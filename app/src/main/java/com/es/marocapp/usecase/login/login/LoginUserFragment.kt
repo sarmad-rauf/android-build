@@ -11,6 +11,7 @@ import com.es.marocapp.BuildConfig
 
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentSignUpNumberBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.BalanceInfoAndLimitResponse
 import com.es.marocapp.model.responses.LoginWithCertResponse
 import com.es.marocapp.network.ApiConstant
@@ -20,6 +21,7 @@ import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import kotlinx.android.synthetic.main.layout_login_header.view.*
 
 /**
  * A simple [Fragment] subclass.
@@ -44,7 +46,17 @@ class LoginUserFragment : BaseFragment<FragmentSignUpNumberBinding>(), LoginClic
         mDataBinding.inputPhoneNumber.setText(mActivityViewModel.mUserMsisdn)
 
         subscribeObserver()
+        setStrings()
 
+    }
+
+    private fun setStrings() {
+        mDataBinding.root.txtHeaderTitle.text= LanguageData.getStringValue("LoginIntoAccount")
+        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
+        mDataBinding.inputLayoutPin.hint = LanguageData.getStringValue("Password")
+        mDataBinding.txtForgotPin.hint = LanguageData.getStringValue("ForgotPasswordQuestion")
+
+        mDataBinding.btnLoginIN.text = LanguageData.getStringValue("BtnTitle_Login")
     }
 
     private fun subscribeObserver() {
@@ -99,7 +111,7 @@ class LoginUserFragment : BaseFragment<FragmentSignUpNumberBinding>(), LoginClic
 
     override fun onLoginButtonClick(view: View) {
         if (mDataBinding.inputPin.text.toString() == "") {
-            mDataBinding.inputLayoutPin.error = "Please Enter Valid Password"
+            mDataBinding.inputLayoutPin.error = LanguageData.getStringValue("PleaseEnterValidPassword")
             mDataBinding.inputLayoutPin.isErrorEnabled = true
         } else {
             mDataBinding.inputLayoutPin.error = ""

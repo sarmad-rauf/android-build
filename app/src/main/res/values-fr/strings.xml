@@ -33,10 +33,10 @@
     <string name="enter_email">ENTER EMAIL</string>
     <string name="enter_address">Enter Address</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_home_cap">HOME</string>
-    <string name="title_transaction_cap">TRANSACTION</string>
-    <string name="title_pin_cap">PIN</string>
-    <string name="title_approval_cap">APPROVALS</string>
+    <string name="title_home_cap">Accueil</string>
+    <string name="title_transaction_cap">Historique des opérations</string>
+    <string name="title_pin_cap">Mot de Passe</string>
+    <string name="title_approval_cap">Confirmation des operations</string>
     <string name="quick_recharge">Quick Recharge</string>
     <string name="recharge">Recharge</string>
     <string name="recharge_newLine">\nRecharge</string>

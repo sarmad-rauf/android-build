@@ -81,7 +81,9 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
     }
 
     private fun setStrings() {
-        btnLogin.text=LanguageData.getStringValue("Water")
+        mDataBinding.root.txtHeaderTitle.text=LanguageData.getStringValue("LoginIntoAccount")
+        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
+        mDataBinding.btnLogin.text = LanguageData.getStringValue("BtnTitle_Login")
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -103,7 +105,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
         //For Proper Flow un Comment all this section
         //TODO need to implement proper check for lenght of number
         if (mDataBinding.inputPhoneNumber.text.toString() == "" || mDataBinding.inputPhoneNumber.text.length < Constants.APP_MSISDN_LENGTH.toInt() - 2) {
-            mDataBinding.inputLayoutPhoneNumber.error = "Please Enter Valid Mobile Number"
+            mDataBinding.inputLayoutPhoneNumber.error =LanguageData.getStringValue( "PleaseEnterValidMobileNumber")
             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
         } else {
             mDataBinding.inputLayoutPhoneNumber.error = ""
@@ -124,7 +126,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                     userMSISDNwithPrefix
                 )
             } else {
-                mDataBinding.inputLayoutPhoneNumber.error = "Please Enter Valid Mobile Number"
+                mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue( "PleaseEnterValidMobileNumber")
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
             }
         }

@@ -3,18 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/send_money_nav_graph"
-    app:startDestination="@id/sendMoneyTypeFragment">
+    app:startDestination="@id/fundsTransferMsisdnFragment">
 
     <fragment
         android:id="@+id/sendMoneyTypeFragment"
         android:name="com.es.marocapp.usecase.sendmoney.SendMoneyTypeFragment"
         android:label="SendMoneyTypeFragment"
         tools:layout="@layout/fragment_bill_payment_type"
-        >
-        <action
-            android:id="@+id/action_sendMoneyTypeFragment_to_fundsTransferMsisdnFragment"
-            app:destination="@id/fundsTransferMsisdnFragment" />
-    </fragment>
+        />
     <fragment
         android:id="@+id/fundsTransferMsisdnFragment"
         android:name="com.es.marocapp.usecase.sendmoney.tranferfundcase.FundsTransferMsisdnFragment"

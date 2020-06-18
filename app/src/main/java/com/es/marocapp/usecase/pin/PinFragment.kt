@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentPinBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
@@ -37,6 +38,16 @@ class PinFragment : BaseFragment<FragmentPinBinding>(), ChangePasswordClickListe
 //        })
 
         subscribeObserver()
+        setStrings()
+    }
+
+    private fun setStrings() {
+        mDataBinding.tvChangeTitle.text = LanguageData.getStringValue("ChangePassword")
+        mDataBinding.inputLayoutOldPassword.hint = LanguageData.getStringValue("EnterOldPassword")
+        mDataBinding.inputLayoutNewPassword.hint = LanguageData.getStringValue("EnterNewPassword")
+        mDataBinding.inputLayoutConfirmPassword.hint = LanguageData.getStringValue("ConfirmNewPassword")
+
+        mDataBinding.btnChangePassword.text = LanguageData.getStringValue("BtnTitle_Change")
     }
 
     private fun subscribeObserver() {
@@ -65,7 +76,7 @@ class PinFragment : BaseFragment<FragmentPinBinding>(), ChangePasswordClickListe
                     mDataBinding.inputNewPassword.text.toString().trim()
                 )
             } else {
-                mDataBinding.inputLayoutConfirmPassword.error = "Please Enter Same Password"
+                mDataBinding.inputLayoutConfirmPassword.error = LanguageData.getStringValue("PasswordAndConfirmPasswordDoesntMatch")
                 mDataBinding.inputLayoutConfirmPassword.isErrorEnabled = true
             }
         }
@@ -77,7 +88,7 @@ class PinFragment : BaseFragment<FragmentPinBinding>(), ChangePasswordClickListe
 
         if (mDataBinding.inputOldPassword.text.isNullOrEmpty()) {
             isValidForAll = false
-            mDataBinding.inputLayoutOldPassword.error = "Please Enter Valid Password"
+            mDataBinding.inputLayoutOldPassword.error = LanguageData.getStringValue("PleaseEnterValidOTP")
             mDataBinding.inputLayoutOldPassword.isErrorEnabled = true
         } else {
             mDataBinding.inputLayoutOldPassword.error = ""
@@ -86,7 +97,7 @@ class PinFragment : BaseFragment<FragmentPinBinding>(), ChangePasswordClickListe
 
         if (mDataBinding.inputNewPassword.text.isNullOrEmpty()) {
             isValidForAll = false
-            mDataBinding.inputLayoutNewPassword.error = "Please Enter Valid Password"
+            mDataBinding.inputLayoutNewPassword.error = LanguageData.getStringValue("PleaseEnterValidOTP")
             mDataBinding.inputLayoutNewPassword.isErrorEnabled = true
         } else {
             mDataBinding.inputLayoutNewPassword.error = ""
@@ -95,7 +106,7 @@ class PinFragment : BaseFragment<FragmentPinBinding>(), ChangePasswordClickListe
 
         if (mDataBinding.inputConfirmPassword.text.isNullOrEmpty()) {
             isValidForAll = false
-            mDataBinding.inputLayoutConfirmPassword.error = "Please Enter Valid Password"
+            mDataBinding.inputLayoutConfirmPassword.error = LanguageData.getStringValue("PleaseEnterValidOTP")
             mDataBinding.inputLayoutConfirmPassword.isErrorEnabled = true
         } else {
             mDataBinding.inputLayoutConfirmPassword.error = ""

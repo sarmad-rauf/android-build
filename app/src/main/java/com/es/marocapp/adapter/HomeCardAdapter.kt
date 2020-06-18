@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.es.marocapp.R
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.CardModel
 import com.es.marocapp.model.responses.BalanceInfoAndLimitResponse
 import com.es.marocapp.usecase.home.HomeBalanceFragment
@@ -15,13 +16,19 @@ class HomeCardAdapter(
 ) :
     FragmentStatePagerAdapter(fm!!) {
 
-    private lateinit var mbalanceInfoAndResonse : BalanceInfoAndLimitResponse
+    private lateinit var mbalanceInfoAndResonse: BalanceInfoAndLimitResponse
 
     init {
         mbalanceInfoAndResonse = Constants.balanceInfoAndResponse
     }
 
-    private var mDummyBalanceFragment1: HomeBalanceFragment = HomeBalanceFragment(CardModel(R.drawable.ic_wallet_balance,"Balance",Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mbalanceInfoAndResonse.balance))
+    private var mDummyBalanceFragment1: HomeBalanceFragment = HomeBalanceFragment(
+        CardModel(
+            R.drawable.ic_wallet_balance,
+            LanguageData.getStringValue("Balance").toString(),
+            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mbalanceInfoAndResonse.balance
+        )
+    )
 //    private var mDummyBalanceFragment2: HomeBalanceFragment = HomeBalanceFragment(CardModel(R.drawable.ic_wallet_balance,"Balance","200"))
 //    private var mDummyBalanceFragment3: HomeBalanceFragment = HomeBalanceFragment(CardModel(R.drawable.ic_wallet_balance,"Balance","2,200"))
 
@@ -33,7 +40,7 @@ class HomeCardAdapter(
 //            DUMMY_BALANCE_2 -> return mDummyBalanceFragment2
 //            DUMMY_BALANCE_3 -> return mDummyBalanceFragment3
         }
-        return HomeBalanceFragment(CardModel(R.drawable.ic_wallet_balance,"Wallet","1,200"))
+        return HomeBalanceFragment(CardModel(R.drawable.ic_wallet_balance, LanguageData.getStringValue("WalletBalance").toString(), "1,200"))
     }
 
     override fun getCount(): Int {

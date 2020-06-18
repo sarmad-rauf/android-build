@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentAirTimeMsisdnBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.airtime.AirTimeActivity
@@ -64,8 +65,14 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
             )
         )
 
+        setStrings()
         subscribeObserver()
 
+    }
+
+    private fun setStrings() {
+        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+        mDataBinding.btnNext.text = LanguageData.getStringValue("Submit")
     }
 
     private fun subscribeObserver() {
@@ -98,7 +105,7 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
 
         if (mDataBinding.inputPhoneNumber.text.isNullOrEmpty() && mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_MSISDN_LENGTH.toInt() - 2) {
             isValidForAll = false
-            mDataBinding.inputLayoutPhoneNumber.error = "Please Enter Valid Mobile Number"
+            mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidAmount")
             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
         } else {
             mDataBinding.inputLayoutPhoneNumber.error = ""
@@ -115,7 +122,7 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
                 msisdnEntered = userMSISDNwithPrefix
             } else {
                 isValidForAll = false
-                mDataBinding.inputLayoutPhoneNumber.error = "Please Enter Valid Mobile Number"
+                mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidAmount")
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
             }
         }

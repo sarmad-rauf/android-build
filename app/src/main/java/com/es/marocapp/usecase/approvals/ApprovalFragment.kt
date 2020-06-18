@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.ApprovalsItemAdapter
 import com.es.marocapp.databinding.FragmentApprovalBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.Approvaldetail
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
@@ -58,7 +59,12 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
         (activity as MainActivity).setHomeToolbarVisibility(false)
 
         subscribeForApprovalsResponse()
+        setStrings()
+    }
 
+    private fun setStrings() {
+        mDataBinding.allApprovalTitle.text = LanguageData.getStringValue("All Approvals")
+        mDataBinding.tvTransactionHistoryTitle.text = LanguageData.getStringValue("MyApprovals")
     }
 
     private fun subscribeForApprovalsResponse() {

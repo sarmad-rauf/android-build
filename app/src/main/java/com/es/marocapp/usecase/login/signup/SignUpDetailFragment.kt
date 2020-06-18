@@ -16,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentSignUpDetailBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.GetAccountHolderInformationResponse
 import com.es.marocapp.model.responses.GetInitialAuthDetailsReponse
 import com.es.marocapp.model.responses.GetOtpForRegistrationResponse
@@ -54,7 +55,6 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
         }
 
         mDataBinding.root.groupBack.visibility = View.VISIBLE
-        mDataBinding.root.txtHeaderTitle.text = getString(R.string.create_your_account)
 
         mDataBinding.root.txtBack.setOnClickListener {
             (activity as LoginActivity).navController.navigateUp()
@@ -71,6 +71,21 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
         mDataBinding.inputNationalID.addTextChangedListener(this)
 
         subscribeObserver()
+        setStrings()
+
+    }
+
+    private fun setStrings() {
+        mDataBinding.root.txtBack.text= LanguageData.getStringValue("BtnTitle_Back")
+        mDataBinding.root.txtHeaderTitle.text= LanguageData.getStringValue("CreateYourAccount")
+        mDataBinding.inputLayoutFirstName.hint = LanguageData.getStringValue("EnterFirstName")
+        mDataBinding.inputLayoutLastName.hint = LanguageData.getStringValue("EnterLastName")
+        mDataBinding.inputLayoutDateOfBirth.hint = LanguageData.getStringValue("EnterDateOfBirth")
+        mDataBinding.inputLayoutNationalID.hint = LanguageData.getStringValue("EnterNationalIdentityNumber")
+        mDataBinding.inputLayoutGender.hint = LanguageData.getStringValue("SelectGender")
+        mDataBinding.inputLayoutEmail.hint = LanguageData.getStringValue("EnterEmail")
+        mDataBinding.inputLayoutAddress.hint = LanguageData.getStringValue("EnterAddress")
+        mDataBinding.btnNextDetailFragment.text = LanguageData.getStringValue("BtnTitle_Next")
 
     }
 
@@ -187,7 +202,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
         if(mDataBinding.inputFirstName.text.isNullOrEmpty()){
             isValidForAll = false
-            mDataBinding.inputLayoutFirstName.error = "Please Enter First Name"
+            mDataBinding.inputLayoutFirstName.error = LanguageData.getStringValue("PleaseEnterFirstName")
             mDataBinding.inputLayoutFirstName.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutFirstName.error = ""
@@ -196,7 +211,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
         if(mDataBinding.inputLastName.text.isNullOrEmpty()){
             isValidForAll = false
-            mDataBinding.inputLayoutLastName.error = "Please Enter Last Name"
+            mDataBinding.inputLayoutLastName.error = LanguageData.getStringValue("PleaseEnterLastName")
             mDataBinding.inputLayoutLastName.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutLastName.error = ""
@@ -205,7 +220,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
         if(mDataBinding.inputDateOfBirth.text.isNullOrEmpty()){
             isValidForAll = false
-            mDataBinding.inputLayoutDateOfBirth.error = "Please Select Date"
+            mDataBinding.inputLayoutDateOfBirth.error = LanguageData.getStringValue("PleaseSelectDate")
             mDataBinding.inputLayoutDateOfBirth.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutDateOfBirth.error = ""
@@ -214,7 +229,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
         if(mDataBinding.inputNationalID.text.isNullOrEmpty()){
             isValidForAll = false
-            mDataBinding.inputLayoutNationalID.error = "Please Enter Identity Number"
+            mDataBinding.inputLayoutNationalID.error = LanguageData.getStringValue("PleaseEnterIdentityNumber")
             mDataBinding.inputLayoutNationalID.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutNationalID.error = ""
@@ -225,14 +240,14 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
                 mDataBinding.inputLayoutNationalID.isErrorEnabled = false
             }else{
                 isValidForAll = false
-                mDataBinding.inputLayoutNationalID.error = "Please Enter Valid Identity Number"
+                mDataBinding.inputLayoutNationalID.error = LanguageData.getStringValue("PleaseEnterValidIdentityNumber")
                 mDataBinding.inputLayoutNationalID.isErrorEnabled = true
             }
         }
 
         if(mDataBinding.inputGender.text.isNullOrEmpty()){
             isValidForAll = false
-            mDataBinding.inputLayoutGender.error = "Please Select Gender"
+            mDataBinding.inputLayoutGender.error = LanguageData.getStringValue("PleaseSelectGender")
             mDataBinding.inputLayoutGender.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutGender.error = ""
@@ -241,7 +256,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
         if(mDataBinding.inputEmail.text.isNullOrEmpty()){
             isValidForAll = false
-            mDataBinding.inputLayoutEmail.error = "Please Enter Email Address"
+            mDataBinding.inputLayoutEmail.error = LanguageData.getStringValue("PleaseEnterEmailAddress")
             mDataBinding.inputLayoutEmail.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutEmail.error = ""
@@ -250,7 +265,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
         if(mDataBinding.inputAddress.text.isNullOrEmpty()){
             isValidForAll = false
-            mDataBinding.inputLayoutAddress.error = "Please Enter Address"
+            mDataBinding.inputLayoutAddress.error = LanguageData.getStringValue("PleaseEnterAddress")
             mDataBinding.inputLayoutAddress.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutAddress.error = ""

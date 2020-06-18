@@ -49,6 +49,8 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
     var mBalanceInforAndResponseObserver = ObservableField<BalanceInfoAndLimitResponse>()
     var mAccountHolderInfoResponseObserver = ObservableField<GetAccountHolderInformationResponse>()
 
+    var popBackStackTo = -1
+
     init {
         mBalanceInforAndResponseObserver.set(Constants.balanceInfoAndResponse)
     }
@@ -390,13 +392,15 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
             if(isInitiatePaymenetToMerchantUseCase.get()!!){
                 transferType = Constants.MERCHANT_TYPE_PAYMENT
-                receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
             }else if(isFundTransferUseCase.get()!!){
                 transferType = Constants.TRANSFER_TYPE_PAYMENT
+            }
+
+            if(Constants.IS_AGENT_USER || Constants.IS_MERCHANT_USER){
+                receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
+            }
+            if(Constants.IS_CONSUMER_USER){
                 receiver = Constants.getTransferReceiverAlias(transferdAmountTo)
-            }else{
-                transferType = Constants.TYPE_PAYMENT
-                receiver = Constants.getNumberMsisdn(transferdAmountTo)
             }
 
 
@@ -457,13 +461,15 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
             if(isInitiatePaymenetToMerchantUseCase.get()!!){
                 transferType = Constants.MERCHANT_TYPE_PAYMENT
-                receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
             }else if(isFundTransferUseCase.get()!!){
                 transferType = Constants.TRANSFER_TYPE_PAYMENT
+            }
+
+            if(Constants.IS_AGENT_USER || Constants.IS_MERCHANT_USER){
+                receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
+            }
+            if(Constants.IS_CONSUMER_USER){
                 receiver = Constants.getTransferReceiverAlias(transferdAmountTo)
-            }else{
-                transferType = Constants.TYPE_PAYMENT
-                receiver = Constants.getNumberMsisdn(transferdAmountTo)
             }
 
 

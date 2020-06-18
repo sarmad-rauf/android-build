@@ -5,6 +5,7 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentAirTimeSuccessLayoutBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.airtime.AirTimeActivity
@@ -31,8 +32,27 @@ class AirTimeSuccessFragment : BaseFragment<FragmentAirTimeSuccessLayoutBinding>
         (activity as AirTimeActivity).setHeaderVisibility(false)
         (activity as AirTimeActivity).setCompanyIconToolbarVisibility(false)
 
+        setStrings()
         updateUI()
     }
+
+    private fun setStrings() {
+        mDataBinding.tvOwnerNameTitle.text = LanguageData.getStringValue("TransactionID")
+        mDataBinding.tvContactNumTitle.text = LanguageData.getStringValue("ReceiverName")
+        mDataBinding.tvReceiverNumberTitle.text = LanguageData.getStringValue("ReceiverNumber")
+        mDataBinding.tvOwnerNameTitle2.text = LanguageData.getStringValue("Amount")
+        mDataBinding.tvContactNumTitle2.text = LanguageData.getStringValue("Fee")
+        mDataBinding.tvDHTitle.text = LanguageData.getStringValue("TotalCost")
+        mDataBinding.newBalanceTitle.text = LanguageData.getStringValue("YourNewBalanceIs")
+
+        mDataBinding.tvSuccessTitle.text = mActivityViewModel.airTimeSelected.get()!!
+        mDataBinding.successTItle.text = LanguageData.getStringValue("Success")
+
+        mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("BtnTitle_OK")
+        mDataBinding.tvCompanyNameTitle.text = LanguageData.getStringValue("Source")
+
+    }
+
 
     private fun updateUI() {
 //        tvOwnerNameVal== TransactionID

@@ -304,6 +304,7 @@
                 android:paddingEnd="@dimen/_16sdp"
                 android:paddingBottom="@dimen/_8sdp"
                 android:text="@string/success"
+                android:id="@+id/successTItle"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_15ssp"
                 app:layout_constraintBottom_toTopOf="@+id/mSuccessDetailContainer"

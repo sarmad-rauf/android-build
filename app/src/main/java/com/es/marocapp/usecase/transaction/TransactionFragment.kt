@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.TransactionHistoryAdapter
 import com.es.marocapp.databinding.FragmentTransactionBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.CustomModelHistoryItem
 import com.es.marocapp.model.responses.History
 import com.es.marocapp.network.ApiConstant
@@ -53,6 +54,11 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
         transactionViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN)
 
         subscribeObserver()
+        setStrings()
+    }
+
+    private fun setStrings() {
+        mDataBinding.tvTransactionHistoryTitle.text = LanguageData.getStringValue("TransactionHistory")
     }
 
     private fun subscribeObserver() {
