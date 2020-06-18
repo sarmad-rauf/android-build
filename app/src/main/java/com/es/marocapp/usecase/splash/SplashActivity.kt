@@ -269,6 +269,4 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
         }
         return deviceID
     }
-
-
 }
