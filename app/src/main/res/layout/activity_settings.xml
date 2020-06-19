@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+        <variable
+            name="listener"
+            type="com.es.marocapp.usecase.settings.SettingsClickListener" />
+
+    </data>
+
+ <androidx.constraintlayout.widget.ConstraintLayout
+     android:layout_width="match_parent"
+     android:background="@color/colorGreyLight"
+     android:layout_height="match_parent">
+
+     <androidx.constraintlayout.widget.ConstraintLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         app:layout_constraintTop_toTopOf="parent"
+         android:id="@+id/headerSettings"
+         android:background="@color/colorActivityHeaderBlue"
+         android:padding="@dimen/_10sdp"
+         >
+
+         <com.es.marocapp.widgets.MarocRegularTextView
+             android:id="@+id/activityHeaderTitle"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="@dimen/_8sdp"
+             tools:text="Settings"
+             android:textAllCaps="true"
+             android:textColor="@color/colorWhite"
+             android:textSize="@dimen/_20ssp"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintHorizontal_bias="0.29"
+             app:layout_constraintStart_toEndOf="@+id/activityHeaderBack"
+             app:layout_constraintTop_toTopOf="parent" />
+
+         <ImageView
+             android:id="@+id/activityHeaderBack"
+             android:layout_width="@dimen/_32sdp"
+             android:layout_height="@dimen/_32sdp"
+             android:layout_marginStart="@dimen/_8sdp"
+             android:src="@drawable/ic_back"
+             android:onClick="@{listener::onBackButtonClickListener}"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent" />
+     </androidx.constraintlayout.widget.ConstraintLayout>
+
+     <androidx.cardview.widget.CardView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_margin="@dimen/_16sdp"
+         android:id="@+id/cvChangeLanguage"
+         app:layout_constraintTop_toBottomOf="@+id/headerSettings"
+         app:cardCornerRadius="@dimen/_12sdp">
+
+         <androidx.constraintlayout.widget.ConstraintLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:onClick="@{listener::onChangeLanguageClick}"
+             android:padding="@dimen/_12sdp">
+         <com.es.marocapp.widgets.MarocRegularTextView
+             android:id="@+id/tvChangeLanguage"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:textSize="@dimen/_14ssp"
+             tools:text="Change Language"
+             app:layout_constraintTop_toTopOf="parent"
+             app:layout_constraintEnd_toStartOf="@+id/imgNxt"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             android:textColor="@color/colorTextGreyDark"
+
+             />
+
+             <com.es.marocapp.widgets.MarocRegularTextView
+                 android:id="@+id/tvLanguage"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:textSize="@dimen/_12ssp"
+                 tools:text="English"
+                 app:layout_constraintTop_toTopOf="parent"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintEnd_toStartOf="@+id/imgNxt"
+                 android:textColor="@color/colorTextGreyMedium"
+                 />
+
+             <ImageView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/imgNxt"
+                 app:layout_constraintTop_toTopOf="parent"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 android:src="@drawable/back"/>
+
+         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+     </androidx.cardview.widget.CardView>
+
+     <androidx.cardview.widget.CardView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_margin="@dimen/_16sdp"
+         android:id="@+id/cvBlockAccount"
+         app:layout_constraintTop_toBottomOf="@+id/cvChangeLanguage"
+         app:cardCornerRadius="@dimen/_12sdp">
+
+         <androidx.constraintlayout.widget.ConstraintLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:onClick="@{listener::onBlockAccountClick}"
+             android:padding="@dimen/_12sdp">
+             <com.es.marocapp.widgets.MarocRegularTextView
+                 android:id="@+id/tvBlockAccount"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:textSize="@dimen/_14ssp"
+                 tools:text="Block Account"
+                 app:layout_constraintTop_toTopOf="parent"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintStart_toStartOf="parent"
+                 android:textColor="@color/colorTextGreyDark"
+
+                 />
+
+
+             <ImageView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 app:layout_constraintTop_toTopOf="parent"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 android:src="@drawable/back"/>
+
+         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+     </androidx.cardview.widget.CardView>
+
+
+     <com.es.marocapp.widgets.MarocButton
+         android:id="@+id/btnUpdate"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         tools:text="Update"
+         android:textColor="@color/colorWhite"
+         android:textStyle="bold"
+         android:onClick="@{listener::onUpdateClickListener}"
+         android:background="@drawable/button_enable_blue"
+         android:layout_marginStart="@dimen/_16sdp"
+         android:layout_marginEnd="@dimen/_16sdp"
+         android:layout_marginBottom="@dimen/_16sdp"
+         app:layout_constraintBottom_toBottomOf="parent"
+         />
+
+ </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

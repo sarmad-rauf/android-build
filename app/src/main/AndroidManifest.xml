@@ -24,6 +24,7 @@
         <activity android:name=".usecase.favorites.FavoritesActivity" />
         <activity android:name=".usecase.accountdetails.AccountDetailsActivity" />
         <activity android:name=".usecase.payments.PaymentsActivity" />
+        <activity android:name=".usecase.settings.SettingsActivity"/>
         <activity
             android:name=".usecase.MainActivity"
             android:label="@string/title_activity_main" />

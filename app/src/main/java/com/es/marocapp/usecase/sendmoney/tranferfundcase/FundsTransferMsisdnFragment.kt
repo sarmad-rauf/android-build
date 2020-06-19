@@ -68,7 +68,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
             )
         )
 
-        mDataBinding.scanQRImage.setOnClickListener{
+        mDataBinding.btnScanQR.setOnClickListener{
             val integrator = IntentIntegrator(activity)
             integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES)
             integrator.setPrompt("")
@@ -88,7 +88,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
     private fun setStrings() {
         mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
         mDataBinding.selectFavoriteTypeTitle.hint = LanguageData.getStringValue("SelectFavorite")
-        mDataBinding.scanQRTitle.hint = LanguageData.getStringValue("OrScanQr")
+        mDataBinding.btnScanQR.text = LanguageData.getStringValue("ScanQr")
 
         mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Next")
 

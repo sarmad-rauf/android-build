@@ -159,7 +159,11 @@
     <string name="operation_failure">Failed to perform operation.</string>
     <string name="click_to_call">Click to Call</string>
     <string name="pending">Pending</string>
+
     <string name="addNick">Add Nick</string>
     <string name="please_assign_nick_for_the_new_favorite">Please assign nick for the new favorite</string>
+
+    <string name="language_english">English</string>
+    <string name="language_french">French</string>
 
 </resources>
