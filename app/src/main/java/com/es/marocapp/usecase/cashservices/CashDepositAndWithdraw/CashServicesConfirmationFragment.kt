@@ -82,8 +82,13 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
                     mActivityViewModel.transactionID = it.financialTransactionId
                     mActivityViewModel.requestForGetBalanceApi(activity)
                 }else{
-                    Constants.HEADERS_FOR_PAYEMNTS = false
-                    DialogUtils.showErrorDialoge(activity,it.description)
+                    if(it.responseCode.equals(ApiConstant.API_PENDING)){
+                        Constants.HEADERS_FOR_PAYEMNTS = false
+                        (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesConfirmationFragment_to_cashServicesPendingFragment)
+                    }else{
+                        Constants.HEADERS_FOR_PAYEMNTS = false
+                        DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                    }
                 }
             }
         )
@@ -96,8 +101,13 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
                     mActivityViewModel.transactionID = it.financialTransactionId
                     (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesConfirmationFragment_to_cashServicesSuccessFragment)
                 }else{
-                    Constants.HEADERS_FOR_PAYEMNTS = false
-                    DialogUtils.showErrorDialoge(activity,it.description)
+                    if(it.responseCode.equals(ApiConstant.API_PENDING)){
+                        Constants.HEADERS_FOR_PAYEMNTS = false
+                        (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesConfirmationFragment_to_cashServicesPendingFragment)
+                    }else{
+                        Constants.HEADERS_FOR_PAYEMNTS = false
+                        DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                    }
                 }
             }
         )

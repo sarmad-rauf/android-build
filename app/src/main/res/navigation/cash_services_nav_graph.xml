@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_cashServicesConfirmationFragment_to_cashServicesSuccessFragment"
             app:destination="@id/cashServicesSuccessFragment" />
+        <action
+            android:id="@+id/action_cashServicesConfirmationFragment_to_cashServicesPendingFragment"
+            app:destination="@id/cashServicesPendingFragment" />
     </fragment>
     <fragment
         android:id="@+id/cashServicesSuccessFragment"
@@ -54,4 +57,10 @@
             android:id="@+id/action_cashServicesVerifyOtpFragment_to_cashServicesConfirmationFragment"
             app:destination="@id/cashServicesConfirmationFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/cashServicesPendingFragment"
+        android:name="com.es.marocapp.usecase.cashservices.CashDepositAndWithdraw.CashServicesPendingFragment"
+        android:label="CashServicesPendingFragment"
+        tools:layout="@layout/fragment_cash_services_pending"
+        />
 </navigation>

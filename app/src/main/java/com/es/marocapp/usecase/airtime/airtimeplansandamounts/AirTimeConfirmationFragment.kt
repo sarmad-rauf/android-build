@@ -79,10 +79,17 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     Constants.HEADERS_FOR_PAYEMNTS = false
-//                    mActivityViewModel.senderBalanceAfter = it.senderBalanceAfter
-//                    mActivityViewModel.transactionID = it.financialTransactionId
+                    mActivityViewModel.senderBalanceAfter = it.senderBalanceafter
+                    mActivityViewModel.transactionID = it.transactionId
+                    (activity as AirTimeActivity).navController.navigate(R.id.action_airTimeConfirmationFragment_to_airTimeSuccessFragment)
                 } else {
-                    DialogUtils.showErrorDialoge(activity, it.description)
+                    if(it.responseCode.equals(ApiConstant.API_PENDING)){
+                        Constants.HEADERS_FOR_PAYEMNTS = false
+                        (activity as AirTimeActivity).navController.navigate(R.id.action_airTimeConfirmationFragment_to_airTimePendingFragment)
+                    }else{
+                        Constants.HEADERS_FOR_PAYEMNTS = false
+                        DialogUtils.showErrorDialoge(activity, it.description)
+                    }
                 }
             })
     }

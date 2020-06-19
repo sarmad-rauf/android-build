@@ -40,11 +40,20 @@
         <action
             android:id="@+id/action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment"
             app:destination="@id/fundsTrasnferSuccessFragment" />
+        <action
+            android:id="@+id/action_fundTransferConfirmationFragment_to_fundsTransferPendingFragment"
+            app:destination="@id/fundsTransferPendingFragment" />
     </fragment>
     <fragment
         android:id="@+id/fundsTrasnferSuccessFragment"
         android:name="com.es.marocapp.usecase.sendmoney.tranferfundcase.FundsTrasnferSuccessFragment"
         android:label="FundsTrasnferSuccessFragment"
         tools:layout="@layout/fragment_funds_transfer_success"
+        />
+    <fragment
+        android:id="@+id/fundsTransferPendingFragment"
+        android:name="com.es.marocapp.usecase.sendmoney.tranferfundcase.FundsTransferPendingFragment"
+        android:label="FundsTransferPendingFragment"
+        tools:layout="@layout/fragment_funds_transfer_pending"
         />
 </navigation>

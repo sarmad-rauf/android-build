@@ -18,6 +18,10 @@ object LanguageData{
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
+        if(value.equals("")){
+            value = key.toString()
+        }
         return value
     }
 }

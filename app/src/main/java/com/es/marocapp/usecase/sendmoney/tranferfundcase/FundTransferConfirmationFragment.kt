@@ -74,8 +74,13 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                     mActivityViewModel.transactionID = it.financialTransactionId
                     (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
                 }else{
-                    Constants.HEADERS_FOR_PAYEMNTS = false
-                    DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                    if(it.responseCode.equals(ApiConstant.API_PENDING)){
+                        Constants.HEADERS_FOR_PAYEMNTS = false
+                        (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTransferPendingFragment)
+                    }else{
+                        Constants.HEADERS_FOR_PAYEMNTS = false
+                        DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                    }
                 }
             })
 
@@ -87,8 +92,13 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                     mActivityViewModel.transactionID = it.financialTransactionId
                     (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
                 }else{
-                    Constants.HEADERS_FOR_PAYEMNTS = false
-                    DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                    if(it.responseCode.equals(ApiConstant.API_PENDING)){
+                        Constants.HEADERS_FOR_PAYEMNTS = false
+                        (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTransferPendingFragment)
+                    }else{
+                        Constants.HEADERS_FOR_PAYEMNTS = false
+                        DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                    }
                 }
             })
 
@@ -100,8 +110,13 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                     mActivityViewModel.transactionID = it.transactionId
                     (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
                 }else{
-                    Constants.HEADERS_FOR_PAYEMNTS = false
-                    DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                    if(it.responseCode.equals(ApiConstant.API_PENDING)){
+                        Constants.HEADERS_FOR_PAYEMNTS = false
+                        (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTransferPendingFragment)
+                    }else{
+                        Constants.HEADERS_FOR_PAYEMNTS = false
+                        DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                    }
                 }
             })
 
@@ -113,8 +128,13 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                     mActivityViewModel.transactionID = it.transactionId
                     (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
                 }else{
-                    Constants.HEADERS_FOR_PAYEMNTS = false
-                    DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                    if(it.responseCode.equals(ApiConstant.API_PENDING)){
+                        Constants.HEADERS_FOR_PAYEMNTS = false
+                        (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTransferPendingFragment)
+                    }else{
+                        Constants.HEADERS_FOR_PAYEMNTS = false
+                        DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                    }
                 }
             })
     }

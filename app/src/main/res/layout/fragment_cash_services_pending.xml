@@ -6,11 +6,11 @@
 
         <variable
             name="viewmodel"
-            type="com.es.marocapp.usecase.airtime.AirTimeViewModel" />
+            type="com.es.marocapp.usecase.cashservices.CashServicesViewModel" />
 
         <variable
             name="listner"
-            type="com.es.marocapp.usecase.airtime.AirTimeClickListner" />
+            type="com.es.marocapp.usecase.cashservices.CashServicesClickListner" />
 
     </data>
 
@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
-                android:src="@drawable/img_payment_success"
+                android:src="@drawable/img_payment_pending"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvSuccessTitle" />
@@ -120,6 +120,7 @@
                             android:id="@+id/tvOwnerNameTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:visibility="gone"
                             android:layout_marginTop="@dimen/_16sdp"
                             android:text="@string/transaction_id"
                             android:textColor="@color/colorTextGreyDark"
@@ -132,6 +133,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="John Ptrucci"
+                            android:visibility="gone"
                             android:textColor="@color/colorTextGreyDark"
                             android:textSize="@dimen/_14sdp"
                             app:layout_constraintBottom_toBottomOf="@+id/tvOwnerNameTitle"
@@ -143,9 +145,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_16sdp"
                             android:text="@string/receiver_s_name"
+                            android:visibility="gone"
                             android:textColor="@color/colorTextGreyDark"
                             android:textSize="@dimen/_12sdp"
-                            android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/tvOwnerNameTitle"
                             app:layout_constraintTop_toBottomOf="@+id/tvOwnerNameTitle" />
 
@@ -154,10 +156,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_8sdp"
+                            android:visibility="gone"
                             android:text="+212 88716 9918"
                             android:textColor="@color/colorTextGreyDark"
                             android:textSize="@dimen/_14sdp"
-                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/tvContactNumTitle"
                             app:layout_constraintEnd_toEndOf="@+id/tvOwnerNameVal" />
 
@@ -272,9 +274,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
                             android:text="DH 0.00"
+                            android:visibility="gone"
                             android:textColor="@color/colorTextGreyDark"
                             android:textSize="@dimen/_12sdp"
-                            android:visibility="gone"
                             app:layout_constraintStart_toStartOf="@+id/tvOwnerNameTitle"
                             app:layout_constraintTop_toBottomOf="@+id/tvDHVal" />
 
@@ -284,9 +286,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_8sdp"
                             android:text="DH 0.00"
+                            android:visibility="gone"
                             android:textColor="@color/colorTextGreyDark"
                             android:textSize="@dimen/_14sdp"
-                            android:visibility="gone"
                             app:layout_constraintEnd_toEndOf="@+id/tvOwnerNameVal"
                             app:layout_constraintTop_toBottomOf="@+id/tvDHVal" />
 
@@ -296,15 +298,15 @@
 
 
             <com.es.marocapp.widgets.MarocMediumTextView
-                android:id="@+id/successTItle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_enable_green"
+                android:background="@drawable/button_pending_orange"
                 android:paddingStart="@dimen/_16sdp"
                 android:paddingTop="@dimen/_8sdp"
                 android:paddingEnd="@dimen/_16sdp"
                 android:paddingBottom="@dimen/_8sdp"
-                android:text="@string/success"
+                android:text="@string/pending"
+                android:id="@+id/successTItle"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_15ssp"
                 app:layout_constraintBottom_toTopOf="@+id/mSuccessDetailContainer"

@@ -56,11 +56,20 @@
         <action
             android:id="@+id/action_airTimeConfirmationFragment_to_airTimeSuccessFragment"
             app:destination="@id/airTimeSuccessFragment" />
+        <action
+            android:id="@+id/action_airTimeConfirmationFragment_to_airTimePendingFragment"
+            app:destination="@id/airTimePendingFragment" />
     </fragment>
     <fragment
         android:id="@+id/airTimeSuccessFragment"
         android:name="com.es.marocapp.usecase.airtime.airtimeplansandamounts.AirTimeSuccessFragment"
         android:label="AirTimeSuccessFragment"
         tools:layout="@layout/fragment_air_time_success_layout"
+        />
+    <fragment
+        android:id="@+id/airTimePendingFragment"
+        android:name="com.es.marocapp.usecase.airtime.airtimeplansandamounts.AirTimePendingFragment"
+        android:label="AirTimePendingFragment"
+        tools:layout="@layout/fragment_cash_services_pending"
         />
 </navigation>
