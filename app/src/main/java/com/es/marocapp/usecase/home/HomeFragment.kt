@@ -160,9 +160,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                         }
 
                         1-> {
+                            startActivity(
                             Intent(
                                 activity as MainActivity,
                                 AirTimeActivity::class.java
+                            )
                             )
                         }
 
@@ -177,17 +179,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                             startActivity(intent)
                         }
 
-                        3 -> {
+                        5 -> {
+                            startActivity(
                             Intent(
                                 activity as MainActivity,
                                 CashServicesActivity::class.java
                             )
+                            )
                         }
 
                         else -> {
+                            startActivity(
                             Intent(
                                 activity as MainActivity,
                                 PaymentsActivity::class.java
+                            )
                             )
                         }
 

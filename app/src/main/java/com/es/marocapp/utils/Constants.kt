@@ -8,8 +8,11 @@ import android.text.format.Formatter.formatIpAddress
 import android.util.Base64.encodeToString
 import android.util.Log
 import com.es.marocapp.model.responses.BalanceInfoAndLimitResponse
+import com.es.marocapp.model.responses.Contact
+import com.es.marocapp.model.responses.LoginWithCertResponse
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 object Constants {
@@ -54,6 +57,8 @@ object Constants {
     
     //Responses
     lateinit var balanceInfoAndResponse : BalanceInfoAndLimitResponse
+    lateinit var loginWithCertResponse : LoginWithCertResponse
+    var mContactListArray : ArrayList<Contact> = arrayListOf()
 
     fun getCurrentDate() : String{
         val calendar = Calendar.getInstance(TimeZone.getDefault())

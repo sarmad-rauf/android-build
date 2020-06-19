@@ -3,6 +3,8 @@ package com.es.marocapp.usecase.airtime.airtimeplansandamounts
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
@@ -13,13 +15,17 @@ import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.airtime.AirTimeActivity
 import com.es.marocapp.usecase.airtime.AirTimeClickListner
 import com.es.marocapp.usecase.airtime.AirTimeViewModel
+import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.layout_activity_header.view.*
 
-class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirTimeClickListner {
+class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirTimeClickListner,
+    AdapterView.OnItemSelectedListener {
 
     private lateinit var mActivityViewModel: AirTimeViewModel
+
+    private var list_of_favorites = arrayListOf<String>()
 
     var msisdnEntered = ""
 
@@ -48,6 +54,23 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
             )
         }
 
+        for(contacts in Constants.mContactListArray){
+            var contactNumber = contacts.fri
+            contactNumber = contactNumber.substringBefore("@")
+            contactNumber = contactNumber.substringBefore("/")
+            contactNumber = contactNumber.removePrefix(Constants.APP_MSISDN_PREFIX)
+            contactNumber = "0$contactNumber"
+            list_of_favorites.add(contactNumber)
+        }
+        list_of_favorites.add(0,LanguageData.getStringValue("SelectFavorite").toString())
+
+        val adapterFavoriteType = ArrayAdapter<CharSequence>(activity as AirTimeActivity, R.layout.layout_favorites_spinner_text,
+            list_of_favorites as List<CharSequence>
+        )
+        mDataBinding.spinnerSelectFavorites.apply {
+            adapter = adapterFavoriteType
+        }
+        mDataBinding.spinnerSelectFavorites.onItemSelectedListener = this@AirTimeMsisdnFragment
 
         (activity as AirTimeActivity).mDataBinding.headerAirTime.rootView.tv_company_title.text = mActivityViewModel.airTimeAmountSelected.get()!!
         (activity as AirTimeActivity).mDataBinding.headerAirTime.rootView.img_company_icons.setImageResource(R.drawable.others)
@@ -65,6 +88,8 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
             )
         )
 
+        mActivityViewModel.isUserSelectedFromFavorites.set(false)
+
         setStrings()
         subscribeObserver()
 
@@ -72,6 +97,7 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
 
     private fun setStrings() {
         mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+        mDataBinding.selectFavoriteTypeTitle.hint = LanguageData.getStringValue("SelectFavorite")
         mDataBinding.btnNext.text = LanguageData.getStringValue("Submit")
     }
 
@@ -113,6 +139,7 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
 
             var userMsisdn = mDataBinding.inputPhoneNumber.text.toString()
             if (userMsisdn.startsWith("0", false)) {
+                checkNumberExistInFavorites(userMsisdn)
                 mDataBinding.inputLayoutPhoneNumber.error = ""
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
                 var userMSISDNwithPrefix = userMsisdn.removePrefix("0")
@@ -128,6 +155,27 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
         }
 
         return isValidForAll
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+    }
+
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        var selectedFavorites = mDataBinding.spinnerSelectFavorites.selectedItem.toString()
+        if(!selectedFavorites.equals(LanguageData.getStringValue("SelectFavorite"))){
+            mDataBinding.inputPhoneNumber.setText(selectedFavorites)
+            mActivityViewModel.isUserSelectedFromFavorites.set(true)
+        }
+    }
+
+    private fun checkNumberExistInFavorites(userMsisdn: String) {
+        for(i in 0 until list_of_favorites.size){
+            if(list_of_favorites[i].equals(userMsisdn)){
+                mActivityViewModel.isUserSelectedFromFavorites.set(true)
+                break
+            }
+        }
     }
 
 }

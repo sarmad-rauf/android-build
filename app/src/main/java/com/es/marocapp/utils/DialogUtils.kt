@@ -2,7 +2,6 @@ package com.es.marocapp.utils
 
 import android.app.Dialog
 import android.content.Context
-import android.os.Handler
 import android.view.Gravity
 import android.view.View
 import android.view.Window
@@ -93,7 +92,7 @@ object DialogUtils{
         var tvDescription = addDialog.findViewById<TextView>(R.id.password_dialog_description)
         var tvTitle = addDialog.findViewById<TextView>(R.id.password_dialog_title)
 
-        tvDescription.text = LanguageData.getStringValue("EnterPasswrodToProceed")
+        tvDescription.text = LanguageData.getStringValue("EnterPasswordToProceed")
         tvTitle.text = LanguageData.getStringValue("DearCustomer")
 
         var passwordField  = addDialog.findViewById<EditText>(R.id.password_dialog_input_enter_password)
@@ -111,6 +110,64 @@ object DialogUtils{
                 addDialog.dismiss()
             }
         }
+    }
+
+    fun showAddToFavoriteDialoge(
+        mContext: Context?,
+        listner : OnAddToFavoritesDialogClickListner
+    ) {
+        val addDialog = Dialog(mContext!!)
+        addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        addDialog.setContentView(R.layout.layout_dialog_add_to_favorite)
+
+        val dialogWindow = addDialog.window
+        val layoutParams = dialogWindow!!.attributes
+        layoutParams.x = Gravity.CENTER_HORIZONTAL
+        layoutParams.y = Gravity.CENTER_VERTICAL
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+        dialogWindow.attributes = layoutParams
+
+        addDialog.show()
+
+        var btnNO = addDialog.findViewById<Button>(R.id.favorites_dialog_cancel_btn)
+        var btnYes = addDialog.findViewById<Button>(R.id.favorite_dialog_yes_btn)
+        var otpDialogFieldDescriotion  = addDialog.findViewById<TextView>(R.id.add_toFavorite_dialog_description)
+        var otpDialogFieldTitle  = addDialog.findViewById<TextView>(R.id.add_toFavorite_dialog_title)
+
+
+        btnNO.setOnClickListener {
+            listner.onDialogNoClickListner()
+            addDialog.dismiss()
+        }
+
+        btnNO.text = LanguageData.getStringValue("BtnTitle_Cancel")
+        btnYes.text = LanguageData.getStringValue("Submit")
+        otpDialogFieldTitle.text = LanguageData.getStringValue("DearCustomer")
+        otpDialogFieldDescriotion.text = LanguageData.getStringValue("PleaseAssignNickForTheNewFavorite")
+
+        var nickNameField  = addDialog.findViewById<EditText>(R.id.favorite_dialog_input_enter_nickName)
+        var nickNameFieldInput  = addDialog.findViewById<TextInputLayout>(R.id.favorite_dialog_layout_enter_nick)
+        nickNameFieldInput.hint = LanguageData.getStringValue("AddNick")
+
+        btnYes.setOnClickListener {
+            var nickName = nickNameField.text.toString().trim()
+            if(nickName.equals("")){
+                nickNameFieldInput.error = LanguageData.getStringValue("PleaseEnterNickName")
+                nickNameFieldInput.isErrorEnabled = true
+            }else{
+                nickNameFieldInput.error = ""
+                nickNameFieldInput.isErrorEnabled = false
+                listner.onDialogYesClickListner(nickName)
+                addDialog.dismiss()
+            }
+        }
+    }
+
+    interface OnAddToFavoritesDialogClickListner{
+        fun onDialogYesClickListner(nickName : String)
+        fun onDialogNoClickListner()
+
     }
 
     interface OnPasswordDialogClickListner{

@@ -2,16 +2,20 @@ package com.es.marocapp.usecase.airtime.airtimeplansandamounts
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentAirTimePendingBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.airtime.AirTimeActivity
 import com.es.marocapp.usecase.airtime.AirTimeClickListner
 import com.es.marocapp.usecase.airtime.AirTimeViewModel
+import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.DialogUtils
 
 class AirTimePendingFragment : BaseFragment<FragmentAirTimePendingBinding>(), AirTimeClickListner {
 
@@ -28,11 +32,41 @@ class AirTimePendingFragment : BaseFragment<FragmentAirTimePendingBinding>(), Ai
             viewmodel = mActivityViewModel
         }
 
+        mDataBinding.addToFavoriteCheckBox.setOnClickListener {
+            DialogUtils.showAddToFavoriteDialoge(activity as AirTimeActivity,object : DialogUtils.OnAddToFavoritesDialogClickListner{
+                override fun onDialogYesClickListner(nickName: String) {
+                    mDataBinding.addToFavoriteCheckBox.isActivated = true
+                    mDataBinding.addToFavoriteCheckBox.isChecked = true
+                    mDataBinding.addToFavoriteCheckBox.isClickable = false
+
+                    mActivityViewModel.requestForAddFavoritesApi(activity,nickName)
+                }
+
+                override fun onDialogNoClickListner() {
+                    mDataBinding.addToFavoriteCheckBox.isActivated = false
+                    mDataBinding.addToFavoriteCheckBox.isChecked = false
+                    mDataBinding.addToFavoriteCheckBox.isClickable = true
+                }
+
+            })
+        }
+
+        if(mActivityViewModel.isUserSelectedFromFavorites.get()!!){
+            mDataBinding.addToFavoriteCheckBox.isActivated = true
+            mDataBinding.addToFavoriteCheckBox.isChecked = true
+            mDataBinding.addToFavoriteCheckBox.isClickable = false
+        }else{
+            mDataBinding.addToFavoriteCheckBox.isActivated = false
+            mDataBinding.addToFavoriteCheckBox.isChecked = false
+            mDataBinding.addToFavoriteCheckBox.isClickable = true
+        }
+
         (activity as AirTimeActivity).setHeaderVisibility(false)
         (activity as AirTimeActivity).setCompanyIconToolbarVisibility(false)
 
         setStrings()
         updateUI()
+        subscribeObserver()
     }
 
     private fun updateUI() {
@@ -75,6 +109,24 @@ class AirTimePendingFragment : BaseFragment<FragmentAirTimePendingBinding>(), Ai
 
         mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("BtnTitle_OK")
         mDataBinding.tvCompanyNameTitle.text = LanguageData.getStringValue("Source")
+
+        mDataBinding.addToFavoritesTitle.text = LanguageData.getStringValue("BtnTitle_AddToFavorites")
+    }
+
+    private fun subscribeObserver() {
+        mActivityViewModel.getAddFavoritesResponseListner.observe(this@AirTimePendingFragment,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    Constants.mContactListArray.clear()
+                    Constants.mContactListArray.addAll(it.contactList)
+                    DialogUtils.showErrorDialoge(activity,it.description)
+                }else{
+                    mDataBinding.addToFavoriteCheckBox.isActivated = false
+                    mDataBinding.addToFavoriteCheckBox.isChecked = false
+                    mDataBinding.addToFavoriteCheckBox.isClickable = true
+                    DialogUtils.showErrorDialoge(activity,it.description)
+                }
+            })
     }
 
     override fun onNextClickListner(view: View) {

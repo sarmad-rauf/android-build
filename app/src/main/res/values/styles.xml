@@ -39,4 +39,9 @@
         <item name="android:textSize">@dimen/_16ssp</item>
     </style>
 
+    <style name="checkBoxStyle" parent="Base.Theme.AppCompat">
+        <item name="colorAccent">@color/colorWhite</item> <!-- for uncheck state -->
+        <item name="android:textColorSecondary">@color/colorWhite</item> <!-- for check state -->
+    </style>
+
 </resources>

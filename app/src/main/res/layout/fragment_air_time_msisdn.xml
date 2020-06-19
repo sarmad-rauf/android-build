@@ -45,6 +45,29 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.es.marocapp.widgets.MarocRegularTextView
+            android:id="@+id/selectFavoriteTypeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_favorite"
+            android:textSize="@dimen/_12ssp"
+            android:textColor="@color/colorTextGreyMedium"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_phone_number"
+            app:layout_constraintStart_toStartOf="@+id/input_layout_phone_number"
+            app:textAllCaps="true"
+            />
+
+        <Spinner
+            android:id="@+id/spinnerSelectFavorites"
+            android:layout_width="271dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_32sdp"
+            android:background="@drawable/spinner_icon_background_grey"
+            app:layout_constraintStart_toStartOf="@+id/selectFavoriteTypeTitle"
+            app:layout_constraintTop_toBottomOf="@+id/selectFavoriteTypeTitle" />
+
         <com.es.marocapp.widgets.MarocButton
             android:id="@+id/btnNext"
             android:layout_width="match_parent"

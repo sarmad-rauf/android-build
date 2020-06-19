@@ -31,6 +31,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
     var getPaymentResponseListner = SingleLiveEvent<PaymentResponse>()
     var getFloatTransferQuoteResponseListner = SingleLiveEvent<FloatTransferQuoteResponse>()
     var getFloatTransferResponseListner = SingleLiveEvent<FloatTransferResponse>()
+    var getAddFavoritesResponseListner = SingleLiveEvent<AddContactResponse>()
 
     var trasferTypeSelected = ObservableField<String>()
     var isUserRegistered = ObservableField<Boolean>()
@@ -38,6 +39,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
     var isFundTransferUseCase = ObservableField<Boolean>()
     var isInitiatePaymenetToMerchantUseCase = ObservableField<Boolean>()
     var isAccountHolderInformationFailed = ObservableField<Boolean>()
+    var isUserSelectedFromFavorites = ObservableField<Boolean>()
 
     var transferdAmountTo = ""
     var amountToTransfer = ""
@@ -48,6 +50,8 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
     var ReceiverName =""
     var mBalanceInforAndResponseObserver = ObservableField<BalanceInfoAndLimitResponse>()
     var mAccountHolderInfoResponseObserver = ObservableField<GetAccountHolderInformationResponse>()
+
+    var tranferAmountToWithAlias = ""
 
     var popBackStackTo = -1
 
@@ -176,6 +180,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
             isLoading.set(true)
             amountToTransfer = amount
+            tranferAmountToWithAlias = Constants.getNumberMsisdn(transferdAmountTo)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getTransferQouteCall(
                 TransferQouteRequest(amount,ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(transferdAmountTo))
@@ -227,7 +232,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
         if (Tools.checkNetworkStatus(getApplication())) {
 
             isLoading.set(true)
-
+            tranferAmountToWithAlias = Constants.getNumberMsisdn(transferdAmountTo)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getTransferCall(
                 TransferRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,Constants.getNumberMsisdn(transferdAmountTo))
@@ -280,6 +285,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
             isLoading.set(true)
             amountToTransfer = amount
+            tranferAmountToWithAlias = Constants.getNumberMsisdn(transferdAmountTo)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getMerchantQouteCall(
                 MerchantPaymentQuoteRequest(amount,ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(transferdAmountTo))
@@ -332,7 +338,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
         if (Tools.checkNetworkStatus(getApplication())) {
 
             isLoading.set(true)
-
+            tranferAmountToWithAlias = Constants.getNumberMsisdn(transferdAmountTo)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getMerchantPaymentCall(
                 MerchantPaymentRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,Constants.getNumberMsisdn(sender),Constants.getNumberMsisdn(transferdAmountTo))
@@ -404,6 +410,8 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
             }
 
 
+            tranferAmountToWithAlias = receiver
+
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPaymentQouteCall(
                 PaymentQuoteRequest(amount,ApiConstant.CONTEXT_AFTER_LOGIN,receiver,Constants.getNumberMsisdn(sender),transferType,Constants.balanceInfoAndResponse.profilename.toString())
             )
@@ -473,6 +481,9 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
             }
 
 
+            tranferAmountToWithAlias = receiver
+
+
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPaymentCall(
                 PaymentRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,receiver,Constants.getNumberMsisdn(sender),transferType,Constants.balanceInfoAndResponse.profilename.toString())
 
@@ -535,14 +546,19 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
             if(isInitiatePaymenetToMerchantUseCase.get()!!){
                 transferType = Constants.MERCHANT_TYPE_PAYMENT
-                receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
-            }else if(isFundTransferUseCase.get()!!){
+             }else if(isFundTransferUseCase.get()!!){
                 transferType = Constants.TRANSFER_TYPE_PAYMENT
-                receiver = Constants.getTransferReceiverAlias(transferdAmountTo)
-            }else{
-                transferType = Constants.TYPE_PAYMENT
-                receiver = Constants.getNumberMsisdn(transferdAmountTo)
             }
+
+            if(Constants.IS_AGENT_USER || Constants.IS_MERCHANT_USER){
+                receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
+            }
+            if(Constants.IS_CONSUMER_USER){
+                receiver = Constants.getTransferReceiverAlias(transferdAmountTo)
+            }
+
+
+            tranferAmountToWithAlias = receiver
 
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getSimplePaymentQouteCall(
@@ -602,14 +618,19 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
             if(isInitiatePaymenetToMerchantUseCase.get()!!){
                 transferType = Constants.MERCHANT_TYPE_PAYMENT
-                receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
             }else if(isFundTransferUseCase.get()!!){
                 transferType = Constants.TRANSFER_TYPE_PAYMENT
-                receiver = Constants.getTransferReceiverAlias(transferdAmountTo)
-            }else{
-                transferType = Constants.TYPE_PAYMENT
-                receiver = Constants.getNumberMsisdn(transferdAmountTo)
             }
+
+            if(Constants.IS_AGENT_USER || Constants.IS_MERCHANT_USER){
+                receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
+            }
+            if(Constants.IS_CONSUMER_USER){
+                receiver = Constants.getTransferReceiverAlias(transferdAmountTo)
+            }
+
+
+            tranferAmountToWithAlias = receiver
 
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getSimplePaymentCall(
@@ -664,6 +685,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
             isLoading.set(true)
             amountToTransfer = amount
+            tranferAmountToWithAlias = Constants.getNumberMsisdn(transferdAmountTo)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getFloatTransferQuoteCall(
                 FloatTransferQuoteRequest(amount,ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(transferdAmountTo))
@@ -717,7 +739,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
         if (Tools.checkNetworkStatus(getApplication())) {
 
             isLoading.set(true)
-
+            tranferAmountToWithAlias = Constants.getNumberMsisdn(transferdAmountTo)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getFloatTransferCall(
                 FloatTransferRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,Constants.getNumberMsisdn(transferdAmountTo))
@@ -735,6 +757,58 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
                         } else {
                             getFloatTransferResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For AddFavorites
+    fun requestForAddFavoritesApi(context: Context?,
+                                   contactName : String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAddContact(
+                AddContactRequest(tranferAmountToWithAlias,contactName,ApiConstant.CONTEXT_AFTER_LOGIN)
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getAddFavoritesResponseListner.postValue(result)
+
+                        } else {
+                            getAddFavoritesResponseListner.postValue(result)
                         }
 
 

@@ -6,9 +6,11 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import com.es.marocapp.R
 import com.es.marocapp.locale.LocaleManager
+import com.es.marocapp.model.requests.AddContactRequest
 import com.es.marocapp.model.requests.AirTimeQuoteRequest
 import com.es.marocapp.model.requests.AirTimeRequest
 import com.es.marocapp.model.requests.GetAirTimeUseCasesRequest
+import com.es.marocapp.model.responses.AddContactResponse
 import com.es.marocapp.model.responses.AirTimeQuoteResponse
 import com.es.marocapp.model.responses.AirTimeResponse
 import com.es.marocapp.model.responses.GetAirTimeUseCasesResponse
@@ -36,6 +38,8 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
     var transactionID = ""
     var senderBalanceAfter ="0.00"
 
+    var tranferAmountToWithAlias = ""
+
     var isRechargeFixeUseCase = ObservableField<Boolean>()
     var isRechargeMobileUseCase = ObservableField<Boolean>()
     var airTimeSelected = ObservableField<String>()
@@ -43,11 +47,14 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
     var airTimeSelectedPlanCodeSelected = ObservableField<String>()
     var airTimeAmountSelected = ObservableField<String>()
 
-    var mAirTimeUseCaseResponse = ObservableField<GetAirTimeUseCasesResponse>()
+    var isUserSelectedFromFavorites = ObservableField<Boolean>()
 
+    var mAirTimeUseCaseResponse = ObservableField<GetAirTimeUseCasesResponse>()
     var getAirTimeUseCasesResponseListner = SingleLiveEvent<GetAirTimeUseCasesResponse>()
     var getAirTimeQuoteResponseListner = SingleLiveEvent<AirTimeQuoteResponse>()
     var getAirTimeResponseListner = SingleLiveEvent<AirTimeResponse>()
+    var getAddFavoritesResponseListner = SingleLiveEvent<AddContactResponse>()
+
 
     //Request For AirTimeUseCase
     fun requestForAirTimeUseCasesApi(context: Context?
@@ -135,6 +142,8 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
                 userMsisdn = Constants.getTransferReceiverAlias(transferdAmountTo)
             }
 
+            tranferAmountToWithAlias = userMsisdn
+
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAirTimeQuoteCall(
                 AirTimeQuoteRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,"1",airTimeSelectedPlanCode,userMsisdn,
                     Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_PAYMENT)
@@ -202,6 +211,8 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
                 userMsisdn = Constants.getTransferReceiverAlias(transferdAmountTo)
             }
 
+            tranferAmountToWithAlias = userMsisdn
+
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAirTimeCall(
                 AirTimeRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,"1",airTimeSelectedPlanCode,qouteId,userMsisdn,
                     Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_PAYMENT)
@@ -218,6 +229,58 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
                             getAirTimeResponseListner.postValue(result)
                         } else {
                             getAirTimeResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For AddFavorites
+    fun requestForAddFavoritesApi(context: Context?,
+                                  contactName : String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAddContact(
+                AddContactRequest(tranferAmountToWithAlias,contactName,ApiConstant.CONTEXT_AFTER_LOGIN)
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getAddFavoritesResponseListner.postValue(result)
+
+                        } else {
+                            getAddFavoritesResponseListner.postValue(result)
                         }
 
 

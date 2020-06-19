@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,11 +22,11 @@ import kotlinx.android.synthetic.main.fragment_funds_transfer_enter_msisdn.*
 
 
 class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisdnBinding>(),
-    FundsTrasnferClickLisntener {
+    FundsTrasnferClickLisntener, AdapterView.OnItemSelectedListener {
 
     private lateinit var mActivityViewModel : SendMoneyViewModel
 
-    private var list_of_favorites = arrayOf("Select Favorite","Favorite 1", "Favorite 2", "Favorite 3")
+    private var list_of_favorites = arrayListOf<String>()
 
     override fun setLayout(): Int {
         return R.layout.fragment_funds_transfer_enter_msisdn
@@ -37,10 +38,23 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
             listener = this@FundsTransferMsisdnFragment
         }
 
-        val adapterFavoriteType = ArrayAdapter<CharSequence>(activity as SendMoneyActivity, R.layout.layout_favorites_spinner_text, list_of_favorites)
+        for(contacts in Constants.mContactListArray){
+            var contactNumber = contacts.fri
+            contactNumber = contactNumber.substringBefore("@")
+            contactNumber = contactNumber.substringBefore("/")
+            contactNumber = contactNumber.removePrefix(Constants.APP_MSISDN_PREFIX)
+            contactNumber = "0$contactNumber"
+            list_of_favorites.add(contactNumber)
+        }
+        list_of_favorites.add(0,LanguageData.getStringValue("SelectFavorite").toString())
+
+        val adapterFavoriteType = ArrayAdapter<CharSequence>(activity as SendMoneyActivity, R.layout.layout_favorites_spinner_text,
+            list_of_favorites as List<CharSequence>
+        )
         mDataBinding.spinnerSelectFavorites.apply {
             adapter = adapterFavoriteType
         }
+        mDataBinding.spinnerSelectFavorites.onItemSelectedListener = this@FundsTransferMsisdnFragment
         mActivityViewModel.isFundTransferUseCase.set((activity as SendMoneyActivity).intent.getBooleanExtra("isFundTransferUseCase",false))
         mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set((activity as SendMoneyActivity).intent.getBooleanExtra("isInitiatePaymenetToMerchantUseCase",false))
         mActivityViewModel.trasferTypeSelected.set((activity as SendMoneyActivity).intent.getStringExtra("useCaseType"))
@@ -66,7 +80,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         }
 
         mActivityViewModel.popBackStackTo = -1
-
+        mActivityViewModel.isUserSelectedFromFavorites.set(false)
         setStrings()
         subscribeObserver()
     }
@@ -149,7 +163,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
     override fun onNextClickListner(view: View) {
         //TODO MSISDN Lenght Check
         if(mDataBinding.inputPhoneNumber.text.isNotEmpty() && mDataBinding.inputPhoneNumber.text.toString().length< Constants.APP_MSISDN_LENGTH.toInt()-2){
-            mDataBinding.inputLayoutPhoneNumber.error = "Please Enter Valid Mobile Number"
+            mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutPhoneNumber.error = ""
@@ -157,6 +171,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
 
             var userMsisdn = mDataBinding.inputPhoneNumber.text.toString()
             if(userMsisdn.startsWith("0",false)){
+                checkNumberExistInFavorites(userMsisdn)
                 mDataBinding.inputLayoutPhoneNumber.error = ""
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
                 var userMSISDNwithPrefix = userMsisdn.removePrefix("0")
@@ -165,8 +180,17 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
 
                 mActivityViewModel.requestForGetAccountHolderInformationApi(activity,userMSISDNwithPrefix)
             }else{
-                mDataBinding.inputLayoutPhoneNumber.error = "Please Enter Valid Mobile Number"
+                mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+            }
+        }
+    }
+
+    private fun checkNumberExistInFavorites(userMsisdn: String) {
+        for(i in 0 until list_of_favorites.size){
+            if(list_of_favorites[i].equals(userMsisdn)){
+                mActivityViewModel.isUserSelectedFromFavorites.set(true)
+                break
             }
         }
     }
@@ -176,7 +200,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
             IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         if (result != null) {
             if (result.contents == null) {
-                DialogUtils.showErrorDialoge(activity, "Please scan valid QR.")
+                DialogUtils.showErrorDialoge(activity, LanguageData.getStringValue("PleaseScanValidQRDot"))
             } else {
                 var sResult = result.contents
                 sResult = StringBuilder(sResult!!).insert(2, "-").insert(6, "-").toString()
@@ -185,12 +209,24 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         } else {
             // This is important, otherwise the result will not be passed to the fragment
             super.onActivityResult(requestCode, resultCode, data)
-            DialogUtils.showErrorDialoge(activity, "Please scan valid QR.")
+            DialogUtils.showErrorDialoge(activity, LanguageData.getStringValue("PleaseScanValidQRDot"))
         }
     }
 
     override fun onBackClickListner(view: View) {
 
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+
+    }
+
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, pos: Int, p3: Long) {
+        var selectedFavorites = mDataBinding.spinnerSelectFavorites.selectedItem.toString()
+        if(!selectedFavorites.equals(LanguageData.getStringValue("SelectFavorite"))){
+            mDataBinding.inputPhoneNumber.setText(selectedFavorites)
+            mActivityViewModel.isUserSelectedFromFavorites.set(true)
+        }
     }
 
 }

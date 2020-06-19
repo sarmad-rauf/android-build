@@ -13,9 +13,6 @@ import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.airtime.AirTimeActivity
 import com.es.marocapp.usecase.airtime.AirTimeClickListner
 import com.es.marocapp.usecase.airtime.AirTimeViewModel
-import com.es.marocapp.usecase.cashservices.CashServicesActivity
-import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
-import com.es.marocapp.usecase.sendmoney.SendMoneyViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 

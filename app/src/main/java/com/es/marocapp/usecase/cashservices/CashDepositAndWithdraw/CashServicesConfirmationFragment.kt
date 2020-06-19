@@ -38,7 +38,7 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
 
         mDataBinding.imgBackButton.setOnClickListener {
             if(mActivityViewModel.isOTPFlow.get()!!){
-                (activity as CashServicesActivity).navController.popBackStack(R.id.cashServicesVerifyOtpFragment,false)
+                (activity as CashServicesActivity).navController.popBackStack(R.id.cashMsisdnAndAmountFragment,false)
             }else{
                 (activity as CashServicesActivity).navController.popBackStack(R.id.cashMsisdnAndAmountFragment,false)
             }
@@ -155,6 +155,7 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
     override fun onBackClickListner(view: View) {
         mActivityViewModel.isDepositUseCase.set(false)
         mActivityViewModel.isWithdrawUseCase.set(false)
+        mActivityViewModel.isOTPFlow.set(false)
         Constants.HEADERS_FOR_PAYEMNTS = false
         (activity as CashServicesActivity).startNewActivityAndClear(activity as CashServicesActivity,
             MainActivity::class.java)

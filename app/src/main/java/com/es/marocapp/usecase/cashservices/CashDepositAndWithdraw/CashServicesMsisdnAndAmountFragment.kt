@@ -86,7 +86,28 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     mActivityViewModel.isOTPFlow.set(true)
-                    (activity as CashServicesActivity).navController.navigate(R.id.action_cashMsisdnAndAmountFragment_to_cashServicesVerifyOtpFragment)
+                    DialogUtils.showOTPDialogue(activity,object : DialogUtils.OnOTPDialogClickListner{
+                        override fun onOTPDialogYesClickListner(otp: String) {
+                            mActivityViewModel.requestForCashInWithOtpQouteApi(
+                                activity,otp
+                            )
+                        }
+
+                    })
+                } else {
+                    DialogUtils.showErrorDialoge(activity, it.description)
+                }
+            })
+
+        mActivityViewModel.getCashInWithOtpQuoteResponseListner.observe(this@CashServicesMsisdnAndAmountFragment,
+            Observer {
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    if (it.quoteList.isNotEmpty()) {
+                        mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
+                        mActivityViewModel.qouteId = it.quoteList[0].quoteid
+                    }
+
+                    (activity as CashServicesActivity).navController.navigate(R.id.action_cashMsisdnAndAmountFragment_to_cashServicesConfirmationFragment)
                 } else {
                     DialogUtils.showErrorDialoge(activity, it.description)
                 }

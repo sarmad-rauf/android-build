@@ -62,10 +62,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
+                android:paddingTop="@dimen/_32sdp"
                 android:src="@drawable/img_payment_success"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvSuccessTitle" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/addToFavoriteCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/checkBoxStyle"
+                app:layout_constraintStart_toStartOf="@+id/imgBackButton"
+                app:layout_constraintTop_toTopOf="@+id/imgSuccess"
+                />
+
+            <com.es.marocapp.widgets.MarocMediumTextView
+                android:id="@+id/addToFavoritesTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_14ssp"
+                android:text="Add to Favorites"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/addToFavoriteCheckBox"
+                app:layout_constraintTop_toTopOf="@+id/addToFavoriteCheckBox"
+                app:layout_constraintBottom_toBottomOf="@+id/addToFavoriteCheckBox"
+                />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/mSuccessDetailContainer"

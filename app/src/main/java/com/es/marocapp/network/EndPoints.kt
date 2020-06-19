@@ -128,4 +128,7 @@ object EndPoints {
     //payment/airtime
     const val payment_airtime = "payment/airtime"
 
+    //addcontact
+    const val addcontact = "addcontact"
+
 }

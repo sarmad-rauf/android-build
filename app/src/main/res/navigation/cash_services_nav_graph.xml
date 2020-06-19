@@ -24,9 +24,6 @@
         <action
             android:id="@+id/action_cashMsisdnAndAmountFragment_to_cashServicesConfirmationFragment"
             app:destination="@id/cashServicesConfirmationFragment" />
-        <action
-            android:id="@+id/action_cashMsisdnAndAmountFragment_to_cashServicesVerifyOtpFragment"
-            app:destination="@id/cashServicesVerifyOtpFragment" />
     </fragment>
     <fragment
         android:id="@+id/cashServicesConfirmationFragment"
