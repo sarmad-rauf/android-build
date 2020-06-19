@@ -158,4 +158,5 @@
     <string name="default_account_otp">Please enter OTP to proceed further</string>
     <string name="operation_success">Operation performed successfully.</string>
     <string name="operation_failure">Failed to perform operation.</string>
+    <string name="language_english">English</string>
 </resources>

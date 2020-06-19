@@ -19,6 +19,7 @@ import com.es.marocapp.usecase.accountdetails.AccountDetailsActivity
 import com.es.marocapp.usecase.favorites.FavoritesActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.qrcode.GenerateQrActivity
+import com.es.marocapp.usecase.settings.SettingsActivity
 import com.es.marocapp.usecase.termsandcondiitons.TermsAndConditions
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
@@ -113,7 +114,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     }
 
     override fun onDrawerMenuSettingsClick(view: View) {
-        Toast.makeText(this, "Under Development", Toast.LENGTH_SHORT).show()
+        startNewActivity(this@MainActivity,SettingsActivity::class.java)
     }
 
     override fun onDrawerMenuFavoritesClick(view: View) {

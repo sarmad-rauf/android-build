@@ -91,11 +91,11 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-        if( position==0 && !LocaleManager.selectedLanguage.equals("en")){
+        if( position==0 && !LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_EN)){
             // LocaleManager.setAppLanguage(applicationContext, LocaleManager.KEY_LANGUAGE_EN)
             LocaleManager.setLanguageAndUpdate(context as Activity,LocaleManager.KEY_LANGUAGE_EN,LoginActivity::class.java)
         }
-        else if( position==1 && !LocaleManager.selectedLanguage.equals("fr")) {
+        else if( position==1 && !LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_FR)) {
             //LocaleManager.setAppLanguage(applicationContext,LocaleManager.KEY_LANGUAGE_FR)
             LocaleManager.setLanguageAndUpdate(context as Activity,LocaleManager.KEY_LANGUAGE_FR,LoginActivity::class.java)
         }

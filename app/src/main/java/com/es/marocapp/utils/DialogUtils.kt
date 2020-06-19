@@ -2,20 +2,18 @@ package com.es.marocapp.utils
 
 import android.app.Dialog
 import android.content.Context
-import android.os.Handler
 import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.res.ResourcesCompat
 import com.es.marocapp.R
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.widgets.MarocButton
 import com.google.android.material.textfield.TextInputLayout
+
 
 object DialogUtils{
 
@@ -261,4 +259,104 @@ object DialogUtils{
             addDialog.dismiss()
         }
     }
+
+    fun showChangeLanguageDialogue(
+        mContext: Context?,
+        listner: OnChangeLanguageClickListner
+    ) {
+        val addDialog = Dialog(mContext!!)
+        addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        addDialog.setContentView(R.layout.layout_change_language_dialog)
+
+        val dialogWindow = addDialog.window
+        val layoutParams = dialogWindow!!.attributes
+        layoutParams.x = Gravity.CENTER_HORIZONTAL
+        layoutParams.y = Gravity.CENTER_VERTICAL
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+        dialogWindow.attributes = layoutParams
+
+        addDialog.show()
+        var tvMsg=addDialog.findViewById<TextView>(R.id.language_dialog_description)
+        var tvDialogTitle=addDialog.findViewById<TextView>(R.id.language_dialog_title)
+
+        var btnYes = addDialog.findViewById<Button>(R.id.language_dialog_yes_btn)
+
+        var radioGrp = addDialog.findViewById<RadioGroup>(R.id.language_dialog_radiogroup)
+        var selectedLanguage=""
+        if(LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_EN)){
+            radioGrp.check(R.id.rb_English)
+            selectedLanguage=mContext.resources.getString(R.string.language_english)
+        }
+        else if(LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_FR)){
+            radioGrp.check(R.id.rb_French)
+            selectedLanguage=mContext.resources.getString(R.string.language_french)
+        }
+
+
+        radioGrp.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
+            val checkedRadioButton =
+                group.findViewById<View>(checkedId) as RadioButton
+            val isChecked = checkedRadioButton.isChecked
+            if (isChecked) {
+                selectedLanguage = checkedRadioButton.text.toString()
+            }
+        })
+
+
+        btnYes.text = LanguageData.getStringValue("BtnTitle_OK")
+        tvDialogTitle.text = LanguageData.getStringValue("ChangeLanguage")
+        tvMsg.text=LanguageData.getStringValue("PleaseChooseyourLanguage")
+
+        addDialog.findViewById<View>(R.id.language_dialog_yes_btn).setOnClickListener {
+            listner.onChangeLanguageDialogYesClickListner(selectedLanguage)
+            addDialog.dismiss()
+        }
+    }
+
+    interface OnChangeLanguageClickListner{
+        fun onChangeLanguageDialogYesClickListner(selectedLanguage: String)
+    }
+
+
+    fun showCustomDialogue(
+        mContext: Context?,
+        btnTxt:String?,
+        confirmationTxt:String?,
+        titleTxt:String?,
+        listner: OnCustomDialogListner
+    ) {
+        val addDialog = Dialog(mContext!!)
+        addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        addDialog.setContentView(R.layout.layout_generic_dialog)
+
+        val dialogWindow = addDialog.window
+        val layoutParams = dialogWindow!!.attributes
+        layoutParams.x = Gravity.CENTER_HORIZONTAL
+        layoutParams.y = Gravity.CENTER_VERTICAL
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+        dialogWindow.attributes = layoutParams
+
+        addDialog.show()
+        var tvConfirmation=addDialog.findViewById<TextView>(R.id.custom_dialog_description)
+        var tvDialogTitle=addDialog.findViewById<TextView>(R.id.custom_dialog_title)
+        var btnYes = addDialog.findViewById<Button>(R.id.custom_dialog_yes_btn)
+
+
+        btnYes.text = btnTxt
+        tvDialogTitle.text = titleTxt
+        tvConfirmation.text=confirmationTxt
+
+
+        addDialog.findViewById<View>(R.id.custom_dialog_yes_btn).setOnClickListener {
+            listner.onCustomDialogOkClickListner()
+            addDialog.dismiss()
+        }
+    }
+
+    interface OnCustomDialogListner{
+        fun onCustomDialogOkClickListner()
+    }
+
 }
