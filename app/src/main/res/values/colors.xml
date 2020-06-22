@@ -23,5 +23,6 @@
     <color name="colorSuccess">#60d18c</color>
     <color name="colorPending">#e8c01f</color>
     <color name="colorFail">#ff4949</color>
+    <color name="colorToast">#e8c01f</color>
 
 </resources>

@@ -2,11 +2,14 @@ package com.es.marocapp.usecase.login.login
 
 
 import android.app.Activity
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.view.View
 import android.widget.AdapterView
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
@@ -24,8 +27,9 @@ import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_login.view.*
 import kotlinx.android.synthetic.main.layout_login_header.view.*
-import kotlinx.android.synthetic.main.layout_login_header.view.languageSpinner
+import kotlinx.android.synthetic.main.toast_layout.view.*
 
 
 class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
@@ -165,7 +169,9 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                     mActivityViewModel.previousDeviceId = deviceID
                     mActivityViewModel.requestForGetOtpApi(activity)
                 }
+
             } else if(it.responseCode == ApiConstant.API_FAILURE){
+                //showTermsConditionsAndSignup()
                 mActivityViewModel.isSignUpFlow.set(true)
                 mActivity.navController.navigate(R.id.action_loginFragment_to_signUpDetailFragment)
             }else{
@@ -203,6 +209,31 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
             this,
             mValidateOtpandAliasesResponseListner
         )
+    }
+
+    private fun showTermsConditionsAndSignup() {
+        mDataBinding.root.toast_layout_root.visibility=View.VISIBLE
+
+        mDataBinding.root.txtHeaderTitle.text="Create your account"
+        mDataBinding.inputLayoutPhoneNumber.isEnabled=false
+        mDataBinding.btnLogin.text = LanguageData.getStringValue("BtnTitle_Submit")
+        mDataBinding.root.tvMsg.text = getString(R.string.agree_terms)
+        mDataBinding.root.cb_Terms.visibility=View.VISIBLE
+        val text =
+            "I agree to <font color='#ff6600'>Terms and Conditions</font>."
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            mDataBinding.root.cb_Terms.setText(
+                Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY),
+                TextView.BufferType.SPANNABLE
+            )
+        } else {
+            mDataBinding.root.cb_Terms.setText(Html.fromHtml(text), TextView.BufferType.SPANNABLE)
+        }
+
+        mDataBinding.root.cross.setOnClickListener{
+            mDataBinding.root.toast_layout_root.visibility=View.GONE
+        }
     }
 
     fun checkUserRegsitrationAndActicationSenario(response: GetAccountHolderInformationResponse) {

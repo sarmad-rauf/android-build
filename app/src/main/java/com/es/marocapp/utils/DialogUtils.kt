@@ -1,11 +1,9 @@
 package com.es.marocapp.utils
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
-import android.view.Gravity
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.*
 import androidx.core.content.res.ResourcesCompat
 import com.es.marocapp.R
@@ -15,7 +13,7 @@ import com.es.marocapp.widgets.MarocButton
 import com.google.android.material.textfield.TextInputLayout
 
 
-object DialogUtils{
+object DialogUtils {
 
     fun showErrorDialoge(
         mContext: Context?,
@@ -61,7 +59,7 @@ object DialogUtils{
 
     fun showPasswordDialoge(
         mContext: Context?,
-        listner : OnPasswordDialogClickListner
+        listner: OnPasswordDialogClickListner
     ) {
         val addDialog = Dialog(mContext!!)
         addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -94,15 +92,17 @@ object DialogUtils{
         tvDescription.text = LanguageData.getStringValue("EnterPasswordToProceed")
         tvTitle.text = LanguageData.getStringValue("DearCustomer")
 
-        var passwordField  = addDialog.findViewById<EditText>(R.id.password_dialog_input_enter_password)
-        var passwordFieldInput  = addDialog.findViewById<TextInputLayout>(R.id.password_dialog_layout_enter_password)
+        var passwordField =
+            addDialog.findViewById<EditText>(R.id.password_dialog_input_enter_password)
+        var passwordFieldInput =
+            addDialog.findViewById<TextInputLayout>(R.id.password_dialog_layout_enter_password)
         passwordFieldInput.hint = LanguageData.getStringValue("EnterPassword")
         btnYes.setOnClickListener {
             var password = passwordField.text.toString().trim()
-            if(password.equals("")){
+            if (password.equals("")) {
                 passwordFieldInput.error = LanguageData.getStringValue("PleaseEnterValidPassword")
                 passwordFieldInput.isErrorEnabled = true
-            }else{
+            } else {
                 passwordFieldInput.error = ""
                 passwordFieldInput.isErrorEnabled = false
                 listner.onDialogYesClickListner(password)
@@ -113,7 +113,7 @@ object DialogUtils{
 
     fun showAddToFavoriteDialoge(
         mContext: Context?,
-        listner : OnAddToFavoritesDialogClickListner
+        listner: OnAddToFavoritesDialogClickListner
     ) {
         val addDialog = Dialog(mContext!!)
         addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -131,8 +131,9 @@ object DialogUtils{
 
         var btnNO = addDialog.findViewById<Button>(R.id.favorites_dialog_cancel_btn)
         var btnYes = addDialog.findViewById<Button>(R.id.favorite_dialog_yes_btn)
-        var otpDialogFieldDescriotion  = addDialog.findViewById<TextView>(R.id.add_toFavorite_dialog_description)
-        var otpDialogFieldTitle  = addDialog.findViewById<TextView>(R.id.add_toFavorite_dialog_title)
+        var otpDialogFieldDescriotion =
+            addDialog.findViewById<TextView>(R.id.add_toFavorite_dialog_description)
+        var otpDialogFieldTitle = addDialog.findViewById<TextView>(R.id.add_toFavorite_dialog_title)
 
 
         btnNO.setOnClickListener {
@@ -143,18 +144,21 @@ object DialogUtils{
         btnNO.text = LanguageData.getStringValue("BtnTitle_Cancel")
         btnYes.text = LanguageData.getStringValue("Submit")
         otpDialogFieldTitle.text = LanguageData.getStringValue("DearCustomer")
-        otpDialogFieldDescriotion.text = LanguageData.getStringValue("PleaseAssignNickForTheNewFavorite")
+        otpDialogFieldDescriotion.text =
+            LanguageData.getStringValue("PleaseAssignNickForTheNewFavorite")
 
-        var nickNameField  = addDialog.findViewById<EditText>(R.id.favorite_dialog_input_enter_nickName)
-        var nickNameFieldInput  = addDialog.findViewById<TextInputLayout>(R.id.favorite_dialog_layout_enter_nick)
+        var nickNameField =
+            addDialog.findViewById<EditText>(R.id.favorite_dialog_input_enter_nickName)
+        var nickNameFieldInput =
+            addDialog.findViewById<TextInputLayout>(R.id.favorite_dialog_layout_enter_nick)
         nickNameFieldInput.hint = LanguageData.getStringValue("AddNick")
 
         btnYes.setOnClickListener {
             var nickName = nickNameField.text.toString().trim()
-            if(nickName.equals("")){
+            if (nickName.equals("")) {
                 nickNameFieldInput.error = LanguageData.getStringValue("PleaseEnterNickName")
                 nickNameFieldInput.isErrorEnabled = true
-            }else{
+            } else {
                 nickNameFieldInput.error = ""
                 nickNameFieldInput.isErrorEnabled = false
                 listner.onDialogYesClickListner(nickName)
@@ -163,14 +167,14 @@ object DialogUtils{
         }
     }
 
-    interface OnAddToFavoritesDialogClickListner{
-        fun onDialogYesClickListner(nickName : String)
+    interface OnAddToFavoritesDialogClickListner {
+        fun onDialogYesClickListner(nickName: String)
         fun onDialogNoClickListner()
 
     }
 
-    interface OnPasswordDialogClickListner{
-        fun onDialogYesClickListner(password : String)
+    interface OnPasswordDialogClickListner {
+        fun onDialogYesClickListner(password: String)
     }
 
     fun showConfirmationDialogue(
@@ -191,8 +195,8 @@ object DialogUtils{
         dialogWindow.attributes = layoutParams
 
         addDialog.show()
-        var tvConfirmation=addDialog.findViewById<TextView>(R.id.confirmation_dialog_description)
-        var tvDialogTitle=addDialog.findViewById<TextView>(R.id.confirmation_dialog_title)
+        var tvConfirmation = addDialog.findViewById<TextView>(R.id.confirmation_dialog_description)
+        var tvDialogTitle = addDialog.findViewById<TextView>(R.id.confirmation_dialog_title)
         var btnNO = addDialog.findViewById<Button>(R.id.confirmation_dialog_no_btn)
         var btnYes = addDialog.findViewById<Button>(R.id.confirmation_dialog_yes_btn)
 
@@ -200,7 +204,7 @@ object DialogUtils{
         btnNO.text = LanguageData.getStringValue("BtnTitle_No")
         btnYes.text = LanguageData.getStringValue("BtnTitle_Yes")
         tvDialogTitle.text = LanguageData.getStringValue("DearCustomer")
-        tvConfirmation.text=confirmationTxt
+        tvConfirmation.text = confirmationTxt
 
         addDialog.findViewById<View>(R.id.confirmation_dialog_no_btn).setOnClickListener {
             addDialog.dismiss()
@@ -211,13 +215,13 @@ object DialogUtils{
         }
     }
 
-    interface OnConfirmationDialogClickListner{
+    interface OnConfirmationDialogClickListner {
         fun onDialogYesClickListner()
     }
 
     fun showOTPDialogue(
         mContext: Context?,
-        listner : OnOTPDialogClickListner
+        listner: OnOTPDialogClickListner
     ) {
         val addDialog = Dialog(mContext!!)
         addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -240,24 +244,27 @@ object DialogUtils{
         addDialog.findViewById<View>(R.id.otp_dialog_no_btn).setOnClickListener {
             addDialog.dismiss()
         }
-        var otpDialogFieldDescriotion  = addDialog.findViewById<TextView>(R.id.otp_dialog_description)
-        var otpDialogFieldTitle  = addDialog.findViewById<TextView>(R.id.otp_dialog_title)
+        var otpDialogFieldDescriotion =
+            addDialog.findViewById<TextView>(R.id.otp_dialog_description)
+        var otpDialogFieldTitle = addDialog.findViewById<TextView>(R.id.otp_dialog_title)
 
         btnNO.text = LanguageData.getStringValue("BtnTitle_No")
         btnYes.text = LanguageData.getStringValue("BtnTitle_Yes")
         otpDialogFieldTitle.text = LanguageData.getStringValue("DearCustomer")
-        otpDialogFieldDescriotion.text = LanguageData.getStringValue("PleaseEnterOtpToProceedFurther")
+        otpDialogFieldDescriotion.text =
+            LanguageData.getStringValue("PleaseEnterOtpToProceedFurther")
 
-        var otpField  = addDialog.findViewById<EditText>(R.id.otp_dialog_input_enter_otp)
-        var otpFieldInput  = addDialog.findViewById<TextInputLayout>(R.id.otp_dialog_layout_enter_otp)
+        var otpField = addDialog.findViewById<EditText>(R.id.otp_dialog_input_enter_otp)
+        var otpFieldInput =
+            addDialog.findViewById<TextInputLayout>(R.id.otp_dialog_layout_enter_otp)
         otpFieldInput.hint = LanguageData.getStringValue("EnterOTP")
 
         addDialog.findViewById<View>(R.id.otp_dialog_yes_btn).setOnClickListener {
             var otp = otpField.text.toString().trim()
-            if(otp.equals("")){
+            if (otp.equals("")) {
                 otpFieldInput.error = LanguageData.getStringValue("PleaseEnterValidOTP")
                 otpFieldInput.isErrorEnabled = true
-            }else{
+            } else {
                 otpFieldInput.error = ""
                 otpFieldInput.isErrorEnabled = false
                 listner.onOTPDialogYesClickListner(otp)
@@ -266,14 +273,14 @@ object DialogUtils{
         }
     }
 
-    interface OnOTPDialogClickListner{
-        fun onOTPDialogYesClickListner(password : String)
+    interface OnOTPDialogClickListner {
+        fun onOTPDialogYesClickListner(password: String)
     }
 
     //0 for Success Dialogue & 1 For Failure Dialogue
     fun successFailureDialogue(
         mContext: Context?,
-        description: String?,dialogueType:Int
+        description: String?, dialogueType: Int
     ) {
         val addDialog = Dialog(mContext!!)
         addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -293,7 +300,7 @@ object DialogUtils{
         val tvMessage = addDialog.findViewById<TextView>(R.id.dialog_description)
         tvMessage.text = description
         val image = addDialog.findViewById<ImageView>(R.id.dialog_img)
-        if(dialogueType==0) {
+        if (dialogueType == 0) {
             image.setImageDrawable(
                 ResourcesCompat.getDrawable(
                     mContext.resources,
@@ -301,8 +308,7 @@ object DialogUtils{
                     null
                 )
             )
-        }
-        else{
+        } else {
             image.setImageDrawable(
                 ResourcesCompat.getDrawable(
                     mContext.resources,
@@ -335,20 +341,19 @@ object DialogUtils{
         dialogWindow.attributes = layoutParams
 
         addDialog.show()
-        var tvMsg=addDialog.findViewById<TextView>(R.id.language_dialog_description)
-        var tvDialogTitle=addDialog.findViewById<TextView>(R.id.language_dialog_title)
+        var tvMsg = addDialog.findViewById<TextView>(R.id.language_dialog_description)
+        var tvDialogTitle = addDialog.findViewById<TextView>(R.id.language_dialog_title)
 
         var btnYes = addDialog.findViewById<Button>(R.id.language_dialog_yes_btn)
 
         var radioGrp = addDialog.findViewById<RadioGroup>(R.id.language_dialog_radiogroup)
-        var selectedLanguage=""
-        if(LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_EN)){
+        var selectedLanguage = ""
+        if (LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_EN)) {
             radioGrp.check(R.id.rb_English)
-            selectedLanguage=mContext.resources.getString(R.string.language_english)
-        }
-        else if(LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_FR)){
+            selectedLanguage = mContext.resources.getString(R.string.language_english)
+        } else if (LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_FR)) {
             radioGrp.check(R.id.rb_French)
-            selectedLanguage=mContext.resources.getString(R.string.language_french)
+            selectedLanguage = mContext.resources.getString(R.string.language_french)
         }
 
 
@@ -364,7 +369,7 @@ object DialogUtils{
 
         btnYes.text = LanguageData.getStringValue("BtnTitle_OK")
         tvDialogTitle.text = LanguageData.getStringValue("ChangeLanguage")
-        tvMsg.text=LanguageData.getStringValue("PleaseChooseyourLanguage")
+        tvMsg.text = LanguageData.getStringValue("PleaseChooseyourLanguage")
 
         addDialog.findViewById<View>(R.id.language_dialog_yes_btn).setOnClickListener {
             listner.onChangeLanguageDialogYesClickListner(selectedLanguage)
@@ -372,16 +377,16 @@ object DialogUtils{
         }
     }
 
-    interface OnChangeLanguageClickListner{
+    interface OnChangeLanguageClickListner {
         fun onChangeLanguageDialogYesClickListner(selectedLanguage: String)
     }
 
 
     fun showCustomDialogue(
         mContext: Context?,
-        btnTxt:String?,
-        confirmationTxt:String?,
-        titleTxt:String?,
+        btnTxt: String?,
+        confirmationTxt: String?,
+        titleTxt: String?,
         listner: OnCustomDialogListner
     ) {
         val addDialog = Dialog(mContext!!)
@@ -397,14 +402,14 @@ object DialogUtils{
         dialogWindow.attributes = layoutParams
 
         addDialog.show()
-        var tvConfirmation=addDialog.findViewById<TextView>(R.id.custom_dialog_description)
-        var tvDialogTitle=addDialog.findViewById<TextView>(R.id.custom_dialog_title)
+        var tvConfirmation = addDialog.findViewById<TextView>(R.id.custom_dialog_description)
+        var tvDialogTitle = addDialog.findViewById<TextView>(R.id.custom_dialog_title)
         var btnYes = addDialog.findViewById<Button>(R.id.custom_dialog_yes_btn)
 
 
         btnYes.text = btnTxt
         tvDialogTitle.text = titleTxt
-        tvConfirmation.text=confirmationTxt
+        tvConfirmation.text = confirmationTxt
 
 
         addDialog.findViewById<View>(R.id.custom_dialog_yes_btn).setOnClickListener {
@@ -413,8 +418,26 @@ object DialogUtils{
         }
     }
 
-    interface OnCustomDialogListner{
+    interface OnCustomDialogListner {
         fun onCustomDialogOkClickListner()
+    }
+
+    fun customToast(context: Activity) {
+        val inflater: LayoutInflater = context.layoutInflater
+        val layout: View = inflater.inflate(
+            R.layout.toast_layout,
+            context.findViewById(R.id.toast_layout_root) as ViewGroup?
+        )
+
+        val text = layout.findViewById<View>(R.id.text) as TextView
+        text.text = context.getString(R.string.agree_terms)
+
+        val toast =
+            Toast(context.getApplicationContext())
+        toast.setGravity(Gravity.BOTTOM, 0, 0)
+        toast.duration = Toast.LENGTH_LONG
+        toast.view = layout
+        toast.show()
     }
 
 }
