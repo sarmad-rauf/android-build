@@ -18,6 +18,7 @@ import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.airtime.AirTimeActivity
+import com.es.marocapp.usecase.billpayment.BillPaymentActivity
 import com.es.marocapp.usecase.cashservices.CashServicesActivity
 import com.es.marocapp.usecase.payments.PaymentsActivity
 import com.es.marocapp.usecase.qrcode.GenerateQrActivity
@@ -180,6 +181,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                             startActivity(intent)
                         }
 
+                        3 -> {
+                            (activity as MainActivity).startNewActivity(activity as MainActivity,
+                                BillPaymentActivity ::class.java)
+                        }
+
+                        4 -> {
+                            (activity as MainActivity).startNewActivity(activity as MainActivity,
+                                GenerateQrActivity::class.java)
+                        }
+
                         5 -> {
                             startActivity(
                             Intent(
@@ -187,10 +198,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                                 CashServicesActivity::class.java
                             )
                             )
-                        }
-                        4 -> {
-                            (activity as MainActivity).startNewActivity(activity as MainActivity,
-                                GenerateQrActivity::class.java)
                         }
 
                         else -> {

@@ -10,6 +10,8 @@ import android.util.Log
 import com.es.marocapp.model.responses.BalanceInfoAndLimitResponse
 import com.es.marocapp.model.responses.Contact
 import com.es.marocapp.model.responses.LoginWithCertResponse
+import java.text.DateFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -128,7 +130,40 @@ object Constants {
         return "$number@hpss.mer.sp/SP"
     }
 
+    fun getPostPaidMobileDomainAlias(number: String) : String{
+        return "$number@bscs.mobile.sp/SP"
+    }
+
+    fun getPostPaidFixedDomainAlias(number: String) : String{
+        return "$number@bscs.fixed.sp/SP"
+    }
+
+    fun getPostPaidInternetDomainAlias(number: String) : String{
+        return "$number@bscs.internet.sp/SP"
+    }
+
     fun addAmountAndFee(amount : Double, fee : Double): String{
         return (amount+fee).toString()
+    }
+
+    fun parseDateFromString(dateString : String) : String{
+        var myDate = ""
+        var df: DateFormat = SimpleDateFormat("yyyyMMdd")
+        val d: Date
+        try {
+            d = df.parse(dateString)
+            df = SimpleDateFormat("dd/MM/yyyy")
+            myDate= df.format(d)
+        } catch (e: ParseException) {
+        }
+
+        return myDate
+    }
+
+    fun getMonthFromParsedDate(date : String) : String{
+        val d = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse(date)
+        val cal = Calendar.getInstance()
+        cal.time = d
+        return SimpleDateFormat("MMMM").format(cal.time)
     }
 }

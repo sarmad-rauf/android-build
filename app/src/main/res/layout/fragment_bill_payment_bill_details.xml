@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.es.marocapp.usecase.billpayment.BillPaymentViewModel" />
+
+        <variable
+            name="listner"
+            type="com.es.marocapp.usecase.billpayment.BillPaymentClickListner" />
+
+
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGreyLight"
+    >
+
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/selectAllCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:theme="@style/checkBoxStyleBillPayment"
+        android:layout_margin="@dimen/_16sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <com.es.marocapp.widgets.MarocMediumTextView
+        android:id="@+id/selectAllTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_14ssp"
+        android:text="Select All"
+        android:textColor="@color/colorTextGreyMedium"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/selectAllCheckBox"
+        app:layout_constraintTop_toTopOf="@+id/selectAllCheckBox"
+        app:layout_constraintBottom_toBottomOf="@+id/selectAllCheckBox"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mBillsRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:paddingBottom="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        app:layout_constraintTop_toBottomOf="@+id/selectAllCheckBox"
+        app:layout_constraintBottom_toTopOf="@+id/btnNext"
+        />
+
+    <com.es.marocapp.widgets.MarocButton
+        android:id="@+id/btnNext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pay"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:onClick="@{listner::onSubmitClickListner}"
+        android:background="@drawable/button_enable_blue"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

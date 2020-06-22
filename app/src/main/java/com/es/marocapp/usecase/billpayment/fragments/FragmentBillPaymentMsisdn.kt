@@ -1,58 +1,50 @@
-package com.es.marocapp.usecase.airtime.airtimeplansandamounts
+package com.es.marocapp.usecase.billpayment.fragments
 
 import android.os.Bundle
-import android.text.InputFilter
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
-import com.es.marocapp.databinding.FragmentAirTimeMsisdnBinding
+import com.es.marocapp.databinding.FragmentBillPaymentMsisdnBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
-import com.es.marocapp.usecase.airtime.AirTimeActivity
-import com.es.marocapp.usecase.airtime.AirTimeClickListner
-import com.es.marocapp.usecase.airtime.AirTimeViewModel
-import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
+import com.es.marocapp.usecase.billpayment.BillPaymentActivity
+import com.es.marocapp.usecase.billpayment.BillPaymentClickListner
+import com.es.marocapp.usecase.billpayment.BillPaymentViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.layout_activity_header.view.*
 
-class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirTimeClickListner,
-    AdapterView.OnItemSelectedListener {
+class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>(),
+    BillPaymentClickListner, AdapterView.OnItemSelectedListener {
 
-    private lateinit var mActivityViewModel: AirTimeViewModel
+    private lateinit var mActivityViewModel: BillPaymentViewModel
 
     private var list_of_favorites = arrayListOf<String>()
 
     var msisdnEntered = ""
+    var code = ""
+
 
     override fun setLayout(): Int {
-        return R.layout.fragment_air_time_msisdn
+        return R.layout.fragment_bill_payment_msisdn
     }
 
     override fun init(savedInstanceState: Bundle?) {
-
-        mActivityViewModel = ViewModelProvider(activity as AirTimeActivity).get(
-            AirTimeViewModel::class.java
-        )
+        mActivityViewModel = ViewModelProvider(activity as BillPaymentActivity).get(BillPaymentViewModel::class.java)
         mDataBinding.apply {
-            listner = this@AirTimeMsisdnFragment
+            listner = this@FragmentBillPaymentMsisdn
+            viewmodel = mActivityViewModel
         }
 
-        if(mActivityViewModel.isRechargeFixeUseCase.get()!!){
-            (activity as AirTimeActivity).setHeaderTitle(
-                mActivityViewModel.airTimeSelected.get()!!
-            )
-        }
+        (activity as BillPaymentActivity).setHeaderTitle(
+            LanguageData.getStringValue("BillPayment").toString()
+        )
 
-        if(mActivityViewModel.isRechargeMobileUseCase.get()!!){
-            (activity as AirTimeActivity).setHeaderTitle(
-                mActivityViewModel.airTimePlanSelected.get()!!
-            )
-        }
+        mActivityViewModel.isUserSelectedFromFavorites.set(false)
 
         for(contacts in Constants.mContactListArray){
             var contactNumber = contacts.fri
@@ -62,63 +54,57 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
             contactNumber = "0$contactNumber"
             list_of_favorites.add(contactNumber)
         }
-        list_of_favorites.add(0,LanguageData.getStringValue("SelectFavorite").toString())
+        list_of_favorites.add(0, LanguageData.getStringValue("SelectFavorite").toString())
 
-        val adapterFavoriteType = ArrayAdapter<CharSequence>(activity as AirTimeActivity, R.layout.layout_favorites_spinner_text,
+        val adapterFavoriteType = ArrayAdapter<CharSequence>(activity as BillPaymentActivity, R.layout.layout_favorites_spinner_text,
             list_of_favorites as List<CharSequence>
         )
         mDataBinding.spinnerSelectFavorites.apply {
             adapter = adapterFavoriteType
         }
-        mDataBinding.spinnerSelectFavorites.onItemSelectedListener = this@AirTimeMsisdnFragment
+        mDataBinding.spinnerSelectFavorites.onItemSelectedListener = this@FragmentBillPaymentMsisdn
+        (activity as BillPaymentActivity).setHeaderVisibility(true)
+        (activity as BillPaymentActivity).setCompanyIconToolbarVisibility(true)
 
-        (activity as AirTimeActivity).mDataBinding.headerAirTime.rootView.tv_company_title.text = mActivityViewModel.airTimeAmountSelected.get()!!
-        (activity as AirTimeActivity).mDataBinding.headerAirTime.rootView.img_company_icons.setImageResource(R.drawable.others)
+        (activity as BillPaymentActivity).mDataBinding.headerBillPayment.rootView.tv_company_title.text = mActivityViewModel.billTypeSelected.get()!!
+        (activity as BillPaymentActivity).mDataBinding.headerBillPayment.rootView.img_company_icons.setImageResource(mActivityViewModel.billTypeSelectedIcon)
 
-        (activity as AirTimeActivity).setHeaderVisibility(true)
-        (activity as AirTimeActivity).setCompanyIconToolbarVisibility(true)
-
-
-        mActivityViewModel.popBackStackTo = R.id.airTimeAmountFragment
-
-        //todo also here remove lenght-2 check in max line
-        mDataBinding.inputPhoneNumber.filters = arrayOf<InputFilter>(
-            InputFilter.LengthFilter(
-                Constants.APP_MSISDN_LENGTH.toInt() - 2
-            )
-        )
-
-        mActivityViewModel.isUserSelectedFromFavorites.set(false)
+        mActivityViewModel.popBackStackTo = R.id.fragmentPostPaidBillType
 
         setStrings()
         subscribeObserver()
-
     }
 
-    private fun setStrings() {
-        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+    private fun subscribeObserver() {
+        mDataBinding.inputLayoutCode.hint = LanguageData.getStringValue("EnterCode")
+        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterContactNumber")
         mDataBinding.selectFavoriteTypeTitle.hint = LanguageData.getStringValue("SelectFavorite")
         mDataBinding.btnNext.text = LanguageData.getStringValue("Submit")
     }
 
-    private fun subscribeObserver() {
-        mActivityViewModel.getAirTimeQuoteResponseListner.observe(this@AirTimeMsisdnFragment,
+    private fun setStrings() {
+        mActivityViewModel.errorText.observe(this@FragmentBillPaymentMsisdn, Observer {
+            DialogUtils.showErrorDialoge(activity,it)
+        }
+        )
+
+        mActivityViewModel.getPostPaidResourceInfoResponseListner.observe(this@FragmentBillPaymentMsisdn,
             Observer {
-                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                    if (it.quoteList.isNotEmpty()) {
-                        mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
-                        mActivityViewModel.qouteId = it.quoteList[0].quoteid
-                    }
-                    (activity as AirTimeActivity).navController.navigate(R.id.action_airTimeMsisdnFragment_to_airTimeConfirmationFragment)
-                } else {
-                    DialogUtils.showErrorDialoge(activity, it.description)
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    mActivityViewModel.custId = it.response.custId
+                    mActivityViewModel.custname = it.response.custname
+                    mActivityViewModel.totalamount = it.response.totalamount
+                    (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMsisdn_to_fragmentPostPaidBillDetails)
+                }else{
+                    DialogUtils.showErrorDialoge(activity,it.description)
                 }
-            })
+            }
+        )
     }
 
-    override fun onNextClickListner(view: View) {
-        if (isValidForAll()) {
-            mActivityViewModel.requestForAirTimeQuoteApi(activity,msisdnEntered)
+    override fun onSubmitClickListner(view: View) {
+        if(isValidForAll()){
+            mActivityViewModel.requestForPostPaidFinancialResourceInfoApi(activity,code,msisdnEntered)
         }
     }
 
@@ -155,11 +141,22 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
             }
         }
 
+        if(mDataBinding.inputCode.text.isNullOrEmpty() || mDataBinding.inputCode.text.toString().isEmpty()){
+            isValidForAll = false
+            mDataBinding.inputLayoutCode.error = LanguageData.getStringValue("PleaseEnterValidCode")
+            mDataBinding.inputLayoutCode.isErrorEnabled = true
+        }else{
+            mDataBinding.inputLayoutCode.error = ""
+            mDataBinding.inputLayoutCode.isErrorEnabled = false
+            code = mDataBinding.inputCode.text.toString().trim()
+        }
+
         return isValidForAll
     }
 
-    override fun onNothingSelected(p0: AdapterView<*>?) {
 
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {

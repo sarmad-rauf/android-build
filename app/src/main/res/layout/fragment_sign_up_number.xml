@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         android:text="@string/login"
         android:textSize="@dimen/_16ssp"
-        android:textAllCaps="false"
+        android:textAllCaps="true"
         android:onClick="@{listener::onLoginButtonClick}"
         android:background="@drawable/button_enable"
         android:layout_marginTop="@dimen/_16sdp"

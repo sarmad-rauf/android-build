@@ -131,4 +131,13 @@ object EndPoints {
     //addcontact
     const val addcontact = "addcontact"
 
+    //getfinancialresourceinformation/bill/postpaid
+    const val getfinancialresourceinformation_bill_postpaid = "getfinancialresourceinformation/bill/postpaid"
+
+    //payment/bill/postpaid/quote
+    const val payment_bill_postpaid_quote = "payment/bill/postpaid/quote"
+
+    //payment/bill/postpaid
+    const val payment_bill_postpaid = "payment/bill/postpaid"
+
 }

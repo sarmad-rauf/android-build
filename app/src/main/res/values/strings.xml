@@ -165,5 +165,6 @@
 
     <string name="language_english">English</string>
     <string name="language_french">French</string>
+    <string name="enter_code">Enter Code</string>
 
 </resources>

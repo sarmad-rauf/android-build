@@ -140,7 +140,7 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
 
         if (mDataBinding.inputPhoneNumber.text.isNullOrEmpty() && mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_MSISDN_LENGTH.toInt() - 2) {
             isValidForAll = false
-            mDataBinding.inputLayoutPhoneNumber.error = "Please Enter Valid Mobile Number"
+            mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
         } else {
             mDataBinding.inputLayoutPhoneNumber.error = ""
@@ -157,14 +157,14 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
                 msisdnEntered = userMSISDNwithPrefix
             } else {
                 isValidForAll = false
-                mDataBinding.inputLayoutPhoneNumber.error = "Please Enter Valid Mobile Number"
+                mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
             }
         }
 
         if (mDataBinding.inputAmount.text.isNullOrEmpty()) {
             isValidForAll = false
-            mDataBinding.inputLayoutAmount.error = "Please Enter Valid Amount"
+            mDataBinding.inputLayoutAmount.error = LanguageData.getStringValue("PleaseEnterValidAmount")
             mDataBinding.inputLayoutAmount.isErrorEnabled = true
         } else {
             mDataBinding.inputLayoutAmount.error = ""
@@ -174,7 +174,7 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
 
             if (sAmount == "" || SumAmountEditText() == "0" || sAmount == ".") {
                 isValidForAll = false
-                mDataBinding.inputLayoutAmount.error = "Please enter valid amount to proceed."
+                mDataBinding.inputLayoutAmount.error = LanguageData.getStringValue("PleaseEnterValidAmountToProceed.")
                 mDataBinding.inputLayoutAmount.isErrorEnabled = true
             } else {
                 mDataBinding.inputLayoutAmount.error = ""

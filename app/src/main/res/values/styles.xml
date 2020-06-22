@@ -44,4 +44,9 @@
         <item name="android:textColorSecondary">@color/colorWhite</item> <!-- for check state -->
     </style>
 
+    <style name="checkBoxStyleBillPayment" parent="Base.Theme.AppCompat">
+        <item name="colorAccent">@color/colorOrangeLight</item> <!-- for uncheck state -->
+        <item name="android:textColorSecondary">@color/colorTextGreyMedium</item> <!-- for check state -->
+    </style>
+
 </resources>

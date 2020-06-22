@@ -22,5 +22,6 @@
     <color name="colorOrangeLight">#ff8a3d</color>
     <color name="colorSuccess">#60d18c</color>
     <color name="colorPending">#e8c01f</color>
+    <color name="colorFail">#ff4949</color>
 
 </resources>

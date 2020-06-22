@@ -13,7 +13,7 @@
     android:background="@color/colorGreyLight"
     android:paddingStart="@dimen/_12sdp"
     android:paddingEnd="@dimen/_12sdp"
-    tools:context="com.es.marocapp.usecase.payments.billpayment.BillPaymentTypeFragment">
+    >
 
     <com.es.marocapp.widgets.MarocMediumTextView
         android:id="@+id/tvPaymentType"

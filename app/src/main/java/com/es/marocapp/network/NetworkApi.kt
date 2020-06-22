@@ -196,5 +196,17 @@ interface NetworkApi {
     @POST(EndPoints.addcontact)
     fun getAddContact(@Body request : AddContactRequest) : Observable<AddContactResponse>
 
+    //PostPaidFinancialResourceInfo
+    @POST(EndPoints.getfinancialresourceinformation_bill_postpaid)
+    fun getPostPaidFinancialResourceInfo(@Body request : PostPaidFinancialResourceInfoRequest) : Observable<PostPaidFinancialResourceInfoResponse>
+
+    //PostPaidBillPaymentQuote
+    @POST(EndPoints.payment_bill_postpaid_quote)
+    fun getPostPaidBillPaymentQuote(@Body request : PostPaidBillPaymentQuoteRequest) : Observable<PostPaidBillPaymentQuoteResponse>
+
+    //PostPaidBillPayment
+    @POST(EndPoints.payment_bill_postpaid)
+    fun getPostPaidBillPayment(@Body request : PostPaidBillPaymentRequest) : Observable<PostPaidBillPaymentResponse>
+
 
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bill_payment_navigation_graph"
+    app:startDestination="@id/fragmentPostPaidPaymentTypes">
+
+    <fragment
+        android:id="@+id/fragmentPostPaidPaymentTypes"
+        android:name="com.es.marocapp.usecase.billpayment.fragments.FragmentPostPaidPaymentTypes"
+        android:label="FragmentPostPaidPaymentTypes"
+        tools:layout="@layout/fragment_bill_payment_type"
+        >
+        <action
+            android:id="@+id/action_fragmentPostPaidPaymentTypes_to_fragmentPostPaidServiceProvider"
+            app:destination="@id/fragmentPostPaidServiceProvider" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentPostPaidServiceProvider"
+        android:name="com.es.marocapp.usecase.billpayment.fragments.FragmentPostPaidServiceProvider"
+        android:label="FragmentPostPaidServiceProvider"
+        tools:layout="@layout/fragment_bill_payment_type"
+        >
+        <action
+            android:id="@+id/action_fragmentPostPaidServiceProvider_to_fragmentPostPaidBillType"
+            app:destination="@id/fragmentPostPaidBillType" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentPostPaidBillType"
+        android:name="com.es.marocapp.usecase.billpayment.fragments.FragmentPostPaidBillType"
+        tools:layout="@layout/fragment_bill_payment_type"
+        >
+
+        <action
+            android:id="@+id/action_fragmentPostPaidBillType_to_fragmentBillPaymentMsisdn"
+            app:destination="@id/fragmentBillPaymentMsisdn" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentBillPaymentMsisdn"
+        android:name="com.es.marocapp.usecase.billpayment.fragments.FragmentBillPaymentMsisdn"
+        android:label="FragmentBillPaymentMsisdn"
+        tools:layout="@layout/fragment_bill_payment_msisdn"
+        >
+        <action
+            android:id="@+id/action_fragmentBillPaymentMsisdn_to_fragmentPostPaidBillDetails"
+            app:destination="@id/fragmentPostPaidBillDetails" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentPostPaidBillDetails"
+        android:name="com.es.marocapp.usecase.billpayment.fragments.FragmentPostPaidBillDetails"
+        android:label="FragmentPostPaidBillDetails"
+        tools:layout="@layout/fragment_bill_payment_bill_details"
+        >
+        <action
+            android:id="@+id/action_fragmentPostPaidBillDetails_to_fragmentBillPaymentPostPaidConfirmation"
+            app:destination="@id/fragmentBillPaymentPostPaidConfirmation" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentBillPaymentPostPaidConfirmation"
+        android:name="com.es.marocapp.usecase.billpayment.fragments.FragmentBillPaymentPostPaidConfirmation"
+        android:label="FragmentBillPaymentPostPaidConfirmation"
+        tools:layout="@layout/fragment_bill_payment_confimation"
+        />
+
+</navigation>
