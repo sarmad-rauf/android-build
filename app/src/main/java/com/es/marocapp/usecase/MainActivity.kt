@@ -23,6 +23,7 @@ import com.es.marocapp.usecase.settings.SettingsActivity
 import com.es.marocapp.usecase.termsandcondiitons.TermsAndConditions
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.Tools
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.layout_drawer_header.view.*
@@ -144,7 +145,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     }
 
     override fun onDrawerMenuClickToCallClick(view: View) {
-        Toast.makeText(this, "Under Development", Toast.LENGTH_SHORT).show()
+       Tools.openDialerWithNumber(this@MainActivity)
     }
 
     override fun onDrawerMenuLogOutClick(view: View) {

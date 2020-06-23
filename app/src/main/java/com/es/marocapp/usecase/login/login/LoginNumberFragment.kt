@@ -39,6 +39,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
     lateinit var mActivityViewModel: LoginActivityViewModel
     lateinit var mActivity: LoginActivity
     lateinit var mLanguageSpinnerAdapter: LanguageCustomSpinnerAdapter
+    var isRegFlow=false
 
     override fun setLayout(): Int {
         return R.layout.fragment_login
@@ -106,32 +107,45 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
     }
 
     override fun onLoginButtonClick(view: View) {
-        //For Proper Flow un Comment all this section
-        //TODO need to implement proper check for lenght of number
-        if (mDataBinding.inputPhoneNumber.text.toString() == "" || mDataBinding.inputPhoneNumber.text.length < Constants.APP_MSISDN_LENGTH.toInt() - 2) {
-            mDataBinding.inputLayoutPhoneNumber.error =LanguageData.getStringValue( "PleaseEnterValidMobileNumber")
-            mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
-        } else {
-            mDataBinding.inputLayoutPhoneNumber.error = ""
-            mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
-
-            var userMsisdn = mDataBinding.inputPhoneNumber.text.toString()
-            if (userMsisdn.startsWith("0", false)) {
+        if(isRegFlow==true){
+            if(mDataBinding.root.cb_Terms.isChecked) {
+                 mActivityViewModel.isSignUpFlow.set(true)
+                  mActivity.navController.navigate(R.id.action_loginFragment_to_signUpDetailFragment)
+            }
+            else{
+                mDataBinding.root.toast_layout_root.visibility=View.VISIBLE
+            }
+        }
+        else {
+            //For Proper Flow un Comment all this section
+            //TODO need to implement proper check for lenght of number
+            if (mDataBinding.inputPhoneNumber.text.toString() == "" || mDataBinding.inputPhoneNumber.text.length < Constants.APP_MSISDN_LENGTH.toInt() - 2) {
+                mDataBinding.inputLayoutPhoneNumber.error =
+                    LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+            } else {
                 mDataBinding.inputLayoutPhoneNumber.error = ""
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
-                var userMSISDNwithPrefix = userMsisdn.removePrefix("0")
-                userMSISDNwithPrefix = Constants.APP_MSISDN_PREFIX + userMSISDNwithPrefix
-                userMSISDNwithPrefix = userMSISDNwithPrefix.removePrefix("+")
-                Constants.CURRENT_USER_MSISDN = userMSISDNwithPrefix
-                Constants.CURRENT_NUMBER_DEVICE_ID =
-                    userMSISDNwithPrefix + "-" + Constants.CURRENT_DEVICE_ID
-                mActivityViewModel.requestForGetAccountHolderInformationApi(
-                    context,
-                    userMSISDNwithPrefix
-                )
-            } else {
-                mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue( "PleaseEnterValidMobileNumber")
-                mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+
+                var userMsisdn = mDataBinding.inputPhoneNumber.text.toString()
+                if (userMsisdn.startsWith("0", false)) {
+                    mDataBinding.inputLayoutPhoneNumber.error = ""
+                    mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+                    var userMSISDNwithPrefix = userMsisdn.removePrefix("0")
+                    userMSISDNwithPrefix = Constants.APP_MSISDN_PREFIX + userMSISDNwithPrefix
+                    userMSISDNwithPrefix = userMSISDNwithPrefix.removePrefix("+")
+                    Constants.CURRENT_USER_MSISDN = userMSISDNwithPrefix
+                    Constants.CURRENT_NUMBER_DEVICE_ID =
+                        userMSISDNwithPrefix + "-" + Constants.CURRENT_DEVICE_ID
+                    mActivityViewModel.requestForGetAccountHolderInformationApi(
+                        context,
+                        userMSISDNwithPrefix
+                    )
+                } else {
+                    mDataBinding.inputLayoutPhoneNumber.error =
+                        LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                    mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                }
             }
         }
 
@@ -171,9 +185,10 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                 }
 
             } else if(it.responseCode == ApiConstant.API_FAILURE){
-                //showTermsConditionsAndSignup()
-                mActivityViewModel.isSignUpFlow.set(true)
-                mActivity.navController.navigate(R.id.action_loginFragment_to_signUpDetailFragment)
+                isRegFlow=true
+                showTermsConditionsAndSignup()
+                /* mActivityViewModel.isSignUpFlow.set(true)
+                 mActivity.navController.navigate(R.id.action_loginFragment_to_signUpDetailFragment)*/
             }else{
                 DialogUtils.showErrorDialoge(activity,it.description)
             }
@@ -217,10 +232,9 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
         mDataBinding.root.txtHeaderTitle.text="Create your account"
         mDataBinding.inputLayoutPhoneNumber.isEnabled=false
         mDataBinding.btnLogin.text = LanguageData.getStringValue("BtnTitle_Submit")
-        mDataBinding.root.tvMsg.text = getString(R.string.agree_terms)
+        mDataBinding.root.tvMsg.text = LanguageData.getStringValue("YouMustAgreeToTermsAndConditionsToProceedFurther")
         mDataBinding.root.cb_Terms.visibility=View.VISIBLE
-        val text =
-            "I agree to <font color='#ff6600'>Terms and Conditions</font>."
+        val text =LanguageData.getStringValue("AgreeTo")  + "<font color='#ff6600'>" +LanguageData.getStringValue("TermsConditionsCaps") + "</font>."
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             mDataBinding.root.cb_Terms.setText(

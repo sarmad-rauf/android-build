@@ -14,6 +14,9 @@ import com.es.marocapp.model.responses.UserApprovalResponse
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
+import com.es.marocapp.usecase.BaseActivity
+import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.SingleLiveEvent
 import com.es.marocapp.utils.Tools
@@ -47,12 +50,16 @@ class ApprovalViewModel(application: Application) : AndroidViewModel(application
                         isLoading.set(false)
 
                         if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
+                                ApiConstant.API_SUCCESS, true)) {
+
                             getApprovalResponseListner.postValue(result)
 
-                        } else {
+                        }
+                        else if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_FAILURE, true)){
+                            (context as BaseActivity<*>).startNewActivityAndClear(context as MainActivity, LoginActivity::class.java)
+                        }
+                        else {
                             getApprovalResponseListner.postValue(result)
                         }
 

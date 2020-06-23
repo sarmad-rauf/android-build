@@ -129,6 +129,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.CURRENT_CURRENCY_TYPE = it.currencyOnEwp
                 Constants.CURRENT_CURRENCY_TYPE_TO_SHOW = it.currencyToShow
                 Constants.AMOUNT_CONVERSION_VALUE = it.amountConversionValue
+                Constants.HELPLINE_NUMBER = it.helpLineNumber
                 if(it.quickAmounts.isNotEmpty()){
                     Constants.quickAmountsList.addAll(it.quickAmounts)
                 }else{
