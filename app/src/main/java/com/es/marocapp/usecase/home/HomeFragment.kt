@@ -143,7 +143,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             this.add(HomeUseCasesModel(LanguageData.getStringValue("SendMoney").toString(),R.drawable.ic_send_money))
             this.add(HomeUseCasesModel(LanguageData.getStringValue("BillPayment").toString(), R.drawable.ic_bill_payment))
             this.add(HomeUseCasesModel(LanguageData.getStringValue("GenerateQr").toString(), R.drawable.ic_qr_white))
-            this.add(HomeUseCasesModel(LanguageData.getStringValue("CashService").toString(), R.drawable.ic_transfer))
+            if(Constants.IS_MERCHANT_USER){
+                this.add(HomeUseCasesModel(LanguageData.getStringValue("CashService").toString(), R.drawable.ic_transfer))
+            }
         }
 
         mUseCasesAdapter =

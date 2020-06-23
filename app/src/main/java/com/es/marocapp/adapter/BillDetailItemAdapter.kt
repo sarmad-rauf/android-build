@@ -61,7 +61,13 @@ class BillDetailItemAdapter(private val bills : ArrayList<InvoiceCustomModel>) :
     }
 
     fun getUpdateList(): ArrayList<InvoiceCustomModel> {
-        return bills
+        var selectedBills : ArrayList<InvoiceCustomModel> = arrayListOf()
+        for(i in bills.indices){
+            if(bills[i].isBillSelected){
+                selectedBills.add(bills[i])
+            }
+        }
+        return selectedBills
     }
 
 }

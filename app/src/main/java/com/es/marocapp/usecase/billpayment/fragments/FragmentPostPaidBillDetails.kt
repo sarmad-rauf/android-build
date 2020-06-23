@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +17,7 @@ import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.billpayment.BillPaymentActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentClickListner
 import com.es.marocapp.usecase.billpayment.BillPaymentViewModel
+import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 
 class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsBinding>(),
@@ -127,11 +127,14 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
         mActivityViewModel.selectedIvoicesList.set(selectedListOfInvoice)
         for(i in selectedListOfInvoice.indices){
             //Ohrefnum(16) + month (8) + OpenAmount (15) + OHXACT (38)
-            mActivityViewModel.totalSelectedBillAmount = (mActivityViewModel.totalSelectedBillAmount.toDouble()+selectedListOfInvoice[i].openAmount.toDouble()).toString()
+            var convertedBillAmount  = (selectedListOfInvoice[i].openAmount.toDouble()/Constants.AMOUNT_CONVERSION_VALUE.toDouble()).toString()
+            mActivityViewModel.listOfSelectedBillAmount.add(convertedBillAmount)
+            mActivityViewModel.totalSelectedBillAmount = ((mActivityViewModel.totalSelectedBillAmount.toDouble()+convertedBillAmount.toDouble())).toString()
             Log.i("TotalBillAmount",mActivityViewModel.totalSelectedBillAmount)
             var selectBillInvoice = selectedListOfInvoice[i].ohrefnum+selectedListOfInvoice[i].month+selectedListOfInvoice[i].openAmount+selectedListOfInvoice[i].ohxact
             mActivityViewModel.selectBillAmount = selectedListOfInvoice[i].openAmount
-            mActivityViewModel.requestForPostPaidBillPaymentQuoteApi(activity,selectBillInvoice)
+            mActivityViewModel.requestForPostPaidBillPaymentQuoteApi(activity,selectedListOfInvoice[i].month,selectedListOfInvoice[i].ohrefnum,selectedListOfInvoice[i].ohxact,
+                selectedListOfInvoice[i].openAmount)
         }
     }
 

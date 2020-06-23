@@ -44,6 +44,7 @@ object Constants {
     var CURRENT_NUMBER_DEVICE_ID = ""
     var CURRENT_CURRENCY_TYPE = ""
     var CURRENT_CURRENCY_TYPE_TO_SHOW = ""
+    var AMOUNT_CONVERSION_VALUE= ""
 
     var HEADERS_AFTER_LOGINS = false
     var HEADERS_FOR_PAYEMNTS = false

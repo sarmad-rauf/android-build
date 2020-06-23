@@ -12,6 +12,7 @@ import com.es.marocapp.model.responses.PostPaidBillPaymentResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.airtime.AirTimeActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentClickListner
 import com.es.marocapp.usecase.billpayment.BillPaymentViewModel
@@ -47,6 +48,9 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
             )
         }
 
+        (activity as BillPaymentActivity).setHeaderVisibility(false)
+        (activity as BillPaymentActivity).setCompanyIconToolbarVisibility(false)
+
         setStrings()
         updateUI()
         subscribeObserver()
@@ -69,6 +73,7 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
 
                     mActivityViewModel.selectedIvoicesBillPaymentStatus.set(listOfResponse)
 
+                    (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentPostPaidConfirmation_to_fragmentPostPaidBillPaymentSuccess)
                 }else{
                     DialogUtils.showErrorDialoge(activity,LanguageData.getStringValue("SomethingWentWrong"))
                 }
@@ -84,18 +89,21 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
 //        tvAmountVal == AmountTotal
 
         mDataBinding.tvCompanyNameVal.text = mActivityViewModel.transferdAmountTo.substringBefore("@")
-        var ReceiverName = Constants.balanceInfoAndResponse.firstname +" " +Constants.balanceInfoAndResponse.surname
-        mActivityViewModel.ReceiverName = ReceiverName
-        mDataBinding.tvOwnerNameVal.text = ReceiverName
+//        var ReceiverName = Constants.balanceInfoAndResponse.firstname +" " +Constants.balanceInfoAndResponse.surname
+        mActivityViewModel.ReceiverName = mActivityViewModel.custname
+        mDataBinding.tvOwnerNameVal.text = mActivityViewModel.ReceiverName
 
         var totalFee = "0.00"
 
         for(i in mActivityViewModel.listOfPostPaidBillPaymentQuote.indices){
             var item = mActivityViewModel.listOfPostPaidBillPaymentQuote[i]
             if(item.quoteList.isNotEmpty()){
+                mActivityViewModel.listOfSelectedBillFee.add(item.quoteList[0].fee.amount.toString())
                 totalFee = (totalFee.toDouble()+item.quoteList[0].fee.amount).toString()
             }
         }
+
+        mActivityViewModel.feeAmount = totalFee
 
         mDataBinding.tvReceiptCodeVal.text =
             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.totalSelectedBillAmount
@@ -144,7 +152,8 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
                     mActivityViewModel.selectBillAmount = selectedListOfInvoice[i].openAmount
                     if(!mActivityViewModel.selectedIvoicesQuoteList.get().isNullOrEmpty()){
                         if(!mActivityViewModel.selectedIvoicesQuoteList.get()!![i].equals("-1")){
-                            mActivityViewModel.requestForPostPaidBillPaymentApi(activity,selectBillInvoice,mActivityViewModel.selectedIvoicesQuoteList.get()!![i])
+                            mActivityViewModel.requestForPostPaidBillPaymentApi(activity,selectedListOfInvoice[i].month,selectedListOfInvoice[i].ohrefnum,selectedListOfInvoice[i].ohxact,
+                                selectedListOfInvoice[i].openAmount,mActivityViewModel.selectedIvoicesQuoteList.get()!![i])
                         }else{
                             mActivityViewModel.listOfPostPaidBillPayment.add(
                                 PostPaidBillPaymentResponse(arrayListOf(),"","Failed","","","","",

@@ -5,13 +5,11 @@ import android.content.Context
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import com.es.marocapp.R
+import com.es.marocapp.model.requests.AddContactRequest
 import com.es.marocapp.model.requests.PostPaidBillPaymentQuoteRequest
 import com.es.marocapp.model.requests.PostPaidBillPaymentRequest
 import com.es.marocapp.model.requests.PostPaidFinancialResourceInfoRequest
-import com.es.marocapp.model.responses.InvoiceCustomModel
-import com.es.marocapp.model.responses.PostPaidBillPaymentQuoteResponse
-import com.es.marocapp.model.responses.PostPaidBillPaymentResponse
-import com.es.marocapp.model.responses.PostPaidFinancialResourceInfoResponse
+import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
@@ -66,6 +64,12 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
     var listOfPostPaidBillPayment = arrayListOf<PostPaidBillPaymentResponse>()
     var getPostPaidBillPaymentResponseListner = SingleLiveEvent<ArrayList<PostPaidBillPaymentResponse>>()
+
+
+    var getAddFavoritesResponseListner = SingleLiveEvent<AddContactResponse>()
+
+    var listOfSelectedBillAmount : ArrayList<String> = arrayListOf()
+    var listOfSelectedBillFee : ArrayList<String> = arrayListOf()
 
 
     //Request For PostPaidFinancialResourceInfo
@@ -139,16 +143,22 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
 
     //Request For PostPaidBillPaymentQuote
-    fun requestForPostPaidBillPaymentQuoteApi(context: Context?,
-                                              invoiceOfSelectedBill : String
+    fun requestForPostPaidBillPaymentQuoteApi(
+        context: Context?,
+        invoiceMonth: String,
+        ohrefnum: String,
+        ohxact: String,
+        openAmount: String
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
 
+            var convertedAmountValue = (selectBillAmount.toDouble()/Constants.AMOUNT_CONVERSION_VALUE.toDouble()).toString()
+
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPostPaidBillPaymentQuote(
                 PostPaidBillPaymentQuoteRequest(
-                    selectBillAmount,mCodeEntered,ApiConstant.CONTEXT_AFTER_LOGIN,custId,custname,invoiceOfSelectedBill,"1",
-                    transferdAmountTo,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),selectBillAmount,Constants.TYPE_PAYMENT,domain
+                    convertedAmountValue,mCodeEntered,ApiConstant.CONTEXT_AFTER_LOGIN,custId,custname,"1",
+                    transferdAmountTo,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),selectBillAmount,Constants.TYPE_PAYMENT,domain,invoiceMonth,ohrefnum,ohxact,openAmount
                 )
             )
                 .compose(applyIOSchedulers())
@@ -194,15 +204,21 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
     //Request For PostPaidBillPayment
     fun requestForPostPaidBillPaymentApi(
-        context: Context?, selectBillInvoice: String, mQuoteId: String
+        context: Context?,  invoiceMonth: String,
+        ohrefnum: String,
+        ohxact: String,
+        openAmount: String, mQuoteId: String
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
 
+
+            var convertedAmountValue = (selectBillAmount.toDouble()/Constants.AMOUNT_CONVERSION_VALUE.toDouble()).toString()
+
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPostPaidBillPayment(
                 PostPaidBillPaymentRequest(
-                    selectBillAmount,mCodeEntered,ApiConstant.CONTEXT_AFTER_LOGIN,custId,custname,selectBillInvoice,"1",mQuoteId,transferdAmountTo,
-                    Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),selectBillAmount,Constants.TYPE_PAYMENT,domain
+                    convertedAmountValue,mCodeEntered,ApiConstant.CONTEXT_AFTER_LOGIN,custId,custname,"1",mQuoteId,transferdAmountTo,
+                    Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),selectBillAmount,Constants.TYPE_PAYMENT,domain,invoiceMonth,ohrefnum,ohxact,openAmount
                 )
             )
                 .compose(applyIOSchedulers())
@@ -223,6 +239,60 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                             selectedIvoicesBillPaymentResponseValue.set(listOfPostPaidBillPayment)
                             getPostPaidBillPaymentResponseListner.postValue(listOfPostPaidBillPayment)
                         }
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For AddFavorites
+    fun requestForAddFavoritesApi(context: Context?,
+                                  contactName : String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            var tranferAmountToWithAlias = transferdAmountTo.substringBefore("@")
+            tranferAmountToWithAlias = tranferAmountToWithAlias.substringBefore("/")
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAddContact(
+                AddContactRequest(tranferAmountToWithAlias,contactName,ApiConstant.CONTEXT_AFTER_LOGIN)
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_SUCCESS, true
+                            )
+                        ) {
+                            getAddFavoritesResponseListner.postValue(result)
+
+                        } else {
+                            getAddFavoritesResponseListner.postValue(result)
+                        }
+
 
                     },
                     { error ->

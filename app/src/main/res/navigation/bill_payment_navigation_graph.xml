@@ -60,6 +60,16 @@
         android:name="com.es.marocapp.usecase.billpayment.fragments.FragmentBillPaymentPostPaidConfirmation"
         android:label="FragmentBillPaymentPostPaidConfirmation"
         tools:layout="@layout/fragment_bill_payment_confimation"
+        >
+        <action
+            android:id="@+id/action_fragmentBillPaymentPostPaidConfirmation_to_fragmentPostPaidBillPaymentSuccess"
+            app:destination="@id/fragmentPostPaidBillPaymentSuccess" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentPostPaidBillPaymentSuccess"
+        android:name="com.es.marocapp.usecase.billpayment.fragments.FragmentPostPaidBillPaymentSuccess"
+        android:label="FragmentPostPaidBillPaymentSuccess"
+        tools:layout="@layout/fragment_bill_payment_success"
         />
 
 </navigation>

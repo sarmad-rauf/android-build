@@ -1,6 +1,7 @@
 package com.es.marocapp.model.responses
 
 data class GetPreLoginDataResponse(
+    val amountConversionValue: String,
     val androidOtpExpiryTime: String,
     val androidOtpLength: Int,
     val bankDomainForRegistration: String,
@@ -12,6 +13,7 @@ data class GetPreLoginDataResponse(
     val dateFormat: String,
     val description: String,
     val genderList: List<String>,
+    val helpLineNumber: String,
     val iosOtpExpiryTime: String,
     val iosOtpLength: Int,
     val msisdnLength: String,

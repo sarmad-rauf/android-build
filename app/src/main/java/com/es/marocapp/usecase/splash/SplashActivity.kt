@@ -128,6 +128,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.APP_DATE_FORMAT = it.dateFormat
                 Constants.CURRENT_CURRENCY_TYPE = it.currencyOnEwp
                 Constants.CURRENT_CURRENCY_TYPE_TO_SHOW = it.currencyToShow
+                Constants.AMOUNT_CONVERSION_VALUE = it.amountConversionValue
                 if(it.quickAmounts.isNotEmpty()){
                     Constants.quickAmountsList.addAll(it.quickAmounts)
                 }else{

@@ -71,6 +71,12 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
         mActivityViewModel.popBackStackTo = R.id.fragmentPostPaidBillType
 
+        if(mActivityViewModel.isInternetSelected.get()!!){
+            mDataBinding.inputLayoutCode.visibility = View.GONE
+        }else{
+            mDataBinding.inputLayoutCode.visibility = View.VISIBLE
+        }
+
         setStrings()
         subscribeObserver()
     }
@@ -141,14 +147,16 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             }
         }
 
-        if(mDataBinding.inputCode.text.isNullOrEmpty() || mDataBinding.inputCode.text.toString().isEmpty()){
-            isValidForAll = false
-            mDataBinding.inputLayoutCode.error = LanguageData.getStringValue("PleaseEnterValidCode")
-            mDataBinding.inputLayoutCode.isErrorEnabled = true
-        }else{
-            mDataBinding.inputLayoutCode.error = ""
-            mDataBinding.inputLayoutCode.isErrorEnabled = false
-            code = mDataBinding.inputCode.text.toString().trim()
+        if(mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!){
+            if(mDataBinding.inputCode.text.isNullOrEmpty() || mDataBinding.inputCode.text.toString().isEmpty()){
+                isValidForAll = false
+                mDataBinding.inputLayoutCode.error = LanguageData.getStringValue("PleaseEnterValidCode")
+                mDataBinding.inputLayoutCode.isErrorEnabled = true
+            }else{
+                mDataBinding.inputLayoutCode.error = ""
+                mDataBinding.inputLayoutCode.isErrorEnabled = false
+                code = mDataBinding.inputCode.text.toString().trim()
+            }
         }
 
         return isValidForAll
