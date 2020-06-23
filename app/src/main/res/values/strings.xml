@@ -166,5 +166,6 @@
     <string name="language_english">English</string>
     <string name="language_french">French</string>
     <string name="enter_code">Enter Code</string>
+    <string name="agree_terms"><![CDATA[You must agree to Terms & Conditions to proceed further]]></string>
 
 </resources>
