@@ -49,21 +49,15 @@ class ApprovalViewModel(application: Application) : AndroidViewModel(application
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true)) {
-
-                            getApprovalResponseListner.postValue(result)
-
+                        if(result?.responseCode != null){
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS ->  getApprovalResponseListner.postValue(result)
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  getApprovalResponseListner.postValue(result)
+                            }
                         }
-                        else if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SESSION_OUT, true)){
-                            (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
-                        }
-                        else if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_INVALID, true)){
-                            (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_INVALID)
-                        }
-                        else {
+                        else{
                             getApprovalResponseListner.postValue(result)
                         }
 
