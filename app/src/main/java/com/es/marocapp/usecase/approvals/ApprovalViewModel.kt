@@ -57,7 +57,11 @@ class ApprovalViewModel(application: Application) : AndroidViewModel(application
                         }
                         else if (result?.responseCode != null && result?.responseCode!!.equals(
                                 ApiConstant.API_SESSION_OUT, true)){
-                            (context as BaseActivity<*>).startNewActivityAndClear(context as MainActivity, LoginActivity::class.java)
+                            (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                        }
+                        else if (result?.responseCode != null && result?.responseCode!!.equals(
+                                ApiConstant.API_INVALID, true)){
+                            (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_INVALID)
                         }
                         else {
                             getApprovalResponseListner.postValue(result)
@@ -192,4 +196,5 @@ class ApprovalViewModel(application: Application) : AndroidViewModel(application
         }
 
     }
+
 }

@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.es.marocapp.usecase.login.LoginActivity.Companion.KEY_REDIRECT_USER
 import com.es.marocapp.utils.Logger
 
 abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
@@ -124,6 +125,25 @@ abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
                     BASE_EXTRA_TEXT_FOR_INTENT_INJECTION + RootValues.getInstance().TIME_STAMP_FOR_INTENT_INJECTION)*/
                 activity.startActivity(intent)
             /*}*/
+        } catch (e: Exception) {
+            Logger.debugLog(Logger.TAG_CATCH_LOGS, e.message!!)
+        }
+
+    }
+
+    fun logoutAndRedirectUserToLoginScreen(activity: Activity, clazz: Class<*>, value: String) {
+        try {
+            //  RootValues.getInstance().TIME_STAMP_FOR_INTENT_INJECTION = System.currentTimeMillis().toString()
+            val intent = Intent(activity, clazz)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            /*intent.putExtra(KEY_INJECTION_EXTRA_STRING,
+                BASE_EXTRA_TEXT_FOR_INTENT_INJECTION + RootValues.getInstance().TIME_STAMP_FOR_INTENT_INJECTION)*/
+            var bundle =Bundle()
+            bundle.putString(KEY_REDIRECT_USER, value)
+            intent.putExtras(bundle)
+            activity.startActivity(intent)
+            activity.finish()
         } catch (e: Exception) {
             Logger.debugLog(Logger.TAG_CATCH_LOGS, e.message!!)
         }
