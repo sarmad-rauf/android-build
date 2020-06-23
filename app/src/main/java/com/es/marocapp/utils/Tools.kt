@@ -1,9 +1,11 @@
 package com.es.marocapp.utils
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.util.Log
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
@@ -70,5 +72,11 @@ object Tools {
             Log.e("QR ERROR", e.toString())
             return null
         }
+    }
+
+    fun openDialerWithNumber(context: Context){
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.data = Uri.parse("tel:" + Constants.HELPLINE_NUMBER)
+            context.startActivity(intent)
     }
 }

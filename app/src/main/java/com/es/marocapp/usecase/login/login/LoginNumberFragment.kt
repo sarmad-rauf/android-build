@@ -232,10 +232,9 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
         mDataBinding.root.txtHeaderTitle.text="Create your account"
         mDataBinding.inputLayoutPhoneNumber.isEnabled=false
         mDataBinding.btnLogin.text = LanguageData.getStringValue("BtnTitle_Submit")
-        mDataBinding.root.tvMsg.text = getString(R.string.agree_terms)
+        mDataBinding.root.tvMsg.text = LanguageData.getStringValue("YouMustAgreeToTermsAndConditionsToProceedFurther")
         mDataBinding.root.cb_Terms.visibility=View.VISIBLE
-        val text =
-            "I agree to <font color='#ff6600'>Terms and Conditions</font>."
+        val text =LanguageData.getStringValue("AgreeTo")  + "<font color='#ff6600'>" +LanguageData.getStringValue("TermsConditionsCaps") + "</font>."
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             mDataBinding.root.cb_Terms.setText(
