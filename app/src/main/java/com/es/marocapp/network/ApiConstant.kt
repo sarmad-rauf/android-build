@@ -4,6 +4,7 @@ object ApiConstant {
     const val API_SUCCESS = "0000"
     const val API_FAILURE = "1500"
     const val API_PENDING = "1800"
+    const val API_SESSION_OUT = "1401"
 
     const val APP_CREDENTIAL_TYPE = "password"
 

@@ -55,6 +55,7 @@
                     android:background="@drawable/circle"
                     android:gravity="center"
                     tools:text="3"
+                    android:visibility="invisible"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/_10ssp"
                     app:layout_constraintBottom_toBottomOf="@+id/imgIconSideMenu"

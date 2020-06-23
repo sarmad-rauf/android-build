@@ -56,7 +56,7 @@ class ApprovalViewModel(application: Application) : AndroidViewModel(application
 
                         }
                         else if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_FAILURE, true)){
+                                ApiConstant.API_SESSION_OUT, true)){
                             (context as BaseActivity<*>).startNewActivityAndClear(context as MainActivity, LoginActivity::class.java)
                         }
                         else {
