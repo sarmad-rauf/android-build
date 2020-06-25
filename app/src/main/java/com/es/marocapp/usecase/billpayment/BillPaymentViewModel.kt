@@ -5,14 +5,15 @@ import android.content.Context
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import com.es.marocapp.R
-import com.es.marocapp.model.requests.AddContactRequest
-import com.es.marocapp.model.requests.PostPaidBillPaymentQuoteRequest
-import com.es.marocapp.model.requests.PostPaidBillPaymentRequest
-import com.es.marocapp.model.requests.PostPaidFinancialResourceInfoRequest
+import com.es.marocapp.model.requests.*
+import com.es.marocapp.model.requests.Param
 import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
+import com.es.marocapp.usecase.BaseActivity
+import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.SingleLiveEvent
 import com.es.marocapp.utils.Tools
@@ -46,6 +47,11 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     var totalBillSelected = -1
 
 
+    //UseCase Observer
+    var isBillUseCaseSelected = ObservableField<Boolean>()
+    var isFatoratiUseCaseSelected = ObservableField<Boolean>()
+
+    //Post PIad Bill Payment Observer
     var isPostPaidMobileSelected = ObservableField<Boolean>()
     var isPostPaidFixSelected = ObservableField<Boolean>()
     var isInternetSelected = ObservableField<Boolean>()
@@ -57,6 +63,17 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     var selectedIvoicesBillPaymentStatus = ObservableField<ArrayList<String>>()
     var selectedIvoicesBillPaymentResponseValue = ObservableField<ArrayList<PostPaidBillPaymentResponse>>()
 
+    //Fatorati Observer
+    var fatoratiStepOneObserver = ObservableField<BillPaymentFatoratiStepOneResponse>()
+    var fatoratiTypeSelected = ObservableField<Creancier>()
+    var fatoratiStepTwoObserver = ObservableField<BillPaymentFatoratiStepTwoResponse>()
+    var fatoratiStepFourObserver = ObservableField<BillPaymentFatoratiStepFourResponse>()
+
+    var selectedFatoraitIvoicesList = ObservableField<ArrayList<FatoratiCustomParamModel>>()
+    var billPaymentPostFatoratiResponseObserver = ObservableField<ArrayList<BillPaymentFatoratiResponse>>()
+
+
+    //Post PIad Bill Payment API Listner
     var getPostPaidResourceInfoResponseListner = SingleLiveEvent<PostPaidFinancialResourceInfoResponse>()
 
     var listOfPostPaidBillPaymentQuote = arrayListOf<PostPaidBillPaymentQuoteResponse>()
@@ -67,6 +84,17 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
 
     var getAddFavoritesResponseListner = SingleLiveEvent<AddContactResponse>()
+
+    //Fatorati API Listner
+    var getFatoratiStepOneResponseListner = SingleLiveEvent<BillPaymentFatoratiStepOneResponse>()
+    var getFatoratiStepTwoResponseListner = SingleLiveEvent<BillPaymentFatoratiStepTwoResponse>()
+    var getFatoratiStepFourResponseListner = SingleLiveEvent<BillPaymentFatoratiStepFourResponse>()
+
+    var listOfFatoratiQuote = arrayListOf<BillPaymentFatoratiQuoteResponse>()
+    var getPostPaidFatoratiQuoteResponseListner = SingleLiveEvent<ArrayList<BillPaymentFatoratiQuoteResponse>>()
+
+    var listOfFatorati = arrayListOf<BillPaymentFatoratiResponse>()
+    var getPostPaidFatoratiResponseListner = SingleLiveEvent<ArrayList<BillPaymentFatoratiResponse>>()
 
     var listOfSelectedBillAmount : ArrayList<String> = arrayListOf()
     var listOfSelectedBillFee : ArrayList<String> = arrayListOf()
@@ -316,5 +344,340 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
         }
 
     }
+
+    //Request For FatoratiStepOne
+    fun requestForFatoratiStepOneApi(context: Context?
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiStepOne(
+                BillPaymentFatoratiStepOneRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.OPERATION_TYPE_CREANCIER,
+                    Constants.getFatoratiAlias(Constants.CURRENT_USER_MSISDN),Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    fatoratiStepOneObserver.set(result)
+                                    getFatoratiStepOneResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    fatoratiStepOneObserver.set(result)
+                                    getFatoratiStepOneResponseListner.postValue(result)
+                                }
+                            }
+
+                        } else {
+                            getFatoratiStepOneResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For FatoratiStepTwo
+    fun requestForFatoratiStepTwoApi(context: Context?,
+                                    receiver: String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+            transferdAmountTo = receiver
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiStepTwo(
+                BillPaymentFatoratiStepTwoRequest(ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,Constants.OPERATION_TYPE_CREANCE,
+                    Constants.getFatoratiAlias(receiver),Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    fatoratiStepTwoObserver.set(result)
+                                    getFatoratiStepTwoResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    fatoratiStepTwoObserver.set(result)
+                                    getFatoratiStepTwoResponseListner.postValue(result)
+                                }
+                            }
+
+                        } else {
+                            getFatoratiStepTwoResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For FatoratiStepFour
+    fun requestForFatoratiStepFourApi(context: Context?
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+
+
+                disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiStepFour(
+                    BillPaymentFatoratiStepFourRequest(fatoratiTypeSelected.get()!!.codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
+                        fatoratiStepTwoObserver.get()!!.param.nomChamp,Constants.OPERATION_TYPE_IMPAYES,Constants.getFatoratiAlias(transferdAmountTo),
+                        fatoratiStepTwoObserver.get()!!.refTxFatourati,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
+                )
+                    .compose(applyIOSchedulers())
+                    .subscribe(
+                        { result ->
+                            isLoading.set(false)
+
+                            if (result?.responseCode != null)
+                            {
+                                when(result?.responseCode) {
+                                    ApiConstant.API_SUCCESS -> {
+                                        fatoratiStepFourObserver.set(result)
+                                        getFatoratiStepFourResponseListner.postValue(result)
+                                    }
+                                    ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                        LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                    ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                        LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                    else ->  {
+                                        fatoratiStepFourObserver.set(result)
+                                        getFatoratiStepFourResponseListner.postValue(result)
+                                    }
+                                }
+
+                            } else {
+                                getFatoratiStepFourResponseListner.postValue(result)
+                            }
+
+
+                        },
+                        { error ->
+                            isLoading.set(false)
+
+                            //Display Error Result Code with with Configure Message
+                            try {
+                                if (context != null && error != null) {
+                                    errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                                }
+                            } catch (e: Exception) {
+                                errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                            }
+
+                        })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For FatoratiQuotePayment
+    fun requestForFatoratiQuoteApi(context: Context?,
+                                   amount: String,idArticle:String,
+                                   prixTTC : String,
+                                   typeArticle :String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiQuote(
+                BillPaymentFatoratiQuoteRequest(amount,fatoratiTypeSelected.get()!!.codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
+                    "true", FatoratiQuoteParam(idArticle,prixTTC,typeArticle),Constants.getFatoratiAlias(transferdAmountTo),
+                    Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_BILL_PAYMENT
+                )
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    listOfFatoratiQuote.add(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    listOfFatoratiQuote.add(result)
+                                }
+                            }
+
+                        } else {
+                            listOfFatoratiQuote.add(result)
+                        }
+
+                        if(listOfFatoratiQuote.size.equals(totalBillSelected)){
+                            getPostPaidFatoratiQuoteResponseListner.postValue(listOfFatoratiQuote)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+
+    //Request For FatoratiPayment
+    fun requestForFatoratiApi(context: Context?,
+                                   amount: String,idArticle:String,
+                                   prixTTC : String,
+                                   typeArticle :String,
+                              quoteId : String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatorati(
+                BillPaymentFatoratiRequest(amount,fatoratiTypeSelected.get()!!.codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
+                    "true", Param(idArticle,prixTTC,typeArticle),quoteId,Constants.getFatoratiAlias(transferdAmountTo),
+                    Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_BILL_PAYMENT
+                )
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    listOfFatorati.add(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    listOfFatorati.add(result)
+                                }
+                            }
+
+                        } else {
+                            listOfFatorati.add(result)
+                        }
+
+                        if(listOfFatorati.size.equals(totalBillSelected)){
+                            billPaymentPostFatoratiResponseObserver.set(listOfFatorati)
+                            getPostPaidFatoratiResponseListner.postValue(listOfFatorati)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
 
 }

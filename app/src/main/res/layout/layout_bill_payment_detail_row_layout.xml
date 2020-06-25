@@ -51,11 +51,11 @@
                 app:layout_constraintEnd_toStartOf="@+id/dueDateVal"
                 />
 
-            <com.es.marocapp.widgets.MarocRegularTextView
+            <com.es.marocapp.widgets.MarocLightTextView
                 android:id="@+id/dueDateVal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/_12ssp"
+                android:textSize="@dimen/_11ssp"
                 android:text="29/04/2020"
                 android:textColor="@color/colorGreyDark"
                 android:layout_marginEnd="@dimen/_16sdp"

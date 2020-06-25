@@ -44,22 +44,26 @@ class FragmentPostPaidPaymentTypes : BaseFragment<FragmentBillPaymentTypeBinding
 
         mBillPaymentTypes.apply {
             add(LanguageData.getStringValue("Bill").toString())
-            add(LanguageData.getStringValue("Favorites").toString())
+            add(LanguageData.getStringValue("WaterAndElectricity").toString())
         }
 
         mBillPaymentTypesIcon.apply {
             add(R.drawable.bill)
-            add(R.drawable.favorites)
+            add(R.drawable.water_electricty)
         }
 
         mBillPaymentItemTypeAdapter = PaymentItemsAdapter(mBillPaymentTypes, mBillPaymentTypesIcon,object : PaymentItemsAdapter.PaymentItemTypeClickListner{
             override fun onPaymentItemTypeClick(paymentItems: String) {
                 when(paymentItems){
                     LanguageData.getStringValue("Bill") -> {
+                        mActivityViewModel.isBillUseCaseSelected.set(true)
+                        mActivityViewModel.isFatoratiUseCaseSelected.set(false)
                         (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidPaymentTypes_to_fragmentPostPaidServiceProvider)
                     }
-                    LanguageData.getStringValue("Favorites") -> {
-                        Toast.makeText(activity,"Under Development",Toast.LENGTH_SHORT).show()
+                    LanguageData.getStringValue("WaterAndElectricity") -> {
+                        mActivityViewModel.isBillUseCaseSelected.set(false)
+                        mActivityViewModel.isFatoratiUseCaseSelected.set(true)
+                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidPaymentTypes_to_fragmentPostPaidServiceProvider)
                     }
                     else -> Toast.makeText(activity,"Nothing Clicked Clicked", Toast.LENGTH_SHORT).show()
 

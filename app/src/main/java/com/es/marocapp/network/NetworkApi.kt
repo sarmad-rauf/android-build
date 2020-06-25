@@ -208,5 +208,27 @@ interface NetworkApi {
     @POST(EndPoints.payment_bill_postpaid)
     fun getPostPaidBillPayment(@Body request : PostPaidBillPaymentRequest) : Observable<PostPaidBillPaymentResponse>
 
+    //BillPaymentFatoratiStepOne
+    @POST(EndPoints.getfinancialresourceinformation_bill_fatourati_step1)
+    fun getBillPaymentFatoratiStepOne(@Body request : BillPaymentFatoratiStepOneRequest) : Observable<BillPaymentFatoratiStepOneResponse>
+
+    //BillPaymentFatoratiStepTwo
+    @POST(EndPoints.getfinancialresourceinformation_bill_fatourati_step2)
+    fun getBillPaymentFatoratiStepTwo(@Body request : BillPaymentFatoratiStepTwoRequest) : Observable<BillPaymentFatoratiStepTwoResponse>
+
+    //BillPaymentFatoratiStepFour
+    @POST(EndPoints.getfinancialresourceinformation_bill_fatourati_step4)
+    fun getBillPaymentFatoratiStepFour(@Body request : BillPaymentFatoratiStepFourRequest) : Observable<BillPaymentFatoratiStepFourResponse>
+
+    //BillPaymentFatoratiQuote
+    @POST(EndPoints.payment_bill_fatourati_quote)
+    fun getBillPaymentFatoratiQuote(@Body request : BillPaymentFatoratiQuoteRequest) : Observable<BillPaymentFatoratiQuoteResponse>
+
+    //BillPaymentFatorati
+    @POST(EndPoints.payment_bill_fatourati)
+    fun getBillPaymentFatorati(@Body request : BillPaymentFatoratiRequest) : Observable<BillPaymentFatoratiResponse>
+
+
+
 
 }

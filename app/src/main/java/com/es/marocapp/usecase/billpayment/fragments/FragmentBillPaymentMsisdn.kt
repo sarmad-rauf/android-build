@@ -66,29 +66,42 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         (activity as BillPaymentActivity).setHeaderVisibility(true)
         (activity as BillPaymentActivity).setCompanyIconToolbarVisibility(true)
 
-        (activity as BillPaymentActivity).mDataBinding.headerBillPayment.rootView.tv_company_title.text = mActivityViewModel.billTypeSelected.get()!!
-        (activity as BillPaymentActivity).mDataBinding.headerBillPayment.rootView.img_company_icons.setImageResource(mActivityViewModel.billTypeSelectedIcon)
+        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+            (activity as BillPaymentActivity).mDataBinding.headerBillPayment.rootView.tv_company_title.text = mActivityViewModel.billTypeSelected.get()!!
+            (activity as BillPaymentActivity).mDataBinding.headerBillPayment.rootView.img_company_icons.setImageResource(mActivityViewModel.billTypeSelectedIcon)
+
+            if(mActivityViewModel.isInternetSelected.get()!!){
+                mDataBinding.inputLayoutCode.visibility = View.GONE
+            }else{
+                mDataBinding.inputLayoutCode.visibility = View.VISIBLE
+            }
+
+
+            (activity as BillPaymentActivity).setLetterIconVisible(false,"")
+        }
+        if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+            (activity as BillPaymentActivity).mDataBinding.headerBillPayment.rootView.tv_company_title.text = mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier
+
+            mDataBinding.inputLayoutCode.visibility = View.GONE
+
+            (activity as BillPaymentActivity).setLetterIconVisible(true,mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier[0].toString())
+
+        }
 
         mActivityViewModel.popBackStackTo = R.id.fragmentPostPaidBillType
-
-        if(mActivityViewModel.isInternetSelected.get()!!){
-            mDataBinding.inputLayoutCode.visibility = View.GONE
-        }else{
-            mDataBinding.inputLayoutCode.visibility = View.VISIBLE
-        }
 
         setStrings()
         subscribeObserver()
     }
 
-    private fun subscribeObserver() {
+    private fun setStrings() {
         mDataBinding.inputLayoutCode.hint = LanguageData.getStringValue("EnterCode")
         mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterContactNumber")
         mDataBinding.selectFavoriteTypeTitle.hint = LanguageData.getStringValue("SelectFavorite")
         mDataBinding.btnNext.text = LanguageData.getStringValue("Submit")
     }
 
-    private fun setStrings() {
+    private fun subscribeObserver() {
         mActivityViewModel.errorText.observe(this@FragmentBillPaymentMsisdn, Observer {
             DialogUtils.showErrorDialoge(activity,it)
         }
@@ -106,11 +119,37 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 }
             }
         )
+
+        mActivityViewModel.getFatoratiStepTwoResponseListner.observe(this@FragmentBillPaymentMsisdn,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    mActivityViewModel.requestForFatoratiStepFourApi(activity)
+                }else{
+                    DialogUtils.showErrorDialoge(activity,it.description)
+                }
+            }
+        )
+
+        mActivityViewModel.getFatoratiStepFourResponseListner.observe(this@FragmentBillPaymentMsisdn,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMsisdn_to_fragmentPostPaidBillDetails)
+                }else{
+                    DialogUtils.showErrorDialoge(activity,it.description)
+                }
+            }
+        )
     }
 
     override fun onSubmitClickListner(view: View) {
         if(isValidForAll()){
-            mActivityViewModel.requestForPostPaidFinancialResourceInfoApi(activity,code,msisdnEntered)
+            if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+                mActivityViewModel.requestForPostPaidFinancialResourceInfoApi(activity,code,msisdnEntered)
+            }
+
+            if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+                mActivityViewModel.requestForFatoratiStepTwoApi(activity,msisdnEntered)
+            }
         }
     }
 
@@ -146,16 +185,17 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
             }
         }
-
-        if(mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!){
-            if(mDataBinding.inputCode.text.isNullOrEmpty() || mDataBinding.inputCode.text.toString().isEmpty()){
-                isValidForAll = false
-                mDataBinding.inputLayoutCode.error = LanguageData.getStringValue("PleaseEnterValidCode")
-                mDataBinding.inputLayoutCode.isErrorEnabled = true
-            }else{
-                mDataBinding.inputLayoutCode.error = ""
-                mDataBinding.inputLayoutCode.isErrorEnabled = false
-                code = mDataBinding.inputCode.text.toString().trim()
+        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+            if(mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!){
+                if(mDataBinding.inputCode.text.isNullOrEmpty() || mDataBinding.inputCode.text.toString().isEmpty()){
+                    isValidForAll = false
+                    mDataBinding.inputLayoutCode.error = LanguageData.getStringValue("PleaseEnterValidCode")
+                    mDataBinding.inputLayoutCode.isErrorEnabled = true
+                }else{
+                    mDataBinding.inputLayoutCode.error = ""
+                    mDataBinding.inputLayoutCode.isErrorEnabled = false
+                    code = mDataBinding.inputCode.text.toString().trim()
+                }
             }
         }
 

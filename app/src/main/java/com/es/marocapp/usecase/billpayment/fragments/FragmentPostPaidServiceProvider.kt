@@ -2,15 +2,18 @@ package com.es.marocapp.usecase.billpayment.fragments
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.PaymentItemsAdapter
 import com.es.marocapp.databinding.FragmentBillPaymentTypeBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.billpayment.BillPaymentActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentViewModel
+import com.es.marocapp.utils.DialogUtils
 
 class FragmentPostPaidServiceProvider : BaseFragment<FragmentBillPaymentTypeBinding>() {
 
@@ -42,11 +45,21 @@ class FragmentPostPaidServiceProvider : BaseFragment<FragmentBillPaymentTypeBind
         mActivityViewModel.popBackStackTo = R.id.fragmentPostPaidPaymentTypes
 
         mBillPaymentTypes.apply {
-            add(LanguageData.getStringValue("IAM").toString())
+            if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+                add(LanguageData.getStringValue("IAM").toString())
+            }
+            if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+                add(LanguageData.getStringValue("Fatourati").toString())
+            }
         }
 
         mBillPaymentTypesIcon.apply {
-            add(R.drawable.iam)
+            if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+                add(R.drawable.iam)
+            }
+            if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+                add(R.drawable.fatourati)
+            }
         }
 
         mBillPaymentItemTypeAdapter = PaymentItemsAdapter(mBillPaymentTypes, mBillPaymentTypesIcon,object : PaymentItemsAdapter.PaymentItemTypeClickListner{
@@ -55,6 +68,11 @@ class FragmentPostPaidServiceProvider : BaseFragment<FragmentBillPaymentTypeBind
                     LanguageData.getStringValue("IAM") -> {
                         (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidServiceProvider_to_fragmentPostPaidBillType)
                     }
+
+                    LanguageData.getStringValue("Fatourati") -> {
+                        mActivityViewModel.requestForFatoratiStepOneApi(activity)
+                    }
+
                     else -> Toast.makeText(activity,"Nothing Clicked Clicked", Toast.LENGTH_SHORT).show()
 
                 }
@@ -66,6 +84,23 @@ class FragmentPostPaidServiceProvider : BaseFragment<FragmentBillPaymentTypeBind
             layoutManager = LinearLayoutManager(activity as BillPaymentActivity)
         }
 
+        subscribeObserver()
+
+    }
+
+    private fun subscribeObserver() {
+        mActivityViewModel.errorText.observe(this@FragmentPostPaidServiceProvider, Observer {
+            DialogUtils.showErrorDialoge(activity,it)
+        })
+
+        mActivityViewModel.getFatoratiStepOneResponseListner.observe(this@FragmentPostPaidServiceProvider,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidServiceProvider_to_fragmentPostPaidBillType)
+                }else{
+                    DialogUtils.showErrorDialoge(activity,it.description)
+                }
+            })
     }
 
 }

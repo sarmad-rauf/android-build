@@ -5,7 +5,6 @@ import android.content.Context.WIFI_SERVICE
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.text.format.Formatter.formatIpAddress
-import android.util.Base64.encodeToString
 import android.util.Log
 import com.es.marocapp.model.responses.BalanceInfoAndLimitResponse
 import com.es.marocapp.model.responses.Contact
@@ -14,7 +13,6 @@ import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 object Constants {
@@ -29,6 +27,10 @@ object Constants {
     const val TRANSFER_TYPE_PAYMENT = "INTEROP_TRANSFER"
     const val MERCHANT_TYPE_PAYMENT = "INTEROP_TRANSFER_SEND"
     const val TYPE_PAYMENT = "PAYMENT"
+    const val TYPE_BILL_PAYMENT = "BILL_PAYMENT"
+    const val OPERATION_TYPE_CREANCIER = "creancier"
+    const val OPERATION_TYPE_CREANCE = "creance"
+    const val OPERATION_TYPE_IMPAYES = "impayes"
     const val TYPE_CASH_IN = "CASH_IN"
 
     //preLoginData
@@ -144,6 +146,10 @@ object Constants {
         return "$number@bscs.internet.sp/SP"
     }
 
+    fun getFatoratiAlias(number: String) :String{
+        return "$number@fatourati.sp/SP"
+    }
+
     fun addAmountAndFee(amount : Double, fee : Double): String{
         return (amount+fee).toString()
     }
@@ -167,5 +173,10 @@ object Constants {
         val cal = Calendar.getInstance()
         cal.time = d
         return SimpleDateFormat("MMMM").format(cal.time)
+    }
+
+    fun converValueToTwoDecimalPlace(value : Double) : String{
+        val result = java.lang.String.format("%.2f", value)
+        return result
     }
 }

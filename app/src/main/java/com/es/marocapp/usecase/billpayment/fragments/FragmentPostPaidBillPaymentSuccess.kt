@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.BillDetailItemAdapter
+import com.es.marocapp.adapter.FatoratiPaidBillAdapter
 import com.es.marocapp.adapter.PaidBillStatusAdpater
 import com.es.marocapp.databinding.FragmentBillPaymentSuccessBinding
 import com.es.marocapp.locale.LanguageData
@@ -26,6 +27,7 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
     private lateinit var mActivityViewModel : BillPaymentViewModel
 
     private lateinit var mBillPaidAdapter : PaidBillStatusAdpater
+    private lateinit var mFatoratiBillPaidAdapter : FatoratiPaidBillAdapter
 
 
     override fun setLayout(): Int {
@@ -73,9 +75,27 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
 
         mDataBinding.tvSuccessTitle.text = LanguageData.getStringValue("BillPayment")
 
-        populatePaidBillList()
+        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+            populatePaidBillList()
+        }
+
+        if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+            populateFatoratiBillList()
+        }
 
         subscribeObserver()
+    }
+
+    private fun populateFatoratiBillList() {
+        var receiverNumber = mActivityViewModel.transferdAmountTo.substringBefore("@")
+        receiverNumber = receiverNumber.substringBefore("/")
+        mFatoratiBillPaidAdapter = FatoratiPaidBillAdapter(mActivityViewModel.listOfFatorati,mActivityViewModel.listOfSelectedBillAmount,mActivityViewModel.listOfSelectedBillFee,
+            receiverNumber)
+
+        mDataBinding.mPaidBillsRecycler.apply {
+            adapter = mFatoratiBillPaidAdapter
+            layoutManager = LinearLayoutManager(activity)
+        }
     }
 
     private fun populatePaidBillList() {
@@ -111,6 +131,8 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
         mActivityViewModel.isPostPaidMobileSelected.set(false)
         mActivityViewModel.isPostPaidFixSelected.set(false)
         mActivityViewModel.isInternetSelected.set(false)
+        mActivityViewModel.isBillUseCaseSelected.set(false)
+        mActivityViewModel.isFatoratiUseCaseSelected.set(false)
         Constants.HEADERS_FOR_PAYEMNTS = false
         (activity as BillPaymentActivity).startNewActivityAndClear(
             activity as BillPaymentActivity,
@@ -122,6 +144,8 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
         mActivityViewModel.isPostPaidMobileSelected.set(false)
         mActivityViewModel.isPostPaidFixSelected.set(false)
         mActivityViewModel.isInternetSelected.set(false)
+        mActivityViewModel.isBillUseCaseSelected.set(false)
+        mActivityViewModel.isFatoratiUseCaseSelected.set(false)
         Constants.HEADERS_FOR_PAYEMNTS = false
         (activity as BillPaymentActivity).startNewActivityAndClear(
             activity as BillPaymentActivity,

@@ -70,4 +70,15 @@ class BillPaymentActivity : BaseActivity<ActivityBillPaymentBinding>() {
         }
     }
 
+    fun setLetterIconVisible(isVisible: Boolean,letter : String){
+        if(isVisible){
+            mDataBinding.headerBillPayment.rootView.first_letter_icons.visibility = View.VISIBLE
+            mDataBinding.headerBillPayment.rootView.first_letter_icons.text = letter
+            mDataBinding.headerBillPayment.rootView.img_company_icons.visibility = View.GONE
+        }else{
+            mDataBinding.headerBillPayment.rootView.first_letter_icons.visibility = View.GONE
+            mDataBinding.headerBillPayment.rootView.img_company_icons.visibility = View.VISIBLE
+        }
+    }
+
 }

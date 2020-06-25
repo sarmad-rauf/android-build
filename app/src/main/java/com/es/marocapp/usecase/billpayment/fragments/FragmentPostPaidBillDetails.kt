@@ -8,9 +8,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
+import com.es.marocapp.adapter.BillDetailFatoratiItemAdapter
 import com.es.marocapp.adapter.BillDetailItemAdapter
 import com.es.marocapp.databinding.FragmentBillPaymentBillDetailsBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.model.responses.FatoratiCustomParamModel
 import com.es.marocapp.model.responses.InvoiceCustomModel
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
@@ -26,10 +28,13 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
     private lateinit var mActivityViewModel : BillPaymentViewModel
 
     private lateinit var mBillDetailsAdapter : BillDetailItemAdapter
+    private lateinit var mFatoratiBillDetailsAdapter : BillDetailFatoratiItemAdapter
 
     private var listOfCustomInvoice = arrayListOf<InvoiceCustomModel>()
-
     private var selectedListOfInvoice = arrayListOf<InvoiceCustomModel>()
+
+    private var listOfFatoratiCustomInvoice = arrayListOf<FatoratiCustomParamModel>()
+    private var selectedFatoratiListOfInvoice = arrayListOf<FatoratiCustomParamModel>()
 
     override fun setLayout(): Int {
         return R.layout.fragment_bill_payment_bill_details
@@ -50,29 +55,61 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
 
         mActivityViewModel.popBackStackTo = R.id.fragmentBillPaymentMsisdn
 
-        for(i in mActivityViewModel.PostPaidFinancialResourceInfoObserver.get()!!.invoices.indices){
-            var item = mActivityViewModel.PostPaidFinancialResourceInfoObserver.get()!!.invoices[i]
-            listOfCustomInvoice.add(InvoiceCustomModel(false,item.month,item.ohrefnum,item.ohxact,item.openAmount))
+        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+            for(i in mActivityViewModel.PostPaidFinancialResourceInfoObserver.get()!!.invoices.indices){
+                var item = mActivityViewModel.PostPaidFinancialResourceInfoObserver.get()!!.invoices[i]
+                listOfCustomInvoice.add(InvoiceCustomModel(false,item.month,item.ohrefnum,item.ohxact,item.openAmount))
+            }
+        }
+        if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+            for(i in mActivityViewModel.fatoratiStepFourObserver.get()!!.params.indices){
+                var item = mActivityViewModel.fatoratiStepFourObserver.get()!!.params[i]
+                listOfFatoratiCustomInvoice.add(FatoratiCustomParamModel(false,item.description,item.idArticle,item.prixTTC,item.typeArticle))
+            }
         }
 
         mBillDetailsAdapter = BillDetailItemAdapter(listOfCustomInvoice)
+        mFatoratiBillDetailsAdapter = BillDetailFatoratiItemAdapter(listOfFatoratiCustomInvoice)
         mDataBinding.mBillsRecycler.apply {
-            adapter = mBillDetailsAdapter
+            if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+                adapter = mBillDetailsAdapter
+            }
+            if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+                adapter = mFatoratiBillDetailsAdapter
+            }
             layoutManager = LinearLayoutManager(activity)
         }
 
         mDataBinding.selectAllCheckBox.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener{
             override fun onCheckedChanged(p0: CompoundButton?, isChecked: Boolean) {
                 if(isChecked){
-                    for(i in listOfCustomInvoice.indices){
-                        listOfCustomInvoice[i].isBillSelected = isChecked
+                    if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+                        for(i in listOfFatoratiCustomInvoice.indices){
+                            listOfFatoratiCustomInvoice[i].isItemSelected = isChecked
+                        }
+                        mFatoratiBillDetailsAdapter.notifyDataSetChanged()
                     }
-                    mBillDetailsAdapter.notifyDataSetChanged()
+
+                    if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+                        for(i in listOfCustomInvoice.indices){
+                            listOfCustomInvoice[i].isBillSelected = isChecked
+                        }
+                        mBillDetailsAdapter.notifyDataSetChanged()
+                    }
                 }else{
-                    for(i in listOfCustomInvoice.indices){
-                        listOfCustomInvoice[i].isBillSelected = isChecked
+                    if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+                        for(i in listOfFatoratiCustomInvoice.indices){
+                            listOfFatoratiCustomInvoice[i].isItemSelected = isChecked
+                        }
+                        mFatoratiBillDetailsAdapter.notifyDataSetChanged()
                     }
-                    mBillDetailsAdapter.notifyDataSetChanged()
+
+                    if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+                        for(i in listOfCustomInvoice.indices){
+                            listOfCustomInvoice[i].isBillSelected = isChecked
+                        }
+                        mBillDetailsAdapter.notifyDataSetChanged()
+                    }
                 }
             }
 
@@ -113,7 +150,36 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
                 }else{
                     DialogUtils.showErrorDialoge(activity,LanguageData.getStringValue("SomethingWentWrong"))
                 }
-            })
+            }
+        )
+
+        mActivityViewModel.getPostPaidFatoratiQuoteResponseListner.observe(this@FragmentPostPaidBillDetails,
+            Observer {
+                if(!it.isNullOrEmpty()){
+                    var isAllBillPaymentSucceed = false
+                    var mQouteList : ArrayList<String> = arrayListOf()
+                    for(i in it.indices){
+                        if(it[i].responseCode.equals(ApiConstant.API_SUCCESS)){
+                            isAllBillPaymentSucceed = true
+                            if(it[i].quoteList.isNotEmpty()){
+                                mQouteList.add(it[i].quoteList[0].quoteid)
+                            }
+                        }else{
+                            mQouteList.add("-1")
+                        }
+                    }
+
+                    if(isAllBillPaymentSucceed){
+                        mActivityViewModel.selectedIvoicesQuoteList.set(mQouteList)
+                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidBillDetails_to_fragmentBillPaymentPostPaidConfirmation)
+                    }else{
+                        DialogUtils.showErrorDialoge(activity,LanguageData.getStringValue("SomethingWentWrong"))
+                    }
+                }else{
+                    DialogUtils.showErrorDialoge(activity,LanguageData.getStringValue("SomethingWentWrong"))
+                }
+            }
+        )
     }
 
     private fun setStrings() {
@@ -121,20 +187,63 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
     }
 
     override fun onSubmitClickListner(view: View) {
-        selectedListOfInvoice.addAll(mBillDetailsAdapter.getUpdateList())
+        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+            selectedListOfInvoice.addAll(mBillDetailsAdapter.getUpdateList())
+            payPostPaidBillsCall()
+        }
 
-        mActivityViewModel.totalBillSelected = selectedListOfInvoice.size
-        mActivityViewModel.selectedIvoicesList.set(selectedListOfInvoice)
-        for(i in selectedListOfInvoice.indices){
-            //Ohrefnum(16) + month (8) + OpenAmount (15) + OHXACT (38)
-            var convertedBillAmount  = (selectedListOfInvoice[i].openAmount.toDouble()/Constants.AMOUNT_CONVERSION_VALUE.toDouble()).toString()
-            mActivityViewModel.listOfSelectedBillAmount.add(convertedBillAmount)
-            mActivityViewModel.totalSelectedBillAmount = ((mActivityViewModel.totalSelectedBillAmount.toDouble()+convertedBillAmount.toDouble())).toString()
-            Log.i("TotalBillAmount",mActivityViewModel.totalSelectedBillAmount)
-            var selectBillInvoice = selectedListOfInvoice[i].ohrefnum+selectedListOfInvoice[i].month+selectedListOfInvoice[i].openAmount+selectedListOfInvoice[i].ohxact
-            mActivityViewModel.selectBillAmount = selectedListOfInvoice[i].openAmount
-            mActivityViewModel.requestForPostPaidBillPaymentQuoteApi(activity,selectedListOfInvoice[i].month,selectedListOfInvoice[i].ohrefnum,selectedListOfInvoice[i].ohxact,
-                selectedListOfInvoice[i].openAmount)
+        if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+            selectedFatoratiListOfInvoice.addAll(mFatoratiBillDetailsAdapter.getUpdateList())
+            payFatoratiBillsCall()
+        }
+
+
+    }
+
+    private fun payFatoratiBillsCall() {
+        Log.i("SelectedBillCOunt",selectedFatoratiListOfInvoice.size.toString())
+        if(selectedFatoratiListOfInvoice.size.equals(0)){
+            mDataBinding.btnNext.isClickable = false
+            mDataBinding.btnNext.isActivated = false
+        }else{
+            mDataBinding.btnNext.isClickable = true
+            mDataBinding.btnNext.isActivated = true
+
+            mActivityViewModel.totalBillSelected = selectedFatoratiListOfInvoice.size
+            mActivityViewModel.selectedFatoraitIvoicesList.set(selectedFatoratiListOfInvoice)
+            for(i in selectedFatoratiListOfInvoice.indices){
+
+                var convertedBillAmount  = selectedFatoratiListOfInvoice[i].prixTTC
+                mActivityViewModel.listOfSelectedBillAmount.add(convertedBillAmount)
+                mActivityViewModel.totalSelectedBillAmount = ((mActivityViewModel.totalSelectedBillAmount.toDouble()+convertedBillAmount.toDouble())).toString()
+                Log.i("TotalBillAmount",mActivityViewModel.totalSelectedBillAmount)
+                mActivityViewModel.requestForFatoratiQuoteApi(activity,selectedFatoratiListOfInvoice[i].prixTTC,selectedFatoratiListOfInvoice[i].idArticle,
+                    selectedFatoratiListOfInvoice[i].prixTTC,
+                    selectedFatoratiListOfInvoice[i].typeArticle)
+            }
+        }
+    }
+
+    private fun payPostPaidBillsCall() {
+        if(selectedListOfInvoice.size.equals(0)){
+            mDataBinding.btnNext.isClickable = false
+            mDataBinding.btnNext.isActivated = false
+        }else{
+            mDataBinding.btnNext.isClickable = true
+            mDataBinding.btnNext.isActivated = true
+            mActivityViewModel.totalBillSelected = selectedListOfInvoice.size
+            mActivityViewModel.selectedIvoicesList.set(selectedListOfInvoice)
+            for(i in selectedListOfInvoice.indices){
+                //Ohrefnum(16) + month (8) + OpenAmount (15) + OHXACT (38)
+                var convertedBillAmount  = (selectedListOfInvoice[i].openAmount.toDouble()/Constants.AMOUNT_CONVERSION_VALUE.toDouble()).toString()
+                mActivityViewModel.listOfSelectedBillAmount.add(convertedBillAmount)
+                mActivityViewModel.totalSelectedBillAmount = ((mActivityViewModel.totalSelectedBillAmount.toDouble()+convertedBillAmount.toDouble())).toString()
+                Log.i("TotalBillAmount",mActivityViewModel.totalSelectedBillAmount)
+                var selectBillInvoice = selectedListOfInvoice[i].ohrefnum+selectedListOfInvoice[i].month+selectedListOfInvoice[i].openAmount+selectedListOfInvoice[i].ohxact
+                mActivityViewModel.selectBillAmount = selectedListOfInvoice[i].openAmount
+                mActivityViewModel.requestForPostPaidBillPaymentQuoteApi(activity,selectedListOfInvoice[i].month,selectedListOfInvoice[i].ohrefnum,selectedListOfInvoice[i].ohxact,
+                    selectedListOfInvoice[i].openAmount)
+            }
         }
     }
 

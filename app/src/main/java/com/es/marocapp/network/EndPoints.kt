@@ -140,4 +140,19 @@ object EndPoints {
     //payment/bill/postpaid
     const val payment_bill_postpaid = "payment/bill/postpaid"
 
+    //getfinancialresourceinformation/bill/fatourati/step1
+    const val getfinancialresourceinformation_bill_fatourati_step1 = "getfinancialresourceinformation/bill/fatourati/step1"
+
+    ///getfinancialresourceinformation/bill/fatourati/step2
+    const val getfinancialresourceinformation_bill_fatourati_step2 = "getfinancialresourceinformation/bill/fatourati/step2"
+
+    //getfinancialresourceinformation/bill/fatourati/step4
+    const val getfinancialresourceinformation_bill_fatourati_step4 = "getfinancialresourceinformation/bill/fatourati/step4"
+
+    //payment/bill/fatourati/quote
+    const val payment_bill_fatourati_quote = "payment/bill/fatourati/quote"
+
+    //payment/bill/fatourati
+    const val payment_bill_fatourati = "payment/bill/fatourati"
+
 }
