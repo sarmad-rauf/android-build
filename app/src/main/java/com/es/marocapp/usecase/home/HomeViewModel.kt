@@ -16,6 +16,9 @@ import com.es.marocapp.model.responses.VerifyOTPForDefaultAccountResponse
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
+import com.es.marocapp.usecase.BaseActivity
+import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.SingleLiveEvent
 import com.es.marocapp.utils.Tools
@@ -56,11 +59,20 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getAccountHolderAdditionalInfoResponseListner.postValue(result)
+                        if (result?.responseCode != null) {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getAccountHolderAdditionalInfoResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getAccountHolderAdditionalInfoResponseListner.postValue(result)
+                                }
+                            }
+                            
 
                         } else {
                             errorText.postValue(result?.description)
@@ -116,10 +128,20 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true)) {
-
-                            setDefaultAccountResponseListener.postValue(result)
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    setDefaultAccountResponseListener.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    setDefaultAccountResponseListener.postValue(result)
+                                }
+                            }
 
                         } else {
                             errorText.postValue(result?.description)
@@ -179,11 +201,20 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true)) {
-
-                            verifyOTPForDefaultAccountResponseListener.postValue(result)
-
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    verifyOTPForDefaultAccountResponseListener.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    verifyOTPForDefaultAccountResponseListener.postValue(result)
+                                }
+                            }
                         } else {
                             errorText.postValue(result?.description)
                         }

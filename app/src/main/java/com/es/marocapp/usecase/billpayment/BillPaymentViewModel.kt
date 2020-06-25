@@ -135,12 +135,21 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getPostPaidResourceInfoResponseListner.postValue(result)
-                            PostPaidFinancialResourceInfoObserver.set(result)
+                        if (result?.responseCode != null) {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getPostPaidResourceInfoResponseListner.postValue(result)
+                                    PostPaidFinancialResourceInfoObserver.set(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getPostPaidResourceInfoResponseListner.postValue(result)
+                                    PostPaidFinancialResourceInfoObserver.set(result)
+                                }
+                            }
                         } else {
                             getPostPaidResourceInfoResponseListner.postValue(result)
                         }
@@ -194,11 +203,19 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            listOfPostPaidBillPaymentQuote.add(result)
+                        if (result?.responseCode != null) {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    listOfPostPaidBillPaymentQuote.add(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    listOfPostPaidBillPaymentQuote.add(result)
+                                }
+                            }
                         } else {
                             listOfPostPaidBillPaymentQuote.add(result)
                         }
@@ -254,11 +271,21 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            listOfPostPaidBillPayment.add(result)
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    listOfPostPaidBillPayment.add(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    listOfPostPaidBillPayment.add(result)
+                                }
+                            }
+
                         } else {
                             listOfPostPaidBillPayment.add(result)
                         }
@@ -311,11 +338,20 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getAddFavoritesResponseListner.postValue(result)
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getAddFavoritesResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getAddFavoritesResponseListner.postValue(result)
+                                }
+                            }
 
                         } else {
                             getAddFavoritesResponseListner.postValue(result)
