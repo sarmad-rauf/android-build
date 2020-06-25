@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -17,18 +16,17 @@ import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentSignUpDetailBinding
 import com.es.marocapp.locale.LanguageData
-import com.es.marocapp.model.responses.GetAccountHolderInformationResponse
 import com.es.marocapp.model.responses.GetInitialAuthDetailsReponse
 import com.es.marocapp.model.responses.GetOtpForRegistrationResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
-import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 import java.util.*
+import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 
@@ -39,7 +37,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
     TextWatcher {
 
     lateinit var mActivityViewModel: LoginActivityViewModel
-
+    var emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex()
     var isCnicMatches = false
 
     override fun setLayout(): Int {
@@ -254,9 +252,16 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
             mDataBinding.inputLayoutGender.isErrorEnabled = false
         }
 
-        if(mDataBinding.inputEmail.text.isNullOrEmpty()){
+        if(mDataBinding.inputEmail.text.isNullOrEmpty() || !mDataBinding.inputEmail.text.trim().matches(emailPattern)){
             isValidForAll = false
-            mDataBinding.inputLayoutEmail.error = LanguageData.getStringValue("PleaseEnterEmailAddress")
+            if(mDataBinding.inputEmail.text.isNullOrEmpty()) {
+                mDataBinding.inputLayoutEmail.error =
+                    LanguageData.getStringValue("PleaseEnterEmailAddress")
+            }
+            else{
+                mDataBinding.inputLayoutEmail.error =
+                    LanguageData.getStringValue("PleaseEnterValidEmail")
+            }
             mDataBinding.inputLayoutEmail.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutEmail.error = ""
@@ -275,5 +280,4 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
         return isValidForAll
     }
-
 }

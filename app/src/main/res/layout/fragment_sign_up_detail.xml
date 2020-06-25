@@ -54,6 +54,7 @@
                         android:layout_height="wrap_content"
                         android:theme="@style/myTextInputLabel"
                         android:hint="@string/enter_first_name"
+                        android:digits="@string/regex_alphabets"
                         android:inputType="textPersonName" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,6 +73,7 @@
                         android:layout_height="wrap_content"
                         android:theme="@style/myTextInputLabel"
                         android:hint="@string/enter_last_name"
+                        android:digits="@string/regex_alphabets"
                         android:inputType="textPersonName" />
                 </com.google.android.material.textfield.TextInputLayout>
 
