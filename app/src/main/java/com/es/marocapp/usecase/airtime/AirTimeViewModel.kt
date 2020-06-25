@@ -17,6 +17,8 @@ import com.es.marocapp.model.responses.GetAirTimeUseCasesResponse
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
+import com.es.marocapp.usecase.BaseActivity
+import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.SingleLiveEvent
 import com.es.marocapp.utils.Tools
@@ -81,12 +83,21 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getAirTimeUseCasesResponseListner.postValue(result)
-                            mAirTimeUseCaseResponse.set(result)
+                        if (result?.responseCode != null) {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getAirTimeUseCasesResponseListner.postValue(result)
+                                    mAirTimeUseCaseResponse.set(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as AirTimeActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as AirTimeActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getAirTimeUseCasesResponseListner.postValue(result)
+                                    mAirTimeUseCaseResponse.set(result)
+                                }
+                            }
                         } else {
                             getAirTimeUseCasesResponseListner.postValue(result)
                         }
@@ -153,11 +164,20 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getAirTimeQuoteResponseListner.postValue(result)
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getAirTimeQuoteResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as AirTimeActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as AirTimeActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getAirTimeQuoteResponseListner.postValue(result)
+                                }
+                            }
                         } else {
                             getAirTimeQuoteResponseListner.postValue(result)
                         }
@@ -222,11 +242,21 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getAirTimeResponseListner.postValue(result)
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getAirTimeResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as AirTimeActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as AirTimeActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getAirTimeResponseListner.postValue(result)
+                                }
+                            }
+
                         } else {
                             getAirTimeResponseListner.postValue(result)
                         }
@@ -273,12 +303,20 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getAddFavoritesResponseListner.postValue(result)
-
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getAddFavoritesResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as AirTimeActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as AirTimeActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getAddFavoritesResponseListner.postValue(result)
+                                }
+                            }
                         } else {
                             getAddFavoritesResponseListner.postValue(result)
                         }

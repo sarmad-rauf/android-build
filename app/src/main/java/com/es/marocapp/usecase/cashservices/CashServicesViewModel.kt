@@ -10,6 +10,8 @@ import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
+import com.es.marocapp.usecase.BaseActivity
+import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.SingleLiveEvent
 import com.es.marocapp.utils.Tools
@@ -67,11 +69,20 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getInitiateTrasnferQuoteResponseListner.postValue(result)
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getInitiateTrasnferQuoteResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as CashServicesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as CashServicesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getInitiateTrasnferQuoteResponseListner.postValue(result)
+                                }
+                            }
 
                         } else {
                             getInitiateTrasnferQuoteResponseListner.postValue(result)
@@ -122,12 +133,20 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getInitiateTrasnferResponseListner.postValue(result)
-
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getInitiateTrasnferResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as CashServicesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as CashServicesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getInitiateTrasnferResponseListner.postValue(result)
+                                }
+                            }
                         } else {
                             getInitiateTrasnferResponseListner.postValue(result)
                         }
@@ -174,12 +193,19 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getCashInWithOtpQuoteResponseListner.postValue(result)
-
+                        if (result?.responseCode != null) {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getCashInWithOtpQuoteResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as CashServicesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as CashServicesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getCashInWithOtpQuoteResponseListner.postValue(result)
+                                }
+                            }
                         } else {
                             getCashInWithOtpQuoteResponseListner.postValue(result)
                         }
@@ -229,12 +255,20 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getCashInWithOtpResponseListner.postValue(result)
-
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getCashInWithOtpResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as CashServicesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as CashServicesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getCashInWithOtpResponseListner.postValue(result)
+                                }
+                            }
                         } else {
                             getCashInWithOtpResponseListner.postValue(result)
                         }
@@ -287,16 +321,24 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getGenerateOtpResponseListner.postValue(result)
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getGenerateOtpResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as CashServicesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as CashServicesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getGenerateOtpResponseListner.postValue(result)
+                                }
+                            }
 
                         } else {
                             getGenerateOtpResponseListner.postValue(result)
                         }
-
 
                     },
                     { error ->
@@ -339,12 +381,19 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getBalanceResponseListner.postValue(result)
-
+                        if (result?.responseCode != null) {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getBalanceResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as CashServicesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as CashServicesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getBalanceResponseListner.postValue(result)
+                                }
+                            }
                         } else {
                             getBalanceResponseListner.postValue(result)
                         }

@@ -10,6 +10,8 @@ import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
+import com.es.marocapp.usecase.BaseActivity
+import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.SingleLiveEvent
 import com.es.marocapp.utils.Tools
@@ -88,9 +90,14 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
                             // if response code is 1500 this means user  user isnot registered redirecting user to Registration flow
                             getAccountHolderInformationResponseListner.postValue(result)
                             mAccountHolderInfoResponseObserver.set(result)
-                        }
-                        else {
-                            errorText.postValue(Constants.SHOW_SERVER_ERROR)
+                        }else if(result.responseCode.equals(ApiConstant.API_SESSION_OUT)){
+                            (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                        }else if(result.responseCode.equals(ApiConstant.API_SESSION_OUT)){
+                            (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                LoginActivity.KEY_REDIRECT_USER_INVALID)
+                        } else {
+                            getAccountHolderInformationResponseListner.postValue(result)
                         }
 
 
@@ -136,12 +143,19 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getAccountHolderAdditionalInfoResponseListner.postValue(result)
-
+                        if (result?.responseCode != null ) {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getAccountHolderAdditionalInfoResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getAccountHolderAdditionalInfoResponseListner.postValue(result)
+                                }
+                            }
                         } else {
                             errorText.postValue(Constants.SHOW_SERVER_ERROR)
                         }
@@ -190,11 +204,19 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getTransferQouteResponseListner.postValue(result)
+                        if (result?.responseCode != null) {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getTransferQouteResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getTransferQouteResponseListner.postValue(result)
+                                }
+                            }
 
                         } else {
                             getTransferQouteResponseListner.postValue(result)
@@ -242,11 +264,20 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getTransferResponseListner.postValue(result)
+                        if (result?.responseCode != null ) 
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getTransferResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getTransferResponseListner.postValue(result)
+                                }
+                            }
 
                         } else {
                             getTransferResponseListner.postValue(result)
@@ -295,11 +326,20 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getMerchantQouteResponseListner.postValue(result)
+                        if (result?.responseCode != null) 
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getMerchantQouteResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getMerchantQouteResponseListner.postValue(result)
+                                }
+                            }
 
                         } else {
                             getMerchantQouteResponseListner.postValue(result)
@@ -348,11 +388,20 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getMerchantPaymentResponseListner.postValue(result)
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getMerchantPaymentResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getMerchantPaymentResponseListner.postValue(result)
+                                }
+                            }
 
                         } else {
                             getMerchantPaymentResponseListner.postValue(result)
@@ -420,11 +469,20 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getPaymentQouteResponseListner.postValue(result)
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getPaymentQouteResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getPaymentQouteResponseListner.postValue(result)
+                                }
+                            }
 
                         } else {
                             getPaymentQouteResponseListner.postValue(result)
@@ -493,11 +551,20 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getPaymentResponseListner.postValue(result)
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getPaymentResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getPaymentResponseListner.postValue(result)
+                                }
+                            }
 
                         } else {
                             getPaymentResponseListner.postValue(result)
@@ -569,11 +636,20 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getPaymentQouteResponseListner.postValue(result)
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getPaymentQouteResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getPaymentQouteResponseListner.postValue(result)
+                                }
+                            }
 
                         } else {
                             getPaymentQouteResponseListner.postValue(result)
@@ -642,11 +718,20 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getPaymentResponseListner.postValue(result)
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getPaymentResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getPaymentResponseListner.postValue(result)
+                                }
+                            }
 
                         } else {
                             getPaymentResponseListner.postValue(result)
@@ -696,11 +781,20 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getFloatTransferQuoteResponseListner.postValue(result)
+                        if (result?.responseCode != null ) 
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getFloatTransferQuoteResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getFloatTransferQuoteResponseListner.postValue(result)
+                                }
+                            }
 
                         } else {
                             getFloatTransferQuoteResponseListner.postValue(result)
@@ -749,12 +843,20 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getFloatTransferResponseListner.postValue(result)
-
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getFloatTransferResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getFloatTransferResponseListner.postValue(result)
+                                }
+                            }
                         } else {
                             getFloatTransferResponseListner.postValue(result)
                         }
@@ -801,11 +903,20 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getAddFavoritesResponseListner.postValue(result)
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getAddFavoritesResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getAddFavoritesResponseListner.postValue(result)
+                                }
+                            }
 
                         } else {
                             getAddFavoritesResponseListner.postValue(result)
