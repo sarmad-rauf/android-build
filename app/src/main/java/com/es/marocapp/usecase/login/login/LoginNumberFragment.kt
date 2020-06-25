@@ -109,6 +109,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
     override fun onLoginButtonClick(view: View) {
         if(isRegFlow==true){
             if(mDataBinding.root.cb_Terms.isChecked) {
+                mDataBinding.root.toast_layout_root.visibility=View.GONE
                  mActivityViewModel.isSignUpFlow.set(true)
                   mActivity.navController.navigate(R.id.action_loginFragment_to_signUpDetailFragment)
             }
@@ -227,7 +228,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
     }
 
     private fun showTermsConditionsAndSignup() {
-        mDataBinding.root.toast_layout_root.visibility=View.VISIBLE
+       // mDataBinding.root.toast_layout_root.visibility=View.VISIBLE
 
         mDataBinding.root.txtHeaderTitle.text="Create your account"
         mDataBinding.inputLayoutPhoneNumber.isEnabled=false
