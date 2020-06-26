@@ -1,9 +1,13 @@
 package com.es.marocapp.usecase
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
+import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.core.view.GravityCompat
+import androidx.core.view.get
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -26,6 +30,8 @@ import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Tools
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.layout_drawer_header.view.*
 
 
@@ -88,6 +94,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         mDataBinding.textDrawerLogOut.text = LanguageData.getStringValue("LogOut")
 
         mDataBinding.toolbarWelcomeBack.text = LanguageData.getStringValue("WelcomeBack")
+
+        val menu: Menu = mDataBinding.root.nav_view.getMenu()
+        menu.get(0).title=LanguageData.getStringValue("HOME")
+        menu.get(1).title=LanguageData.getStringValue("Transactions")
+        menu.get(2).title=LanguageData.getStringValue("PIN")
+        menu.get(3).title=LanguageData.getStringValue("Approvals")
 
     }
 
