@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -28,14 +29,15 @@
 
         <com.es.marocapp.widgets.MarocRegularTextView
             android:id="@+id/tvTransactionHistoryTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:text="@string/my_approvals"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            tools:text="@string/my_approvals"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_19ssp"
+            android:textSize="@dimen/_18ssp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgBackButton"
+            app:layout_constraintBottom_toBottomOf="@+id/topHeaderContainer"
             app:layout_constraintTop_toTopOf="parent"
             app:textAllCaps="true" />
 
