@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.CustomizeIconsAdapter
+import com.es.marocapp.adapter.PaymentItemsAdapter
 import com.es.marocapp.databinding.FragmentBillPaymentTypeBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.GetAirTimeUseCasesResponse
@@ -17,8 +18,10 @@ import com.es.marocapp.utils.DialogUtils
 class AirTimeTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
 
     lateinit var mActivityViewModel: AirTimeViewModel
-    private lateinit var mAirTimeItemTypeAdapter: CustomizeIconsAdapter
+    private lateinit var mAirTimeItemTypeAdapter: PaymentItemsAdapter
     private var mAirTimeTypes: ArrayList<String> = ArrayList()
+    private var mAitTimeIcon: ArrayList<Int>  = ArrayList()
+
 
     private lateinit var mAirTimeUseCaseResponse : GetAirTimeUseCasesResponse
 
@@ -47,9 +50,9 @@ class AirTimeTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
 
         mActivityViewModel.requestForAirTimeUseCasesApi(activity)
 
-        mAirTimeItemTypeAdapter = CustomizeIconsAdapter(mAirTimeTypes,
-            object : CustomizeIconsAdapter.CustomizeItemClickListner {
-                override fun onCustomizeItemTypeClick(paymentItems: String) {
+        mAirTimeItemTypeAdapter = PaymentItemsAdapter(mAirTimeTypes,mAitTimeIcon,
+            object : PaymentItemsAdapter.PaymentItemTypeClickListner {
+                override fun onPaymentItemTypeClick(paymentItems: String) {
                     when (paymentItems) {
                         mAirTimeUseCaseResponse.rechargeFixe.titleName -> {
                             mActivityViewModel.isRechargeFixeUseCase.set(true)
@@ -94,10 +97,12 @@ class AirTimeTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     if (!it.rechargeFixe.planList.isNullOrEmpty()) {
                         mAirTimeTypes.add(it.rechargeFixe.titleName)
+                        mAitTimeIcon.add(R.drawable.mobile_fix)
                     }
 
                     if (!it.rechargeMobile.planList.isNullOrEmpty()) {
                         mAirTimeTypes.add(it.rechargeMobile.titleName)
+                        mAitTimeIcon.add(R.drawable.mobile)
                     }
 
                     mAirTimeItemTypeAdapter.notifyDataSetChanged()

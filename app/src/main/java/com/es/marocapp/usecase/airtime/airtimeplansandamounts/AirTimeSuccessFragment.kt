@@ -90,9 +90,9 @@ class AirTimeSuccessFragment : BaseFragment<FragmentAirTimeSuccessLayoutBinding>
         mDataBinding.tvOwnerNameTitle.text = LanguageData.getStringValue("TransactionID")
         mDataBinding.tvContactNumTitle.text = LanguageData.getStringValue("ReceiverName")
         mDataBinding.tvReceiverNumberTitle.text = LanguageData.getStringValue("ReceiverNumber")
-        mDataBinding.tvOwnerNameTitle2.text = LanguageData.getStringValue("Amount")
+        mDataBinding.tvOwnerNameTitle2.text = LanguageData.getStringValue("Bill")
         mDataBinding.tvContactNumTitle2.text = LanguageData.getStringValue("Fee")
-        mDataBinding.tvDHTitle.text = LanguageData.getStringValue("TotalCost")
+        mDataBinding.tvDHTitle.text = LanguageData.getStringValue("Amount")
         mDataBinding.newBalanceTitle.text = LanguageData.getStringValue("YourNewBalanceIs")
 
         mDataBinding.tvSuccessTitle.text = mActivityViewModel.airTimeSelected.get()!!
@@ -120,15 +120,15 @@ class AirTimeSuccessFragment : BaseFragment<FragmentAirTimeSuccessLayoutBinding>
 //        mDataBinding.tvContactNumVal.text = mActivityViewModel.ReceiverName
         mDataBinding.tvReceiverNumberVal.text = mActivityViewModel.transferdAmountTo
 
-        mDataBinding.tvOwnerNameVal2.text = Constants.CURRENT_CURRENCY_TYPE+" "+mActivityViewModel.amountToTransfer
-        mDataBinding.tvContactNumVal2.text = Constants.CURRENT_CURRENCY_TYPE+" "+mActivityViewModel.feeAmount
+        mDataBinding.tvOwnerNameVal2.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.amountToTransfer
+        mDataBinding.tvContactNumVal2.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.feeAmount
 
         var amountToTransfer = Constants.addAmountAndFee(mActivityViewModel.amountToTransfer.toDouble(),mActivityViewModel.feeAmount.toDouble())
-        mDataBinding.tvDHVal.text = Constants.CURRENT_CURRENCY_TYPE+" "+amountToTransfer
+        mDataBinding.tvDHVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+amountToTransfer
 
         Constants.balanceInfoAndResponse.balance = mActivityViewModel.senderBalanceAfter
 
-        mDataBinding.newBalanceVal.text = Constants.CURRENT_CURRENCY_TYPE+" "+mActivityViewModel.senderBalanceAfter
+        mDataBinding.newBalanceVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.senderBalanceAfter
     }
 
     override fun onNextClickListner(view: View) {

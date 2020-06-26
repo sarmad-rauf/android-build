@@ -22,7 +22,11 @@ class PaymentItemsAdapter(private val paymentItems : ArrayList<String>,
 
     override fun onBindViewHolder(holder: PaymentItemViewHolder, position: Int) {
         holder.paymentItem.text = paymentItems[position]
-        holder.paymentItemIcon.setBackgroundResource(paymentItemsIcons[position])
+        if(paymentItemsIcons.isEmpty()){
+            holder.paymentItemIcon.setBackgroundResource(R.drawable.others)
+        }else{
+            holder.paymentItemIcon.setBackgroundResource(paymentItemsIcons[position])
+        }
 
         holder.mPaymentItemLayout.setOnClickListener {
             listner.onPaymentItemTypeClick(paymentItems[position])

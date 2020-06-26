@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.CustomizeIconsAdapter
+import com.es.marocapp.adapter.PaymentItemsAdapter
 import com.es.marocapp.databinding.FragmentBillPaymentTypeBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.GetAirTimeUseCasesResponse
@@ -16,8 +17,9 @@ import kotlinx.android.synthetic.main.layout_activity_header.view.*
 class AirTimeAmountFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
 
     lateinit var mActivityViewModel: AirTimeViewModel
-    private lateinit var mAirTimeAmountsItemTypeAdapter: CustomizeIconsAdapter
+    private lateinit var mAirTimeAmountsItemTypeAdapter: PaymentItemsAdapter
     private var mAirTimeAmountsTypes: ArrayList<String> = ArrayList()
+    private var mAitTimeIcon: ArrayList<Int>  = ArrayList()
 
     lateinit var airTimeResponse : GetAirTimeUseCasesResponse
 
@@ -78,9 +80,9 @@ class AirTimeAmountFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
             }
         }
 
-        mAirTimeAmountsItemTypeAdapter = CustomizeIconsAdapter(mAirTimeAmountsTypes,
-            object : CustomizeIconsAdapter.CustomizeItemClickListner {
-                override fun onCustomizeItemTypeClick(paymentItems: String) {
+        mAirTimeAmountsItemTypeAdapter = PaymentItemsAdapter(mAirTimeAmountsTypes,mAitTimeIcon,
+            object : PaymentItemsAdapter.PaymentItemTypeClickListner {
+                override fun onPaymentItemTypeClick(paymentItems: String) {
                     mActivityViewModel.airTimeAmountSelected.set(paymentItems)
                     (activity as AirTimeActivity).navController.navigate(R.id.action_airTimeAmountFragment_to_airTimeMsisdnFragment)
                 }
