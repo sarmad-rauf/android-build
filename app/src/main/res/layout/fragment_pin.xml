@@ -30,15 +30,16 @@
 
     <com.es.marocapp.widgets.MarocRegularTextView
         android:id="@+id/tvChangeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:text="@string/change_pin"
         android:textColor="@color/colorWhite"
-        android:textSize="@dimen/_19ssp"
+        android:textSize="@dimen/_18ssp"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgBackButton"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/topHeaderContainer"
         app:textAllCaps="true" />
 
     <androidx.appcompat.widget.AppCompatImageView
