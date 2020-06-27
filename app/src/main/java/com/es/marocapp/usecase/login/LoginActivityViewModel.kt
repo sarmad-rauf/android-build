@@ -249,7 +249,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getRegisterUser(
                 RegisterUserRequest(Accountholder(DOB,identificationNumber,firstName,gender,postalAddress,lastName),
-                    ApiConstant.CONTEXT_BEFORE_LOGIN,deviceID_UserMsisdn,email,Constants.getNumberMsisdn(mUserMsisdn),otp)
+                    ApiConstant.CONTEXT_BEFORE_LOGIN,deviceID_UserMsisdn,email,Constants.getNumberMsisdn(mUserMsisdn),EncryptionUtils.encryptString(otp))
 
             )
                 .compose(applyIOSchedulers())
