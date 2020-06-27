@@ -99,7 +99,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         val menu: Menu = mDataBinding.root.nav_view.getMenu()
         menu.get(0).title=LanguageData.getStringValue("HOME")
         menu.get(1).title=LanguageData.getStringValue("Transactions")
-        menu.get(2).title=LanguageData.getStringValue("PIN")
+        menu.get(2).title=LanguageData.getStringValue("Password")
         menu.get(3).title=LanguageData.getStringValue("Approvals")
 
     }
@@ -145,6 +145,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
     override fun onDrawerMenuFAQsClick(view: View) {
         mDataBinding.drawerLayout.closeDrawer(GravityCompat.START)
+
 
         var myBundle : Bundle = Bundle()
         myBundle.putString("title","FAQs")

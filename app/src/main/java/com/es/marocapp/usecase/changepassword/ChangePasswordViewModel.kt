@@ -1,4 +1,4 @@
-package com.es.marocapp.usecase.pin
+package com.es.marocapp.usecase.changepassword
 
 import android.app.Application
 import android.content.Context
@@ -20,7 +20,7 @@ import com.es.marocapp.utils.Tools
 import io.reactivex.disposables.Disposable
 import retrofit2.HttpException
 
-class PinViewModel(application: Application) : AndroidViewModel(application) {
+class ChangePasswordViewModel(application: Application) : AndroidViewModel(application) {
 
     var isLoading = ObservableField<Boolean>()
     var errorText = SingleLiveEvent<String>()

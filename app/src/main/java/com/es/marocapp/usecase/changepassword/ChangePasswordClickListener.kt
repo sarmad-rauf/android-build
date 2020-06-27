@@ -1,4 +1,4 @@
-package com.es.marocapp.usecase.pin
+package com.es.marocapp.usecase.changepassword
 
 import android.view.View
 

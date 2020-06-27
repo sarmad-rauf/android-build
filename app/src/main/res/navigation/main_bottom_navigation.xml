@@ -18,9 +18,9 @@
         />
     <fragment
         android:id="@+id/navigation_pin"
-        android:name="com.es.marocapp.usecase.pin.PinFragment"
+        android:name="com.es.marocapp.usecase.changepassword.ChangePasswordFragment"
         android:label="PinFragment"
-        tools:layout="@layout/fragment_pin"
+        tools:layout="@layout/fragment_changepassword"
         />
     <fragment
         android:id="@+id/navigation_approval"
