@@ -46,11 +46,7 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
             viewmodel = mActivityViewModel
         }
 
-        (activity as SendMoneyActivity).setHeaderTitle(
-            (activity as SendMoneyActivity).resources.getString(
-                R.string.amount
-            )
-        )
+        (activity as SendMoneyActivity).setHeaderTitle(LanguageData.getStringValue("Amount").toString())
         (activity as SendMoneyActivity).setHeaderVisibility(true)
 
         var userBalance =

@@ -38,6 +38,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
             listener = this@FundsTransferMsisdnFragment
         }
 
+        list_of_favorites.clear()
         for(contacts in Constants.mContactListArray){
             var contactNumber = contacts.fri
             contactNumber = contactNumber.substringBefore("@")
