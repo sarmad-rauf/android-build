@@ -56,7 +56,11 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
         }
 
         mDataBinding.txtResend.setOnClickListener {
-            mActivityViewModel.requestForGetOTPForRegistrationApi(context,mActivityViewModel.firstName,mActivityViewModel.lastName,mActivityViewModel.identificationNumber)
+            if(mActivityViewModel.isDeviceChanged){
+                mActivityViewModel.requestForGetOtpApi(activity)
+            }else{
+                mActivityViewModel.requestForGetOTPForRegistrationApi(context,mActivityViewModel.firstName,mActivityViewModel.lastName,mActivityViewModel.identificationNumber)
+            }
         }
 
         subscribeObserver()
