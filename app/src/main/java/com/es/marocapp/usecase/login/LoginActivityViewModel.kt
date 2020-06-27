@@ -300,7 +300,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
             isLoading.set(true)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getActivateUser(
-                ActivateUserRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(mUserMsisdn),seceret,Constants.SECRET_TYPE)
+                ActivateUserRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(mUserMsisdn),EncryptionUtils.encryptString(seceret),Constants.SECRET_TYPE)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -511,7 +511,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
             isLoading.set(true)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getCreateCredentialCall(
-                CreateCredentialRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(mUserMsisdn),newSecret,ApiConstant.APP_CREDENTIAL_TYPE)
+                CreateCredentialRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(mUserMsisdn),EncryptionUtils.encryptString(newSecret),ApiConstant.APP_CREDENTIAL_TYPE)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
