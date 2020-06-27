@@ -46,6 +46,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
         mActivityViewModel.isUserSelectedFromFavorites.set(false)
 
+        list_of_favorites.clear()
         for(contacts in Constants.mContactListArray){
             var contactNumber = contacts.fri
             contactNumber = contactNumber.substringBefore("@")

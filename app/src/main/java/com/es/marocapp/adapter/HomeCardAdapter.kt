@@ -37,8 +37,6 @@ class HomeCardAdapter(
     override fun getItem(position: Int): Fragment {
         when (position) {
             DUMMY_BALANCE_1 -> return mDummyBalanceFragment1
-//            DUMMY_BALANCE_2 -> return mDummyBalanceFragment2
-//            DUMMY_BALANCE_3 -> return mDummyBalanceFragment3
         }
         return HomeBalanceFragment(CardModel(R.drawable.ic_wallet_balance, LanguageData.getStringValue("WalletBalance").toString(), "1,200"))
     }
