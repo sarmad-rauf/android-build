@@ -15,6 +15,17 @@ object EncryptionUtils{
         return  encryptedText
     }
 
+    public fun decryptString(value:String):String{
+        //decrypt - result plain string
+        val decryptedText = AesGcm256.decrypt(
+            value,
+            AesGcm256.HexToByte(hexKey),
+            AesGcm256.HexToByte(hexIV)
+        )
+
+        return  decryptedText
+    }
+
     fun ecryptionDecryptionTest(){
         //Generate and dump KEY so we could use again
         //System.out.println(AesGcm256.toHex(AesGcm256.NewKey()));

@@ -22,6 +22,7 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.GetPreLoginDataResponse
 import com.es.marocapp.model.responses.translations.TranslationInnerObject
 import com.es.marocapp.network.ApiConstant
+import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
@@ -121,8 +122,8 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 
         val preLoginDataObserver = Observer<GetPreLoginDataResponse> {
             if (it.responseCode.equals(ApiConstant.API_SUCCESS, true)) {
-                Constants.APP_MSISDN_PREFIX = it.msisdnPrefix
-                Constants.APP_MSISDN_LENGTH = it.msisdnLength
+                Constants.APP_MSISDN_PREFIX = EncryptionUtils.decryptString( it.msisdnPrefix)
+                Constants.APP_MSISDN_LENGTH = EncryptionUtils.decryptString(it.msisdnLength)
                 Constants.APP_CN_LENGTH = it.cnLength
                 Constants.APP_CN_REGEX = it.cnRegex
                 Constants.APP_DATE_FORMAT = it.dateFormat

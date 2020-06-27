@@ -27,6 +27,7 @@ import com.es.marocapp.usecase.settings.SettingsActivity
 import com.es.marocapp.usecase.termsandcondiitons.TermsAndConditions
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.PrefUtils
 import com.es.marocapp.utils.Tools
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -106,6 +107,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     private fun subscribeObserver() {
         mActivityViewModel.getLogOutUserResponseListner.observe(this@MainActivity, Observer {
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                PrefUtils.addString(this, PrefUtils.PreKeywords.PREF_KEY_USER_MSISDN,"")
                 startNewActivityAndClear(this@MainActivity,LoginActivity::class.java)
             }else{
                DialogUtils.showErrorDialoge(this@MainActivity,it.description)

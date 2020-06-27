@@ -21,6 +21,7 @@ object PrefUtils {
      */
     object PreKeywords {
         val PREF_KEY_USER_DATA = "key.pref.user.data"
+        val PREF_KEY_USER_MSISDN = "key.pref.user.msisdn"
         val PREF_KEY_IS_FIRSTTIME = "key.pref.is.firsttime"
         var PREF_KEY_FIRST_TIME_LOGIN_AFTER_APP_INSTALL = "key.pref.first.time.login.after.app.install"
 

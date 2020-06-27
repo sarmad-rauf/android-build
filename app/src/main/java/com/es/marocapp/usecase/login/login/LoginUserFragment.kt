@@ -22,6 +22,8 @@ import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.PrefUtils
+import com.es.marocapp.utils.PrefUtils.PreKeywords.PREF_KEY_USER_MSISDN
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 
 /**
@@ -69,6 +71,7 @@ class LoginUserFragment : BaseFragment<FragmentSignUpNumberBinding>(), LoginClic
         val mBalanceInfoAndLimtListner = Observer<BalanceInfoAndLimitResponse> {
             if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                 Constants.balanceInfoAndResponse = it
+                PrefUtils.addString(activity!!,PREF_KEY_USER_MSISDN,Constants.CURRENT_USER_MSISDN)
                 (activity as LoginActivity).startNewActivityAndClear(
                     activity as LoginActivity,
                     MainActivity::class.java
