@@ -4,13 +4,12 @@ package com.es.marocapp.usecase.login.login
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.BuildConfig
 
 import com.es.marocapp.R
-import com.es.marocapp.databinding.FragmentSignUpNumberBinding
+import com.es.marocapp.databinding.FragmentLoginNumberPasswordBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.BalanceInfoAndLimitResponse
 import com.es.marocapp.model.responses.LoginWithCertResponse
@@ -29,12 +28,12 @@ import kotlinx.android.synthetic.main.layout_login_header.view.*
 /**
  * A simple [Fragment] subclass.
  */
-class LoginUserFragment : BaseFragment<FragmentSignUpNumberBinding>(), LoginClickListener {
+class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBinding>(), LoginClickListener {
 
     lateinit var mActivityViewModel: LoginActivityViewModel
 
     override fun setLayout(): Int {
-        return R.layout.fragment_sign_up_number
+        return R.layout.fragment_login_number_password
     }
 
     override fun init(savedInstanceState: Bundle?) {
@@ -43,7 +42,7 @@ class LoginUserFragment : BaseFragment<FragmentSignUpNumberBinding>(), LoginClic
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel
-            listener = this@LoginUserFragment
+            listener = this@LoginNumberPasswordFragment
         }
 
         mDataBinding.inputPhoneNumber.setText(mActivityViewModel.mUserMsisdn)
@@ -64,7 +63,7 @@ class LoginUserFragment : BaseFragment<FragmentSignUpNumberBinding>(), LoginClic
 
     private fun subscribeObserver() {
 
-        mActivityViewModel.errorText.observe(this@LoginUserFragment, Observer {
+        mActivityViewModel.errorText.observe(this@LoginNumberPasswordFragment, Observer {
             DialogUtils.showErrorDialoge(activity as LoginActivity,it)
         })
 
@@ -107,11 +106,11 @@ class LoginUserFragment : BaseFragment<FragmentSignUpNumberBinding>(), LoginClic
         }
 
         mActivityViewModel.getBalanceInforAndLimitResponseListner.observe(
-            this@LoginUserFragment,
+            this@LoginNumberPasswordFragment,
             mBalanceInfoAndLimtListner
         )
         mActivityViewModel.getLoginWithCertResponseListner.observe(
-            this@LoginUserFragment,
+            this@LoginNumberPasswordFragment,
             mloginWithCertListner
         )
     }

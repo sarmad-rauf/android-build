@@ -23,9 +23,9 @@
     </fragment>
     <fragment
         android:id="@+id/signUpNumberFragment"
-        android:name="com.es.marocapp.usecase.login.login.LoginUserFragment"
+        android:name="com.es.marocapp.usecase.login.login.LoginNumberPasswordFragment"
         android:label="SignUpNumberFragment"
-        tools:layout="@layout/fragment_sign_up_number"
+        tools:layout="@layout/fragment_login_number_password"
         >
         <action
             android:id="@+id/action_signUpNumberFragment_to_forgotPasswordFragment"
