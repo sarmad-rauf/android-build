@@ -32,7 +32,7 @@ class HomeCardAdapter(
 //    private var mDummyBalanceFragment2: HomeBalanceFragment = HomeBalanceFragment(CardModel(R.drawable.ic_wallet_balance,"Balance","200"))
 //    private var mDummyBalanceFragment3: HomeBalanceFragment = HomeBalanceFragment(CardModel(R.drawable.ic_wallet_balance,"Balance","2,200"))
 
-    private val TOTAL_BALANCE_FRAGMENTS = 3
+    private val TOTAL_BALANCE_FRAGMENTS = 1
 
     override fun getItem(position: Int): Fragment {
         when (position) {
