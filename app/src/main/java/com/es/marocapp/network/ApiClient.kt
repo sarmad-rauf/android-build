@@ -2,6 +2,7 @@ package com.es.marocapp.network
 
 import android.content.Context
 import com.es.marocapp.BuildConfig
+import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.utils.Constants
 import java.io.InputStream
 import java.text.SimpleDateFormat
@@ -79,7 +80,7 @@ public class ApiClient() : Dependencies() {
         headerParams["token"] = Constants.createUserToken()
         if(Constants.HEADERS_AFTER_LOGINS){
             if(Constants.HEADERS_FOR_PAYEMNTS){
-                headerParams["authorization"] = "Basic "+Constants.CURRENT_USER_MSISDN+":"+Constants.CURRENT_USER_CREDENTIAL
+                headerParams["authorization"] = EncryptionUtils.encryptString("Basic "+Constants.CURRENT_USER_MSISDN+":"+Constants.CURRENT_USER_CREDENTIAL)
             }else{
                 headerParams["authorization"] = Constants.LOGGED_IN_USER_COOKIE
             }
