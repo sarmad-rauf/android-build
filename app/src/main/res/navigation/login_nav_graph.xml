@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_loginFragment_to_setYourPinFragment"
             app:destination="@id/setYourPinFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_verifyNumberFragment"
+            app:destination="@id/verifyNumberFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpNumberFragment"
@@ -50,6 +53,9 @@
         <action
             android:id="@+id/action_verifyNumberFragment_to_setYourPinFragment"
             app:destination="@id/setYourPinFragment" />
+        <action
+            android:id="@+id/action_verifyNumberFragment_to_signUpNumberFragment"
+            app:destination="@id/signUpNumberFragment" />
     </fragment>
     <fragment
         android:id="@+id/setYourPinFragment"

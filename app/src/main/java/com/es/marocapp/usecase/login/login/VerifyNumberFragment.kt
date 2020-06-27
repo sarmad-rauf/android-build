@@ -12,7 +12,9 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentVerifyNumberBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
+import com.es.marocapp.model.responses.GetAccountHolderInformationResponse
 import com.es.marocapp.model.responses.RegisterUserResponse
+import com.es.marocapp.model.responses.ValidateOtpAndUpdateAliasesResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.login.LoginActivity
@@ -54,7 +56,11 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
         }
 
         mDataBinding.txtResend.setOnClickListener {
-            mActivityViewModel.requestForGetOTPForRegistrationApi(context,mActivityViewModel.firstName,mActivityViewModel.lastName,mActivityViewModel.identificationNumber)
+            if(mActivityViewModel.isDeviceChanged){
+                mActivityViewModel.requestForGetOtpApi(activity)
+            }else{
+                mActivityViewModel.requestForGetOTPForRegistrationApi(context,mActivityViewModel.firstName,mActivityViewModel.lastName,mActivityViewModel.identificationNumber)
+            }
         }
 
         subscribeObserver()
@@ -98,6 +104,14 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
             this,
             mRegisterUserResonseObserver
         )
+
+       mActivityViewModel.getValidateOtpAndUpdateAliasResponseListner.observe(this, Observer {
+           if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+               checkUserRegsitrationAndActicationSenario()
+           }else{
+               DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
+           }
+       })
     }
 
     override fun onOTPVerifyClick(view: View) {
@@ -108,11 +122,72 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
             mDataBinding.inputLayoutVerifyOtp.error = ""
             mDataBinding.inputLayoutVerifyOtp.isErrorEnabled = false
 
-            mActivityViewModel.requestForRegisterUserApi(
-                activity,
-                Constants.CURRENT_NUMBER_DEVICE_ID,
-                mDataBinding.inputVerifyOtp.text.toString().trim()
-            )
+            if(mActivityViewModel.isDeviceChanged){
+                mActivityViewModel.requestForVerifyOtpAndUpdateAliaseAPI(
+                    activity,
+                    mActivityViewModel.previousDeviceId,
+                    Constants.CURRENT_NUMBER_DEVICE_ID,
+                    mDataBinding.inputVerifyOtp.text.toString().trim()
+                )
+            }else{
+                mActivityViewModel.requestForRegisterUserApi(
+                    activity,
+                    Constants.CURRENT_NUMBER_DEVICE_ID,
+                    mDataBinding.inputVerifyOtp.text.toString().trim()
+                )
+            }
+        }
+    }
+
+    fun checkUserRegsitrationAndActicationSenario() {
+        var response = mActivityViewModel.accountHolderInfoResponse
+        if (response.accountHolderStatus.equals("ACTIVE", true)) {
+            if (response.credentialList.credentials.isNotEmpty()) {
+
+                for (i in response.credentialList.credentials.indices) {
+                    if (response.credentialList.credentials[i].credentialtype.equals(
+                            "password",
+                            true
+                        ) && response.credentialList.credentials[i].credentialstatus.equals(
+                            "ACTIVE",
+                            true
+                        )
+                    ) {
+                        // this check means that User is Register and in active state with password set for his account so direct login api is called
+                        //LoginwithCert APi is called
+                        mActivityViewModel.activeUserWithoutPasswordType.set(false)
+                        mActivityViewModel.activeUserWithoutPassword.set(false)
+
+                        (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_signUpNumberFragment)
+                    } else if(response.credentialList.credentials[i].credentialstatus.equals("BLOCKED",true) || response.credentialList.credentials[i].credentialstatus.equals("BLOCK",true)){
+                        DialogUtils.showErrorDialoge(activity,"User is Blocked")
+                    }
+                    else{
+                        // Create Crednetial Api is Called
+                        //this check means user is register with state Active but didn't registered Password as his account having credetial type pin
+
+                        mActivityViewModel.activeUserWithoutPasswordType.set(true)
+                        mActivityViewModel.activeUserWithoutPassword.set(false)
+
+                        (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_setYourPinFragment)
+                    }
+                }
+            }else{
+                // Create Crednetial Api is Called
+                //this check means user is register with state Active but didn't registered Password as his account having credetial type pin
+
+                mActivityViewModel.activeUserWithoutPasswordType.set(true)
+                mActivityViewModel.activeUserWithoutPassword.set(false)
+
+                (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_setYourPinFragment)
+            }
+        } else {
+            //activation Api is called on next screens
+            // This Check Means User Register Itself verifies OTP but Close App before setting his/her pin so user is redirected to setup Pin Fragment
+            mActivityViewModel.activeUserWithoutPassword.set(true)
+            mActivityViewModel.activeUserWithoutPasswordType.set(false)
+
+            (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_setYourPinFragment)
         }
     }
 
