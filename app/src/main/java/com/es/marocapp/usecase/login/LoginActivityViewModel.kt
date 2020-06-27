@@ -408,7 +408,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
             isLoading.set(true)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getValidateOtpAndUpdateAliases(
-                ValidateOtpAndUpdateAliasesRequest(previousDeviceID,newDeviceID,ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(mUserMsisdn),otp)
+                ValidateOtpAndUpdateAliasesRequest(previousDeviceID,newDeviceID,ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(mUserMsisdn),EncryptionUtils.encryptString(otp))
             )
                 .compose(applyIOSchedulers())
                 .subscribe(

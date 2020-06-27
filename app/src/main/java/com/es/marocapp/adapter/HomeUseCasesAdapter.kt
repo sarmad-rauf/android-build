@@ -11,7 +11,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.es.marocapp.R
 import com.es.marocapp.model.HomeUseCasesModel
-import com.es.marocapp.utils.SquareLayout
 
 class HomeUseCasesAdapter(private val usecases : ArrayList<HomeUseCasesModel>, var listener : HomeUseCasesClickListner, var context : Context) : RecyclerView.Adapter<HomeUseCasesAdapter.HomeUseCasesViewHolder>() {
 
@@ -19,6 +18,14 @@ class HomeUseCasesAdapter(private val usecases : ArrayList<HomeUseCasesModel>, v
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeUseCasesViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.use_case_item_layout, parent, false)
+
+        // work here if you need to control height of your items
+        // keep in mind that parent is RecyclerView in this case
+
+        // work here if you need to control height of your items
+        // keep in mind that parent is RecyclerView in this case
+  /*      val height = parent.measuredHeight / 2
+        view.setMinimumHeight(height)*/
         return HomeUseCasesViewHolder(view)
     }
 

@@ -71,6 +71,7 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
         approvalViewModel.getApprovalResponseListner.observe(this, Observer {
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                // approvalViewModel.requestForUserApprovalsApi(activity,"01","true")
+                mApprovalsList.clear()
                 mApprovalsList.apply {
                     addAll(it.approvaldetails as ArrayList<Approvaldetail>)
                     mApprovalsItemAdapter.notifyDataSetChanged()
