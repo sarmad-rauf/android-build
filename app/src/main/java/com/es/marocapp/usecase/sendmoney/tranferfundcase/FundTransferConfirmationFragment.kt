@@ -34,6 +34,7 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
         }
 
         (activity as SendMoneyActivity).setHeaderVisibility(false)
+
         mActivityViewModel.popBackStackTo = R.id.fundsTransferAmountFragment
 
         mDataBinding.imgBackButton.setOnClickListener {
