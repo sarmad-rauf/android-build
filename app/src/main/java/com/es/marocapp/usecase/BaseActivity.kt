@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.es.marocapp.usecase.login.LoginActivity.Companion.KEY_REDIRECT_USER
 import com.es.marocapp.utils.Logger
+import com.es.marocapp.utils.PrefUtils
 
 abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
 {
@@ -132,6 +133,7 @@ abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
     }
 
     fun logoutAndRedirectUserToLoginScreen(activity: Activity, clazz: Class<*>, value: String) {
+        PrefUtils.addString(this, PrefUtils.PreKeywords.PREF_KEY_USER_MSISDN,"")
         try {
             //  RootValues.getInstance().TIME_STAMP_FOR_INTENT_INJECTION = System.currentTimeMillis().toString()
             val intent = Intent(activity, clazz)

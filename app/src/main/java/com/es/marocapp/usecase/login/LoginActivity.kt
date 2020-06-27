@@ -57,6 +57,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             navController.navigate(R.id.action_loginFragment_to_signUpNumberFragment)
             Constants.CURRENT_USER_MSISDN=userData
             mActivityViewModel.mUserMsisdn=Constants.CURRENT_USER_MSISDN
+
+           var userMSISDNwithPrefix = userData
+             userMSISDNwithPrefix = Constants.APP_MSISDN_PREFIX + userMSISDNwithPrefix
+            userMSISDNwithPrefix = userMSISDNwithPrefix.removePrefix("+")
+            Constants.CURRENT_USER_MSISDN = userData
+            Constants.CURRENT_NUMBER_DEVICE_ID =
+                userMSISDNwithPrefix + "-" + Constants.CURRENT_DEVICE_ID
         }
     }
 
@@ -65,6 +72,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             var redirectionType=intent.getStringExtra(KEY_REDIRECT_USER)
 
             if(redirectionType.equals(KEY_REDIRECT_USER_SESSION_OUT)){
+                mActivityViewModel.mUserMsisdn=Constants.CURRENT_USER_MSISDN
                 navController.navigate(R.id.action_loginFragment_to_signUpNumberFragment)
             }
            /* else if(redirectionType.equals(KEY_REDIRECT_USER_INVALID)){

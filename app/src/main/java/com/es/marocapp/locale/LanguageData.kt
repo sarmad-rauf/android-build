@@ -8,15 +8,16 @@ object LanguageData{
     var stringsHashMap: Map<String?, TranslationInnerObject?>? = HashMap()
 
     fun getStringValue(key: String?): String? {
-        var value = ""
+        var value :String? = ""
         try {
             if (LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_EN)) {
-                value = stringsHashMap?.get(key)?.english!!
+                value = stringsHashMap?.get(key)?.english
             } else if (LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_FR)) {
-                value = stringsHashMap?.get(key)?.french!!
+                value = stringsHashMap?.get(key)?.french
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            value = key.toString()
         }
 
         if(value.equals("")){
