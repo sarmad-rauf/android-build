@@ -56,7 +56,7 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
         mDataBinding.root.txtHeaderTitle.text= LanguageData.getStringValue("LoginIntoAccount")
         mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
         mDataBinding.inputLayoutPin.hint = LanguageData.getStringValue("Password")
-        mDataBinding.txtForgotPin.hint = LanguageData.getStringValue("ForgotPasswordQuestion")
+        mDataBinding.txtForgotPin.text = LanguageData.getStringValue("ForgotPasswordQuestion")
 
         mDataBinding.btnLoginIN.text = LanguageData.getStringValue("BtnTitle_Login")
     }
