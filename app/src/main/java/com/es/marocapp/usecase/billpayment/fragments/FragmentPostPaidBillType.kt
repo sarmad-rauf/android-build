@@ -45,6 +45,7 @@ class FragmentPostPaidBillType : BaseFragment<FragmentBillPaymentTypeBinding>() 
 
         mActivityViewModel.popBackStackTo = R.id.fragmentPostPaidServiceProvider
 
+        mBillPaymentTypes.clear()
         mBillPaymentTypes.apply {
             if(mActivityViewModel.isBillUseCaseSelected.get()!!){
                 add(LanguageData.getStringValue("PostpaidMobile").toString())
@@ -53,12 +54,14 @@ class FragmentPostPaidBillType : BaseFragment<FragmentBillPaymentTypeBinding>() 
             }
         }
 
+        mBillPaymentTypesIcon.clear()
         mBillPaymentTypesIcon.apply {
             add(R.drawable.postpaid)
             add(R.drawable.postpaid_fix)
             add(R.drawable.internet)
         }
 
+        mFatoratiTypesList.clear()
         mFatoratiTypesList.apply {
             if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
                 var fatoratiType = mActivityViewModel.fatoratiStepOneObserver.get()!!.creanciers

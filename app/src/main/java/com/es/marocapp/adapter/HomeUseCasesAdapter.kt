@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.es.marocapp.R
 import com.es.marocapp.model.HomeUseCasesModel
+import com.es.marocapp.utils.SquareLayout
 
 class HomeUseCasesAdapter(private val usecases : ArrayList<HomeUseCasesModel>, var listener : HomeUseCasesClickListner, var context : Context) : RecyclerView.Adapter<HomeUseCasesAdapter.HomeUseCasesViewHolder>() {
 

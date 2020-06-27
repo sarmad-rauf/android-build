@@ -24,7 +24,7 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
     }
 
     override fun onBindViewHolder(holder: BillPaymentItemViewHolder, position: Int) {
-        holder.billDueDateTitle.text = LanguageData.getStringValue("Company")
+        holder.billDueDateTitle.text = LanguageData.getStringValue("Description")
         holder.billingMonthTitle.text = LanguageData.getStringValue("Amount")
         holder.billStatusTitle.text = LanguageData.getStringValue("Status")
         holder.billStatusVal.text = LanguageData.getStringValue("Unpaid")

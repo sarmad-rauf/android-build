@@ -163,6 +163,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     }
 
     override fun onDrawerMenuLogOutClick(view: View) {
+        mDataBinding.drawerLayout.closeDrawer(GravityCompat.START)
         mActivityViewModel.requestForLogOutUserApi(this@MainActivity)
     }
 

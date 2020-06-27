@@ -95,6 +95,10 @@ class AirTimeTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
         mActivityViewModel.getAirTimeUseCasesResponseListner.observe(this@AirTimeTypeFragment,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+
+                    mAirTimeTypes.clear()
+                    mAitTimeIcon.clear()
+
                     if (!it.rechargeFixe.planList.isNullOrEmpty()) {
                         mAirTimeTypes.add(it.rechargeFixe.titleName)
                         mAitTimeIcon.add(R.drawable.mobile_fix)

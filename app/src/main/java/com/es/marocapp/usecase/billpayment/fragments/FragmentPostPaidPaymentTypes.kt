@@ -42,11 +42,13 @@ class FragmentPostPaidPaymentTypes : BaseFragment<FragmentBillPaymentTypeBinding
 
         mActivityViewModel.popBackStackTo = -1
 
+        mBillPaymentTypes.clear()
         mBillPaymentTypes.apply {
             add(LanguageData.getStringValue("Bill").toString())
             add(LanguageData.getStringValue("WaterAndElectricity").toString())
         }
 
+        mBillPaymentTypesIcon.clear()
         mBillPaymentTypesIcon.apply {
             add(R.drawable.bill)
             add(R.drawable.water_electricty)

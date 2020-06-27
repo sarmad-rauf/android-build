@@ -11,7 +11,12 @@
             name="listener"
             type="com.es.marocapp.usecase.MainActivityClickListeners" />
 
+        <variable
+            name="viewmodel"
+            type="com.es.marocapp.usecase.MainActivityViewModel" />
+
     </data>
+
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
@@ -139,6 +144,11 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbarContainer"
             app:navGraph="@navigation/main_bottom_navigation" />
+
+        <include android:id="@+id/Gif_Loader"
+            layout="@layout/layout_dialog"
+            android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
