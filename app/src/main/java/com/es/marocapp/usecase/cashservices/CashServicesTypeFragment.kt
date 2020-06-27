@@ -29,11 +29,13 @@ class CashServicesTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() 
 
         mActivityViewModel.popBackStackTo = -1
 
+        mCashServicesTypes.clear()
         mCashServicesTypes.apply {
             add(LanguageData.getStringValue("Deposit").toString())
             add(LanguageData.getStringValue("Withdraw").toString())
         }
 
+        mCashServicesTypesIcon.clear()
         mCashServicesTypesIcon.apply {
             add(R.drawable.ic_deposit)
             add(R.drawable.ic_withdraw)

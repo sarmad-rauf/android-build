@@ -44,6 +44,7 @@ class FragmentPostPaidServiceProvider : BaseFragment<FragmentBillPaymentTypeBind
 
         mActivityViewModel.popBackStackTo = R.id.fragmentPostPaidPaymentTypes
 
+        mBillPaymentTypes.clear()
         mBillPaymentTypes.apply {
             if(mActivityViewModel.isBillUseCaseSelected.get()!!){
                 add(LanguageData.getStringValue("IAM").toString())
@@ -53,6 +54,7 @@ class FragmentPostPaidServiceProvider : BaseFragment<FragmentBillPaymentTypeBind
             }
         }
 
+        mBillPaymentTypesIcon.clear()
         mBillPaymentTypesIcon.apply {
             if(mActivityViewModel.isBillUseCaseSelected.get()!!){
                 add(R.drawable.iam)

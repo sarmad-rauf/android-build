@@ -57,13 +57,16 @@ class AirTimeAmountFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
 
         mAirTimeAmountsTypes.apply {
             if(mActivityViewModel.isRechargeMobileUseCase.get()!!){
+                mAirTimeAmountsTypes.clear()
                 if(airTimeResponse.rechargeMobile.planList.isNotEmpty()){
                     for(index in airTimeResponse.rechargeMobile.planList.indices){
                         if(airTimeResponse.rechargeMobile.planList[index].plan.equals(mActivityViewModel.airTimePlanSelected.get()!!)){
                             mActivityViewModel.airTimeSelectedPlanCodeSelected.set(airTimeResponse.rechargeMobile.planList[index].code.toString())
                             for(amountIndex in airTimeResponse.rechargeMobile.planList[index].amounts.indices){
-                                var airTimeAmount = airTimeResponse.rechargeMobile.planList[index].amounts[amountIndex].removeSuffix("DH")
-                                mAirTimeAmountsTypes.add(airTimeAmount.trim())
+
+                                var airTimeAmount = airTimeResponse.rechargeMobile.planList[index].amounts[amountIndex].substringBefore(" ")
+                                airTimeAmount = airTimeAmount.removeSuffix("DH").trim()
+                                add(airTimeAmount.trim())
                             }
                         }
                     }
@@ -71,6 +74,7 @@ class AirTimeAmountFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
             }
 
             if(mActivityViewModel.isRechargeFixeUseCase.get()!!){
+                mAirTimeAmountsTypes.clear()
                 if(airTimeResponse.rechargeFixe.planList.isNotEmpty()){
                     for(index in airTimeResponse.rechargeFixe.planList.indices){
                         var airTimeAmount = airTimeResponse.rechargeFixe.planList[index].removeSuffix("DH")

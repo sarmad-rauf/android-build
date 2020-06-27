@@ -55,7 +55,6 @@
                 android:layout_height="@dimen/_32sdp"
                 android:layout_margin="@dimen/_12sdp"
                 app:layout_constraintTop_toTopOf="parent"
-                android:onClick="@{listner::onBackClickListner}"
                 app:layout_constraintStart_toStartOf="parent"
                 android:src="@drawable/ic_back"
                 />

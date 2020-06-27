@@ -138,12 +138,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
 
     private fun populateHomeUseCase() {
         val useCases = ArrayList<HomeUseCasesModel>().apply {
-            this.add(HomeUseCasesModel(LanguageData.getStringValue("MerchantPayment").toString(), R.drawable.ic_payment))
-            this.add(HomeUseCasesModel(LanguageData.getStringValue("AirTime").toString(), R.drawable.ic_recharge))
-            this.add(HomeUseCasesModel(LanguageData.getStringValue("SendMoney").toString(),R.drawable.ic_send_money))
-            this.add(HomeUseCasesModel(LanguageData.getStringValue("BillPayment").toString(), R.drawable.ic_bill_payment))
-            this.add(HomeUseCasesModel(LanguageData.getStringValue("GenerateQr").toString(), R.drawable.ic_qr_white))
-            if(Constants.IS_MERCHANT_USER){
+            if(Constants.loginWithCertResponse.allowedMenu.MerchantPayment !=null){
+                this.add(HomeUseCasesModel(LanguageData.getStringValue("MerchantPayment").toString(), R.drawable.ic_payment))
+            }
+            if(Constants.loginWithCertResponse.allowedMenu.AirTime!=null){
+                this.add(HomeUseCasesModel(LanguageData.getStringValue("AirTime").toString(), R.drawable.ic_recharge))
+            }
+            if(Constants.loginWithCertResponse.allowedMenu.SendMoney!=null){
+                this.add(HomeUseCasesModel(LanguageData.getStringValue("SendMoney").toString(),R.drawable.ic_send_money))
+            }
+            if(Constants.loginWithCertResponse.allowedMenu.BillPayment!=null){
+                this.add(HomeUseCasesModel(LanguageData.getStringValue("BillPayment").toString(), R.drawable.ic_bill_payment))
+            }
+            if(Constants.loginWithCertResponse.allowedMenu.GenerateQR!=null){
+                this.add(HomeUseCasesModel(LanguageData.getStringValue("GenerateQr").toString(), R.drawable.ic_qr_white))
+            }
+            if(Constants.loginWithCertResponse.allowedMenu.CashService!=null){
                 this.add(HomeUseCasesModel(LanguageData.getStringValue("CashService").toString(), R.drawable.ic_transfer))
             }
         }
@@ -210,33 +220,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                             )
                             )
                         }
-
-//                        1-> startActivity(
-//                            Intent(
-//                                activity as MainActivity,
-//                                AirTimeActivity::class.java
-//                            )
-//                        )
-//                        2 -> startActivity(
-//                            Intent(
-//                                activity as MainActivity,
-//                                SendMoneyActivity::class.java
-//                            )
-//                        )
-//
-//                        3 ->startActivity(
-//                            Intent(
-//                                activity as MainActivity,
-//                                CashServicesActivity::class.java
-//                            )
-//                        )
-//                        else -> startActivity(
-//                            Intent(
-//                                activity as MainActivity,
-//                                PaymentsActivity::class.java
-//                            )
-//                        )
-
                     }
                 }
 

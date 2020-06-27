@@ -65,6 +65,7 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
         }
         mDataBinding.etAmountEntered.addTextChangedListener(this@FundsTransferAmountFragment)
 
+        mQuickAmountList.clear()
         for(quickAmount in Constants.quickAmountsList){
             mQuickAmountList.add(QuickAmountModel(quickAmount,false))
         }

@@ -43,11 +43,12 @@ class AirTimePlanFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
 
         airTimeResponse = mActivityViewModel.mAirTimeUseCaseResponse.get()!!
 
+        mAirTimePlansTypes.clear()
         mAirTimePlansTypes.apply {
             if(mActivityViewModel.isRechargeMobileUseCase.get()!!){
                 if(airTimeResponse.rechargeMobile.planList.isNotEmpty()){
                     for(index in airTimeResponse.rechargeMobile.planList.indices){
-                           mAirTimePlansTypes.add(airTimeResponse.rechargeMobile.planList[index].plan)
+                           add(airTimeResponse.rechargeMobile.planList[index].plan)
                     }
                 }
             }

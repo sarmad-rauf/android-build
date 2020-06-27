@@ -55,12 +55,15 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
 
         mActivityViewModel.popBackStackTo = R.id.fragmentBillPaymentMsisdn
 
+        listOfCustomInvoice.clear()
         if(mActivityViewModel.isBillUseCaseSelected.get()!!){
             for(i in mActivityViewModel.PostPaidFinancialResourceInfoObserver.get()!!.invoices.indices){
                 var item = mActivityViewModel.PostPaidFinancialResourceInfoObserver.get()!!.invoices[i]
                 listOfCustomInvoice.add(InvoiceCustomModel(false,item.month,item.ohrefnum,item.ohxact,item.openAmount))
             }
         }
+
+        listOfFatoratiCustomInvoice.clear()
         if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
             for(i in mActivityViewModel.fatoratiStepFourObserver.get()!!.params.indices){
                 var item = mActivityViewModel.fatoratiStepFourObserver.get()!!.params[i]

@@ -1,34 +1,34 @@
 package com.es.marocapp.model.responses
 
 data class LoginWithCertResponse(
-    var allowedMenu: AllowedMenu,
-    var appliedContext: String,
-    var contactList: List<Contact>,
-    var contentLength: String,
-    var date: String,
-    var description: String,
-    var expires: String,
-    var profile: Profile,
-    var responseCode: String,
-    var setCookie: String
+    val allowedMenu: AllowedMenu,
+    val appliedContext: String,
+    val contactList: List<Contact>,
+    val contentLength: String,
+    val date: String,
+    val description: String,
+    val expires: String,
+    val profile: Profile,
+    val responseCode: String,
+    val setCookie: String
 )
 
 data class AllowedMenu(
-    var QR: List<String>,
-    var accounts: List<String>,
-    var defaultAccountStatusPopup : List<String>,
-    var mobileRecharge: List<String>,
-    var payments: List<String>,
-    var sendMoney: List<String>
+    val AirTime: List<Any>,
+    val BillPayment: List<String>,
+    val CashService: List<String>,
+    val GenerateQR: List<Any>,
+    val MerchantPayment: List<Any>,
+    val SendMoney: List<Any>
 )
 
 data class Contact(
-    var contactName: String,
-    var fri: String
+    val contactName: String,
+    val fri: String
 )
 
 data class Profile(
-    var agentUser: Boolean,
-    var consumerUser: Boolean,
-    var merchantUser: Boolean
+    val agentUser: Boolean,
+    val consumerUser: Boolean,
+    val merchantUser: Boolean
 )
