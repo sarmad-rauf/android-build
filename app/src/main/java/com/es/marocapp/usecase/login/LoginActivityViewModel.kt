@@ -43,6 +43,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     var lastName = ""
     var email = ""
     var previousDeviceId = ""
+    var isDeviceChanged = false
 
 
     var getAccountHolderInformationResponseListner = SingleLiveEvent<GetAccountHolderInformationResponse>()

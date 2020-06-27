@@ -197,20 +197,9 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
 
         val mGetOtpResponseListner = Observer<GetOptResponse> {
             if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                mActivityViewModel.requestForVerifyOtpAndUpdateAliaseAPI(
-                    activity,
-                    mActivityViewModel.previousDeviceId,
-                    Constants.CURRENT_NUMBER_DEVICE_ID,
-                    "11111"
-                )
-            }else{
-                DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
-            }
-        }
+                mActivityViewModel.isDeviceChanged = true
+                (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_verifyNumberFragment)
 
-        val mValidateOtpandAliasesResponseListner = Observer<ValidateOtpAndUpdateAliasesResponse> {
-            if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                checkUserRegsitrationAndActicationSenario(mActivityViewModel.accountHolderInfoResponse)
             }else{
                 DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
             }
@@ -221,10 +210,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
             mAccountHolderInfoResonseObserver
         )
         mActivityViewModel.getOTPResponseListner.observe(this, mGetOtpResponseListner)
-        mActivityViewModel.getValidateOtpAndUpdateAliasResponseListner.observe(
-            this,
-            mValidateOtpandAliasesResponseListner
-        )
+
     }
 
     private fun showTermsConditionsAndSignup() {
