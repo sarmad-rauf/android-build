@@ -113,6 +113,14 @@ class FundsTrasnferSuccessFragment : BaseFragment<FragmentFundsTransferSuccessBi
 //
 //        newBalanceVal = NewBalance
 
+        if(mActivityViewModel.isUserRegistered.get()!!){
+            mDataBinding.tvContactNumTitle.visibility = View.VISIBLE
+            mDataBinding.tvContactNumVal.visibility = View.VISIBLE
+        }else{
+            mDataBinding.tvContactNumTitle.visibility = View.GONE
+            mDataBinding.tvContactNumVal.visibility = View.GONE
+        }
+
         mDataBinding.tvOwnerNameVal.text = mActivityViewModel.transactionID
         mDataBinding.tvContactNumVal.text = mActivityViewModel.ReceiverName
         mDataBinding.tvReceiverNumberVal.text = mActivityViewModel.transferdAmountTo
