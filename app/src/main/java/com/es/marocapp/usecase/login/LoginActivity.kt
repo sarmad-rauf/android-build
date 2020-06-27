@@ -59,9 +59,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             mActivityViewModel.mUserMsisdn=Constants.CURRENT_USER_MSISDN
 
            var userMSISDNwithPrefix = userData
-             userMSISDNwithPrefix = Constants.APP_MSISDN_PREFIX + userMSISDNwithPrefix
+            /* userMSISDNwithPrefix = Constants.APP_MSISDN_PREFIX + userMSISDNwithPrefix
             userMSISDNwithPrefix = userMSISDNwithPrefix.removePrefix("+")
-            Constants.CURRENT_USER_MSISDN = userData
+            Constants.CURRENT_USER_MSISDN = userData*/
             Constants.CURRENT_NUMBER_DEVICE_ID =
                 userMSISDNwithPrefix + "-" + Constants.CURRENT_DEVICE_ID
         }

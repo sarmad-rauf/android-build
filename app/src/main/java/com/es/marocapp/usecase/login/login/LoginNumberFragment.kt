@@ -57,7 +57,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
 
         mDataBinding.root.txtHeaderTitle.text = getString(R.string.enter_your_number)
 
-        mDataBinding.root.languageSpinner.visibility = View.VISIBLE
+   /*     mDataBinding.root.languageSpinner.visibility = View.VISIBLE
         mDataBinding.root.languageSpinner.onItemSelectedListener = this
 
         mActivity = activity as LoginActivity
@@ -73,7 +73,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
             else{
                 setSelection(1)
             }
-        }
+        }*/
 
 
         //todo also here remove lenght-2 check in max line
