@@ -16,6 +16,7 @@ import com.es.marocapp.model.responses.VerifyOTPForDefaultAccountResponse
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
+import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.login.LoginActivity
@@ -194,7 +195,8 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             }
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.verifyOTPforSetDefaultAccountStatus(
-                VerifyOTPForDefaultAccountRequest(ApiConstant.CONTEXT_AFTER_LOGIN, receiver,"confirm","en",Constants?.balanceInfoAndResponse?.profilename,referenceNumber,otp)
+                VerifyOTPForDefaultAccountRequest(ApiConstant.CONTEXT_AFTER_LOGIN, receiver,"confirm","en",Constants?.balanceInfoAndResponse?.profilename,referenceNumber,
+                    EncryptionUtils.encryptString(otp))
             )
                 .compose(applyIOSchedulers())
                 .subscribe(

@@ -71,7 +71,7 @@ class PinFragment : BaseFragment<FragmentPinBinding>(), ChangePasswordClickListe
             ) {
                 mDataBinding.inputLayoutConfirmPassword.error = ""
                 mDataBinding.inputLayoutConfirmPassword.isErrorEnabled = false
-                pinViewModel.requestForCahngePasswordAPI(
+                pinViewModel.requestForChangePasswordAPI(
                     activity, mDataBinding.inputOldPassword.text.toString().trim(),
                     mDataBinding.inputNewPassword.text.toString().trim()
                 )

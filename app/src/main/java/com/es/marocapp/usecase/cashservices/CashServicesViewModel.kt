@@ -10,6 +10,7 @@ import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
+import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
@@ -186,7 +187,8 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
             mOTP = otp
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getCashInWithOtpQuoteCall(
-                CashInWithOtpQuoteRequest(amountToTransfer, ApiConstant.CONTEXT_AFTER_LOGIN,otp, Constants.getNumberMsisdn(transferdAmountTo),noteToSend)
+                CashInWithOtpQuoteRequest(amountToTransfer, ApiConstant.CONTEXT_AFTER_LOGIN,
+                    EncryptionUtils.encryptString(otp), Constants.getNumberMsisdn(transferdAmountTo),noteToSend)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(

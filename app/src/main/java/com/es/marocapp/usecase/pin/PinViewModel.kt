@@ -10,6 +10,7 @@ import com.es.marocapp.model.responses.ChangePasswordResponse
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
+import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.login.LoginActivity
@@ -29,7 +30,7 @@ class PinViewModel(application: Application) : AndroidViewModel(application) {
 
 
     // API For ChangeUserPassword
-    fun requestForCahngePasswordAPI(
+    fun requestForChangePasswordAPI(
         context: Context?,
         oldCredential : String,
         newCredential : String
@@ -40,7 +41,8 @@ class PinViewModel(application: Application) : AndroidViewModel(application) {
             isLoading.set(true)
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getChangePasswordCall(
                 ChangePasswordRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),
-                oldCredential,newCredential,Constants.SECRET_TYPE)
+                    EncryptionUtils.encryptString(oldCredential),
+                    EncryptionUtils.encryptString(newCredential),Constants.SECRET_TYPE)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(

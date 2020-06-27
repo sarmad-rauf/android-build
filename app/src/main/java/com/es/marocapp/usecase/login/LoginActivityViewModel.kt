@@ -11,6 +11,7 @@ import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
+import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.SingleLiveEvent
 import com.es.marocapp.utils.Tools
@@ -458,7 +459,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
             isLoading.set(true)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getForgotPasswordCall(
-                ForgotPasswordRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,ApiConstant.APP_CREDENTIAL_TYPE,Constants.getNumberMsisdn(mUserMsisdn),newSecret,otp,newSecret)
+                ForgotPasswordRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,ApiConstant.APP_CREDENTIAL_TYPE,Constants.getNumberMsisdn(mUserMsisdn),EncryptionUtils.encryptString(newSecret),EncryptionUtils.encryptString(otp),EncryptionUtils.encryptString(newSecret))
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -564,7 +565,8 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
             //todo remove hardcoded value
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getLoginWithCertCall(
-                LoginWithCertRequest(versionName,"MzU3ODc2Nzgz",ApiConstant.CONTEXT_AFTER_LOGIN,Constants.CURRENT_NUMBER_DEVICE_ID,Constants.getNumberMsisdn(mUserMsisdn),secret,ApiConstant.APP_CREDENTIAL_TYPE,"CODE_LOGIN_S2_")
+                LoginWithCertRequest(versionName,"MzU3ODc2Nzgz",ApiConstant.CONTEXT_AFTER_LOGIN,Constants.CURRENT_NUMBER_DEVICE_ID,Constants.getNumberMsisdn(mUserMsisdn),
+                    EncryptionUtils.encryptString(secret),ApiConstant.APP_CREDENTIAL_TYPE,"CODE_LOGIN_S2_")
             )
                 .compose(applyIOSchedulers())
                 .subscribe(

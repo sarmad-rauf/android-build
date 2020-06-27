@@ -15,6 +15,7 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.BalanceInfoAndLimitResponse
 import com.es.marocapp.model.responses.LoginWithCertResponse
 import com.es.marocapp.network.ApiConstant
+import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.login.LoginActivity
@@ -90,6 +91,7 @@ class LoginUserFragment : BaseFragment<FragmentSignUpNumberBinding>(), LoginClic
                 if (it.setCookie.isNotEmpty()) {
                     var cookie = it.setCookie
                     Constants.setBase64EncodedString(cookie)
+                    Constants.LOGGED_IN_USER_COOKIE= EncryptionUtils.encryptString(Constants.LOGGED_IN_USER_COOKIE)
                     Constants.LOGGED_IN_USER = mActivityViewModel.mUserMsisdn
                 }
                 Constants.HEADERS_AFTER_LOGINS = true
