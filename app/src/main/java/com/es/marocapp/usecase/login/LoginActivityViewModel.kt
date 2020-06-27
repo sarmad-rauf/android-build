@@ -577,8 +577,8 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                         if(result?.responseCode != null){
                             when(result?.responseCode) {
                                 ApiConstant.API_SUCCESS ->  getLoginWithCertResponseListner.postValue(result)
-                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as LoginActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
-                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as LoginActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as LoginActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as LoginActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_INVALID)
                                 else ->  getLoginWithCertResponseListner.postValue(result)
                             }
                         }
