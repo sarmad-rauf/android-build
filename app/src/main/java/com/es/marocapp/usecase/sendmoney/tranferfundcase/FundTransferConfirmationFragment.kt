@@ -162,6 +162,17 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
         amountToTransfer = Constants.addAmountAndFee(mActivityViewModel.amountToTransfer.toDouble(),mActivityViewModel.feeAmount.toDouble())
         mDataBinding.tvAmountVal.text =Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+amountToTransfer
 
+        if(mActivityViewModel.isUserRegistered.get()!!){
+            mDataBinding.tvOwnerNameTitle.visibility = View.VISIBLE
+            mDataBinding.tvOwnerNameVal.visibility = View.VISIBLE
+            mDataBinding.divider2.visibility = View.VISIBLE
+
+        }else{
+            mDataBinding.tvOwnerNameTitle.visibility = View.GONE
+            mDataBinding.tvOwnerNameVal.visibility = View.GONE
+            mDataBinding.divider2.visibility = View.GONE
+        }
+
     }
 
     override fun onNextClickListner(view: View) {
