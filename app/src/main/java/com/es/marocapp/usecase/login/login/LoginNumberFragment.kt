@@ -111,7 +111,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
             if(mDataBinding.root.cb_Terms.isChecked) {
                 mDataBinding.root.toast_layout_root.visibility=View.GONE
                  mActivityViewModel.isSignUpFlow.set(true)
-                  mActivity.navController.navigate(R.id.action_loginFragment_to_signUpDetailFragment)
+                (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_signUpDetailFragment)
             }
             else{
                 mDataBinding.root.toast_layout_root.visibility=View.VISIBLE
