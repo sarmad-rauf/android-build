@@ -102,6 +102,9 @@ class AirTimeSuccessFragment : BaseFragment<FragmentAirTimeSuccessLayoutBinding>
         mDataBinding.tvCompanyNameTitle.text = LanguageData.getStringValue("Source")
 
         mDataBinding.addToFavoritesTitle.text = LanguageData.getStringValue("BtnTitle_AddToFavorites")
+
+        mDataBinding.tvSendNameTitle.text = LanguageData.getStringValue("SenderName")
+        mDataBinding.tvSendNumberTitle.text = LanguageData.getStringValue("SenderNumber")
     }
 
 
@@ -115,6 +118,9 @@ class AirTimeSuccessFragment : BaseFragment<FragmentAirTimeSuccessLayoutBinding>
 //        tvDHVal== AmountTotal
 //
 //        newBalanceVal = NewBalance
+
+        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname + Constants.balanceInfoAndResponse.surname
+        mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
 
         mDataBinding.tvOwnerNameVal.text = mActivityViewModel.transactionID
 //        mDataBinding.tvContactNumVal.text = mActivityViewModel.ReceiverName

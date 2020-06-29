@@ -68,6 +68,9 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
 
         mDataBinding.btnConfirmationCancel.text = LanguageData.getStringValue("BtnTitle_Cancel")
         mDataBinding.btnConfirmationPay.text = mActivityViewModel.trasferTypeSelected.get()!!
+
+        mDataBinding.tvSendNameTitle.text = LanguageData.getStringValue("SenderName")
+        mDataBinding.tvSendNumberTitle.text = LanguageData.getStringValue("SenderNumber")
     }
 
     private fun subscribeObserver() {
@@ -84,10 +87,16 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
                 }else{
                     if(it.responseCode.equals(ApiConstant.API_PENDING)){
                         Constants.HEADERS_FOR_PAYEMNTS = false
+                        mActivityViewModel.isTransactionPending.set(true)
+                        mActivityViewModel.isTransactionFailed.set(false)
+                        mActivityViewModel.cashServiceFailureOrPendingDescription.set(it.description)
                         (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesConfirmationFragment_to_cashServicesPendingFragment)
                     }else{
                         Constants.HEADERS_FOR_PAYEMNTS = false
-                        DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                        mActivityViewModel.isTransactionPending.set(false)
+                        mActivityViewModel.isTransactionFailed.set(true)
+                        mActivityViewModel.cashServiceFailureOrPendingDescription.set(it.description)
+                        (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesConfirmationFragment_to_cashServicesPendingFragment)
                     }
                 }
             }
@@ -103,10 +112,16 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
                 }else{
                     if(it.responseCode.equals(ApiConstant.API_PENDING)){
                         Constants.HEADERS_FOR_PAYEMNTS = false
+                        mActivityViewModel.isTransactionPending.set(true)
+                        mActivityViewModel.isTransactionFailed.set(false)
+                        mActivityViewModel.cashServiceFailureOrPendingDescription.set(it.description)
                         (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesConfirmationFragment_to_cashServicesPendingFragment)
                     }else{
                         Constants.HEADERS_FOR_PAYEMNTS = false
-                        DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                        mActivityViewModel.isTransactionPending.set(false)
+                        mActivityViewModel.isTransactionFailed.set(true)
+                        mActivityViewModel.cashServiceFailureOrPendingDescription.set(it.description)
+                        (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesConfirmationFragment_to_cashServicesPendingFragment)
                     }
                 }
             }
@@ -124,6 +139,10 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
     }
 
     private fun updateUI() {
+
+        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname + Constants.balanceInfoAndResponse.surname
+        mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
+
         mDataBinding.tvCompanyNameVal.text = mActivityViewModel.transferdAmountTo
         mDataBinding.tvReceiptCodeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.amountToTransfer
         mDataBinding.tvDHVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.feeAmount

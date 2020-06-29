@@ -100,6 +100,8 @@ class FundsTrasnferSuccessFragment : BaseFragment<FragmentFundsTransferSuccessBi
         mDataBinding.tvCompanyNameTitle.text = LanguageData.getStringValue("Source")
         mDataBinding.addToFavoritesTitle.text = LanguageData.getStringValue("BtnTitle_AddToFavorites")
 
+        mDataBinding.tvSendNameTitle.text = LanguageData.getStringValue("SenderName")
+        mDataBinding.tvSendNumberTitle.text = LanguageData.getStringValue("SenderNumber")
     }
 
     private fun updateUI() {
@@ -120,6 +122,10 @@ class FundsTrasnferSuccessFragment : BaseFragment<FragmentFundsTransferSuccessBi
             mDataBinding.tvContactNumTitle.visibility = View.GONE
             mDataBinding.tvContactNumVal.visibility = View.GONE
         }
+
+        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname + Constants.balanceInfoAndResponse.surname
+        mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
+
 
         mDataBinding.tvOwnerNameVal.text = mActivityViewModel.transactionID
         mDataBinding.tvContactNumVal.text = mActivityViewModel.ReceiverName

@@ -63,6 +63,9 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
 
         mDataBinding.btnConfirmationCancel.text = LanguageData.getStringValue("BtnTitle_Cancel")
         mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("BtnTitle_Pay")
+
+        mDataBinding.tvSendNameTitle.text = LanguageData.getStringValue("SenderName")
+        mDataBinding.tvSendNumberTitle.text = LanguageData.getStringValue("SenderNumber")
     }
 
     private fun subscribeObserver() {
@@ -81,10 +84,16 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                 }else{
                     if(it.responseCode.equals(ApiConstant.API_PENDING)){
                         Constants.HEADERS_FOR_PAYEMNTS = false
+                        mActivityViewModel.isTransactionPending.set(true)
+                        mActivityViewModel.isTransactionFailed.set(false)
+                        mActivityViewModel.sendMoneyFailureOrPendingDescription.set(it.description)
                         (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTransferPendingFragment)
                     }else{
                         Constants.HEADERS_FOR_PAYEMNTS = false
-                        DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                        mActivityViewModel.isTransactionPending.set(false)
+                        mActivityViewModel.isTransactionFailed.set(true)
+                        mActivityViewModel.sendMoneyFailureOrPendingDescription.set(it.description)
+                        (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTransferPendingFragment)
                     }
                 }
             })
@@ -99,10 +108,16 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                 }else{
                     if(it.responseCode.equals(ApiConstant.API_PENDING)){
                         Constants.HEADERS_FOR_PAYEMNTS = false
+                        mActivityViewModel.isTransactionPending.set(true)
+                        mActivityViewModel.isTransactionFailed.set(false)
+                        mActivityViewModel.sendMoneyFailureOrPendingDescription.set(it.description)
                         (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTransferPendingFragment)
                     }else{
                         Constants.HEADERS_FOR_PAYEMNTS = false
-                        DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                        mActivityViewModel.isTransactionPending.set(false)
+                        mActivityViewModel.isTransactionFailed.set(true)
+                        mActivityViewModel.sendMoneyFailureOrPendingDescription.set(it.description)
+                        (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTransferPendingFragment)
                     }
                 }
             })
@@ -117,10 +132,16 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                 }else{
                     if(it.responseCode.equals(ApiConstant.API_PENDING)){
                         Constants.HEADERS_FOR_PAYEMNTS = false
+                        mActivityViewModel.isTransactionPending.set(true)
+                        mActivityViewModel.isTransactionFailed.set(false)
+                        mActivityViewModel.sendMoneyFailureOrPendingDescription.set(it.description)
                         (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTransferPendingFragment)
                     }else{
                         Constants.HEADERS_FOR_PAYEMNTS = false
-                        DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                        mActivityViewModel.isTransactionPending.set(false)
+                        mActivityViewModel.isTransactionFailed.set(true)
+                        mActivityViewModel.sendMoneyFailureOrPendingDescription.set(it.description)
+                        (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTransferPendingFragment)
                     }
                 }
             })
@@ -135,10 +156,16 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                 }else{
                     if(it.responseCode.equals(ApiConstant.API_PENDING)){
                         Constants.HEADERS_FOR_PAYEMNTS = false
+                        mActivityViewModel.isTransactionPending.set(true)
+                        mActivityViewModel.isTransactionFailed.set(false)
+                        mActivityViewModel.sendMoneyFailureOrPendingDescription.set(it.description)
                         (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTransferPendingFragment)
                     }else{
                         Constants.HEADERS_FOR_PAYEMNTS = false
-                        DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                        mActivityViewModel.isTransactionPending.set(false)
+                        mActivityViewModel.isTransactionFailed.set(true)
+                        mActivityViewModel.sendMoneyFailureOrPendingDescription.set(it.description)
+                        (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTransferPendingFragment)
                     }
                 }
             })
@@ -151,6 +178,9 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
 //        tvDHVal == Fee
 //
 //        tvAmountVal == AmountTotal
+
+        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname + Constants.balanceInfoAndResponse.surname
+        mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
 
         mDataBinding.tvCompanyNameVal.text = mActivityViewModel.transferdAmountTo
         var ReceiverName = mActivityViewModel.mAccountHolderInfoResponseObserver.get()?.firstName +" " +mActivityViewModel.mAccountHolderInfoResponseObserver.get()?.sureName

@@ -6,6 +6,8 @@ import android.net.wifi.WifiManager
 import android.os.Build
 import android.text.format.Formatter.formatIpAddress
 import android.util.Log
+import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.BalanceInfoAndLimitResponse
 import com.es.marocapp.model.responses.Contact
 import com.es.marocapp.model.responses.LoginWithCertResponse
@@ -81,6 +83,10 @@ object Constants {
             .format(Date()) + Random()
             .nextInt(999998) + "($LOGGED_IN_USER)"
         return token
+    }
+
+    fun getSelectedLanguage() : String{
+        return LocaleManager.selectedLanguage
     }
 
     fun createUserLoggedInToken() : String{

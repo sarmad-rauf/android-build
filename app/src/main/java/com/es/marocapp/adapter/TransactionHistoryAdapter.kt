@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -63,6 +64,14 @@ class TransactionHistoryAdapter(
             holder.tvCompanyName?.text = models!![position].historyList.toname
             holder.tvBillAmount?.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+models!![position].historyList.fromamount
             holder.tvBillDate?.text = models!![position].date
+
+            when(models!![position].historyList.transfertype){
+                "Payment"-> holder.transferTypeIcon?.setImageResource(R.drawable.others)
+                "CashOut"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_withdraw)
+                "Transfer"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_favorite_transfers)
+                "FloatTransfer"-> holder.transferTypeIcon?.setImageResource(R.drawable.others)
+                else-> holder.transferTypeIcon?.setImageResource(R.drawable.others)
+            }
         }
     }
 
@@ -91,6 +100,7 @@ class TransactionHistoryAdapter(
         var tvCompanyName: TextView? = null
         var tvBillDate: TextView? = null
         var tvBillAmount: TextView? = null
+        var transferTypeIcon: ImageView? = null
 
         init {
             // Lookup view for data population
@@ -100,6 +110,7 @@ class TransactionHistoryAdapter(
             tvCompanyName = convertView.findViewById(R.id.row_company_name)
             tvBillDate = convertView.findViewById(R.id.row_bill_date)
             tvBillAmount = convertView.findViewById(R.id.row_bill_amount)
+            transferTypeIcon = convertView.findViewById(R.id.row_company_icon)
         }
     }
 

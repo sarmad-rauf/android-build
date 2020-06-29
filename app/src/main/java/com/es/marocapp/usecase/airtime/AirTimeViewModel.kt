@@ -49,6 +49,10 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
     var airTimeSelectedPlanCodeSelected = ObservableField<String>()
     var airTimeAmountSelected = ObservableField<String>()
 
+    var isTransactionFailed = ObservableField<Boolean>()
+    var isTransactionPending = ObservableField<Boolean>()
+    var airTimeResponse = ObservableField<AirTimeResponse>()
+
     var isUserSelectedFromFavorites = ObservableField<Boolean>()
 
     var mAirTimeUseCaseResponse = ObservableField<GetAirTimeUseCasesResponse>()
@@ -247,18 +251,21 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
                             when(result?.responseCode) {
                                 ApiConstant.API_SUCCESS -> {
                                     getAirTimeResponseListner.postValue(result)
+                                    airTimeResponse.set(result)
                                 }
                                 ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as AirTimeActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
                                 ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as AirTimeActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_INVALID)
                                 else ->  {
+                                    airTimeResponse.set(result)
                                     getAirTimeResponseListner.postValue(result)
                                 }
                             }
 
                         } else {
                             getAirTimeResponseListner.postValue(result)
+                            airTimeResponse.set(result)
                         }
 
 

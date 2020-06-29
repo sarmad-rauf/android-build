@@ -54,9 +54,14 @@ class CashServicesSuccessFragment : BaseFragment<FragmentCashServicesSuccessBind
         mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("BtnTitle_OK")
         mDataBinding.tvCompanyNameTitle.text = LanguageData.getStringValue("Source")
 
+        mDataBinding.tvSendNameTitle.text = LanguageData.getStringValue("SenderName")
+        mDataBinding.tvSendNumberTitle.text = LanguageData.getStringValue("SenderNumber")
     }
 
     private fun updateUI() {
+
+        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname + Constants.balanceInfoAndResponse.surname
+        mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
 
         mDataBinding.tvOwnerNameVal.text = mActivityViewModel.transactionID
 

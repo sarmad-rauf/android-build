@@ -38,6 +38,10 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
     var senderBalanceAfter ="0.00"
     var mOTP = ""
 
+    var isTransactionFailed = ObservableField<Boolean>()
+    var isTransactionPending = ObservableField<Boolean>()
+    var cashServiceFailureOrPendingDescription = ObservableField<String>()
+
     var popBackStackTo = -1
     var isOTPFlow = ObservableField<Boolean>()
 

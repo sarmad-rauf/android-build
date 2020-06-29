@@ -151,6 +151,73 @@
                         />
 
                     <com.es.marocapp.widgets.MarocLightTextView
+                        android:id="@+id/tvSendNameTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:text="Sender Name"
+                        android:textColor="@color/colorTextGreyDark"
+                        android:textSize="@dimen/_12sdp"
+                        app:layout_constraintStart_toStartOf="@+id/tvCompanyNameTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+                    <com.es.marocapp.widgets.MarocRegularTextView
+                        android:id="@+id/tvSenderNameVal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:text="+212 88716 9918"
+                        android:textColor="@color/colorTextGreyDark"
+                        android:textSize="@dimen/_14sdp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvSendNameTitle"
+                        app:layout_constraintEnd_toEndOf="@+id/tvOwnerNameVal" />
+
+                    <ImageView
+                        android:id="@+id/divider9"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/colorGreyLight"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        app:layout_constraintTop_toBottomOf="@+id/tvSenderNameVal"
+                        app:layout_constraintStart_toStartOf="@+id/tvSendNameTitle"
+                        app:layout_constraintEnd_toEndOf="@+id/tvSenderNameVal"
+                        />
+
+                    <com.es.marocapp.widgets.MarocLightTextView
+                        android:id="@+id/tvSendNumberTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:text="Sender Number"
+                        android:textColor="@color/colorTextGreyDark"
+                        android:textSize="@dimen/_12sdp"
+                        app:layout_constraintStart_toStartOf="@+id/tvSendNameTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/tvSenderNameVal" />
+
+                    <com.es.marocapp.widgets.MarocRegularTextView
+                        android:id="@+id/tvSenderNumberVal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:text="+212 88716 9918"
+                        android:textColor="@color/colorTextGreyDark"
+                        android:textSize="@dimen/_14sdp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvSendNumberTitle"
+                        app:layout_constraintEnd_toEndOf="@+id/tvOwnerNameVal" />
+
+                    <ImageView
+                        android:id="@+id/divider10"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:background="@color/colorGreyLight"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        app:layout_constraintTop_toBottomOf="@+id/tvSenderNumberVal"
+                        app:layout_constraintStart_toStartOf="@+id/tvSendNumberTitle"
+                        app:layout_constraintEnd_toEndOf="@+id/tvSenderNumberVal"
+                        />
+
+
+                    <com.es.marocapp.widgets.MarocLightTextView
                         android:id="@+id/tvContactNumTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -158,7 +225,7 @@
                         android:textColor="@color/colorTextGreyDark"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:text="@string/source"
-                        app:layout_constraintTop_toBottomOf="@+id/divider2"
+                        app:layout_constraintTop_toBottomOf="@+id/divider10"
                         app:layout_constraintStart_toStartOf="@+id/tvOwnerNameTitle"
                         />
 
@@ -171,7 +238,7 @@
                         android:textColor="@color/colorTextGreyDark"
                         android:layout_marginTop="@dimen/_8sdp"
                         app:layout_constraintEnd_toEndOf="@+id/tvOwnerNameVal"
-                        app:layout_constraintTop_toBottomOf="@+id/divider2"
+                        app:layout_constraintTop_toBottomOf="@+id/divider10"
                         />
 
                     <ImageView

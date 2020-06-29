@@ -78,6 +78,7 @@ public class ApiClient() : Dependencies() {
         headerParams["Accept"] = "application/json"
         headerParams["X-Forwarded-For"] = Constants.APPLICATION_IP_ADDRESS
         headerParams["token"] = Constants.createUserToken()
+        headerParams["lang"] = Constants.getSelectedLanguage()
         if(Constants.HEADERS_AFTER_LOGINS){
             if(Constants.HEADERS_FOR_PAYEMNTS){
                 headerParams["authorization"] = EncryptionUtils.encryptString("Basic "+Constants.CURRENT_USER_MSISDN+":"+Constants.CURRENT_USER_CREDENTIAL)

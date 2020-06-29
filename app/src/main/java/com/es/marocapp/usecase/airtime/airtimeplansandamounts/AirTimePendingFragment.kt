@@ -70,47 +70,32 @@ class AirTimePendingFragment : BaseFragment<FragmentAirTimePendingBinding>(), Ai
     }
 
     private fun updateUI() {
-        //        tvOwnerNameVal== TransactionID
-//        tvContactNumVal== ReceiverName
-//        tvReceiverNumberVal= ReceiverNumber
-//        tvOwnerNameVal2 == Amount
-//        tvContactNumVal2== Fee
-//
-//        tvDHVal== AmountTotal
-//
-//        newBalanceVal = NewBalance
+        mDataBinding.descriptionOfTransaction.text = mActivityViewModel.airTimeResponse.get()!!.description
 
-        mDataBinding.tvOwnerNameVal.text = mActivityViewModel.transactionID
-//        mDataBinding.tvContactNumVal.text = mActivityViewModel.ReceiverName
-        mDataBinding.tvReceiverNumberVal.text = mActivityViewModel.transferdAmountTo
+        if(mActivityViewModel.isTransactionFailed.get()!!){
+            mDataBinding.imgSuccess.setImageResource(R.drawable.img_payment_failure)
+            mDataBinding.successTItle.visibility = View.GONE
+            mDataBinding.successTItleFailed.visibility = View.VISIBLE
+            mDataBinding.favoritesGroup.visibility = View.GONE
+        }
 
-        mDataBinding.tvOwnerNameVal2.text = Constants.CURRENT_CURRENCY_TYPE+" "+mActivityViewModel.amountToTransfer
-        mDataBinding.tvContactNumVal2.text = Constants.CURRENT_CURRENCY_TYPE+" "+mActivityViewModel.feeAmount
-
-        var amountToTransfer = Constants.addAmountAndFee(mActivityViewModel.amountToTransfer.toDouble(),mActivityViewModel.feeAmount.toDouble())
-        mDataBinding.tvDHVal.text = Constants.CURRENT_CURRENCY_TYPE+" "+amountToTransfer
-
-//        Constants.balanceInfoAndResponse.balance = mActivityViewModel.senderBalanceAfter
-
-        mDataBinding.newBalanceVal.text = Constants.CURRENT_CURRENCY_TYPE+" "+Constants.balanceInfoAndResponse.balance
+        if(mActivityViewModel.isTransactionPending.get()!!){
+            mDataBinding.imgSuccess.setImageResource(R.drawable.img_payment_pending)
+            mDataBinding.successTItle.visibility = View.VISIBLE
+            mDataBinding.successTItleFailed.visibility = View.GONE
+            mDataBinding.favoritesGroup.visibility = View.VISIBLE
+        }
     }
 
     private fun setStrings() {
-        mDataBinding.tvOwnerNameTitle.text = LanguageData.getStringValue("TransactionID")
-        mDataBinding.tvContactNumTitle.text = LanguageData.getStringValue("ReceiverName")
-        mDataBinding.tvReceiverNumberTitle.text = LanguageData.getStringValue("ReceiverNumber")
-        mDataBinding.tvOwnerNameTitle2.text = LanguageData.getStringValue("Amount")
-        mDataBinding.tvContactNumTitle2.text = LanguageData.getStringValue("Fee")
-        mDataBinding.tvDHTitle.text = LanguageData.getStringValue("TotalCost")
-        mDataBinding.newBalanceTitle.text = LanguageData.getStringValue("YourNewBalanceIs")
-
         mDataBinding.tvSuccessTitle.text = mActivityViewModel.airTimeSelected.get()!!
-        mDataBinding.successTItle.text = LanguageData.getStringValue("Pending")
 
         mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("BtnTitle_OK")
-        mDataBinding.tvCompanyNameTitle.text = LanguageData.getStringValue("Source")
 
         mDataBinding.addToFavoritesTitle.text = LanguageData.getStringValue("BtnTitle_AddToFavorites")
+
+        mDataBinding.successTItle.text = LanguageData.getStringValue("Pending")
+        mDataBinding.successTItleFailed.text = LanguageData.getStringValue("Failed")
     }
 
     private fun subscribeObserver() {

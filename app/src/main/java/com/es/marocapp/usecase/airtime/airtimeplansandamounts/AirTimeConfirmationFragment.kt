@@ -68,6 +68,9 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
 
         mDataBinding.btnConfirmationCancel.text = LanguageData.getStringValue("BtnTitle_Cancel")
         mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("BtnTitle_Pay")
+
+        mDataBinding.tvSendNameTitle.text = LanguageData.getStringValue("SenderName")
+        mDataBinding.tvSendNumberTitle.text = LanguageData.getStringValue("SenderNumber")
     }
 
 
@@ -82,10 +85,14 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
                 } else {
                     if(it.responseCode.equals(ApiConstant.API_PENDING)){
                         Constants.HEADERS_FOR_PAYEMNTS = false
+                        mActivityViewModel.isTransactionPending.set(true)
+                        mActivityViewModel.isTransactionFailed.set(false)
                         (activity as AirTimeActivity).navController.navigate(R.id.action_airTimeConfirmationFragment_to_airTimePendingFragment)
                     }else{
                         Constants.HEADERS_FOR_PAYEMNTS = false
-                        DialogUtils.showErrorDialoge(activity, it.description)
+                        mActivityViewModel.isTransactionPending.set(false)
+                        mActivityViewModel.isTransactionFailed.set(true)
+                        (activity as AirTimeActivity).navController.navigate(R.id.action_airTimeConfirmationFragment_to_airTimePendingFragment)
                     }
                 }
             })
@@ -98,6 +105,9 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
 //        tvDHVal == Fee
 //
 //        tvAmountVal == AmountTotal
+
+        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname + Constants.balanceInfoAndResponse.surname
+        mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
 
         mDataBinding.tvCompanyNameVal.text = mActivityViewModel.transferdAmountTo
 //        var ReceiverName = mActivityViewModel.mAccountHolderInfoResponseObserver.get()?.firstName +" " +mActivityViewModel.mAccountHolderInfoResponseObserver.get()?.sureName

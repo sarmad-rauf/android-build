@@ -206,6 +206,50 @@
                             app:layout_constraintBottom_toBottomOf="@+id/tvReceiverNumberTitle"
                             app:layout_constraintEnd_toEndOf="@+id/tvOwnerNameVal" />
 
+                        <com.es.marocapp.widgets.MarocLightTextView
+                            android:id="@+id/tvSendNameTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:text="Sender Name"
+                            android:textColor="@color/colorTextGreyDark"
+                            android:textSize="@dimen/_12sdp"
+                            app:layout_constraintStart_toStartOf="@+id/tvReceiverNumberTitle"
+                            app:layout_constraintTop_toBottomOf="@+id/tvReceiverNumberTitle" />
+
+                        <com.es.marocapp.widgets.MarocRegularTextView
+                            android:id="@+id/tvSenderNameVal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:text="+212 88716 9918"
+                            android:textColor="@color/colorTextGreyDark"
+                            android:textSize="@dimen/_14sdp"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvSendNameTitle"
+                            app:layout_constraintEnd_toEndOf="@+id/tvOwnerNameVal" />
+
+                        <com.es.marocapp.widgets.MarocLightTextView
+                            android:id="@+id/tvSendNumberTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:text="Sender Number"
+                            android:textColor="@color/colorTextGreyDark"
+                            android:textSize="@dimen/_12sdp"
+                            app:layout_constraintStart_toStartOf="@+id/tvSendNameTitle"
+                            app:layout_constraintTop_toBottomOf="@+id/tvSendNameTitle" />
+
+                        <com.es.marocapp.widgets.MarocRegularTextView
+                            android:id="@+id/tvSenderNumberVal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:text="+212 88716 9918"
+                            android:textColor="@color/colorTextGreyDark"
+                            android:textSize="@dimen/_14sdp"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvSendNumberTitle"
+                            app:layout_constraintEnd_toEndOf="@+id/tvOwnerNameVal" />
+
                         <ImageView
                             android:id="@+id/dottedLine1"
                             android:layout_width="match_parent"
@@ -213,7 +257,7 @@
                             android:layout_marginTop="@dimen/_16sdp"
                             android:layerType="software"
                             android:src="@drawable/dotted"
-                            app:layout_constraintTop_toBottomOf="@+id/tvReceiverNumberTitle" />
+                            app:layout_constraintTop_toBottomOf="@+id/tvSendNumberTitle" />
 
                         <com.es.marocapp.widgets.MarocLightTextView
                             android:id="@+id/tvOwnerNameTitle2"

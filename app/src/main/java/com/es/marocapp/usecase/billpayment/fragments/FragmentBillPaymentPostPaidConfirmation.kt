@@ -129,6 +129,9 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
 //
 //        tvAmountVal == AmountTotal
 
+        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname + Constants.balanceInfoAndResponse.surname
+        mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
+
         if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
             mDataBinding.tvOwnerNameVal.visibility = View.GONE
             mDataBinding.tvOwnerNameTitle.visibility = View.GONE
@@ -202,6 +205,9 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
 
         mDataBinding.btnConfirmationCancel.text = LanguageData.getStringValue("BtnTitle_Cancel")
         mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("BtnTitle_Pay")
+
+        mDataBinding.tvSendNameTitle.text = LanguageData.getStringValue("SenderName")
+        mDataBinding.tvSendNumberTitle.text = LanguageData.getStringValue("SenderNumber")
     }
 
     override fun onSubmitClickListner(view: View) {

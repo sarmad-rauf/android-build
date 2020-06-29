@@ -35,6 +35,12 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
     var getFloatTransferResponseListner = SingleLiveEvent<FloatTransferResponse>()
     var getAddFavoritesResponseListner = SingleLiveEvent<AddContactResponse>()
 
+
+    var isTransactionFailed = ObservableField<Boolean>()
+    var isTransactionPending = ObservableField<Boolean>()
+    var sendMoneyFailureOrPendingDescription = ObservableField<String>()
+
+
     var trasferTypeSelected = ObservableField<String>()
     var isUserRegistered = ObservableField<Boolean>()
     var isUserUnRegisteredSpecialCase = ObservableField<Boolean>()

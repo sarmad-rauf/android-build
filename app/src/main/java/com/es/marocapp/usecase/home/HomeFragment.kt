@@ -67,6 +67,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     private fun setStrings() {
         mDataBinding.textTitleQuickRecharge.text = LanguageData.getStringValue("QuickRecharge")
         mDataBinding.btnQuickRecharge4.text = LanguageData.getStringValue("Recharge")
+
+        if(Constants.quickAmountsList.isNotEmpty()){
+            for(i in Constants.quickAmountsList.indices){
+                when(i){
+                    0 -> mDataBinding.btnQuickRecharge1.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+Constants.quickAmountsList[i]
+                    1 -> mDataBinding.btnQuickRecharge2.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+Constants.quickAmountsList[i]
+                    2 -> mDataBinding.btnQuickRecharge3.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+Constants.quickAmountsList[i]
+                }
+
+            }
+        }
     }
 
     private fun subscribeForDefaultAccountStatus() {
