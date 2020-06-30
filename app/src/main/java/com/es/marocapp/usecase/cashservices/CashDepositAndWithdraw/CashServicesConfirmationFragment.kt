@@ -84,6 +84,8 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
                     Constants.HEADERS_FOR_PAYEMNTS = false
                     mActivityViewModel.transactionID = it.financialTransactionId
                     mActivityViewModel.requestForGetBalanceApi(activity)
+                }else if (it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
+                    DialogUtils.showErrorDialoge(activity,it.description)
                 }else{
                     if(it.responseCode.equals(ApiConstant.API_PENDING)){
                         Constants.HEADERS_FOR_PAYEMNTS = false
@@ -109,6 +111,8 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
                     mActivityViewModel.senderBalanceAfter = it.senderBalanceAfter
                     mActivityViewModel.transactionID = it.financialTransactionId
                     (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesConfirmationFragment_to_cashServicesSuccessFragment)
+                }else if (it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
+                    DialogUtils.showErrorDialoge(activity,it.description)
                 }else{
                     if(it.responseCode.equals(ApiConstant.API_PENDING)){
                         Constants.HEADERS_FOR_PAYEMNTS = false

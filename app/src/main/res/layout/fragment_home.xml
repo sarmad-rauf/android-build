@@ -13,219 +13,215 @@
 
         <variable
             name="listener"
-            type="com.es.marocapp.usecase.home.HomeFragmentClickListners"/> />
+            type="com.es.marocapp.usecase.home.HomeFragmentClickListners" />
 
 
     </data>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_12sdp">
+
+        <!--                <androidx.viewpager2.widget.ViewPager2-->
+        <!--                    android:id="@+id/viewPager"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="0dp"-->
+        <!--                    app:layout_constraintVertical_weight=".3"-->
+        <!--                    app:cardSlider_indicator="@id/indicator"-->
+        <!--                    app:cardSlider_otherPagesWidth="@dimen/_8sdp"-->
+        <!--                    app:cardSlider_pageMargin="@dimen/_6sdp"-->
+        <!--                    app:cardSlider_smallAlphaFactor="0.4"-->
+        <!--                    app:cardSlider_smallScaleFactor="0.8"-->
+        <!--                    app:layout_constraintTop_toTopOf="parent"-->
+        <!--                    app:layout_constraintBottom_toTopOf="@+id/indicator"-->
+        <!--                    />-->
+
+        <!--                <-->
+        <!--                    android:id="@+id/indicator"-->
+        <!--                    android:layout_width="wrap_content"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:foregroundGravity="center_horizontal"-->
+        <!--                    android:gravity="center_horizontal"-->
+        <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                    app:layout_constraintStart_toStartOf="parent"-->
+        <!--                    app:layout_constraintTop_toBottomOf="@+id/viewPager"-->
+        <!--                    app:layout_constraintBottom_toTopOf="@+id/quickRechargeContainer"/>-->
+
+        <FrameLayout
+            android:id="@+id/View"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:background="@android:color/black"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/quickRechargeContainer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight=".3">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/colorWhite" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/left_nav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|start"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:onClick="@{listener::onPreviousBalanceCardClick}"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_back" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/right_nav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:onClick="@{listener::onNextBalanceCardClick}"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_forward" />
+
+        </FrameLayout>
+
+        <com.merhold.extensiblepageindicator.ExtensiblePageIndicator
+            android:id="@+id/flexibleIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/_4sdp"
+            app:indicatorPadding="@dimen/_8sdp"
+            app:indicatorRadius="@dimen/_2sdp"
+            app:layout_constraintBottom_toTopOf="@+id/quickRechargeContainer"
+            app:layout_constraintEnd_toStartOf="@+id/View"
+            app:layout_constraintStart_toEndOf="@+id/View"
+            app:layout_constraintTop_toBottomOf="@+id/View" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/quickRechargeContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:background="@drawable/using_smart_phone"
+            android:paddingBottom="@dimen/_8sdp"
+            app:layout_constraintBottom_toTopOf="@+id/useCasesRecyclerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/View"
+            app:layout_constraintVertical_weight=".15">
+
+            <com.es.marocapp.widgets.MarocMediumTextView
+                android:id="@+id/textTitleQuickRecharge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_12sdp"
-                android:layout_marginBottom="@dimen/_12sdp"
-               >
+                android:text="@string/quick_recharge"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintStart_toStartOf="@id/quickRechargeContainer"
+                app:layout_constraintTop_toTopOf="@+id/quickRechargeContainer" />
 
-<!--                <androidx.viewpager2.widget.ViewPager2-->
-<!--                    android:id="@+id/viewPager"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="0dp"-->
-<!--                    app:layout_constraintVertical_weight=".3"-->
-<!--                    app:cardSlider_indicator="@id/indicator"-->
-<!--                    app:cardSlider_otherPagesWidth="@dimen/_8sdp"-->
-<!--                    app:cardSlider_pageMargin="@dimen/_6sdp"-->
-<!--                    app:cardSlider_smallAlphaFactor="0.4"-->
-<!--                    app:cardSlider_smallScaleFactor="0.8"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    app:layout_constraintBottom_toTopOf="@+id/indicator"-->
-<!--                    />-->
+            <com.es.marocapp.widgets.MarocButton
+                android:id="@+id/btnQuickRecharge1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="@drawable/button_quick_recharge"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingStart="@dimen/_6sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingEnd="@dimen/_6sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:text="DH5"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textTitleQuickRecharge" />
 
-<!--                <-->
-<!--                    android:id="@+id/indicator"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:foregroundGravity="center_horizontal"-->
-<!--                    android:gravity="center_horizontal"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toBottomOf="@+id/viewPager"-->
-<!--                    app:layout_constraintBottom_toTopOf="@+id/quickRechargeContainer"/>-->
+            <com.es.marocapp.widgets.MarocButton
+                android:id="@+id/btnQuickRecharge2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@drawable/button_quick_recharge"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingStart="@dimen/_6sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingEnd="@dimen/_6sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:text="DH10"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/btnQuickRecharge1"
+                app:layout_constraintEnd_toStartOf="@id/btnQuickRecharge3"
+                app:layout_constraintStart_toEndOf="@+id/btnQuickRecharge1" />
 
-                <FrameLayout
-                    android:id="@+id/View"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintVertical_weight=".3"
-                    android:background="@android:color/black"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/quickRechargeContainer"
-                    >
+            <com.es.marocapp.widgets.MarocButton
+                android:id="@+id/btnQuickRecharge3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:background="@drawable/button_quick_recharge"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingStart="@dimen/_6sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingEnd="@dimen/_6sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:text="DH100"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/btnQuickRecharge1"
+                app:layout_constraintEnd_toStartOf="@id/btnQuickRecharge4"
+                app:layout_constraintStart_toEndOf="@+id/btnQuickRecharge2" />
 
-                    <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/viewpager"
-                        android:background="@color/colorWhite"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+            <com.es.marocapp.widgets.MarocButton
+                android:id="@+id/btnQuickRecharge4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@drawable/button_quick_recharge_state"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingStart="@dimen/_6sdp"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingEnd="@dimen/_6sdp"
+                android:paddingBottom="@dimen/_4sdp"
+                android:text="@string/recharge"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/btnQuickRecharge3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnQuickRecharge3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/left_nav"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:onClick="@{listener::onPreviousBalanceCardClick}"
-                        android:layout_gravity="center_vertical|start"
-                        android:layout_marginStart="@dimen/_12sdp"
-                        app:srcCompat="@drawable/ic_back" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/right_nav"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:onClick="@{listener::onNextBalanceCardClick}"
-                        android:layout_gravity="center_vertical|end"
-                        android:layout_marginEnd="@dimen/_12sdp"
-                        app:srcCompat="@drawable/ic_forward" />
-
-                </FrameLayout>
-
-                <com.merhold.extensiblepageindicator.ExtensiblePageIndicator
-                    android:id="@+id/flexibleIndicator"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="@dimen/_4sdp"
-                    app:indicatorPadding="@dimen/_8sdp"
-                    app:indicatorRadius="@dimen/_2sdp"
-                    app:layout_constraintStart_toEndOf="@+id/View"
-                    app:layout_constraintEnd_toStartOf="@+id/View"
-                    app:layout_constraintTop_toBottomOf="@+id/View"
-                    app:layout_constraintBottom_toTopOf="@+id/quickRechargeContainer"
-                    />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/quickRechargeContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintVertical_weight=".15"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:paddingBottom="@dimen/_8sdp"
-                    android:background="@drawable/using_smart_phone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/View"
-                    app:layout_constraintBottom_toTopOf="@+id/useCasesRecyclerView">
-
-                <com.es.marocapp.widgets.MarocMediumTextView
-                    android:id="@+id/textTitleQuickRecharge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:text="@string/quick_recharge"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_14ssp"
-                    app:layout_constraintStart_toStartOf="@id/quickRechargeContainer"
-                    app:layout_constraintTop_toTopOf="@+id/quickRechargeContainer" />
-
-                <com.es.marocapp.widgets.MarocButton
-                    android:id="@+id/btnQuickRecharge1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minHeight="0dp"
-                    android:minWidth="0dp"
-                    android:paddingStart="@dimen/_6sdp"
-                    android:paddingEnd="@dimen/_6sdp"
-                    android:paddingTop="@dimen/_4sdp"
-                    android:paddingBottom="@dimen/_4sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:background="@drawable/button_quick_recharge"
-                    android:text="DH5"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_14ssp"
-                    app:layout_constraintStart_toStartOf="@+id/textTitleQuickRecharge"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                   />
-
-                <com.es.marocapp.widgets.MarocButton
-                    android:id="@+id/btnQuickRecharge2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_4sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:minHeight="0dp"
-                    android:minWidth="0dp"
-                    android:paddingStart="@dimen/_6sdp"
-                    android:paddingEnd="@dimen/_6sdp"
-                    android:paddingTop="@dimen/_4sdp"
-                    android:paddingBottom="@dimen/_4sdp"
-                    android:background="@drawable/button_quick_recharge"
-                    android:text="DH10"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_14ssp"
-                    app:layout_constraintBottom_toBottomOf="@+id/btnQuickRecharge1"
-                    app:layout_constraintStart_toEndOf="@+id/btnQuickRecharge1"
-                    app:layout_constraintEnd_toStartOf="@id/btnQuickRecharge3"/>
-
-                <com.es.marocapp.widgets.MarocButton
-                    android:id="@+id/btnQuickRecharge3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_4sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:minHeight="0dp"
-                    android:minWidth="0dp"
-                    android:paddingStart="@dimen/_6sdp"
-                    android:paddingEnd="@dimen/_6sdp"
-                    android:paddingTop="@dimen/_4sdp"
-                    android:paddingBottom="@dimen/_4sdp"
-                    android:background="@drawable/button_quick_recharge"
-                    android:text="DH100"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_14ssp"
-                    app:layout_constraintBottom_toBottomOf="@+id/btnQuickRecharge1"
-                    app:layout_constraintStart_toEndOf="@+id/btnQuickRecharge2"
-                    app:layout_constraintEnd_toStartOf="@id/btnQuickRecharge4"/>
-
-                <com.es.marocapp.widgets.MarocButton
-                    android:id="@+id/btnQuickRecharge4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_4sdp"
-                    android:layout_marginTop="@dimen/_8sdp"
-                    android:background="@drawable/button_quick_recharge_state"
-                    android:text="@string/recharge"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_14ssp"
-                    android:minHeight="0dp"
-                    android:minWidth="0dp"
-                    android:paddingStart="@dimen/_6sdp"
-                    android:paddingEnd="@dimen/_6sdp"
-                    android:paddingTop="@dimen/_4sdp"
-                    android:paddingBottom="@dimen/_4sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    app:layout_constraintBottom_toBottomOf="@+id/btnQuickRecharge3"
-                    app:layout_constraintStart_toEndOf="@+id/btnQuickRecharge3"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/useCasesRecyclerView"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintVertical_weight=".3"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    app:layout_constraintEnd_toEndOf="@+id/quickRechargeContainer"
-                    app:layout_constraintStart_toStartOf="@+id/quickRechargeContainer"
-                    app:layout_constraintTop_toBottomOf="@+id/quickRechargeContainer"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/useCasesRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/quickRechargeContainer"
+            app:layout_constraintStart_toStartOf="@+id/quickRechargeContainer"
+            app:layout_constraintTop_toBottomOf="@+id/quickRechargeContainer"
+            app:layout_constraintVertical_weight=".3" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

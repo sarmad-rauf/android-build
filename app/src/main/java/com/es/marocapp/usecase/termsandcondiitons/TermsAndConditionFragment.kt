@@ -1,12 +1,14 @@
 package com.es.marocapp.usecase.termsandcondiitons
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentTermsAndConditionBinding
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.favorites.FavoritesViewModel
+import java.io.File
 
 class TermsAndConditionFragment : BaseFragment<FragmentTermsAndConditionBinding>(){
 
@@ -23,6 +25,22 @@ class TermsAndConditionFragment : BaseFragment<FragmentTermsAndConditionBinding>
             viewmodel = mAcitivtyViewModel
         }
 
+        showPdfFromFile((activity as TermsAndConditions).downloadedFileFromURL)
     }
 
+    private fun showPdfFromFile(file: File) {
+        mDataBinding.pdfView.fromFile(file)
+            .password(null)
+            .defaultPage(0)
+            .enableSwipe(true)
+            .swipeHorizontal(false)
+            .enableDoubletap(true)
+            .onPageError { page, _ ->
+                Toast.makeText(
+                    activity,
+                    "Error at page: $page", Toast.LENGTH_LONG
+                ).show()
+            }
+            .load()
+    }
 }

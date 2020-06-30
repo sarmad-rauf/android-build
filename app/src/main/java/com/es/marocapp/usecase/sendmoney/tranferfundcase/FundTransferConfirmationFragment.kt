@@ -27,7 +27,8 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        mActivityViewModel = ViewModelProvider(activity as SendMoneyActivity).get(SendMoneyViewModel::class.java)
+        mActivityViewModel =
+            ViewModelProvider(activity as SendMoneyActivity).get(SendMoneyViewModel::class.java)
         mDataBinding.apply {
             listner = this@FundTransferConfirmationFragment
             viewmodel = mActivityViewModel
@@ -38,7 +39,10 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
         mActivityViewModel.popBackStackTo = R.id.fundsTransferAmountFragment
 
         mDataBinding.imgBackButton.setOnClickListener {
-            (activity as SendMoneyActivity).navController.popBackStack(R.id.fundsTransferAmountFragment,false)
+            (activity as SendMoneyActivity).navController.popBackStack(
+                R.id.fundsTransferAmountFragment,
+                false
+            )
         }
         setStrings()
         updateUI()
@@ -71,24 +75,26 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
     private fun subscribeObserver() {
         mActivityViewModel.errorText.observe(this@FundTransferConfirmationFragment, Observer {
             Constants.HEADERS_FOR_PAYEMNTS = false
-            DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it)
+            DialogUtils.showErrorDialoge(activity as SendMoneyActivity, it)
         })
 
         mActivityViewModel.getFloatTransferResponseListner.observe(this@FundTransferConfirmationFragment,
             Observer {
-                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     Constants.HEADERS_FOR_PAYEMNTS = false
                     mActivityViewModel.senderBalanceAfter = it.senderBalanceAfter
                     mActivityViewModel.transactionID = it.financialTransactionId
                     (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
-                }else{
-                    if(it.responseCode.equals(ApiConstant.API_PENDING)){
+                }else if (it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
+                    DialogUtils.showErrorDialoge(activity,it.description)
+                } else {
+                    if (it.responseCode.equals(ApiConstant.API_PENDING)) {
                         Constants.HEADERS_FOR_PAYEMNTS = false
                         mActivityViewModel.isTransactionPending.set(true)
                         mActivityViewModel.isTransactionFailed.set(false)
                         mActivityViewModel.sendMoneyFailureOrPendingDescription.set(it.description)
                         (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTransferPendingFragment)
-                    }else{
+                    } else {
                         Constants.HEADERS_FOR_PAYEMNTS = false
                         mActivityViewModel.isTransactionPending.set(false)
                         mActivityViewModel.isTransactionFailed.set(true)
@@ -100,19 +106,21 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
 
         mActivityViewModel.getTransferResponseListner.observe(this@FundTransferConfirmationFragment,
             Observer {
-                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     Constants.HEADERS_FOR_PAYEMNTS = false
                     mActivityViewModel.senderBalanceAfter = it.senderBalanceAfter
                     mActivityViewModel.transactionID = it.financialTransactionId
                     (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
-                }else{
-                    if(it.responseCode.equals(ApiConstant.API_PENDING)){
+                }else if (it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
+                    DialogUtils.showErrorDialoge(activity,it.description)
+                } else {
+                    if (it.responseCode.equals(ApiConstant.API_PENDING)) {
                         Constants.HEADERS_FOR_PAYEMNTS = false
                         mActivityViewModel.isTransactionPending.set(true)
                         mActivityViewModel.isTransactionFailed.set(false)
                         mActivityViewModel.sendMoneyFailureOrPendingDescription.set(it.description)
                         (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTransferPendingFragment)
-                    }else{
+                    } else {
                         Constants.HEADERS_FOR_PAYEMNTS = false
                         mActivityViewModel.isTransactionPending.set(false)
                         mActivityViewModel.isTransactionFailed.set(true)
@@ -124,19 +132,21 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
 
         mActivityViewModel.getMerchantPaymentResponseListner.observe(this@FundTransferConfirmationFragment,
             Observer {
-                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     Constants.HEADERS_FOR_PAYEMNTS = false
                     mActivityViewModel.senderBalanceAfter = it.senderBalanceAfter
                     mActivityViewModel.transactionID = it.transactionId
                     (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
-                }else{
-                    if(it.responseCode.equals(ApiConstant.API_PENDING)){
+                }else if (it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
+                    DialogUtils.showErrorDialoge(activity,it.description)
+                } else {
+                    if (it.responseCode.equals(ApiConstant.API_PENDING)) {
                         Constants.HEADERS_FOR_PAYEMNTS = false
                         mActivityViewModel.isTransactionPending.set(true)
                         mActivityViewModel.isTransactionFailed.set(false)
                         mActivityViewModel.sendMoneyFailureOrPendingDescription.set(it.description)
                         (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTransferPendingFragment)
-                    }else{
+                    } else {
                         Constants.HEADERS_FOR_PAYEMNTS = false
                         mActivityViewModel.isTransactionPending.set(false)
                         mActivityViewModel.isTransactionFailed.set(true)
@@ -148,19 +158,21 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
 
         mActivityViewModel.getPaymentResponseListner.observe(this@FundTransferConfirmationFragment,
             Observer {
-                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     Constants.HEADERS_FOR_PAYEMNTS = false
                     mActivityViewModel.senderBalanceAfter = it.senderBalanceafter
                     mActivityViewModel.transactionID = it.transactionId
                     (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
-                }else{
-                    if(it.responseCode.equals(ApiConstant.API_PENDING)){
+                } else if (it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
+                    DialogUtils.showErrorDialoge(activity, it.description)
+                } else {
+                    if (it.responseCode.equals(ApiConstant.API_PENDING)) {
                         Constants.HEADERS_FOR_PAYEMNTS = false
                         mActivityViewModel.isTransactionPending.set(true)
                         mActivityViewModel.isTransactionFailed.set(false)
                         mActivityViewModel.sendMoneyFailureOrPendingDescription.set(it.description)
                         (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTransferPendingFragment)
-                    }else{
+                    } else {
                         Constants.HEADERS_FOR_PAYEMNTS = false
                         mActivityViewModel.isTransactionPending.set(false)
                         mActivityViewModel.isTransactionFailed.set(true)
@@ -179,25 +191,33 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
 //
 //        tvAmountVal == AmountTotal
 
-        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname + Constants.balanceInfoAndResponse.surname
+        mDataBinding.tvSenderNameVal.text =
+            Constants.balanceInfoAndResponse.firstname + Constants.balanceInfoAndResponse.surname
         mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
 
         mDataBinding.tvCompanyNameVal.text = mActivityViewModel.transferdAmountTo
-        var ReceiverName = mActivityViewModel.mAccountHolderInfoResponseObserver.get()?.firstName +" " +mActivityViewModel.mAccountHolderInfoResponseObserver.get()?.sureName
+        var ReceiverName =
+            mActivityViewModel.mAccountHolderInfoResponseObserver.get()?.firstName + " " + mActivityViewModel.mAccountHolderInfoResponseObserver.get()?.sureName
         mActivityViewModel.ReceiverName = ReceiverName
         mDataBinding.tvOwnerNameVal.text = ReceiverName
-        mDataBinding.tvReceiptCodeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.amountToTransfer
-        mDataBinding.tvDHVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.feeAmount
+        mDataBinding.tvReceiptCodeVal.text =
+            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.amountToTransfer
+        mDataBinding.tvDHVal.text =
+            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.feeAmount
 
-        amountToTransfer = Constants.addAmountAndFee(mActivityViewModel.amountToTransfer.toDouble(),mActivityViewModel.feeAmount.toDouble())
-        mDataBinding.tvAmountVal.text =Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+amountToTransfer
+        amountToTransfer = Constants.addAmountAndFee(
+            mActivityViewModel.amountToTransfer.toDouble(),
+            mActivityViewModel.feeAmount.toDouble()
+        )
+        mDataBinding.tvAmountVal.text =
+            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + amountToTransfer
 
-        if(mActivityViewModel.isUserRegistered.get()!!){
+        if (mActivityViewModel.isUserRegistered.get()!!) {
             mDataBinding.tvOwnerNameTitle.visibility = View.VISIBLE
             mDataBinding.tvOwnerNameVal.visibility = View.VISIBLE
             mDataBinding.divider2.visibility = View.VISIBLE
 
-        }else{
+        } else {
             mDataBinding.tvOwnerNameTitle.visibility = View.GONE
             mDataBinding.tvOwnerNameVal.visibility = View.GONE
             mDataBinding.divider2.visibility = View.GONE
@@ -206,49 +226,80 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
     }
 
     override fun onNextClickListner(view: View) {
-        DialogUtils.showPasswordDialoge(activity as SendMoneyActivity,object : DialogUtils.OnPasswordDialogClickListner{
-            override fun onDialogYesClickListner(password: String) {
-                Constants.HEADERS_FOR_PAYEMNTS = true
-                Constants.CURRENT_USER_CREDENTIAL = password
-                if(Constants.IS_AGENT_USER){
-                    if(mActivityViewModel.isFundTransferUseCase.get()!!){
-                        mActivityViewModel.requestForFloatTransferApi(activity,mActivityViewModel.qouteId)
-                    }
+        DialogUtils.showPasswordDialoge(activity as SendMoneyActivity,
+            object : DialogUtils.OnPasswordDialogClickListner {
+                override fun onDialogYesClickListner(password: String) {
+                    Constants.HEADERS_FOR_PAYEMNTS = true
+                    Constants.CURRENT_USER_CREDENTIAL = password
+                    if (Constants.IS_AGENT_USER) {
+                        if (mActivityViewModel.isFundTransferUseCase.get()!!) {
+                            mActivityViewModel.requestForFloatTransferApi(
+                                activity,
+                                mActivityViewModel.qouteId
+                            )
+                        }
 
-                    if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
-                        if(mActivityViewModel.isUserRegistered.get()!!){
-                            if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
-                                mActivityViewModel.requestFoMerchantApi(activity,Constants.CURRENT_USER_MSISDN,mActivityViewModel.qouteId)
+                        if (mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!) {
+                            if (mActivityViewModel.isUserRegistered.get()!!) {
+                                if (mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!) {
+                                    mActivityViewModel.requestFoMerchantApi(
+                                        activity,
+                                        Constants.CURRENT_USER_MSISDN,
+                                        mActivityViewModel.qouteId
+                                    )
+                                }
+                            } else {
+                                if (mActivityViewModel.isAccountHolderInformationFailed.get()!!) {
+                                    mActivityViewModel.requestForSimplePayementApi(
+                                        activity,
+                                        mActivityViewModel.qouteId,
+                                        Constants.CURRENT_USER_MSISDN
+                                    )
+                                } else {
+                                    mActivityViewModel.requestFoPayementApi(
+                                        activity,
+                                        mActivityViewModel.qouteId,
+                                        Constants.CURRENT_USER_MSISDN
+                                    )
+                                }
                             }
-                        }else{
-                            if(mActivityViewModel.isAccountHolderInformationFailed.get()!!){
-                                mActivityViewModel.requestForSimplePayementApi(activity,mActivityViewModel.qouteId,Constants.CURRENT_USER_MSISDN)
-                            }else{
-                                mActivityViewModel.requestFoPayementApi(activity,mActivityViewModel.qouteId,Constants.CURRENT_USER_MSISDN)
+                        }
+
+                    } else {
+                        if (mActivityViewModel.isUserRegistered.get()!!) {
+                            if (mActivityViewModel.isFundTransferUseCase.get()!!) {
+                                mActivityViewModel.requestFoTransferApi(
+                                    activity,
+                                    mActivityViewModel.qouteId
+                                )
+                            }
+
+                            if (mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!) {
+                                mActivityViewModel.requestFoMerchantApi(
+                                    activity,
+                                    Constants.CURRENT_USER_MSISDN,
+                                    mActivityViewModel.qouteId
+                                )
+                            }
+                        } else {
+                            if (mActivityViewModel.isAccountHolderInformationFailed.get()!!) {
+                                mActivityViewModel.requestForSimplePayementApi(
+                                    activity,
+                                    mActivityViewModel.qouteId,
+                                    Constants.CURRENT_USER_MSISDN
+                                )
+                            } else {
+                                mActivityViewModel.requestFoPayementApi(
+                                    activity,
+                                    mActivityViewModel.qouteId,
+                                    Constants.CURRENT_USER_MSISDN
+                                )
                             }
                         }
+
                     }
-
-                }else{
-                    if(mActivityViewModel.isUserRegistered.get()!!){
-                        if(mActivityViewModel.isFundTransferUseCase.get()!!){
-                            mActivityViewModel.requestFoTransferApi(activity,mActivityViewModel.qouteId)
-                        }
-
-                        if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
-                            mActivityViewModel.requestFoMerchantApi(activity,Constants.CURRENT_USER_MSISDN,mActivityViewModel.qouteId)
-                        }
-                    }else{
-                        if(mActivityViewModel.isAccountHolderInformationFailed.get()!!){
-                            mActivityViewModel.requestForSimplePayementApi(activity,mActivityViewModel.qouteId,Constants.CURRENT_USER_MSISDN)
-                        }else{
-                            mActivityViewModel.requestFoPayementApi(activity,mActivityViewModel.qouteId,Constants.CURRENT_USER_MSISDN)
-                        }
-                    }
-
                 }
-            }
-        })
+            })
     }
 
     override fun onBackClickListner(view: View) {
@@ -256,8 +307,10 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
         mActivityViewModel.isFundTransferUseCase.set(false)
         mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set(false)
         Constants.HEADERS_FOR_PAYEMNTS = false
-        (activity as SendMoneyActivity).startNewActivityAndClear(activity as SendMoneyActivity,
-            MainActivity::class.java)
+        (activity as SendMoneyActivity).startNewActivityAndClear(
+            activity as SendMoneyActivity,
+            MainActivity::class.java
+        )
     }
 
 }

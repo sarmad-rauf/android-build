@@ -82,20 +82,23 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
                     mActivityViewModel.senderBalanceAfter = it.senderBalanceafter
                     mActivityViewModel.transactionID = it.transactionId
                     (activity as AirTimeActivity).navController.navigate(R.id.action_airTimeConfirmationFragment_to_airTimeSuccessFragment)
+                } else if (it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
+                    DialogUtils.showErrorDialoge(activity,it.description)
                 } else {
-                    if(it.responseCode.equals(ApiConstant.API_PENDING)){
+                    if (it.responseCode.equals(ApiConstant.API_PENDING)) {
                         Constants.HEADERS_FOR_PAYEMNTS = false
                         mActivityViewModel.isTransactionPending.set(true)
                         mActivityViewModel.isTransactionFailed.set(false)
                         (activity as AirTimeActivity).navController.navigate(R.id.action_airTimeConfirmationFragment_to_airTimePendingFragment)
-                    }else{
+                    } else {
                         Constants.HEADERS_FOR_PAYEMNTS = false
                         mActivityViewModel.isTransactionPending.set(false)
                         mActivityViewModel.isTransactionFailed.set(true)
                         (activity as AirTimeActivity).navController.navigate(R.id.action_airTimeConfirmationFragment_to_airTimePendingFragment)
                     }
                 }
-            })
+            }
+        )
     }
 
     private fun updateUI() {
@@ -106,7 +109,8 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
 //
 //        tvAmountVal == AmountTotal
 
-        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname + Constants.balanceInfoAndResponse.surname
+        mDataBinding.tvSenderNameVal.text =
+            Constants.balanceInfoAndResponse.firstname + Constants.balanceInfoAndResponse.surname
         mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
 
         mDataBinding.tvCompanyNameVal.text = mActivityViewModel.transferdAmountTo

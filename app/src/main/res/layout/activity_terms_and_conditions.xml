@@ -2,6 +2,9 @@
 <layout>
 
     <data>
+        <import
+            type="android.view.View" />
+
         <variable
             name="viewmodel"
             type="com.es.marocapp.usecase.termsandcondiitons.TermsAndConditionsVIewModel" />
@@ -53,6 +56,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topHeaderContainer"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <include android:id="@+id/Gif_Loader"
+        layout="@layout/layout_dialog"
+        android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
