@@ -23,6 +23,7 @@ data class GetPreLoginDataResponse(
     val numberOfTransactions: String,
     val publicKey: Any,
     val quickAmounts: List<String>,
+    val quickRechargeAmounts: List<String>,
     val responseCode: String,
     val termsAndConditions: String,
     val url: String,

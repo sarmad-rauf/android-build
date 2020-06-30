@@ -3,6 +3,7 @@ package com.es.marocapp.usecase.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -33,6 +34,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     private lateinit var mCardAdapter: HomeCardAdapter
     private lateinit var mUseCasesAdapter: HomeUseCasesAdapter
     var referenceNumber="";
+    var quickRechargeSelectedAmount = ""
 
     override fun setLayout(): Int {
         return R.layout.fragment_home
@@ -62,18 +64,55 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         }
 
         setStrings()
+        setQuickAmountListner()
+    }
+
+    private fun setQuickAmountListner() {
+        mDataBinding.btnQuickRecharge1.setOnClickListener {
+            mDataBinding.btnQuickRecharge1.setBackgroundResource(R.drawable.button_quick_recharge_state)
+            mDataBinding.btnQuickRecharge2.setBackgroundResource(R.drawable.button_quick_recharge)
+            mDataBinding.btnQuickRecharge3.setBackgroundResource(R.drawable.button_quick_recharge)
+            quickRechargeSelectedAmount = mDataBinding.btnQuickRecharge1.text.toString().removePrefix("DH").trim()
+        }
+
+        mDataBinding.btnQuickRecharge2.setOnClickListener {
+            mDataBinding.btnQuickRecharge2.setBackgroundResource(R.drawable.button_quick_recharge_state)
+            mDataBinding.btnQuickRecharge1.setBackgroundResource(R.drawable.button_quick_recharge)
+            mDataBinding.btnQuickRecharge3.setBackgroundResource(R.drawable.button_quick_recharge)
+            quickRechargeSelectedAmount = mDataBinding.btnQuickRecharge2.text.toString().removePrefix("DH").trim()
+        }
+
+        mDataBinding.btnQuickRecharge3.setOnClickListener {
+            mDataBinding.btnQuickRecharge3.setBackgroundResource(R.drawable.button_quick_recharge_state)
+            mDataBinding.btnQuickRecharge1.setBackgroundResource(R.drawable.button_quick_recharge)
+            mDataBinding.btnQuickRecharge2.setBackgroundResource(R.drawable.button_quick_recharge)
+            quickRechargeSelectedAmount = mDataBinding.btnQuickRecharge3.text.toString().removePrefix("DH").trim()
+        }
+
+        mDataBinding.btnQuickRecharge4.setOnClickListener {
+            var intent = Intent(
+                activity as MainActivity,
+                AirTimeActivity::class.java
+            )
+            intent.putExtra("isQuickRechargeCase",true)
+            intent.putExtra("quickRechargeAmount",quickRechargeSelectedAmount)
+            startActivity(intent)
+        }
     }
 
     private fun setStrings() {
         mDataBinding.textTitleQuickRecharge.text = LanguageData.getStringValue("QuickRecharge")
         mDataBinding.btnQuickRecharge4.text = LanguageData.getStringValue("Recharge")
 
-        if(Constants.quickAmountsList.isNotEmpty()){
+        if(Constants.quickRechargeAmountsList.isNotEmpty()){
             for(i in Constants.quickAmountsList.indices){
+                var quickAmount = Constants.quickRechargeAmountsList[i].substringBefore("DH")
+                quickAmount = quickAmount.substringBefore(" ").trim()
+                quickAmount = quickAmount.removeSuffix("DH")
                 when(i){
-                    0 -> mDataBinding.btnQuickRecharge1.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+Constants.quickAmountsList[i]
-                    1 -> mDataBinding.btnQuickRecharge2.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+Constants.quickAmountsList[i]
-                    2 -> mDataBinding.btnQuickRecharge3.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+Constants.quickAmountsList[i]
+                    0 -> mDataBinding.btnQuickRecharge1.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+quickAmount
+                    1 -> mDataBinding.btnQuickRecharge2.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+quickAmount
+                    2 -> mDataBinding.btnQuickRecharge3.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+quickAmount
                 }
 
             }
@@ -185,12 +224,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                         }
 
                         1-> {
-                            startActivity(
-                            Intent(
+                            var intent = Intent(
                                 activity as MainActivity,
                                 AirTimeActivity::class.java
                             )
-                            )
+                            intent.putExtra("isQuickRechargeCase",false)
+                            startActivity(intent)
                         }
 
                         2 -> {

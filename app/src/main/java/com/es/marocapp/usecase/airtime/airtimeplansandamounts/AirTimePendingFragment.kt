@@ -51,14 +51,16 @@ class AirTimePendingFragment : BaseFragment<FragmentAirTimePendingBinding>(), Ai
             })
         }
 
-        if(mActivityViewModel.isUserSelectedFromFavorites.get()!!){
-            mDataBinding.addToFavoriteCheckBox.isActivated = true
-            mDataBinding.addToFavoriteCheckBox.isChecked = true
-            mDataBinding.addToFavoriteCheckBox.isClickable = false
-        }else{
-            mDataBinding.addToFavoriteCheckBox.isActivated = false
-            mDataBinding.addToFavoriteCheckBox.isChecked = false
-            mDataBinding.addToFavoriteCheckBox.isClickable = true
+        if(!mActivityViewModel.isQuickRechargeUseCase.get()!!){
+            if(mActivityViewModel.isUserSelectedFromFavorites.get()!!){
+                mDataBinding.addToFavoriteCheckBox.isActivated = true
+                mDataBinding.addToFavoriteCheckBox.isChecked = true
+                mDataBinding.addToFavoriteCheckBox.isClickable = false
+            }else{
+                mDataBinding.addToFavoriteCheckBox.isActivated = false
+                mDataBinding.addToFavoriteCheckBox.isChecked = false
+                mDataBinding.addToFavoriteCheckBox.isClickable = true
+            }
         }
 
         (activity as AirTimeActivity).setHeaderVisibility(false)
@@ -84,6 +86,10 @@ class AirTimePendingFragment : BaseFragment<FragmentAirTimePendingBinding>(), Ai
             mDataBinding.successTItle.visibility = View.VISIBLE
             mDataBinding.successTItleFailed.visibility = View.GONE
             mDataBinding.favoritesGroup.visibility = View.VISIBLE
+        }
+
+        if(mActivityViewModel.isQuickRechargeUseCase.get()!!){
+            mDataBinding.favoritesGroup.visibility = View.GONE
         }
     }
 

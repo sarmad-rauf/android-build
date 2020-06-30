@@ -26,10 +26,8 @@
         <fragment
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:defaultNavHost="true"
             android:id="@+id/nav_air_time_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
-            app:navGraph="@navigation/air_time_nav_graph"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/headerAirTime"

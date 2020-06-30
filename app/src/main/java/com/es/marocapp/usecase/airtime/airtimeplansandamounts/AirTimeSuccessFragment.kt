@@ -52,14 +52,20 @@ class AirTimeSuccessFragment : BaseFragment<FragmentAirTimeSuccessLayoutBinding>
             })
         }
 
-        if(mActivityViewModel.isUserSelectedFromFavorites.get()!!){
-            mDataBinding.addToFavoriteCheckBox.isActivated = true
-            mDataBinding.addToFavoriteCheckBox.isChecked = true
-            mDataBinding.addToFavoriteCheckBox.isClickable = false
-        }else{
-            mDataBinding.addToFavoriteCheckBox.isActivated = false
-            mDataBinding.addToFavoriteCheckBox.isChecked = false
-            mDataBinding.addToFavoriteCheckBox.isClickable = true
+        if(!mActivityViewModel.isQuickRechargeUseCase.get()!!){
+            if(mActivityViewModel.isUserSelectedFromFavorites.get()!!){
+                mDataBinding.addToFavoriteCheckBox.isActivated = true
+                mDataBinding.addToFavoriteCheckBox.isChecked = true
+                mDataBinding.addToFavoriteCheckBox.isClickable = false
+            }else{
+                mDataBinding.addToFavoriteCheckBox.isActivated = false
+                mDataBinding.addToFavoriteCheckBox.isChecked = false
+                mDataBinding.addToFavoriteCheckBox.isClickable = true
+            }
+        }
+
+        if(mActivityViewModel.isQuickRechargeUseCase.get()!!){
+            mDataBinding.favoritesGroup.visibility = View.GONE
         }
 
         (activity as AirTimeActivity).setHeaderVisibility(false)

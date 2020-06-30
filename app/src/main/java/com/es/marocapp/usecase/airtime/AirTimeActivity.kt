@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph
 import androidx.navigation.fragment.NavHostFragment
 import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityAirTimeBinding
@@ -23,6 +24,11 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
 
     lateinit var navHostFragment: NavHostFragment
 
+    lateinit var navGraph: NavGraph
+
+    var isQuickRechargeUseCase = false
+    var quickRechargeAmount = ""
+
     override fun init(savedInstanceState: Bundle?) {
         mActivityViewModel =
             ViewModelProvider(this@AirTimeActivity).get(AirTimeViewModel::class.java)
@@ -30,9 +36,16 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
             viewmodel = mActivityViewModel
         }
 
+        isQuickRechargeUseCase = intent.getBooleanExtra("isQuickRechargeCase",false)
+        if(isQuickRechargeUseCase){
+            quickRechargeAmount = intent.getStringExtra("quickRechargeAmount")
+        }
+
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_air_time_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
+
+        navGraph = navController.navInflater.inflate(R.navigation.air_time_nav_graph)
 
         setHeaderTitle(LanguageData.getStringValue("AirTime").toString())
 
@@ -45,8 +58,23 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
         }
 
         setCompanyIconToolbarVisibility(false)
+        setFragmentToShow()
     }
 
+    fun setFragmentToShow(){
+        if(isQuickRechargeUseCase){
+            mActivityViewModel.isQuickRechargeUseCase.set(true)
+            mActivityViewModel.isRechargeFixeUseCase.set(false)
+            mActivityViewModel.isRechargeMobileUseCase.set(false)
+            mActivityViewModel.airTimeSelected.set(LanguageData.getStringValue("QuickRecharge"))
+            mActivityViewModel.airTimeAmountSelected.set(quickRechargeAmount)
+            navGraph.startDestination = R.id.airTimeConfirmationFragment
+        }else{
+            navGraph.startDestination = R.id.airTimeTypeFragment
+        }
+
+        navController.setGraph(navGraph)
+    }
     override fun setLayout(): Int {
         return R.layout.activity_air_time
     }

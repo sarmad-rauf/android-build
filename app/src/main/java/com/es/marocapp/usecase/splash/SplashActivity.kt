@@ -143,6 +143,15 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                         add("500")
                     }
                 }
+                if(it.quickRechargeAmounts.isNotEmpty()){
+                    Constants.quickRechargeAmountsList.addAll(it.quickRechargeAmounts)
+                }else{
+                    Constants.quickRechargeAmountsList.apply {
+                        add("5")
+                        add("10")
+                        add("20")
+                    }
+                }
                 mActivityViewModel.requestForTranslationsApi(this)
             } else {
                 DialogUtils.showErrorDialoge(this@SplashActivity,it.description)

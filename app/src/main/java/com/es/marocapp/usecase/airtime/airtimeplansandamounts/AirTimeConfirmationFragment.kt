@@ -46,7 +46,11 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
         }
 
         setStrings()
-        updateUI()
+        if(mActivityViewModel.isQuickRechargeUseCase.get()!!){
+            mActivityViewModel.requestForAirTimeQuoteApi(activity,Constants.CURRENT_USER_MSISDN)
+        }else{
+            updateUI()
+        }
         subscribeObserver()
     }
 
@@ -75,6 +79,24 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
 
 
     private fun subscribeObserver() {
+        mActivityViewModel.errorText.observe(this@AirTimeConfirmationFragment, Observer {
+            DialogUtils.showErrorDialoge(activity,it)
+        })
+
+        mActivityViewModel.getAirTimeQuoteResponseListner.observe(this@AirTimeConfirmationFragment,
+            Observer {
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    if (it.quoteList.isNotEmpty()) {
+                        mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
+                        mActivityViewModel.qouteId = it.quoteList[0].quoteid
+                    }
+
+                    updateUI()
+                } else {
+                    DialogUtils.showErrorDialoge(activity, it.description)
+                }
+            })
+
         mActivityViewModel.getAirTimeResponseListner.observe(this@AirTimeConfirmationFragment,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {

@@ -57,12 +57,14 @@ class AirTimeTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
                         mAirTimeUseCaseResponse.rechargeFixe.titleName -> {
                             mActivityViewModel.isRechargeFixeUseCase.set(true)
                             mActivityViewModel.isRechargeMobileUseCase.set(false)
+                            mActivityViewModel.isQuickRechargeUseCase.set(false)
                             mActivityViewModel.airTimeSelected.set(mAirTimeUseCaseResponse.rechargeFixe.titleName)
                             (activity as AirTimeActivity).navController.navigate(R.id.action_airTimeTypeFragment_to_airTimeAmountFragment)
                         }
                         mAirTimeUseCaseResponse.rechargeMobile.titleName -> {
                             mActivityViewModel.isRechargeFixeUseCase.set(false)
                             mActivityViewModel.isRechargeMobileUseCase.set(true)
+                            mActivityViewModel.isQuickRechargeUseCase.set(false)
                             mActivityViewModel.airTimeSelected.set(mAirTimeUseCaseResponse.rechargeMobile.titleName)
                             (activity as AirTimeActivity).navController.navigate(R.id.action_airTimeTypeFragment_to_airTimePlanFragment)
                         }

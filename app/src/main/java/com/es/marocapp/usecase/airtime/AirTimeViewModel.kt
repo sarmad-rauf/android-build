@@ -44,6 +44,7 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
 
     var isRechargeFixeUseCase = ObservableField<Boolean>()
     var isRechargeMobileUseCase = ObservableField<Boolean>()
+    var isQuickRechargeUseCase = ObservableField<Boolean>()
     var airTimeSelected = ObservableField<String>()
     var airTimePlanSelected = ObservableField<String>()
     var airTimeSelectedPlanCodeSelected = ObservableField<String>()
@@ -145,7 +146,7 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
             if(isRechargeMobileUseCase.get()!!){
                 airTimeSelectedPlanCode = airTimeSelectedPlanCodeSelected.get()!!
             }
-            if(isRechargeFixeUseCase.get()!!){
+            if(isRechargeFixeUseCase.get()!! || isQuickRechargeUseCase.get()!!){
                 airTimeSelectedPlanCode = "0"
             }
 
@@ -223,7 +224,7 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
                 airTimeSelectedPlanCode = airTimeSelectedPlanCodeSelected.get()!!
             }
 
-            if(isRechargeFixeUseCase.get()!!){
+            if(isRechargeFixeUseCase.get()!! || isQuickRechargeUseCase.get()!!){
                 airTimeSelectedPlanCode = "0"
             }
 
