@@ -39,6 +39,8 @@
             android:focusable="true"
             android:textSize="@dimen/_14ssp"
             android:hint="@string/enter_receiver_s_mobile_number_caps"
+            android:paddingEnd="@dimen/_24sdp"
+            android:ellipsize="end"
             android:inputType="phone"
             android:maxLength="12" />
     </com.google.android.material.textfield.TextInputLayout>

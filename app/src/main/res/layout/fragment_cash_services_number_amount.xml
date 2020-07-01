@@ -41,6 +41,7 @@
             android:focusableInTouchMode="true"
             android:focusable="true"
             android:textSize="@dimen/_14ssp"
+            android:ellipsize="end"
             android:hint="@string/enter_receiver_s_mobile_number_caps"
             android:inputType="phone"
             android:maxLength="12" />
