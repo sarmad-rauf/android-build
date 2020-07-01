@@ -76,7 +76,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
         }*/
 
         if(mActivityViewModel.isNewUserRegisterd.get()!!){
-            mActivity.navController.navigate(R.id.action_loginFragment_to_signUpNumberFragment)
+            (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_signUpNumberFragment)
         }
         //todo also here remove lenght-2 check in max line
         mDataBinding.inputPhoneNumber.filters =

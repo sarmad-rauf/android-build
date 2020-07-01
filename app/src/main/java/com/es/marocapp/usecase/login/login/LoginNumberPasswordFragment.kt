@@ -46,6 +46,7 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
         }
 
         mDataBinding.inputPhoneNumber.setText(mActivityViewModel.mUserMsisdn)
+        mActivityViewModel.isNewUserRegisterd.set(false)
 
         subscribeObserver()
         setStrings()
