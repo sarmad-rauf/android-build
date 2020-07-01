@@ -139,7 +139,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     override fun onDrawerMenuContactUsClick(view: View) {
         mDataBinding.drawerLayout.closeDrawer(GravityCompat.START)
         var myBundle : Bundle = Bundle()
-        myBundle.putString("title","Contact Us")
+        myBundle.putString("title",LanguageData.getStringValue("ContactUs"))
         startNewActivity(this@MainActivity,TermsAndConditions::class.java,myBundle)
     }
 
@@ -148,14 +148,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
 
         var myBundle : Bundle = Bundle()
-        myBundle.putString("title","FAQs")
+        myBundle.putString("title",LanguageData.getStringValue("Faqs"))
         startNewActivity(this@MainActivity,TermsAndConditions::class.java,myBundle)
     }
 
     override fun onDrawerMenuTermsAndConditionClick(view: View) {
         mDataBinding.drawerLayout.closeDrawer(GravityCompat.START)
         var myBundle : Bundle = Bundle()
-        myBundle.putString("title","Term & Conditions")
+        myBundle.putString("title",LanguageData.getStringValue("TermsAndConditions"))
         startNewActivity(this@MainActivity,TermsAndConditions::class.java,myBundle)
     }
 

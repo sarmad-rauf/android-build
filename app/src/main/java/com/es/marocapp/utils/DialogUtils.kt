@@ -89,7 +89,7 @@ object DialogUtils {
         var tvDescription = addDialog.findViewById<TextView>(R.id.password_dialog_description)
         var tvTitle = addDialog.findViewById<TextView>(R.id.password_dialog_title)
 
-        tvDescription.text = LanguageData.getStringValue("EnterPasswordToProceed")
+        tvDescription.text = LanguageData.getStringValue("EnterPasswrodToProceed")
         tvTitle.text = LanguageData.getStringValue("DearCustomer")
 
         var passwordField =

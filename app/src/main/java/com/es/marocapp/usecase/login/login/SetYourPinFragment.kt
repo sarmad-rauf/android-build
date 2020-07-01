@@ -81,6 +81,7 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
 
         val mActivateUserObserver = Observer<ActivateUserResponse>{
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                mActivityViewModel.isNewUserRegisterd.set(true)
                 (activity as LoginActivity).navController.popBackStack(R.id.loginFragment,false)
             }else{
                 DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
