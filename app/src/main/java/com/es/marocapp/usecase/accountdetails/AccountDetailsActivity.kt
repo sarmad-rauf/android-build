@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.AccountDetailLimitListAdapter
 import com.es.marocapp.databinding.LayoutAccountDetailsBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.Limits
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
@@ -43,6 +44,16 @@ class AccountDetailsActivity : BaseActivity<LayoutAccountDetailsBinding>(){
 //        }
         var limitListInfo = respone?.limitsList
 
+        setStings()
+
+    }
+
+    private fun setStings() {
+        mDataBinding.tvAccountDetailTitle.text = LanguageData.getStringValue("AccountDetails")
+        mDataBinding.accountDetailAccountNumTitle.text = LanguageData.getStringValue("AcountNumber")
+        mDataBinding.accountDetailCurrentBalanceTitle.text = LanguageData.getStringValue("CurrentBalance")
+        mDataBinding.profileTitleSenRevContainer.text = LanguageData.getStringValue("Profile")
+        mDataBinding.accountDetailHi.text = LanguageData.getStringValue("Hi")
     }
 
     override fun setLayout(): Int {
