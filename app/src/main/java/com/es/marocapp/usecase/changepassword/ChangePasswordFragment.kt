@@ -11,6 +11,7 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.DialogUtils
 
 class ChangePasswordFragment : BaseFragment<FragmentChangepasswordBinding>(), ChangePasswordClickListener {
@@ -56,6 +57,7 @@ class ChangePasswordFragment : BaseFragment<FragmentChangepasswordBinding>(), Ch
         pinViewModel.getChangePassResponseListner.observe(this@ChangePasswordFragment, Observer {
             if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                 Toast.makeText(activity, "Password Changed Successfully", Toast.LENGTH_SHORT).show()
+                (activity as MainActivity).navController.navigate(R.id.navigation_home)
             } else {
                 DialogUtils.showErrorDialoge(activity as MainActivity, it.description)
             }
