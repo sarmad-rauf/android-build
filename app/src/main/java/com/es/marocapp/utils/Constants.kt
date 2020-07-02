@@ -8,6 +8,7 @@ import android.text.format.Formatter.formatIpAddress
 import android.util.Log
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
+import com.es.marocapp.model.responses.Account
 import com.es.marocapp.model.responses.BalanceInfoAndLimitResponse
 import com.es.marocapp.model.responses.Contact
 import com.es.marocapp.model.responses.LoginWithCertResponse
@@ -30,6 +31,7 @@ object Constants {
     const val MERCHANT_TYPE_PAYMENT = "INTEROP_TRANSFER_SEND"
     const val TYPE_PAYMENT = "PAYMENT"
     const val TYPE_BILL_PAYMENT = "BILL_PAYMENT"
+    const val TYPE_COMMISSIONING = "COMMISSIONING"
     const val OPERATION_TYPE_CREANCIER = "creancier"
     const val OPERATION_TYPE_CREANCE = "creance"
     const val OPERATION_TYPE_IMPAYES = "impayes"
@@ -69,6 +71,7 @@ object Constants {
     
     //Responses
     lateinit var balanceInfoAndResponse : BalanceInfoAndLimitResponse
+    lateinit var getAccountsResponse : Account
     lateinit var loginWithCertResponse : LoginWithCertResponse
     var mContactListArray : ArrayList<Contact> = arrayListOf()
 

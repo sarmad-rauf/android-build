@@ -17,9 +17,19 @@ class HomeCardAdapter(
     FragmentStatePagerAdapter(fm!!) {
 
     private lateinit var mbalanceInfoAndResonse: BalanceInfoAndLimitResponse
+    private lateinit var mDummyAgnetBalanceFragment1: HomeBalanceFragment
 
     init {
         mbalanceInfoAndResonse = Constants.balanceInfoAndResponse
+        if(Constants.IS_AGENT_USER){
+            mDummyAgnetBalanceFragment1 = HomeBalanceFragment(
+                CardModel(
+                    R.drawable.ic_wallet_balance,
+                    Constants.getAccountsResponse.accountType,
+                    Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + Constants.getAccountsResponse.balance
+                )
+            )
+        }
     }
 
     private var mDummyBalanceFragment1: HomeBalanceFragment = HomeBalanceFragment(
@@ -29,20 +39,28 @@ class HomeCardAdapter(
             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mbalanceInfoAndResonse.balance
         )
     )
+
+
 //    private var mDummyBalanceFragment2: HomeBalanceFragment = HomeBalanceFragment(CardModel(R.drawable.ic_wallet_balance,"Balance","200"))
 //    private var mDummyBalanceFragment3: HomeBalanceFragment = HomeBalanceFragment(CardModel(R.drawable.ic_wallet_balance,"Balance","2,200"))
 
-    private val TOTAL_BALANCE_FRAGMENTS = 1
+    private val TOTAL_BALANCE_FRAGMENTS_SINGLE = 1
+    private val TOTAL_BALANCE_FRAGMENTS_AGENT = 2
 
     override fun getItem(position: Int): Fragment {
         when (position) {
             DUMMY_BALANCE_1 -> return mDummyBalanceFragment1
+            DUMMY_BALANCE_2 -> return mDummyAgnetBalanceFragment1
         }
-        return HomeBalanceFragment(CardModel(R.drawable.ic_wallet_balance, LanguageData.getStringValue("WalletBalance").toString(), "1,200"))
+        return HomeBalanceFragment(CardModel(R.drawable.ic_wallet_balance, LanguageData.getStringValue("WalletBalance").toString(), "DH 0.00"))
     }
 
     override fun getCount(): Int {
-        return TOTAL_BALANCE_FRAGMENTS
+        if(Constants.IS_AGENT_USER){
+            return TOTAL_BALANCE_FRAGMENTS_AGENT
+        }else{
+            return TOTAL_BALANCE_FRAGMENTS_SINGLE
+        }
     }
 
     companion object {

@@ -41,6 +41,9 @@ object EndPoints {
     //getbalanceinfoandlimits
     const val getbalanceinfoandlimits = "getbalanceinfoandlimits"
 
+    //getaccounts
+    const val getaccounts = "getaccounts"
+
     //changepassword
     const val changepassword = "changepassword"
 

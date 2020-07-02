@@ -68,14 +68,38 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
             DialogUtils.showErrorDialoge(activity as LoginActivity,it)
         })
 
+        mActivityViewModel.getAccountsResponseListner.observe(this@LoginNumberPasswordFragment,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    for(i in it.accounts.indices){
+                        if(it.accounts[i].accountType.equals(Constants.TYPE_COMMISSIONING,true)){
+                            Constants.getAccountsResponse = it.accounts[i]
+                        }
+                    }
+                    PrefUtils.addString(activity!!,PREF_KEY_USER_MSISDN,Constants.CURRENT_USER_MSISDN)
+                    (activity as LoginActivity).startNewActivityAndClear(
+                        activity as LoginActivity,
+                        MainActivity::class.java
+                    )
+                }else{
+                    DialogUtils.showErrorDialoge(activity,it.description)
+                }
+            }
+        )
+
         val mBalanceInfoAndLimtListner = Observer<BalanceInfoAndLimitResponse> {
             if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                Constants.balanceInfoAndResponse = it
-                PrefUtils.addString(activity!!,PREF_KEY_USER_MSISDN,Constants.CURRENT_USER_MSISDN)
-                (activity as LoginActivity).startNewActivityAndClear(
-                    activity as LoginActivity,
-                    MainActivity::class.java
-                )
+                if(Constants.IS_AGENT_USER){
+                    Constants.balanceInfoAndResponse = it
+                    mActivityViewModel.requestForGetAccountsAPI(activity)
+                }else{
+                    Constants.balanceInfoAndResponse = it
+                    PrefUtils.addString(activity!!,PREF_KEY_USER_MSISDN,Constants.CURRENT_USER_MSISDN)
+                    (activity as LoginActivity).startNewActivityAndClear(
+                        activity as LoginActivity,
+                        MainActivity::class.java
+                    )
+                }
             } else {
                 DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
             }

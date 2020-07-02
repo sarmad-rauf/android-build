@@ -58,6 +58,10 @@ interface NetworkApi {
     @POST(EndPoints.getbalanceinfoandlimits)
     fun getBalancesInfoAndLimtCall(@Body request : BalanceInfoAndLimtRequest) : Observable<BalanceInfoAndLimitResponse>
 
+    //Request for GetAccounts
+    @POST(EndPoints.getaccounts)
+    fun getAccountsCall(@Body request : GetAccountsRequest) : Observable<GetAccountsResponse>
+
     //Request for ChangePassword
     @POST(EndPoints.changepassword)
     fun getChangePasswordCall(@Body request : ChangePasswordRequest) : Observable<ChangePasswordResponse>

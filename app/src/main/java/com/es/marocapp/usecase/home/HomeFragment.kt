@@ -288,6 +288,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         }
 
         mDataBinding.flexibleIndicator.initViewPager(mDataBinding.viewpager)
+
+        setRightLeftNavigationVisibility()
+    }
+
+    private fun setRightLeftNavigationVisibility() {
+        if(Constants.IS_AGENT_USER){
+            mDataBinding.leftNav.visibility = View.VISIBLE
+            mDataBinding.rightNav.visibility = View.VISIBLE
+            mDataBinding.flexibleIndicator.visibility = View.VISIBLE
+        }else{
+            mDataBinding.leftNav.visibility = View.GONE
+            mDataBinding.rightNav.visibility = View.GONE
+            mDataBinding.flexibleIndicator.visibility = View.GONE
+        }
     }
 
     override fun onPageScrollStateChanged(state: Int) {
@@ -299,7 +313,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     override fun onPageSelected(position: Int) {
         when (position) {
             0 -> mDataBinding.leftNav.visibility = View.GONE
-            2 -> mDataBinding.rightNav.visibility = View.GONE
+            1 -> mDataBinding.rightNav.visibility = View.GONE
             else -> {
                 mDataBinding.leftNav.visibility = View.VISIBLE
                 mDataBinding.rightNav.visibility = View.VISIBLE
