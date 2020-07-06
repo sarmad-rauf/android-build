@@ -320,18 +320,16 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
     //Request For AddFavorites
     fun requestForAddFavoritesApi(context: Context?,
-                                  contactName : String
+                                  contactName : String,
+                                  tranferAmountToWithoutAlias : String
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
 
             isLoading.set(true)
 
-            var tranferAmountToWithAlias = transferdAmountTo.substringBefore("@")
-            tranferAmountToWithAlias = tranferAmountToWithAlias.substringBefore("/")
-
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAddContact(
-                AddContactRequest(tranferAmountToWithAlias,contactName,ApiConstant.CONTEXT_AFTER_LOGIN)
+                AddContactRequest(tranferAmountToWithoutAlias,contactName,ApiConstant.CONTEXT_AFTER_LOGIN)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(

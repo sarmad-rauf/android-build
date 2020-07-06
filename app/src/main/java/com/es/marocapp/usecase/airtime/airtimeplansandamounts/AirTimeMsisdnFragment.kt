@@ -61,7 +61,10 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
             contactNumber = contactNumber.substringBefore("/")
             contactNumber = contactNumber.removePrefix(Constants.APP_MSISDN_PREFIX)
             contactNumber = "0$contactNumber"
-            list_of_favorites.add(contactNumber)
+            //todo also here remove lenght-2 check in max line
+            if(contactNumber.length.equals(Constants.APP_MSISDN_LENGTH.toInt() - 2)){
+                list_of_favorites.add(contactNumber)
+            }
         }
         list_of_favorites.add(0,LanguageData.getStringValue("SelectFavorite").toString())
 

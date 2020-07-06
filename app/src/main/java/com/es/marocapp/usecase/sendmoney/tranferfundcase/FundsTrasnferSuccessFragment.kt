@@ -72,9 +72,11 @@ class FundsTrasnferSuccessFragment : BaseFragment<FragmentFundsTransferSuccessBi
         mActivityViewModel.getAddFavoritesResponseListner.observe(this@FundsTrasnferSuccessFragment,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                    Constants.mContactListArray.clear()
-                    Constants.mContactListArray.addAll(it.contactList)
-                    DialogUtils.showErrorDialoge(activity,it.description)
+                    if(!it.contactList.isNullOrEmpty()){
+                        Constants.mContactListArray.clear()
+                        Constants.mContactListArray.addAll(it.contactList)
+                        DialogUtils.showErrorDialoge(activity,it.description)
+                    }
                 }else{
                     mDataBinding.addToFavoriteCheckBox.isActivated = false
                     mDataBinding.addToFavoriteCheckBox.isChecked = false

@@ -201,7 +201,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 this.add(HomeUseCasesModel(LanguageData.getStringValue("BillPayment").toString(), R.drawable.ic_bill_payment))
             }
             if(Constants.loginWithCertResponse.allowedMenu.GenerateQR!=null){
-                this.add(HomeUseCasesModel(LanguageData.getStringValue("GenerateQr").toString(), R.drawable.ic_qr_white))
+                this.add(HomeUseCasesModel(LanguageData.getStringValue("GenerateQR").toString(), R.drawable.ic_qr_white))
             }
             if(Constants.loginWithCertResponse.allowedMenu.CashService!=null){
                 this.add(HomeUseCasesModel(LanguageData.getStringValue("CashService").toString(), R.drawable.ic_transfer))
@@ -285,6 +285,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         mDataBinding.viewpager.apply {
             adapter = mCardAdapter
             pageMargin = 16
+            addOnPageChangeListener(this@HomeFragment)
         }
 
         mDataBinding.flexibleIndicator.initViewPager(mDataBinding.viewpager)
@@ -308,17 +309,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-    }
-
-    override fun onPageSelected(position: Int) {
         when (position) {
-            0 -> mDataBinding.leftNav.visibility = View.GONE
-            1 -> mDataBinding.rightNav.visibility = View.GONE
+            0 -> {
+                mDataBinding.leftNav.visibility = View.GONE
+                mDataBinding.rightNav.visibility = View.VISIBLE
+            }
+            1 ->{
+                mDataBinding.leftNav.visibility = View.VISIBLE
+                mDataBinding.rightNav.visibility = View.GONE
+            }
             else -> {
                 mDataBinding.leftNav.visibility = View.VISIBLE
                 mDataBinding.rightNav.visibility = View.VISIBLE
             }
         }
+    }
+
+    override fun onPageSelected(position: Int) {
     }
 
     override fun onNextBalanceCardClick(view: View) {

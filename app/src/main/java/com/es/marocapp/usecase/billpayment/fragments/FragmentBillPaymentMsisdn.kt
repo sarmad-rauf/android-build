@@ -1,6 +1,7 @@
 package com.es.marocapp.usecase.billpayment.fragments
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -47,14 +48,28 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         mActivityViewModel.isUserSelectedFromFavorites.set(false)
 
         list_of_favorites.clear()
-        for(contacts in Constants.mContactListArray){
-            var contactNumber = contacts.fri
-            contactNumber = contactNumber.substringBefore("@")
-            contactNumber = contactNumber.substringBefore("/")
-            contactNumber = contactNumber.removePrefix(Constants.APP_MSISDN_PREFIX)
-            contactNumber = "0$contactNumber"
-            list_of_favorites.add(contactNumber)
+        if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+            var selectedFatorati = "BillPayment_Fatourati_${mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier}"
+            for(contacts in Constants.mContactListArray){
+                var contactName = contacts.contactName
+                if(contactName.contains(selectedFatorati)){
+                    contactName = contactName.substringAfter("@")
+                    list_of_favorites.add(contactName)
+                }
+            }
         }
+
+        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+            for(contacts in Constants.mContactListArray){
+                var contactNumber = contacts.fri
+                contactNumber = contactNumber.substringBefore("@")
+                contactNumber = contactNumber.substringBefore("/")
+                if(contactNumber.length == 6){
+                    list_of_favorites.add(contactNumber)
+                }
+            }
+        }
+
         list_of_favorites.add(0, LanguageData.getStringValue("SelectFavorite").toString())
 
         val adapterFavoriteType = ArrayAdapter<CharSequence>(activity as BillPaymentActivity, R.layout.layout_favorites_spinner_text,
@@ -89,6 +104,10 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
         }
 
+        //todo also here remove lenght-2 check in max line
+        mDataBinding.inputPhoneNumber.filters =
+            arrayOf<InputFilter>(InputFilter.LengthFilter(6))
+
         mActivityViewModel.popBackStackTo = R.id.fragmentPostPaidBillType
 
         setStrings()
@@ -97,7 +116,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
     private fun setStrings() {
         mDataBinding.inputLayoutCode.hint = LanguageData.getStringValue("EnterCode")
-        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterContactNumber")
+        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterCilNumber")
         mDataBinding.selectFavoriteTypeTitle.hint = LanguageData.getStringValue("SelectFavorite")
         mDataBinding.btnNext.text = LanguageData.getStringValue("Submit")
     }
@@ -162,29 +181,24 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         var isValidForAll = true
 
         //todo NUmber Lenght is Pending
-        if (mDataBinding.inputPhoneNumber.text.isNullOrEmpty() || mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_MSISDN_LENGTH.toInt() - 2) {
+        if (mDataBinding.inputPhoneNumber.text.isNullOrEmpty() || mDataBinding.inputPhoneNumber.text.toString().length < 6) {
             isValidForAll = false
-            mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+            mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidCILNumber")
             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
         } else {
             mDataBinding.inputLayoutPhoneNumber.error = ""
             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
 
-            var userMsisdn = mDataBinding.inputPhoneNumber.text.toString()
-            if (userMsisdn.startsWith("0", false)) {
-                checkNumberExistInFavorites(userMsisdn)
-                mDataBinding.inputLayoutPhoneNumber.error = ""
-                mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
-                var userMSISDNwithPrefix = userMsisdn.removePrefix("0")
-                userMSISDNwithPrefix = Constants.APP_MSISDN_PREFIX + userMSISDNwithPrefix
-                userMSISDNwithPrefix = userMSISDNwithPrefix.removePrefix("+")
+            msisdnEntered = mDataBinding.inputPhoneNumber.text.toString().trim()
 
-                msisdnEntered = userMSISDNwithPrefix
-            } else {
-                isValidForAll = false
-                mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
-                mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+            if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+                checkNumberExistInFavorites(msisdnEntered)
             }
+
+            if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+                checkNumberExistInFavoritesForFatorati(msisdnEntered)
+            }
+
         }
         if(mActivityViewModel.isBillUseCaseSelected.get()!!){
             if(mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!){
@@ -204,6 +218,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
     }
 
 
+
     override fun onNothingSelected(p0: AdapterView<*>?) {
         
     }
@@ -211,10 +226,39 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         var selectedFavorites = mDataBinding.spinnerSelectFavorites.selectedItem.toString()
         if(!selectedFavorites.equals(LanguageData.getStringValue("SelectFavorite"))){
-            mDataBinding.inputPhoneNumber.setText(selectedFavorites)
-            mActivityViewModel.isUserSelectedFromFavorites.set(true)
+            if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+                mDataBinding.inputPhoneNumber.setText(selectedFavorites)
+                mActivityViewModel.isUserSelectedFromFavorites.set(true)
+            }
+
+            if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+                for(contacts in Constants.mContactListArray){
+                    var contactName = contacts.contactName
+                    contactName = contactName.substringAfter("@")
+                    if(selectedFavorites.equals(contactName)){
+                        var selectedFri = contacts.fri.substringBefore("@")
+                        mDataBinding.inputPhoneNumber.setText(selectedFri)
+                        break
+                    }
+
+                }
+            }
+
         }
     }
+
+    private fun checkNumberExistInFavoritesForFatorati(msisdnEntered: String) {
+        for(contacts in Constants.mContactListArray){
+            var contactNumber = contacts.fri
+            contactNumber = contactNumber.substringBefore("@")
+            if(msisdnEntered.equals(contactNumber)){
+                mActivityViewModel.isUserSelectedFromFavorites.set(true)
+                break
+            }
+
+        }
+    }
+
 
     private fun checkNumberExistInFavorites(userMsisdn: String) {
         for(i in 0 until list_of_favorites.size){

@@ -48,7 +48,15 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
                     mDataBinding.addToFavoriteCheckBox.isChecked = true
                     mDataBinding.addToFavoriteCheckBox.isClickable = false
 
-                    mActivityViewModel.requestForAddFavoritesApi(activity,nickName)
+                    var tranferAmountToWithoutAlias = mActivityViewModel.transferdAmountTo.substringBefore("@")
+                    tranferAmountToWithoutAlias = tranferAmountToWithoutAlias.substringBefore("/")
+
+                    if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+                        var fatoratiNickName = "BillPayment_Fatourati_${mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier}@$nickName"
+                        mActivityViewModel.requestForAddFavoritesApi(activity,fatoratiNickName,Constants.getFatoratiAlias(mActivityViewModel.transferdAmountTo))
+                    }else{
+                        mActivityViewModel.requestForAddFavoritesApi(activity,nickName,tranferAmountToWithoutAlias)
+                    }
                 }
 
                 override fun onDialogNoClickListner() {
@@ -114,9 +122,11 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
         mActivityViewModel.getAddFavoritesResponseListner.observe(this@FragmentPostPaidBillPaymentSuccess,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                    Constants.mContactListArray.clear()
-                    Constants.mContactListArray.addAll(it.contactList)
-                    DialogUtils.showErrorDialoge(activity,it.description)
+                    if(!it.contactList.isNullOrEmpty()){
+                        Constants.mContactListArray.clear()
+                        Constants.mContactListArray.addAll(it.contactList)
+                        DialogUtils.showErrorDialoge(activity,it.description)
+                    }
                 }else{
                     mDataBinding.addToFavoriteCheckBox.isActivated = false
                     mDataBinding.addToFavoriteCheckBox.isChecked = false
