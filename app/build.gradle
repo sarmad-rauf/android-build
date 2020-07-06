@@ -36,9 +36,9 @@ android {
 
         debug {
             if (baseUrlType == 1) {//Production
-                buildConfigField "String", "SERVER_URL", "\"https://jsonplaceholder.typicode.com/\""
+                buildConfigField "String", "SERVER_URL", ""
             } else if (baseUrlType == 2) {// Staging
-                buildConfigField "String", "SERVER_URL", "\"https://jsonplaceholder.typicode.com/\""
+                buildConfigField "String", "SERVER_URL", ""
             } else if (baseUrlType == 3) {// Development
                 buildConfigField "String", "SERVER_URL", "\"http://124.109.32.135:8080/mobileapi/\""
             }
@@ -48,9 +48,9 @@ android {
         }
         release {
             if (baseUrlType == 1) {//Production
-                buildConfigField "String", "SERVER_URL", "\"https://jsonplaceholder.typicode.com/\""
+                buildConfigField "String", "SERVER_URL", ""
             } else if (baseUrlType == 2) {// Staging
-                buildConfigField "String", "SERVER_URL", "\"https://jsonplaceholder.typicode.com/\""
+                buildConfigField "String", "SERVER_URL", ""
             } else if (baseUrlType == 3) {// Development
                 buildConfigField "String", "SERVER_URL", "\"http://124.109.32.135:8080/mobileapi/\""
             }
