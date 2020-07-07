@@ -15,6 +15,7 @@ import com.downloader.OnDownloadListener
 import com.downloader.PRDownloader
 import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityTermsAndConditionsBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.utils.Constants
 import kotlinx.android.synthetic.main.fragment_approval.*
@@ -52,7 +53,7 @@ class TermsAndConditions : BaseActivity<ActivityTermsAndConditionsBinding>() {
 
         navGraph = navController.navInflater.inflate(R.navigation.terms_and_condition_nav_graph)
 
-        if(headerText == "FAQs"){
+        if(headerText == LanguageData.getStringValue("Faqs")){
             mActivityViewModel.isLoading.set(true)
             val fileName = "faq.pdf"
             downloadPdfFromInternet(
@@ -60,7 +61,7 @@ class TermsAndConditions : BaseActivity<ActivityTermsAndConditionsBinding>() {
                 getRootDirPath(this),
                 fileName
             )
-        }else if(headerText == "Term & Conditions"){
+        }else if(headerText == LanguageData.getStringValue("TermsAndConditions")){
             mActivityViewModel.isLoading.set(true)
             val fileName = "terms.pdf"
             downloadPdfFromInternet(
@@ -81,9 +82,9 @@ class TermsAndConditions : BaseActivity<ActivityTermsAndConditionsBinding>() {
     }
 
     fun setFragmentToShow(){
-        if(headerText == "FAQs"){
+        if(headerText == LanguageData.getStringValue("Faqs")){
             navGraph.startDestination = R.id.FAQsFragment
-        }else if(headerText == "Term & Conditions"){
+        }else if(headerText == LanguageData.getStringValue("TermsAndConditions")){
             navGraph.startDestination = R.id.termsAndConditionFragment
         }else if(headerText == "Contact Us"){
             navGraph.startDestination = R.id.contactUsFragment
@@ -103,8 +104,8 @@ class TermsAndConditions : BaseActivity<ActivityTermsAndConditionsBinding>() {
             .start(object : OnDownloadListener {
                 override fun onDownloadComplete() {
                     mActivityViewModel.isLoading.set(false)
-                    Toast.makeText(this@TermsAndConditions, "downloadComplete", Toast.LENGTH_LONG)
-                        .show()
+                    /*Toast.makeText(this@TermsAndConditions, "downloadComplete", Toast.LENGTH_LONG)
+                        .show()*/
                     val downloadedFile = File(dirPath, fileName)
                     downloadedFileFromURL = downloadedFile
                     setFragmentToShow()
