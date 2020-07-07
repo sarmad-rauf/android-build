@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".usecase.consumerregistration.ConsumerRegistrationActivity"></activity>
         <activity android:name=".usecase.billpayment.BillPaymentActivity" />
         <activity android:name=".usecase.airtime.AirTimeActivity" />
         <activity android:name=".usecase.cashservices.CashServicesActivity" />

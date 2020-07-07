@@ -1,81 +1,74 @@
-package com.es.marocapp.usecase.login.signup
-
+package com.es.marocapp.usecase.consumerregistration.fragments
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
 import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.View
-import androidx.fragment.app.Fragment
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
-import com.es.marocapp.databinding.FragmentSignUpDetailBinding
+import com.es.marocapp.databinding.FragmentConsumerRegistrationDetailsBinding
 import com.es.marocapp.locale.LanguageData
-import com.es.marocapp.model.responses.GetInitialAuthDetailsReponse
-import com.es.marocapp.model.responses.GetOtpForRegistrationResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
-import com.es.marocapp.usecase.login.LoginActivity
-import com.es.marocapp.usecase.login.LoginActivityViewModel
+import com.es.marocapp.usecase.consumerregistration.ConsumerRegistrationActivity
+import com.es.marocapp.usecase.consumerregistration.ConsumerRegistrationClickListner
+import com.es.marocapp.usecase.consumerregistration.ConsumerRegistrationViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 import java.util.*
-import java.util.regex.Matcher
 import java.util.regex.Pattern
 
+class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistrationDetailsBinding>(),
+    ConsumerRegistrationClickListner, TextWatcher {
 
-/**
- * A simple [Fragment] subclass.
- */
-class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUpClickListner,
-    TextWatcher {
-
-    lateinit var mActivityViewModel: LoginActivityViewModel
+    lateinit var mActivityViewModel: ConsumerRegistrationViewModel
     var emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex()
     var isCnicMatches = false
+    var consumerMsisdnEntered = ""
+
 
     override fun setLayout(): Int {
-        return R.layout.fragment_sign_up_detail
+        return R.layout.fragment_consumer_registration_details
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        mActivityViewModel = ViewModelProvider(activity as LoginActivity).get(LoginActivityViewModel::class.java)
+        mActivityViewModel = ViewModelProvider(activity as ConsumerRegistrationActivity).get(ConsumerRegistrationViewModel::class.java)
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel
-            listener = this@SignUpDetailFragment
+            listener = this@ConsumerRegistrationDetailFragment
         }
 
-        mDataBinding.root.groupBack.visibility = View.VISIBLE
+        mActivityViewModel.popBackStackTo = -1
 
-        mDataBinding.root.txtBack.setOnClickListener {
-            (activity as LoginActivity).navController.navigateUp()
-        }
-
-        mDataBinding.root.imgBackButton.setOnClickListener {
-            (activity as LoginActivity).navController.navigateUp()
-        }
         mDataBinding.inputNationalID.filters = arrayOf<InputFilter>(
             InputFilter.LengthFilter(
                 Constants.APP_CN_LENGTH.toInt()
             )
         )
+
+        //todo also here remove lenght-2 check in max line
+        mDataBinding.inputConsumerNumber.filters = arrayOf<InputFilter>(
+            InputFilter.LengthFilter(
+                Constants.APP_MSISDN_LENGTH.toInt() - 2
+            )
+        )
+
         mDataBinding.inputNationalID.addTextChangedListener(this)
 
         subscribeObserver()
         setStrings()
-
     }
 
     private fun setStrings() {
-        mDataBinding.root.txtBack.text= LanguageData.getStringValue("BtnTitle_Back")
-        mDataBinding.root.txtHeaderTitle.text= LanguageData.getStringValue("CreateYourAccount")
+        mDataBinding.inputLayoutConsumerNumber.hint = LanguageData.getStringValue("EnterConsumerNumber")
         mDataBinding.inputLayoutFirstName.hint = LanguageData.getStringValue("EnterFirstName")
         mDataBinding.inputLayoutLastName.hint = LanguageData.getStringValue("EnterLastName")
         mDataBinding.inputLayoutDateOfBirth.hint = LanguageData.getStringValue("EnterDateOfBirth")
@@ -88,72 +81,32 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
     }
 
     private fun subscribeObserver() {
-        mActivityViewModel.errorText.observe(this@SignUpDetailFragment, Observer {
-            DialogUtils.showErrorDialoge(activity as LoginActivity,it)
+        mActivityViewModel.errorText.observe(this@ConsumerRegistrationDetailFragment, androidx.lifecycle.Observer {
+            DialogUtils.showErrorDialoge(activity as ConsumerRegistrationActivity,it)
         })
 
-        val mInitialAuthDetailsResonseObserver = Observer<GetInitialAuthDetailsReponse>{
-            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+        mActivityViewModel.getInitialAuthDetailsResponseListner.observe(this@ConsumerRegistrationDetailFragment,
+            androidx.lifecycle.Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
 
-                mActivityViewModel.requestForGetOTPForRegistrationApi(activity,mDataBinding.inputFirstName.text.toString().trim(),mDataBinding.inputLastName.text.toString().trim()
-                    ,mDataBinding.inputNationalID.text.toString().trim())
-            }else{
-                DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
+                    mActivityViewModel.requestForGetOTPForRegistrationApi(activity,mDataBinding.inputFirstName.text.toString().trim(),mDataBinding.inputLastName.text.toString().trim()
+                        ,mDataBinding.inputNationalID.text.toString().trim())
+                }else{
+                    DialogUtils.showErrorDialoge(activity as ConsumerRegistrationActivity,it.description)
+                }
             }
-        }
-
-        val mOTPForRegistrationResonseObserver = Observer<GetOtpForRegistrationResponse>{
-            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_verifyNumberFragment)
-            }else{
-                DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
-            }
-        }
-
-        mActivityViewModel.getInitialAuthDetailsResponseListner.observe(this,mInitialAuthDetailsResonseObserver)
-        mActivityViewModel.getOtpForRegistrationResponseListner.observe(this,mOTPForRegistrationResonseObserver)
-    }
-
-    private fun showDatePickerDialog() {
-        val calendar: Calendar = Calendar.getInstance()
-        val year: Int = calendar.get(Calendar.YEAR)
-        val month: Int = calendar.get(Calendar.MONTH)
-        val dayOfMonth: Int = calendar.get(Calendar.DAY_OF_MONTH)
-
-        val datePickerDialog = DatePickerDialog(
-            activity as LoginActivity,
-            OnDateSetListener { datePicker, year, month, day ->
-                var monthVal = (month+1).toString()
-                var selectedDate = "$year-$monthVal-$day"
-                mDataBinding.inputDateOfBirth.setText(selectedDate)
-            }, year, month, dayOfMonth
         )
 
-        datePickerDialog.show()
+        mActivityViewModel.getOtpForRegistrationResponseListner.observe(this@ConsumerRegistrationDetailFragment,Observer{
+            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                (activity as ConsumerRegistrationActivity).navController.navigate(R.id.action_consumerRegistrationDetailFragment_to_consumerRegistrationVerifyOtpFragment)
+            }else{
+                DialogUtils.showErrorDialoge(activity as ConsumerRegistrationActivity,it.description)
+            }
+        })
     }
 
-    private fun showGenderDialog(){
-        val singleChoiceItems =
-            resources.getStringArray(R.array.dialog_gender_choice_array)
-        val itemSelected = 0
-        AlertDialog.Builder(activity)
-            .setTitle(LanguageData.getStringValue("SelectGender"))
-            .setSingleChoiceItems(
-                singleChoiceItems,
-                itemSelected,
-                DialogInterface.OnClickListener { dialogInterface, selectedIndex ->
-                    when(selectedIndex){
-                        0-> mDataBinding.inputGender.setText(LanguageData.getStringValue("Male"))
-                        1-> mDataBinding.inputGender.setText(LanguageData.getStringValue("Female"))
-                        2-> mDataBinding.inputGender.setText(LanguageData.getStringValue("Other"))
-                    }
-                })
-            .setPositiveButton(LanguageData.getStringValue("BtnTitle_OK"), null)
-            .show()
-    }
-
-    override fun onNextButtonClick(view: View) {
-
+    override fun onSubmitClickListner(view: View) {
         if(isValidForAll()){
             mActivityViewModel.DOB = mDataBinding.inputDateOfBirth.text.toString().trim()
             mActivityViewModel.identificationNumber = mDataBinding.inputNationalID.text.toString().trim()
@@ -163,40 +116,38 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
             mActivityViewModel.lastName = mDataBinding.inputLastName.text.toString().trim()
             mActivityViewModel.email = mDataBinding.inputEmail.text.toString().trim()
 
-            mActivityViewModel.requestForeGetInitialAuthDetailsApi(activity)
+            mActivityViewModel.requestForeGetInitialAuthDetailsApi(activity,consumerMsisdnEntered)
         }
-        //For Without API Calling Uncomment Below Line
-//        (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_verifyNumberFragment)
-    }
-
-    override fun onBackButtonClick(view: View) {
-
-    }
-
-    override fun onCalenderCalenderClick(view: View) {
-        showDatePickerDialog()
-    }
-
-    override fun onGenderSelectionClick(view: View) {
-        mDataBinding.inputGender.setText(LanguageData.getStringValue("Male"))
-        showGenderDialog()
-    }
-
-    override fun afterTextChanged(p0: Editable?) {
-        var cnic = mDataBinding.inputNationalID.text.toString().trim()
-        var cnicLength = cnic.length
-        isCnicMatches = !(cnicLength > 0 && !Pattern.matches(Constants.APP_CN_REGEX, cnic))
-    }
-
-    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-    }
-
-    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
     }
 
     private fun isValidForAll(): Boolean {
 
         var isValidForAll = true
+
+        //todo NUmber Lenght is Pending
+        if (mDataBinding.inputConsumerNumber.text.isNullOrEmpty() || mDataBinding.inputConsumerNumber.text.toString().length < Constants.APP_MSISDN_LENGTH.toInt() - 2) {
+            isValidForAll = false
+            mDataBinding.inputLayoutConsumerNumber.error = LanguageData.getStringValue("PleaseEnterValidConsumerNumber")
+            mDataBinding.inputLayoutConsumerNumber.isErrorEnabled = true
+        } else {
+            mDataBinding.inputLayoutConsumerNumber.error = ""
+            mDataBinding.inputLayoutConsumerNumber.isErrorEnabled = false
+
+            var userMsisdn = mDataBinding.inputConsumerNumber.text.toString()
+            if (userMsisdn.startsWith("0", false)) {
+                mDataBinding.inputLayoutConsumerNumber.error = ""
+                mDataBinding.inputLayoutConsumerNumber.isErrorEnabled = false
+                var userMSISDNwithPrefix = userMsisdn.removePrefix("0")
+                userMSISDNwithPrefix = Constants.APP_MSISDN_PREFIX + userMSISDNwithPrefix
+                userMSISDNwithPrefix = userMSISDNwithPrefix.removePrefix("+")
+
+                consumerMsisdnEntered = userMSISDNwithPrefix
+            } else {
+                isValidForAll = false
+                mDataBinding.inputLayoutConsumerNumber.error = LanguageData.getStringValue("PleaseEnterValidConsumerNumber")
+                mDataBinding.inputLayoutConsumerNumber.isErrorEnabled = true
+            }
+        }
 
         if(mDataBinding.inputFirstName.text.isNullOrEmpty()){
             isValidForAll = false
@@ -280,4 +231,64 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
         return isValidForAll
     }
+
+    private fun showDatePickerDialog() {
+        val calendar: Calendar = Calendar.getInstance()
+        val year: Int = calendar.get(Calendar.YEAR)
+        val month: Int = calendar.get(Calendar.MONTH)
+        val dayOfMonth: Int = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            activity as ConsumerRegistrationActivity,
+            DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
+                var monthVal = (month + 1).toString()
+                var selectedDate = "$year-$monthVal-$day"
+                mDataBinding.inputDateOfBirth.setText(selectedDate)
+            }, year, month, dayOfMonth
+        )
+
+        datePickerDialog.show()
+    }
+
+    private fun showGenderDialog(){
+        val singleChoiceItems =
+            resources.getStringArray(R.array.dialog_gender_choice_array)
+        val itemSelected = 0
+        AlertDialog.Builder(activity)
+            .setTitle(LanguageData.getStringValue("SelectGender"))
+            .setSingleChoiceItems(
+                singleChoiceItems,
+                itemSelected,
+                DialogInterface.OnClickListener { dialogInterface, selectedIndex ->
+                    when(selectedIndex){
+                        0-> mDataBinding.inputGender.setText(LanguageData.getStringValue("Male"))
+                        1-> mDataBinding.inputGender.setText(LanguageData.getStringValue("Female"))
+                        2-> mDataBinding.inputGender.setText(LanguageData.getStringValue("Other"))
+                    }
+                })
+            .setPositiveButton(LanguageData.getStringValue("BtnTitle_OK"), null)
+            .show()
+    }
+
+    override fun onCalenderCalenderClick(view: View) {
+        showDatePickerDialog()
+    }
+
+    override fun onGenderSelectionClick(view: View) {
+        mDataBinding.inputGender.setText(LanguageData.getStringValue("Male"))
+        showGenderDialog()
+    }
+
+    override fun afterTextChanged(p0: Editable?) {
+        var cnic = mDataBinding.inputNationalID.text.toString().trim()
+        var cnicLength = cnic.length
+        isCnicMatches = !(cnicLength > 0 && !Pattern.matches(Constants.APP_CN_REGEX, cnic))
+    }
+
+    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    }
+
+    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    }
+
 }

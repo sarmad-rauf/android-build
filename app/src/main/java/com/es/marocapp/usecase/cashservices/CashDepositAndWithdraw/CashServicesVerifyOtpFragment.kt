@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentCashServicesVerifyOtpBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.cashservices.CashServicesActivity
@@ -45,7 +46,15 @@ class CashServicesVerifyOtpFragment : BaseFragment<FragmentCashServicesVerifyOtp
             mActivityViewModel.requestForGenerateOtpApi(activity,mActivityViewModel.transferdAmountTo,mActivityViewModel.amountToTransfer,mActivityViewModel.noteToSend)
         }
 
+        setStrings()
         subscribeObserver()
+    }
+
+    private fun setStrings() {
+        mDataBinding.inputLayoutVerifyOtp.hint = LanguageData.getStringValue("EnterOTP")
+        mDataBinding.txtOtpNotRecieved.text = LanguageData.getStringValue("OTPNotRecieved")+ " "
+        mDataBinding.txtResend.text = LanguageData.getStringValue("Resend")
+        mDataBinding.btnVerifyOtp.text = LanguageData.getStringValue("BtnTitle_Verify")
     }
 
     private fun subscribeObserver() {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/consumer_registration_nav_graph"
+    app:startDestination="@id/consumerRegistrationDetailFragment">
+
+    <fragment
+        android:id="@+id/consumerRegistrationDetailFragment"
+        android:name="com.es.marocapp.usecase.consumerregistration.fragments.ConsumerRegistrationDetailFragment"
+        android:label="ConsumerRegistrationDetailFragment"
+        tools:layout="@layout/fragment_consumer_registration_details"
+        >
+        <action
+            android:id="@+id/action_consumerRegistrationDetailFragment_to_consumerRegistrationVerifyOtpFragment"
+            app:destination="@id/consumerRegistrationVerifyOtpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/consumerRegistrationVerifyOtpFragment"
+        android:name="com.es.marocapp.usecase.consumerregistration.fragments.ConsumerRegistrationVerifyOtpFragment"
+        android:label="ConsumerRegistrationVerifyOtpFragment"
+        tools:layout="@layout/fragment_consumer_registration_verify_otp"
+        />
+</navigation>

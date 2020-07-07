@@ -21,6 +21,7 @@ import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.airtime.AirTimeActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentActivity
 import com.es.marocapp.usecase.cashservices.CashServicesActivity
+import com.es.marocapp.usecase.consumerregistration.ConsumerRegistrationActivity
 import com.es.marocapp.usecase.payments.PaymentsActivity
 import com.es.marocapp.usecase.qrcode.GenerateQrActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
@@ -206,14 +207,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             if(Constants.loginWithCertResponse.allowedMenu.CashService!=null){
                 this.add(HomeUseCasesModel(LanguageData.getStringValue("CashService").toString(), R.drawable.ic_transfer))
             }
+            if(Constants.loginWithCertResponse.allowedMenu.ConsumerRegistration!=null){
+                this.add(HomeUseCasesModel(LanguageData.getStringValue("ConsumerRegistration").toString(),R.drawable.ic_consumer))
+            }
         }
 
         mUseCasesAdapter =
             HomeUseCasesAdapter(useCases, object : HomeUseCasesAdapter.HomeUseCasesClickListner {
-                override fun onHomeUseCaseClick(position: Int) {
-                    when (position) {
+                override fun onHomeUseCaseClick(position: Int, useCaseSelected : String) {
+                    when (useCaseSelected) {
 
-                        0-> {
+                        LanguageData.getStringValue("MerchantPayment").toString()-> {
                             val intent = Intent(activity as MainActivity,
                                 SendMoneyActivity::class.java)
                             intent.putExtra("isFundTransferUseCase", false)
@@ -223,7 +227,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                             startActivity(intent)
                         }
 
-                        1-> {
+                        LanguageData.getStringValue("AirTime").toString()-> {
                             var intent = Intent(
                                 activity as MainActivity,
                                 AirTimeActivity::class.java
@@ -232,7 +236,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                             startActivity(intent)
                         }
 
-                        2 -> {
+                        LanguageData.getStringValue("SendMoney").toString() -> {
                             val intent = Intent(activity as MainActivity,
                                 SendMoneyActivity::class.java)
 
@@ -243,22 +247,31 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                             startActivity(intent)
                         }
 
-                        3 -> {
+                        LanguageData.getStringValue("BillPayment").toString() -> {
                             (activity as MainActivity).startNewActivity(activity as MainActivity,
                                 BillPaymentActivity ::class.java)
                         }
 
-                        4 -> {
+                        LanguageData.getStringValue("GenerateQR").toString() -> {
                             (activity as MainActivity).startNewActivity(activity as MainActivity,
                                 GenerateQrActivity::class.java)
                         }
 
-                        5 -> {
+                        LanguageData.getStringValue("CashService").toString() -> {
                             startActivity(
                             Intent(
                                 activity as MainActivity,
                                 CashServicesActivity::class.java
                             )
+                            )
+                        }
+
+                        LanguageData.getStringValue("ConsumerRegistration").toString()->{
+                            startActivity(
+                                Intent(
+                                    activity as MainActivity,
+                                    ConsumerRegistrationActivity::class.java
+                                )
                             )
                         }
 

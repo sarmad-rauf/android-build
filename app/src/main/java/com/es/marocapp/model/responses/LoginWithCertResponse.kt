@@ -14,12 +14,13 @@ data class LoginWithCertResponse(
 )
 
 data class AllowedMenu(
-    val AirTime: List<Any>,
+    val AirTime: List<String>,
     val BillPayment: List<String>,
     val CashService: List<String>,
-    val GenerateQR: List<Any>,
-    val MerchantPayment: List<Any>,
-    val SendMoney: List<Any>
+    val GenerateQR: List<String>,
+    val MerchantPayment: List<String>,
+    val SendMoney: List<String>,
+    val ConsumerRegistration: List<String>
 )
 
 data class Contact(

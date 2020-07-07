@@ -42,7 +42,7 @@ class HomeUseCasesAdapter(private val usecases : ArrayList<HomeUseCasesModel>, v
         }
 
         holder.useCaseChildtLayout.setOnClickListener {
-            listener.onHomeUseCaseClick(position)
+            listener.onHomeUseCaseClick(position,usecases[position].useCaseTitle)
         }
     }
 
@@ -54,6 +54,6 @@ class HomeUseCasesAdapter(private val usecases : ArrayList<HomeUseCasesModel>, v
     }
 
     interface HomeUseCasesClickListner{
-        fun onHomeUseCaseClick(position: Int)
+        fun onHomeUseCaseClick(position: Int,useCaseSelected : String)
     }
 }
