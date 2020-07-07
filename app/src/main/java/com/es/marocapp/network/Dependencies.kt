@@ -69,7 +69,7 @@ abstract class Dependencies {
             })
 
             // Install the all-trusting trust manager
-            val sslContext = SSLContext.getInstance("TLSv1.2")//SSL
+            val sslContext = SSLContext.getInstance("SSL")//SSL
             sslContext.init(null, trustAllCerts, java.security.SecureRandom())
             // Create an ssl socket factory with our all-trusting manager
             val sslSocketFactory = sslContext.socketFactory
@@ -135,11 +135,6 @@ abstract class Dependencies {
                 return isMatch
             }
 
-            // Check if Hostname other than the Jazz Servers than bypass SSL Pinning
-            if (!setBaseUrl().contains(hostname)) {
-                isMatch = true
-                return isMatch
-            }
 
             if (serverCertsList != null) {
                 for (i in 0 until serverCertsList.size) {
