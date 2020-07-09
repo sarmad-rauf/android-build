@@ -113,7 +113,9 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                 Constants.IS_MERCHANT_USER = it.profile.merchantUser
 
                 Constants.loginWithCertResponse = it
-                Constants.mContactListArray.addAll(Constants.loginWithCertResponse.contactList)
+                if(Constants.loginWithCertResponse.contactList!=null) {
+                    Constants.mContactListArray.addAll(Constants.loginWithCertResponse.contactList)
+                }
                 //setting cookie for use in header
                 if (it.setCookie.isNotEmpty()) {
                     var cookie = it.setCookie
