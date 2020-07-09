@@ -7,7 +7,10 @@ import androidx.multidex.MultiDex
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.utils.RootValues
+import com.google.android.gms.security.ProviderInstaller
+import java.security.NoSuchAlgorithmException
 import java.util.*
+import javax.net.ssl.SSLContext
 
 
 class ApplicationClass : Application() {
@@ -32,6 +35,22 @@ class ApplicationClass : Application() {
         // Set App saved Language
         LocaleManager.selectedLanguage=LocaleManager.getSelectedLanguageFromPref(applicationContext)
         LocaleManager.setAppLanguage(applicationContext,LocaleManager.selectedLanguage)
+
+        //SSL pinning
+        installSSL()
+
+    }
+
+
+    fun installSSL(){
+
+            // Google Play will install latest OpenSSL
+            ProviderInstaller.installIfNeeded(getApplicationContext());
+            var sslContext: SSLContext
+            sslContext = SSLContext.getInstance("TLSv1.2");
+            sslContext.init(null, null, null);
+            sslContext.createSSLEngine();
+
     }
 
 

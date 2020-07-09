@@ -172,12 +172,14 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
         val mAccountHolderInfoResonseObserver = Observer<GetAccountHolderInformationResponse> {
             if (it.responseCode == ApiConstant.API_SUCCESS) {
                 mActivityViewModel.isSignUpFlow.set(false)
-                var deviceID = it.deviceId
-                deviceID = deviceID.removePrefix("ID:")
-                deviceID = deviceID.removeSuffix("@device/ALIAS")
+                var deviceID =""
+                if(it.deviceId!=null) {
+                    deviceID = it.deviceId
+                    deviceID = deviceID.removePrefix("ID:")
+                    deviceID = deviceID.removeSuffix("@device/ALIAS")
 
-                deviceID = deviceID.trim()
-
+                    deviceID = deviceID.trim()
+                }
                 if (deviceID.equals(Constants.CURRENT_NUMBER_DEVICE_ID)) {
                     checkUserRegsitrationAndActicationSenario(it)
                 } else {

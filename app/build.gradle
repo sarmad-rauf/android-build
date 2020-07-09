@@ -9,7 +9,7 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 
-def baseUrlType = 3 //1:Production,2:Staging,3:Development
+def baseUrlType = 2 //1:Production,2:Staging,3:Development
 
 android {
     compileSdkVersion 29
@@ -38,7 +38,7 @@ android {
             if (baseUrlType == 1) {//Production
                 buildConfigField "String", "SERVER_URL", ""
             } else if (baseUrlType == 2) {// Staging
-                buildConfigField "String", "SERVER_URL", ""
+                buildConfigField "String", "SERVER_URL", "\"https://10.100.170.122/mobileapi/\""
             } else if (baseUrlType == 3) {// Development
                 buildConfigField "String", "SERVER_URL", "\"http://124.109.32.135:8080/mobileapi/\""
             }
@@ -50,7 +50,7 @@ android {
             if (baseUrlType == 1) {//Production
                 buildConfigField "String", "SERVER_URL", ""
             } else if (baseUrlType == 2) {// Staging
-                buildConfigField "String", "SERVER_URL", ""
+                buildConfigField "String", "SERVER_URL", "\"https://10.100.170.122/mobileapi/\""
             } else if (baseUrlType == 3) {// Development
                 buildConfigField "String", "SERVER_URL", "\"http://124.109.32.135:8080/mobileapi/\""
             }

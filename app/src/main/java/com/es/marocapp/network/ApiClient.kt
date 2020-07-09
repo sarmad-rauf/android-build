@@ -113,8 +113,9 @@ public class ApiClient() : Dependencies() {
     override fun setSslCertificate(): ArrayList<String> {
 
         var publicKeysList: ArrayList<String> = ArrayList<String>()
-        publicKeysList.add("=")
-        publicKeysList.add("=")
+        publicKeysList.add("CSRAtwO/YS+LAKcoae6Yy5lNa43DhjQTJWrDodxguVs=")
+
+       /* publicKeysList.add("EbmVRuVFiv5FDIvVCnjqSiH+DLLIpku9/I024/54Oms=")*/
 
         return publicKeysList
        //return RootValues.getInstance().keysPublicServerFromNdk
@@ -132,7 +133,7 @@ public class ApiClient() : Dependencies() {
 /*
 
 Creating certificate from remote URL and writing to file (mycertfile.pem)
-openssl s_client -showcerts -connect https://ecarestg.jazz.com.pk:8243 </dev/null 2>/dev/null|openssl x509 -outform PEM >mycertfile.pem
+openssl s_client -showcerts -connect https://10.100.170.122/mobileapi/ </dev/null 2>/dev/null|openssl x509 -outform PEM >mycertfile.pem
 
 
 Generating SHA256 hash of public key from a certificate (mycertfile.pem)
