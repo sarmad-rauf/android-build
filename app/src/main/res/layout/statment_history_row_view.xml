@@ -60,15 +60,18 @@
 
             <com.es.marocapp.widgets.MarocRegularTextView
                 android:id="@+id/row_bill_type"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/_14ssp"
-                android:text="Electricity Bill"
-                android:textColor="@color/colorGreyDark"
                 android:layout_marginStart="@dimen/_8sdp"
-                app:layout_constraintTop_toTopOf="parent"
+                android:text="Electricity Billasdasdasdasdasdasd"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:textColor="@color/colorGreyDark"
+                android:textSize="@dimen/_14ssp"
+                android:ellipsize="end"
+                app:layout_constraintEnd_toStartOf="@+id/row_bill_amount"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/row_company_icon"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.es.marocapp.widgets.MarocRegularTextView
                 android:id="@+id/row_company_name"
@@ -90,8 +93,10 @@
                 android:text="DH2.800.00"
                 android:textColor="@color/colorGreyDark"
                 android:layout_marginEnd="@dimen/_16sdp"
+                app:layout_constraintTop_toTopOf="@+id/row_bill_type"
                 app:layout_constraintBottom_toBottomOf="@+id/row_bill_type"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/row_bill_type"
                 />
 
             <com.es.marocapp.widgets.MarocRegularTextView
