@@ -17,6 +17,7 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityTermsAndConditionsBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseActivity
+import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.utils.Constants
 import kotlinx.android.synthetic.main.fragment_approval.*
 import java.io.File
@@ -73,6 +74,10 @@ class TermsAndConditions : BaseActivity<ActivityTermsAndConditionsBinding>() {
             navGraph.startDestination = R.id.contactUsFragment
         }else{
             navGraph.startDestination = R.id.termsAndConditionFragment
+        }
+
+        mDataBinding.imgBackButton.setOnClickListener{
+            onBackPressed()
         }
 
     }
