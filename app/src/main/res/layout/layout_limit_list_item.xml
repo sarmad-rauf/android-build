@@ -15,6 +15,8 @@
         android:text="@string/yeary_sending_limit"
         android:textColor="@color/colorTextGreyDark"
         android:textSize="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:ellipsize="end"
         app:layout_constraintEnd_toStartOf="@+id/tvYearlySendingLimitVal"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
