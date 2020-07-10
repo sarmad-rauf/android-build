@@ -37,6 +37,10 @@ class AccountDetailsActivity : BaseActivity<LayoutAccountDetailsBinding>(){
             layoutManager = LinearLayoutManager(this@AccountDetailsActivity)
         }
 
+        mDataBinding.imgBackButton.setOnClickListener {
+            this@AccountDetailsActivity.finish()
+        }
+
         //TODO add Reycler IN View and POpulate according to list
 //        if(!respone?.limitsList.isNullOrEmpty()){
 //            mDataBinding.tvYearlySendingLimitTitle.text = respone?.limitsList?.get(0)?.name
