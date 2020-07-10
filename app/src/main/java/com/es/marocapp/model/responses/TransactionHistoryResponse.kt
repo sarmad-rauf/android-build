@@ -22,7 +22,7 @@ data class History(
     val fromavailablebalance: String,
     val fromcommittedbalance: Any,
     val fromfee: String,
-    val fromfri: Any,
+    val fromfri: String,
     val fromname: String,
     val fromnote: Any,
     val fromposmsisdn: Any,
