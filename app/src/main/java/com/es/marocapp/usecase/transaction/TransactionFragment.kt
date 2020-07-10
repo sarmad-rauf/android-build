@@ -1,5 +1,6 @@
 package com.es.marocapp.usecase.transaction
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -41,7 +42,10 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
 
         mTransactionHistoryAdapter = TransactionHistoryAdapter(mTransactionsList,object : TransactionHistoryAdapter.HistoryDetailListner{
             override fun onHistoryDetailClickListner(customModelHistoryItem: CustomModelHistoryItem?) {
-                Toast.makeText(context,"Item Clicked",Toast.LENGTH_SHORT).show()
+                if (customModelHistoryItem != null) {
+                    Constants.currentTransactionItem = customModelHistoryItem
+                    startActivity(Intent(activity as MainActivity,TransactionDetailsActivity::class.java))
+                }
             }
 
         })

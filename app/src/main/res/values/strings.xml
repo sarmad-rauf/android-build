@@ -168,5 +168,9 @@
     <string name="enter_code">Enter Code</string>
     <string name="agree_terms"><![CDATA[You must agree to Terms & Conditions to proceed further]]></string>
     <string name="regex_alphabets">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/[^a-zA-Z àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]/</string>
+    <string name="transaction_detials">Transaction details</string>
+    <string name="date">Date</string>
+    <string name="sender_name">Sender Name</string>
+    <string name="sender_identity">Sender Identity</string>
 
 </resources>
