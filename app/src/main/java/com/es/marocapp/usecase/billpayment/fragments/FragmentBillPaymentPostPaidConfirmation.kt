@@ -162,7 +162,7 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
         if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
             for(i in mActivityViewModel.listOfFatoratiQuote.indices){
                 var item = mActivityViewModel.listOfFatoratiQuote[i]
-                if(item.quoteList.isNotEmpty()){
+                if(item.quoteList!=null && item.quoteList.isNotEmpty()){
                     mActivityViewModel.listOfSelectedBillFee.add(item.quoteList[0].fee.amount.toString())
                     totalFee = (totalFee.toDouble()+item.quoteList[0].fee.amount).toString()
                 }
