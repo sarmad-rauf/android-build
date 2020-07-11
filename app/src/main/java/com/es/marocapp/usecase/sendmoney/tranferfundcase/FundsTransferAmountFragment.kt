@@ -165,7 +165,7 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
             }
 
             if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
-                if(mActivityViewModel.isUserRegistered.get()!!){
+                if(mActivityViewModel.isUserRegistered!=null && mActivityViewModel.isUserRegistered.get()!=null && mActivityViewModel.isUserRegistered.get()!!){
                     if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
                         mActivityViewModel.requestFoMerchantQouteApi(activity,sAmount)
                     }
@@ -178,7 +178,7 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
                 }
             }
         }else{
-            if(mActivityViewModel.isUserRegistered.get()!!){
+            if(mActivityViewModel.isUserRegistered!=null && mActivityViewModel.isUserRegistered.get()!=null && mActivityViewModel.isUserRegistered.get()!!){
                 if(mActivityViewModel.isFundTransferUseCase.get()!!){
                     mActivityViewModel.requestFoTransferQouteApi(activity,sAmount)
                 }
