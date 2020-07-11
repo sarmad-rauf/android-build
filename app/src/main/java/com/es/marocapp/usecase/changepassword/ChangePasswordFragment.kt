@@ -30,6 +30,10 @@ class ChangePasswordFragment : BaseFragment<FragmentChangepasswordBinding>(), Ch
             listner = this@ChangePasswordFragment
         }
 
+        mDataBinding.imgBackButton.setOnClickListener {
+            (activity as MainActivity).navController.popBackStack(R.id.navigation_home,false)
+        }
+
         (activity as MainActivity).setHomeToolbarVisibility(false)
 
 //        pinViewModel.text.observe(this, Observer {

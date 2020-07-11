@@ -8,6 +8,7 @@ import android.text.format.Formatter.formatIpAddress
 import android.util.Log
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
+import com.es.marocapp.model.CustomModelHistoryItem
 import com.es.marocapp.model.responses.Account
 import com.es.marocapp.model.responses.BalanceInfoAndLimitResponse
 import com.es.marocapp.model.responses.Contact
@@ -73,6 +74,7 @@ object Constants {
     lateinit var balanceInfoAndResponse : BalanceInfoAndLimitResponse
     lateinit var getAccountsResponse : Account
     lateinit var loginWithCertResponse : LoginWithCertResponse
+    lateinit var currentTransactionItem : CustomModelHistoryItem
     var mContactListArray : ArrayList<Contact> = arrayListOf()
 
     fun getCurrentDate() : String{

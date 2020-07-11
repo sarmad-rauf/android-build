@@ -19,6 +19,9 @@ class GenerateQrActivity:BaseActivity<FragmentGenerateQrBinding>(){
     override fun init(savedInstanceState: Bundle?) {
 
         imgResult.setImageBitmap(Tools.generateQR(Constants.CURRENT_USER_MSISDN))
+        mDataBinding.imgBackButton.setOnClickListener {
+            this@GenerateQrActivity.finish()
+        }
     }
 
 }

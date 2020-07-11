@@ -294,7 +294,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     }
 
     private fun populateHomeCardView() {
-        mCardAdapter = HomeCardAdapter((activity as MainActivity).supportFragmentManager)
+        mCardAdapter = HomeCardAdapter(this@HomeFragment.childFragmentManager)
         mDataBinding.viewpager.apply {
             adapter = mCardAdapter
             pageMargin = 16

@@ -1,6 +1,7 @@
 package com.es.marocapp.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.es.marocapp.R
 import com.es.marocapp.model.CustomModelHistoryItem
 import com.es.marocapp.utils.Constants
-import java.util.*
-import kotlin.collections.ArrayList
 
 class TransactionHistoryAdapter(
     models: ArrayList<CustomModelHistoryItem>?,
@@ -62,8 +61,16 @@ class TransactionHistoryAdapter(
 
             holder.tvBillType?.text = models!![position].historyList.transfertype
             holder.tvCompanyName?.text = models!![position].historyList.toname
-            holder.tvBillAmount?.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+models!![position].historyList.fromamount
             holder.tvBillDate?.text = models!![position].date
+
+            val sName: String = Constants.balanceInfoAndResponse.firstname + " " + Constants.balanceInfoAndResponse.surname
+            if(sName.equals(models!![position].historyList.toname)){
+                holder.tvBillAmount?.text = "+"+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+models!![position].historyList.fromamount
+                holder.tvBillAmount?.setTextColor(Color.parseColor("#008000"))
+            }else{
+                holder.tvBillAmount?.text = "-"+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+models!![position].historyList.fromamount
+                holder.tvBillAmount?.setTextColor(Color.parseColor("#ff0000"))
+            }
 
             when(models!![position].historyList.transfertype){
                 "Payment"-> holder.transferTypeIcon?.setImageResource(R.drawable.others)
@@ -71,6 +78,10 @@ class TransactionHistoryAdapter(
                 "Transfer"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_favorite_transfers)
                 "FloatTransfer"-> holder.transferTypeIcon?.setImageResource(R.drawable.others)
                 else-> holder.transferTypeIcon?.setImageResource(R.drawable.others)
+            }
+
+            holder.dataContainer!!.setOnClickListener {
+                listner.onHistoryDetailClickListner(models!![position])
             }
         }
     }

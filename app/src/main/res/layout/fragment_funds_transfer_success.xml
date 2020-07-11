@@ -41,6 +41,8 @@
                 android:text="Inititate Payment to Merchant"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_17ssp"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_4sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imgBackButton"
                 app:layout_constraintHorizontal_bias="0.4"

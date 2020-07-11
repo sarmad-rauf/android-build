@@ -31,10 +31,18 @@ class AccountDetailsActivity : BaseActivity<LayoutAccountDetailsBinding>(){
         mDataBinding.accountDetailCurrentBalance.text = respone?.currnecy+" "+respone?.balance
         mDataBinding.appNameTitleSenRevContainer.text = respone?.profilename
 
-        mLimitListAdapter = AccountDetailLimitListAdapter(respone?.limitsList as ArrayList<Limits>)
-        mDataBinding.mAccountDetailLimitInfo.apply {
-            adapter = mLimitListAdapter
-            layoutManager = LinearLayoutManager(this@AccountDetailsActivity)
+        if(respone?.limitsList!=null) {
+            mLimitListAdapter =
+                AccountDetailLimitListAdapter(respone?.limitsList as ArrayList<Limits>)
+
+            mDataBinding.mAccountDetailLimitInfo.apply {
+                adapter = mLimitListAdapter
+                layoutManager = LinearLayoutManager(this@AccountDetailsActivity)
+            }
+        }
+
+        mDataBinding.imgBackButton.setOnClickListener {
+            this@AccountDetailsActivity.finish()
         }
 
         //TODO add Reycler IN View and POpulate according to list
