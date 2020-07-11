@@ -253,7 +253,7 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getCashInWithOtpCall(
                 CashInWithOtpRequest(amountToTransfer,
-                    ApiConstant.CONTEXT_AFTER_LOGIN,otp,
+                    ApiConstant.CONTEXT_AFTER_LOGIN,EncryptionUtils.encryptString(otp),
                     Constants.getNumberMsisdn(transferdAmountTo),qouteID,noteToSend)
             )
                 .compose(applyIOSchedulers())

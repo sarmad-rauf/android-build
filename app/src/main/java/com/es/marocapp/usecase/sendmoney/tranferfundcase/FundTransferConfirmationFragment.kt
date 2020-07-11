@@ -212,7 +212,7 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
         mDataBinding.tvAmountVal.text =
             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + amountToTransfer
 
-        if (mActivityViewModel.isUserRegistered.get()!!) {
+        if (mActivityViewModel.isUserRegistered!=null && mActivityViewModel.isUserRegistered.get()!=null && mActivityViewModel.isUserRegistered.get()!!) {
             mDataBinding.tvOwnerNameTitle.visibility = View.VISIBLE
             mDataBinding.tvOwnerNameVal.visibility = View.VISIBLE
             mDataBinding.divider2.visibility = View.VISIBLE
@@ -240,7 +240,7 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                         }
 
                         if (mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!) {
-                            if (mActivityViewModel.isUserRegistered.get()!!) {
+                            if (mActivityViewModel.isUserRegistered!=null && mActivityViewModel.isUserRegistered.get()!=null && mActivityViewModel.isUserRegistered.get()!!) {
                                 if (mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!) {
                                     mActivityViewModel.requestFoMerchantApi(
                                         activity,
@@ -266,7 +266,7 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                         }
 
                     } else {
-                        if (mActivityViewModel.isUserRegistered.get()!!) {
+                        if (mActivityViewModel.isUserRegistered!=null && mActivityViewModel.isUserRegistered.get()!=null && mActivityViewModel.isUserRegistered.get()!!) {
                             if (mActivityViewModel.isFundTransferUseCase.get()!!) {
                                 mActivityViewModel.requestFoTransferApi(
                                     activity,
