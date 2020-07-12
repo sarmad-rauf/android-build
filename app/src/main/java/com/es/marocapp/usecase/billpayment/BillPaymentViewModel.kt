@@ -60,6 +60,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     var PostPaidFinancialResourceInfoObserver = ObservableField<PostPaidFinancialResourceInfoResponse>()
     var selectedIvoicesList = ObservableField<ArrayList<InvoiceCustomModel>>()
     var selectedIvoicesQuoteList = ObservableField<ArrayList<String>>()
+    var selectedIvoicesQuoteHash = HashMap<String,String>()
     var selectedIvoicesBillPaymentStatus = ObservableField<ArrayList<String>>()
     var selectedIvoicesBillPaymentResponseValue = ObservableField<ArrayList<PostPaidBillPaymentResponse>>()
 

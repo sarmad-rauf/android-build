@@ -3,6 +3,7 @@ package com.es.marocapp.model.responses
 data class PostPaidBillPaymentQuoteResponse(
     val accountHolderInfoResponse: Any,
     val accountNumber: Any,
+    val invoiceOhrefnum:String,
     val clearingNumber: Any,
     val description: String,
     val employeeId: Any,

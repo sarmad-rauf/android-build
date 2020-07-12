@@ -2,6 +2,7 @@ package com.es.marocapp.model.responses
 
 data class BillPaymentFatoratiQuoteResponse(
     val accountHolderInfoResponse: Any,
+    val idArticle: String,
     val accountNumber: Any,
     val clearingNumber: Any,
     val description: String,

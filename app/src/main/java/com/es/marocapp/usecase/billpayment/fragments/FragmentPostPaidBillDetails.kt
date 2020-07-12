@@ -133,19 +133,23 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
                 if(!it.isNullOrEmpty()){
                     var isAllBillPaymentSucceed = false
                     var mQouteList : ArrayList<String> = arrayListOf()
+                    var mQouteHash = HashMap<String,String>()
                     for(i in it.indices){
                         if(it[i].responseCode.equals(ApiConstant.API_SUCCESS)){
                             isAllBillPaymentSucceed = true
                             if(it[i].quoteList.isNotEmpty()){
                                 mQouteList.add(it[i].quoteList[0].quoteid)
+                                mQouteHash.put(it[i].invoiceOhrefnum,it[i].quoteList[0].quoteid)
                             }
                         }else{
                             mQouteList.add("-1")
+                            mQouteHash.put("-1","-1")
                         }
                     }
 
                     if(isAllBillPaymentSucceed){
                         mActivityViewModel.selectedIvoicesQuoteList.set(mQouteList)
+                        mActivityViewModel.selectedIvoicesQuoteHash=mQouteHash
                         (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidBillDetails_to_fragmentBillPaymentPostPaidConfirmation)
                     }else{
                         DialogUtils.showErrorDialoge(activity,LanguageData.getStringValue("SomethingWentWrong"))
@@ -161,19 +165,23 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
                 if(!it.isNullOrEmpty()){
                     var isAllBillPaymentSucceed = false
                     var mQouteList : ArrayList<String> = arrayListOf()
+                    var mQouteHash = HashMap<String,String>()
                     for(i in it.indices){
                         if(it[i].responseCode.equals(ApiConstant.API_SUCCESS)){
                             isAllBillPaymentSucceed = true
                             if(it[i].quoteList.isNotEmpty()){
                                 mQouteList.add(it[i].quoteList[0].quoteid)
+                                mQouteHash.put(it[i].idArticle,it[i].quoteList[0].quoteid)
                             }
                         }else{
                             mQouteList.add("-1")
+                            mQouteHash.put("-1","-1")
                         }
                     }
 
                     if(isAllBillPaymentSucceed){
                         mActivityViewModel.selectedIvoicesQuoteList.set(mQouteList)
+                        mActivityViewModel.selectedIvoicesQuoteHash=mQouteHash
                         (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidBillDetails_to_fragmentBillPaymentPostPaidConfirmation)
                     }else{
                         DialogUtils.showErrorDialoge(activity,LanguageData.getStringValue("SomethingWentWrong"))
