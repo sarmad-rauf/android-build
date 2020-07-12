@@ -151,12 +151,13 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
             }
 
             var userMsisdn = ""
-            if(Constants.IS_AGENT_USER || Constants.IS_MERCHANT_USER){
-                userMsisdn = Constants.getMerchantReceiverAlias(transferdAmountTo)
-            }
-            if(Constants.IS_CONSUMER_USER){
-                userMsisdn = Constants.getTransferReceiverAlias(transferdAmountTo)
-            }
+//            if(Constants.IS_AGENT_USER || Constants.IS_MERCHANT_USER){
+//                userMsisdn = Constants.getMerchantReceiverAlias(transferdAmountTo)
+//            }
+//            if(Constants.IS_CONSUMER_USER){
+//                userMsisdn = Constants.getTransferReceiverAlias(transferdAmountTo)
+//            }
+            userMsisdn = Constants.getAirTimeReceiverAlias(transferdAmountTo)
 
             tranferAmountToWithAlias = userMsisdn
 
@@ -229,12 +230,14 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
             }
 
             var userMsisdn = ""
-            if(Constants.IS_AGENT_USER || Constants.IS_MERCHANT_USER){
-                userMsisdn = Constants.getMerchantReceiverAlias(transferdAmountTo)
-            }
-            if(Constants.IS_CONSUMER_USER){
-                userMsisdn = Constants.getTransferReceiverAlias(transferdAmountTo)
-            }
+//            if(Constants.IS_AGENT_USER || Constants.IS_MERCHANT_USER){
+//                userMsisdn = Constants.getMerchantReceiverAlias(transferdAmountTo)
+//            }
+//            if(Constants.IS_CONSUMER_USER){
+//                userMsisdn = Constants.getTransferReceiverAlias(transferdAmountTo)
+//            }
+            userMsisdn = Constants.getAirTimeReceiverAlias(transferdAmountTo)
+
 
             tranferAmountToWithAlias = userMsisdn
 

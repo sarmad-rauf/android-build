@@ -309,6 +309,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+        mDataBinding.viewpager.adapter!!.count
         when (position) {
             0 -> {
                 mDataBinding.leftNav.visibility = View.GONE

@@ -146,6 +146,10 @@ object Constants {
         return "$number@hpss.mer.sp/SP"
     }
 
+    fun getAirTimeReceiverAlias(number : String) : String{
+        return "$number@ocs.prepaid.sp/SP"
+    }
+
     fun getAgentReceiverAlias(number: String) : String{
         return "$number@hpss.mer.sp/SP"
     }
