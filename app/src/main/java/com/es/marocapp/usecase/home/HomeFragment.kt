@@ -309,19 +309,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     }
 
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-        mDataBinding.viewpager.adapter!!.count
-        when (position) {
-            0 -> {
-                mDataBinding.leftNav.visibility = View.GONE
-                mDataBinding.rightNav.visibility = View.VISIBLE
-            }
-            1 ->{
-                mDataBinding.leftNav.visibility = View.VISIBLE
-                mDataBinding.rightNav.visibility = View.GONE
-            }
-            else -> {
-                mDataBinding.leftNav.visibility = View.VISIBLE
-                mDataBinding.rightNav.visibility = View.VISIBLE
+        var totalItemCount = mDataBinding.viewpager.adapter!!.count
+        if(totalItemCount!=null){
+            if(totalItemCount>1){
+                when (position) {
+                    0 -> {
+                        mDataBinding.leftNav.visibility = View.GONE
+                        mDataBinding.rightNav.visibility = View.VISIBLE
+                    }
+                    totalItemCount-1 ->{
+                        mDataBinding.leftNav.visibility = View.VISIBLE
+                        mDataBinding.rightNav.visibility = View.GONE
+                    }
+                    else -> {
+                        mDataBinding.leftNav.visibility = View.VISIBLE
+                        mDataBinding.rightNav.visibility = View.VISIBLE
+                    }
+                }
             }
         }
     }
