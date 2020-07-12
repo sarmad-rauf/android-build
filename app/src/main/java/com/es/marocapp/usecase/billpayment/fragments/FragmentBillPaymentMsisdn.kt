@@ -190,7 +190,6 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
     private fun isValidForAll(): Boolean {
         var isValidForAll = true
-
         //todo NUmber Lenght is Pending
         if(mActivityViewModel.isBillUseCaseSelected.get()!!){
             //todo NUmber Lenght is Pending
