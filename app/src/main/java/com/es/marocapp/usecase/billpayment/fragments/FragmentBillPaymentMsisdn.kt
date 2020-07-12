@@ -64,7 +64,10 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 var contactNumber = contacts.fri
                 contactNumber = contactNumber.substringBefore("@")
                 contactNumber = contactNumber.substringBefore("/")
-                if(contactNumber.length == 6){
+                contactNumber = contactNumber.removePrefix(Constants.APP_MSISDN_PREFIX)
+                contactNumber = "0$contactNumber"
+                //todo also here remove lenght-2 check in max line
+                if(contactNumber.length.equals(Constants.APP_MSISDN_LENGTH.toInt() - 2)){
                     list_of_favorites.add(contactNumber)
                 }
             }
@@ -92,8 +95,13 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 mDataBinding.inputLayoutCode.visibility = View.VISIBLE
             }
 
-
             (activity as BillPaymentActivity).setLetterIconVisible(false,"")
+
+            //todo also here remove lenght-2 check in max line
+            mDataBinding.inputPhoneNumber.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(
+                Constants.APP_MSISDN_LENGTH.toInt() - 2
+            ))
+
         }
         if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
             (activity as BillPaymentActivity).mDataBinding.headerBillPayment.rootView.tv_company_title.text = mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier
@@ -102,11 +110,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
             (activity as BillPaymentActivity).setLetterIconVisible(true,mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier[0].toString())
 
+            mDataBinding.inputPhoneNumber.filters =
+                arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_CIL_LENGTH.toInt()))
         }
-
-        //todo also here remove lenght-2 check in max line
-        mDataBinding.inputPhoneNumber.filters =
-            arrayOf<InputFilter>(InputFilter.LengthFilter(6))
 
         mActivityViewModel.popBackStackTo = R.id.fragmentPostPaidBillType
 
@@ -116,7 +122,12 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
     private fun setStrings() {
         mDataBinding.inputLayoutCode.hint = LanguageData.getStringValue("EnterCode")
-        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterCilNumber")
+        if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterCilNumber")
+        }
+        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
+        }
         mDataBinding.selectFavoriteTypeTitle.hint = LanguageData.getStringValue("SelectFavorite")
         mDataBinding.btnNext.text = LanguageData.getStringValue("Submit")
     }
@@ -181,25 +192,46 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         var isValidForAll = true
 
         //todo NUmber Lenght is Pending
-        if (mDataBinding.inputPhoneNumber.text.isNullOrEmpty() || mDataBinding.inputPhoneNumber.text.toString().length < 6) {
-            isValidForAll = false
-            mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidCILNumber")
-            mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
-        } else {
-            mDataBinding.inputLayoutPhoneNumber.error = ""
-            mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+            //todo NUmber Lenght is Pending
+            if(mDataBinding.inputPhoneNumber.text.isNotEmpty() && mDataBinding.inputPhoneNumber.text.toString().length< Constants.APP_MSISDN_LENGTH.toInt()-2){
+                mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+            }else{
+                mDataBinding.inputLayoutPhoneNumber.error = ""
+                mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
 
-            msisdnEntered = mDataBinding.inputPhoneNumber.text.toString().trim()
+                var userMsisdn = mDataBinding.inputPhoneNumber.text.toString()
+                if(userMsisdn.startsWith("0",false)){
+                    checkNumberExistInFavorites(userMsisdn)
+                    mDataBinding.inputLayoutPhoneNumber.error = ""
+                    mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+                    var userMSISDNwithPrefix = userMsisdn.removePrefix("0")
+                    userMSISDNwithPrefix = Constants.APP_MSISDN_PREFIX + userMSISDNwithPrefix
+                    userMSISDNwithPrefix = userMSISDNwithPrefix.removePrefix("+")
 
-            if(mActivityViewModel.isBillUseCaseSelected.get()!!){
-                checkNumberExistInFavorites(msisdnEntered)
+                    msisdnEntered = userMSISDNwithPrefix
+                }else{
+                    mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                    mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                }
             }
+        }
+        if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+            if (mDataBinding.inputPhoneNumber.text.isNullOrEmpty() || mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_CIL_LENGTH.toInt()) {
+                isValidForAll = false
+                mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidCILNumber")
+                mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+            } else {
+                mDataBinding.inputLayoutPhoneNumber.error = ""
+                mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
 
-            if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+                msisdnEntered = mDataBinding.inputPhoneNumber.text.toString().trim()
+
                 checkNumberExistInFavoritesForFatorati(msisdnEntered)
             }
-
         }
+
         if(mActivityViewModel.isBillUseCaseSelected.get()!!){
             if(mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!){
                 if(mDataBinding.inputCode.text.isNullOrEmpty() || mDataBinding.inputCode.text.toString().isEmpty()){

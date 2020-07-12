@@ -191,11 +191,13 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
 
     override fun onSubmitClickListner(view: View) {
         if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+            selectedListOfInvoice.clear()
             selectedListOfInvoice.addAll(mBillDetailsAdapter.getUpdateList())
             payPostPaidBillsCall()
         }
 
         if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+            selectedFatoratiListOfInvoice.clear()
             selectedFatoratiListOfInvoice.addAll(mFatoratiBillDetailsAdapter.getUpdateList())
             payFatoratiBillsCall()
         }
