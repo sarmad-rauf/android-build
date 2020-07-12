@@ -5,6 +5,7 @@ data class GetPreLoginDataResponse(
     val androidOtpExpiryTime: String,
     val androidOtpLength: Int,
     val bankDomainForRegistration: String,
+    val cilLength: String,
     val cnLength: String,
     val cnRegex: String,
     val consumerRegistrationProfile: String,

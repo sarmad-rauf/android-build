@@ -44,6 +44,7 @@ object Constants {
     var APP_CN_LENGTH = "8"
     var APP_MSISDN_PREFIX = "+000"
     var APP_MSISDN_LENGTH = "12"
+    var APP_CIL_LENGTH = "6"
     var quickAmountsList : ArrayList<String> = arrayListOf()
     var quickRechargeAmountsList : ArrayList<String> = arrayListOf()
     var URL_FOR_FAQ =""

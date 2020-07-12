@@ -189,7 +189,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
-
+            isLoading.set(true)
             var convertedAmountValue = (selectBillAmount.toDouble()/Constants.AMOUNT_CONVERSION_VALUE.toDouble()).toString()
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPostPaidBillPaymentQuote(
@@ -256,7 +256,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
-
+            isLoading.set(true)
 
             var convertedAmountValue = (selectBillAmount.toDouble()/Constants.AMOUNT_CONVERSION_VALUE.toDouble()).toString()
 
