@@ -12,8 +12,11 @@
         tools:layout="@layout/fragment_favorites_type"
         >
         <action
-            android:id="@+id/action_favoriteTypesFragment_to_favoriteDetailFragment"
-            app:destination="@id/favoriteDetailFragment" />
+            android:id="@+id/action_favoriteTypesFragment_to_favoritesAddOrViewFragment"
+            app:destination="@id/favoritesAddOrViewFragment" />
+        <action
+            android:id="@+id/action_favoriteTypesFragment_to_fragmentFavoritesPaymentTypes"
+            app:destination="@id/fragmentFavoritesPaymentTypes" />
     </fragment>
     <fragment
         android:id="@+id/favoriteDetailFragment"
@@ -31,4 +34,27 @@
         android:label="FavoriteEnterContactFragment"
         tools:layout="@layout/fragment_favorites_enter_number"
         />
+    <fragment
+        android:id="@+id/favoritesAddOrViewFragment"
+        android:name="com.es.marocapp.usecase.favorites.FavoritesAddOrViewFragment"
+        android:label="FavoritesAddOrViewFragment"
+        tools:layout="@layout/fragment_favorites_type"
+        >
+        <action
+            android:id="@+id/action_favoritesAddOrViewFragment_to_favoriteDetailFragment"
+            app:destination="@id/favoriteDetailFragment" />
+        <action
+            android:id="@+id/action_favoritesAddOrViewFragment_to_favoriteEnterContactFragment"
+            app:destination="@id/favoriteEnterContactFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentFavoritesPaymentTypes"
+        android:name="com.es.marocapp.usecase.favorites.FragmentFavoritesPaymentTypes"
+        android:label="FragmentFavoritesPaymentTypes"
+        tools:layout="@layout/fragment_favorites_type"
+        >
+        <action
+            android:id="@+id/action_fragmentFavoritesPaymentTypes_to_favoritesAddOrViewFragment"
+            app:destination="@id/favoritesAddOrViewFragment" />
+    </fragment>
 </navigation>

@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentFavoriteDetailsBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseFragment
 
 
@@ -15,14 +16,13 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
     private lateinit var mActivitViewModel: FavoritesViewModel
     private var list_of_paymentType = arrayOf("Payment","Payment 1", "Payment 2", "Payment 3")
     private var list_of_billType = arrayOf("Bill","Bill 1", "Bill 2", "Bill 3")
-    private var list_of_companyType = arrayOf("Company","Company 1", "Company 2", "Company 3")
 
     override fun setLayout(): Int {
         return R.layout.fragment_favorite_details
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        mActivitViewModel = ViewModelProvider(this).get(FavoritesViewModel::class.java)
+        mActivitViewModel = ViewModelProvider(activity as FavoritesActivity).get(FavoritesViewModel::class.java)
 
         mDataBinding.apply {
             viewmodel = mActivitViewModel
@@ -39,11 +39,19 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
             adapter = adapterBillType
         }
 
-        val adapterCompanyType = ArrayAdapter<CharSequence>(activity as FavoritesActivity, R.layout.layout_favorites_spinner_text, list_of_companyType)
-        mDataBinding.spinnerSelectCompany.apply {
-            adapter = adapterCompanyType
-        }
 
+        (activity as FavoritesActivity).setHeader(LanguageData.getStringValue("Add").toString())
+
+        mActivitViewModel.popBackStackTo = R.id.favoritesAddOrViewFragment
+
+        setStrings()
+
+    }
+
+    private fun setStrings() {
+        mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Next")
+        mDataBinding.selectPaymentTypeTitle.text = LanguageData.getStringValue("SelectPaymentType")
+        mDataBinding.selectBillTypeTitle.text = LanguageData.getStringValue("SelectBillType")
     }
 
     override fun onNextButtonClick(view: View) {

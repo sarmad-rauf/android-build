@@ -6,6 +6,8 @@ interface SettingsClickListener {
 
     fun onChangeLanguageClick(view: View)
 
+    fun onManageFavoritesClick(view: View)
+
     fun onBlockAccountClick(view: View)
 
     fun onUpdateClickListener(view:View)

@@ -92,40 +92,7 @@
         app:layout_constraintEnd_toEndOf="@+id/spinnerSelectBillType"
         />
 
-    <com.es.marocapp.widgets.MarocRegularTextView
-        android:id="@+id/selectCompanyTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/select_bill_type"
-        android:textSize="@dimen/_12ssp"
-        android:textColor="@color/colorTextGreyMedium"
-        android:layout_marginTop="@dimen/_16sdp"
-        app:layout_constraintTop_toBottomOf="@+id/divider2"
-        app:layout_constraintStart_toStartOf="@+id/selectPaymentTypeTitle"
-        app:textAllCaps="true"
-        />
 
-    <Spinner
-        android:id="@+id/spinnerSelectCompany"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginEnd="@dimen/_32sdp"
-        android:background="@drawable/spinner_icon_background_grey"
-        app:layout_constraintTop_toBottomOf="@+id/selectCompanyTitle"
-        app:layout_constraintStart_toStartOf="@+id/selectCompanyTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-
-    <ImageView
-        android:id="@+id/divider3"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/colorTextGreyMedium"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerSelectCompany"
-        app:layout_constraintStart_toStartOf="@+id/spinnerSelectCompany"
-        app:layout_constraintEnd_toEndOf="@+id/spinnerSelectCompany"
-        />
 
 
     <com.es.marocapp.widgets.MarocButton

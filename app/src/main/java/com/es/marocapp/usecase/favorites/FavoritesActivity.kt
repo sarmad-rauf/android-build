@@ -9,6 +9,7 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityFavoritesBinding
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.payments.PaymentsViewModel
+import kotlinx.android.synthetic.main.layout_activity_header.view.*
 
 class FavoritesActivity : BaseActivity<ActivityFavoritesBinding>() {
 
@@ -28,10 +29,23 @@ class FavoritesActivity : BaseActivity<ActivityFavoritesBinding>() {
 
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_favorites_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
+
+        mDataBinding.imgBackButton.setOnClickListener {
+            if (mActivityViewModel.popBackStackTo == -1) {
+                this@FavoritesActivity.finish()
+            } else {
+                navController.popBackStack(mActivityViewModel.popBackStackTo, false)
+            }
+        }
+
     }
 
     override fun setLayout(): Int {
         return R.layout.activity_favorites
+    }
+
+    fun setHeader(headerTitle : String){
+        mDataBinding.tvFavoritesTitle.text = headerTitle
     }
 
 }

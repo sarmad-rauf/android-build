@@ -15,6 +15,7 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.favorites.FavoritesActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Tools
@@ -40,6 +41,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
     private fun setStrings() {
         mDataBinding.root.activityHeaderTitle.text = LanguageData.getStringValue("Settings")
         mDataBinding.root.tvChangeLanguage.text = LanguageData.getStringValue("ChangeLanguage")
+        mDataBinding.root.tvManageFavorites.text = LanguageData.getStringValue("ManageFavorites")
         mDataBinding.root.tvBlockAccount.text = LanguageData.getStringValue("BlockAccount")
         mDataBinding.root.btnUpdate.text = LanguageData.getStringValue("BtnTitle_Update")
 
@@ -74,6 +76,10 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
             }
 
         })
+    }
+
+    override fun onManageFavoritesClick(view: View) {
+        startActivity(Intent(this@SettingsActivity, FavoritesActivity::class.java))
     }
 
     override fun onBlockAccountClick(view: View) {

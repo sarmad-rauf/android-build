@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.FavoritesTypeItemAdapter
 import com.es.marocapp.databinding.FragmentFavoritesTypeBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseFragment
 
 class FavoriteTypesFragment : BaseFragment<FragmentFavoritesTypeBinding>(){
@@ -21,38 +22,56 @@ class FavoriteTypesFragment : BaseFragment<FragmentFavoritesTypeBinding>(){
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        mActivityViewModel = ViewModelProvider(this).get(FavoritesViewModel::class.java)
+        mActivityViewModel = ViewModelProvider(activity as FavoritesActivity).get(FavoritesViewModel::class.java)
         mDataBinding.apply {
             viewmodel = mActivityViewModel
         }
 
-        (activity as FavoritesActivity).mDataBinding.tvFavoritesTitle.text = "Favorites"
+        mActivityViewModel.popBackStackTo = -1
+
+        (activity as FavoritesActivity).setHeader(LanguageData.getStringValue("Favorites").toString())
 
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mFavoritesTypes.clear()
         mFavoritesTypes.apply {
-            add("Payments")
-            add("Transfer")
+            add(LanguageData.getStringValue("Payments").toString())
+            add(LanguageData.getStringValue("SendMoney").toString())
+            add(LanguageData.getStringValue("MerchantPayment").toString())
+            add(LanguageData.getStringValue("AirTime").toString())
         }
 
+        mFavoritesTypesIcon.clear()
         mFavoritesTypesIcon.apply {
             add(R.drawable.ic_favorite_payments)
+            add(R.drawable.ic_favorite_transfers)
+            add(R.drawable.ic_favorite_transfers)
             add(R.drawable.ic_favorite_transfers)
         }
 
         mFavoritesItemTypeAdapter = FavoritesTypeItemAdapter(mFavoritesTypes,mFavoritesTypesIcon ,
             object : FavoritesTypeItemAdapter.FavoritesItemTypeClickListner{
             override fun onFavoriteItemTypeClick(itemType: String) {
-                if(itemType.equals("Payments",true)){
-                    (activity as FavoritesActivity).mDataBinding.tvFavoritesTitle.text = "Payments"
-                }else{
-                    (activity as FavoritesActivity).mDataBinding.tvFavoritesTitle.text = "Transfer"
+                if(itemType.equals(LanguageData.getStringValue("Payments"),true)){
+                    mActivityViewModel.selectedFavoritesType.set(LanguageData.getStringValue("Payments"))
+                    mActivityViewModel.isPaymentSelected.set(true)
+                    (activity as FavoritesActivity).navController.navigate(R.id.action_favoriteTypesFragment_to_fragmentFavoritesPaymentTypes)
+                }else if(itemType.equals(LanguageData.getStringValue("SendMoney"),true)){
+                    mActivityViewModel.selectedFavoritesType.set(LanguageData.getStringValue("SendMoney"))
+                    mActivityViewModel.isPaymentSelected.set(false)
+                    (activity as FavoritesActivity).navController.navigate(R.id.action_favoriteTypesFragment_to_favoritesAddOrViewFragment)
+                }else if(itemType.equals(LanguageData.getStringValue("MerchantPayment"),true)){
+                    mActivityViewModel.selectedFavoritesType.set(LanguageData.getStringValue("MerchantPayment"))
+                    mActivityViewModel.isPaymentSelected.set(false)
+                    (activity as FavoritesActivity).navController.navigate(R.id.action_favoriteTypesFragment_to_favoritesAddOrViewFragment)
+                }else if(itemType.equals(LanguageData.getStringValue("AirTime"),true)){
+                    mActivityViewModel.selectedFavoritesType.set(LanguageData.getStringValue("AirTime"))
+                    mActivityViewModel.isPaymentSelected.set(false)
+                    (activity as FavoritesActivity).navController.navigate(R.id.action_favoriteTypesFragment_to_favoritesAddOrViewFragment)
                 }
-                (activity as FavoritesActivity).navController.navigate(R.id.action_favoriteTypesFragment_to_favoriteDetailFragment)
-
             }
 
         })
