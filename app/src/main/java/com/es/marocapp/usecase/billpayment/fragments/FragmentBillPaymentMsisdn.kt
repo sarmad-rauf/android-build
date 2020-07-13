@@ -1,7 +1,9 @@
 package com.es.marocapp.usecase.billpayment.fragments
 
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputFilter
+import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -18,9 +20,10 @@ import com.es.marocapp.usecase.billpayment.BillPaymentViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.layout_activity_header.view.*
+import java.util.regex.Pattern
 
 class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>(),
-    BillPaymentClickListner, AdapterView.OnItemSelectedListener {
+    BillPaymentClickListner, AdapterView.OnItemSelectedListener, TextWatcher {
 
     private lateinit var mActivityViewModel: BillPaymentViewModel
 
@@ -28,7 +31,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
     var msisdnEntered = ""
     var code = ""
-
+    var isNumberRegexMatches = false
 
     override fun setLayout(): Int {
         return R.layout.fragment_bill_payment_msisdn
@@ -115,6 +118,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         }
 
         mActivityViewModel.popBackStackTo = R.id.fragmentPostPaidBillType
+        mDataBinding.inputPhoneNumber.addTextChangedListener(this)
 
         setStrings()
         subscribeObserver()
@@ -209,7 +213,16 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                     userMSISDNwithPrefix = Constants.APP_MSISDN_PREFIX + userMSISDNwithPrefix
                     userMSISDNwithPrefix = userMSISDNwithPrefix.removePrefix("+")
 
-                    msisdnEntered = userMSISDNwithPrefix
+                    if(isNumberRegexMatches){
+                        mDataBinding.inputLayoutPhoneNumber.error = ""
+                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+
+                        msisdnEntered = userMSISDNwithPrefix
+                    }else{
+                        isValidForAll = false
+                        mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                    }
                 }else{
                     mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
@@ -225,9 +238,18 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 mDataBinding.inputLayoutPhoneNumber.error = ""
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
 
-                msisdnEntered = mDataBinding.inputPhoneNumber.text.toString().trim()
+                if(isNumberRegexMatches){
+                    mDataBinding.inputLayoutPhoneNumber.error = ""
+                    mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
 
-                checkNumberExistInFavoritesForFatorati(msisdnEntered)
+                    msisdnEntered = mDataBinding.inputPhoneNumber.text.toString().trim()
+
+                    checkNumberExistInFavoritesForFatorati(msisdnEntered)
+                }else{
+                    isValidForAll = false
+                    mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidCILNumber")
+                    mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                }
             }
         }
 
@@ -298,6 +320,26 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 break
             }
         }
+    }
+
+    override fun afterTextChanged(p0: Editable?) {
+        var msisdn = mDataBinding.inputPhoneNumber.text.toString().trim()
+        var msisdnLenght = msisdn.length
+
+        if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+            isNumberRegexMatches =
+                !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_CIL_REGEX, msisdn))
+        }
+        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+            isNumberRegexMatches =
+                !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_MSISDN_REGEX, msisdn))
+        }
+    }
+
+    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    }
+
+    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
     }
 
 }

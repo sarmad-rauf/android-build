@@ -1,10 +1,13 @@
 package com.es.marocapp.usecase.airtime.airtimeplansandamounts
 
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputFilter
+import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
@@ -19,15 +22,17 @@ import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.layout_activity_header.view.*
+import java.util.regex.Pattern
 
 class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirTimeClickListner,
-    AdapterView.OnItemSelectedListener {
+    AdapterView.OnItemSelectedListener, TextWatcher {
 
     private lateinit var mActivityViewModel: AirTimeViewModel
 
     private var list_of_favorites = arrayListOf<String>()
 
     var msisdnEntered = ""
+    var isNumberRegexMatches = false
 
     override fun setLayout(): Int {
         return R.layout.fragment_air_time_msisdn
@@ -93,6 +98,7 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
         )
 
         mActivityViewModel.isUserSelectedFromFavorites.set(false)
+        mDataBinding.inputPhoneNumber.addTextChangedListener(this)
 
         setStrings()
         subscribeObserver()
@@ -151,7 +157,16 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
                 userMSISDNwithPrefix = Constants.APP_MSISDN_PREFIX + userMSISDNwithPrefix
                 userMSISDNwithPrefix = userMSISDNwithPrefix.removePrefix("+")
 
-                msisdnEntered = userMSISDNwithPrefix
+                if(isNumberRegexMatches){
+                    mDataBinding.inputLayoutPhoneNumber.error = ""
+                    mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+
+                    msisdnEntered = userMSISDNwithPrefix
+                }else{
+                    isValidForAll = false
+                    mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                    mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                }
             } else {
                 isValidForAll = false
                 mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
@@ -181,6 +196,19 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
                 break
             }
         }
+    }
+
+    override fun afterTextChanged(p0: Editable?) {
+        var msisdn = mDataBinding.inputPhoneNumber.text.toString().trim()
+        var msisdnLenght = msisdn.length
+        isNumberRegexMatches =
+            !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_MSISDN_REGEX, msisdn))
+    }
+
+    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    }
+
+    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
     }
 
 }

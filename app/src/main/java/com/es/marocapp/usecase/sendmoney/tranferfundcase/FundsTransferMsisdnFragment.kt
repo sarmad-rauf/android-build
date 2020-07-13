@@ -2,7 +2,9 @@ package com.es.marocapp.usecase.sendmoney.tranferfundcase
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputFilter
+import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -19,14 +21,16 @@ import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.fragment_funds_transfer_enter_msisdn.*
+import java.util.regex.Pattern
 
 
 class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisdnBinding>(),
-    FundsTrasnferClickLisntener, AdapterView.OnItemSelectedListener {
+    FundsTrasnferClickLisntener, AdapterView.OnItemSelectedListener, TextWatcher {
 
     private lateinit var mActivityViewModel : SendMoneyViewModel
 
     private var list_of_favorites = arrayListOf<String>()
+    var isNumberRegexMatches = false
 
     override fun setLayout(): Int {
         return R.layout.fragment_funds_transfer_enter_msisdn
@@ -85,6 +89,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
 
         mActivityViewModel.popBackStackTo = -1
         mActivityViewModel.isUserSelectedFromFavorites.set(false)
+        mDataBinding.inputPhoneNumber.addTextChangedListener(this)
         setStrings()
         subscribeObserver()
     }
@@ -182,7 +187,17 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                 userMSISDNwithPrefix = Constants.APP_MSISDN_PREFIX + userMSISDNwithPrefix
                 userMSISDNwithPrefix = userMSISDNwithPrefix.removePrefix("+")
 
-                mActivityViewModel.requestForGetAccountHolderInformationApi(activity,userMSISDNwithPrefix)
+                    if(isNumberRegexMatches){
+                        mDataBinding.inputLayoutPhoneNumber.error = ""
+                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+
+                        mActivityViewModel.requestForGetAccountHolderInformationApi(activity,
+                            userMSISDNwithPrefix
+                        )
+                    }else{
+                        mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                    }
             }else{
                 mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
@@ -231,6 +246,19 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
             mDataBinding.inputPhoneNumber.setText(selectedFavorites)
             mActivityViewModel.isUserSelectedFromFavorites.set(true)
         }
+    }
+
+    override fun afterTextChanged(p0: Editable?) {
+        var msisdn = mDataBinding.inputPhoneNumber.text.toString().trim()
+        var msisdnLenght = msisdn.length
+        isNumberRegexMatches =
+            !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_MSISDN_REGEX, msisdn))
+    }
+
+    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    }
+
+    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
     }
 
 }

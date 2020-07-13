@@ -1,8 +1,11 @@
 package com.es.marocapp.usecase.cashservices.CashDepositAndWithdraw
 
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputFilter
+import android.text.TextWatcher
 import android.view.View
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
@@ -15,14 +18,16 @@ import com.es.marocapp.usecase.cashservices.CashServicesClickListner
 import com.es.marocapp.usecase.cashservices.CashServicesViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import java.util.regex.Pattern
 import kotlin.math.roundToInt
 
 class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNumberAmountBinding>(),
-    CashServicesClickListner {
+    CashServicesClickListner, TextWatcher {
 
     private lateinit var mActivityViewModel: CashServicesViewModel
 
     var msisdnEntered = ""
+    var isNumberRegexMatches = false
 
     override fun setLayout(): Int {
         return R.layout.fragment_cash_services_number_amount
@@ -50,6 +55,9 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
                 Constants.APP_MSISDN_LENGTH.toInt() - 2
             )
         )
+
+        mDataBinding.inputPhoneNumber.addTextChangedListener(this)
+
 
         subscribeObserver()
         setStrings()
@@ -154,7 +162,16 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
                 userMSISDNwithPrefix = Constants.APP_MSISDN_PREFIX + userMSISDNwithPrefix
                 userMSISDNwithPrefix = userMSISDNwithPrefix.removePrefix("+")
 
-                msisdnEntered = userMSISDNwithPrefix
+                if(isNumberRegexMatches){
+                    mDataBinding.inputLayoutPhoneNumber.error = ""
+                    mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+
+                    msisdnEntered = userMSISDNwithPrefix
+                }else{
+                    isValidForAll = false
+                    mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                    mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                }
             } else {
                 isValidForAll = false
                 mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
@@ -190,5 +207,18 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
             mDataBinding.inputAmount.text.toString().trim { it <= ' ' }.toDouble()
         val nNum = dNum.roundToInt()
         return nNum.toString()
+    }
+
+    override fun afterTextChanged(p0: Editable?) {
+        var msisdn = mDataBinding.inputPhoneNumber.text.toString().trim()
+        var msisdnLenght = msisdn.length
+        isNumberRegexMatches =
+            !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_MSISDN_REGEX, msisdn))
+    }
+
+    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    }
+
+    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
     }
 }

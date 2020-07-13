@@ -124,7 +124,9 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
             if (it.responseCode.equals(ApiConstant.API_SUCCESS, true)) {
                 Constants.APP_MSISDN_PREFIX = EncryptionUtils.decryptString( it.msisdnPrefix)
                 Constants.APP_MSISDN_LENGTH = EncryptionUtils.decryptString(it.msisdnLength)
+                Constants.APP_MSISDN_REGEX = it.msisdnRegex
                 Constants.APP_CIL_LENGTH = it.cilLength
+                Constants.APP_CIL_REGEX = it.cilRegex
                 Constants.APP_CN_LENGTH = it.cnLength
                 Constants.APP_CN_REGEX = it.cnRegex
                 Constants.APP_DATE_FORMAT = it.dateFormat
