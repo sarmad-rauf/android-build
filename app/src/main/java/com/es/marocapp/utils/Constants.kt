@@ -44,6 +44,9 @@ object Constants {
     var APP_CN_LENGTH = "8"
     var APP_MSISDN_PREFIX = "+000"
     var APP_MSISDN_LENGTH = "12"
+    var APP_MSISDN_REGEX = ""
+    var APP_CIL_LENGTH = "6"
+    var APP_CIL_REGEX = ""
     var quickAmountsList : ArrayList<String> = arrayListOf()
     var quickRechargeAmountsList : ArrayList<String> = arrayListOf()
     var URL_FOR_FAQ =""
@@ -143,6 +146,10 @@ object Constants {
 
     fun getMerchantReceiverAlias(number: String) : String{
         return "$number@hpss.mer.sp/SP"
+    }
+
+    fun getAirTimeReceiverAlias(number : String) : String{
+        return "$number@ocs.prepaid.sp/SP"
     }
 
     fun getAgentReceiverAlias(number: String) : String{
