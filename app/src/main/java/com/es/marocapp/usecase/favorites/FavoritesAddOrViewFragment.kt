@@ -1,13 +1,16 @@
 package com.es.marocapp.usecase.favorites
 
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.FavoritesTypeItemAdapter
 import com.es.marocapp.databinding.FragmentFavoritesTypeBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
+import com.es.marocapp.utils.DialogUtils
 
 class FavoritesAddOrViewFragment : BaseFragment<FragmentFavoritesTypeBinding>(){
 
@@ -53,7 +56,7 @@ class FavoritesAddOrViewFragment : BaseFragment<FragmentFavoritesTypeBinding>(){
                         mActivityViewModel.selectedFavoritesAction.set(LanguageData.getStringValue("Add"))
                         if(mActivityViewModel.isPaymentSelected.get()!!){
                             if(mActivityViewModel.isFatoratiUsecaseSelected.get()!!){
-                                (activity as FavoritesActivity).navController.navigate(R.id.action_favoritesAddOrViewFragment_to_favoriteDetailFragment)
+                                mActivityViewModel.requestForFatoratiStepOneApi(activity)
                             }else{
                                 (activity as FavoritesActivity).navController.navigate(R.id.action_favoritesAddOrViewFragment_to_favoriteEnterContactFragment)
                             }
@@ -61,7 +64,7 @@ class FavoritesAddOrViewFragment : BaseFragment<FragmentFavoritesTypeBinding>(){
                             (activity as FavoritesActivity).navController.navigate(R.id.action_favoritesAddOrViewFragment_to_favoriteEnterContactFragment)
                         }
                     }else if(itemType.equals(LanguageData.getStringValue("View"),true)){
-                        mActivityViewModel.selectedFavoritesAction.set(LanguageData.getStringValue("SendMoney"))
+                        (activity as FavoritesActivity).navController.navigate(R.id.action_favoritesAddOrViewFragment_to_viewFavoritesFragment)
                     }
 
                 }
@@ -71,6 +74,23 @@ class FavoritesAddOrViewFragment : BaseFragment<FragmentFavoritesTypeBinding>(){
             adapter = mFavoritesItemTypeAdapter
             layoutManager = LinearLayoutManager(activity as FavoritesActivity)
         }
+
+        subscribeObserver()
+    }
+
+    private fun subscribeObserver() {
+        mActivityViewModel.errorText.observe(this@FavoritesAddOrViewFragment, Observer {
+            DialogUtils.showErrorDialoge(activity,it)
+        })
+        mActivityViewModel.getFatoratiStepOneResponseListner.observe(this@FavoritesAddOrViewFragment,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    (activity as FavoritesActivity).navController.navigate(R.id.action_favoritesAddOrViewFragment_to_favoriteDetailFragment)
+                }else{
+                    DialogUtils.showErrorDialoge(activity,it.description)
+                }
+            }
+        )
     }
 
 }

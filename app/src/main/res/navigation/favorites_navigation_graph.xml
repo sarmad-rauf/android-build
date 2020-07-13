@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_favoritesAddOrViewFragment_to_favoriteEnterContactFragment"
             app:destination="@id/favoriteEnterContactFragment" />
+        <action
+            android:id="@+id/action_favoritesAddOrViewFragment_to_viewFavoritesFragment"
+            app:destination="@id/viewFavoritesFragment" />
     </fragment>
     <fragment
         android:id="@+id/fragmentFavoritesPaymentTypes"
@@ -57,4 +60,10 @@
             android:id="@+id/action_fragmentFavoritesPaymentTypes_to_favoritesAddOrViewFragment"
             app:destination="@id/favoritesAddOrViewFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/viewFavoritesFragment"
+        android:name="com.es.marocapp.usecase.favorites.ViewFavoritesFragment"
+        android:label="ViewFavoritesFragment"
+        tools:layout="@layout/fragment_favorites_view"
+        />
 </navigation>
