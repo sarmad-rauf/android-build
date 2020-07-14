@@ -2,6 +2,7 @@ package com.es.marocapp.adapter
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.es.marocapp.R
 import com.es.marocapp.model.CustomModelHistoryItem
 import com.es.marocapp.utils.Constants
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class TransactionHistoryAdapter(
     models: ArrayList<CustomModelHistoryItem>?,
@@ -61,24 +66,25 @@ class TransactionHistoryAdapter(
 
             holder.tvBillType?.text = models!![position].historyList.transfertype
             holder.tvCompanyName?.text = models!![position].historyList.toname
-            holder.tvBillDate?.text = models!![position].date
+            var dateToShow : String = Constants.getZoneFormattedDateAndTime(models!![position].date)
+            holder.tvBillDate?.text = dateToShow
 
             val sName: String = Constants.balanceInfoAndResponse.firstname + " " + Constants.balanceInfoAndResponse.surname
             if(sName.equals(models!![position].historyList.toname)){
-                holder.tvBillAmount?.text = "+"+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+models!![position].historyList.fromamount
+                holder.tvBillAmount?.text = "+"+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+models!![position].historyList.toamount
                 holder.tvBillAmount?.setTextColor(Color.parseColor("#008000"))
             }else{
-                holder.tvBillAmount?.text = "-"+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+models!![position].historyList.fromamount
+                holder.tvBillAmount?.text = "-"+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+models!![position].historyList.toamount
                 holder.tvBillAmount?.setTextColor(Color.parseColor("#ff0000"))
             }
 
             when(models!![position].historyList.transfertype){
-                "PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.others)
-                "EXTERNAL_PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.others)
-                "CASH_IN"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_withdraw)
-                "WITHDRAW"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_withdraw)
-                "DEPOSIT"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_deposit)
-                "CASH_OUT"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_deposit)
+                "PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_transaction_payment)
+                "EXTERNAL_PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_transaction_payment)
+                "CASH_IN"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_deposit)
+                "WITHDRAW"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_deposit)
+                "DEPOSIT"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_withdraw)
+                "CASH_OUT"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_withdraw)
                 "TRANSFER"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_favorite_transfers)
                 "FLOAT_TRANSFER"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_favorite_transfers)
                 else-> holder.transferTypeIcon?.setImageResource(R.drawable.others)
@@ -89,6 +95,8 @@ class TransactionHistoryAdapter(
             }
         }
     }
+
+
 
     override fun getItemViewType(position: Int): Int {
         return if (models != null && models!!.size > 0) {

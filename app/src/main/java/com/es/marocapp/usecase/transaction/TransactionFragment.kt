@@ -79,7 +79,7 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
                             ))
 
                             for(j in it.historyResponse[i].historyList.indices){
-                                mTransactionList.add(CustomModelHistoryItem(1,it.historyResponse[i].date,it.historyResponse[i].historyList[j]))
+                                mTransactionList.add(CustomModelHistoryItem(1,it.historyResponse[i].historyList[j].date,it.historyResponse[i].historyList[j]))
                             }
                         }
 

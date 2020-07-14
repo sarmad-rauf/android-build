@@ -25,7 +25,7 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
 
     private fun setStrings() {
         mDataBinding.tvTransactionHistoryTitle.text = LanguageData.getStringValue("TransactionDetails")
-        mDataBinding.dateTitle.text = LanguageData.getStringValue("Date")
+        mDataBinding.dateTitle.text = LanguageData.getStringValue("Time")
         mDataBinding.transactionIDTitle.text = LanguageData.getStringValue("TransactionID")
         mDataBinding.ReceiverNameTitle.text = LanguageData.getStringValue("ReceiverName")
         mDataBinding.ReceiverIdentityTitle.text = LanguageData.getStringValue("ReceiverNumber")
@@ -41,7 +41,7 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         if(mItemDetailsToShow.date.isNullOrEmpty()){
             mDataBinding.dateVal.text = "-"
         }else{
-            mDataBinding.dateVal.text = mItemDetailsToShow.date
+            mDataBinding.dateVal.text = Constants.getZoneFormattedDateAndTime(mItemDetailsToShow.date)
         }
 
         //TransactionID

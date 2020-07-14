@@ -77,19 +77,14 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         )
 
         mDataBinding.btnScanQR.setOnClickListener{
-            val integrator = IntentIntegrator(activity)
-            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES)
-            integrator.setPrompt("")
-            integrator.setOrientationLocked(false)
-            integrator.setCameraId(0)
-            integrator.setBeepEnabled(false)
-            integrator.setBarcodeImageEnabled(false)
-            integrator.initiateScan()
+            (activity as SendMoneyActivity).startQRScan(mDataBinding.inputPhoneNumber, mDataBinding.inputLayoutPhoneNumber)
         }
 
         mActivityViewModel.popBackStackTo = -1
         mActivityViewModel.isUserSelectedFromFavorites.set(false)
         mDataBinding.inputPhoneNumber.addTextChangedListener(this)
+        (activity as SendMoneyActivity).mInputField = mDataBinding.inputPhoneNumber
+        (activity as SendMoneyActivity).mInputFieldLayout = mDataBinding.inputLayoutPhoneNumber
         setStrings()
         subscribeObserver()
     }

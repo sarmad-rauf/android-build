@@ -203,4 +203,19 @@ object Constants {
         val result = java.lang.String.format("%.2f", value)
         return result
     }
+
+    fun getZoneFormattedDateAndTime(dateToFormat : String): String {
+        val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        val output = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+
+        var d: Date? = null
+        try {
+            d = input.parse("2018-02-02T06:54:57.744Z")
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        val formatted: String = output.format(d)
+        Log.i("DATE", "" + formatted)
+        return formatted
+    }
 }
