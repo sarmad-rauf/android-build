@@ -64,7 +64,7 @@ class ViewFavoritesFragment : BaseFragment<FragmentFavoritesViewBinding>(),
                         Constants.mContactListArray.clear()
                         Constants.mContactListArray.addAll(it.contactList)
                         mContactList.clear()
-                        mContactList.addAll(it.contactList)
+                        mContactList.addAll(getContactList())
                         mFavoriteAdapter.notifyDataSetChanged()
                         if(mContactList.isEmpty()){
                             mDataBinding.cvViewFavorites.visibility = View.GONE
@@ -74,7 +74,7 @@ class ViewFavoritesFragment : BaseFragment<FragmentFavoritesViewBinding>(),
                         }
                         DialogUtils.showSuccessDialog(activity,it.description,object : DialogUtils.OnConfirmationDialogClickListner{
                             override fun onDialogYesClickListner() {
-                                (activity as FavoritesActivity).finish()
+                                (activity as FavoritesActivity).navController.popBackStack(R.id.favoriteTypesFragment,false)
                             }
                         })
                     }

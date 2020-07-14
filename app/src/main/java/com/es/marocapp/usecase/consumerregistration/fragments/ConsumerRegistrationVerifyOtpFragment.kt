@@ -52,10 +52,15 @@ class ConsumerRegistrationVerifyOtpFragment : BaseFragment<FragmentConsumerRegis
         mActivityViewModel.getRegisterUserResponseListner.observe(this@ConsumerRegistrationVerifyOtpFragment,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                    (activity as ConsumerRegistrationActivity).startNewActivityAndClear(
-                        activity as ConsumerRegistrationActivity,
-                        MainActivity::class.java
-                    )
+                    DialogUtils.showSuccessDialog(activity,it.description,object : DialogUtils.OnConfirmationDialogClickListner{
+                        override fun onDialogYesClickListner() {
+                            (activity as ConsumerRegistrationActivity).startNewActivityAndClear(
+                                activity as ConsumerRegistrationActivity,
+                                MainActivity::class.java
+                            )
+                        }
+
+                    })
                 }else{
                     DialogUtils.showErrorDialoge(activity,it.description)
                 }

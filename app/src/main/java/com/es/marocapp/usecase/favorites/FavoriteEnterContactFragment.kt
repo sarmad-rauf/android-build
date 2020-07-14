@@ -80,7 +80,7 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
                         Constants.mContactListArray.addAll(it.contactList)
                         DialogUtils.showSuccessDialog(activity,it.description,object : DialogUtils.OnConfirmationDialogClickListner{
                             override fun onDialogYesClickListner() {
-                                (activity as FavoritesActivity).finish()
+                                (activity as FavoritesActivity).navController.popBackStack(R.id.favoriteTypesFragment,false)
                             }
                         })
                     }
