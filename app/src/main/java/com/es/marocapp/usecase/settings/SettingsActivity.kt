@@ -234,7 +234,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
     }
 
     override fun onManageFavoritesClick(view: View) {
-        startActivity(Intent(this@SettingsActivity, FavoritesAcetivity::class.java))
+        startActivity(Intent(this@SettingsActivity, FavoritesActivity::class.java))
     }
 
     override fun onBlockAccountClick(view: View) {
