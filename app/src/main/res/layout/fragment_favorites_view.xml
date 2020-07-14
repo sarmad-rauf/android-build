@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.es.marocapp.usecase.favorites.FavoritesViewModel" />
+
+        <variable
+            name="listner"
+            type="com.es.marocapp.usecase.favorites.FavoritesPaymentClickListener" />
+
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGreyLight"
+    android:paddingBottom="@dimen/_16sdp"
+    >
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.es.marocapp.widgets.MarocMediumTextView
+                android:id="@+id/viewFavoritesTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/colorTextGreyMedium"
+                tools:text="Here you can view or remove accounts"
+                android:layout_margin="@dimen/_16sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvViewFavorites"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/viewFavoritesTitle"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                app:cardCornerRadius="@dimen/_12sdp"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    >
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/view_favorites_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:paddingBottom="@dimen/_32sdp"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

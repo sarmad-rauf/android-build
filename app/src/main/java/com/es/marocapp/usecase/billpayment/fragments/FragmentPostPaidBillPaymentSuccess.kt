@@ -133,7 +133,8 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
                     mDataBinding.addToFavoriteCheckBox.isClickable = true
                     DialogUtils.showErrorDialoge(activity,it.description)
                 }
-            })
+            }
+        )
     }
 
 

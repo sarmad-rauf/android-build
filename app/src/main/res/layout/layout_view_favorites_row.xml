@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.es.marocapp.widgets.MarocRegularTextView
+        android:id="@+id/tvFavortieName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorGreyDark"
+        android:textSize="@dimen/_14ssp"
+        android:text="Ahmed Mustafa"
+        android:layout_marginStart="@dimen/_22sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imgDeleteFavorite"
+        />
+
+    <com.es.marocapp.widgets.MarocRegularTextView
+        android:id="@+id/tvFavortieNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorTextGreyMedium"
+        android:textSize="@dimen/_12ssp"
+        android:text="+212111222333"
+        android:layout_marginTop="@dimen/_8sdp"
+        app:layout_constraintStart_toStartOf="@+id/tvFavortieName"
+        app:layout_constraintTop_toBottomOf="@+id/tvFavortieName"
+        />
+
+    <ImageView
+        android:id="@+id/imgDeleteFavorite"
+        android:layout_width="@dimen/_32sdp"
+        android:layout_height="@dimen/_32sdp"
+        android:layout_marginEnd="@dimen/_22ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/delete"
+        app:layout_constraintTop_toTopOf="@+id/tvFavortieName"
+        app:layout_constraintBottom_toBottomOf="@+id/tvFavortieNumber"
+        />
+
+    <ImageView
+        android:id="@+id/view_favorite_dotted_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layerType="software"
+        android:src="@drawable/dotted"
+        app:layout_constraintTop_toBottomOf="@+id/tvFavortieNumber" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

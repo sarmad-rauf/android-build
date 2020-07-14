@@ -153,18 +153,22 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                     Constants.CURRENT_NUMBER_DEVICE_ID =
                         userMSISDNwithPrefix + "-" + Constants.CURRENT_DEVICE_ID
 
-                    if(isNumberRegexMatches){
-                        mDataBinding.inputLayoutPhoneNumber.error = ""
-                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
-
-                        mActivityViewModel.requestForGetAccountHolderInformationApi(
-                            context,
-                            userMSISDNwithPrefix
-                        )
-                    }else{
-                        mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
-                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
-                    }
+                    mActivityViewModel.requestForGetAccountHolderInformationApi(
+                        context,
+                        userMSISDNwithPrefix
+                    )
+//                    if(isNumberRegexMatches){
+//                        mDataBinding.inputLayoutPhoneNumber.error = ""
+//                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+//
+//                        mActivityViewModel.requestForGetAccountHolderInformationApi(
+//                            context,
+//                            userMSISDNwithPrefix
+//                        )
+//                    }else{
+//                        mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+//                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+//                    }
 
                 } else {
                     mDataBinding.inputLayoutPhoneNumber.error =

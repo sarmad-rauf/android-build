@@ -215,6 +215,50 @@ object DialogUtils {
         }
     }
 
+    fun showSuccessDialog(
+        mContext: Context?,
+        description: String?,
+        listner: OnConfirmationDialogClickListner
+    ) {
+        val addDialog = Dialog(mContext!!)
+        addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        addDialog.setContentView(R.layout.layout_error_dialog)
+
+        val dialogWindow = addDialog.window
+        val layoutParams = dialogWindow!!.attributes
+        layoutParams.x = Gravity.CENTER_HORIZONTAL
+        layoutParams.y = Gravity.CENTER_VERTICAL
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+        dialogWindow.attributes = layoutParams
+
+        val tvMessage = addDialog.findViewById<TextView>(R.id.error_dialog_description)
+        val tvTitle = addDialog.findViewById<TextView>(R.id.error_dialog_title)
+        val btnOK = addDialog.findViewById<Button>(R.id.error_dialog_ok_btn)
+
+        btnOK.text = LanguageData.getStringValue("BtnTitle_OK")
+        tvTitle.text = LanguageData.getStringValue("DearCustomer")
+        tvMessage.text = description
+
+        addDialog.show()
+        btnOK.setOnClickListener {
+            listner.onDialogYesClickListner()
+            addDialog.dismiss()
+        }
+
+//        val handler = Handler()
+//        val runnable = Runnable {
+//            if (addDialog != null && addDialog.isShowing) {
+//                try {
+//                    addDialog.dismiss()
+//                } catch (ex: Exception) {
+//                }
+//            }
+//        }
+//        addDialog.setOnDismissListener { handler.removeCallbacks(runnable) }
+//        handler.postDelayed(runnable, 7000)
+    }
+
     interface OnConfirmationDialogClickListner {
         fun onDialogYesClickListner()
     }

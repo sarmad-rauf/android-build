@@ -4,4 +4,5 @@ import android.view.View
 
 interface FavoritesPaymentClickListener {
     fun onNextButtonClick(view : View)
+    fun onDeleteButtonClick(view : View)
 }

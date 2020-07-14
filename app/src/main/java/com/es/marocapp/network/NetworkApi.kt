@@ -200,6 +200,10 @@ interface NetworkApi {
     @POST(EndPoints.addcontact)
     fun getAddContact(@Body request : AddContactRequest) : Observable<AddContactResponse>
 
+    //Request for deletecontact
+    @POST(EndPoints.deletecontact)
+    fun getDeleteContact(@Body request : DeleteContactRequest) : Observable<DeleteContactResponse>
+
     //PostPaidFinancialResourceInfo
     @POST(EndPoints.getfinancialresourceinformation_bill_postpaid)
     fun getPostPaidFinancialResourceInfo(@Body request : PostPaidFinancialResourceInfoRequest) : Observable<PostPaidFinancialResourceInfoResponse>

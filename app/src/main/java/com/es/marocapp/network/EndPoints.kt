@@ -134,6 +134,9 @@ object EndPoints {
     //addcontact
     const val addcontact = "addcontact"
 
+    //deletecontact
+    const val deletecontact = "deletecontact"
+
     //getfinancialresourceinformation/bill/postpaid
     const val getfinancialresourceinformation_bill_postpaid = "getfinancialresourceinformation/bill/postpaid"
 
