@@ -232,7 +232,13 @@ interface NetworkApi {
     @POST(EndPoints.payment_bill_fatourati)
     fun getBillPaymentFatorati(@Body request : BillPaymentFatoratiRequest) : Observable<BillPaymentFatoratiResponse>
 
+    //Request for setDefaultAccountStatus
+    @POST(EndPoints.unregisterDefaultAccount)
+    fun unregisterDefaultAccountStatus(@Body request : SetDefaultAccountRequest) : Observable<UnRegisterDefaultAccountResponse>
 
+    //Request for changeLanguage
+    @POST(EndPoints.updateLanguage)
+    fun updateLanguage(@Body request : UpdateLanguageRequest) : Observable<UpdateLanguageResponse>
 
 
 }

@@ -158,4 +158,10 @@ object EndPoints {
     //payment/bill/fatourati
     const val payment_bill_fatourati = "payment/bill/fatourati"
 
+    //Unregister DefaultAccountStatus
+    const val unregisterDefaultAccount = "getfinancialresourceinformation/unregister"
+
+    //Update Languaga
+    const val updateLanguage = "updatelanguage"
+
 }

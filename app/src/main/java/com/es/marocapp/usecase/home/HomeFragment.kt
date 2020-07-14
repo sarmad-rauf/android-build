@@ -131,6 +131,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                         if (it.additionalinformation[0].value.equals("FALSE", true)) {
                             showPopUp()
                         }
+                        else{
+                            Constants.IS_DEFAULT_ACCOUNT_SET=true
+                        }
                     }
                 }else{
                     DialogUtils.showErrorDialoge(activity ,it.description)
@@ -158,6 +161,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         homeViewModel.verifyOTPForDefaultAccountResponseListener.observe(this@HomeFragment,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    Constants.IS_DEFAULT_ACCOUNT_SET=true
                     DialogUtils.successFailureDialogue(context,LanguageData.getStringValue("OperationPerformedSuccessfullyDot"),0)
                 }else{
                     DialogUtils.successFailureDialogue(context,LanguageData.getStringValue("FailedToPerformOperationDot"),1)

@@ -7,6 +7,9 @@
 
         <import type="android.view.View" />
         <variable
+            name="viewmodel"
+            type="com.es.marocapp.usecase.settings.SettingsViewModel" />
+        <variable
             name="listener"
             type="com.es.marocapp.usecase.settings.SettingsClickListener" />
 
@@ -147,8 +150,50 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:layout_margin="@dimen/_16sdp"
-         android:id="@+id/cvBlockAccount"
+         android:id="@+id/cvDefaultAccount"
+         android:onClick="@{listener::onSetDefaultAccountClick}"
          app:layout_constraintTop_toBottomOf="@+id/cvManageFavorites"
+         app:cardCornerRadius="@dimen/_12sdp">
+
+         <androidx.constraintlayout.widget.ConstraintLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:padding="@dimen/_12sdp">
+             <com.es.marocapp.widgets.MarocRegularTextView
+                 android:id="@+id/tvDefaultAccount"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:textSize="@dimen/_14ssp"
+                 tools:text="Set as Default"
+                 app:layout_constraintTop_toTopOf="parent"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintStart_toStartOf="parent"
+                 android:textColor="@color/colorTextGreyDark"
+
+                 />
+
+
+             <androidx.appcompat.widget.SwitchCompat
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/defaultAccountSwitch"
+                 app:layout_constraintTop_toTopOf="parent"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent"
+               />
+
+         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+     </androidx.cardview.widget.CardView>
+
+     <androidx.cardview.widget.CardView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_margin="@dimen/_16sdp"
+         android:id="@+id/cvBlockAccount"
+         app:layout_constraintTop_toBottomOf="@+id/cvDefaultAccount"
          app:cardCornerRadius="@dimen/_12sdp">
 
          <androidx.constraintlayout.widget.ConstraintLayout
@@ -190,6 +235,7 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          tools:text="Update"
+         android:visibility="gone"
          android:textColor="@color/colorWhite"
          android:textStyle="bold"
          android:onClick="@{listener::onUpdateClickListener}"
@@ -199,6 +245,17 @@
          android:layout_marginBottom="@dimen/_16sdp"
          app:layout_constraintBottom_toBottomOf="parent"
          />
+
+     <androidx.cardview.widget.CardView
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintBottom_toBottomOf="parent">
+     <include android:id="@+id/Gif_Loader"
+         layout="@layout/layout_dialog"
+         />
+     </androidx.cardview.widget.CardView>
 
  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

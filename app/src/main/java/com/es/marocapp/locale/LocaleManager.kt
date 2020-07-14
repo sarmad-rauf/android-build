@@ -18,6 +18,7 @@ object LocaleManager {
     const val KEY_LANGUAGE_FR = "fr"
 
     var selectedLanguage= KEY_LANGUAGE_EN
+    var languageToBeChangedAfterAPI="";
 
     /**
      * This function for getting selected Language Locale from shared preferences

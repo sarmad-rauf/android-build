@@ -12,5 +12,7 @@ interface SettingsClickListener {
 
     fun onUpdateClickListener(view:View)
 
+    fun onSetDefaultAccountClick(view:View)
+
     fun onBackButtonClickListener(view: View)
 }

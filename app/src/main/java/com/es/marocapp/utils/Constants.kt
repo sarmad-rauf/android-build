@@ -72,6 +72,8 @@ object Constants {
     var IS_AGENT_USER = false
     var IS_CONSUMER_USER = false
     var IS_MERCHANT_USER = false
+
+    var IS_DEFAULT_ACCOUNT_SET = false
     
     //Responses
     lateinit var balanceInfoAndResponse : BalanceInfoAndLimitResponse
