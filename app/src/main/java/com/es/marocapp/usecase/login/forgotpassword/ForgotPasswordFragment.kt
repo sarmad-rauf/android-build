@@ -43,6 +43,15 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
             (activity as LoginActivity).navController.navigateUp()
         }
 
+        DialogUtils.showCustomDialogue(activity,LanguageData.getStringValue("BtnTitle_OK"),LanguageData.getStringValue("PleaseCallCallcenterForGeneratingOTP"),
+            LanguageData.getStringValue("OTP"),object : DialogUtils.OnCustomDialogListner{
+                override fun onCustomDialogOkClickListner() {
+
+                }
+
+            }
+        )
+
         subsribeObserver()
         setStrings()
 
