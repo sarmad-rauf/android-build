@@ -45,7 +45,12 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
             listener = this@LoginNumberPasswordFragment
         }
 
-        mDataBinding.inputPhoneNumber.setText(mActivityViewModel.mUserMsisdn)
+        var numberToShow = mActivityViewModel.mUserMsisdn
+        numberToShow = numberToShow.substringAfter(Constants.APP_MSISDN_PREFIX)
+        numberToShow = numberToShow.substringAfter("212")
+        numberToShow = numberToShow.substringAfter("+212")
+        numberToShow = "0$numberToShow"
+        mDataBinding.inputPhoneNumber.setText(numberToShow)
         mActivityViewModel.isNewUserRegisterd.set(false)
 
         subscribeObserver()

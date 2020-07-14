@@ -79,12 +79,12 @@ class TransactionHistoryAdapter(
             }
 
             when(models!![position].historyList.transfertype){
-                "PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.others)
-                "EXTERNAL_PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.others)
-                "CASH_IN"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_withdraw)
-                "WITHDRAW"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_withdraw)
-                "DEPOSIT"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_deposit)
-                "CASH_OUT"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_deposit)
+                "PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_transaction_payment)
+                "EXTERNAL_PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_transaction_payment)
+                "CASH_IN"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_deposit)
+                "WITHDRAW"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_deposit)
+                "DEPOSIT"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_withdraw)
+                "CASH_OUT"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_withdraw)
                 "TRANSFER"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_favorite_transfers)
                 "FLOAT_TRANSFER"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_favorite_transfers)
                 else-> holder.transferTypeIcon?.setImageResource(R.drawable.others)

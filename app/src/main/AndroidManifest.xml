@@ -21,7 +21,9 @@
         <activity android:name=".usecase.billpayment.BillPaymentActivity" />
         <activity android:name=".usecase.airtime.AirTimeActivity" />
         <activity android:name=".usecase.cashservices.CashServicesActivity" />
-        <activity android:name=".usecase.sendmoney.SendMoneyActivity" />
+        <activity android:name=".usecase.sendmoney.SendMoneyActivity"
+            android:screenOrientation="portrait"
+            />
         <activity android:name=".usecase.termsandcondiitons.TermsAndConditions" />
         <activity android:name=".usecase.favorites.FavoritesActivity" />
         <activity android:name=".usecase.accountdetails.AccountDetailsActivity" />
