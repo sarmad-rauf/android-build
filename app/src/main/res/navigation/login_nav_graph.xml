@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_loginFragment_to_verifyNumberFragment"
             app:destination="@id/verifyNumberFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_resetPasswordFragment"
+            app:destination="@id/resetPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpNumberFragment"
@@ -33,6 +36,9 @@
         <action
             android:id="@+id/action_signUpNumberFragment_to_forgotPasswordFragment"
             app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_signUpNumberFragment_to_resetPasswordFragment"
+            app:destination="@id/resetPasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpDetailFragment"
@@ -69,4 +75,14 @@
         android:label="ForgotPasswordFragment"
         tools:layout="@layout/fragment_forgot_password"
         />
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.es.marocapp.usecase.login.forgotpassword.ResetPasswordFragment"
+        android:label="ResetPasswordFragment"
+        tools:layout="@layout/fragment_forgot_password"
+        >
+        <action
+            android:id="@+id/action_resetPasswordFragment_to_signUpNumberFragment"
+            app:destination="@id/signUpNumberFragment" />
+    </fragment>
 </navigation>

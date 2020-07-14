@@ -95,7 +95,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
     }
 
     private fun setStrings() {
-        mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("LoginIntoAccount")
+        mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("EnterMsisdnToProceed")
         mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
         mDataBinding.btnLogin.text = LanguageData.getStringValue("BtnTitle_Login")
     }
@@ -220,6 +220,16 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                 showTermsConditionsAndSignup()
                 /* mActivityViewModel.isSignUpFlow.set(true)
                  mActivity.navController.navigate(R.id.action_loginFragment_to_signUpDetailFragment)*/
+            }else if(it.responseCode == ApiConstant.API_ACCOUNT_BLOCKED){
+                val btnTxt = LanguageData.getStringValue("BtnTitle_OK")
+                val titleTxt = LanguageData.getStringValue("AccountBlocked")
+                val descriptionTxt =it.description
+                DialogUtils.showCustomDialogue(activity,btnTxt,descriptionTxt,titleTxt,object : DialogUtils.OnCustomDialogListner{
+                    override fun onCustomDialogOkClickListner() {
+                    }
+
+
+                })
             } else {
                 DialogUtils.showErrorDialoge(activity, it.description)
             }
@@ -298,7 +308,15 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                             true
                         )
                     ) {
-                        DialogUtils.showErrorDialoge(activity, "User is Blocked")
+                        DialogUtils.showBlockedAccountDialog(activity,LanguageData.getStringValue("BtnTitle_ResetPassword"),LanguageData.getStringValue("BtnTitle_Cancel"),
+                            LanguageData.getStringValue("BlockedAndResetAccount"),LanguageData.getStringValue("AccountBlocked"),object : DialogUtils.OnCustomDialogListner{
+                                override fun onCustomDialogOkClickListner() {
+                                    mActivityViewModel.isFromLoginUserScreen.set(false)
+                                    (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)
+                                }
+
+                            }
+                        )
                     } else {
                         // Create Crednetial Api is Called
                         //this check means user is register with state Active but didn't registered Password as his account having credetial type pin
