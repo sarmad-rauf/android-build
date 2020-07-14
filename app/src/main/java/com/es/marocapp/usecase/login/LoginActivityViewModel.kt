@@ -28,6 +28,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     var activeUserWithoutPassword : ObservableField<Boolean> = ObservableField(false)
     var activeUserWithoutPasswordType : ObservableField<Boolean> = ObservableField(false)
     var isNewUserRegisterd : ObservableField<Boolean> = ObservableField(false)
+    var isFromLoginUserScreen : ObservableField<Boolean> = ObservableField(false)
     lateinit var accountHolderInfoResponse : GetAccountHolderInformationResponse
     var isLoading = ObservableField<Boolean>()
     var errorText = SingleLiveEvent<String>()

@@ -130,6 +130,26 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                 }
                 Constants.HEADERS_AFTER_LOGINS = true
                 mActivityViewModel.requestForBalanceInfoAndLimtsAPI(activity)
+            }else if(it.responseCode == ApiConstant.API_ACCOUNT_BLOCKED){
+                val btnTxt = LanguageData.getStringValue("BtnTitle_OK")
+                val titleTxt = LanguageData.getStringValue("AccountBlocked")
+                val descriptionTxt =it.description
+                DialogUtils.showCustomDialogue(activity,btnTxt,descriptionTxt,titleTxt,object : DialogUtils.OnCustomDialogListner{
+                    override fun onCustomDialogOkClickListner() {
+                        (activity as LoginActivity).navController.popBackStack(R.id.loginFragment,false)
+                    }
+                })
+            }  else if(it.responseCode.equals(ApiConstant.API_WRONG_ATTEMPT_BLOCKED)){
+                DialogUtils.showBlockedAccountDialog(activity,LanguageData.getStringValue("BtnTitle_ResetPassword"),LanguageData.getStringValue("BtnTitle_Cancel"),
+                LanguageData.getStringValue("BlockedAndResetAccount"),LanguageData.getStringValue("AccountBlocked"),object : DialogUtils.OnCustomDialogListner{
+                        override fun onCustomDialogOkClickListner() {
+                            mActivityViewModel.isFromLoginUserScreen.set(true)
+                            mDataBinding.inputPin.setText("")
+                            (activity as LoginActivity).navController.navigate(R.id.action_signUpNumberFragment_to_resetPasswordFragment)
+                        }
+
+                    }
+                )
             } else {
                 Constants.HEADERS_AFTER_LOGINS = false
                 Constants.LOGGED_IN_USER = ""

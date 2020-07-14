@@ -418,6 +418,49 @@ object DialogUtils {
         }
     }
 
+    fun showBlockedAccountDialog(
+        mContext: Context?,
+        btnTxtYes: String?,
+        btnTxtNo: String?,
+        confirmationTxt: String?,
+        titleTxt: String?,
+        listner: OnCustomDialogListner
+    ) {
+        val addDialog = Dialog(mContext!!)
+        addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        addDialog.setContentView(R.layout.dialog_blocked_account_layout)
+
+        val dialogWindow = addDialog.window
+        val layoutParams = dialogWindow!!.attributes
+        layoutParams.x = Gravity.CENTER_HORIZONTAL
+        layoutParams.y = Gravity.CENTER_VERTICAL
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+        dialogWindow.attributes = layoutParams
+
+        addDialog.show()
+        var tvConfirmation = addDialog.findViewById<TextView>(R.id.custom_dialog_description)
+        var tvDialogTitle = addDialog.findViewById<TextView>(R.id.custom_dialog_title)
+        var btnYes = addDialog.findViewById<Button>(R.id.custom_dialog_yes_btn)
+        var btnNo = addDialog.findViewById<Button>(R.id.custom_dialog_no_btn)
+
+
+        btnYes.text = btnTxtYes
+        btnNo.text = btnTxtNo
+        tvDialogTitle.text = titleTxt
+        tvConfirmation.text = confirmationTxt
+
+
+        addDialog.findViewById<View>(R.id.custom_dialog_yes_btn).setOnClickListener {
+            listner.onCustomDialogOkClickListner()
+            addDialog.dismiss()
+        }
+
+        addDialog.findViewById<View>(R.id.custom_dialog_no_btn).setOnClickListener {
+            addDialog.dismiss()
+        }
+    }
+
     interface OnCustomDialogListner {
         fun onCustomDialogOkClickListner()
     }
