@@ -60,11 +60,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         populateHomeCardView()
         populateHomeUseCase()
 
-        if(Constants.IS_CONSUMER_USER || Constants.IS_MERCHANT_USER){
-        homeViewModel.requestForAccountHolderAddtionalInformationApi(context)
-        subscribeForDefaultAccountStatus()
-        subscribeForSetDefaultAccountStatus()
-        subscribeForVerifyOTPForSetDefaultAccountStatus()
+        if(Constants.IS_FIRST_TIME) {
+            if (Constants.IS_CONSUMER_USER || Constants.IS_MERCHANT_USER) {
+                homeViewModel.requestForAccountHolderAddtionalInformationApi(context)
+                Constants.IS_FIRST_TIME=false
+                subscribeForDefaultAccountStatus()
+                subscribeForSetDefaultAccountStatus()
+                subscribeForVerifyOTPForSetDefaultAccountStatus()
+            }
         }
 
         setStrings()
