@@ -36,7 +36,11 @@ object DialogUtils {
         val tvTitle = addDialog.findViewById<TextView>(R.id.error_dialog_title)
         val btnOK = addDialog.findViewById<Button>(R.id.error_dialog_ok_btn)
 
-        btnOK.text = LanguageData.getStringValue(okBtnText)
+        if(okBtnText.equals("BtnTitle_OK")){
+            btnOK.text = LanguageData.getStringValue(okBtnText)
+        }else{
+            btnOK.text = okBtnText
+        }
         tvTitle.text = LanguageData.getStringValue("Alert")
         tvMessage.text = description
 
@@ -79,7 +83,11 @@ object DialogUtils {
         val tvMessage = addDialog.findViewById<TextView>(R.id.updateDialogDescription)
         val btnOK = addDialog.findViewById<Button>(R.id.updateDialogBtn)
 
-        btnOK.text = LanguageData.getStringValue(okBtnText)
+        if(okBtnText.equals("BtnTitle_OK")){
+            btnOK.text = LanguageData.getStringValue(okBtnText)
+        }else{
+            btnOK.text = okBtnText
+        }
         tvMessage.text = description
 
         addDialog.show()
