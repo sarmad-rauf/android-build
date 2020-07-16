@@ -354,7 +354,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     }
 
     private fun setRightLeftNavigationVisibility() {
-        if(Constants.IS_AGENT_USER){
+        if(Constants.IS_AGENT_USER && Constants.getAccountsResponse!=null){
             mDataBinding.leftNav.visibility = View.VISIBLE
             mDataBinding.rightNav.visibility = View.VISIBLE
             mDataBinding.flexibleIndicator.visibility = View.VISIBLE

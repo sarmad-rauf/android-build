@@ -17,6 +17,7 @@ import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 object Constants {
@@ -80,7 +81,8 @@ object Constants {
     
     //Responses
     lateinit var balanceInfoAndResponse : BalanceInfoAndLimitResponse
-    lateinit var getAccountsResponse : Account
+      var getAccountsResponse : Account? =null
+    lateinit var getAccountsResponseArray : ArrayList<Account>
     lateinit var loginWithCertResponse : LoginWithCertResponse
     lateinit var currentTransactionItem : CustomModelHistoryItem
     var mContactListArray : ArrayList<Contact> = arrayListOf()

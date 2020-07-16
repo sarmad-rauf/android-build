@@ -11,6 +11,7 @@ import com.es.marocapp.BuildConfig
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentLoginNumberPasswordBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.model.responses.Account
 import com.es.marocapp.model.responses.BalanceInfoAndLimitResponse
 import com.es.marocapp.model.responses.LoginWithCertResponse
 import com.es.marocapp.network.ApiConstant
@@ -77,9 +78,10 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                     for(i in it.accounts.indices){
-                        if(it.accounts[i].accountType.equals(Constants.TYPE_COMMISSIONING,true)){
+                        Constants.getAccountsResponseArray=it.accounts as ArrayList<Account>
+                       /* if(it.accounts[i].accountType.equals(Constants.TYPE_COMMISSIONING,true)){
                             Constants.getAccountsResponse = it.accounts[i]
-                        }
+                        }*/
                     }
                     PrefUtils.addString(activity!!,PREF_KEY_USER_MSISDN,Constants.CURRENT_USER_MSISDN)
                     (activity as LoginActivity).startNewActivityAndClear(

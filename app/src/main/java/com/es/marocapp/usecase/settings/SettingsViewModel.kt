@@ -186,7 +186,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             }
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.unregisterDefaultAccountStatus(
-                SetDefaultAccountRequest(ApiConstant.CONTEXT_AFTER_LOGIN, receiver,"enrollment",LocaleManager.selectedLanguage,Constants?.balanceInfoAndResponse?.profilename)
+                SetDefaultAccountRequest(ApiConstant.CONTEXT_AFTER_LOGIN, receiver,"unsubscribe",LocaleManager.selectedLanguage,Constants?.balanceInfoAndResponse?.profilename)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
