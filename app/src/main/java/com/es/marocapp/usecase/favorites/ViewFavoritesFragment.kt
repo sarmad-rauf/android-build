@@ -72,11 +72,11 @@ class ViewFavoritesFragment : BaseFragment<FragmentFavoritesViewBinding>(),
                             mDataBinding.cvViewFavorites.visibility = View.VISIBLE
 
                         }
-                        DialogUtils.showSuccessDialog(activity,it.description,object : DialogUtils.OnConfirmationDialogClickListner{
-                            override fun onDialogYesClickListner() {
-                                (activity as FavoritesActivity).navController.popBackStack(R.id.favoriteTypesFragment,false)
-                            }
-                        })
+//                        DialogUtils.showSuccessDialog(activity,it.description,object : DialogUtils.OnConfirmationDialogClickListner{
+//                            override fun onDialogYesClickListner() {
+////                                (activity as FavoritesActivity).navController.popBackStack(R.id.favoriteTypesFragment,false)
+//                            }
+//                        })
                     }
                 }else{
                     DialogUtils.showErrorDialoge(activity,it.description)
