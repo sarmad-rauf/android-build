@@ -139,9 +139,9 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
         }
 
         if(mActivityViewModel.isBillUseCaseSelected.get()!!){
-            mDataBinding.tvOwnerNameVal.visibility = View.VISIBLE
-            mDataBinding.tvOwnerNameTitle.visibility = View.VISIBLE
-            mDataBinding.divider2.visibility = View.VISIBLE
+            mDataBinding.tvOwnerNameVal.visibility = View.GONE
+            mDataBinding.tvOwnerNameTitle.visibility = View.GONE
+            mDataBinding.divider2.visibility = View.GONE
         }
 
         mDataBinding.tvCompanyNameVal.text = mActivityViewModel.transferdAmountTo.substringBefore("@")

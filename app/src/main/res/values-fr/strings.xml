@@ -82,7 +82,7 @@
     <string name="cancel">cancel</string>
     <string name="bill_payment">Bill Payment</string>
     <string name="your_new_balance_is">Your new balance is</string>
-    <string name="ok">ok</string>
+    <string name="ok">D\'accord</string>
     <string name="success">SUCCESS</string>
     <string name="error_msg_generic">Something went wrong!</string>
     <string name="account_details">ACCOUNT DETAILS</string>
@@ -173,4 +173,5 @@
     <string name="transaction_detials">Transaction details</string>
     <string name="sender_name">Sender Name</string>
     <string name="sender_identity">Sender Identity</string>
+    <string name="update">Update</string>
 </resources>

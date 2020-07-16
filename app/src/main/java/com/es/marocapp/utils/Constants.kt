@@ -51,6 +51,8 @@ object Constants {
     var quickRechargeAmountsList : ArrayList<String> = arrayListOf()
     var URL_FOR_FAQ =""
     var URL_FOR_TERMSANDCONDITIONS =""
+    var APP_VERSION =""
+    var URL_FOR_UPDATE_APP =""
 
 
     var APPLICATION_IP_ADDRESS = ""

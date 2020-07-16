@@ -17,7 +17,8 @@ object DialogUtils {
 
     fun showErrorDialoge(
         mContext: Context?,
-        description: String?
+        description: String?,
+        okBtnText : String = "BtnTitle_OK"
     ) {
         val addDialog = Dialog(mContext!!)
         addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -35,7 +36,7 @@ object DialogUtils {
         val tvTitle = addDialog.findViewById<TextView>(R.id.error_dialog_title)
         val btnOK = addDialog.findViewById<Button>(R.id.error_dialog_ok_btn)
 
-        btnOK.text = LanguageData.getStringValue("BtnTitle_OK")
+        btnOK.text = LanguageData.getStringValue(okBtnText)
         tvTitle.text = LanguageData.getStringValue("Alert")
         tvMessage.text = description
 
@@ -55,6 +56,36 @@ object DialogUtils {
 //        }
 //        addDialog.setOnDismissListener { handler.removeCallbacks(runnable) }
 //        handler.postDelayed(runnable, 7000)
+    }
+
+    fun showUpdateAPPDailog(
+        mContext: Context?,
+        description: String?,
+        listner : DialogUtils.OnCustomDialogListner,
+        okBtnText : String = "BtnTitle_OK"
+    ) {
+        val addDialog = Dialog(mContext!!)
+        addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        addDialog.setContentView(R.layout.dialog_udpate_app_layout)
+
+        val dialogWindow = addDialog.window
+        val layoutParams = dialogWindow!!.attributes
+        layoutParams.x = Gravity.CENTER_HORIZONTAL
+        layoutParams.y = Gravity.CENTER_VERTICAL
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+        dialogWindow.attributes = layoutParams
+
+        val tvMessage = addDialog.findViewById<TextView>(R.id.updateDialogDescription)
+        val btnOK = addDialog.findViewById<Button>(R.id.updateDialogBtn)
+
+        btnOK.text = LanguageData.getStringValue(okBtnText)
+        tvMessage.text = description
+
+        addDialog.show()
+        btnOK.setOnClickListener {
+            addDialog.dismiss()
+        }
     }
 
     fun showPasswordDialoge(

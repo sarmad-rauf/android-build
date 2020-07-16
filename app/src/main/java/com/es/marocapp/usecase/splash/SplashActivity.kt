@@ -3,8 +3,11 @@ package com.es.marocapp.usecase.splash
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
@@ -70,14 +73,17 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
         if (permission != PackageManager.PERMISSION_GRANTED) {
             Log.i(PERMISSION_TAG, "Permission to read phone state denied")
             makeRequestPermission()
-        }else{
+        } else {
 //            val telephonyManager =
 //                application.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
 //            Constants.CURRENT_DEVICE_ID = telephonyManager!!.deviceId
 
             setDeviceIMEI()
 
-            mActivityViewModel.requestForGetPreLoginDataApi(this@SplashActivity,BuildConfig.VERSION_NAME)
+            mActivityViewModel.requestForGetPreLoginDataApi(
+                this@SplashActivity,
+                BuildConfig.VERSION_NAME
+            )
         }
     }
 
@@ -122,7 +128,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 
         val preLoginDataObserver = Observer<GetPreLoginDataResponse> {
             if (it.responseCode.equals(ApiConstant.API_SUCCESS, true)) {
-                Constants.APP_MSISDN_PREFIX = EncryptionUtils.decryptString( it.msisdnPrefix)
+                Constants.APP_MSISDN_PREFIX = EncryptionUtils.decryptString(it.msisdnPrefix)
                 Constants.APP_MSISDN_LENGTH = EncryptionUtils.decryptString(it.msisdnLength)
                 Constants.APP_MSISDN_REGEX = it.msisdnRegex
                 Constants.APP_CIL_LENGTH = it.cilLength
@@ -136,9 +142,11 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.HELPLINE_NUMBER = it.helpLineNumber
                 Constants.URL_FOR_FAQ = it.faqs
                 Constants.URL_FOR_TERMSANDCONDITIONS = it.termsAndConditions
-                if(it.quickAmounts.isNotEmpty()){
+                Constants.APP_VERSION = it.version
+                Constants.URL_FOR_UPDATE_APP = it.url
+                if (it.quickAmounts.isNotEmpty()) {
                     Constants.quickAmountsList.addAll(it.quickAmounts)
-                }else{
+                } else {
                     Constants.quickAmountsList.apply {
                         add("50")
                         add("100")
@@ -146,9 +154,9 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                         add("500")
                     }
                 }
-                if(it.quickRechargeAmounts.isNotEmpty()){
+                if (it.quickRechargeAmounts.isNotEmpty()) {
                     Constants.quickRechargeAmountsList.addAll(it.quickRechargeAmounts)
-                }else{
+                } else {
                     Constants.quickRechargeAmountsList.apply {
                         add("5")
                         add("10")
@@ -156,13 +164,44 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                     }
                 }
                 mActivityViewModel.requestForTranslationsApi(this)
+            } else if (it.responseCode.equals(ApiConstant.API_INVALID_VERSION)) {
+                DialogUtils.showUpdateAPPDailog(this@SplashActivity,
+                    it.description,
+                    object : DialogUtils.OnCustomDialogListner {
+                        override fun onCustomDialogOkClickListner() {
+                            val appPackageName =
+                                packageName // getPackageName() from Context or Activity object
+
+                            try {
+                                startActivity(
+                                    Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse("market://${it.url}$appPackageName")
+                                    )
+                                )
+//                                Uri.parse("market://${it.url}=$appPackageName")
+                            } catch (anfe: ActivityNotFoundException) {
+                                startActivity(
+                                    Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse("${it.url}$appPackageName")
+                                    )
+                                )
+//                                Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                            }
+                        }
+                    },getString(R.string.ok))
             } else {
-                DialogUtils.showErrorDialoge(this@SplashActivity,it.description)
+                DialogUtils.showErrorDialoge(
+                    this@SplashActivity,
+                    it.description,
+                    getString(R.string.ok)
+                )
             }
         }
 
         val errorText = Observer<String> {
-            DialogUtils.showErrorDialoge(this@SplashActivity,it)
+            DialogUtils.showErrorDialoge(this@SplashActivity, it,getString(R.string.ok))
         }
 
         mActivityViewModel.mHandler.observe(this, resultObserver)
@@ -172,28 +211,28 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 
     private fun subscribeForTranslationsApiResponse() {
         mActivityViewModel.translationApiResponseListener.observe(this, Observer {
-            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+            if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                 setTranslations(it.labelList)
                 startNewActivityAndClear(this@SplashActivity, LoginActivity::class.java)
-            /*    mApprovalsList.apply {
-                    addAll(it.approvaldetails as ArrayList<Approvaldetail>)
-                    mApprovalsItemAdapter.notifyDataSetChanged()
-                }*/
-            }else{
-                DialogUtils.showErrorDialoge(this@SplashActivity,it.description)
+            } else {
+                DialogUtils.showErrorDialoge(
+                    this@SplashActivity,
+                    it.description,
+                    getString(R.string.ok)
+                )
             }
         })
     }
 
     private fun setTranslations(labelList: Map<String?, TranslationInnerObject?>?) {
 
-        LanguageData.stringsHashMap=labelList
-        var temp=labelList
-        Log.d("LableListObj",labelList.toString())
+        LanguageData.stringsHashMap = labelList
+        var temp = labelList
+        Log.d("LableListObj", labelList.toString())
 
     }
 
-    fun setDeviceIMEI(){
+    fun setDeviceIMEI() {
         var myuniqueID: String?
         val myversion = Integer.valueOf(Build.VERSION.SDK)
         if (myversion < 23) {
