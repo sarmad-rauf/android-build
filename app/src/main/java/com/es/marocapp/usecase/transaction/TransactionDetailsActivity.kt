@@ -103,7 +103,7 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         }
 
         //TotalAmount
-        mDataBinding.totalAmountVal.text = Constants.addAmountAndFee(amount.toDouble(),fee.toDouble())
+        mDataBinding.totalAmountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+Constants.addAmountAndFee(amount.toDouble(),fee.toDouble())
 
 
     }

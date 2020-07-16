@@ -37,6 +37,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     var referenceNumber="";
     var quickRechargeSelectedAmount = ""
 
+    var isBtnQuickOneChecked = false
+    var isBtnQuickTwoChecked = false
+    var isBtnQuickThreeChecked = false
+
     override fun setLayout(): Int {
         return R.layout.fragment_home
     }
@@ -57,11 +61,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         populateHomeCardView()
         populateHomeUseCase()
 
-        if(Constants.IS_CONSUMER_USER || Constants.IS_MERCHANT_USER){
-        homeViewModel.requestForAccountHolderAddtionalInformationApi(context)
-        subscribeForDefaultAccountStatus()
-        subscribeForSetDefaultAccountStatus()
-        subscribeForVerifyOTPForSetDefaultAccountStatus()
+        if(Constants.IS_FIRST_TIME) {
+            if (Constants.IS_CONSUMER_USER || Constants.IS_MERCHANT_USER) {
+                homeViewModel.requestForAccountHolderAddtionalInformationApi(context)
+                Constants.IS_FIRST_TIME=false
+                subscribeForDefaultAccountStatus()
+                subscribeForSetDefaultAccountStatus()
+                subscribeForVerifyOTPForSetDefaultAccountStatus()
+            }
         }
 
         setStrings()
@@ -70,34 +77,70 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
 
     private fun setQuickAmountListner() {
         mDataBinding.btnQuickRecharge1.setOnClickListener {
-            mDataBinding.btnQuickRecharge1.setBackgroundResource(R.drawable.button_quick_recharge_state)
-            mDataBinding.btnQuickRecharge2.setBackgroundResource(R.drawable.button_quick_recharge)
-            mDataBinding.btnQuickRecharge3.setBackgroundResource(R.drawable.button_quick_recharge)
-            quickRechargeSelectedAmount = mDataBinding.btnQuickRecharge1.text.toString().removePrefix("DH").trim()
+            if(isBtnQuickOneChecked){
+                isBtnQuickOneChecked = false
+                mDataBinding.btnQuickRecharge1.setBackgroundResource(R.drawable.button_quick_recharge)
+                mDataBinding.btnQuickRecharge2.setBackgroundResource(R.drawable.button_quick_recharge)
+                mDataBinding.btnQuickRecharge3.setBackgroundResource(R.drawable.button_quick_recharge)
+                quickRechargeSelectedAmount = "-1"
+            }else{
+                isBtnQuickOneChecked = true
+                isBtnQuickTwoChecked= false
+                isBtnQuickThreeChecked = false
+                mDataBinding.btnQuickRecharge1.setBackgroundResource(R.drawable.button_quick_recharge_state)
+                mDataBinding.btnQuickRecharge2.setBackgroundResource(R.drawable.button_quick_recharge)
+                mDataBinding.btnQuickRecharge3.setBackgroundResource(R.drawable.button_quick_recharge)
+                quickRechargeSelectedAmount = mDataBinding.btnQuickRecharge1.text.toString().removePrefix("DH").trim()
+            }
+
         }
 
         mDataBinding.btnQuickRecharge2.setOnClickListener {
-            mDataBinding.btnQuickRecharge2.setBackgroundResource(R.drawable.button_quick_recharge_state)
-            mDataBinding.btnQuickRecharge1.setBackgroundResource(R.drawable.button_quick_recharge)
-            mDataBinding.btnQuickRecharge3.setBackgroundResource(R.drawable.button_quick_recharge)
-            quickRechargeSelectedAmount = mDataBinding.btnQuickRecharge2.text.toString().removePrefix("DH").trim()
+            if(isBtnQuickTwoChecked){
+                isBtnQuickTwoChecked = false
+                mDataBinding.btnQuickRecharge1.setBackgroundResource(R.drawable.button_quick_recharge)
+                mDataBinding.btnQuickRecharge2.setBackgroundResource(R.drawable.button_quick_recharge)
+                mDataBinding.btnQuickRecharge3.setBackgroundResource(R.drawable.button_quick_recharge)
+                quickRechargeSelectedAmount = "-1"
+            }else{
+                isBtnQuickTwoChecked = true
+                isBtnQuickOneChecked= false
+                isBtnQuickThreeChecked = false
+                mDataBinding.btnQuickRecharge2.setBackgroundResource(R.drawable.button_quick_recharge_state)
+                mDataBinding.btnQuickRecharge1.setBackgroundResource(R.drawable.button_quick_recharge)
+                mDataBinding.btnQuickRecharge3.setBackgroundResource(R.drawable.button_quick_recharge)
+                quickRechargeSelectedAmount = mDataBinding.btnQuickRecharge2.text.toString().removePrefix("DH").trim()
+            }
         }
 
         mDataBinding.btnQuickRecharge3.setOnClickListener {
-            mDataBinding.btnQuickRecharge3.setBackgroundResource(R.drawable.button_quick_recharge_state)
-            mDataBinding.btnQuickRecharge1.setBackgroundResource(R.drawable.button_quick_recharge)
-            mDataBinding.btnQuickRecharge2.setBackgroundResource(R.drawable.button_quick_recharge)
-            quickRechargeSelectedAmount = mDataBinding.btnQuickRecharge3.text.toString().removePrefix("DH").trim()
+            if(isBtnQuickThreeChecked){
+                isBtnQuickThreeChecked = false
+                mDataBinding.btnQuickRecharge1.setBackgroundResource(R.drawable.button_quick_recharge)
+                mDataBinding.btnQuickRecharge2.setBackgroundResource(R.drawable.button_quick_recharge)
+                mDataBinding.btnQuickRecharge3.setBackgroundResource(R.drawable.button_quick_recharge)
+                quickRechargeSelectedAmount = "-1"
+            }else{
+                isBtnQuickThreeChecked = true
+                isBtnQuickTwoChecked= false
+                isBtnQuickOneChecked = false
+                mDataBinding.btnQuickRecharge3.setBackgroundResource(R.drawable.button_quick_recharge_state)
+                mDataBinding.btnQuickRecharge1.setBackgroundResource(R.drawable.button_quick_recharge)
+                mDataBinding.btnQuickRecharge2.setBackgroundResource(R.drawable.button_quick_recharge)
+                quickRechargeSelectedAmount = mDataBinding.btnQuickRecharge3.text.toString().removePrefix("DH").trim()
+            }
         }
 
         mDataBinding.btnQuickRecharge4.setOnClickListener {
-            var intent = Intent(
-                activity as MainActivity,
-                AirTimeActivity::class.java
-            )
-            intent.putExtra("isQuickRechargeCase",true)
-            intent.putExtra("quickRechargeAmount",quickRechargeSelectedAmount)
-            startActivity(intent)
+            if(isBtnQuickOneChecked || isBtnQuickTwoChecked || isBtnQuickThreeChecked){
+                var intent = Intent(
+                    activity as MainActivity,
+                    AirTimeActivity::class.java
+                )
+                intent.putExtra("isQuickRechargeCase",true)
+                intent.putExtra("quickRechargeAmount",quickRechargeSelectedAmount)
+                startActivity(intent)
+            }
         }
     }
 

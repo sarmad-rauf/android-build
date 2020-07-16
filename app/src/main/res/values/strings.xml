@@ -174,5 +174,6 @@
     <string name="sender_name">Sender Name</string>
     <string name="sender_identity">Sender Identity</string>
     <string name="enter_name">Enter Name</string>
+    <string name="update">Update</string>
 
 </resources>

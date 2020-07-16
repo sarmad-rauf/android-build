@@ -39,10 +39,14 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
         (activity as AirTimeActivity).setCompanyIconToolbarVisibility(false)
 
         mDataBinding.imgBackButton.setOnClickListener {
-            (activity as AirTimeActivity).navController.popBackStack(
-                R.id.airTimeMsisdnFragment,
-                false
-            )
+            if(mActivityViewModel.isQuickRechargeUseCase.get()!!){
+                (activity as AirTimeActivity).finish()
+            }else{
+                (activity as AirTimeActivity).navController.popBackStack(
+                    R.id.airTimeMsisdnFragment,
+                    false
+                )
+            }
         }
 
         setStrings()
