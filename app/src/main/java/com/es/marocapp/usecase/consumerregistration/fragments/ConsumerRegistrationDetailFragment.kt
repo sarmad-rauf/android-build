@@ -32,6 +32,7 @@ class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistra
     var emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex()
     var isCnicMatches = false
     var consumerMsisdnEntered = ""
+    var isNumberRegexMatches = false
 
 
     override fun setLayout(): Int {
@@ -61,6 +62,7 @@ class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistra
             )
         )
 
+        mDataBinding.inputConsumerNumber.addTextChangedListener(this)
         mDataBinding.inputNationalID.addTextChangedListener(this)
 
         subscribeObserver()
@@ -108,15 +110,23 @@ class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistra
 
     override fun onSubmitClickListner(view: View) {
         if(isValidForAll()){
-            mActivityViewModel.DOB = mDataBinding.inputDateOfBirth.text.toString().trim()
-            mActivityViewModel.identificationNumber = mDataBinding.inputNationalID.text.toString().trim()
-            mActivityViewModel.firstName = mDataBinding.inputFirstName.text.toString().trim()
-            mActivityViewModel.gender = mDataBinding.inputGender.text.toString().trim()
-            mActivityViewModel.postalAddress = mDataBinding.inputAddress.text.toString().trim()
-            mActivityViewModel.lastName = mDataBinding.inputLastName.text.toString().trim()
-            mActivityViewModel.email = mDataBinding.inputEmail.text.toString().trim()
+            if(isNumberRegexMatches){
+                mDataBinding.inputLayoutConsumerNumber.error = ""
+                mDataBinding.inputLayoutConsumerNumber.isErrorEnabled = false
 
-            mActivityViewModel.requestForeGetInitialAuthDetailsApi(activity,consumerMsisdnEntered)
+                mActivityViewModel.DOB = mDataBinding.inputDateOfBirth.text.toString().trim()
+                mActivityViewModel.identificationNumber = mDataBinding.inputNationalID.text.toString().trim()
+                mActivityViewModel.firstName = mDataBinding.inputFirstName.text.toString().trim()
+                mActivityViewModel.gender = mDataBinding.inputGender.text.toString().trim()
+                mActivityViewModel.postalAddress = mDataBinding.inputAddress.text.toString().trim()
+                mActivityViewModel.lastName = mDataBinding.inputLastName.text.toString().trim()
+                mActivityViewModel.email = mDataBinding.inputEmail.text.toString().trim()
+
+                mActivityViewModel.requestForeGetInitialAuthDetailsApi(activity,consumerMsisdnEntered)
+            }else{
+                mDataBinding.inputLayoutConsumerNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                mDataBinding.inputLayoutConsumerNumber.isErrorEnabled = true
+            }
         }
     }
 
@@ -279,10 +289,18 @@ class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistra
         showGenderDialog()
     }
 
-    override fun afterTextChanged(p0: Editable?) {
-        var cnic = mDataBinding.inputNationalID.text.toString().trim()
-        var cnicLength = cnic.length
-        isCnicMatches = !(cnicLength > 0 && !Pattern.matches(Constants.APP_CN_REGEX, cnic))
+    override fun afterTextChanged(editable: Editable?) {
+        if(editable == mDataBinding.inputNationalID.editableText){
+            var cnic = mDataBinding.inputNationalID.text.toString().trim()
+            var cnicLength = cnic.length
+            isCnicMatches = !(cnicLength > 0 && !Pattern.matches(Constants.APP_CN_REGEX, cnic))
+        }else if(editable == mDataBinding.inputConsumerNumber.editableText){
+            var msisdn = mDataBinding.inputConsumerNumber.text.toString().trim()
+            var msisdnLenght = msisdn.length
+            isNumberRegexMatches =
+                !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_MSISDN_REGEX, msisdn))
+        }
+
     }
 
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
