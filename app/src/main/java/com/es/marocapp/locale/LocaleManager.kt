@@ -16,6 +16,7 @@ object LocaleManager {
 
     const val KEY_LANGUAGE_EN = "en"
     const val KEY_LANGUAGE_FR = "fr"
+    const val KEY_LANGUAGE_AR = "ar"
 
     var selectedLanguage= KEY_LANGUAGE_EN
     var languageToBeChangedAfterAPI="";
@@ -83,6 +84,9 @@ object LocaleManager {
     private fun updateAppAfterlanguangeSelection(activity: Activity?, clazz: Class<*>) {
         try {
 
+            val configuration: Configuration = activity?.getResources()!!.getConfiguration()
+            configuration.setLayoutDirection(Locale(selectedLanguage))
+            activity.getResources().updateConfiguration(configuration, activity.getResources().getDisplayMetrics())
                 // Activity Reloading
                 (activity as BaseActivity<*>).startActivityAfterLanguageChange(activity, clazz)
 

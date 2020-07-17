@@ -438,6 +438,10 @@ object DialogUtils {
             radioGrp.check(R.id.rb_French)
             selectedLanguage = mContext.resources.getString(R.string.language_french)
         }
+        else if (LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_AR)) {
+            radioGrp.check(R.id.rb_Arabic)
+            selectedLanguage = mContext.resources.getString(R.string.language_arabic)
+        }
 
 
         radioGrp.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->

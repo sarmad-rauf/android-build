@@ -67,6 +67,13 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="@string/language_french"/>
 
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rb_Arabic"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="@string/language_arabic"/>
+
         </RadioGroup>
 
 

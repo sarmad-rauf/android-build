@@ -10,6 +10,7 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivitySettingsBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
+import com.es.marocapp.locale.LocaleManager.KEY_LANGUAGE_AR
 import com.es.marocapp.locale.LocaleManager.KEY_LANGUAGE_EN
 import com.es.marocapp.locale.LocaleManager.KEY_LANGUAGE_FR
 import com.es.marocapp.network.ApiConstant
@@ -91,6 +92,9 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
         else if(LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_FR)){
             mDataBinding.root.tvLanguage.text= resources.getString(R.string.language_french)
         }
+        else if(LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_AR)){
+            mDataBinding.root.tvLanguage.text= resources.getString(R.string.language_arabic)
+        }
     }
 
  /*   private fun subscribeForDefaultAccountStatus() {
@@ -170,6 +174,12 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
                             LocaleManager.KEY_LANGUAGE_FR,
                             SettingsActivity::class.java)
                     }
+                    else if(LocaleManager.languageToBeChangedAfterAPI.equals("Arabic")) {
+
+                        LocaleManager.setLanguageAndUpdate(this@SettingsActivity,
+                            LocaleManager.KEY_LANGUAGE_AR,
+                            SettingsActivity::class.java)
+                    }
                    // DialogUtils.successFailureDialogue(this@SettingsActivity,it.description,0)
                 }else{
                     DialogUtils.successFailureDialogue(this@SettingsActivity,it.description,1)
@@ -224,6 +234,10 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
                 }
                 else  if(selectedLanguage.equals("French")){
                     langParam= KEY_LANGUAGE_FR
+                }
+
+                else  if(selectedLanguage.equals("Arabic")){
+                    langParam= KEY_LANGUAGE_AR
                 }
 
                 settingsViewModel.requestForChangeLanguage(this@SettingsActivity,langParam)
