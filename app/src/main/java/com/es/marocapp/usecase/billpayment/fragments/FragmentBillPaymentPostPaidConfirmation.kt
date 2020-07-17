@@ -199,7 +199,7 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
         mDataBinding.tvOwnerNameTitle.text = LanguageData.getStringValue("ReceiverName")
         mDataBinding.tvReceiptCodeTitle.text = LanguageData.getStringValue("Bill")
         mDataBinding.tvDHTitle.text = LanguageData.getStringValue("TotalFee")
-        mDataBinding.tvAmountTitle.text = LanguageData.getStringValue("TotalCost")
+        mDataBinding.tvAmountTitle.text = LanguageData.getStringValue("Amount")
 
         mDataBinding.tvConfirmationTitle.text = LanguageData.getStringValue("Confirmation")
 
