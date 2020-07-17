@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:theme="@style/myTextInputLabel"
                 android:hint="@string/enter_otp"
-                android:inputType="phone"
+                android:inputType="text"
                 android:maxLength="12" />
         </com.google.android.material.textfield.TextInputLayout>
 

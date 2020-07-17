@@ -3,6 +3,9 @@ package com.es.marocapp.utils
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.text.Editable
+import android.text.InputFilter
+import android.text.TextWatcher
 import android.view.*
 import android.widget.*
 import androidx.core.content.res.ResourcesCompat
@@ -11,6 +14,7 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.widgets.MarocButton
 import com.google.android.material.textfield.TextInputLayout
+import java.util.regex.Pattern
 
 
 object DialogUtils {
@@ -262,6 +266,7 @@ object DialogUtils {
         mContext: Context?,
         listner: OnOTPDialogClickListner
     ) {
+        var isOTPRegexMatches = false
         val addDialog = Dialog(mContext!!)
         addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         addDialog.setContentView(R.layout.layout_otp_dialog)
@@ -298,6 +303,24 @@ object DialogUtils {
             addDialog.findViewById<TextInputLayout>(R.id.otp_dialog_layout_enter_otp)
         otpFieldInput.hint = LanguageData.getStringValue("EnterOTP")
 
+        otpField.filters =
+            arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_OTP_LENGTH))
+        otpField.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(p0: Editable?) {
+                var otp = otpField.text.toString().trim()
+                var otpLenght = otp.length
+                isOTPRegexMatches =
+                    (otpLenght > 0 && Pattern.matches(Constants.APP_OTP_REGEX, otp))
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+        })
+
         addDialog.findViewById<View>(R.id.otp_dialog_yes_btn).setOnClickListener {
             var otp = otpField.text.toString().trim()
             if (otp.equals("")) {
@@ -306,8 +329,16 @@ object DialogUtils {
             } else {
                 otpFieldInput.error = ""
                 otpFieldInput.isErrorEnabled = false
-                listner.onOTPDialogYesClickListner(otp)
-                addDialog.dismiss()
+                if(isOTPRegexMatches){
+                    otpFieldInput.error = ""
+                    otpFieldInput.isErrorEnabled = false
+
+                    listner.onOTPDialogYesClickListner(otp)
+                    addDialog.dismiss()
+                }else{
+                    otpFieldInput.error = LanguageData.getStringValue("PleaseEnterValidOTP")
+                    otpFieldInput.isErrorEnabled = true
+                }
             }
         }
     }
