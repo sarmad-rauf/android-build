@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:id="@+id/containerLayout"
     android:layout_width="match_parent"
@@ -43,15 +44,17 @@
 
             <com.es.marocapp.widgets.MarocRegularTextView
                 android:id="@+id/payment_type_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Bill"
+                tool:text="Billasdasdasdasdasdasdasdassdasdsad"
                 android:textSize="@dimen/_14ssp"
                 android:textColor="@color/colorGreyDark"
                 android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/img_Info"
+                app:layout_constraintEnd_toStartOf="@+id/img_next"
                 />
 
             <ImageView

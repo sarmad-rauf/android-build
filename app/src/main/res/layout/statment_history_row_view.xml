@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tool="http://schemas.android.com/tools"
     android:background="@color/colorGreyLight"
     android:orientation="vertical"
     android:paddingStart="@dimen/_10sdp"
     android:paddingEnd="@dimen/_10sdp"
-    android:paddingBottom="@dimen/_10sdp"
-    >
+    android:paddingBottom="@dimen/_10sdp">
 
 
     <com.es.marocapp.widgets.MarocMediumTextView
@@ -75,14 +75,15 @@
 
             <com.es.marocapp.widgets.MarocRegularTextView
                 android:id="@+id/row_company_name"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/_12ssp"
-                android:text="Company A"
+                tool:text="Ranjeet Shiwari asdadsg"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:textColor="@color/colorTextGreyMedium"
                 app:layout_constraintTop_toBottomOf="@+id/row_bill_type"
                 app:layout_constraintStart_toStartOf="@+id/row_bill_type"
+                app:layout_constraintEnd_toStartOf="@+id/row_bill_date"
                 />
 
             <com.es.marocapp.widgets.MarocRegularTextView
@@ -90,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/_14ssp"
-                android:text="DH2.800.00"
+                tool:text="DH2.800.00"
                 android:textColor="@color/colorGreyDark"
                 android:layout_marginEnd="@dimen/_16sdp"
                 app:layout_constraintTop_toTopOf="@+id/row_bill_type"
@@ -104,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/_12ssp"
-                android:text="30/04/2020"
+                tool:text="30-04-2020 01:12:25"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:textColor="@color/colorTextGreyMedium"
                 app:layout_constraintBottom_toBottomOf="@+id/row_company_name"

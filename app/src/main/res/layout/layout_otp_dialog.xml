@@ -61,6 +61,7 @@
                 android:theme="@style/myTextInputLabel"
                 android:focusableInTouchMode="true"
                 android:focusable="true"
+                android:inputType="text"
                 android:textSize="@dimen/_14ssp"
                 android:hint="@string/enter_otp"
                 android:maxLength="12" />

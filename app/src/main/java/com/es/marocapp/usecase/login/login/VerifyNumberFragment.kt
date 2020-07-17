@@ -2,9 +2,13 @@ package com.es.marocapp.usecase.login.login
 
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputFilter
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
@@ -22,14 +26,18 @@ import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.layout_login_header.view.*
+import java.util.regex.Pattern
 
 /**
  * A simple [Fragment] subclass.
  */
 class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
-    VerifyOTPClickListner {
+    VerifyOTPClickListner, TextWatcher {
 
     lateinit var mActivityViewModel: LoginActivityViewModel
+
+    var isOTPRegexMatches = false
+
 
     override fun setLayout(): Int {
         return R.layout.fragment_verify_number
@@ -62,6 +70,11 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
                 mActivityViewModel.requestForGetOTPForRegistrationApi(context,mActivityViewModel.firstName,mActivityViewModel.lastName,mActivityViewModel.identificationNumber)
             }
         }
+
+        mDataBinding.inputVerifyOtp.filters =
+            arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_OTP_LENGTH))
+
+        mDataBinding.inputVerifyOtp.addTextChangedListener(this)
 
         subscribeObserver()
         setStrings()
@@ -122,19 +135,26 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
             mDataBinding.inputLayoutVerifyOtp.error = ""
             mDataBinding.inputLayoutVerifyOtp.isErrorEnabled = false
 
-            if(mActivityViewModel.isDeviceChanged){
-                mActivityViewModel.requestForVerifyOtpAndUpdateAliaseAPI(
-                    activity,
-                    mActivityViewModel.previousDeviceId,
-                    Constants.CURRENT_NUMBER_DEVICE_ID,
-                    mDataBinding.inputVerifyOtp.text.toString().trim()
-                )
+            if(isOTPRegexMatches){
+                mDataBinding.inputLayoutVerifyOtp.error = ""
+                mDataBinding.inputLayoutVerifyOtp.isErrorEnabled = false
+                if(mActivityViewModel.isDeviceChanged){
+                    mActivityViewModel.requestForVerifyOtpAndUpdateAliaseAPI(
+                        activity,
+                        mActivityViewModel.previousDeviceId,
+                        Constants.CURRENT_NUMBER_DEVICE_ID,
+                        mDataBinding.inputVerifyOtp.text.toString().trim()
+                    )
+                }else{
+                    mActivityViewModel.requestForRegisterUserApi(
+                        activity,
+                        Constants.CURRENT_NUMBER_DEVICE_ID,
+                        mDataBinding.inputVerifyOtp.text.toString().trim()
+                    )
+                }
             }else{
-                mActivityViewModel.requestForRegisterUserApi(
-                    activity,
-                    Constants.CURRENT_NUMBER_DEVICE_ID,
-                    mDataBinding.inputVerifyOtp.text.toString().trim()
-                )
+                mDataBinding.inputLayoutVerifyOtp.error = LanguageData.getStringValue("PleaseEnterValidOTP")
+                mDataBinding.inputLayoutVerifyOtp.isErrorEnabled = true
             }
         }
     }
@@ -189,6 +209,19 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
 
             (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_setYourPinFragment)
         }
+    }
+
+    override fun afterTextChanged(p0: Editable?) {
+        var otp = mDataBinding.inputVerifyOtp.text.toString().trim()
+        var otpLenght = otp.length
+        isOTPRegexMatches =
+            (otpLenght > 0 && Pattern.matches(Constants.APP_OTP_REGEX, otp))
+    }
+
+    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    }
+
+    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
     }
 
 }

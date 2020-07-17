@@ -1,8 +1,12 @@
 package com.es.marocapp.usecase.login.forgotpassword
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputFilter
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
@@ -14,12 +18,17 @@ import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
+import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.layout_login_header.view.*
+import java.util.regex.Pattern
 
-class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), ForgotPasswordClickListner{
+class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), ForgotPasswordClickListner,
+    TextWatcher {
 
     lateinit var mActivityViewModel: LoginActivityViewModel
+
+    var isOTPRegexMatches = false
 
     override fun setLayout(): Int {
         return R.layout.fragment_forgot_password
@@ -51,6 +60,11 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
 
             }
         )
+
+        mDataBinding.inputForgotOtp.filters =
+            arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_OTP_LENGTH))
+
+        mDataBinding.inputForgotOtp.addTextChangedListener(this)
 
         subsribeObserver()
         setStrings()
@@ -108,6 +122,15 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
         }else{
             mDataBinding.inputLayoutOtp.error = ""
             mDataBinding.inputLayoutOtp.isErrorEnabled = false
+            if(isOTPRegexMatches){
+                mDataBinding.inputLayoutOtp.error = ""
+                mDataBinding.inputLayoutOtp.isErrorEnabled = false
+
+            }else{
+                isValidForAll = false
+                mDataBinding.inputLayoutOtp.error = LanguageData.getStringValue("PleaseEnterValidOTP")
+                mDataBinding.inputLayoutOtp.isErrorEnabled = true
+            }
         }
 
         if(mDataBinding.inputForgotPassword.text.isNullOrEmpty()){
@@ -129,6 +152,19 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
         }
 
         return isValidForAll
+    }
+
+    override fun afterTextChanged(p0: Editable?) {
+        var otp = mDataBinding.inputForgotOtp.text.toString().trim()
+        var otpLenght = otp.length
+        isOTPRegexMatches =
+            (otpLenght > 0 && Pattern.matches(Constants.APP_OTP_REGEX, otp))
+    }
+
+    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    }
+
+    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
     }
 
 

@@ -135,6 +135,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.APP_CIL_REGEX = it.cilRegex
                 Constants.APP_CN_LENGTH = it.cnLength
                 Constants.APP_CN_REGEX = it.cnRegex
+                Constants.APP_OTP_LENGTH = it.androidOtpLength
                 Constants.APP_DATE_FORMAT = it.dateFormat
                 Constants.CURRENT_CURRENCY_TYPE = it.currencyOnEwp
                 Constants.CURRENT_CURRENCY_TYPE_TO_SHOW = it.currencyToShow
