@@ -12,7 +12,8 @@ data class GetAccountHolderInformationResponse(
     val msisdn: String,
     val profileName: String,
     val responseCode: String,
-    val sureName: String
+    val sureName: String,
+    val language: String
 )
 
 data class CredentialList(
