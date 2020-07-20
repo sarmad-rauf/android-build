@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.es.marocapp.R
+import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.requests.GetAccountHolderInformationRequest
 import com.es.marocapp.model.requests.SetDefaultAccountRequest
 import com.es.marocapp.model.requests.VerifyOTPForDefaultAccountRequest
@@ -122,7 +123,8 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             }
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.setDefaultAccountStatus(
-                SetDefaultAccountRequest(ApiConstant.CONTEXT_AFTER_LOGIN, receiver,"enrollment","en",Constants?.balanceInfoAndResponse?.profilename)
+                SetDefaultAccountRequest(ApiConstant.CONTEXT_AFTER_LOGIN, receiver,"enrollment",
+                    LocaleManager.selectedLanguage,Constants?.balanceInfoAndResponse?.profilename)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -195,7 +197,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             }
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.verifyOTPforSetDefaultAccountStatus(
-                VerifyOTPForDefaultAccountRequest(ApiConstant.CONTEXT_AFTER_LOGIN, receiver,"confirm","en",Constants?.balanceInfoAndResponse?.profilename,referenceNumber,
+                VerifyOTPForDefaultAccountRequest(ApiConstant.CONTEXT_AFTER_LOGIN, receiver,"confirm",LocaleManager.selectedLanguage,Constants?.balanceInfoAndResponse?.profilename,referenceNumber,
                     EncryptionUtils.encryptString(otp))
             )
                 .compose(applyIOSchedulers())

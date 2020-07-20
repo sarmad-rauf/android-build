@@ -21,10 +21,6 @@ class ApplicationClass : Application() {
             super.attachBaseContext(context)
             MultiDex.install(this)
 
-            LocaleManager.selectedLanguage=LocaleManager.getSelectedLanguageFromPref(context)
-            LocaleManager.setAppLocale(context,LocaleManager.selectedLanguage)
-
-
         } catch (e: Exception) {
         }
     }
@@ -38,8 +34,7 @@ class ApplicationClass : Application() {
         ApiClient.newApiClientInstance.setInit(this)
 
         // Set App saved Language
-     //   LocaleManager.selectedLanguage=LocaleManager.getSelectedLanguageFromPref(applicationContext)
-       // LocaleManager.setAppLocale(this,LocaleManager.selectedLanguage)
+        LocaleManager.selectedLanguage= LocaleManager.getSelectedLanguageFromPref(this)
 
         //SSL pinning
         installSSL()
@@ -49,12 +44,12 @@ class ApplicationClass : Application() {
 
     fun installSSL(){
 
-            // Google Play will install latest OpenSSL
-            ProviderInstaller.installIfNeeded(getApplicationContext());
-            var sslContext: SSLContext
-            sslContext = SSLContext.getInstance("TLSv1.2");
-            sslContext.init(null, null, null);
-            sslContext.createSSLEngine();
+        // Google Play will install latest OpenSSL
+        ProviderInstaller.installIfNeeded(getApplicationContext());
+        var sslContext: SSLContext
+        sslContext = SSLContext.getInstance("TLSv1.2");
+        sslContext.init(null, null, null);
+        sslContext.createSSLEngine();
 
     }
 

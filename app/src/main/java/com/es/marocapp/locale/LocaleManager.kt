@@ -77,16 +77,17 @@ object LocaleManager {
         } catch (e: Exception) {
         }
     }
-/**
-    *
-    * This function is used to to udpate and restart activity after language selection
- */
+    /**
+     *
+     * This function is used to to udpate and restart activity after language selection
+     */
     private fun updateAppAfterlanguangeSelection(activity: Activity?, clazz: Class<*>) {
         try {
 
-            setAppLocale(activity!!.applicationContext,LocaleManager.selectedLanguage)
-
-           // Activity Reloading
+            val configuration: Configuration = activity?.getResources()!!.getConfiguration()
+            configuration.setLayoutDirection(Locale(selectedLanguage))
+            activity.getResources().updateConfiguration(configuration, activity.getResources().getDisplayMetrics())
+            // Activity Reloading
             (activity as BaseActivity<*>).startActivityAfterLanguageChange(activity, clazz)
 
 
@@ -94,9 +95,9 @@ object LocaleManager {
         }
     }
     /**
-    *
-    * This function return True if French language selected
-    */
+     *
+     * This function return True if French language selected
+     */
     fun isFrenchSelected(context: Context): Boolean {
         var isFrenchSelected = false
 
@@ -113,10 +114,10 @@ object LocaleManager {
 
         return isFrenchSelected
     }
-/**
-    *
-    * This function return True if English language selected
- */
+    /**
+     *
+     * This function return True if English language selected
+     */
     fun isEnglishSelected(context: Context): Boolean {
         var isEnglishSelected = false
 
@@ -134,7 +135,7 @@ object LocaleManager {
         return isEnglishSelected
     }
 
-     fun updateResources(
+    fun updateResources(
         context: Context,
         language: String
     ): Context? {
@@ -143,7 +144,6 @@ object LocaleManager {
         Locale.setDefault(locale)
         val res: Resources = context.resources
         val config = Configuration(res.getConfiguration())
-         config.setLayoutDirection(Locale(selectedLanguage))
         if (Build.VERSION.SDK_INT >= 17) {
             config.setLocale(locale)
             context = context.createConfigurationContext(config)
@@ -154,7 +154,7 @@ object LocaleManager {
         return context
     }
 
-     fun setAppLanguage(context: Context,localeCode: String) {
+    fun setAppLanguage(context: Context,localeCode: String) {
         val resources: Resources = context.resources
         val dm = resources.displayMetrics
         val config = resources.configuration
@@ -165,24 +165,8 @@ object LocaleManager {
         }
         resources.updateConfiguration(config, dm)
 
-         setLanguageToPref(context,localeCode)
-         Log.d("Language",localeCode)
-    }
-
-    fun setAppLocale(context: Context,localeCode: String){
-         val locale = Locale(localeCode)
-        Locale.setDefault(locale)
-        val config = Configuration()
-        config.locale = locale
-        config.setLayoutDirection(Locale(localeCode))
-        context?.getApplicationContext()?.getResources()?.updateConfiguration(config, null)
-
-        // val configuration: Configuration = activity?.getResources()!!.getConfiguration()
-
-       // updateResources(activity!!.applicationContext,LocaleManager.selectedLanguage)
-
-        context?.getResources()?.updateConfiguration(config, context?.getResources()?.getDisplayMetrics())
-        // Activity Reloading
+        setLanguageToPref(context,localeCode)
+        Log.d("Language",localeCode)
     }
 
 }

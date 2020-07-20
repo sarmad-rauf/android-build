@@ -2,13 +2,16 @@ package com.es.marocapp.usecase
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.usecase.login.LoginActivity.Companion.KEY_REDIRECT_USER
 import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.PrefUtils
+import java.util.*
 
 abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
 {
@@ -17,7 +20,18 @@ abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
         super.onCreate(savedInstanceState)
         //setContentView(setLayout())
 
+        setLocale()
+
         mDataBinding= DataBindingUtil.setContentView(this, setLayout())
+    }
+
+    private fun setLocale() {
+
+        LocaleManager.setAppLanguage(this, LocaleManager.selectedLanguage)
+
+        val configuration: Configuration = this.getResources()!!.getConfiguration()
+        configuration.setLayoutDirection(Locale(LocaleManager.selectedLanguage))
+        this.getResources().updateConfiguration(configuration, this.getResources().getDisplayMetrics())
     }
 
 
