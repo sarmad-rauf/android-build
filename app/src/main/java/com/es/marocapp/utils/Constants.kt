@@ -212,7 +212,7 @@ object Constants {
     }
 
     fun getZoneFormattedDateAndTime(dateToFormat : String): String {
-        val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+        val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
         val output = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 
         var d: Date? = null
