@@ -217,7 +217,7 @@ object Constants {
 
         var d: Date? = null
         try {
-            d = input.parse("2018-02-02T06:54:57.744Z")
+            d = input.parse(dateToFormat)
         } catch (e: ParseException) {
             e.printStackTrace()
         }
