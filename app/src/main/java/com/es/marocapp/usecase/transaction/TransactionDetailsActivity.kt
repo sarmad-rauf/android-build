@@ -94,16 +94,18 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         }
 
         //Fee
-        if(mItemDetailsToShow.historyList.tofee.isNullOrEmpty()){
+        if(mItemDetailsToShow.historyList.fromfee.isNullOrEmpty()){
             fee = "0.00"
             mDataBinding.feeVal.text = "DH 0.00"
         }else{
-            fee = mItemDetailsToShow.historyList.tofee
-            mDataBinding.feeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mItemDetailsToShow.historyList.tofee
+            fee = mItemDetailsToShow.historyList.fromfee
+            mDataBinding.feeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mItemDetailsToShow.historyList.fromfee
         }
 
         //TotalAmount
-        mDataBinding.totalAmountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+Constants.addAmountAndFee(amount.toDouble(),fee.toDouble())
+        var totalAmount = Constants.addAmountAndFee(amount.toDouble(),fee.toDouble())
+        totalAmount = Constants.converValueToTwoDecimalPlace(totalAmount.toDouble())
+        mDataBinding.totalAmountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+totalAmount
 
 
     }
