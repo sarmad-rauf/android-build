@@ -54,7 +54,6 @@
             android:background="@drawable/button_disable_grey"
             android:textSize="@dimen/_12ssp"
             android:textColor="@color/colorWhite"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/custom_dialog_yes_btn"
             app:layout_constraintTop_toBottomOf="@+id/custom_dialog_description" />
