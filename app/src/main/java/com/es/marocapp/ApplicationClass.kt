@@ -20,6 +20,11 @@ class ApplicationClass : Application() {
         try {
             super.attachBaseContext(context)
             MultiDex.install(this)
+
+            LocaleManager.selectedLanguage=LocaleManager.getSelectedLanguageFromPref(context)
+            LocaleManager.setAppLocale(context,LocaleManager.selectedLanguage)
+
+
         } catch (e: Exception) {
         }
     }
@@ -33,13 +38,8 @@ class ApplicationClass : Application() {
         ApiClient.newApiClientInstance.setInit(this)
 
         // Set App saved Language
-        LocaleManager.selectedLanguage=LocaleManager.getSelectedLanguageFromPref(applicationContext)
-        LocaleManager.setAppLanguage(applicationContext,LocaleManager.selectedLanguage)
-
-
-        val configuration: Configuration = getResources()!!.getConfiguration()
-        configuration.setLayoutDirection(Locale(LocaleManager.selectedLanguage))
-        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics())
+     //   LocaleManager.selectedLanguage=LocaleManager.getSelectedLanguageFromPref(applicationContext)
+       // LocaleManager.setAppLocale(this,LocaleManager.selectedLanguage)
 
         //SSL pinning
         installSSL()

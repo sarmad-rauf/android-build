@@ -49,7 +49,6 @@
             android:id="@+id/favorite_dialog_layout_enter_nick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layoutDirection="locale"
             app:layout_constraintTop_toBottomOf="@+id/add_toFavorite_dialog_description"
             android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginStart="@dimen/_16sdp"

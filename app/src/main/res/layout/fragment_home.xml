@@ -87,7 +87,7 @@
                 android:layout_marginEnd="@dimen/_12sdp"
                 android:onClick="@{listener::onNextBalanceCardClick}"
                 android:visibility="gone"
-                app:srcCompat="@drawable/ic_forward" />
+                app:srcCompat="@drawable/ic_next_svg" />
 
         </FrameLayout>
 

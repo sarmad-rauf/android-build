@@ -84,11 +84,10 @@ object LocaleManager {
     private fun updateAppAfterlanguangeSelection(activity: Activity?, clazz: Class<*>) {
         try {
 
-            val configuration: Configuration = activity?.getResources()!!.getConfiguration()
-            configuration.setLayoutDirection(Locale(selectedLanguage))
-            activity.getResources().updateConfiguration(configuration, activity.getResources().getDisplayMetrics())
-                // Activity Reloading
-                (activity as BaseActivity<*>).startActivityAfterLanguageChange(activity, clazz)
+            setAppLocale(activity!!.applicationContext,LocaleManager.selectedLanguage)
+
+           // Activity Reloading
+            (activity as BaseActivity<*>).startActivityAfterLanguageChange(activity, clazz)
 
 
         } catch (e: Exception) {
@@ -144,6 +143,7 @@ object LocaleManager {
         Locale.setDefault(locale)
         val res: Resources = context.resources
         val config = Configuration(res.getConfiguration())
+         config.setLayoutDirection(Locale(selectedLanguage))
         if (Build.VERSION.SDK_INT >= 17) {
             config.setLocale(locale)
             context = context.createConfigurationContext(config)
@@ -167,6 +167,22 @@ object LocaleManager {
 
          setLanguageToPref(context,localeCode)
          Log.d("Language",localeCode)
+    }
+
+    fun setAppLocale(context: Context,localeCode: String){
+         val locale = Locale(localeCode)
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.locale = locale
+        config.setLayoutDirection(Locale(localeCode))
+        context?.getApplicationContext()?.getResources()?.updateConfiguration(config, null)
+
+        // val configuration: Configuration = activity?.getResources()!!.getConfiguration()
+
+       // updateResources(activity!!.applicationContext,LocaleManager.selectedLanguage)
+
+        context?.getResources()?.updateConfiguration(config, context?.getResources()?.getDisplayMetrics())
+        // Activity Reloading
     }
 
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
     <data>
 
     <import type="android.view.View" />
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/_14ssp"
         android:textColor="@color/colorWhite"
-        android:text="@string/balance"
+        tools:text="@string/balance"
         android:layout_marginTop="@dimen/_8sdp"
         app:layout_constraintTop_toBottomOf="@+id/imgBalanceIcon"
         app:layout_constraintStart_toEndOf="@+id/imgBalanceIcon"
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/_28ssp"
         android:textColor="@color/colorWhite"
-        android:text="DH 1,200"
+        tools:text="DH 1,200"
         app:layout_constraintTop_toBottomOf="@+id/tvBalanceType"
         app:layout_constraintStart_toEndOf="@+id/tvBalanceType"
         app:layout_constraintEnd_toStartOf="@+id/tvBalanceType"
