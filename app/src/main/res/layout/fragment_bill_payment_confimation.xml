@@ -56,7 +56,7 @@
                 android:layout_margin="@dimen/_12sdp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:src="@drawable/ic_back"
+                app:srcCompat="@drawable/ic_back_svg"
                 />
 
             <androidx.cardview.widget.CardView

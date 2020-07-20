@@ -48,7 +48,7 @@
             android:layout_width="@dimen/_32sdp"
             android:layout_height="@dimen/_32sdp"
             android:layout_marginStart="@dimen/_12sdp"
-            android:src="@drawable/ic_back"
+            app:srcCompat="@drawable/ic_back_svg"
             android:onClick="@{listener::onCancelButtonClick}"
             app:layout_constraintBottom_toTopOf="@+id/tvApprovalDetailsTitle"
             app:layout_constraintStart_toStartOf="parent"
