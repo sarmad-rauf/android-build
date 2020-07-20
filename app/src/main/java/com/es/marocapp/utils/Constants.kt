@@ -216,11 +216,11 @@ object Constants {
         val output = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 
         var d: Date? = null
-        val formatted: String = ""
+        var formatted: String = ""
         try {
             d = input.parse(dateToFormat)
 
-        val formatted: String = output.format(d)
+         formatted = output.format(d)
 
         } catch (e: ParseException) {
             e.printStackTrace()
