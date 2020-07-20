@@ -36,6 +36,11 @@ class ApplicationClass : Application() {
         LocaleManager.selectedLanguage=LocaleManager.getSelectedLanguageFromPref(applicationContext)
         LocaleManager.setAppLanguage(applicationContext,LocaleManager.selectedLanguage)
 
+
+        val configuration: Configuration = getResources()!!.getConfiguration()
+        configuration.setLayoutDirection(Locale(LocaleManager.selectedLanguage))
+        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics())
+
         //SSL pinning
         installSSL()
 
