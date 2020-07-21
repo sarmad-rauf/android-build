@@ -459,6 +459,9 @@ object DialogUtils {
         var tvDialogTitle = addDialog.findViewById<TextView>(R.id.language_dialog_title)
 
         var btnYes = addDialog.findViewById<Button>(R.id.language_dialog_yes_btn)
+        var rbEnglish =  addDialog.findViewById<RadioButton>(R.id.rb_English)
+        var rbFrench =  addDialog.findViewById<RadioButton>(R.id.rb_French)
+        var rbArabic =  addDialog.findViewById<RadioButton>(R.id.rb_Arabic)
 
         var radioGrp = addDialog.findViewById<RadioGroup>(R.id.language_dialog_radiogroup)
         var selectedLanguage = ""
@@ -488,6 +491,9 @@ object DialogUtils {
         btnYes.text = LanguageData.getStringValue("BtnTitle_OK")
         tvDialogTitle.text = LanguageData.getStringValue("ChangeLanguage")
         tvMsg.text = LanguageData.getStringValue("PleaseChooseyourLanguage")
+        rbEnglish.text = LanguageData.getStringValue("DropDown_English")
+        rbFrench.text = LanguageData.getStringValue("DropDown_French")
+        rbArabic.text = LanguageData.getStringValue("DropDown_Arabic")
 
         addDialog.findViewById<View>(R.id.language_dialog_yes_btn).setOnClickListener {
             listner.onChangeLanguageDialogYesClickListner(selectedLanguage)

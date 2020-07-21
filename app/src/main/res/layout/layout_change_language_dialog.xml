@@ -58,21 +58,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rb_English"
-                android:text="@string/language_english"/>
+                tools:text="@string/language_english"/>
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rb_French"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/language_french"/>
+                tools:text="@string/language_french"/>
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/rb_Arabic"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="@string/language_arabic"/>
+                tools:text="@string/language_arabic"/>
 
         </RadioGroup>
 

@@ -162,19 +162,19 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
         settingsViewModel.updateLanguageResponseListener.observe(this,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                    if(LocaleManager.languageToBeChangedAfterAPI.equals("English")){
+                    if(LocaleManager.languageToBeChangedAfterAPI.equals(LanguageData.getStringValue("DropDown_English"))){
 
                         LocaleManager.setLanguageAndUpdate(this@SettingsActivity,
                             LocaleManager.KEY_LANGUAGE_EN,
                             SettingsActivity::class.java)
                     }
-                    else if(LocaleManager.languageToBeChangedAfterAPI.equals("French")) {
+                    else if(LocaleManager.languageToBeChangedAfterAPI.equals(LanguageData.getStringValue("DropDown_French"))) {
 
                         LocaleManager.setLanguageAndUpdate(this@SettingsActivity,
                             LocaleManager.KEY_LANGUAGE_FR,
                             SettingsActivity::class.java)
                     }
-                    else if(LocaleManager.languageToBeChangedAfterAPI.equals("Arabic")) {
+                    else if(LocaleManager.languageToBeChangedAfterAPI.equals(LanguageData.getStringValue("DropDown_Arabic"))) {
 
                         LocaleManager.setLanguageAndUpdate(this@SettingsActivity,
                             LocaleManager.KEY_LANGUAGE_AR,
@@ -229,14 +229,14 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
                 LocaleManager.languageToBeChangedAfterAPI=selectedLanguage
 
                 var langParam=""
-                if(selectedLanguage.equals("English")){
+                if(selectedLanguage.equals(LanguageData.getStringValue("DropDown_English"))){
                     langParam=KEY_LANGUAGE_EN
                 }
-                else  if(selectedLanguage.equals("French")){
+                else  if(selectedLanguage.equals(LanguageData.getStringValue("DropDown_French"))){
                     langParam= KEY_LANGUAGE_FR
                 }
 
-                else  if(selectedLanguage.equals("Arabic")){
+                else  if(selectedLanguage.equals(LanguageData.getStringValue("DropDown_Arabic"))){
                     langParam= KEY_LANGUAGE_AR
                 }
 
