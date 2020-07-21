@@ -24,6 +24,7 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
     }
 
     private fun setStrings() {
+        mDataBinding.statusTitle.text = LanguageData.getStringValue("TransactionStatus")
         mDataBinding.tvTransactionHistoryTitle.text = LanguageData.getStringValue("TransactionDetails")
         mDataBinding.dateTitle.text = LanguageData.getStringValue("Time")
         mDataBinding.transactionIDTitle.text = LanguageData.getStringValue("TransactionID")
@@ -37,6 +38,13 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
     }
 
     private fun updateUI(){
+        //status
+        if(mItemDetailsToShow.historyList.transactionstatus.isNullOrEmpty()){
+            mDataBinding.statusVal.text = "-"
+        }else{
+            mDataBinding.statusVal.text = mItemDetailsToShow.historyList.transactionstatus
+        }
+
         //Date
         if(mItemDetailsToShow.date.isNullOrEmpty()){
             mDataBinding.dateVal.text = "-"

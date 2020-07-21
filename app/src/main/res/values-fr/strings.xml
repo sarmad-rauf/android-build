@@ -178,4 +178,6 @@
     <string name="enter_name">Enter Name</string>
     <string name="update">Update</string>
     <string name="language_arabic">Arabic</string>
+    <string name="status">Status</string>
+
 </resources>
