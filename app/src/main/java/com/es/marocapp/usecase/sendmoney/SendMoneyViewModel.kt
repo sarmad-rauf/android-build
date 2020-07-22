@@ -99,7 +99,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
                         }else if(result.responseCode.equals(ApiConstant.API_SESSION_OUT)){
                             (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
                                 LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
-                        }else if(result.responseCode.equals(ApiConstant.API_SESSION_OUT)){
+                        }else if(result.responseCode.equals(ApiConstant.API_INVALID)){
                             (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as SendMoneyActivity, LoginActivity::class.java,
                                 LoginActivity.KEY_REDIRECT_USER_INVALID)
                         } else {
