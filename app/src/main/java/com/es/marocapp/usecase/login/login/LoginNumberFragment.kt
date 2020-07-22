@@ -257,8 +257,8 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
     private fun showTermsConditionsAndSignup() {
         // mDataBinding.root.toast_layout_root.visibility=View.VISIBLE
 
-        mDataBinding.root.txtHeaderTitle.text = "Create your account"
-        mDataBinding.inputLayoutPhoneNumber.isEnabled = false
+        mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("CreateYourAccount")
+                mDataBinding.inputLayoutPhoneNumber.isEnabled = false
         mDataBinding.btnLogin.text = LanguageData.getStringValue("BtnTitle_Submit")
         mDataBinding.root.tvMsg.text =
             LanguageData.getStringValue("YouMustAgreeToTermsAndConditionsToProceedFurther")
