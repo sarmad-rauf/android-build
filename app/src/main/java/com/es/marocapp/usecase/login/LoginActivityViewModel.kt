@@ -92,19 +92,14 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
+                        if (result?.responseCode != null )
+                         {
                             getAccountHolderInformationResponseListner.postValue(result)
 
-                        }else if(result?.responseCode!=null && result.responseCode.equals(ApiConstant.API_FAILURE,true)){
-                            // if response code is 1500 this means user  user isnot registered redirecting user to Registration flow
-                            getAccountHolderInformationResponseListner.postValue(result)
-                        }
-                        else {
-                            getAccountHolderInformationResponseListner.postValue(result)
-                        }
+                        }else {
+
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                    }
 
 
                     },
@@ -206,14 +201,11 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
+                        if (result?.responseCode != null) {
                             getOtpForRegistrationResponseListner.postValue(result)
 
                         } else {
-                            getOtpForRegistrationResponseListner.postValue(result)
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
                         }
 
 
@@ -261,14 +253,11 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
+                        if (result?.responseCode != null) {
                             getRegisterUserResponseListner.postValue(result)
 
                         } else {
-                            getRegisterUserResponseListner.postValue(result)
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
                         }
 
 
@@ -314,14 +303,11 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
+                        if (result?.responseCode != null) {
                             getActivateUserResponseListner.postValue(result)
 
                         } else {
-                            getActivateUserResponseListner.postValue(result)
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
                         }
 
 
@@ -366,14 +352,12 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
+                        if (result?.responseCode != null )
+                        {
                             getOTPResponseListner.postValue(result)
 
                         } else {
-                            getOTPResponseListner.postValue(result)
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
                         }
 
 
@@ -420,14 +404,12 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
+                        if (result?.responseCode != null )
+                        {
                             getValidateOtpAndUpdateAliasResponseListner.postValue(result)
 
                         } else {
-                            getValidateOtpAndUpdateAliasResponseListner.postValue(result)
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
                         }
 
 
@@ -473,14 +455,12 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
+                        if (result?.responseCode != null)
+                        {
                             getForgotPasswordResponseListner.postValue(result)
 
                         } else {
-                            getForgotPasswordResponseListner.postValue(result)
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
                         }
 
 
@@ -525,14 +505,12 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
+                        if (result?.responseCode != null)
+                        {
                             getCreateCredentialsResponseListner.postValue(result)
 
                         } else {
-                            getCreateCredentialsResponseListner.postValue(result)
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
                         }
 
 
@@ -632,13 +610,15 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getBalanceInforAndLimitResponseListner.postValue(result)
-
-                        } else {
+                        if(result?.responseCode != null){
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS ->  getBalanceInforAndLimitResponseListner.postValue(result)
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as LoginActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as LoginActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  getBalanceInforAndLimitResponseListner.postValue(result)
+                            }
+                        }
+                        else{
                             getBalanceInforAndLimitResponseListner.postValue(result)
                         }
 
@@ -685,13 +665,15 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getAccountsResponseListner.postValue(result)
-
-                        } else {
+                        if(result?.responseCode != null){
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS ->  getAccountsResponseListner.postValue(result)
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as LoginActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as LoginActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  getAccountsResponseListner.postValue(result)
+                            }
+                        }
+                        else{
                             getAccountsResponseListner.postValue(result)
                         }
 
