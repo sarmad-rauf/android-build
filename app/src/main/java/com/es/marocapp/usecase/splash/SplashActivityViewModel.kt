@@ -48,14 +48,11 @@ class SplashActivityViewModel(application: Application) : AndroidViewModel(appli
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
+                        if (result?.responseCode != null ) {
                             preLoginDataResponseListener.postValue(result)
 
                         } else {
-                            preLoginDataResponseListener.postValue(result)
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
                         }
 
 
@@ -96,14 +93,12 @@ class SplashActivityViewModel(application: Application) : AndroidViewModel(appli
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
+                        if (result?.responseCode != null )
+                        {
                             translationApiResponseListener.postValue(result)
 
                         } else {
-                            translationApiResponseListener.postValue(result)
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
                         }
 
 
