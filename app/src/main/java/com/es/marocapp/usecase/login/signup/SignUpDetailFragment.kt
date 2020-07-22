@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.layout_login_header.view.*
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import kotlin.collections.ArrayList
 
 
 /**
@@ -68,6 +69,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
         )
         mDataBinding.inputNationalID.addTextChangedListener(this)
 
+        mActivityViewModel.isSimplePopUp = true
         subscribeObserver()
         setStrings()
 
@@ -133,22 +135,28 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
     }
 
     private fun showGenderDialog(){
-        val singleChoiceItems =
-            resources.getStringArray(R.array.dialog_gender_choice_array)
+        val singleChoiceItems: ArrayList<String> = arrayListOf()
+        singleChoiceItems.apply {
+            add(LanguageData.getStringValue("Male").toString())
+            add(LanguageData.getStringValue("Female").toString())
+            add(LanguageData.getStringValue("Other").toString())
+        }
+
+        var list = singleChoiceItems.toTypedArray()
         val itemSelected = 0
         AlertDialog.Builder(activity)
-            .setTitle("Select your gender")
+            .setTitle(LanguageData.getStringValue("SelectGender"))
             .setSingleChoiceItems(
-                singleChoiceItems,
+                list,
                 itemSelected,
                 DialogInterface.OnClickListener { dialogInterface, selectedIndex ->
                     when(selectedIndex){
-                        0-> mDataBinding.inputGender.setText("MALE")
-                        1-> mDataBinding.inputGender.setText("FEMALE")
-                        2-> mDataBinding.inputGender.setText("OTHER")
+                        0-> mDataBinding.inputGender.setText(LanguageData.getStringValue("Male"))
+                        1-> mDataBinding.inputGender.setText(LanguageData.getStringValue("Female"))
+                        2-> mDataBinding.inputGender.setText(LanguageData.getStringValue("Other"))
                     }
                 })
-            .setPositiveButton("Ok", null)
+            .setPositiveButton(LanguageData.getStringValue("BtnTitle_OK"), null)
             .show()
     }
 

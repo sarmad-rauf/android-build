@@ -88,4 +88,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
     }
 
+    override fun onBackPressed() {
+        if(mActivityViewModel.isSimplePopUp){
+            super.onBackPressed()
+        }else{
+            this@LoginActivity.finish()
+        }
+    }
+
 }

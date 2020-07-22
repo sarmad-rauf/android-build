@@ -107,7 +107,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     private fun subscribeObserver() {
         mActivityViewModel.getLogOutUserResponseListner.observe(this@MainActivity, Observer {
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                PrefUtils.addString(this, PrefUtils.PreKeywords.PREF_KEY_USER_MSISDN,"")
+//                PrefUtils.addString(this, PrefUtils.PreKeywords.PREF_KEY_USER_MSISDN,"")
                 startNewActivityAndClear(this@MainActivity,LoginActivity::class.java)
             }else{
                DialogUtils.showErrorDialoge(this@MainActivity,it.description)

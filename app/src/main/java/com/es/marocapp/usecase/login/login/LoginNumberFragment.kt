@@ -89,6 +89,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
 
         mDataBinding.inputPhoneNumber.addTextChangedListener(this)
 
+        mActivityViewModel.isSimplePopUp = true
         subscribe()
         setStrings()
 
