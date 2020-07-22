@@ -261,13 +261,19 @@ class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistra
     }
 
     private fun showGenderDialog(){
-        val singleChoiceItems =
-            resources.getStringArray(R.array.dialog_gender_choice_array)
+        val singleChoiceItems: ArrayList<String> = arrayListOf()
+        singleChoiceItems.apply {
+            add(LanguageData.getStringValue("Male").toString())
+            add(LanguageData.getStringValue("Female").toString())
+            add(LanguageData.getStringValue("Other").toString())
+        }
+
+        var list = singleChoiceItems.toTypedArray()
         val itemSelected = 0
         AlertDialog.Builder(activity)
             .setTitle(LanguageData.getStringValue("SelectGender"))
             .setSingleChoiceItems(
-                singleChoiceItems,
+                list,
                 itemSelected,
                 DialogInterface.OnClickListener { dialogInterface, selectedIndex ->
                     when(selectedIndex){

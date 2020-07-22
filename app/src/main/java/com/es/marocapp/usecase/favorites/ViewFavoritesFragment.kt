@@ -35,16 +35,6 @@ class ViewFavoritesFragment : BaseFragment<FragmentFavoritesViewBinding>(),
             listner = this@ViewFavoritesFragment
         }
 
-        if(mActivitViewModel.isPaymentSelected.get()!!){
-            if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!){
-
-            }else{
-
-            }
-        }else{
-
-        }
-
         mActivitViewModel.popBackStackTo = R.id.favoritesAddOrViewFragment
         (activity as FavoritesActivity).setHeader(LanguageData.getStringValue("View").toString())
         setStrings()
