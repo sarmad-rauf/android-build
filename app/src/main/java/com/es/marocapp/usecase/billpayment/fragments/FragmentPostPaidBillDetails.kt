@@ -85,7 +85,7 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
 
         mDataBinding.selectAllCheckBox.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener{
             override fun onCheckedChanged(p0: CompoundButton?, isChecked: Boolean) {
-                if(isChecked){
+
                     if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
                         for(i in listOfFatoratiCustomInvoice.indices){
                             listOfFatoratiCustomInvoice[i].isItemSelected = isChecked
@@ -99,21 +99,7 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
                         }
                         mBillDetailsAdapter.notifyDataSetChanged()
                     }
-                }else{
-                    if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
-                        for(i in listOfFatoratiCustomInvoice.indices){
-                            listOfFatoratiCustomInvoice[i].isItemSelected = isChecked
-                        }
-                        mFatoratiBillDetailsAdapter.notifyDataSetChanged()
-                    }
 
-                    if(mActivityViewModel.isBillUseCaseSelected.get()!!){
-                        for(i in listOfCustomInvoice.indices){
-                            listOfCustomInvoice[i].isBillSelected = isChecked
-                        }
-                        mBillDetailsAdapter.notifyDataSetChanged()
-                    }
-                }
             }
 
         })
