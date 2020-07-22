@@ -41,7 +41,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     { result ->
                         isLoading.set(false)
 
-                      /*  if (result?.responseCode != null && result?.responseCode!!.equals(
+                        if (result?.responseCode != null && result?.responseCode!!.equals(
                                 ApiConstant.API_SUCCESS, true
                             )
                         ) {
@@ -49,14 +49,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
                         } else {
                             getLogOutUserResponseListner.postValue(result)
-                        }*/
-
-                        if (result?.responseCode != null )
-                         {
-                            getLogOutUserResponseListner.postValue(result)
-
                         }
-
 
 
                     },
