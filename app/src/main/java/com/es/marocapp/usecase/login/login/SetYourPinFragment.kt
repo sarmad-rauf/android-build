@@ -50,6 +50,7 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
             (activity as LoginActivity).navController.navigateUp()
         }
 
+        mActivityViewModel.isSimplePopUp = true
         subscribeObserver()
         setStrings()
     }

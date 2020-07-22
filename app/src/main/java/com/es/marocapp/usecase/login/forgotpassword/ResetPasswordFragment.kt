@@ -67,6 +67,7 @@ class ResetPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), For
 
         mDataBinding.inputForgotOtp.addTextChangedListener(this)
 
+        mActivityViewModel.isSimplePopUp = true
         subsribeObserver()
         setStrings()
 

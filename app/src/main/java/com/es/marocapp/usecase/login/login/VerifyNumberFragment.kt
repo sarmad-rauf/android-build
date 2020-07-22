@@ -76,6 +76,7 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
 
         mDataBinding.inputVerifyOtp.addTextChangedListener(this)
 
+        mActivityViewModel.isSimplePopUp = true
         subscribeObserver()
         setStrings()
 
