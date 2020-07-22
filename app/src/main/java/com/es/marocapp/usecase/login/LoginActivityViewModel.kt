@@ -610,16 +610,12 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                     { result ->
                         isLoading.set(false)
 
-                        if(result?.responseCode != null){
-                            when(result?.responseCode) {
-                                ApiConstant.API_SUCCESS ->  getBalanceInforAndLimitResponseListner.postValue(result)
-                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as LoginActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
-                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as LoginActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_INVALID)
-                                else ->  getBalanceInforAndLimitResponseListner.postValue(result)
-                            }
-                        }
-                        else{
+                        if (result?.responseCode != null )
+                        {
                             getBalanceInforAndLimitResponseListner.postValue(result)
+
+                        } else {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
                         }
 
 
@@ -665,16 +661,12 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                     { result ->
                         isLoading.set(false)
 
-                        if(result?.responseCode != null){
-                            when(result?.responseCode) {
-                                ApiConstant.API_SUCCESS ->  getAccountsResponseListner.postValue(result)
-                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as LoginActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
-                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as LoginActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_INVALID)
-                                else ->  getAccountsResponseListner.postValue(result)
-                            }
-                        }
-                        else{
+                        if (result?.responseCode != null )
+                         {
                             getAccountsResponseListner.postValue(result)
+
+                        } else {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
                         }
 
 
