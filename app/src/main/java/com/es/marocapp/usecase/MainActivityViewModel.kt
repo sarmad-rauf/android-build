@@ -12,6 +12,7 @@ import com.es.marocapp.model.responses.LogOutUserResponse
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
+import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.SingleLiveEvent
 import com.es.marocapp.utils.Tools
@@ -41,13 +42,15 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                     { result ->
                         isLoading.set(false)
 
-                        if (result?.responseCode != null && result?.responseCode!!.equals(
-                                ApiConstant.API_SUCCESS, true
-                            )
-                        ) {
-                            getLogOutUserResponseListner.postValue(result)
-
-                        } else {
+                        if(result?.responseCode != null){
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS ->  getLogOutUserResponseListner.postValue(result)
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  getLogOutUserResponseListner.postValue(result)
+                            }
+                        }
+                        else{
                             getLogOutUserResponseListner.postValue(result)
                         }
 
