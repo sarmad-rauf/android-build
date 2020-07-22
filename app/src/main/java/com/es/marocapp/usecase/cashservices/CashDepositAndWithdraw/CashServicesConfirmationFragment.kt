@@ -37,11 +37,8 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
         }
 
         mDataBinding.imgBackButton.setOnClickListener {
-            if(mActivityViewModel.isOTPFlow.get()!!){
-                (activity as CashServicesActivity).navController.popBackStack(R.id.cashMsisdnAndAmountFragment,false)
-            }else{
-                (activity as CashServicesActivity).navController.popBackStack(R.id.cashMsisdnAndAmountFragment,false)
-            }
+            (activity as CashServicesActivity).navController.popBackStack(R.id.cashMsisdnAndAmountFragment,false)
+
         }
 
         (activity as CashServicesActivity).setHeaderVisibility(false)
