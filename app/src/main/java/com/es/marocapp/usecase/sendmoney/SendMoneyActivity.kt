@@ -1,8 +1,12 @@
 package com.es.marocapp.usecase.sendmoney
 
+import android.app.Activity
 import android.content.Intent
+import android.database.Cursor
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -11,12 +15,12 @@ import com.es.marocapp.databinding.ActivitySendMoneyBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.utils.Constants
-import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.widgets.MarocEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.layout_simple_header.view.*
 import java.util.regex.Pattern
+
 
 class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
 
@@ -28,6 +32,7 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
 
     lateinit var mInputField : MarocEditText
     lateinit var mInputFieldLayout : TextInputLayout
+     val PICK_CONTACT = 10021
 
     override fun init(savedInstanceState: Bundle?) {
         mActivityViewModel = ViewModelProvider(this@SendMoneyActivity).get(SendMoneyViewModel::class.java)
@@ -69,6 +74,12 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
         integrator.initiateScan()
     }
 
+    fun openPhoneBook(){
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+        startActivityForResult(intent, PICK_CONTACT)
+    }
+
     fun setHeaderTitle(title : String){
         mDataBinding.headerBillPayment.rootView.simpleHeaderTitle.text = title
     }
@@ -82,43 +93,82 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val result =
-            IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-        if (result != null) {
-            if (result.contents == null) {
-//                DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
-               mInputFieldLayout.isErrorEnabled= true
-               mInputFieldLayout.error= LanguageData.getStringValue("PleaseScanValidQRDot")
-            } else {
-                var sResult = result.contents
-                if(isValidQR(sResult)){
-                    mInputFieldLayout.isErrorEnabled= false
-                    mInputFieldLayout.error= ""
-                    var msisdn = sResult
-                    if(msisdn.contains("212")){
-                        msisdn = msisdn.substringAfter("212")
-                        msisdn = msisdn.substringAfter("+212")
-                        msisdn = "0$msisdn"
-                    }
-                    mInputField.setText(msisdn)
-                }else{
-                    mInputField.setText("")
-//                    DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
-                    mInputFieldLayout.isErrorEnabled= true
-                    mInputFieldLayout.error= LanguageData.getStringValue("PleaseScanValidQRDot")
+
+            if (requestCode == PICK_CONTACT && resultCode === Activity.RESULT_OK) {
+                val contactData = data!!.data
+                val cursor: Cursor? = contentResolver.query(
+                    contactData!!,
+                    null,
+                    null,
+                    null,
+                    null
+                )
+                cursor?.moveToFirst()
+
+                val number =
+                    cursor?.getString(cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER))
+
+                if (number == null || number.isNullOrEmpty()) {
+                    mInputFieldLayout.isErrorEnabled = true
+                    mInputFieldLayout.error =
+                        LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                } else {
+                    var sResult = number
+
+                    verifyAndSetMsisdn(sResult,true)
                 }
             }
-        } else {
-            // This is important, otherwise the result will not be passed to the fragment
-            super.onActivityResult(requestCode, resultCode, data)
-            mInputField.setText("")
+        else {
+            val result =
+                IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+            if (result != null) {
+                if (result.contents == null) {
+//                DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
+                    mInputFieldLayout.isErrorEnabled = true
+                    mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
+                } else {
+                    var sResult = result.contents
+
+                    verifyAndSetMsisdn(sResult,false)
+                }
+            } else {
+                // This is important, otherwise the result will not be passed to the fragment
+                super.onActivityResult(requestCode, resultCode, data)
+                mInputField.setText("")
 //            DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
-            mInputFieldLayout.isErrorEnabled= true
-            mInputFieldLayout.error= LanguageData.getStringValue("PleaseScanValidQRDot")
+                mInputFieldLayout.isErrorEnabled = true
+                mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
+            }
         }
     }
 
-    private fun isValidQR(result: String): Boolean {
+    private fun verifyAndSetMsisdn(sResult: String?,isFromPhonebook:Boolean) {
+        if (isValidNumber(sResult!!)) {
+            mInputFieldLayout.isErrorEnabled = false
+            mInputFieldLayout.error = ""
+            var msisdn = sResult
+            if (msisdn.contains("212")) {
+                msisdn = msisdn.substringAfter("212")
+                msisdn = msisdn.substringAfter("+212")
+                msisdn = "0$msisdn"
+            }
+            mInputField.setText(msisdn)
+        } else {
+            mInputField.setText("")
+//                    DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
+            mInputFieldLayout.isErrorEnabled = true
+            if(isFromPhonebook){
+                mInputFieldLayout.error =
+                    LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+            }
+            else {
+                mInputFieldLayout.error =
+                    LanguageData.getStringValue("PleaseScanValidQRDot")
+            }
+        }
+    }
+
+    private fun isValidNumber(result: String): Boolean {
         var isNumberRegexMatches = false
         var msisdn = result
         if(result.contains("212")){

@@ -51,6 +51,7 @@
         android:layout_height="@dimen/_32sdp"
         android:src="@drawable/ic_selected_msisdn"
         android:layout_margin="@dimen/_2sdp"
+        android:id="@+id/phonebook"
         app:layout_constraintEnd_toEndOf="@+id/input_layout_phone_number"
         app:layout_constraintBottom_toBottomOf="@+id/input_layout_phone_number"
         app:layout_constraintTop_toTopOf="@+id/input_layout_phone_number"

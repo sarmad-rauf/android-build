@@ -2,6 +2,7 @@ package com.es.marocapp.usecase.sendmoney.tranferfundcase
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
@@ -87,6 +88,10 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         (activity as SendMoneyActivity).mInputFieldLayout = mDataBinding.inputLayoutPhoneNumber
         setStrings()
         subscribeObserver()
+
+        mDataBinding.phonebook.setOnClickListener{
+                    (activity as SendMoneyActivity).openPhoneBook()
+        }
     }
 
     private fun setStrings() {
