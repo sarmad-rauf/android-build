@@ -259,7 +259,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 this.add(HomeUseCasesModel(LanguageData.getStringValue("ConsumerRegistration").toString(),R.drawable.ic_consumer))
             }
 
-            this.add(HomeUseCasesModel(LanguageData.getStringValue("CashInViaCard").toString(),R.drawable.ic_home_cashin_card))
+            if(Constants.loginWithCertResponse.allowedMenu.CashInViaCard!=null){
+                this.add(HomeUseCasesModel(LanguageData.getStringValue("CashInViaCard").toString(),R.drawable.ic_home_cashin_card))
+            }
         }
 
         mUseCasesAdapter =

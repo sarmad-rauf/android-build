@@ -20,7 +20,8 @@ data class AllowedMenu(
     val GenerateQR: List<String>,
     val MerchantPayment: List<String>,
     val SendMoney: List<String>,
-    val ConsumerRegistration: List<String>
+    val ConsumerRegistration: List<String>,
+    val CashInViaCard: List<String>
 )
 
 data class Contact(

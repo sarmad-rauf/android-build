@@ -91,7 +91,7 @@ class CashInViaCardAmountFragment : BaseFragment<FragmentCashInViaCardAmountBind
                     )
                 }
 
-            },LanguageData.getStringValue("BtnTitle_OK").toString())
+            },R.drawable.ic_payment_pending,LanguageData.getStringValue("BtnTitle_OK").toString())
         }
     }
 
