@@ -156,7 +156,7 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
         val sAmount: String = mDataBinding.etAmountEntered.text.toString().trim { it <= ' ' }
 
         if (sAmount == "" || SumAmountEditText() == "0" || sAmount == ".") {
-            mDataBinding.etAmountEntered.error = "Please enter valid amount to proceed."
+            mDataBinding.etAmountEntered.error = LanguageData.getStringValue("PleaseEnterValidAmountToProceed.")
             return
         }
         if(Constants.IS_AGENT_USER){

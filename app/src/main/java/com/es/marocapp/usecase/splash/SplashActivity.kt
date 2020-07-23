@@ -191,7 +191,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 //                                Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
                             }
                         }
-                    },getString(R.string.ok))
+                    },R.drawable.ic_force_update,getString(R.string.ok))
             } else {
                 DialogUtils.showErrorDialoge(
                     this@SplashActivity,
