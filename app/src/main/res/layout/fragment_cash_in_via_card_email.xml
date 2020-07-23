@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.es.marocapp.usecase.cashinviacard.CashInViaCardViewModel" />
+
+        <variable
+            name="listner"
+            type="com.es.marocapp.usecase.cashinviacard.CashInViaCardClickListners" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGreyLight"
+        >
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_enter_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            >
+
+            <com.es.marocapp.widgets.MarocEditText
+                android:id="@+id/input_enter_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/myTextInputLabel"
+                android:hint="@string/enter_email"
+                android:inputType="textEmailAddress"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.es.marocapp.widgets.MarocButton
+            android:id="@+id/btnNext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/next"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:onClick="@{listner::onNextButtonClick}"
+            android:background="@drawable/button_enable_blue"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

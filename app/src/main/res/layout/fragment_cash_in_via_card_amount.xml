@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.es.marocapp.usecase.cashinviacard.CashInViaCardViewModel" />
+
+        <variable
+            name="listner"
+            type="com.es.marocapp.usecase.cashinviacard.CashInViaCardClickListners" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGreyLight"
+        >
+
+        <com.es.marocapp.widgets.MarocMediumTextView
+            android:id="@+id/tvAmountSelection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:textStyle="bold"
+            android:text="@string/amount"
+            android:textColor="@color/colorTextGreyMedium"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/amountContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:layout_constraintTop_toBottomOf="@+id/tvAmountSelection">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:focusable="true"
+                >
+
+                <com.es.marocapp.widgets.MarocEditText
+                    android:id="@+id/etAmountEntered"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginBottom="@dimen/_12sdp"
+                    android:background="@android:color/transparent"
+                    android:hint="0.00"
+                    android:imeOptions="actionDone"
+                    android:focusableInTouchMode="true"
+                    android:focusable="true"
+                    android:inputType="numberDecimal"
+                    android:digits="0123456789."
+                    android:cursorVisible="false"
+                    android:gravity="center"
+                    android:textAlignment="center"
+                    android:textColorHint="@color/colorEditTextGreyMedium"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_35sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/minuAmountTotal"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:src="@drawable/minu_btn_orange"
+            app:layout_constraintStart_toStartOf="@+id/tvAmountSelection"
+            app:layout_constraintTop_toBottomOf="@+id/amountContainer" />
+
+        <ImageView
+            android:id="@+id/plusAmountTotal"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:src="@drawable/plus_btn_orange"
+            app:layout_constraintEnd_toEndOf="@id/amountContainer"
+            app:layout_constraintTop_toBottomOf="@+id/amountContainer" />
+
+        <SeekBar
+            android:id="@+id/AmountSeekBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:progressDrawable="@drawable/seek_bar"
+            android:thumb="@drawable/seekbar_slider"
+            app:layout_constraintBottom_toTopOf="@+id/plusAmountTotal"
+            app:layout_constraintEnd_toStartOf="@+id/plusAmountTotal"
+            app:layout_constraintStart_toEndOf="@+id/minuAmountTotal"
+            app:layout_constraintTop_toBottomOf="@+id/plusAmountTotal" />
+
+
+        <com.es.marocapp.widgets.MarocMediumTextView
+            android:id="@+id/tvQuickAmountTitle"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:textStyle="bold"
+            tools:text="@string/quick_amount"
+            android:textColor="@color/colorTextGreyMedium"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintStart_toStartOf="@+id/tvAmountSelection"
+            app:layout_constraintTop_toBottomOf="@+id/AmountSeekBar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/quickAmountRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:layout_constraintTop_toBottomOf="@+id/tvQuickAmountTitle"
+            app:layout_constraintBottom_toTopOf="@+id/btnNext"
+            />
+
+        <com.es.marocapp.widgets.MarocButton
+            android:id="@+id/btnNext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:background="@drawable/button_enable_blue"
+            android:text="@string/next"
+            android:onClick="@{listner::onNextButtonClick}"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

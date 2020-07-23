@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cash_in_via_card_nav_graph"
+    app:startDestination="@id/cashInViaCardEmailFragment">
+
+    <fragment
+        android:id="@+id/cashInViaCardEmailFragment"
+        android:name="com.es.marocapp.usecase.cashinviacard.fragments.CashInViaCardEmailFragment"
+        android:label="CashInViaCardEmailFragment"
+        tools:layout="@layout/fragment_cash_in_via_card_email"
+        >
+        <action
+            android:id="@+id/action_cashInViaCardEmailFragment_to_cashInViaCardAmountFragment"
+            app:destination="@id/cashInViaCardAmountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cashInViaCardAmountFragment"
+        android:name="com.es.marocapp.usecase.cashinviacard.fragments.CashInViaCardAmountFragment"
+        android:label="CashInViaCardAmountFragment"
+        tools:layout="@layout/fragment_cash_in_via_card_amount"
+        >
+        <action
+            android:id="@+id/action_cashInViaCardAmountFragment_to_cashInViaCashWebViewFragment"
+            app:destination="@id/cashInViaCashWebViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cashInViaCashWebViewFragment"
+        android:name="com.es.marocapp.usecase.cashinviacard.fragments.CashInViaCashWebViewFragment"
+        android:label="CashInViaCashWebViewFragment"
+        tools:layout="@layout/fragment_cash_in_via_card_webview"
+        />
+
+
+</navigation>

@@ -20,6 +20,7 @@ import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.airtime.AirTimeActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentActivity
+import com.es.marocapp.usecase.cashinviacard.ActivityCashInViaCard
 import com.es.marocapp.usecase.cashservices.CashServicesActivity
 import com.es.marocapp.usecase.consumerregistration.ConsumerRegistrationActivity
 import com.es.marocapp.usecase.payments.PaymentsActivity
@@ -257,6 +258,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             if(Constants.loginWithCertResponse.allowedMenu.ConsumerRegistration!=null){
                 this.add(HomeUseCasesModel(LanguageData.getStringValue("ConsumerRegistration").toString(),R.drawable.ic_consumer))
             }
+
+            this.add(HomeUseCasesModel(LanguageData.getStringValue("CashInViaCard").toString(),R.drawable.ic_home_cashin_card))
         }
 
         mUseCasesAdapter =
@@ -318,6 +321,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                                 Intent(
                                     activity as MainActivity,
                                     ConsumerRegistrationActivity::class.java
+                                )
+                            )
+                        }
+
+                        LanguageData.getStringValue("CashInViaCard").toString()->{
+                            startActivity(
+                                Intent(
+                                    activity as MainActivity,
+                                    ActivityCashInViaCard::class.java
                                 )
                             )
                         }

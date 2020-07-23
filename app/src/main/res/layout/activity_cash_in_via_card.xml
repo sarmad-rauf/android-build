@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.es.marocapp.usecase.cashinviacard.CashInViaCardViewModel" />
+
+        <variable
+            name="listner"
+            type="com.es.marocapp.usecase.cashinviacard.CashInViaCardClickListners" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".usecase.cashinviacard.ActivityCashInViaCard">
+
+        <include
+            android:id="@+id/headerCashInViaCard"
+            layout="@layout/layout_simple_header" />
+
+
+
+        <fragment
+            android:id="@+id/nav_cash_in_via_card_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/headerCashInViaCard"
+            app:navGraph="@navigation/cash_in_via_card_nav_graph" />
+
+        <include
+            android:id="@+id/Gif_Loader"
+            layout="@layout/layout_dialog"
+            android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
