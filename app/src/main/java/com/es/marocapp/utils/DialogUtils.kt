@@ -70,6 +70,7 @@ object DialogUtils {
         mContext: Context?,
         description: String?,
         listner : DialogUtils.OnCustomDialogListner,
+        icon : Int,
         okBtnText : String = "BtnTitle_OK"
     ) {
         val addDialog = Dialog(mContext!!)
@@ -86,6 +87,9 @@ object DialogUtils {
 
         val tvMessage = addDialog.findViewById<TextView>(R.id.updateDialogDescription)
         val btnOK = addDialog.findViewById<Button>(R.id.updateDialogBtn)
+        val iconToShow = addDialog.findViewById<ImageView>(R.id.updateAppIcon)
+
+        iconToShow.setImageResource(icon)
 
         if(okBtnText.equals("BtnTitle_OK")){
             btnOK.text = LanguageData.getStringValue(okBtnText)
