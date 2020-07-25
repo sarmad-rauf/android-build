@@ -20,7 +20,6 @@ class ApplicationClass : Application() {
         try {
             super.attachBaseContext(context)
             MultiDex.install(this)
-
         } catch (e: Exception) {
         }
     }
