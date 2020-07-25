@@ -45,6 +45,9 @@ object Constants {
     var APP_MSISDN_PREFIX = "+000"
     var APP_MSISDN_LENGTH = "12"
     var APP_MSISDN_REGEX = ""
+    var APP_MSISDN_POSTPAIDBILL_MOBILE_REGEX=""
+    var APP_MSISDN_POSTPAIDBILL_FIXE_REGEX=""
+    var APP_MSISDN_POSTPAIDBILL_INTERNET_REGEX=""
     var APP_CIL_LENGTH = "6"
     var APP_CIL_REGEX = ""
     var quickAmountsList : ArrayList<String> = arrayListOf()

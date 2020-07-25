@@ -131,6 +131,9 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.APP_MSISDN_PREFIX = EncryptionUtils.decryptString(it.msisdnPrefix)
                 Constants.APP_MSISDN_LENGTH = EncryptionUtils.decryptString(it.msisdnLength)
                 Constants.APP_MSISDN_REGEX = it.msisdnRegex
+                Constants.APP_MSISDN_POSTPAIDBILL_MOBILE_REGEX = it.postpaidBillMobileRegex
+                Constants.APP_MSISDN_POSTPAIDBILL_FIXE_REGEX = it.postpaidBillFixedRegex
+                Constants.APP_MSISDN_POSTPAIDBILL_INTERNET_REGEX = it.postpaidBillInternetRegex
                 Constants.APP_CIL_LENGTH = it.cilLength
                 Constants.APP_CIL_REGEX = it.cilRegex
                 Constants.APP_CN_LENGTH = it.cnLength

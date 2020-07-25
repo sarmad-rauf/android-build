@@ -201,7 +201,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         //todo NUmber Lenght is Pending
         if(mActivityViewModel.isBillUseCaseSelected.get()!!){
             //todo NUmber Lenght is Pending
-            if(mDataBinding.inputPhoneNumber.text.isNotEmpty() && mDataBinding.inputPhoneNumber.text.toString().length< Constants.APP_MSISDN_LENGTH.toInt()-2){
+            if(mDataBinding.inputPhoneNumber.text.isNotEmpty() /*&& mDataBinding.inputPhoneNumber.text.toString().length< Constants.APP_MSISDN_LENGTH.toInt()-2*/){
                 mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
             }else{
@@ -335,9 +335,22 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_CIL_REGEX, msisdn))
         }
         if(mActivityViewModel.isBillUseCaseSelected.get()!!){
-            isNumberRegexMatches =
-                !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_MSISDN_REGEX, msisdn))
+            if(mActivityViewModel.isPostPaidMobileSelected.get()!!){
+                isNumberRegexMatches =
+                   !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_MSISDN_POSTPAIDBILL_MOBILE_REGEX, msisdn))
+            }
+            if(mActivityViewModel.isPostPaidFixSelected.get()!!){
+                isNumberRegexMatches =
+                    !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_MSISDN_POSTPAIDBILL_FIXE_REGEX, msisdn))
+            }
+            if(mActivityViewModel.isInternetSelected.get()!!){
+                isNumberRegexMatches =
+                    !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_MSISDN_POSTPAIDBILL_INTERNET_REGEX, msisdn))
+            }
+            /*isNumberRegexMatches =
+                !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_MSISDN_REGEX, msisdn))*/
         }
+
     }
 
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

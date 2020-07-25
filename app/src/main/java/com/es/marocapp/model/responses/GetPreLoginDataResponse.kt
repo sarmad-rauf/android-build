@@ -30,5 +30,8 @@ data class GetPreLoginDataResponse(
     val responseCode: String,
     val termsAndConditions: String,
     val url: String,
-    val version: String
+    val version: String,
+    val postpaidBillFixedRegex:String,
+    val postpaidBillInternetRegex:String,
+    val postpaidBillMobileRegex:String
 )
