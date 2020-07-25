@@ -44,9 +44,9 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
 
         mDataBinding.root.groupBack.visibility = View.VISIBLE
 
-        mDataBinding.root.txtBack.setOnClickListener {
-            (activity as LoginActivity).navController.navigateUp()
-        }
+//        mDataBinding.root.txtBack.setOnClickListener {
+//            (activity as LoginActivity).navController.navigateUp()
+//        }
 
         mDataBinding.root.imgBackButton.setOnClickListener {
             (activity as LoginActivity).navController.navigateUp()
@@ -74,7 +74,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
 
     private fun setStrings() {
         mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("ForgotPassword")
-        mDataBinding.root.txtBack.text= LanguageData.getStringValue("BtnTitle_Back")
+//        mDataBinding.root.txtBack.text= LanguageData.getStringValue("BtnTitle_Back")
 
         mDataBinding.inputLayoutOtp.hint = LanguageData.getStringValue("EnterOTP")
         mDataBinding.inputLayoutSetYourPassword.hint = LanguageData.getStringValue("EnterPassword")

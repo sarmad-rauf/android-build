@@ -8,8 +8,8 @@
     </style>
 
     <style name="Spinner" parent="Widget.AppCompat.Spinner">
-        <item name="backgroundTint">@color/colorWhite</item>
-        <item name="android:textColor">@color/colorWhite</item>
+        <item name="backgroundTint">@color/colorBlack</item>
+        <item name="android:textColor">@color/colorBlack</item>
     </style>
 
     <style name="Widget.Design.TextInputLayout" parent="AppTheme">
@@ -23,7 +23,7 @@
         <!-- Customize your theme here. -->
         <item name="android:textSize">@dimen/_16ssp</item>
         <item name="colorControlNormal">@color/colorEditTextGreyMedium</item>
-        <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorCerulean</item>
     </style>
 
     <style name="AppTheme.TextFloatLabelAppearance" parent="TextAppearance.Design.Hint">

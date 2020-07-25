@@ -20,7 +20,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:background="@color/colorWhite"
         >
 
         <include android:id="@+id/loginHeader"
@@ -43,8 +45,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:layoutDirection="inherit"
                     android:layout_marginTop="@dimen/_32sdp"
-                    android:layout_marginStart="@dimen/_32sdp"
-                    android:layout_marginEnd="@dimen/_32sdp"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
                     >
 
                     <com.es.marocapp.widgets.MarocEditText
@@ -82,6 +84,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/cb_Terms"
+                    android:buttonTint="@color/colorCerulean"
+                    android:foregroundTint="@color/colorCerulean"
                     android:visibility="gone"
                     tools:text="I agree to terms and conditions"
                     app:layout_constraintTop_toBottomOf="@+id/input_layout_phone_number"
@@ -110,9 +114,9 @@
                     android:onClick="@{listener::onLoginButtonClick}"
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/_16ssp"
-                    app:layout_constraintEnd_toEndOf="@+id/input_layout_pin"
+                    app:layout_constraintEnd_toEndOf="@+id/input_layout_phone_number"
                     app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="@+id/input_layout_pin"
+                    app:layout_constraintStart_toStartOf="@+id/input_layout_phone_number"
                     app:layout_constraintTop_toBottomOf="@+id/txtForgotPin" />
 
                 <com.es.marocapp.widgets.MarocMediumTextView

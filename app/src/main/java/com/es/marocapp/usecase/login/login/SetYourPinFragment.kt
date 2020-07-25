@@ -42,9 +42,9 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
 
         mDataBinding.root.groupBack.visibility = View.VISIBLE
 
-        mDataBinding.root.txtBack.setOnClickListener{
-            (activity as LoginActivity).navController.navigateUp()
-        }
+//        mDataBinding.root.txtBack.setOnClickListener{
+//            (activity as LoginActivity).navController.navigateUp()
+//        }
 
         mDataBinding.root.imgBackButton.setOnClickListener{
             (activity as LoginActivity).navController.navigateUp()
@@ -68,7 +68,7 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
         }
 
         mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("CreateYourPassword")
-        mDataBinding.setYourPinHeader.rootView.txtBack.text= LanguageData.getStringValue("BtnTitle_Back")
+//        mDataBinding.setYourPinHeader.rootView.txtBack.text= LanguageData.getStringValue("BtnTitle_Back")
 
         mDataBinding.inputLayoutEnterPin.hint = LanguageData.getStringValue("EnterPassword")
         mDataBinding.inputLayoutConfrimPin.hint = LanguageData.getStringValue("ConfirmPassword")

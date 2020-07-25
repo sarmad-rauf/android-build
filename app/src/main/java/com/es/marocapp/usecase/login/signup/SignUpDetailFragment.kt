@@ -55,9 +55,9 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
         mDataBinding.root.groupBack.visibility = View.VISIBLE
 
-        mDataBinding.root.txtBack.setOnClickListener {
-            (activity as LoginActivity).navController.navigateUp()
-        }
+//        mDataBinding.root.txtBack.setOnClickListener {
+//            (activity as LoginActivity).navController.navigateUp()
+//        }
 
         mDataBinding.root.imgBackButton.setOnClickListener {
             (activity as LoginActivity).navController.navigateUp()
@@ -76,7 +76,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
     }
 
     private fun setStrings() {
-        mDataBinding.root.txtBack.text= LanguageData.getStringValue("BtnTitle_Back")
+//        mDataBinding.root.txtBack.text= LanguageData.getStringValue("BtnTitle_Back")
         mDataBinding.root.txtHeaderTitle.text= LanguageData.getStringValue("CreateYourAccount")
         mDataBinding.inputLayoutFirstName.hint = LanguageData.getStringValue("EnterFirstName")
         mDataBinding.inputLayoutLastName.hint = LanguageData.getStringValue("EnterLastName")

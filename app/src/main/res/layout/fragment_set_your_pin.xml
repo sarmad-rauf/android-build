@@ -20,6 +20,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:background="@color/colorWhite"
         tools:context=".usecase.login.login.SetYourPinFragment">
 
         <include android:id="@+id/setYourPinHeader"
@@ -31,8 +34,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/setYourPinHeader"
             android:layout_marginTop="@dimen/_32sdp"
-            android:layout_marginStart="@dimen/_32sdp"
-            android:layout_marginEnd="@dimen/_32sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
             >
             <com.es.marocapp.widgets.MarocEditText
                 android:id="@+id/input_enter_pin"
@@ -49,8 +52,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/input_layout_enter_pin"
             android:layout_marginTop="@dimen/_16sdp"
-            android:layout_marginStart="@dimen/_32sdp"
-            android:layout_marginEnd="@dimen/_32sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
             >
             <com.es.marocapp.widgets.MarocEditText
                 android:id="@+id/input_confirm_pin"

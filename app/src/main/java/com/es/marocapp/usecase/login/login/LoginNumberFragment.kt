@@ -62,23 +62,23 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
 
         mDataBinding.root.txtHeaderTitle.text = getString(R.string.enter_your_number)
 
-        /*     mDataBinding.root.languageSpinner.visibility = View.VISIBLE
-             mDataBinding.root.languageSpinner.onItemSelectedListener = this
+        /*mDataBinding.root.languageSpinner.visibility = View.VISIBLE
+        mDataBinding.root.languageSpinner.onItemSelectedListener = this
 
-             mActivity = activity as LoginActivity
+        mActivity = activity as LoginActivity
 
-             val languageItems = arrayOf("English", "French")
-             mLanguageSpinnerAdapter =
-                 LanguageCustomSpinnerAdapter(activity as LoginActivity, languageItems)
-             mDataBinding.root.languageSpinner.apply {
-                 adapter = mLanguageSpinnerAdapter
-                 if(LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_EN)){
-                     setSelection(0)
-                 }
-                 else{
-                     setSelection(1)
-                 }
-             }*/
+        val languageItems = arrayOf(LanguageData.getStringValue("DropDown_English").toString(),
+            LanguageData.getStringValue("DropDown_French").toString(),LanguageData.getStringValue("DropDown_Arabic").toString())
+        mLanguageSpinnerAdapter =
+            LanguageCustomSpinnerAdapter(activity as LoginActivity, languageItems)
+        mDataBinding.root.languageSpinner.apply {
+            adapter = mLanguageSpinnerAdapter
+            if (LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_EN)) {
+                setSelection(0)
+            } else {
+                setSelection(1)
+            }
+        }*/
 
         if (mActivityViewModel.isNewUserRegisterd.get()!!) {
             (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_signUpNumberFragment)
@@ -130,7 +130,12 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                 mActivityViewModel.isSignUpFlow.set(true)
                 (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_signUpDetailFragment)
             } else {
-                mDataBinding.root.toast_layout_root.visibility = View.VISIBLE
+                DialogUtils.showUpdateAPPDailog(activity,LanguageData.getStringValue("YouMustAgreeToTermsAndConditionsToProceedFurther"),object : DialogUtils.OnCustomDialogListner{
+                    override fun onCustomDialogOkClickListner() {
+
+                    }
+
+                },R.drawable.update_blue)
             }
         } else {
             //For Proper Flow un Comment all this section
@@ -158,7 +163,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
 //                        context,
 //                        userMSISDNwithPrefix
 //                    )
-                    if(isNumberRegexMatches){
+                    if (isNumberRegexMatches) {
                         mDataBinding.inputLayoutPhoneNumber.error = ""
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
 
@@ -166,8 +171,9 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                             context,
                             userMSISDNwithPrefix
                         )
-                    }else{
-                        mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                    } else {
+                        mDataBinding.inputLayoutPhoneNumber.error =
+                            LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
                     }
 
@@ -221,16 +227,21 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                 showTermsConditionsAndSignup()
                 /* mActivityViewModel.isSignUpFlow.set(true)
                  mActivity.navController.navigate(R.id.action_loginFragment_to_signUpDetailFragment)*/
-            }else if(it.responseCode == ApiConstant.API_ACCOUNT_BLOCKED){
+            } else if (it.responseCode == ApiConstant.API_ACCOUNT_BLOCKED) {
                 val btnTxt = LanguageData.getStringValue("BtnTitle_OK")
                 val titleTxt = LanguageData.getStringValue("AccountBlocked")
-                val descriptionTxt =it.description
-                DialogUtils.showCustomDialogue(activity,btnTxt,descriptionTxt,titleTxt,object : DialogUtils.OnCustomDialogListner{
-                    override fun onCustomDialogOkClickListner() {
-                    }
+                val descriptionTxt = it.description
+                DialogUtils.showCustomDialogue(
+                    activity,
+                    btnTxt,
+                    descriptionTxt,
+                    titleTxt,
+                    object : DialogUtils.OnCustomDialogListner {
+                        override fun onCustomDialogOkClickListner() {
+                        }
 
 
-                })
+                    })
             } else {
                 DialogUtils.showErrorDialoge(activity, it.description)
             }
@@ -258,15 +269,15 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
         // mDataBinding.root.toast_layout_root.visibility=View.VISIBLE
 
         mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("CreateYourAccount")
-                mDataBinding.inputLayoutPhoneNumber.isEnabled = false
+        mDataBinding.inputLayoutPhoneNumber.isEnabled = false
         mDataBinding.btnLogin.text = LanguageData.getStringValue("BtnTitle_Submit")
         mDataBinding.root.tvMsg.text =
             LanguageData.getStringValue("YouMustAgreeToTermsAndConditionsToProceedFurther")
         mDataBinding.root.cb_Terms.visibility = View.VISIBLE
         val text =
-            LanguageData.getStringValue("AgreeTo") + "<font color='#ff6600'>" + LanguageData.getStringValue(
+            LanguageData.getStringValue("AgreeTo") + LanguageData.getStringValue(
                 "TermsConditionsCaps"
-            ) + "</font>."
+            )
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             mDataBinding.root.cb_Terms.setText(
@@ -309,8 +320,12 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                             true
                         )
                     ) {
-                        DialogUtils.showBlockedAccountDialog(activity,LanguageData.getStringValue("BtnTitle_ResetPassword"),LanguageData.getStringValue("BtnTitle_Cancel"),
-                            LanguageData.getStringValue("BlockedAndResetAccount"),LanguageData.getStringValue("AccountBlocked"),object : DialogUtils.OnCustomDialogListner{
+                        DialogUtils.showBlockedAccountDialog(activity,
+                            LanguageData.getStringValue("BtnTitle_ResetPassword"),
+                            LanguageData.getStringValue("BtnTitle_Cancel"),
+                            LanguageData.getStringValue("BlockedAndResetAccount"),
+                            LanguageData.getStringValue("AccountBlocked"),
+                            object : DialogUtils.OnCustomDialogListner {
                                 override fun onCustomDialogOkClickListner() {
                                     mActivityViewModel.isFromLoginUserScreen.set(false)
                                     (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)

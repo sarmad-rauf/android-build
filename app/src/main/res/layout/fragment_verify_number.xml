@@ -20,51 +20,95 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".usecase.login.login.VerifyNumberFragment">
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:descendantFocusability="beforeDescendants"
+        android:background="@color/colorWhite"
+        tools:context=".usecase.login.login.VerifyNumberFragment"
+        >
 
         <include android:id="@+id/verifyNumberHeader"
             layout="@layout/layout_login_header" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_layout_verify_otp"
-            android:layout_width="match_parent"
+        <com.es.marocapp.widgets.MarocRegularTextView
+            android:id="@+id/tvEnterOTPTitile"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/colorBlack"
+            tools:text="Enter OTP"
+            android:layout_margin="@dimen/_16sdp"
             app:layout_constraintTop_toBottomOf="@+id/verifyNumberHeader"
-            android:layout_marginTop="@dimen/_32sdp"
-            android:layout_marginStart="@dimen/_32sdp"
-            android:layout_marginEnd="@dimen/_32sdp"
-            >
+            app:layout_constraintStart_toStartOf="parent"
+            />
 
-            <com.es.marocapp.widgets.MarocEditText
-                android:id="@+id/input_verify_otp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/myTextInputLabel"
-                android:hint="@string/enter_otp"
-                android:inputType="text"
-                android:maxLength="12" />
-        </com.google.android.material.textfield.TextInputLayout>
+        <com.chaos.view.PinView
+            android:id="@+id/input_verify_otp_box"
+            style="@style/PinWidget.PinView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:cursorVisible="false"
+            android:inputType="number"
+            android:padding="16dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:hideLineWhenFilled="false"
+            app:itemHeight="48dp"
+            app:itemRadius="4dp"
+            app:itemSpacing="16dp"
+            app:itemWidth="48dp"
+            app:lineColor="@drawable/otp_selection_theme"
+            app:lineWidth="2dp"
+            app:viewType="rectangle"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvEnterOTPTitile"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
-        <com.es.marocapp.widgets.MarocMediumTextView
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/input_layout_verify_otp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/verifyNumberHeader"-->
+<!--            android:layout_marginTop="@dimen/_32sdp"-->
+<!--            android:layout_marginStart="@dimen/_32sdp"-->
+<!--            android:layout_marginEnd="@dimen/_32sdp"-->
+<!--            >-->
+
+<!--            <com.es.marocapp.widgets.MarocEditText-->
+<!--                android:id="@+id/input_verify_otp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:theme="@style/myTextInputLabel"-->
+<!--                android:hint="@string/enter_otp"-->
+<!--                android:inputType="text"-->
+<!--                android:maxLength="12" />-->
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+        <com.es.marocapp.widgets.MarocRegularTextView
             android:id="@+id/txtOtpNotRecieved"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_32sdp"
             android:text="@string/otp_not_recieved"
-            android:textColor="@color/colorTextGreyDark"
-            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_12ssp"
             android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintTop_toBottomOf="@+id/input_layout_verify_otp"
-            app:layout_constraintStart_toStartOf="@+id/input_layout_verify_otp" />
-        <com.es.marocapp.widgets.MarocMediumTextView
+            app:layout_constraintTop_toBottomOf="@+id/input_verify_otp_box"
+            app:layout_constraintStart_toStartOf="@+id/tvEnterOTPTitile" />
+
+        <com.es.marocapp.widgets.MarocRegularTextView
             android:id="@+id/txtResend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorTextOrange"
-            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_12ssp"
             android:text="@string/resend"
             android:textAllCaps="true"
-            android:textStyle="bold"
             android:layout_marginStart="4dp"
             app:layout_constraintStart_toEndOf="@+id/txtOtpNotRecieved"
             app:layout_constraintBottom_toBottomOf="@id/txtOtpNotRecieved"
@@ -72,17 +116,20 @@
 
         <com.es.marocapp.widgets.MarocButton
             android:id="@+id/btnVerifyOtp"
-            android:layout_width="@dimen/_120sdp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/verify"
             android:textSize="@dimen/_16ssp"
             android:textAllCaps="false"
             android:background="@drawable/button_enable"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_32sdp"
             android:onClick="@{listener::onOTPVerifyClick}"
             android:textColor="@color/colorWhite"
-            app:layout_constraintTop_toBottomOf="@+id/txtOtpNotRecieved"
-            app:layout_constraintEnd_toEndOf="@+id/input_layout_verify_otp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtResend"
+            app:layout_constraintEnd_toEndOf="parent"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

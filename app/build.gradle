@@ -9,7 +9,7 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 
-def baseUrlType = 2 //1:Production,2:Staging,3:Development
+def baseUrlType = 3 //1:Production,2:Staging,3:Development
 
 android {
     compileSdkVersion 29
@@ -136,4 +136,8 @@ dependencies {
     //-------------------------PDF Viewer Lubrary-----------------------
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
     implementation 'com.mindorks.android:prdownloader:0.6.0'
+
+    //-------------------------OTP BOX Library---------------------------
+    implementation 'com.chaos.view:pinview:1.4.3'
+
 }

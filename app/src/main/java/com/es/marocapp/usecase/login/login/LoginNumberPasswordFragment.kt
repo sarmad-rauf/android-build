@@ -2,6 +2,8 @@ package com.es.marocapp.usecase.login.login
 
 
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.lifecycle.Observer
@@ -32,6 +34,7 @@ import kotlinx.android.synthetic.main.layout_login_header.view.*
 class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBinding>(), LoginClickListener {
 
     lateinit var mActivityViewModel: LoginActivityViewModel
+    var isPasswordVisible = false
 
     override fun setLayout(): Int {
         return R.layout.fragment_login_number_password
@@ -53,6 +56,24 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
         numberToShow = "0$numberToShow"
         mDataBinding.inputPhoneNumber.setText(numberToShow)
         mActivityViewModel.isNewUserRegisterd.set(false)
+
+        mDataBinding.imgPasswordStatusIcon.setImageResource(R.drawable.ic_hide_password)
+        mDataBinding.imgPasswordStatusIcon.setOnClickListener {
+            if(isPasswordVisible){
+                mDataBinding.inputPin.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                mDataBinding.imgPasswordStatusIcon.setImageResource(R.drawable.ic_show_password)
+                isPasswordVisible = false
+            }else{
+                mDataBinding.inputPin.transformationMethod = PasswordTransformationMethod.getInstance()
+                mDataBinding.imgPasswordStatusIcon.setImageResource(R.drawable.ic_hide_password)
+                isPasswordVisible = true
+            }
+        }
+
+        mDataBinding.root.groupBack.visibility = View.VISIBLE
+        mDataBinding.root.imgBackButton.setOnClickListener {
+            (activity as LoginActivity).finish()
+        }
 
         mActivityViewModel.isSimplePopUp = false
         subscribeObserver()

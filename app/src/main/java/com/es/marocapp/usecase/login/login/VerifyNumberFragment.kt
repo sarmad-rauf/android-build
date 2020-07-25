@@ -32,7 +32,7 @@ import java.util.regex.Pattern
  * A simple [Fragment] subclass.
  */
 class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
-    VerifyOTPClickListner, TextWatcher {
+    VerifyOTPClickListner, TextWatcher, View.OnFocusChangeListener {
 
     lateinit var mActivityViewModel: LoginActivityViewModel
 
@@ -55,9 +55,9 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
 
         mDataBinding.root.groupBack.visibility = View.VISIBLE
 
-        mDataBinding.root.txtBack.setOnClickListener {
-            (activity as LoginActivity).navController.navigateUp()
-        }
+//        mDataBinding.root.txtBack.setOnClickListener {
+//            (activity as LoginActivity).navController.navigateUp()
+//        }
 
         mDataBinding.root.imgBackButton.setOnClickListener {
             (activity as LoginActivity).navController.navigateUp()
@@ -71,10 +71,17 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
             }
         }
 
-        mDataBinding.inputVerifyOtp.filters =
-            arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_OTP_LENGTH))
 
-        mDataBinding.inputVerifyOtp.addTextChangedListener(this)
+        mDataBinding.inputVerifyOtpBox.itemCount = Constants.APP_OTP_LENGTH
+        var hint = ""
+        for(i in 0 until Constants.APP_OTP_LENGTH){
+            hint = "$hint-"
+        }
+
+        mDataBinding.inputVerifyOtpBox.hint = hint
+
+        mDataBinding.inputVerifyOtpBox.addTextChangedListener(this)
+        mDataBinding.inputVerifyOtpBox.setOnFocusChangeListener(this)
 
         mActivityViewModel.isSimplePopUp = true
         subscribeObserver()
@@ -84,9 +91,8 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
 
     private fun setStrings() {
         mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("VerifyYourNumber")
-        mDataBinding.root.txtBack.text= LanguageData.getStringValue("BtnTitle_Back")
+        mDataBinding.tvEnterOTPTitile.text= LanguageData.getStringValue("EnterOTP")
 
-        mDataBinding.inputLayoutVerifyOtp.hint = LanguageData.getStringValue("EnterOTP")
         mDataBinding.txtOtpNotRecieved.text = LanguageData.getStringValue("OTPNotRecieved")+ " "
         mDataBinding.txtResend.text = LanguageData.getStringValue("Resend")
 
@@ -129,7 +135,7 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
     }
 
     override fun onOTPVerifyClick(view: View) {
-        if (mDataBinding.inputVerifyOtp.text.isNullOrEmpty()) {
+       /* if (mDataBinding.inputVerifyOtp.text.isNullOrEmpty()) {
             mDataBinding.inputLayoutVerifyOtp.error = LanguageData.getStringValue("PleaseEnterValidOTP")
             mDataBinding.inputLayoutVerifyOtp.isErrorEnabled = true
         } else {
@@ -157,6 +163,30 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
                 mDataBinding.inputLayoutVerifyOtp.error = LanguageData.getStringValue("PleaseEnterValidOTP")
                 mDataBinding.inputLayoutVerifyOtp.isErrorEnabled = true
             }
+        }*/
+
+        if(isOTPRegexMatches){
+            if(mActivityViewModel.isDeviceChanged){
+                mActivityViewModel.requestForVerifyOtpAndUpdateAliaseAPI(
+                    activity,
+                    mActivityViewModel.previousDeviceId,
+                    Constants.CURRENT_NUMBER_DEVICE_ID,
+                    mDataBinding.inputVerifyOtpBox.text.toString().trim()
+                )
+            }else{
+                mActivityViewModel.requestForRegisterUserApi(
+                    activity,
+                    Constants.CURRENT_NUMBER_DEVICE_ID,
+                    mDataBinding.inputVerifyOtpBox.text.toString().trim()
+                )
+            }
+        }else{
+            DialogUtils.showUpdateAPPDailog(activity,LanguageData.getStringValue("PleaseEnterValidOTP"),object : DialogUtils.OnCustomDialogListner{
+                override fun onCustomDialogOkClickListner() {
+
+                }
+
+            },R.drawable.update_blue)
         }
     }
 
@@ -213,16 +243,24 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
     }
 
     override fun afterTextChanged(p0: Editable?) {
-        var otp = mDataBinding.inputVerifyOtp.text.toString().trim()
+        var otp = mDataBinding.inputVerifyOtpBox.text.toString().trim()
         var otpLenght = otp.length
         isOTPRegexMatches =
-            (otpLenght > 0 && Pattern.matches(Constants.APP_OTP_REGEX, otp))
+            (otpLenght > 0 && otpLenght==Constants.APP_OTP_LENGTH && Pattern.matches(Constants.APP_OTP_REGEX, otp))
     }
 
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
     }
 
     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+    }
+
+    override fun onFocusChange(p0: View?, hasFocus: Boolean) {
+        if(hasFocus){
+            mDataBinding.tvEnterOTPTitile.setTextColor(activity!!.resources.getColor(R.color.colorCerulean))
+        }else{
+            mDataBinding.tvEnterOTPTitile.setTextColor(activity!!.resources.getColor(R.color.colorBlack))
+        }
     }
 
 }
