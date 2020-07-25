@@ -9,10 +9,7 @@ import android.util.Log
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.CustomModelHistoryItem
-import com.es.marocapp.model.responses.Account
-import com.es.marocapp.model.responses.BalanceInfoAndLimitResponse
-import com.es.marocapp.model.responses.Contact
-import com.es.marocapp.model.responses.LoginWithCertResponse
+import com.es.marocapp.model.responses.*
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -86,7 +83,7 @@ object Constants {
       var getAccountsResponse : Account? =null
     lateinit var getAccountsResponseArray : ArrayList<Account>
     lateinit var loginWithCertResponse : LoginWithCertResponse
-    lateinit var currentTransactionItem : CustomModelHistoryItem
+    lateinit var currentTransactionItem : History
     var mContactListArray : ArrayList<Contact> = arrayListOf()
 
     fun getCurrentDate() : String{
