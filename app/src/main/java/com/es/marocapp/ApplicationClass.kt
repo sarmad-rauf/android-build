@@ -21,6 +21,7 @@ class ApplicationClass : Application() {
             super.attachBaseContext(context)
             MultiDex.install(this)
 
+
         } catch (e: Exception) {
         }
     }

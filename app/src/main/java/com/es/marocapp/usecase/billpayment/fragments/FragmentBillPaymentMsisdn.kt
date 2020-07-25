@@ -145,8 +145,12 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         mActivityViewModel.getPostPaidResourceInfoResponseListner.observe(this@FragmentBillPaymentMsisdn,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                    mActivityViewModel.custId = it.response.custId
-                    mActivityViewModel.custname = it.response.custname
+                    if(it.response.custId!=null) {
+                        mActivityViewModel.custId = it.response.custId
+                    }
+                    if(it.response.custname!=null) {
+                        mActivityViewModel.custname = it.response.custname
+                    }
                     mActivityViewModel.totalamount = it.response.totalamount
                     (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMsisdn_to_fragmentPostPaidBillDetails)
                 }else{
