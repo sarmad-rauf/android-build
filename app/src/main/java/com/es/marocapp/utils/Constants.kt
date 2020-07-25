@@ -48,6 +48,7 @@ object Constants {
     var APP_MSISDN_POSTPAIDBILL_MOBILE_REGEX=""
     var APP_MSISDN_POSTPAIDBILL_FIXE_REGEX=""
     var APP_MSISDN_POSTPAIDBILL_INTERNET_REGEX=""
+    var APP_BILL_PAYMENT_CODE_REGEX=""
     var APP_CIL_LENGTH = "6"
     var APP_CIL_REGEX = ""
     var quickAmountsList : ArrayList<String> = arrayListOf()
