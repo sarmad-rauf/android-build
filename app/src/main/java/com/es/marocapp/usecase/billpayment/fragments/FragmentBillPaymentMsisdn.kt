@@ -264,9 +264,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             }
 
             if (mActivityViewModel.isInternetSelected.get()!!) {
-                if (mDataBinding.inputPhoneNumber.text.isNotEmpty()) {
+                if (!mDataBinding.inputPhoneNumber.text.isNotEmpty()) {
                     mDataBinding.inputLayoutPhoneNumber.error =
-                        LanguageData.getStringValue("EnterValidIdentifier ")
+                        LanguageData.getStringValue("EnterValidIdentifier")
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
                 } else {
                     mDataBinding.inputLayoutPhoneNumber.error = ""
@@ -282,7 +282,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                     } else {
                         isValidForAll = false
                         mDataBinding.inputLayoutPhoneNumber.error =
-                            LanguageData.getStringValue("EnterValidIdentifier ")
+                            LanguageData.getStringValue("EnterValidIdentifier")
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
                     }
 
@@ -394,7 +394,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
     }
 
     override fun afterTextChanged(editable: Editable?) {
-        if(editable == mDataBinding.inputPhoneNumber.editableText){
+        if(editable.hashCode() == mDataBinding.inputPhoneNumber.text.hashCode()){
             var msisdn = mDataBinding.inputPhoneNumber.text.toString().trim()
             var msisdnLenght = msisdn.length
 
@@ -425,7 +425,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                         ))
                 }
             }
-        }else if(editable == mDataBinding.inputCode.editableText){
+        }else if(editable.hashCode() == mDataBinding.inputCode.text.hashCode()){
             var code = mDataBinding.inputCode.text.toString().trim()
             var codeLenght = code.length
             isCodeRegexMatches  =
