@@ -87,9 +87,9 @@ class TransactionHistoryAdapter(
             }
 
         when(models!![position].transactionstatus){
-            "SUCCESSFUL"-> holder.statusImg?.setImageResource(R.drawable.ic_success_svg)
+            "SUCCESSFUL"-> holder.statusImg?.setImageResource(R.drawable.approvals_active)
             "PENDING"-> holder.statusImg?.setImageResource(R.drawable.ic_pending_svg)
-            "FAILED"-> holder.statusImg?.setImageResource(R.drawable.ic_failed_svg)
+            "FAILED"-> holder.statusImg?.setImageResource(R.drawable.failed_2)
             else-> holder.statusImg?.visibility=View.INVISIBLE
         }
 
