@@ -5,12 +5,13 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentTransactionDetailsBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.CustomModelHistoryItem
+import com.es.marocapp.model.responses.History
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.utils.Constants
 
 class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBinding>(){
 
-    private lateinit var mItemDetailsToShow : CustomModelHistoryItem
+    private lateinit var mItemDetailsToShow : History
     private var amount = ""
     private var fee = ""
 
@@ -39,10 +40,10 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
 
     private fun updateUI(){
         //status
-        if(mItemDetailsToShow.historyList.transactionstatus.isNullOrEmpty()){
+        if(mItemDetailsToShow.transactionstatus.isNullOrEmpty()){
             mDataBinding.statusVal.text = "-"
         }else{
-            mDataBinding.statusVal.text = mItemDetailsToShow.historyList.transactionstatus
+            mDataBinding.statusVal.text = mItemDetailsToShow.transactionstatus
         }
 
         //Date
@@ -53,61 +54,61 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         }
 
         //TransactionID
-        if(mItemDetailsToShow.historyList.transactionid.isNullOrEmpty()){
+        if(mItemDetailsToShow.transactionid.isNullOrEmpty()){
             mDataBinding.transactionIDVal.text = "-"
         }else{
 
-            mDataBinding.transactionIDVal.text = mItemDetailsToShow.historyList.transactionid
+            mDataBinding.transactionIDVal.text = mItemDetailsToShow.transactionid
         }
 
         //ReceiverName
-        if(mItemDetailsToShow.historyList.toname.isNullOrEmpty()){
+        if(mItemDetailsToShow.toname.isNullOrEmpty()){
             mDataBinding.ReceiverNameVal.text = "-"
         }else{
 
-            mDataBinding.ReceiverNameVal.text = mItemDetailsToShow.historyList.toname
+            mDataBinding.ReceiverNameVal.text = mItemDetailsToShow.toname
         }
 
         //ReceiverNumber
-        if(mItemDetailsToShow.historyList.tofri.isNullOrEmpty()){
+        if(mItemDetailsToShow.tofri.isNullOrEmpty()){
             mDataBinding.ReceiverIdentityVal.text = "-"
         }else{
 
-            mDataBinding.ReceiverIdentityVal.text = getUpdateFri(mItemDetailsToShow.historyList.tofri)
+            mDataBinding.ReceiverIdentityVal.text = getUpdateFri(mItemDetailsToShow.tofri)
         }
 
         //SenderName
-        if(mItemDetailsToShow.historyList.fromname.isNullOrEmpty()){
+        if(mItemDetailsToShow.fromname.isNullOrEmpty()){
             mDataBinding.SenderNameVal.text = "-"
         }else{
 
-            mDataBinding.SenderNameVal.text = mItemDetailsToShow.historyList.fromname
+            mDataBinding.SenderNameVal.text = mItemDetailsToShow.fromname
         }
 
         //SenderNumber
-        if(mItemDetailsToShow.historyList.fromfri.isNullOrEmpty()){
+        if(mItemDetailsToShow.fromfri.isNullOrEmpty()){
             mDataBinding.SenderIdentityVal.text = "-"
         }else{
 
-            mDataBinding.SenderIdentityVal.text = getUpdateFri(mItemDetailsToShow.historyList.fromfri)
+            mDataBinding.SenderIdentityVal.text = getUpdateFri(mItemDetailsToShow.fromfri)
         }
 
         //Amount
-        if(mItemDetailsToShow.historyList.toamount.isNullOrEmpty()){
+        if(mItemDetailsToShow.toamount.isNullOrEmpty()){
             amount = "0.00"
             mDataBinding.amountVal.text = "DH 0.00"
         }else{
-            amount = mItemDetailsToShow.historyList.toamount
-            mDataBinding.amountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mItemDetailsToShow.historyList.toamount
+            amount = mItemDetailsToShow.toamount
+            mDataBinding.amountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mItemDetailsToShow.toamount
         }
 
         //Fee
-        if(mItemDetailsToShow.historyList.fromfee.isNullOrEmpty()){
+        if(mItemDetailsToShow.fromfee.isNullOrEmpty()){
             fee = "0.00"
             mDataBinding.feeVal.text = "DH 0.00"
         }else{
-            fee = mItemDetailsToShow.historyList.fromfee
-            mDataBinding.feeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mItemDetailsToShow.historyList.fromfee
+            fee = mItemDetailsToShow.fromfee
+            mDataBinding.feeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mItemDetailsToShow.fromfee
         }
 
         //TotalAmount

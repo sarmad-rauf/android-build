@@ -2,7 +2,7 @@ package com.es.marocapp.model.responses
 
 data class TransactionHistoryResponse(
     val description: String,
-    val historyResponse: List<HistoryResponse>,
+    val historyResponse: List<History>,
     val indexoffset: String,
     val responseCode: String,
     val totalCount: String

@@ -9,10 +9,7 @@ import android.util.Log
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.CustomModelHistoryItem
-import com.es.marocapp.model.responses.Account
-import com.es.marocapp.model.responses.BalanceInfoAndLimitResponse
-import com.es.marocapp.model.responses.Contact
-import com.es.marocapp.model.responses.LoginWithCertResponse
+import com.es.marocapp.model.responses.*
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -48,6 +45,10 @@ object Constants {
     var APP_MSISDN_PREFIX = "+000"
     var APP_MSISDN_LENGTH = "12"
     var APP_MSISDN_REGEX = ""
+    var APP_MSISDN_POSTPAIDBILL_MOBILE_REGEX=""
+    var APP_MSISDN_POSTPAIDBILL_FIXE_REGEX=""
+    var APP_MSISDN_POSTPAIDBILL_INTERNET_REGEX=""
+    var APP_BILL_PAYMENT_CODE_REGEX=""
     var APP_CIL_LENGTH = "6"
     var APP_CIL_REGEX = ""
     var quickAmountsList : ArrayList<String> = arrayListOf()
@@ -86,7 +87,7 @@ object Constants {
       var getAccountsResponse : Account? =null
     lateinit var getAccountsResponseArray : ArrayList<Account>
     lateinit var loginWithCertResponse : LoginWithCertResponse
-    lateinit var currentTransactionItem : CustomModelHistoryItem
+    lateinit var currentTransactionItem : History
     var mContactListArray : ArrayList<Contact> = arrayListOf()
 
     fun getCurrentDate() : String{

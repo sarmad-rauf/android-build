@@ -18,12 +18,11 @@ import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
-import kotlinx.android.synthetic.main.fragment_transaction.*
 
 class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), TransactionClickListeners {
 
     private lateinit var transactionViewModel: TransactionViewModel
-    private var mTransactionsList : ArrayList<CustomModelHistoryItem> = ArrayList()
+    private var mTransactionsList : ArrayList<History> = ArrayList()
     private lateinit var mTransactionHistoryAdapter: TransactionHistoryAdapter
 
     override fun setLayout(): Int {
@@ -41,7 +40,7 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
         (activity as MainActivity).setHomeToolbarVisibility(false)
 
         mTransactionHistoryAdapter = TransactionHistoryAdapter(mTransactionsList,object : TransactionHistoryAdapter.HistoryDetailListner{
-            override fun onHistoryDetailClickListner(customModelHistoryItem: CustomModelHistoryItem?) {
+            override fun onHistoryDetailClickListner(customModelHistoryItem: History) {
                 if (customModelHistoryItem != null) {
                     Constants.currentTransactionItem = customModelHistoryItem
                     startActivity(Intent(activity as MainActivity,TransactionDetailsActivity::class.java))
@@ -71,7 +70,7 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                     if(!it.historyResponse.isNullOrEmpty()){
                         var mTransactionList = arrayListOf<CustomModelHistoryItem>()
-                        for(i in it.historyResponse.indices){
+                      /*  for(i in it.historyResponse.indices){
                             mTransactionList.add(CustomModelHistoryItem(0,it.historyResponse[i].date,
                                 History("","","","","","","","",
                                 "","","","","","","","","","","","",
@@ -81,9 +80,9 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
                             for(j in it.historyResponse[i].historyList.indices){
                                 mTransactionList.add(CustomModelHistoryItem(1,it.historyResponse[i].historyList[j].date,it.historyResponse[i].historyList[j]))
                             }
-                        }
+                        }*/
 
-                        mTransactionHistoryAdapter.updateHistoryList(mTransactionList)
+                        mTransactionHistoryAdapter.updateHistoryList(it.historyResponse)
 
                     }else{
                         Toast.makeText(activity,"List Empty",Toast.LENGTH_SHORT).show()

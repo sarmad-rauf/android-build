@@ -92,11 +92,11 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/_14ssp"
                 tool:text="DH2.800.00"
+                android:layout_marginEnd="@dimen/_4sdp"
                 android:textColor="@color/colorGreyDark"
-                android:layout_marginEnd="@dimen/_16sdp"
                 app:layout_constraintTop_toTopOf="@+id/row_bill_type"
                 app:layout_constraintBottom_toBottomOf="@+id/row_bill_type"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/statusImg"
                 app:layout_constraintStart_toEndOf="@+id/row_bill_type"
                 />
 
@@ -107,10 +107,21 @@
                 android:textSize="@dimen/_12ssp"
                 tool:text="30-04-2020 01:12:25"
                 android:layout_marginTop="@dimen/_8sdp"
+
                 android:textColor="@color/colorTextGreyMedium"
                 app:layout_constraintBottom_toBottomOf="@+id/row_company_name"
                 app:layout_constraintEnd_toEndOf="@+id/row_bill_amount"
                 />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="@dimen/_16sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:srcCompat="@drawable/ic_pending_svg"
+                android:id="@+id/statusImg"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -24,7 +24,7 @@ class AccountDetailLimitListAdapter(private val limits: ArrayList<Limits>) :
 
     override fun onBindViewHolder(holder: LimitsItemViewHolder, position: Int) {
         holder.limitListTitle.text = limits[position].name
-        holder.limitListValue.text =Constants.CURRENT_CURRENCY_TYPE_TO_SHOW +" "+ limits[position].threshhold
+        holder.limitListValue.text =limits[position].threshhold
 
         if(position.equals(limits.size)){
             holder.limitListDivider.visibility = View.GONE
