@@ -35,7 +35,7 @@
             android:id="@+id/toolbarContainer"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorWhite"
+            android:background="@color/colorCerulean"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -59,14 +59,14 @@
                     android:layout_height="@dimen/_15sdp"
                     android:background="@drawable/circle"
                     android:gravity="center"
-                    tools:text="3"
+                    android:text="3"
                     android:visibility="invisible"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorCerulean"
                     android:textSize="@dimen/_10ssp"
-                    app:layout_constraintBottom_toBottomOf="@+id/imgIconSideMenu"
-                    app:layout_constraintEnd_toEndOf="@+id/imgIconSideMenu"
-                    app:layout_constraintStart_toEndOf="@id/imgIconSideMenu"
-                    app:layout_constraintTop_toBottomOf="@+id/imgIconSideMenu"
+                    app:layout_constraintBottom_toTopOf="@+id/notification_icon_homeScreen"
+                    app:layout_constraintEnd_toEndOf="@+id/notification_icon_homeScreen"
+                    app:layout_constraintStart_toEndOf="@id/notification_icon_homeScreen"
+                    app:layout_constraintTop_toTopOf="@+id/notification_icon_homeScreen"
                     />
 
                 <com.es.marocapp.widgets.MarocMediumTextView
@@ -77,9 +77,9 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     tools:text="Hi, John Perucci!"
                     android:onClick="@{listener::onAccountDetailClick}"
-                    android:textColor="@color/colorGreyDark"
+                    android:textColor="@color/colorWhite"
                     android:textSize="@dimen/_14ssp"
-                    app:layout_constraintStart_toEndOf="@+id/toolbar_profile_image"
+                    app:layout_constraintStart_toEndOf="@+id/imgIconSideMenu"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.es.marocapp.widgets.MarocRegularTextView
@@ -89,20 +89,40 @@
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_1sdp"
                     android:text="@string/welcome_back"
-                    android:textColor="@color/colorTextGreyMedium"
+                    android:textColor="@color/colorWhite"
                     android:textSize="@dimen/_12ssp"
-                    app:layout_constraintStart_toEndOf="@+id/toolbar_profile_image"
+                    app:layout_constraintStart_toEndOf="@+id/imgIconSideMenu"
                     app:layout_constraintTop_toBottomOf="@+id/toolbar_name" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgIconSideMenu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_20sdp"
-                    android:src="@drawable/ic_menu"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:src="@drawable/ic_menu_white"
                     android:onClick="@{listener::onSideMenuDrawerIconClick}"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/notification_icon_homeScreen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:src="@drawable/ic_notifications"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/call_icon_homeScreen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:src="@drawable/home_icon_call"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/notification_icon_homeScreen"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

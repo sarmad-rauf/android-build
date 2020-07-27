@@ -33,24 +33,24 @@ class HomeUseCasesAdapter(private val usecases : ArrayList<HomeUseCasesModel>, v
         holder.useCaseTitle.text = usecases[position].useCaseTitle
         holder.useCaseImage.setImageResource(usecases[position].useCaseImage)
 
-        if(position==4){
-            holder.useCaseCardView.setCardBackgroundColor(context.resources.getColor(R.color.colorBtnBlue))
-            holder.useCaseChildtLayout.setBackgroundResource(R.color.colorBtnBlue)
-        }else{
-            holder.useCaseCardView.setCardBackgroundColor(context.resources.getColor(R.color.colorWhite))
-            holder.useCaseChildtLayout.setBackgroundResource(R.color.colorWhite)
-        }
-
-        holder.useCaseChildtLayout.setOnClickListener {
-            listener.onHomeUseCaseClick(position,usecases[position].useCaseTitle)
-        }
+//        if(position==4){
+//            holder.useCaseCardView.setCardBackgroundColor(context.resources.getColor(R.color.colorBtnBlue))
+//            holder.useCaseChildtLayout.setBackgroundResource(R.color.colorBtnBlue)
+//        }else{
+//            holder.useCaseCardView.setCardBackgroundColor(context.resources.getColor(R.color.colorWhite))
+//            holder.useCaseChildtLayout.setBackgroundResource(R.color.colorWhite)
+//        }
+//
+//        holder.useCaseChildtLayout.setOnClickListener {
+//            listener.onHomeUseCaseClick(position,usecases[position].useCaseTitle)
+//        }
     }
 
     class HomeUseCasesViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var useCaseTitle : TextView = view.findViewById(R.id.useCaseTitle)
         var useCaseImage : ImageView = view.findViewById(R.id.useCaseImageView)
-        var useCaseCardView : CardView = view.findViewById(R.id.useCaseCardView)
-        var useCaseChildtLayout : ConstraintLayout = view.findViewById(R.id.useCaseChildLayout)
+//        var useCaseCardView : CardView = view.findViewById(R.id.useCaseCardView)
+//        var useCaseChildtLayout : ConstraintLayout = view.findViewById(R.id.useCaseChildLayout)
     }
 
     interface HomeUseCasesClickListner{

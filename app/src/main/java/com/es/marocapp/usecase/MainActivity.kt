@@ -46,6 +46,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
     lateinit var mActivityViewModel: MainActivityViewModel
 
+    override fun setLayout(): Int {
+        return R.layout.activity_main
+    }
+
     override fun init(savedInstanceState: Bundle?) {
         mActivityViewModel = ViewModelProvider(this@MainActivity).get(MainActivityViewModel::class.java)
 
@@ -114,11 +118,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             }
         })
     }
-
-    override fun setLayout(): Int {
-        return R.layout.activity_main
-    }
-
 
     override fun onSideMenuDrawerIconClick(view: View) {
         mDataBinding.drawerLayout.openDrawer(GravityCompat.START)

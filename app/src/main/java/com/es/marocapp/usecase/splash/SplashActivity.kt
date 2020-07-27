@@ -163,9 +163,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                     Constants.quickRechargeAmountsList.addAll(it.quickRechargeAmounts)
                 } else {
                     Constants.quickRechargeAmountsList.apply {
-                        add("5")
-                        add("10")
-                        add("20")
+                        addAll(it.quickRechargeAmounts)
                     }
                 }
                 mActivityViewModel.requestForTranslationsApi(this)

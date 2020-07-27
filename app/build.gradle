@@ -140,4 +140,7 @@ dependencies {
     //-------------------------OTP BOX Library---------------------------
     implementation 'com.chaos.view:pinview:1.4.3'
 
+    //------------Round ProgressBar Library------------------------
+    implementation 'com.github.marcinmoskala:ArcSeekBar:0.31'
+
 }

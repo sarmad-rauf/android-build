@@ -11,7 +11,7 @@ import com.es.marocapp.R
 
 class LanguageCustomSpinnerAdapter(
     val applicationContext: Context,
-    var languages: Array<String>
+    var languages: Array<String>,var textColor : Int = applicationContext.resources.getColor(R.color.colorBlack)
 ) : BaseAdapter() {
 
     private val mInflater: LayoutInflater = LayoutInflater.from(applicationContext)
@@ -29,6 +29,7 @@ class LanguageCustomSpinnerAdapter(
         }
 
         vh.label.text = languages[position]
+        vh.label.setTextColor(textColor)
         return view
     }
 

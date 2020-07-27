@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="com.es.marocapp.usecase.home.HomeViewModel" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorCerulean"
+    >
+
+    <com.marcinmoskala.arcseekbar.ArcSeekBar
+        android:id="@+id/arcSeekBar"
+        android:layout_width="@dimen/_300sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:progressWidth="6dp"
+        app:progressBackgroundWidth="5dp"
+        app:progressColor="@color/colorWhite"
+        app:progressBackgroundColor="@color/colorLightBlue"
+        app:thumb="@drawable/progress_thumb"
+        app:maxProgress="100"
+        app:progress="50"
+        app:roundEdges="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/inner_semi_circle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_40sdp"
+        android:layout_marginEnd="@dimen/_40sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:background="@drawable/oval_sem_circle"
+        app:layout_constraintBottom_toBottomOf="@id/arcSeekBar"
+        app:layout_constraintEnd_toEndOf="@id/arcSeekBar"
+        app:layout_constraintStart_toStartOf="@+id/arcSeekBar"
+        app:layout_constraintTop_toTopOf="@id/arcSeekBar"
+        app:layout_constraintVertical_bias="0.36" />
+
+    <com.es.marocapp.widgets.MarocRegularTextView
+        android:id="@+id/progress_value_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/_14ssp"
+        app:layout_constraintBottom_toBottomOf="@+id/inner_semi_circle"
+        app:layout_constraintEnd_toEndOf="@id/inner_semi_circle"
+        app:layout_constraintStart_toStartOf="@+id/inner_semi_circle"
+        app:layout_constraintTop_toTopOf="@+id/inner_semi_circle"
+        app:layout_constraintVertical_bias="0.3"
+        tools:text="Balance" />
+
+    <com.es.marocapp.widgets.MarocBoldTextView
+        android:id="@+id/progress_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_20sdp"
+        android:textColor="@color/colorWhite"
+        tools:text="DH 2000000000"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingEnd="@dimen/_20sdp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/progress_value_title"
+        app:layout_constraintStart_toStartOf="@+id/inner_semi_circle"
+        app:layout_constraintEnd_toEndOf="@id/inner_semi_circle"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
