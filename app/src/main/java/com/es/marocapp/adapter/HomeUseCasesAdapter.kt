@@ -41,9 +41,9 @@ class HomeUseCasesAdapter(private val usecases : ArrayList<HomeUseCasesModel>, v
 //            holder.useCaseChildtLayout.setBackgroundResource(R.color.colorWhite)
 //        }
 //
-//        holder.useCaseChildtLayout.setOnClickListener {
-//            listener.onHomeUseCaseClick(position,usecases[position].useCaseTitle)
-//        }
+        holder.useCasesParentLayout.setOnClickListener {
+            listener.onHomeUseCaseClick(position,usecases[position].useCaseTitle)
+        }
     }
 
     class HomeUseCasesViewHolder(view: View) : RecyclerView.ViewHolder(view){
@@ -51,6 +51,7 @@ class HomeUseCasesAdapter(private val usecases : ArrayList<HomeUseCasesModel>, v
         var useCaseImage : ImageView = view.findViewById(R.id.useCaseImageView)
 //        var useCaseCardView : CardView = view.findViewById(R.id.useCaseCardView)
 //        var useCaseChildtLayout : ConstraintLayout = view.findViewById(R.id.useCaseChildLayout)
+        var useCasesParentLayout : ConstraintLayout = view.findViewById(R.id.useCasesParentLayout)
     }
 
     interface HomeUseCasesClickListner{

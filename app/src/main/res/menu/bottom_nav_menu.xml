@@ -12,6 +12,11 @@
         android:title="@string/title_transaction_cap" />
 
     <item
+        android:id="@+id/empty"
+        android:enabled="false"
+        android:title="" />
+
+    <item
         android:id="@+id/navigation_pin"
         android:icon="@drawable/ic_pin_inactive"
         android:title="@string/title_pin_cap" />

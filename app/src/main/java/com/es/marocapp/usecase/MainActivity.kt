@@ -46,6 +46,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
     lateinit var mActivityViewModel: MainActivityViewModel
 
+    var isDirectCallForTransaction = true
+
     override fun setLayout(): Int {
         return R.layout.activity_main
     }
@@ -78,6 +80,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
+        mDataBinding.fab.setOnClickListener{
+            if(isDirectCallForTransaction){
+                navController.navigate(R.id.action_navigation_home_to_navigation_transaction)
+            }else{
+                navController.navigateUp()
+                navController.navigate(R.id.action_navigation_home_to_navigation_transaction)
+            }
+        }
+
 
         subscribeObserver()
         setStrings()

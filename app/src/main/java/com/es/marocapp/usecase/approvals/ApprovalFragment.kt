@@ -61,6 +61,7 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
         }
 
         (activity as MainActivity).setHomeToolbarVisibility(false)
+        (activity as MainActivity).isDirectCallForTransaction = false
 
         subscribeForApprovalsResponse()
         setStrings()

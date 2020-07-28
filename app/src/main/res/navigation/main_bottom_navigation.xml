@@ -9,13 +9,19 @@
         android:name="com.es.marocapp.usecase.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home"
-        />
+        >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_transaction"
+            app:destination="@id/transaction_fragment" />
+    </fragment>
+
     <fragment
-        android:id="@+id/navigation_transaction"
+        android:id="@+id/transaction_fragment"
         android:name="com.es.marocapp.usecase.transaction.TransactionFragment"
         android:label="TransactionFragment"
         tools:layout="@layout/fragment_transaction"
         />
+
     <fragment
         android:id="@+id/navigation_pin"
         android:name="com.es.marocapp.usecase.changepassword.ChangePasswordFragment"
@@ -48,5 +54,11 @@
         android:label="ApprovalSuccessFragment"
         tools:layout="@layout/fragment_approval_success">
     </fragment>
+    <fragment
+        android:id="@+id/navigation_transaction"
+        android:name="com.es.marocapp.usecase.qrcode.GernerateQRFragment"
+        android:label="GernerateQRFragment"
+        tools:layout="@layout/fragment_generate_qr"
+        />
 
 </navigation>
