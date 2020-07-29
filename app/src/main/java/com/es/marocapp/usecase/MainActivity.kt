@@ -1,5 +1,6 @@
 package com.es.marocapp.usecase
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
@@ -20,6 +21,7 @@ import com.es.marocapp.databinding.ActivityMainBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.accountdetails.AccountDetailsActivity
+import com.es.marocapp.usecase.cashinviacard.ActivityCashInViaCard
 import com.es.marocapp.usecase.favorites.FavoritesActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.qrcode.GenerateQrActivity
@@ -90,6 +92,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             }
         }
 
+        mDataBinding.dashboardCashInViaCard.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@MainActivity,
+                    ActivityCashInViaCard::class.java
+                )
+            )
+        }
 
         subscribeObserver()
         setStrings()

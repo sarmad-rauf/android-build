@@ -287,14 +287,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     )
                 )
             }
-            if (Constants.loginWithCertResponse.allowedMenu.GenerateQR != null) {
+           /* if (Constants.loginWithCertResponse.allowedMenu.GenerateQR != null) {
                 this.add(
                     HomeUseCasesModel(
                         LanguageData.getStringValue("GenerateQR").toString(),
                         R.drawable.home_qr
                     )
                 )
-            }
+            }*/
             if (Constants.loginWithCertResponse.allowedMenu.CashService != null) {
                 this.add(
                     HomeUseCasesModel(
@@ -312,14 +312,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 )
             }
 
-            if (Constants.loginWithCertResponse.allowedMenu.CashInViaCard != null) {
+            /*if (Constants.loginWithCertResponse.allowedMenu.CashInViaCard != null) {
                 this.add(
                     HomeUseCasesModel(
                         LanguageData.getStringValue("CashInViaCard").toString(),
                         R.drawable.home_cash_via_card
                     )
                 )
-            }
+            }*/
         }
 
         mUseCasesAdapter =
@@ -374,12 +374,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                             )
                         }
 
-                        LanguageData.getStringValue("GenerateQR").toString() -> {
+                        /*LanguageData.getStringValue("GenerateQR").toString() -> {
                             (activity as MainActivity).startNewActivity(
                                 activity as MainActivity,
                                 GenerateQrActivity::class.java
                             )
-                        }
+                        }*/
 
                         LanguageData.getStringValue("CashService").toString() -> {
                             startActivity(
@@ -399,14 +399,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                             )
                         }
 
-                        LanguageData.getStringValue("CashInViaCard").toString() -> {
+                        /*LanguageData.getStringValue("CashInViaCard").toString() -> {
                             startActivity(
                                 Intent(
                                     activity as MainActivity,
                                     ActivityCashInViaCard::class.java
                                 )
                             )
-                        }
+                        }*/
 
                         else -> {
                             startActivity(
