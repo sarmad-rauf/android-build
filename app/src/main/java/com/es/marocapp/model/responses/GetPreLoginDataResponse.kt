@@ -36,6 +36,7 @@ data class GetPreLoginDataResponse(
     val quickRechargeAmounts: List<String>,
     val responseCode: String,
     val termsAndConditions: String,
+    val walletBalanceLimitKey: String,
     val url: String,
     val version: String
 )
