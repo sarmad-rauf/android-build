@@ -22,8 +22,8 @@ class MarocEditText : EditText {
     }
 
     private fun init() {
-        if (RootValues.getInstance().fontRubikLight != null) {
-            setTypeface(RootValues.getInstance().fontRubikLight)
+        if (RootValues.getInstance().fontSofiaProRegular != null) {
+            setTypeface(RootValues.getInstance().fontSofiaProRegular)
         }
 
         setTextAlignment(View.TEXT_ALIGNMENT_VIEW_START);

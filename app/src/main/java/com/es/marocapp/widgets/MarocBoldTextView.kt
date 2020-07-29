@@ -19,8 +19,8 @@ class MarocBoldTextView : androidx.appcompat.widget.AppCompatTextView {
     }
 
     private fun init() {
-        if (RootValues.getInstance().fontRubikBold != null) {
-            setTypeface(RootValues.getInstance().fontRubikBold)
+        if (RootValues.getInstance().fontSofiaProBold != null) {
+            setTypeface(RootValues.getInstance().fontSofiaProBold)
         }
     }
 
