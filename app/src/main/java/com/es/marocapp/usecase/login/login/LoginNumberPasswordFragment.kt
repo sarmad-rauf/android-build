@@ -75,6 +75,14 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
             (activity as LoginActivity).finish()
         }
 
+        mDataBinding.userAnotherAccountTitle.setOnClickListener {
+            (activity as LoginActivity).navController.navigateUp()
+        }
+
+        mDataBinding.userAnotherAccountIcon.setOnClickListener {
+            (activity as LoginActivity).navController.navigateUp()
+        }
+
         mActivityViewModel.isSimplePopUp = false
         subscribeObserver()
         setStrings()
@@ -82,6 +90,7 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
     }
 
     private fun setStrings() {
+        mDataBinding.userAnotherAccountTitle.text= LanguageData.getStringValue("UseAnotheMtcashAccount")
         mDataBinding.root.txtHeaderTitle.text= LanguageData.getStringValue("LoginIntoAccount")
         mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
         mDataBinding.inputLayoutPin.hint = LanguageData.getStringValue("Password")
