@@ -57,6 +57,7 @@ object Constants {
     var URL_FOR_TERMSANDCONDITIONS =""
     var APP_VERSION =""
     var URL_FOR_UPDATE_APP =""
+    var KEY_FOR_WALLET_BALANCE_MAX =""
 
 
     var APPLICATION_IP_ADDRESS = ""

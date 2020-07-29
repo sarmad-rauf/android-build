@@ -143,4 +143,7 @@ dependencies {
     //------------Round ProgressBar Library------------------------
     implementation 'com.github.marcinmoskala:ArcSeekBar:0.31'
 
+    //------------Round ImageView-------------------
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+
 }

@@ -60,13 +60,13 @@
                     android:background="@drawable/circle"
                     android:gravity="center"
                     android:text="3"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     android:textColor="@color/colorCerulean"
                     android:textSize="@dimen/_10ssp"
-                    app:layout_constraintBottom_toTopOf="@+id/notification_icon_homeScreen"
-                    app:layout_constraintEnd_toEndOf="@+id/notification_icon_homeScreen"
-                    app:layout_constraintStart_toEndOf="@id/notification_icon_homeScreen"
-                    app:layout_constraintTop_toTopOf="@+id/notification_icon_homeScreen"
+                    app:layout_constraintBottom_toTopOf="@+id/dashboard_cash_in_via_card"
+                    app:layout_constraintEnd_toEndOf="@+id/dashboard_cash_in_via_card"
+                    app:layout_constraintStart_toEndOf="@id/dashboard_cash_in_via_card"
+                    app:layout_constraintTop_toTopOf="@+id/dashboard_cash_in_via_card"
                     />
 
                 <com.es.marocapp.widgets.MarocMediumTextView
@@ -106,11 +106,11 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/notification_icon_homeScreen"
+                    android:id="@+id/dashboard_cash_in_via_card"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_16sdp"
-                    android:src="@drawable/bell_2"
+                    android:src="@drawable/ic_dashboard_cash_via_card"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -121,8 +121,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:src="@drawable/home_icon_call"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/notification_icon_homeScreen"
+                    app:layout_constraintEnd_toStartOf="@+id/dashboard_cash_in_via_card"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

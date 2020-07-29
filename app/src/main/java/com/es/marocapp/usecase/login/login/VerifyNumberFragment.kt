@@ -73,12 +73,12 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
 
 
         mDataBinding.inputVerifyOtpBox.itemCount = Constants.APP_OTP_LENGTH
-        var hint = ""
-        for(i in 0 until Constants.APP_OTP_LENGTH){
-            hint = "$hint-"
-        }
-
-        mDataBinding.inputVerifyOtpBox.hint = hint
+//        var hint = ""
+//        for(i in 0 until Constants.APP_OTP_LENGTH){
+//            hint = "$hint-"
+//        }
+//
+//        mDataBinding.inputVerifyOtpBox.hint = hint
 
         mDataBinding.inputVerifyOtpBox.addTextChangedListener(this)
         mDataBinding.inputVerifyOtpBox.setOnFocusChangeListener(this)

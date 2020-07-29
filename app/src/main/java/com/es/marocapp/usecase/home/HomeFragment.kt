@@ -1,7 +1,6 @@
 package com.es.marocapp.usecase.home
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
@@ -14,6 +13,7 @@ import com.es.marocapp.adapter.HomeUseCasesAdapter
 import com.es.marocapp.adapter.LanguageCustomSpinnerAdapter
 import com.es.marocapp.databinding.FragmentHomeBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.model.CardModel
 import com.es.marocapp.model.HomeUseCasesModel
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
@@ -287,14 +287,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     )
                 )
             }
-            if (Constants.loginWithCertResponse.allowedMenu.GenerateQR != null) {
+           /* if (Constants.loginWithCertResponse.allowedMenu.GenerateQR != null) {
                 this.add(
                     HomeUseCasesModel(
                         LanguageData.getStringValue("GenerateQR").toString(),
                         R.drawable.home_qr
                     )
                 )
-            }
+            }*/
             if (Constants.loginWithCertResponse.allowedMenu.CashService != null) {
                 this.add(
                     HomeUseCasesModel(
@@ -312,14 +312,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 )
             }
 
-            if (Constants.loginWithCertResponse.allowedMenu.CashInViaCard != null) {
+            /*if (Constants.loginWithCertResponse.allowedMenu.CashInViaCard != null) {
                 this.add(
                     HomeUseCasesModel(
                         LanguageData.getStringValue("CashInViaCard").toString(),
                         R.drawable.home_cash_via_card
                     )
                 )
-            }
+            }*/
         }
 
         mUseCasesAdapter =
@@ -374,12 +374,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                             )
                         }
 
-                        LanguageData.getStringValue("GenerateQR").toString() -> {
+                        /*LanguageData.getStringValue("GenerateQR").toString() -> {
                             (activity as MainActivity).startNewActivity(
                                 activity as MainActivity,
                                 GenerateQrActivity::class.java
                             )
-                        }
+                        }*/
 
                         LanguageData.getStringValue("CashService").toString() -> {
                             startActivity(
@@ -399,14 +399,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                             )
                         }
 
-                        LanguageData.getStringValue("CashInViaCard").toString() -> {
+                        /*LanguageData.getStringValue("CashInViaCard").toString() -> {
                             startActivity(
                                 Intent(
                                     activity as MainActivity,
                                     ActivityCashInViaCard::class.java
                                 )
                             )
-                        }
+                        }*/
 
                         else -> {
                             startActivity(
@@ -427,7 +427,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     }
 
     private fun populateHomeCardView() {
-        mCardAdapter = HomeCardAdapter(this@HomeFragment.childFragmentManager)
+        var mbalanceInfoAndResonse = Constants.balanceInfoAndResponse
+        var maxUserBalance = "0"
+        if(!mbalanceInfoAndResonse.limitsList.isNullOrEmpty()){
+            for(index in mbalanceInfoAndResonse.limitsList!!.indices){
+               if(mbalanceInfoAndResonse.limitsList!![index].name.equals(Constants.KEY_FOR_WALLET_BALANCE_MAX)){
+                   maxUserBalance = mbalanceInfoAndResonse.limitsList!![index].threshhold!!
+               }
+            }
+        }
+        var listOfFragment : ArrayList<HomeBalanceFragment> = arrayListOf()
+        listOfFragment.add(HomeBalanceFragment(
+            0, CardModel(
+                R.drawable.ic_wallet_balance,
+                LanguageData.getStringValue("Balance").toString(),
+                Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mbalanceInfoAndResonse.balance,maxUserBalance,mbalanceInfoAndResonse.balance!!
+            ),-1
+        ))
+        addAgentBalanceCard(listOfFragment)
+        populateBanners(listOfFragment)
+        mCardAdapter = HomeCardAdapter(this@HomeFragment.childFragmentManager,listOfFragment)
         mDataBinding.viewpager.apply {
             adapter = mCardAdapter
             pageMargin = 16
@@ -437,6 +456,39 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         mDataBinding.flexibleIndicator.initViewPager(mDataBinding.viewpager)
 
 //        setRightLeftNavigationVisibility()
+    }
+
+    private fun populateBanners(listOfFragment: ArrayList<HomeBalanceFragment>) {
+        listOfFragment.add(HomeBalanceFragment(
+            1, CardModel(-1, "", "","",""),R.drawable.dummy_adver_2
+        ))
+        listOfFragment.add(HomeBalanceFragment(
+            1, CardModel(-1, "", "","",""),R.drawable.dummy_adv_1
+        ))
+        listOfFragment.add(HomeBalanceFragment(
+            1, CardModel(-1, "", "","",""),R.drawable.sample
+        ))
+    }
+
+    private fun addAgentBalanceCard(listOfFragment: ArrayList<HomeBalanceFragment>) {
+        if (Constants.IS_AGENT_USER && Constants.getAccountsResponseArray != null) {
+            for (i in Constants.getAccountsResponseArray.indices) {
+                if (Constants.getAccountsResponseArray[i].accountType.equals(
+                        Constants.TYPE_COMMISSIONING,
+                        true
+                    )
+                ) {
+                    Constants.getAccountsResponse = Constants.getAccountsResponseArray[i]
+                    listOfFragment.add(HomeBalanceFragment(
+                        0, CardModel(
+                            R.drawable.ic_wallet_balance,
+                            Constants.getAccountsResponse!!.accountType,
+                            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + Constants.getAccountsResponse!!.balance,"0","0"
+                        ),-1)
+                    )
+                }
+            }
+        }
     }
 
     private fun setRightLeftNavigationVisibility() {

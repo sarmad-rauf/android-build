@@ -15,6 +15,10 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
     private var amount = ""
     private var fee = ""
 
+    override fun setLayout(): Int {
+        return R.layout.fragment_transaction_details
+    }
+
     override fun init(savedInstanceState: Bundle?) {
         mItemDetailsToShow = Constants.currentTransactionItem
         mDataBinding.imgBackButton.setOnClickListener {
@@ -132,10 +136,6 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         userFri = userFri.substringBefore("@")
         userFri = userFri.substringBefore("/")
         return userFri
-    }
-
-    override fun setLayout(): Int {
-        return R.layout.fragment_transaction_details
     }
 
 }
