@@ -150,6 +150,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.APP_VERSION = it.version
                 Constants.URL_FOR_UPDATE_APP = it.url
                 Constants.KEY_FOR_WALLET_BALANCE_MAX = it.walletBalanceLimitKey
+                Constants.PREVIOUS_DAYS_TRANSACTION_COUNT = it.numberOfTransactions
                 if (it.quickAmounts.isNotEmpty()) {
                     Constants.quickAmountsList.addAll(it.quickAmounts)
                 } else {
