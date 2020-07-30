@@ -1,6 +1,7 @@
 package com.es.marocapp.usecase.transaction
 
 import android.os.Bundle
+import android.view.View
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentTransactionDetailsBinding
 import com.es.marocapp.locale.LanguageData
@@ -120,7 +121,7 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         totalAmount = Constants.converValueToTwoDecimalPlace(totalAmount.toDouble())
         mDataBinding.totalAmountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+totalAmount
 
-
+        mDataBinding.receiverNameGroup.visibility = View.GONE
     }
 
     private fun getFri(fri: String): String {
