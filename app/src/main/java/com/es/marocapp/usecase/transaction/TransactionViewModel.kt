@@ -13,7 +13,6 @@ import com.es.marocapp.network.applyIOSchedulers
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.login.LoginActivity
-import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.SingleLiveEvent
 import com.es.marocapp.utils.Tools
@@ -35,10 +34,13 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
         if (Tools.checkNetworkStatus(getApplication())) {
 
             isLoading.set(true)
+            var currentDate = ""
+            var previousDateForTransactions = ""
 
-
+            currentDate = Constants.getCurrentDate()
+            previousDateForTransactions = Constants.getPreviousFromCurrentDate(currentDate,Constants.PREVIOUS_DAYS_TRANSACTION_COUNT.toInt())
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getTrasactionHistoryCall(
-                TransactionHistoryRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getCurrentDate(),Constants.getNumberMsisdn(identity),"0","2020-04-28")
+                TransactionHistoryRequest(ApiConstant.CONTEXT_AFTER_LOGIN,currentDate,Constants.getNumberMsisdn(identity),"0",previousDateForTransactions)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(

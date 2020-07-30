@@ -6,15 +6,12 @@ import android.net.wifi.WifiManager
 import android.os.Build
 import android.text.format.Formatter.formatIpAddress
 import android.util.Log
-import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
-import com.es.marocapp.model.CustomModelHistoryItem
 import com.es.marocapp.model.responses.*
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 object Constants {
@@ -58,6 +55,7 @@ object Constants {
     var APP_VERSION =""
     var URL_FOR_UPDATE_APP =""
     var KEY_FOR_WALLET_BALANCE_MAX =""
+    var PREVIOUS_DAYS_TRANSACTION_COUNT ="30"
 
 
     var APPLICATION_IP_ADDRESS = ""
@@ -92,13 +90,37 @@ object Constants {
     var mContactListArray : ArrayList<Contact> = arrayListOf()
 
     fun getCurrentDate() : String{
-        val calendar = Calendar.getInstance(TimeZone.getDefault())
+        /*val calendar = Calendar.getInstance(TimeZone.getDefault())
 
         val currentYear = calendar[Calendar.YEAR].toString()
         val currentMonth = (calendar[Calendar.MONTH] + 1).toString()
         val currentDay = calendar[Calendar.DAY_OF_MONTH].toString()
         var formattedDate = "$currentYear-$currentMonth-$currentDay"
+        return formattedDate*/
+        val c = Calendar.getInstance().time
+        Log.i("CurrentTime",c.toString())
+
+//        val df = SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault())
+        val df = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val formattedDate = df.format(c)
+        Log.i("CurrentTime",formattedDate)
         return formattedDate
+    }
+
+    fun getPreviousFromCurrentDate (
+        currentDate: String,
+        previousDaysTransactionCount: Int
+    ) : String{
+        val dateFormat =
+            SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date = dateFormat.parse(currentDate)
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        calendar.add(Calendar.DATE, -previousDaysTransactionCount)
+        val previousDateAsString = dateFormat.format(calendar.time)
+        Log.i("CurrentTimePrevious",previousDateAsString)
+
+        return previousDateAsString
     }
 
     fun createUserToken() : String{
