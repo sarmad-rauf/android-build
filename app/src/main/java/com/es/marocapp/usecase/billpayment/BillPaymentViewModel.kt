@@ -2,6 +2,7 @@ package com.es.marocapp.usecase.billpayment
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import com.es.marocapp.R
@@ -260,12 +261,19 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
             isLoading.set(true)
             var convertedAmountValue=""
             var convertedOpenAmount=""
+
+
             try {
-                 convertedAmountValue = String.format(
+                convertedAmountValue = String.format(
                     "%.2f",
-                    (selectBillAmount.toDouble() / Constants.AMOUNT_CONVERSION_VALUE.toDouble()).toString()
+                    (selectBillAmount.toDouble() / Constants.AMOUNT_CONVERSION_VALUE.toDouble())
                 )
-                 convertedOpenAmount = (convertedAmountValue.toDouble() * 1000).toString()
+                Log.d("convertedAmountValue", convertedAmountValue)
+
+                convertedOpenAmount =
+                    (convertedAmountValue.toDouble() * Constants.AMOUNT_CONVERSION_VALUE.toDouble()).toString()
+                Log.d("convertedOpenAmount", convertedOpenAmount)
+
             }
             catch (e:Exception){
 

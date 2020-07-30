@@ -433,6 +433,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             for(index in mbalanceInfoAndResonse.limitsList!!.indices){
                if(mbalanceInfoAndResonse.limitsList!![index].name.equals(Constants.KEY_FOR_WALLET_BALANCE_MAX)){
                    maxUserBalance = mbalanceInfoAndResonse.limitsList!![index].threshhold!!
+                   maxUserBalance = maxUserBalance.removePrefix("DH").trim()
                }
             }
         }

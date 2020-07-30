@@ -133,15 +133,15 @@ class FundsTrasnferSuccessFragment : BaseFragment<FragmentFundsTransferSuccessBi
         mDataBinding.tvContactNumVal.text = mActivityViewModel.ReceiverName
         mDataBinding.tvReceiverNumberVal.text = mActivityViewModel.transferdAmountTo
 
-        mDataBinding.tvOwnerNameVal2.text = Constants.CURRENT_CURRENCY_TYPE+" "+mActivityViewModel.amountToTransfer
-        mDataBinding.tvContactNumVal2.text = Constants.CURRENT_CURRENCY_TYPE+" "+mActivityViewModel.feeAmount
+        mDataBinding.tvOwnerNameVal2.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.amountToTransfer
+        mDataBinding.tvContactNumVal2.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.feeAmount
 
         var amountToTransfer = Constants.addAmountAndFee(mActivityViewModel.amountToTransfer.toDouble(),mActivityViewModel.feeAmount.toDouble())
-        mDataBinding.tvDHVal.text =Constants.CURRENT_CURRENCY_TYPE+" "+amountToTransfer
+        mDataBinding.tvDHVal.text =Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+amountToTransfer
 
         Constants.balanceInfoAndResponse.balance = mActivityViewModel.senderBalanceAfter
 
-        mDataBinding.newBalanceVal.text = Constants.CURRENT_CURRENCY_TYPE+" "+mActivityViewModel.senderBalanceAfter
+        mDataBinding.newBalanceVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.senderBalanceAfter
     }
 
     override fun onNextClickListner(view: View) {

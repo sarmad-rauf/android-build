@@ -26,7 +26,7 @@ class QuickAmountAdapter(
     }
 
     override fun onBindViewHolder(holder: QuickAmountItemViewHolder, position: Int) {
-        holder.quickAmountItemName.text = Constants.CURRENT_CURRENCY_TYPE+mQuickAmountItems[position].quickAmountVal
+        holder.quickAmountItemName.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+mQuickAmountItems[position].quickAmountVal
 
         if(mQuickAmountItems[position].isQuickAmountActive){
             holder.quickAmountItemName.background = mContext.resources.getDrawable(R.drawable.button_quick_recharge_enable)
