@@ -48,7 +48,7 @@
             android:focusable="true"
             >
 
-            <com.es.marocapp.widgets.MarocEditText
+            <EditText
                 android:id="@+id/etAmountEntered"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
