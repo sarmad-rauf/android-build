@@ -60,7 +60,7 @@ class CashServicesSuccessFragment : BaseFragment<FragmentCashServicesSuccessBind
 
     private fun updateUI() {
 
-        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname + Constants.balanceInfoAndResponse.surname
+        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname +" "+ Constants.balanceInfoAndResponse.surname
         mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
 
         mDataBinding.tvOwnerNameVal.text = mActivityViewModel.transactionID
@@ -80,6 +80,8 @@ class CashServicesSuccessFragment : BaseFragment<FragmentCashServicesSuccessBind
 
         Constants.balanceInfoAndResponse.balance = mActivityViewModel.senderBalanceAfter
         mDataBinding.newBalanceVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.senderBalanceAfter
+
+        mDataBinding.recieverNameGroup.visibility = View.GONE
 
     }
 

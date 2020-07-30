@@ -136,7 +136,7 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
 //        tvAmountVal == AmountTotal
 
         mDataBinding.tvSenderNameVal.text =
-            Constants.balanceInfoAndResponse.firstname + Constants.balanceInfoAndResponse.surname
+            Constants.balanceInfoAndResponse.firstname +" "+ Constants.balanceInfoAndResponse.surname
         mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
 
         mDataBinding.tvCompanyNameVal.text = mActivityViewModel.transferdAmountTo
@@ -154,6 +154,8 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
         )
         mDataBinding.tvAmountVal.text =
             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + amountToTransfer
+
+        mDataBinding.receiverNameGroup.visibility = View.GONE
     }
 
     override fun onNextClickListner(view: View) {

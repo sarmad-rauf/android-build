@@ -192,7 +192,7 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
 //        tvAmountVal == AmountTotal
 
         mDataBinding.tvSenderNameVal.text =
-            Constants.balanceInfoAndResponse.firstname + Constants.balanceInfoAndResponse.surname
+            Constants.balanceInfoAndResponse.firstname +" "+ Constants.balanceInfoAndResponse.surname
         mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
 
         mDataBinding.tvCompanyNameVal.text = mActivityViewModel.transferdAmountTo
@@ -223,6 +223,7 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
             mDataBinding.divider2.visibility = View.GONE
         }
 
+        mDataBinding.receiverNameGroup.visibility = View.GONE
     }
 
     override fun onNextClickListner(view: View) {

@@ -29,6 +29,7 @@ class PaidBillStatusAdpater (private val billStatus : ArrayList<PostPaidBillPaym
     override fun onBindViewHolder(holder: BillPaymentItemViewHolder, position: Int) {
         holder.tvSourceTitle.text = LanguageData.getStringValue("Source")
         holder.tvReceiverNameTitle.text = LanguageData.getStringValue("ReceiverName")
+//        holder.tvReceiverNameTitle.visibility = View.GONE
         holder.tvReceiverNumberTitle.text = LanguageData.getStringValue("ReceiverNumber")
         holder.tvAmountTitle.text = LanguageData.getStringValue("Amount")
         holder.tvFeeTitle.text = LanguageData.getStringValue("Fee")
@@ -36,6 +37,7 @@ class PaidBillStatusAdpater (private val billStatus : ArrayList<PostPaidBillPaym
 
         holder.tvSourceVal.text = LanguageData.getStringValue("Wallet")
         holder.tvReceiverNameVal.text = recieverName
+//        holder.tvReceiverNameVal.visibility = View.GONE
         holder.tvReceiverNumberVal.text = receiverNumber
         holder.tvAmountVal.text = listOfSelectedBillAmount[position]
         holder.tvFeeVal.text = listOfSelectedBillFee[position]

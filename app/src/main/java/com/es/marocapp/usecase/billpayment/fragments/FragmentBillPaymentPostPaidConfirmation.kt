@@ -129,7 +129,7 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
 //
 //        tvAmountVal == AmountTotal
 
-        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname + Constants.balanceInfoAndResponse.surname
+        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname +" "+ Constants.balanceInfoAndResponse.surname
         mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
 
         if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
@@ -185,6 +185,8 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
         var totalCost = Constants.converValueToTwoDecimalPlace(amountToTransfer.toDouble())
         mDataBinding.tvAmountVal.text =
             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + totalCost
+
+        mDataBinding.receiverNameGroup.visibility = View.GONE
     }
 
     private fun setStrings() {

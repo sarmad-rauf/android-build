@@ -164,6 +164,13 @@
                             app:layout_constraintBottom_toBottomOf="@+id/tvOwnerNameTitle"
                             app:layout_constraintEnd_toEndOf="@+id/tvCompanyNameVal" />
 
+                        <androidx.constraintlayout.widget.Group
+                            android:id="@+id/receiverNameGroup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:constraint_referenced_ids="tvContactNumTitle,tvContactNumVal"
+                            />
+
                         <com.es.marocapp.widgets.MarocLightTextView
                             android:id="@+id/tvContactNumTitle"
                             android:layout_width="wrap_content"

@@ -141,7 +141,7 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
 
     private fun updateUI() {
 
-        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname + Constants.balanceInfoAndResponse.surname
+        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname +" "+ Constants.balanceInfoAndResponse.surname
         mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
 
         mDataBinding.tvCompanyNameVal.text = mActivityViewModel.transferdAmountTo
@@ -150,6 +150,8 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
 
         amountToTransfer = Constants.addAmountAndFee(mActivityViewModel.amountToTransfer.toDouble(),mActivityViewModel.feeAmount.toDouble())
         mDataBinding.tvAmountVal.text =Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+amountToTransfer
+
+        mDataBinding.receiverNameGroup.visibility = View.GONE
 
 
     }

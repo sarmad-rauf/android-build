@@ -125,7 +125,7 @@ class FundsTrasnferSuccessFragment : BaseFragment<FragmentFundsTransferSuccessBi
             mDataBinding.tvContactNumVal.visibility = View.GONE
         }
 
-        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname + Constants.balanceInfoAndResponse.surname
+        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname +" "+ Constants.balanceInfoAndResponse.surname
         mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
 
 
@@ -142,6 +142,8 @@ class FundsTrasnferSuccessFragment : BaseFragment<FragmentFundsTransferSuccessBi
         Constants.balanceInfoAndResponse.balance = mActivityViewModel.senderBalanceAfter
 
         mDataBinding.newBalanceVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.senderBalanceAfter
+
+        mDataBinding.receiverNameGroup.visibility = View.GONE
     }
 
     override fun onNextClickListner(view: View) {

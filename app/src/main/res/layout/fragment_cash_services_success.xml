@@ -137,6 +137,14 @@
                             app:layout_constraintBottom_toBottomOf="@+id/tvOwnerNameTitle"
                             app:layout_constraintEnd_toEndOf="@+id/tvCompanyNameVal" />
 
+                        <androidx.constraintlayout.widget.Group
+                            android:id="@+id/recieverNameGroup"
+                            android:visibility="gone"
+                            app:constraint_referenced_ids="tvContactNumTitle,tvContactNumVal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+
                         <com.es.marocapp.widgets.MarocLightTextView
                             android:id="@+id/tvContactNumTitle"
                             android:layout_width="wrap_content"
@@ -153,8 +161,8 @@
                             android:id="@+id/tvContactNumVal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_8sdp"
                             android:visibility="gone"
+                            android:layout_marginTop="@dimen/_8sdp"
                             android:text="+212 88716 9918"
                             android:textColor="@color/colorTextGreyDark"
                             android:textSize="@dimen/_14sdp"
