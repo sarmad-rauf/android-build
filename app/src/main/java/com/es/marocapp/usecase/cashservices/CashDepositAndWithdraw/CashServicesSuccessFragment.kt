@@ -76,10 +76,10 @@ class CashServicesSuccessFragment : BaseFragment<FragmentCashServicesSuccessBind
             mActivityViewModel.amountToTransfer.toDouble(),
             mActivityViewModel.feeAmount.toDouble()
         )
-        mDataBinding.tvDHVal.text = Constants.CURRENT_CURRENCY_TYPE + " " + amountToTransfer
+        mDataBinding.tvDHVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + amountToTransfer
 
         Constants.balanceInfoAndResponse.balance = mActivityViewModel.senderBalanceAfter
-        mDataBinding.newBalanceVal.text = Constants.CURRENT_CURRENCY_TYPE+" "+mActivityViewModel.senderBalanceAfter
+        mDataBinding.newBalanceVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.senderBalanceAfter
 
     }
 
