@@ -389,7 +389,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 mActivityViewModel.isUserSelectedFromFavorites.set(true)
                 break
             }else{
-                mActivityViewModel.isUserSelectedFromFavorites.set(true)
+                mActivityViewModel.isUserSelectedFromFavorites.set(false)
                 Log.i("FavoritesCheck","false")
             }
 
@@ -405,7 +405,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 Log.i("FavoritesCheck","true")
                 break
             }else{
-                mActivityViewModel.isUserSelectedFromFavorites.set(true)
+                mActivityViewModel.isUserSelectedFromFavorites.set(false)
                 Log.i("FavoritesCheck","false")
             }
         }

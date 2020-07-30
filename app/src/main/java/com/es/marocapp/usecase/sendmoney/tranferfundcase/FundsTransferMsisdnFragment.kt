@@ -215,7 +215,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                 mActivityViewModel.isUserSelectedFromFavorites.set(true)
                 break
             }else{
-                mActivityViewModel.isUserSelectedFromFavorites.set(true)
+                mActivityViewModel.isUserSelectedFromFavorites.set(false)
                 Log.i("FavoritesCheck","false")
             }
         }

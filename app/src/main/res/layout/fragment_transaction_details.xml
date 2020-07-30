@@ -203,6 +203,13 @@
             app:layout_constraintBottom_toBottomOf="@+id/SenderIdentityTitle"
             />
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/receiverNameGroup"
+            android:visibility="gone"
+            app:constraint_referenced_ids="ReceiverNameTitle,ReceiverNameVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <com.es.marocapp.widgets.MarocLightTextView
             android:id="@+id/ReceiverNameTitle"
             android:layout_width="wrap_content"

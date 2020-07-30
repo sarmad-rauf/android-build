@@ -204,7 +204,7 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
                 Log.i("FavoritesCheck","true")
                 break
             }else{
-                mActivityViewModel.isUserSelectedFromFavorites.set(true)
+                mActivityViewModel.isUserSelectedFromFavorites.set(false)
                 Log.i("FavoritesCheck","false")
             }
         }
