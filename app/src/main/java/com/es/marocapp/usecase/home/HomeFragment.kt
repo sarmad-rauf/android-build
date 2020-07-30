@@ -75,6 +75,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         }
 
         (activity as MainActivity).isDirectCallForTransaction = true
+        (activity as MainActivity).isTransactionFragmentNotVisible = true
         setStrings()
         setQuickAmountListner()
     }

@@ -55,6 +55,7 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
         }
 
         transactionViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN)
+        (activity as MainActivity).isTransactionFragmentNotVisible = false
 
         subscribeObserver()
         setStrings()

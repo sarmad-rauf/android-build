@@ -36,6 +36,8 @@ class ChangePasswordFragment : BaseFragment<FragmentChangepasswordBinding>(), Ch
 
         (activity as MainActivity).setHomeToolbarVisibility(false)
         (activity as MainActivity).isDirectCallForTransaction = false
+        (activity as MainActivity).isTransactionFragmentNotVisible = true
+
 
 //        pinViewModel.text.observe(this, Observer {
 //            text_notifications.text = it
