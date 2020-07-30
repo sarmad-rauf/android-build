@@ -39,9 +39,9 @@ class PaidBillStatusAdpater (private val billStatus : ArrayList<PostPaidBillPaym
         holder.tvReceiverNameVal.text = recieverName
 //        holder.tvReceiverNameVal.visibility = View.GONE
         holder.tvReceiverNumberVal.text = receiverNumber
-        holder.tvAmountVal.text = listOfSelectedBillAmount[position]
-        holder.tvFeeVal.text = listOfSelectedBillFee[position]
-        holder.tvTotalCostVal.text = Constants.addAmountAndFee(listOfSelectedBillAmount[position].toDouble(), listOfSelectedBillFee[position].toDouble())
+        holder.tvAmountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+listOfSelectedBillAmount[position]
+        holder.tvFeeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+listOfSelectedBillFee[position]
+        holder.tvTotalCostVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+Constants.addAmountAndFee(listOfSelectedBillAmount[position].toDouble(), listOfSelectedBillFee[position].toDouble())
 
         if(!billStatus.isNullOrEmpty()){
 

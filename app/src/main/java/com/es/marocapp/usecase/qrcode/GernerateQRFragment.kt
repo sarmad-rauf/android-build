@@ -27,6 +27,7 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>(){
         (activity as MainActivity).setHomeToolbarVisibility(false)
 
         (activity as MainActivity).isDirectCallForTransaction = false
+        (activity as MainActivity).isTransactionFragmentNotVisible = true
         setStrings()
     }
 
