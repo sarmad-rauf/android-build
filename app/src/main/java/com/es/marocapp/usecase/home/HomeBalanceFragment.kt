@@ -25,17 +25,21 @@ class HomeBalanceFragment(var viewType : Int,cardDataModel : CardModel,var image
             mDataBinding.progressValueTitle.text = mCardModel.cardName
             mDataBinding.progressValue.text = mCardModel.cardBalance
 
-            if(!mCardModel.userMax.isNullOrEmpty()){
-                mDataBinding.arcSeekBar.maxProgress = mCardModel.userMax.toInt()
-            }else{
-                mDataBinding.arcSeekBar.maxProgress = 0
-            }
+            try {
+                if (!mCardModel.userMax.isNullOrEmpty()) {
+                    mDataBinding.arcSeekBar.maxProgress = mCardModel.userMax.toInt()
+                } else {
+                    mDataBinding.arcSeekBar.maxProgress = 0
+                }
 
-            if(!mCardModel.userCurrent.isNullOrEmpty()){
-                var doubleVal = mCardModel.userCurrent.toDouble()
-                mDataBinding.arcSeekBar.progress = doubleVal.toInt()
-            }else{
-                mDataBinding.arcSeekBar.progress = 0
+                if (!mCardModel.userCurrent.isNullOrEmpty()) {
+                    var doubleVal = mCardModel.userCurrent.toDouble()
+                    mDataBinding.arcSeekBar.progress = doubleVal.toInt()
+                } else {
+                    mDataBinding.arcSeekBar.progress = 0
+                }
+            }catch (e:Exception){
+
             }
 
             mDataBinding.arcSeekBar.isClickable = false

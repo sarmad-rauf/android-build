@@ -19,8 +19,8 @@ class MarocRegularTextView : androidx.appcompat.widget.AppCompatTextView {
     }
 
     private fun init() {
-        if (RootValues.getInstance().fontRubikRegular != null) {
-            setTypeface(RootValues.getInstance().fontRubikRegular)
+        if (RootValues.getInstance().fontSofiaProRegular != null) {
+            setTypeface(RootValues.getInstance().fontSofiaProRegular)
         }
     }
 
