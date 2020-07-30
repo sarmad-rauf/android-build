@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -62,13 +63,15 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
         list_of_favorites.clear()
         for(contacts in Constants.mContactListArray){
             var contactNumber = contacts.fri
+            var contactName = contacts.contactName
             contactNumber = contactNumber.substringBefore("@")
             contactNumber = contactNumber.substringBefore("/")
             contactNumber = contactNumber.removePrefix(Constants.APP_MSISDN_PREFIX)
             contactNumber = "0$contactNumber"
             //todo also here remove lenght-2 check in max line
             if(contactNumber.length.equals(Constants.APP_MSISDN_LENGTH.toInt() - 2)){
-                list_of_favorites.add(contactNumber)
+                var name_number_favorite = "$contactName-$contactNumber"
+                list_of_favorites.add(name_number_favorite)
             }
         }
         list_of_favorites.add(0,LanguageData.getStringValue("SelectFavorite").toString())
@@ -184,16 +187,25 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         var selectedFavorites = mDataBinding.spinnerSelectFavorites.selectedItem.toString()
         if(!selectedFavorites.equals(LanguageData.getStringValue("SelectFavorite"))){
+            selectedFavorites = selectedFavorites.substringAfter("-")
             mDataBinding.inputPhoneNumber.setText(selectedFavorites)
             mActivityViewModel.isUserSelectedFromFavorites.set(true)
+        }else{
+            mDataBinding.inputPhoneNumber.setText("")
+            mActivityViewModel.isUserSelectedFromFavorites.set(false)
         }
     }
 
     private fun checkNumberExistInFavorites(userMsisdn: String) {
         for(i in 0 until list_of_favorites.size){
-            if(list_of_favorites[i].equals(userMsisdn)){
+            var favoriteNumber = list_of_favorites[i].substringAfter("-")
+            if(favoriteNumber.equals(userMsisdn)){
                 mActivityViewModel.isUserSelectedFromFavorites.set(true)
+                Log.i("FavoritesCheck","true")
                 break
+            }else{
+                mActivityViewModel.isUserSelectedFromFavorites.set(true)
+                Log.i("FavoritesCheck","false")
             }
         }
     }
