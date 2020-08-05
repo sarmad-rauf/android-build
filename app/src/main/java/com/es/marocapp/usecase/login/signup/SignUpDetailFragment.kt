@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
+import android.text.format.DateFormat
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -26,9 +27,7 @@ import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 import java.util.*
-import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.collections.ArrayList
 
 
 /**
@@ -127,6 +126,12 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
             OnDateSetListener { datePicker, year, month, day ->
                 var monthVal = (month+1).toString()
                 var selectedDate = "$year-$monthVal-$day"
+                val c = Calendar.getInstance()
+                c.set(Calendar.YEAR,year)
+                c.set(Calendar.MONTH,month)
+                c.set(Calendar.DAY_OF_MONTH,day)
+
+                selectedDate= DateFormat.format("yyyy-MM-dd", c.time).toString()
                 mDataBinding.inputDateOfBirth.setText(selectedDate)
             }, year, month, dayOfMonth
         )
