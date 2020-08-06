@@ -13,6 +13,7 @@ import com.es.marocapp.BuildConfig
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentLoginNumberPasswordBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.Account
 import com.es.marocapp.model.responses.BalanceInfoAndLimitResponse
 import com.es.marocapp.model.responses.LoginWithCertResponse
@@ -162,6 +163,10 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                     Constants.LOGGED_IN_USER = mActivityViewModel.mUserMsisdn
                 }
                 Constants.HEADERS_AFTER_LOGINS = true
+                if(!LocaleManager.languageToBeChangedAfterAPI.isNullOrEmpty()){
+                    LocaleManager.selectedLanguage=LocaleManager.languageToBeChangedAfterAPI
+                    LocaleManager.languageToBeChangedAfterAPI=""
+                }
                 mActivityViewModel.requestForBalanceInfoAndLimtsAPI(activity)
             }else if(it.responseCode == ApiConstant.API_ACCOUNT_BLOCKED){
                 val btnTxt = LanguageData.getStringValue("BtnTitle_OK")

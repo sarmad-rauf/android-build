@@ -193,12 +193,35 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     {
         if (Tools.checkNetworkStatus(getApplication())) {
             isLoading.set(true)
-            var convertedAmountValue = (selectBillAmount.toDouble()/Constants.AMOUNT_CONVERSION_VALUE.toDouble()).toString()
+         //   var convertedAmountValue = (selectBillAmount.toDouble()/Constants.AMOUNT_CONVERSION_VALUE.toDouble()).toString()
+
+            var convertedAmountValue=""
+            var convertedOpenAmount=""
+
+
+            try {
+                convertedAmountValue = String.format(
+                    "%.2f",
+                    (selectBillAmount.toDouble() / Constants.AMOUNT_CONVERSION_VALUE.toDouble())
+                )
+                Log.d("convertedAmountValue", convertedAmountValue)
+
+                convertedOpenAmount =
+                    (DecimalFormat("#").format((convertedAmountValue.toDouble() * Constants.AMOUNT_CONVERSION_VALUE.toDouble()))).toString()
+
+                // convertedOpenAmount = String.format("%.0f", convertedOpenAmount)
+
+                Log.d("convertedOpenAmount", convertedOpenAmount)
+
+            }
+            catch (e:Exception){
+
+            }
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPostPaidBillPaymentQuote(
                 PostPaidBillPaymentQuoteRequest(
                     convertedAmountValue,mCodeEntered,ApiConstant.CONTEXT_AFTER_LOGIN,custId,custname,"1",
-                    transferdAmountTo,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),selectBillAmount,Constants.TYPE_PAYMENT,domain,invoiceMonth,ohrefnum,ohxact,openAmount
+                    transferdAmountTo,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),selectBillAmount,Constants.TYPE_PAYMENT,domain,invoiceMonth,ohrefnum,ohxact,convertedOpenAmount
                 )
             )
                 .compose(applyIOSchedulers())

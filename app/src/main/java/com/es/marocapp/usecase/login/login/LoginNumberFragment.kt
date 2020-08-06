@@ -222,6 +222,9 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                     mActivityViewModel.requestForGetOtpApi(activity)
                 }
 
+                if(!it.language.isNullOrEmpty()) {
+                    LocaleManager.languageToBeChangedAfterAPI = it.language
+                }
             } else if (it.responseCode == ApiConstant.API_FAILURE) {
                 isRegFlow = true
                 showTermsConditionsAndSignup()
