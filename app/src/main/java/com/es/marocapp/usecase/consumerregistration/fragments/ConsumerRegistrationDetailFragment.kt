@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
+import android.text.format.DateFormat
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
@@ -253,6 +254,12 @@ class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistra
             DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
                 var monthVal = (month + 1).toString()
                 var selectedDate = "$year-$monthVal-$day"
+                val c = Calendar.getInstance()
+                c.set(Calendar.YEAR,year)
+                c.set(Calendar.MONTH,month)
+                c.set(Calendar.DAY_OF_MONTH,day)
+
+                selectedDate= DateFormat.format("yyyy-MM-dd", c.time).toString()
                 mDataBinding.inputDateOfBirth.setText(selectedDate)
             }, year, month, dayOfMonth
         )
