@@ -103,12 +103,12 @@ class AirTimeTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
 
                     if (!it.rechargeFixe.planList.isNullOrEmpty()) {
                         mAirTimeTypes.add(it.rechargeFixe.titleName)
-                        mAitTimeIcon.add(R.drawable.mobile_fix)
+                        mAitTimeIcon.add(R.drawable.mobile_fix_blue)
                     }
 
                     if (!it.rechargeMobile.planList.isNullOrEmpty()) {
                         mAirTimeTypes.add(it.rechargeMobile.titleName)
-                        mAitTimeIcon.add(R.drawable.mobile)
+                        mAitTimeIcon.add(R.drawable.mobile_blue)
                     }
 
                     mAirTimeItemTypeAdapter.notifyDataSetChanged()

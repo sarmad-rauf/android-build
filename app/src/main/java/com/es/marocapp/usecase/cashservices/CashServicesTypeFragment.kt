@@ -37,8 +37,8 @@ class CashServicesTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() 
 
         mCashServicesTypesIcon.clear()
         mCashServicesTypesIcon.apply {
-            add(R.drawable.ic_deposit)
-            add(R.drawable.ic_withdraw)
+            add(R.drawable.ic_deposit_blue)
+            add(R.drawable.ic_withdraw_blue)
         }
 
         mCashServicesItemTypeAdapter = PaymentItemsAdapter(mCashServicesTypes, mCashServicesTypesIcon ,object : PaymentItemsAdapter.PaymentItemTypeClickListner{

@@ -16,7 +16,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGreyLight"
+    android:background="@color/colorWhite"
     android:focusableInTouchMode="true"
     >
 
@@ -87,9 +87,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         tools:text="Scan QR "
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorTextOrange"
         android:textStyle="bold"
-        android:background="@drawable/button_enable_blue"
+        android:background="@drawable/button_disable"
         android:layout_marginStart="@dimen/_32sdp"
         android:layout_marginEnd="@dimen/_32sdp"
         android:layout_marginBottom="@dimen/_16sdp"
@@ -108,7 +108,7 @@
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
         android:onClick="@{listener::onNextClickListner}"
-        android:background="@drawable/button_enable_blue"
+        android:background="@drawable/button_enable"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_16sdp"
         android:layout_marginBottom="@dimen/_16sdp"

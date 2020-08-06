@@ -5,11 +5,13 @@
     android:layout_height="wrap_content"
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_marginTop="@dimen/_8sdp"
-    android:id="@+id/containerLayout"
     android:layout_marginBottom="@dimen/_8sdp"
+    android:id="@+id/containerLayout"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_4sdp"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:background="@color/colorWhite"

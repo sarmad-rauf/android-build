@@ -29,6 +29,10 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
     var isQuickRechargeUseCase = false
     var quickRechargeAmount = ""
 
+    override fun setLayout(): Int {
+        return R.layout.activity_air_time
+    }
+
     override fun init(savedInstanceState: Bundle?) {
         mActivityViewModel =
             ViewModelProvider(this@AirTimeActivity).get(AirTimeViewModel::class.java)
@@ -60,7 +64,6 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
         setCompanyIconToolbarVisibility(false)
         setFragmentToShow()
     }
-
     fun setFragmentToShow(){
         if(isQuickRechargeUseCase){
             mActivityViewModel.isQuickRechargeUseCase.set(true)
@@ -74,9 +77,6 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
         }
 
         navController.setGraph(navGraph)
-    }
-    override fun setLayout(): Int {
-        return R.layout.activity_air_time
     }
 
     fun setHeaderTitle(title: String) {
@@ -98,5 +98,12 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
         } else {
             mDataBinding.headerAirTime.visibility = View.GONE
         }
+    }
+
+    fun setVisibilityAndTextToImage(amount : String){
+        mDataBinding.headerAirTime.rootView.img_company_icons.visibility = View.GONE
+        mDataBinding.headerAirTime.rootView.first_letter_icons.visibility = View.VISIBLE
+
+        mDataBinding.headerAirTime.rootView.first_letter_icons.text = amount
     }
 }

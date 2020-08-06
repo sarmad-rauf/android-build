@@ -16,7 +16,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGreyLight"
+    android:background="@color/colorWhite"
     android:focusableInTouchMode="true"
     >
 
@@ -38,12 +38,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16sdp"
+        app:cardElevation="@dimen/_12sdp"
         app:cardCornerRadius="@dimen/_12sdp"
         app:layout_constraintTop_toBottomOf="@+id/tvAmountSelection">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
             android:focusableInTouchMode="true"
             android:focusable="true"
             >
@@ -213,7 +216,7 @@
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_16sdp"
         android:layout_marginBottom="@dimen/_16sdp"
-        android:background="@drawable/button_enable_blue"
+        android:background="@drawable/button_enable"
         android:text="@string/next"
         android:onClick="@{listner::onNextClickListner}"
         android:textColor="@color/colorWhite"
