@@ -19,7 +19,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorGreyLight"
+        android:background="@color/colorWhite"
         >
 
         <ImageView
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/colorCerulean"
+            android:background="@color/colorWhite"
             />
 
         <com.es.marocapp.widgets.MarocRegularTextView
@@ -35,7 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:text="@string/transaction_history"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorBlack"
             android:textSize="@dimen/_18ssp"
             android:textAlignment="center"
             android:gravity="center"
@@ -51,7 +51,7 @@
             android:layout_width="@dimen/_32sdp"
             android:layout_height="@dimen/_32sdp"
             android:layout_marginStart="@dimen/_12sdp"
-            app:srcCompat="@drawable/ic_back_svg"
+            app:srcCompat="@drawable/ic_back_black_svg"
             android:onClick="@{listener::onBackBtnClick}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTransactionHistoryTitle"

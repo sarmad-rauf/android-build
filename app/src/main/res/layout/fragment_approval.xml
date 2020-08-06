@@ -16,7 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorGreyLight"
+        android:background="@color/colorWhite"
         >
 
         <ImageView
@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/colorCerulean"
+            android:background="@color/colorWhite"
             />
 
         <com.es.marocapp.widgets.MarocRegularTextView
@@ -33,7 +33,7 @@
             android:layout_height="0dp"
             android:gravity="center"
             tools:text="@string/my_approvals"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorBlack"
             android:textSize="@dimen/_18ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgBackButton"
@@ -46,7 +46,7 @@
             android:layout_width="@dimen/_32sdp"
             android:layout_height="@dimen/_32sdp"
             android:layout_marginStart="@dimen/_12sdp"
-            app:srcCompat="@drawable/ic_back_svg"
+            app:srcCompat="@drawable/ic_back_black_svg"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTransactionHistoryTitle"
             app:layout_constraintBottom_toTopOf="@+id/tvTransactionHistoryTitle"
@@ -56,7 +56,7 @@
             android:id="@+id/allApprovalTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorTextGreyMedium"
+            android:textColor="@color/colorBlack"
             android:textSize="@dimen/_14ssp"
             android:text="@string/all_approvals"
             android:layout_marginTop="@dimen/_16sdp"
@@ -79,6 +79,8 @@
             layout="@layout/layout_dialog"
             android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
             />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
