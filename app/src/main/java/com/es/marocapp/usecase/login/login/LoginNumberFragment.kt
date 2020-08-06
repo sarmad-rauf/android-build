@@ -224,6 +224,9 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                     }
                 }
 
+                if(!it.language.isNullOrEmpty()) {
+                    LocaleManager.languageToBeChangedAfterAPI = it.language
+                }
             } else if (it.responseCode == ApiConstant.API_FAILURE) {
                 isRegFlow = true
                 showTermsConditionsAndSignup()

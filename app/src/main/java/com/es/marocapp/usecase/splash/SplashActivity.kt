@@ -22,6 +22,7 @@ import com.es.marocapp.BuildConfig
 import com.es.marocapp.R
 import com.es.marocapp.databinding.AcitivtySplashBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.GetPreLoginDataResponse
 import com.es.marocapp.model.responses.translations.TranslationInnerObject
 import com.es.marocapp.network.ApiConstant
@@ -151,6 +152,9 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.URL_FOR_UPDATE_APP = it.url
                 Constants.KEY_FOR_WALLET_BALANCE_MAX = it.walletBalanceLimitKey
                 Constants.PREVIOUS_DAYS_TRANSACTION_COUNT = it.numberOfTransactions
+                if(!it.defaultLanguage.isNullOrEmpty()) {
+                    LocaleManager.selectedLanguage = it.defaultLanguage
+                }
                 if (it.quickAmounts.isNotEmpty()) {
                     Constants.quickAmountsList.addAll(it.quickAmounts)
                 } else {
