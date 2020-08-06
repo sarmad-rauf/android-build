@@ -20,6 +20,7 @@ import com.es.marocapp.utils.SingleLiveEvent
 import com.es.marocapp.utils.Tools
 import io.reactivex.disposables.Disposable
 import retrofit2.HttpException
+import java.text.DecimalFormat
 
 class BillPaymentViewModel(application: Application) : AndroidViewModel(application){
     lateinit var disposable: Disposable
@@ -271,7 +272,10 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                 Log.d("convertedAmountValue", convertedAmountValue)
 
                 convertedOpenAmount =
-                    (convertedAmountValue.toDouble() * Constants.AMOUNT_CONVERSION_VALUE.toDouble()).toString()
+                    (DecimalFormat("#").format((convertedAmountValue.toDouble() * Constants.AMOUNT_CONVERSION_VALUE.toDouble()))).toString()
+
+               // convertedOpenAmount = String.format("%.0f", convertedOpenAmount)
+
                 Log.d("convertedOpenAmount", convertedOpenAmount)
 
             }
