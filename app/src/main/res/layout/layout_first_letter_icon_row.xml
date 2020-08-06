@@ -4,6 +4,8 @@
     xmlns:tool="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:id="@+id/containerLayout"
+    android:layout_marginTop="@dimen/_8sdp"
+    android:layout_marginBottom="@dimen/_8sdp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -13,7 +15,8 @@
         android:background="@color/colorWhite"
         app:cardCornerRadius="@dimen/_10sdp"
         app:cardElevation="@dimen/_4sdp"
-        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_4sdp"
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,7 +42,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:background="@drawable/company_large_empty"
+                android:background="@drawable/blue_circle"
                 />
 
             <com.es.marocapp.widgets.MarocRegularTextView

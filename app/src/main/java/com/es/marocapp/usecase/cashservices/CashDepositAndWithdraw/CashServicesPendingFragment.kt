@@ -51,7 +51,7 @@ class CashServicesPendingFragment : BaseFragment<FragmentCashServicesPendingBind
             mDataBinding.imgSuccess.setImageResource(R.drawable.img_payment_pending)
             mDataBinding.successTItle.visibility = View.VISIBLE
             mDataBinding.successTItleFailed.visibility = View.GONE
-            mDataBinding.favoritesGroup.visibility = View.VISIBLE
+            mDataBinding.favoritesGroup.visibility = View.GONE
         }
     }
 
@@ -60,7 +60,7 @@ class CashServicesPendingFragment : BaseFragment<FragmentCashServicesPendingBind
 
         mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("BtnTitle_OK")
 
-        mDataBinding.addToFavoritesTitle.text = LanguageData.getStringValue("BtnTitle_AddToFavorites")
+//        mDataBinding.addToFavoritesTitle.text = LanguageData.getStringValue("BtnTitle_AddToFavorites")
 
         mDataBinding.successTItle.text = LanguageData.getStringValue("Pending")
         mDataBinding.successTItleFailed.text = LanguageData.getStringValue("Failed")

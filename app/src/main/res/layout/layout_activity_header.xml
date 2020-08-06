@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorActivityHeaderBlue"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
@@ -18,22 +18,23 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorActivityHeaderBlue"
+            android:background="@color/colorWhite"
             android:padding="@dimen/_10sdp"
             >
 
-            <com.es.marocapp.widgets.MarocRegularTextView
+            <com.es.marocapp.widgets.MarocBoldTextView
                 android:id="@+id/activityHeaderTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:text="Bill Payment"
                 android:textAllCaps="true"
-                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_20ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.29"
+                app:layout_constraintHorizontal_bias="0.25"
                 app:layout_constraintStart_toEndOf="@+id/activityHeaderBack"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,7 +43,7 @@
                 android:layout_width="@dimen/_32sdp"
                 android:layout_height="@dimen/_32sdp"
                 android:layout_marginStart="@dimen/_8sdp"
-                app:srcCompat="@drawable/ic_back_svg"
+                app:srcCompat="@drawable/ic_back_black_svg"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -59,7 +60,7 @@
         android:id="@+id/backgroundImg"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/colorGreyLight"
+        android:background="@color/colorWhite"
         app:layout_constraintTop_toTopOf="@+id/guideline3"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -72,6 +73,8 @@
         android:layout_marginEnd="@dimen/_12sdp"
         android:background="@color/colorWhite"
         app:cardCornerRadius="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headerContainerTop">
@@ -113,7 +116,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="@drawable/company_large_empty"
+                android:background="@drawable/blue_circle"
                 />
 
             <com.es.marocapp.widgets.MarocRegularTextView
@@ -121,6 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
+                android:textColor="@color/colorGreyDark"
                 android:text="Company A"
                 android:textSize="@dimen/_14ssp"
                 app:layout_constraintEnd_toStartOf="@+id/container"

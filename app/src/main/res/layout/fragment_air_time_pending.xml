@@ -23,24 +23,25 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorGreyLight"
+            android:background="@color/colorWhite"
             >
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@color/colorCerulean"
+                android:background="@color/colorWhite"
                 app:layout_constraintBottom_toTopOf="@+id/guideline5"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <com.es.marocapp.widgets.MarocRegularTextView
+            <com.es.marocapp.widgets.MarocBoldTextView
                 android:id="@+id/tvSuccessTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:layout_marginTop="@dimen/_12sdp"
                 android:text="@string/bill_payment"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_19ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +53,7 @@
                 android:layout_width="@dimen/_32sdp"
                 android:layout_height="@dimen/_32sdp"
                 android:layout_margin="@dimen/_12sdp"
-                app:srcCompat="@drawable/ic_back_svg"
+                app:srcCompat="@drawable/ic_back_black_svg"
                 android:onClick="@{listner::onBackClickListner}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -71,6 +72,8 @@
                 android:id="@+id/addToFavoriteCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/colorCerulean"
+                android:foregroundTint="@color/colorCerulean"
                 android:theme="@style/checkBoxStyle"
                 app:layout_constraintStart_toStartOf="@+id/imgBackButton"
                 app:layout_constraintTop_toTopOf="@+id/imgSuccess"
@@ -82,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/_14ssp"
                 android:text="Add to Favorites"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/addToFavoriteCheckBox"
                 app:layout_constraintTop_toTopOf="@+id/addToFavoriteCheckBox"
@@ -103,6 +106,7 @@
                     android:id="@+id/successDetailContainer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:elevation="@dimen/_8sdp"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginEnd="@dimen/_16sdp"
                     android:background="@color/colorWhite"
@@ -175,7 +179,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_16sdp"
-                android:background="@drawable/button_enable_blue"
+                android:background="@drawable/button_enable"
                 android:padding="@dimen/_8sdp"
                 android:text="@string/ok"
                 android:onClick="@{listner::onBackClickListner}"

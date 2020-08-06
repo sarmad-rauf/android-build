@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.CustomizeIconsAdapter
+import com.es.marocapp.adapter.FirstLetterIconItemAdapter
 import com.es.marocapp.adapter.PaymentItemsAdapter
 import com.es.marocapp.databinding.FragmentBillPaymentTypeBinding
 import com.es.marocapp.locale.LanguageData
@@ -17,7 +18,7 @@ import kotlinx.android.synthetic.main.layout_activity_header.view.*
 class AirTimeAmountFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
 
     lateinit var mActivityViewModel: AirTimeViewModel
-    private lateinit var mAirTimeAmountsItemTypeAdapter: PaymentItemsAdapter
+    private lateinit var mAirTimeAmountsItemTypeAdapter: FirstLetterIconItemAdapter
     private var mAirTimeAmountsTypes: ArrayList<String> = ArrayList()
     private var mAitTimeIcon: ArrayList<Int>  = ArrayList()
 
@@ -84,8 +85,8 @@ class AirTimeAmountFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
             }
         }
 
-        mAirTimeAmountsItemTypeAdapter = PaymentItemsAdapter(mAirTimeAmountsTypes,mAitTimeIcon,
-            object : PaymentItemsAdapter.PaymentItemTypeClickListner {
+        mAirTimeAmountsItemTypeAdapter = FirstLetterIconItemAdapter(mAirTimeAmountsTypes,
+            object : FirstLetterIconItemAdapter.PaymentItemTypeClickListner {
                 override fun onPaymentItemTypeClick(paymentItems: String) {
                     mActivityViewModel.airTimeAmountSelected.set(paymentItems)
                     (activity as AirTimeActivity).navController.navigate(R.id.action_airTimeAmountFragment_to_airTimeMsisdnFragment)

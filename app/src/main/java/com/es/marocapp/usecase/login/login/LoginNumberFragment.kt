@@ -216,10 +216,12 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                 if (deviceID.equals(Constants.CURRENT_NUMBER_DEVICE_ID)) {
                     checkUserRegsitrationAndActicationSenario(it)
                 } else {
-                    mActivityViewModel.accountHolderInfoResponse = it
+                    if(checkIfUserIsBlocked(it)){
+                        mActivityViewModel.accountHolderInfoResponse = it
 
-                    mActivityViewModel.previousDeviceId = deviceID
-                    mActivityViewModel.requestForGetOtpApi(activity)
+                        mActivityViewModel.previousDeviceId = deviceID
+                        mActivityViewModel.requestForGetOtpApi(activity)
+                    }
                 }
 
                 if(!it.language.isNullOrEmpty()) {
@@ -363,6 +365,40 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
 
             (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_setYourPinFragment)
         }
+    }
+
+    fun checkIfUserIsBlocked(response: GetAccountHolderInformationResponse) : Boolean{
+        var isUserNotBlocked = true
+        if (response.credentialList.credentials.isNotEmpty()) {
+
+            for (i in response.credentialList.credentials.indices) {
+                if (response.credentialList.credentials[i].credentialstatus.equals(
+                        "BLOCKED",
+                        true
+                    ) || response.credentialList.credentials[i].credentialstatus.equals(
+                        "BLOCK",
+                        true
+                    )
+                ) {
+                    DialogUtils.showBlockedAccountDialog(activity,
+                        LanguageData.getStringValue("BtnTitle_ResetPassword"),
+                        LanguageData.getStringValue("BtnTitle_Cancel"),
+                        LanguageData.getStringValue("BlockedAndResetAccount"),
+                        LanguageData.getStringValue("AccountBlocked"),
+                        object : DialogUtils.OnCustomDialogListner {
+                            override fun onCustomDialogOkClickListner() {
+                                mActivityViewModel.isFromLoginUserScreen.set(false)
+                                (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)
+                            }
+
+                        }
+                    )
+                    isUserNotBlocked = false
+                }
+            }
+        }
+
+        return isUserNotBlocked
     }
 
     override fun afterTextChanged(p0: Editable?) {

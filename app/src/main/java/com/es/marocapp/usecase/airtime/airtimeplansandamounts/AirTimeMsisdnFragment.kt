@@ -84,8 +84,8 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
         }
         mDataBinding.spinnerSelectFavorites.onItemSelectedListener = this@AirTimeMsisdnFragment
 
-        (activity as AirTimeActivity).mDataBinding.headerAirTime.rootView.tv_company_title.text = mActivityViewModel.airTimeAmountSelected.get()!!
-        (activity as AirTimeActivity).mDataBinding.headerAirTime.rootView.img_company_icons.setImageResource(R.drawable.others)
+        (activity as AirTimeActivity).mDataBinding.headerAirTime.rootView.tv_company_title.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.airTimeAmountSelected.get()!!
+        (activity as AirTimeActivity).mDataBinding.headerAirTime.rootView.img_company_icons.setImageResource(R.drawable.others_blue)
 
         (activity as AirTimeActivity).setHeaderVisibility(true)
         (activity as AirTimeActivity).setCompanyIconToolbarVisibility(true)
@@ -102,6 +102,9 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
 
         mActivityViewModel.isUserSelectedFromFavorites.set(false)
         mDataBinding.inputPhoneNumber.addTextChangedListener(this)
+
+
+        (activity as AirTimeActivity).setVisibilityAndTextToImage(mActivityViewModel.airTimeAmountSelected.get()!!)
 
         setStrings()
         subscribeObserver()

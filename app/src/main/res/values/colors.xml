@@ -26,5 +26,6 @@
     <color name="colorPending">#e8c01f</color>
     <color name="colorFail">#ff4949</color>
     <color name="colorToast">#e8c01f</color>
+    <color name="colorConfirmationTitle">#969696</color>
 
 </resources>

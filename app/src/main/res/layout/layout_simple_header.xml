@@ -5,17 +5,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/colorActivityHeaderBlue"
+    android:background="@color/colorWhite"
     android:layout_height="wrap_content"
     android:padding="@dimen/_10sdp">
 
-    <com.es.marocapp.widgets.MarocRegularTextView
+    <com.es.marocapp.widgets.MarocBoldTextView
         android:id="@+id/simpleHeaderTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         tools:text="Send Money"
+        android:textStyle="bold"
         android:textAllCaps="true"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:textSize="@dimen/_20ssp"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +29,7 @@
         android:layout_width="@dimen/_32sdp"
         android:layout_height="@dimen/_32sdp"
         android:layout_marginStart="@dimen/_16sdp"
-        app:srcCompat="@drawable/ic_back_svg"
+        app:srcCompat="@drawable/ic_back_black_svg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
