@@ -2,6 +2,8 @@ package com.es.marocapp.usecase.home
 
 
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentHomeBalanceLayoutBinding
@@ -41,6 +43,12 @@ class HomeBalanceFragment(var viewType : Int,cardDataModel : CardModel,var image
             }catch (e:Exception){
 
             }
+
+            mDataBinding.arcSeekBar.setOnTouchListener(object : View.OnTouchListener {
+                override fun onTouch(view: View?, motionEvent: MotionEvent?): Boolean {
+                    return true
+                }
+            })
 
             mDataBinding.arcSeekBar.isClickable = false
             mDataBinding.arcSeekBar.isActivated = false
