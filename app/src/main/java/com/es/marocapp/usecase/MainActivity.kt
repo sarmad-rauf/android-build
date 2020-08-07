@@ -56,7 +56,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        mActivityViewModel = ViewModelProvider(this@MainActivity).get(MainActivityViewModel::class.java)
+        mActivityViewModel =
+            ViewModelProvider(this@MainActivity).get(MainActivityViewModel::class.java)
 
         mDataBinding.apply {
             listener = this@MainActivity
@@ -64,7 +65,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
         val navController = findNavController(R.id.nav_host_fragment)
@@ -84,11 +86,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         // Obtain the FirebaseAnalytics instance.
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
-        mDataBinding.fab.setOnClickListener{
-            if(isTransactionFragmentNotVisible){
-                if(isDirectCallForTransaction){
+        mDataBinding.fab.setOnClickListener {
+            if (isTransactionFragmentNotVisible) {
+                if (isDirectCallForTransaction) {
                     navController.navigate(R.id.action_navigation_home_to_navigation_transaction)
-                }else{
+                } else {
                     navController.navigateUp()
                     navController.navigate(R.id.action_navigation_home_to_navigation_transaction)
                 }
@@ -106,13 +108,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         subscribeObserver()
         setStrings()
+        checkCashInViaCardFunctinalityAgainstUser()
     }
 
     private fun setStrings() {
-        mDataBinding.toolbarName.text = "${LanguageData.getStringValue("Hi")} ${Constants.balanceInfoAndResponse.firstname} ${Constants.balanceInfoAndResponse.surname}"
+        mDataBinding.toolbarName.text =
+            "${LanguageData.getStringValue("Hi")} ${Constants.balanceInfoAndResponse.firstname} ${Constants.balanceInfoAndResponse.surname}"
 
-        mDataBinding.navigationHeader.drawer_header_name.text = "${LanguageData.getStringValue("Hi")} ${Constants.balanceInfoAndResponse.firstname} ${Constants.balanceInfoAndResponse.surname}"
-        mDataBinding.navigationHeader.drawer_header_number.text=Constants.CURRENT_USER_MSISDN
+        mDataBinding.navigationHeader.drawer_header_name.text =
+            "${LanguageData.getStringValue("Hi")} ${Constants.balanceInfoAndResponse.firstname} ${Constants.balanceInfoAndResponse.surname}"
+        mDataBinding.navigationHeader.drawer_header_number.text = Constants.CURRENT_USER_MSISDN
 
         mDataBinding.textDrawerNotifications.text
 
@@ -126,20 +131,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         mDataBinding.toolbarWelcomeBack.text = LanguageData.getStringValue("WelcomeBack")
 
         val menu: Menu = mDataBinding.root.nav_view.getMenu()
-        menu.get(0).title=LanguageData.getStringValue("HOME")
-        menu.get(1).title=LanguageData.getStringValue("Transactions")
-        menu.get(2).title=LanguageData.getStringValue("Password")
-        menu.get(3).title=LanguageData.getStringValue("Approvals")
+        menu.get(0).title = LanguageData.getStringValue("HOME")
+        menu.get(1).title = LanguageData.getStringValue("Transactions")
+        menu.get(2).title = LanguageData.getStringValue("Password")
+        menu.get(3).title = LanguageData.getStringValue("Approvals")
 
     }
 
     private fun subscribeObserver() {
         mActivityViewModel.getLogOutUserResponseListner.observe(this@MainActivity, Observer {
-            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+            if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
 //                PrefUtils.addString(this, PrefUtils.PreKeywords.PREF_KEY_USER_MSISDN,"")
-                startNewActivityAndClear(this@MainActivity,LoginActivity::class.java)
-            }else{
-               DialogUtils.showErrorDialoge(this@MainActivity,it.description)
+                startNewActivityAndClear(this@MainActivity, LoginActivity::class.java)
+            } else {
+                DialogUtils.showErrorDialoge(this@MainActivity, it.description)
             }
         })
     }
@@ -153,38 +158,38 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     }
 
     override fun onDrawerMenuSettingsClick(view: View) {
-        startNewActivity(this@MainActivity,SettingsActivity::class.java)
+        startNewActivity(this@MainActivity, SettingsActivity::class.java)
     }
 
     override fun onDrawerMenuFavoritesClick(view: View) {
-        startNewActivity(this@MainActivity,FavoritesActivity::class.java)
+        startNewActivity(this@MainActivity, FavoritesActivity::class.java)
     }
 
     override fun onDrawerMenuContactUsClick(view: View) {
         mDataBinding.drawerLayout.closeDrawer(GravityCompat.START)
-        var myBundle : Bundle = Bundle()
-        myBundle.putString("title",LanguageData.getStringValue("ContactUs"))
-        startNewActivity(this@MainActivity,TermsAndConditions::class.java,myBundle)
+        var myBundle: Bundle = Bundle()
+        myBundle.putString("title", LanguageData.getStringValue("ContactUs"))
+        startNewActivity(this@MainActivity, TermsAndConditions::class.java, myBundle)
     }
 
     override fun onDrawerMenuFAQsClick(view: View) {
         mDataBinding.drawerLayout.closeDrawer(GravityCompat.START)
 
 
-        var myBundle : Bundle = Bundle()
-        myBundle.putString("title",LanguageData.getStringValue("Faqs"))
-        startNewActivity(this@MainActivity,TermsAndConditions::class.java,myBundle)
+        var myBundle: Bundle = Bundle()
+        myBundle.putString("title", LanguageData.getStringValue("Faqs"))
+        startNewActivity(this@MainActivity, TermsAndConditions::class.java, myBundle)
     }
 
     override fun onDrawerMenuTermsAndConditionClick(view: View) {
         mDataBinding.drawerLayout.closeDrawer(GravityCompat.START)
-        var myBundle : Bundle = Bundle()
-        myBundle.putString("title",LanguageData.getStringValue("TermsAndConditions"))
-        startNewActivity(this@MainActivity,TermsAndConditions::class.java,myBundle)
+        var myBundle: Bundle = Bundle()
+        myBundle.putString("title", LanguageData.getStringValue("TermsAndConditions"))
+        startNewActivity(this@MainActivity, TermsAndConditions::class.java, myBundle)
     }
 
     override fun onDrawerMenuClickToCallClick(view: View) {
-       Tools.openDialerWithNumber(this@MainActivity)
+        Tools.openDialerWithNumber(this@MainActivity)
     }
 
     override fun onDrawerMenuLogOutClick(view: View) {
@@ -193,18 +198,26 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     }
 
     override fun onDrawerMenuGenerateQRClick(view: View) {
-        startNewActivity(this@MainActivity,GenerateQrActivity::class.java)
+        startNewActivity(this@MainActivity, GenerateQrActivity::class.java)
     }
 
     override fun onAccountDetailClick(view: View) {
-        startNewActivity(this@MainActivity,AccountDetailsActivity::class.java)
+        startNewActivity(this@MainActivity, AccountDetailsActivity::class.java)
     }
 
-    fun setHomeToolbarVisibility(isVisible : Boolean){
-        if(isVisible){
+    fun setHomeToolbarVisibility(isVisible: Boolean) {
+        if (isVisible) {
             mDataBinding.toolbarContainer.visibility = View.VISIBLE
-        }else{
+        } else {
             mDataBinding.toolbarContainer.visibility = View.GONE
+        }
+    }
+
+    fun checkCashInViaCardFunctinalityAgainstUser() {
+        if (Constants.loginWithCertResponse.allowedMenu.CashInViaCard != null) {
+            mDataBinding.dashboardCashInViaCard.visibility = View.VISIBLE
+        }else{
+            mDataBinding.dashboardCashInViaCard.visibility = View.GONE
         }
     }
 
