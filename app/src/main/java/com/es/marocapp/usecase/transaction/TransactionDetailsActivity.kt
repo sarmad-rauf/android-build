@@ -34,7 +34,7 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         mDataBinding.tvTransactionHistoryTitle.text = LanguageData.getStringValue("TransactionDetails")
         mDataBinding.dateTitle.text = LanguageData.getStringValue("Time")
         mDataBinding.transactionIDTitle.text = LanguageData.getStringValue("TransactionID")
-        mDataBinding.ReceiverNameTitle.text = LanguageData.getStringValue("ReceiverName")
+        mDataBinding.ReceiverNameTitle.text = LanguageData.getStringValue("ReceiverIdentity")
         mDataBinding.ReceiverIdentityTitle.text = LanguageData.getStringValue("ReceiverNumber")
         mDataBinding.SenderNameTitle.text = LanguageData.getStringValue("SenderName")
         mDataBinding.SenderIdentityTitle.text = LanguageData.getStringValue("SenderNumber")
@@ -121,7 +121,7 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         totalAmount = Constants.converValueToTwoDecimalPlace(totalAmount.toDouble())
         mDataBinding.totalAmountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+totalAmount
 
-        mDataBinding.receiverNameGroup.visibility = View.GONE
+        mDataBinding.receiverNameGroup.visibility = View.VISIBLE
     }
 
     private fun getFri(fri: String): String {
