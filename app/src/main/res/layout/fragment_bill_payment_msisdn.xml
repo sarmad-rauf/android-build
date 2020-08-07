@@ -19,7 +19,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorGreyLight"
+        android:background="@color/colorWhite"
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -100,7 +100,7 @@
             android:textColor="@color/colorWhite"
             android:textStyle="bold"
             android:onClick="@{listner::onSubmitClickListner}"
-            android:background="@drawable/button_enable_blue"
+            android:background="@drawable/button_enable"
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginEnd="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_16sdp"

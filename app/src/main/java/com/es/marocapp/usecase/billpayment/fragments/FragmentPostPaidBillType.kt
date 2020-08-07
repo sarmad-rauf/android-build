@@ -56,9 +56,9 @@ class FragmentPostPaidBillType : BaseFragment<FragmentBillPaymentTypeBinding>() 
 
         mBillPaymentTypesIcon.clear()
         mBillPaymentTypesIcon.apply {
-            add(R.drawable.postpaid)
-            add(R.drawable.postpaid_fix)
-            add(R.drawable.internet)
+            add(R.drawable.postpaid_blue)
+            add(R.drawable.postpaid_fix_blue)
+            add(R.drawable.internet_blue)
         }
 
         mFatoratiTypesList.clear()
@@ -87,7 +87,7 @@ class FragmentPostPaidBillType : BaseFragment<FragmentBillPaymentTypeBinding>() 
                 when(paymentItems){
                     LanguageData.getStringValue("PostpaidMobile") -> {
                         mActivityViewModel.billTypeSelected.set(LanguageData.getStringValue("PostpaidMobile"))
-                        mActivityViewModel.billTypeSelectedIcon = R.drawable.postpaid
+                        mActivityViewModel.billTypeSelectedIcon = R.drawable.postpaid_blue
                         mActivityViewModel.isPostPaidMobileSelected.set(true)
                         mActivityViewModel.isPostPaidFixSelected.set(false)
                         mActivityViewModel.isInternetSelected.set(false)
@@ -95,7 +95,7 @@ class FragmentPostPaidBillType : BaseFragment<FragmentBillPaymentTypeBinding>() 
                     }
                     LanguageData.getStringValue("PostpaidFix") -> {
                         mActivityViewModel.billTypeSelected.set(LanguageData.getStringValue("PostpaidFix"))
-                        mActivityViewModel.billTypeSelectedIcon = R.drawable.postpaid_fix
+                        mActivityViewModel.billTypeSelectedIcon = R.drawable.postpaid_fix_blue
                         mActivityViewModel.isPostPaidMobileSelected.set(false)
                         mActivityViewModel.isPostPaidFixSelected.set(true)
                         mActivityViewModel.isInternetSelected.set(false)
@@ -103,7 +103,7 @@ class FragmentPostPaidBillType : BaseFragment<FragmentBillPaymentTypeBinding>() 
                     }
                     LanguageData.getStringValue("Internet") -> {
                         mActivityViewModel.billTypeSelected.set(LanguageData.getStringValue("Internet"))
-                        mActivityViewModel.billTypeSelectedIcon = R.drawable.internet
+                        mActivityViewModel.billTypeSelectedIcon = R.drawable.internet_blue
                         mActivityViewModel.isPostPaidMobileSelected.set(false)
                         mActivityViewModel.isPostPaidFixSelected.set(false)
                         mActivityViewModel.isInternetSelected.set(true)
