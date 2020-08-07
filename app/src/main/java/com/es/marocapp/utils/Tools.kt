@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.util.Log
+import com.es.marocapp.utils.PrefUtils.PreKeywords.PREF_KEY_IS_FIRSTTIME
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
@@ -78,5 +79,21 @@ object Tools {
             val intent = Intent(Intent.ACTION_DIAL)
             intent.data = Uri.parse("tel:" + Constants.HELPLINE_NUMBER)
             context.startActivity(intent)
+    }
+
+    fun isFirstTime(context: Context):Boolean{
+
+        if (PrefUtils.getBoolean(context,PREF_KEY_IS_FIRSTTIME,true)) {
+            //the app is being launched for first time, do something
+            Log.d("Comments", "First time")
+
+            // record the fact that the app has been started at least once
+            PrefUtils.addBoolean(context, PREF_KEY_IS_FIRSTTIME, false)
+
+            return true
+        }
+        else{
+            return false
+        }
     }
 }

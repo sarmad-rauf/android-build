@@ -31,6 +31,8 @@ import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.PrefUtils
+import com.es.marocapp.utils.Tools
 import java.lang.reflect.Method
 
 
@@ -152,8 +154,10 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.URL_FOR_UPDATE_APP = it.url
                 Constants.KEY_FOR_WALLET_BALANCE_MAX = it.walletBalanceLimitKey
                 Constants.PREVIOUS_DAYS_TRANSACTION_COUNT = it.numberOfTransactions
-                if(!it.defaultLanguage.isNullOrEmpty()) {
-                    LocaleManager.selectedLanguage = it.defaultLanguage
+                if(Tools.isFirstTime(this)) {
+                    if (!it.defaultLanguage.isNullOrEmpty()) {
+                        LocaleManager.selectedLanguage = it.defaultLanguage
+                    }
                 }
                 if (it.quickAmounts.isNotEmpty()) {
                     Constants.quickAmountsList.addAll(it.quickAmounts)

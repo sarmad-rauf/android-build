@@ -3,9 +3,13 @@
 package com.es.marocapp.utils
 
 import android.content.Context
+import android.content.SharedPreferences
+import android.util.Log
 import com.es.marocapp.model.responses.LoginWithCertResponse
+import com.es.marocapp.utils.PrefUtils.PreKeywords.PREF_KEY_IS_FIRSTTIME
 import com.squareup.moshi.Moshi
 import org.json.JSONArray
+
 
 /**
  * Utility class for saving and retrieving data from shared preferences
@@ -14,7 +18,7 @@ import org.json.JSONArray
 
 object PrefUtils {
 
-    private val PREF_NAME = "jazzB2C.prefs"
+    private val PREF_NAME = "martocTel.prefs"
 
     /**
      * Sharepreferences Keys
@@ -228,6 +232,7 @@ object PrefUtils {
 
         return savedList;
     } // getStringArrayList
+
 
 
 
