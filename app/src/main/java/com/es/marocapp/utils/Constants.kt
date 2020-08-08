@@ -24,7 +24,7 @@ object Constants {
     const val IDENTIFICATION_TYPE = "CNIC"
     const val SECRET_TYPE = "password"
     const val TRANSFER_TYPE_PAYMENT = "INTEROP_TRANSFER"
-    const val MERCHANT_TYPE_PAYMENT = "INTEROP_TRANSFER_SEND"
+    const val MERCHANT_TYPE_PAYMENT = "CUSTOM_INTEROP_TRANSFER_SEND"
     const val TYPE_PAYMENT = "PAYMENT"
     const val TYPE_BILL_PAYMENT = "BILL_PAYMENT"
     const val TYPE_COMMISSIONING = "COMMISSIONING"
@@ -237,7 +237,7 @@ object Constants {
 
     fun getZoneFormattedDateAndTime(dateToFormat : String): String {
         val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
-        val output = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+        val output = SimpleDateFormat("yyyy-MM-dd hh:mm a")
 
         var d: Date? = null
         var formatted: String = ""
