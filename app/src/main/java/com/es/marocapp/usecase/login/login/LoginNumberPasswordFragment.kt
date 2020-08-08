@@ -153,6 +153,7 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
 
                 Constants.loginWithCertResponse = it
                 if(Constants.loginWithCertResponse.contactList!=null) {
+                    Constants.mContactListArray.clear()
                     Constants.mContactListArray.addAll(Constants.loginWithCertResponse.contactList)
                 }
                 //setting cookie for use in header
