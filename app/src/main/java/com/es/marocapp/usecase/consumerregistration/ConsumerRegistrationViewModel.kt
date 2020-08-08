@@ -122,7 +122,7 @@ class ConsumerRegistrationViewModel(application: Application) : AndroidViewModel
 
             //TODO authorization & MSISDN parameter pending
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getOTPForRegistration(
-                GetOtpForRegistrationRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,"NzgzMzU3MTI0",mEncryptedNonce!!,
+                GetOtpForRegistrationRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,
                     firstName,identificationNumber,Constants.IDENTIFICATION_TYPE,Constants.getNumberMsisdn(mUserMsisdn),lastName)
 
             )
