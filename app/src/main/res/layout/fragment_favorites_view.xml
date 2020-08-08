@@ -18,7 +18,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGreyLight"
+    android:background="@color/colorWhite"
     android:paddingBottom="@dimen/_16sdp"
     >
 
@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/_14ssp"
-                android:textColor="@color/colorTextGreyMedium"
+                android:textColor="@color/colorBlack"
                 tools:text="Here you can view or remove accounts"
                 android:layout_margin="@dimen/_16sdp"
                 app:layout_constraintTop_toTopOf="parent"
@@ -48,16 +48,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/viewFavoritesTitle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardElevation="@dimen/_12sdp"
+                app:cardCornerRadius="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
-                app:cardCornerRadius="@dimen/_12sdp"
                 >
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorWhite"
                     >
 
                     <androidx.recyclerview.widget.RecyclerView

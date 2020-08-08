@@ -45,8 +45,8 @@ class FavoritesAddOrViewFragment : BaseFragment<FragmentFavoritesTypeBinding>(){
 
         mFavoritesTypesIcon.clear()
         mFavoritesTypesIcon.apply {
-            add(R.drawable.add)
-            add(R.drawable.view)
+            add(R.drawable.add_blue)
+            add(R.drawable.view_blue)
         }
 
         mFavoritesItemTypeAdapter = FavoritesTypeItemAdapter(mFavoritesTypes,mFavoritesTypesIcon ,

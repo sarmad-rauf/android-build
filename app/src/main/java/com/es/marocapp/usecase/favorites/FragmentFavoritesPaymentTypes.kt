@@ -39,8 +39,8 @@ class FragmentFavoritesPaymentTypes : BaseFragment<FragmentFavoritesTypeBinding>
 
         mFavoritesPaymentTypesIcon.clear()
         mFavoritesPaymentTypesIcon.apply {
-            add(R.drawable.bill)
-            add(R.drawable.water_electricty)
+            add(R.drawable.bill_blue)
+            add(R.drawable.water_electricty_blue)
         }
 
         mFavoritesItemTypeAdapter = FavoritesTypeItemAdapter(mFavoritesPaymentTypes,mFavoritesPaymentTypesIcon ,

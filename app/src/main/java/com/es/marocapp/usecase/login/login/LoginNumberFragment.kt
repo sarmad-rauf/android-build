@@ -247,7 +247,18 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
 
 
                     })
-            } else {
+            }else if(it.responseCode.equals(ApiConstant.API_WRONG_ATTEMPT_BLOCKED)){
+                DialogUtils.showBlockedAccountDialog(activity,LanguageData.getStringValue("BtnTitle_ResetPassword"),LanguageData.getStringValue("BtnTitle_Cancel"),
+                    LanguageData.getStringValue("BlockedAndResetAccount"),LanguageData.getStringValue("AccountBlocked"),object : DialogUtils.OnCustomDialogListner{
+                        override fun onCustomDialogOkClickListner() {
+                            mActivityViewModel.isFromLoginUserScreen.set(true)
+                            mDataBinding.inputPin.setText("")
+                            (activity as LoginActivity).navController.navigate(R.id.action_signUpNumberFragment_to_resetPasswordFragment)
+                        }
+
+                    }
+                )
+            }  else {
                 DialogUtils.showErrorDialoge(activity, it.description)
             }
         }

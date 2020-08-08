@@ -46,10 +46,10 @@ class FavoriteTypesFragment : BaseFragment<FragmentFavoritesTypeBinding>(){
 
         mFavoritesTypesIcon.clear()
         mFavoritesTypesIcon.apply {
-            add(R.drawable.ic_favorite_payments)
-            add(R.drawable.ic_favorite_transfers)
-            add(R.drawable.ic_favorite_transfers)
-            add(R.drawable.ic_favorite_transfers)
+            add(R.drawable.payment_blue)
+            add(R.drawable.ic_favorite_transfers_blue)
+            add(R.drawable.favorites_merchant_blue)
+            add(R.drawable.favorties_airtime_blue)
         }
 
         mFavoritesItemTypeAdapter = FavoritesTypeItemAdapter(mFavoritesTypes,mFavoritesTypesIcon ,
