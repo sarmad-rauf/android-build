@@ -109,6 +109,7 @@
                     android:text="@string/initiator_name"
                     android:textColor="@color/colorTextGreyDark"
                     android:textSize="@dimen/_12sdp"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="@+id/tvRequestIndicatorTitle"
                     app:layout_constraintTop_toBottomOf="@+id/tvRequestIndicatorTitle" />
 
@@ -117,6 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="Marketplace"
+                    android:visibility="gone"
                     android:textColor="@color/colorTextGreyDark"
                     android:textSize="@dimen/_14sdp"
                     app:layout_constraintBottom_toBottomOf="@+id/tvIndicatorName"

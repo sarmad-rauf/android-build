@@ -38,7 +38,7 @@ data class GetApprovalsResponse(
 
 data class Approvaldetail(
     val amount: Amount?,
-    val approvalexpirytime: Long,
+    val approvalexpirytime: String?,
     val approvalid: Int,
     val approvaltype: String?,
     val discount: Any,
@@ -50,7 +50,7 @@ data class Approvaldetail(
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readParcelable(Amount::class.java.classLoader),
-        parcel.readLong(),
+        parcel.readString(),
         parcel.readInt(),
         parcel.readString(),
         TODO("discount"),
@@ -64,7 +64,7 @@ data class Approvaldetail(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeParcelable(amount, flags)
-        parcel.writeLong(approvalexpirytime)
+        parcel.writeString(approvalexpirytime)
         parcel.writeInt(approvalid)
         parcel.writeString(approvaltype)
         parcel.writeParcelable(fee, flags)
@@ -87,6 +87,7 @@ data class Approvaldetail(
         }
     }
 }
+
 
 data class Amount(
     val amount: Double,

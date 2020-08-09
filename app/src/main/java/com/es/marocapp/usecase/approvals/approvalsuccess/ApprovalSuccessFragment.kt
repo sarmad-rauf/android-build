@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentApprovalSuccessBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.UserApprovalResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
@@ -64,6 +65,9 @@ class ApprovalSuccessFragment : BaseFragment<FragmentApprovalSuccessBinding>(),
         tvOwnerNameVal2.text=userApprovalData.amount?.currency.plus(userApprovalData.amount?.amount)
 
         tvContactNumVal2.text=userApprovalData.fee?.currency.plus(userApprovalData.fee?.amount)
+
+        mDataBinding.tvContactNumTitle.text = LanguageData.getStringValue("RequestInitiator")
+        mDataBinding.tvContactNumVal.text=userApprovalData.initiatingaccountholderid
     }
 
     override fun onOkClickListener(view: View) {
