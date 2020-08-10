@@ -4,11 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tool="http://schemas.android.com/tools"
-    android:background="@color/colorGreyLight"
+    android:background="@color/colorWhite"
     android:orientation="vertical"
-    android:paddingStart="@dimen/_10sdp"
-    android:paddingEnd="@dimen/_10sdp"
-    android:paddingBottom="@dimen/_10sdp">
+    >
 
 
     <com.es.marocapp.widgets.MarocMediumTextView
@@ -32,8 +30,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:cardCornerRadius="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_8sdp"
+        app:cardCornerRadius="@dimen/_12sdp"
+        app:cardElevation="@dimen/_12sdp"
+        app:cardUseCompatPadding="true"
         android:background="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

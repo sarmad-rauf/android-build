@@ -50,8 +50,8 @@ class FragmentPostPaidPaymentTypes : BaseFragment<FragmentBillPaymentTypeBinding
 
         mBillPaymentTypesIcon.clear()
         mBillPaymentTypesIcon.apply {
-            add(R.drawable.bill)
-            add(R.drawable.water_electricty)
+            add(R.drawable.bill_blue)
+            add(R.drawable.water_electricty_blue)
         }
 
         mBillPaymentItemTypeAdapter = PaymentItemsAdapter(mBillPaymentTypes, mBillPaymentTypesIcon,object : PaymentItemsAdapter.PaymentItemTypeClickListner{

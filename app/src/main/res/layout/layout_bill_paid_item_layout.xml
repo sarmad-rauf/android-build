@@ -8,7 +8,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_8ssp"
+        android:layout_marginEnd="@dimen/_8sdp"
         app:cardCornerRadius="@dimen/_12sdp"
+        app:cardElevation="@dimen/_12sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -46,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:text="@string/transaction_id"
-                android:textColor="@color/colorTextGreyDark"
+                android:textColor="@color/colorConfirmationTitle"
                 android:textSize="@dimen/_12sdp"
                 android:layout_marginStart="@dimen/_8sdp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="John Ptrucci"
-                android:textColor="@color/colorTextGreyDark"
+                android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_14sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvOwnerNameTitle"
@@ -70,7 +75,7 @@
                 android:layout_marginTop="@dimen/_16sdp"
                 android:text="@string/receiver_s_name"
                 android:visibility="gone"
-                android:textColor="@color/colorTextGreyDark"
+                android:textColor="@color/colorConfirmationTitle"
                 android:textSize="@dimen/_12sdp"
                 app:layout_constraintStart_toStartOf="@+id/tvOwnerNameTitle"
                 app:layout_constraintTop_toBottomOf="@+id/tvOwnerNameTitle" />
@@ -82,7 +87,7 @@
                 android:layout_marginTop="@dimen/_8sdp"
                 android:visibility="gone"
                 android:text="+212 88716 9918"
-                android:textColor="@color/colorTextGreyDark"
+                android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_14sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvContactNumTitle"
                 app:layout_constraintEnd_toEndOf="@+id/tvOwnerNameVal" />
@@ -93,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:text="@string/receiver_s_mobile_number"
-                android:textColor="@color/colorTextGreyDark"
+                android:textColor="@color/colorConfirmationTitle"
                 android:textSize="@dimen/_12sdp"
                 app:layout_constraintStart_toStartOf="@+id/tvOwnerNameTitle"
                 app:layout_constraintTop_toBottomOf="@+id/tvContactNumTitle" />
@@ -104,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:text="+212 88716 9918"
-                android:textColor="@color/colorTextGreyDark"
+                android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_14sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvReceiverNumberTitle"
                 app:layout_constraintEnd_toEndOf="@+id/tvOwnerNameVal" />
@@ -115,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:text="@string/amount"
-                android:textColor="@color/colorTextGreyDark"
+                android:textColor="@color/colorConfirmationTitle"
                 android:textSize="@dimen/_12sdp"
                 app:layout_constraintStart_toStartOf="@+id/tvReceiverNumberTitle"
                 app:layout_constraintTop_toBottomOf="@+id/tvReceiverNumberVal" />
@@ -125,7 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="John Ptrucci"
-                android:textColor="@color/colorTextGreyDark"
+                android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_14sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvOwnerNameTitle2"
                 app:layout_constraintEnd_toEndOf="@+id/tvReceiverNumberVal" />
@@ -136,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:text="@string/fee"
-                android:textColor="@color/colorTextGreyDark"
+                android:textColor="@color/colorConfirmationTitle"
                 android:textSize="@dimen/_12sdp"
                 app:layout_constraintStart_toStartOf="@+id/tvOwnerNameTitle2"
                 app:layout_constraintTop_toBottomOf="@+id/tvOwnerNameTitle2" />
@@ -147,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:text="+212 88716 9918"
-                android:textColor="@color/colorTextGreyDark"
+                android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_14sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvContactNumTitle2"
                 app:layout_constraintEnd_toEndOf="@+id/tvOwnerNameVal2" />
@@ -167,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:text="@string/total_cost"
-                android:textColor="@color/colorTextGreyDark"
+                android:textColor="@color/colorConfirmationTitle"
                 android:textSize="@dimen/_12sdp"
                 app:layout_constraintStart_toStartOf="@+id/tvOwnerNameTitle"
                 app:layout_constraintTop_toBottomOf="@+id/dottedLine2" />
@@ -178,7 +183,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:text="DH 10.00"
-                android:textColor="@color/colorTextGreyDark"
+                android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_14sdp"
                 app:layout_constraintEnd_toEndOf="@+id/tvOwnerNameVal"
                 app:layout_constraintTop_toBottomOf="@+id/dottedLine2" />

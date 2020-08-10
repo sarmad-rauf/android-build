@@ -20,7 +20,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/colorWhite"
+        >
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_name"
@@ -71,7 +73,7 @@
             android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginEnd="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_16sdp"
-            android:background="@drawable/button_enable_blue"
+            android:background="@drawable/button_enable"
             android:onClick="@{listener::onNextButtonClick}"
             android:text="@string/add_to_favorites"
             android:textAllCaps="true"

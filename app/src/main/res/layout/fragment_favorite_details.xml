@@ -18,7 +18,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGreyLight"
+    android:background="@color/colorWhite"
     >
 
     <com.es.marocapp.widgets.MarocRegularTextView
@@ -106,7 +106,7 @@
         android:textSize="@dimen/_16ssp"
         android:onClick="@{listener::onNextButtonClick}"
         android:textAllCaps="false"
-        android:background="@drawable/button_enable_blue"
+        android:background="@drawable/button_enable"
         android:layout_marginTop="@dimen/_16sdp"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"

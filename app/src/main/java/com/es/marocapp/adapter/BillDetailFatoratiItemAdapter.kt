@@ -27,12 +27,16 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
         holder.billDueDateTitle.text = LanguageData.getStringValue("Description")
         holder.billingMonthTitle.text = LanguageData.getStringValue("Amount")
         holder.billStatusTitle.text = LanguageData.getStringValue("Status")
+//        holder.billingAmountTitle.text = LanguageData.getStringValue("Amount")
         holder.billStatusVal.text = LanguageData.getStringValue("Unpaid")
 
         holder.isBillSelected.isChecked = bills[position].isItemSelected
 //        var date = Constants.parseDateFromString(bills[position].month)
 //        holder.billDueDateVal.text = date
 //        holder.billingMonthVal.text = Constants.getMonthFromParsedDate(date)
+
+//        holder.billingAmountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+bills[position].prixTTC
+
 
         holder.billingMonthVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + bills[position].prixTTC
         holder.billDueDateVal.text = bills[position].description
@@ -46,6 +50,9 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
                 notifyDataSetChanged()
             }
         }
+
+        holder.billingAmountTitle.visibility = View.GONE
+        holder.billingAmountVal.visibility = View.GONE
     }
 
 
@@ -56,6 +63,8 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
         var billingMonthVal : TextView = view.findViewById(R.id.billingMonthVal)
         var billStatusTitle : TextView = view.findViewById(R.id.billStatusTitle)
         var billStatusVal : TextView = view.findViewById(R.id.billStatusVal)
+        var billingAmountTitle : TextView = view.findViewById(R.id.billingAmountTitle)
+        var billingAmountVal : TextView = view.findViewById(R.id.billingAmountVal)
 
         var isBillSelected : CheckBox = view.findViewById(R.id.isBillSelectedCheckBox)
     }

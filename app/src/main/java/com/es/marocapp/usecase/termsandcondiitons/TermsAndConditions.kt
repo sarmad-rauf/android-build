@@ -37,6 +37,10 @@ class TermsAndConditions : BaseActivity<ActivityTermsAndConditionsBinding>() {
     var headerText = ""
 
 
+    override fun setLayout(): Int {
+        return R.layout.activity_terms_and_conditions
+    }
+
     override fun init(savedInstanceState: Bundle?) {
         mActivityViewModel = ViewModelProvider(this).get(TermsAndConditionsVIewModel::class.java)
 
@@ -80,10 +84,6 @@ class TermsAndConditions : BaseActivity<ActivityTermsAndConditionsBinding>() {
             onBackPressed()
         }
 
-    }
-
-    override fun setLayout(): Int {
-        return R.layout.activity_terms_and_conditions
     }
 
     fun setFragmentToShow(){

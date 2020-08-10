@@ -15,23 +15,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     tools:context=".usecase.termsandcondiitons.TermsAndConditions">
 
     <ImageView
         android:id="@+id/topHeaderContainer"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/colorCerulean"
+        android:background="@color/colorWhite"
         app:layout_constraintTop_toTopOf="parent" />
 
 
 
-    <com.es.marocapp.widgets.MarocRegularTextView
+    <com.es.marocapp.widgets.MarocBoldTextView
         android:id="@+id/tvTermConditionTitle"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:textStyle="bold"
         android:text="@string/terms_amp_conditions"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:textSize="@dimen/_18ssp"
         android:textAlignment="center"
         android:gravity="center"
@@ -47,7 +49,7 @@
         android:layout_width="@dimen/_32sdp"
         android:layout_height="@dimen/_32sdp"
         android:layout_marginStart="@dimen/_12sdp"
-        app:srcCompat="@drawable/ic_back_svg"
+        app:srcCompat="@drawable/ic_back_black_svg"
         app:layout_constraintBottom_toTopOf="@+id/tvTermConditionTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTermConditionTitle" />

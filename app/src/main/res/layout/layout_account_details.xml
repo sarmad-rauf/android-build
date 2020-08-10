@@ -21,25 +21,25 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorGreyLight"
+            android:background="@color/colorWhite"
             android:paddingBottom="@dimen/_16sdp">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@color/colorCerulean"
+                android:background="@color/colorWhite"
                 android:scaleType="fitXY"
-                android:src="@drawable/blue_geometric_png_8"
                 app:layout_constraintBottom_toBottomOf="@+id/guideline6"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.es.marocapp.widgets.MarocRegularTextView
+            <com.es.marocapp.widgets.MarocBoldTextView
                 android:id="@+id/tvAccountDetailTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:layout_marginTop="@dimen/_12sdp"
                 android:text="@string/account_details"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_19ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,7 @@
                 android:layout_width="@dimen/_32sdp"
                 android:layout_height="@dimen/_32sdp"
                 android:layout_margin="@dimen/_12sdp"
-                app:srcCompat="@drawable/ic_back_svg"
+                app:srcCompat="@drawable/ic_back_black_svg"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:text="@string/hi"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorCerulean"
                 android:textSize="@dimen/_16ssp"
                 app:layout_constraintEnd_toStartOf="@+id/account_detail_name"
                 app:layout_constraintStart_toStartOf="@+id/account_detail_profile_image"
@@ -104,7 +104,7 @@
                 android:layout_marginStart="@dimen/_4sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:text="John Perucci!"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorCerulean"
                 android:textSize="@dimen/_16ssp"
                 app:layout_constraintEnd_toEndOf="@+id/account_detail_profile_image"
                 app:layout_constraintStart_toEndOf="@+id/account_detail_hi"
@@ -116,10 +116,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:text="@string/account_number"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_12ssp"
-                app:layout_constraintEnd_toStartOf="@+id/account_detail_name"
-                app:layout_constraintStart_toEndOf="@+id/account_detail_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/account_detail_name" />
 
             <com.es.marocapp.widgets.MarocMediumTextView
@@ -127,7 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1234567890123273"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorCerulean"
                 android:textSize="@dimen/_16ssp"
                 app:layout_constraintEnd_toStartOf="@+id/account_detail_account_num_title"
                 app:layout_constraintStart_toEndOf="@+id/account_detail_account_num_title"
@@ -179,11 +179,11 @@
                 android:id="@+id/profile_sending_receiving_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_16sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
                 android:background="@color/colorWhite"
-                app:cardCornerRadius="@dimen/_10sdp"
+                app:cardCornerRadius="@dimen/_12sdp"
+                app:cardElevation="@dimen/_12sdp"
+                app:cardUseCompatPadding="true"
                 app:layout_constraintTop_toBottomOf="@+id/current_balance_card_container">
 
                 <androidx.constraintlayout.widget.ConstraintLayout

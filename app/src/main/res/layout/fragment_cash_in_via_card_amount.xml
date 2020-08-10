@@ -20,7 +20,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorGreyLight"
+        android:background="@color/colorWhite"
         >
 
         <com.es.marocapp.widgets.MarocMediumTextView
@@ -40,8 +40,10 @@
             android:id="@+id/amountContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="@dimen/_12sdp"
+            app:cardUseCompatPadding="true"
             app:layout_constraintTop_toBottomOf="@+id/tvAmountSelection">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -139,7 +141,7 @@
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginEnd="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_16sdp"
-            android:background="@drawable/button_enable_blue"
+            android:background="@drawable/button_enable"
             android:text="@string/next"
             android:onClick="@{listner::onNextButtonClick}"
             android:textColor="@color/colorWhite"

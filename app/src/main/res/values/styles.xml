@@ -54,4 +54,12 @@
         <item name="android:textColorSecondary">@color/colorTextGreyMedium</item> <!-- for check state -->
     </style>
 
+    <style name="LanguageChangeRadioButtons" parent="Theme.AppCompat.Light">
+        <!--<item name="colorControlNormal">@color/colorTextGreyMedium</item>
+        <item name="colorControlActivated">@color/colorTextOrange</item>-->
+        <item name="colorAccent">@color/colorTextGreyMedium</item>
+        <item name="android:textColorSecondary">@color/colorTextGreyMedium</item>
+        <item name="colorControlNormal">@color/colorTextOrange</item>
+    </style>
+
 </resources>

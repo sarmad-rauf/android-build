@@ -176,7 +176,10 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
             mActivityViewModel.lastName = mDataBinding.inputLastName.text.toString().trim()
             mActivityViewModel.email = mDataBinding.inputEmail.text.toString().trim()
 
-            mActivityViewModel.requestForeGetInitialAuthDetailsApi(activity)
+//            mActivityViewModel.requestForeGetInitialAuthDetailsApi(activity)
+
+            mActivityViewModel.requestForGetOTPForRegistrationApi(activity,mDataBinding.inputFirstName.text.toString().trim(),mDataBinding.inputLastName.text.toString().trim()
+                ,mDataBinding.inputNationalID.text.toString().trim())
         }
         //For Without API Calling Uncomment Below Line
 //        (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_verifyNumberFragment)

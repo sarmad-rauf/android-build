@@ -75,15 +75,15 @@ class TransactionHistoryAdapter(
             }
 
             when(models!![position].transfertype){
-                "PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_transaction_payment)
-                "EXTERNAL_PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_transaction_payment)
-                "CASH_IN"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_deposit)
-                "WITHDRAW"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_deposit)
-                "DEPOSIT"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_withdraw)
-                "CASH_OUT"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_withdraw)
-                "TRANSFER"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_favorite_transfers)
-                "FLOAT_TRANSFER"-> holder.transferTypeIcon?.setImageResource(R.drawable.ic_favorite_transfers)
-                else-> holder.transferTypeIcon?.setImageResource(R.drawable.others)
+                "PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.transaction_circle_merchant_payment)
+                "EXTERNAL_PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.transaction_circle_merchant_payment)
+                "CASH_IN"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_withdraw_transaction)
+                "WITHDRAW"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_withdraw_transaction)
+                "DEPOSIT"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_deposit_transaction)
+                "CASH_OUT"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_deposit_transaction)
+                "TRANSFER"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_transfer_transaction)
+                "FLOAT_TRANSFER"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_transfer_transaction)
+                else-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_generic_transaction)
             }
 
         when(models!![position].transactionstatus){

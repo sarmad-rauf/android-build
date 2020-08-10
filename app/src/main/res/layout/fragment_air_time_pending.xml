@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -36,16 +37,20 @@
 
             <com.es.marocapp.widgets.MarocBoldTextView
                 android:id="@+id/tvSuccessTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:text="@string/bill_payment"
+                tools:text="Funds Transfer"
+                android:gravity="center"
                 android:textColor="@color/colorBlack"
-                android:textSize="@dimen/_19ssp"
+                android:textSize="@dimen/_17ssp"
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_16sdp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgBackButton"
+                app:layout_constraintHorizontal_bias="0.4"
+                app:layout_constraintTop_toBottomOf="@+id/imgBackButton"
+                app:layout_constraintBottom_toTopOf="@+id/imgBackButton"
                 app:textAllCaps="true" />
 
             <androidx.appcompat.widget.AppCompatImageView

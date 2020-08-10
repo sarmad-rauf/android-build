@@ -74,9 +74,9 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
                                     fatoratiStepOneObserver.set(result)
                                     getFatoratiStepOneResponseListner.postValue(result)
                                 }
-                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
-                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_INVALID)
                                 else ->  {
                                     fatoratiStepOneObserver.set(result)
@@ -136,9 +136,9 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
                                 ApiConstant.API_SUCCESS -> {
                                     getAddFavoritesResponseListner.postValue(result)
                                 }
-                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
-                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_INVALID)
                                 else ->  {
                                     getAddFavoritesResponseListner.postValue(result)
@@ -196,9 +196,9 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
                                 ApiConstant.API_SUCCESS -> {
                                     getDeleteFavoritesResponseListner.postValue(result)
                                 }
-                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
-                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_INVALID)
                                 else ->  {
                                     getDeleteFavoritesResponseListner.postValue(result)

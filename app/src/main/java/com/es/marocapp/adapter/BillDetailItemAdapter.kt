@@ -30,12 +30,15 @@ class BillDetailItemAdapter(private val bills : ArrayList<InvoiceCustomModel>) :
         holder.billDueDateTitle.text = LanguageData.getStringValue("DueDate")
         holder.billingMonthTitle.text = LanguageData.getStringValue("BillingMonth")
         holder.billStatusTitle.text = LanguageData.getStringValue("Status")
+        holder.billingAmountTitle.text = LanguageData.getStringValue("Amount")
         holder.billStatusVal.text = LanguageData.getStringValue("Unpaid")
 
         holder.isBillSelected.isChecked = bills[position].isBillSelected
         var date = Constants.parseDateFromString(bills[position].month)
         holder.billDueDateVal.text = date
         holder.billingMonthVal.text = Constants.getMonthFromParsedDate(date)
+
+        holder.billingAmountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+bills[position].openAmount
 
         holder.isBillSelected.setOnClickListener{
             if ((it as CompoundButton).isChecked) {
@@ -56,6 +59,8 @@ class BillDetailItemAdapter(private val bills : ArrayList<InvoiceCustomModel>) :
         var billingMonthVal : TextView = view.findViewById(R.id.billingMonthVal)
         var billStatusTitle : TextView = view.findViewById(R.id.billStatusTitle)
         var billStatusVal : TextView = view.findViewById(R.id.billStatusVal)
+        var billingAmountTitle : TextView = view.findViewById(R.id.billingAmountTitle)
+        var billingAmountVal : TextView = view.findViewById(R.id.billingAmountVal)
 
         var isBillSelected : CheckBox = view.findViewById(R.id.isBillSelectedCheckBox)
     }

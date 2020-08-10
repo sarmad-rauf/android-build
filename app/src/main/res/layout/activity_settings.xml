@@ -17,7 +17,7 @@
 
  <androidx.constraintlayout.widget.ConstraintLayout
      android:layout_width="match_parent"
-     android:background="@color/colorGreyLight"
+     android:background="@color/colorWhite"
      android:layout_height="match_parent">
 
      <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +25,7 @@
          android:layout_height="wrap_content"
          app:layout_constraintTop_toTopOf="parent"
          android:id="@+id/headerSettings"
-         android:background="@color/colorActivityHeaderBlue"
+         android:background="@color/colorWhite"
          android:padding="@dimen/_10sdp"
          >
 
@@ -36,7 +36,7 @@
              android:layout_marginStart="@dimen/_8sdp"
              tools:text="Settings"
              android:textAllCaps="true"
-             android:textColor="@color/colorWhite"
+             android:textColor="@color/colorBlack"
              android:textSize="@dimen/_20ssp"
              app:layout_constraintBottom_toBottomOf="parent"
              app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +49,7 @@
              android:layout_width="@dimen/_32sdp"
              android:layout_height="@dimen/_32sdp"
              android:layout_marginStart="@dimen/_8sdp"
-             app:srcCompat="@drawable/ic_back_svg"
+             app:srcCompat="@drawable/ic_back_black_svg"
              android:onClick="@{listener::onBackButtonClickListener}"
              app:layout_constraintStart_toStartOf="parent"
              app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +61,9 @@
          android:layout_margin="@dimen/_16sdp"
          android:id="@+id/cvChangeLanguage"
          app:layout_constraintTop_toBottomOf="@+id/headerSettings"
-         app:cardCornerRadius="@dimen/_12sdp">
+         app:cardCornerRadius="@dimen/_12sdp"
+         app:cardElevation="@dimen/_12sdp"
+         >
 
          <androidx.constraintlayout.widget.ConstraintLayout
              android:layout_width="match_parent"
@@ -113,7 +115,9 @@
          android:layout_margin="@dimen/_16sdp"
          android:id="@+id/cvManageFavorites"
          app:layout_constraintTop_toBottomOf="@+id/cvChangeLanguage"
-         app:cardCornerRadius="@dimen/_12sdp">
+         app:cardCornerRadius="@dimen/_12sdp"
+         app:cardElevation="@dimen/_12sdp"
+         >
 
          <androidx.constraintlayout.widget.ConstraintLayout
              android:layout_width="match_parent"
@@ -153,7 +157,8 @@
          android:id="@+id/cvDefaultAccount"
          android:onClick="@{listener::onSetDefaultAccountClick}"
          app:layout_constraintTop_toBottomOf="@+id/cvManageFavorites"
-         app:cardCornerRadius="@dimen/_12sdp">
+         app:cardCornerRadius="@dimen/_12sdp"
+         app:cardElevation="@dimen/_12sdp">
 
          <androidx.constraintlayout.widget.ConstraintLayout
              android:layout_width="match_parent"
@@ -194,7 +199,8 @@
          android:layout_margin="@dimen/_16sdp"
          android:id="@+id/cvBlockAccount"
          app:layout_constraintTop_toBottomOf="@+id/cvDefaultAccount"
-         app:cardCornerRadius="@dimen/_12sdp">
+         app:cardCornerRadius="@dimen/_12sdp"
+         app:cardElevation="@dimen/_12sdp">
 
          <androidx.constraintlayout.widget.ConstraintLayout
              android:layout_width="match_parent"
@@ -249,7 +255,7 @@
      <androidx.cardview.widget.CardView
          android:layout_width="match_parent"
          android:layout_height="0dp"
-         android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
+         android:visibility="gone"
          app:layout_constraintTop_toTopOf="parent"
          app:layout_constraintBottom_toBottomOf="parent">
      <include android:id="@+id/Gif_Loader"

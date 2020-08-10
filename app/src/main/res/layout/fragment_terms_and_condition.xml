@@ -7,7 +7,7 @@
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@color/colorGreyLight"
+    android:background="@color/colorWhite"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:cardCornerRadius="@dimen/_12sdp"
+        app:cardElevation="@dimen/_12sdp"
         android:layout_margin="@dimen/_16sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

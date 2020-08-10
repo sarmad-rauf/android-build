@@ -53,7 +53,7 @@
             android:layout_marginTop="@dimen/_16sdp"
             android:paddingStart="@dimen/_32sdp"
             android:paddingEnd="@dimen/_32sdp"
-            android:background="@drawable/button_enable_blue"
+            android:background="@drawable/button_enable"
             android:textSize="@dimen/_14ssp"
             android:textColor="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"

@@ -20,7 +20,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGreyLight"
+    android:background="@color/colorWhite"
     >
 
     <androidx.core.widget.NestedScrollView
@@ -119,7 +119,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:src="@drawable/calender_icon"
+                android:src="@drawable/ic_calender_black"
                 android:onClick="@{listener::onCalenderCalenderClick}"
                 app:layout_constraintBottom_toTopOf="@+id/input_layout_date_of_birth"
                 app:layout_constraintEnd_toEndOf="@+id/input_layout_date_of_birth"
@@ -170,7 +170,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:src="@drawable/ic_dropdown"
+                android:src="@drawable/ic_drop_down_arrow_svg"
                 android:onClick="@{listener::onGenderSelectionClick}"
                 app:layout_constraintBottom_toTopOf="@+id/input_layout_gender"
                 app:layout_constraintEnd_toEndOf="@+id/input_layout_gender"
@@ -213,7 +213,7 @@
 
             <com.es.marocapp.widgets.MarocButton
                 android:id="@+id/btnNextDetailFragment"
-                android:layout_width="@dimen/_120sdp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/next"
                 android:textSize="@dimen/_16ssp"
@@ -222,6 +222,7 @@
                 android:background="@drawable/button_enable"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:textColor="@color/colorWhite"
+                app:layout_constraintStart_toStartOf="@+id/input_layout_address"
                 app:layout_constraintTop_toBottomOf="@+id/input_layout_address"
                 app:layout_constraintEnd_toEndOf="@+id/input_layout_address"
                 />
