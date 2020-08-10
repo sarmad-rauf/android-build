@@ -16,6 +16,7 @@ import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.approvals.ApprovalFragment.Companion.SELECTED_APPROVAL_KEY
 import com.es.marocapp.usecase.approvals.ApprovalFragment.Companion.USER_APPROVAL_KEY
+import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.fragment_approval_details.*
 
@@ -63,11 +64,12 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
     }
 
     private fun setUIData() {
-        tvRequestIndicatorVal.text=selectedApprovalData?.initiatingaccountholderid!!.split("/")[0]
+        tvRequestIndicatorVal.text=selectedApprovalData?.initiatingaccountholderid!!
         tvApprovalTypeVal.text=selectedApprovalData?.approvaltype
         tvApprovalIDVal.text=selectedApprovalData?.approvalid.toString()
-        tvTransactionFeeVal.text=selectedApprovalData?.fee?.currency.plus(selectedApprovalData?.fee?.amount)
-        tvTotalVal.text=selectedApprovalData?.amount?.currency.plus(selectedApprovalData?.amount?.amount)
+        tvTransactionFeeVal.text=selectedApprovalData?.fee?.currency.plus(" ").plus(selectedApprovalData?.fee?.amount)
+        tvTotalVal.text=selectedApprovalData?.amount?.currency.plus(" ").plus(selectedApprovalData?.amount?.amount)
+        tvExourtVal.text=Constants.getZoneFormattedDateAndTime(selectedApprovalData?.approvalexpirytime.toString())
     }
 
     private fun subscribeFoUserApprovalsResponse() {
