@@ -137,21 +137,78 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         mDataBinding.inputPhoneNumber.addTextChangedListener(this)
         mDataBinding.inputCode.addTextChangedListener(this)
 
+        mDataBinding.inputPhoneNumber.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                setInputLayoutHint()
+            } else {
+                if (mDataBinding.inputLayoutPhoneNumber.isErrorEnabled) {
+                    setInputLayoutHint()
+                } else {
+                    if (mDataBinding.inputPhoneNumber.text.isEmpty()) {
+                        mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
+                        if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+                            mDataBinding.inputLayoutPhoneNumber.hint =
+                                LanguageData.getStringValue("CINPlaceholder")
+                            mDataBinding.inputPhoneNumberHint.text =
+                                LanguageData.getStringValue("EnterCilNumber")
+                        }
+                        if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
+                            if (mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!) {
+                                mDataBinding.inputLayoutPhoneNumber.hint =
+                                    LanguageData.getStringValue("MSISDNPlaceholder")
+                                mDataBinding.inputPhoneNumberHint.text =
+                                    LanguageData.getStringValue("PhoneNumber")
+                            } else if (mActivityViewModel.isInternetSelected.get()!!) {
+                                mDataBinding.inputLayoutPhoneNumber.hint =
+                                    LanguageData.getStringValue("MSISDNPlaceholder")
+                                mDataBinding.inputPhoneNumberHint.text =
+                                    LanguageData.getStringValue("EnterPaymentIdentifier")
+                            }
+                        }
+                    } else {
+                        setInputLayoutHint()
+                    }
+                }
+            }
+        }
+
         setStrings()
         subscribeObserver()
+    }
+
+    fun setInputLayoutHint() {
+        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+        if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterCilNumber")
+        }
+        if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
+            if (mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!) {
+                mDataBinding.inputLayoutPhoneNumber.hint =
+                    LanguageData.getStringValue("PhoneNumber")
+            } else if (mActivityViewModel.isInternetSelected.get()!!) {
+                mDataBinding.inputLayoutPhoneNumber.hint =
+                    LanguageData.getStringValue("EnterPaymentIdentifier")
+            }
+        }
     }
 
     private fun setStrings() {
         mDataBinding.inputLayoutCode.hint = LanguageData.getStringValue("EnterCode")
         if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterCilNumber")
+            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("CINPlaceholder")
+            mDataBinding.inputPhoneNumberHint.text =
+                LanguageData.getStringValue("EnterCilNumber")
         }
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
-            if(mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!){
+            if (mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!) {
                 mDataBinding.inputLayoutPhoneNumber.hint =
+                    LanguageData.getStringValue("MSISDNPlaceholder")
+                mDataBinding.inputPhoneNumberHint.text =
                     LanguageData.getStringValue("PhoneNumber")
-            }else if(mActivityViewModel.isInternetSelected.get()!!){
+            } else if (mActivityViewModel.isInternetSelected.get()!!) {
                 mDataBinding.inputLayoutPhoneNumber.hint =
+                    LanguageData.getStringValue("MSISDNPlaceholder")
+                mDataBinding.inputPhoneNumberHint.text =
                     LanguageData.getStringValue("EnterPaymentIdentifier")
             }
         }
@@ -234,6 +291,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                         LanguageData.getStringValue("EnterValidPhoneNumber")
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
                     isValidForAll = false
+                    mDataBinding.inputLayoutPhoneNumber.hint =
+                        LanguageData.getStringValue("PhoneNumber")
+                    mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                 } else {
                     mDataBinding.inputLayoutPhoneNumber.error = ""
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
@@ -257,12 +317,18 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                             mDataBinding.inputLayoutPhoneNumber.error =
                                 LanguageData.getStringValue("EnterValidPhoneNumber")
                             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                            mDataBinding.inputLayoutPhoneNumber.hint =
+                                LanguageData.getStringValue("PhoneNumber")
+                            mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                         }
                     } else {
                         mDataBinding.inputLayoutPhoneNumber.error =
                             LanguageData.getStringValue("EnterValidPhoneNumber")
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
                         isValidForAll = false
+                        mDataBinding.inputLayoutPhoneNumber.hint =
+                            LanguageData.getStringValue("PhoneNumber")
+                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                     }
                 }
 
@@ -274,6 +340,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                         LanguageData.getStringValue("EnterValidIdentifier")
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
                     isValidForAll = false
+                    mDataBinding.inputLayoutPhoneNumber.hint =
+                        LanguageData.getStringValue("EnterPaymentIdentifier")
+                    mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                 } else {
                     mDataBinding.inputLayoutPhoneNumber.error = ""
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
@@ -290,6 +359,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                         mDataBinding.inputLayoutPhoneNumber.error =
                             LanguageData.getStringValue("EnterValidIdentifier")
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                        mDataBinding.inputLayoutPhoneNumber.hint =
+                            LanguageData.getStringValue("EnterPaymentIdentifier")
+                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                     }
 
                 }
@@ -301,6 +373,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 mDataBinding.inputLayoutPhoneNumber.error =
                     LanguageData.getStringValue("PleaseEnterValidCILNumber")
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                mDataBinding.inputLayoutPhoneNumber.hint =
+                    LanguageData.getStringValue("EnterCilNumber")
+                mDataBinding.inputPhoneNumberHint.visibility = View.GONE
             } else {
                 mDataBinding.inputLayoutPhoneNumber.error = ""
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
@@ -317,6 +392,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                     mDataBinding.inputLayoutPhoneNumber.error =
                         LanguageData.getStringValue("PleaseEnterValidCILNumber")
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                    mDataBinding.inputLayoutPhoneNumber.hint =
+                        LanguageData.getStringValue("EnterCilNumber")
+                    mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                 }
             }
         }
@@ -331,11 +409,11 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                         LanguageData.getStringValue("PleaseEnterValidCode")
                     mDataBinding.inputLayoutCode.isErrorEnabled = true
                 } else {
-                    if(isCodeRegexMatches){
+                    if (isCodeRegexMatches) {
                         mDataBinding.inputLayoutCode.error = ""
                         mDataBinding.inputLayoutCode.isErrorEnabled = false
                         code = mDataBinding.inputCode.text.toString().trim()
-                    }else{
+                    } else {
                         isValidForAll = false
                         mDataBinding.inputLayoutCode.error =
                             LanguageData.getStringValue("PleaseEnterValidCode")
@@ -375,7 +453,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 }
             }
 
-        }else{
+        } else {
             mDataBinding.inputPhoneNumber.setText("")
             mActivityViewModel.isUserSelectedFromFavorites.set(false)
         }
@@ -388,9 +466,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             if (msisdnEntered.equals(contactNumber)) {
                 mActivityViewModel.isUserSelectedFromFavorites.set(true)
                 break
-            }else{
+            } else {
                 mActivityViewModel.isUserSelectedFromFavorites.set(false)
-                Log.i("FavoritesCheck","false")
+                Log.i("FavoritesCheck", "false")
             }
 
         }
@@ -402,17 +480,17 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             var favoriteNumber = list_of_favorites[i].substringAfter("-")
             if (favoriteNumber.equals(userMsisdn)) {
                 mActivityViewModel.isUserSelectedFromFavorites.set(true)
-                Log.i("FavoritesCheck","true")
+                Log.i("FavoritesCheck", "true")
                 break
-            }else{
+            } else {
                 mActivityViewModel.isUserSelectedFromFavorites.set(false)
-                Log.i("FavoritesCheck","false")
+                Log.i("FavoritesCheck", "false")
             }
         }
     }
 
     override fun afterTextChanged(editable: Editable?) {
-        if(editable.hashCode() == mDataBinding.inputPhoneNumber.text.hashCode()){
+        if (editable.hashCode() == mDataBinding.inputPhoneNumber.text.hashCode()) {
             var msisdn = mDataBinding.inputPhoneNumber.text.toString().trim()
             var msisdnLenght = msisdn.length
 
@@ -443,10 +521,10 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                         ))
                 }
             }
-        }else if(editable.hashCode() == mDataBinding.inputCode.text.hashCode()){
+        } else if (editable.hashCode() == mDataBinding.inputCode.text.hashCode()) {
             var code = mDataBinding.inputCode.text.toString().trim()
             var codeLenght = code.length
-            isCodeRegexMatches  =
+            isCodeRegexMatches =
                 !(codeLenght > 0 && !Pattern.matches(Constants.APP_BILL_PAYMENT_CODE_REGEX, code))
         }
 

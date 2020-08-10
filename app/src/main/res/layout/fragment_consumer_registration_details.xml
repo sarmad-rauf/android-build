@@ -21,6 +21,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     >
 
     <androidx.core.widget.NestedScrollView
@@ -34,6 +36,19 @@
             android:layout_height="match_parent"
             android:paddingBottom="@dimen/_16sdp"
             >
+
+            <com.es.marocapp.widgets.MarocMediumTextView
+                android:id="@+id/input_phone_number_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                tools:text="Enter Mobile Number"
+                android:textSize="@dimen/_16ssp"
+                android:textColor="@color/colorEditTextGreyMedium"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/_34sdp"
+                />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_layout_consumer_number"

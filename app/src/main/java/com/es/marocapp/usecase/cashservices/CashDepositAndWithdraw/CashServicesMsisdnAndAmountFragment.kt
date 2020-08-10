@@ -28,6 +28,7 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
 
     var msisdnEntered = ""
     var isNumberRegexMatches = false
+    var isErrorEnabled = false
 
     override fun setLayout(): Int {
         return R.layout.fragment_cash_services_number_amount
@@ -58,17 +59,42 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
 
         mDataBinding.inputPhoneNumber.addTextChangedListener(this)
 
+        mDataBinding.inputPhoneNumber.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                mDataBinding.inputLayoutPhoneNumber.hint =
+                    LanguageData.getStringValue("EnterReceiversMobileNumber")
+                mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+            } else {
+                if (mDataBinding.inputLayoutPhoneNumber.isErrorEnabled) {
+                    mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+                    mDataBinding.inputLayoutPhoneNumber.hint =
+                        LanguageData.getStringValue("EnterReceiversMobileNumber")
+                }else{
+                    if (mDataBinding.inputPhoneNumber.text.isEmpty()) {
+                        mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
+                        mDataBinding.inputLayoutPhoneNumber.hint =
+                            LanguageData.getStringValue("MSISDNPlaceholder")
+
+                    } else {
+                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+                        mDataBinding.inputLayoutPhoneNumber.hint =
+                            LanguageData.getStringValue("EnterReceiversMobileNumber")
+                    }
+                }
+            }
+        }
 
         subscribeObserver()
         setStrings()
     }
 
     private fun setStrings() {
-        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
         mDataBinding.inputLayoutAmount.hint = LanguageData.getStringValue("EnterAmount")
         mDataBinding.inputNote.hint = LanguageData.getStringValue("Note")
-
         mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Next")
+        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
+        mDataBinding.inputPhoneNumberHint.text =
+            LanguageData.getStringValue("EnterReceiversMobileNumber")
     }
 
     private fun subscribeObserver() {
@@ -94,14 +120,15 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     mActivityViewModel.isOTPFlow.set(true)
-                    DialogUtils.showOTPDialogue(activity,object : DialogUtils.OnOTPDialogClickListner{
-                        override fun onOTPDialogYesClickListner(otp: String) {
-                            mActivityViewModel.requestForCashInWithOtpQouteApi(
-                                activity,otp
-                            )
-                        }
+                    DialogUtils.showOTPDialogue(activity,
+                        object : DialogUtils.OnOTPDialogClickListner {
+                            override fun onOTPDialogYesClickListner(otp: String) {
+                                mActivityViewModel.requestForCashInWithOtpQouteApi(
+                                    activity, otp
+                                )
+                            }
 
-                    })
+                        })
                 } else {
                     DialogUtils.showErrorDialoge(activity, it.description)
                 }
@@ -125,8 +152,10 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
     override fun onNextClickListner(view: View) {
         if (isValidForAll()) {
             if (mActivityViewModel.isDepositUseCase.get()!!) {
-                mActivityViewModel.requestForGenerateOtpApi(activity, msisdnEntered,mDataBinding.inputAmount.text.toString().trim(),
-                    mDataBinding.inputNote.text.toString().trim())
+                mActivityViewModel.requestForGenerateOtpApi(
+                    activity, msisdnEntered, mDataBinding.inputAmount.text.toString().trim(),
+                    mDataBinding.inputNote.text.toString().trim()
+                )
             }
 
             if (mActivityViewModel.isWithdrawUseCase.get()!!) {
@@ -148,9 +177,15 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
 
         if (mDataBinding.inputPhoneNumber.text.isNullOrEmpty() && mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_MSISDN_LENGTH.toInt() - 2) {
             isValidForAll = false
-            mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+            isErrorEnabled = isValidForAll
+            mDataBinding.inputLayoutPhoneNumber.error =
+                LanguageData.getStringValue("PleaseEnterValidMobileNumber")
             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+            mDataBinding.inputLayoutPhoneNumber.hint =
+                LanguageData.getStringValue("EnterReceiversMobileNumber")
+            mDataBinding.inputPhoneNumberHint.visibility = View.GONE
         } else {
+            isErrorEnabled = isValidForAll
             mDataBinding.inputLayoutPhoneNumber.error = ""
             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
 
@@ -162,26 +197,38 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
                 userMSISDNwithPrefix = Constants.APP_MSISDN_PREFIX + userMSISDNwithPrefix
                 userMSISDNwithPrefix = userMSISDNwithPrefix.removePrefix("+")
 
-                if(isNumberRegexMatches){
+                if (isNumberRegexMatches) {
+                    isErrorEnabled = isValidForAll
                     mDataBinding.inputLayoutPhoneNumber.error = ""
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
 
                     msisdnEntered = userMSISDNwithPrefix
-                }else{
+                } else {
                     isValidForAll = false
-                    mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                    isErrorEnabled = isValidForAll
+                    mDataBinding.inputLayoutPhoneNumber.error =
+                        LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                    mDataBinding.inputLayoutPhoneNumber.hint =
+                        LanguageData.getStringValue("EnterReceiversMobileNumber")
+                    mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                 }
             } else {
                 isValidForAll = false
-                mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                isErrorEnabled = isValidForAll
+                mDataBinding.inputLayoutPhoneNumber.error =
+                    LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                mDataBinding.inputLayoutPhoneNumber.hint =
+                    LanguageData.getStringValue("EnterReceiversMobileNumber")
+                mDataBinding.inputPhoneNumberHint.visibility = View.GONE
             }
         }
 
         if (mDataBinding.inputAmount.text.isNullOrEmpty()) {
             isValidForAll = false
-            mDataBinding.inputLayoutAmount.error = LanguageData.getStringValue("PleaseEnterValidAmount")
+            mDataBinding.inputLayoutAmount.error =
+                LanguageData.getStringValue("PleaseEnterValidAmount")
             mDataBinding.inputLayoutAmount.isErrorEnabled = true
         } else {
             mDataBinding.inputLayoutAmount.error = ""
@@ -191,7 +238,8 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
 
             if (sAmount == "" || SumAmountEditText() == "0" || sAmount == ".") {
                 isValidForAll = false
-                mDataBinding.inputLayoutAmount.error = LanguageData.getStringValue("PleaseEnterValidAmountToProceed.")
+                mDataBinding.inputLayoutAmount.error =
+                    LanguageData.getStringValue("PleaseEnterValidAmountToProceed.")
                 mDataBinding.inputLayoutAmount.isErrorEnabled = true
             } else {
                 mDataBinding.inputLayoutAmount.error = ""

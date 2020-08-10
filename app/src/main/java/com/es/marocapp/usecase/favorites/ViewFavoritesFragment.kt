@@ -67,6 +67,10 @@ class ViewFavoritesFragment : BaseFragment<FragmentFavoritesViewBinding>(),
 ////                                (activity as FavoritesActivity).navController.popBackStack(R.id.favoriteTypesFragment,false)
 //                            }
 //                        })
+                    }else{
+                        Constants.mContactListArray.clear()
+                        mContactList.clear()
+                        mFavoriteAdapter.notifyDataSetChanged()
                     }
                 }else{
                     DialogUtils.showErrorDialoge(activity,it.description)

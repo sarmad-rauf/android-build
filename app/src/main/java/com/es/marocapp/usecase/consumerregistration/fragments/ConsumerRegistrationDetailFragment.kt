@@ -66,6 +66,31 @@ class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistra
         mDataBinding.inputConsumerNumber.addTextChangedListener(this)
         mDataBinding.inputNationalID.addTextChangedListener(this)
 
+        mDataBinding.inputConsumerNumber.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                mDataBinding.inputLayoutConsumerNumber.hint =
+                    LanguageData.getStringValue("EnterConsumerNumber")
+                mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+            } else {
+                if (mDataBinding.inputLayoutConsumerNumber.isErrorEnabled) {
+                    mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+                    mDataBinding.inputLayoutConsumerNumber.hint =
+                        LanguageData.getStringValue("EnterConsumerNumber")
+                }else{
+                    if (mDataBinding.inputConsumerNumber.text.isEmpty()) {
+                        mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
+                        mDataBinding.inputLayoutConsumerNumber.hint =
+                            LanguageData.getStringValue("MSISDNPlaceholder")
+
+                    } else {
+                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+                        mDataBinding.inputLayoutConsumerNumber.hint =
+                            LanguageData.getStringValue("EnterConsumerNumber")
+                    }
+                }
+            }
+        }
+
         subscribeObserver()
         setStrings()
     }
@@ -80,6 +105,10 @@ class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistra
         mDataBinding.inputLayoutEmail.hint = LanguageData.getStringValue("EnterEmail")
         mDataBinding.inputLayoutAddress.hint = LanguageData.getStringValue("EnterAddress")
         mDataBinding.btnNextDetailFragment.text = LanguageData.getStringValue("BtnTitle_Next")
+
+        mDataBinding.inputLayoutConsumerNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
+        mDataBinding.inputPhoneNumberHint.text =
+            LanguageData.getStringValue("EnterConsumerNumber")
 
     }
 
@@ -142,6 +171,9 @@ class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistra
             isValidForAll = false
             mDataBinding.inputLayoutConsumerNumber.error = LanguageData.getStringValue("PleaseEnterValidConsumerNumber")
             mDataBinding.inputLayoutConsumerNumber.isErrorEnabled = true
+            mDataBinding.inputLayoutConsumerNumber.hint =
+                LanguageData.getStringValue("EnterConsumerNumber")
+            mDataBinding.inputPhoneNumberHint.visibility = View.GONE
         } else {
             mDataBinding.inputLayoutConsumerNumber.error = ""
             mDataBinding.inputLayoutConsumerNumber.isErrorEnabled = false
@@ -159,6 +191,9 @@ class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistra
                 isValidForAll = false
                 mDataBinding.inputLayoutConsumerNumber.error = LanguageData.getStringValue("PleaseEnterValidConsumerNumber")
                 mDataBinding.inputLayoutConsumerNumber.isErrorEnabled = true
+                mDataBinding.inputLayoutConsumerNumber.hint =
+                    LanguageData.getStringValue("EnterConsumerNumber")
+                mDataBinding.inputPhoneNumberHint.visibility = View.GONE
             }
         }
 
@@ -305,11 +340,11 @@ class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistra
     }
 
     override fun afterTextChanged(editable: Editable?) {
-        if(editable == mDataBinding.inputNationalID.editableText){
+        if(editable.hashCode() == mDataBinding.inputNationalID.text.hashCode()){
             var cnic = mDataBinding.inputNationalID.text.toString().trim()
             var cnicLength = cnic.length
             isCnicMatches = !(cnicLength > 0 && !Pattern.matches(Constants.APP_CN_REGEX, cnic))
-        }else if(editable == mDataBinding.inputConsumerNumber.editableText){
+        }else if(editable.hashCode() == mDataBinding.inputConsumerNumber.text.hashCode()){
             var msisdn = mDataBinding.inputConsumerNumber.text.toString().trim()
             var msisdnLenght = msisdn.length
             isNumberRegexMatches =

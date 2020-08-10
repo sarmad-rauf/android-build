@@ -35,6 +35,7 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
     var msisdnEntered = ""
     var isNumberRegexMatches = false
 
+
     override fun setLayout(): Int {
         return R.layout.fragment_air_time_msisdn
     }
@@ -48,20 +49,20 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
             listner = this@AirTimeMsisdnFragment
         }
 
-        if(mActivityViewModel.isRechargeFixeUseCase.get()!!){
+        if (mActivityViewModel.isRechargeFixeUseCase.get()!!) {
             (activity as AirTimeActivity).setHeaderTitle(
                 mActivityViewModel.airTimeSelected.get()!!
             )
         }
 
-        if(mActivityViewModel.isRechargeMobileUseCase.get()!!){
+        if (mActivityViewModel.isRechargeMobileUseCase.get()!!) {
             (activity as AirTimeActivity).setHeaderTitle(
                 mActivityViewModel.airTimePlanSelected.get()!!
             )
         }
 
         list_of_favorites.clear()
-        for(contacts in Constants.mContactListArray){
+        for (contacts in Constants.mContactListArray) {
             var contactNumber = contacts.fri
             var contactName = contacts.contactName
             contactNumber = contactNumber.substringBefore("@")
@@ -69,14 +70,15 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
             contactNumber = contactNumber.removePrefix(Constants.APP_MSISDN_PREFIX)
             contactNumber = "0$contactNumber"
             //todo also here remove lenght-2 check in max line
-            if(contactNumber.length.equals(Constants.APP_MSISDN_LENGTH.toInt() - 2)){
+            if (contactNumber.length.equals(Constants.APP_MSISDN_LENGTH.toInt() - 2)) {
                 var name_number_favorite = "$contactName-$contactNumber"
                 list_of_favorites.add(name_number_favorite)
             }
         }
-        list_of_favorites.add(0,LanguageData.getStringValue("SelectFavorite").toString())
+        list_of_favorites.add(0, LanguageData.getStringValue("SelectFavorite").toString())
 
-        val adapterFavoriteType = ArrayAdapter<CharSequence>(activity as AirTimeActivity, R.layout.layout_favorites_spinner_text,
+        val adapterFavoriteType = ArrayAdapter<CharSequence>(
+            activity as AirTimeActivity, R.layout.layout_favorites_spinner_text,
             list_of_favorites as List<CharSequence>
         )
         mDataBinding.spinnerSelectFavorites.apply {
@@ -84,8 +86,11 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
         }
         mDataBinding.spinnerSelectFavorites.onItemSelectedListener = this@AirTimeMsisdnFragment
 
-        (activity as AirTimeActivity).mDataBinding.headerAirTime.rootView.tv_company_title.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.airTimeAmountSelected.get()!!
-        (activity as AirTimeActivity).mDataBinding.headerAirTime.rootView.img_company_icons.setImageResource(R.drawable.others_blue)
+        (activity as AirTimeActivity).mDataBinding.headerAirTime.rootView.tv_company_title.text =
+            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.airTimeAmountSelected.get()!!
+        (activity as AirTimeActivity).mDataBinding.headerAirTime.rootView.img_company_icons.setImageResource(
+            R.drawable.others_blue
+        )
 
         (activity as AirTimeActivity).setHeaderVisibility(true)
         (activity as AirTimeActivity).setCompanyIconToolbarVisibility(true)
@@ -106,15 +111,42 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
 
         (activity as AirTimeActivity).setVisibilityAndTextToImage(mActivityViewModel.airTimeAmountSelected.get()!!)
 
+        mDataBinding.inputPhoneNumber.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                mDataBinding.inputLayoutPhoneNumber.hint =
+                    LanguageData.getStringValue("EnterReceiversMobileNumber")
+                mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+            } else {
+                if (mDataBinding.inputLayoutPhoneNumber.isErrorEnabled) {
+                    mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+                    mDataBinding.inputLayoutPhoneNumber.hint =
+                        LanguageData.getStringValue("EnterReceiversMobileNumber")
+                }else{
+                    if (mDataBinding.inputPhoneNumber.text.isEmpty()) {
+                        mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
+                        mDataBinding.inputLayoutPhoneNumber.hint =
+                            LanguageData.getStringValue("MSISDNPlaceholder")
+
+                    } else {
+                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+                        mDataBinding.inputLayoutPhoneNumber.hint =
+                            LanguageData.getStringValue("EnterReceiversMobileNumber")
+                    }
+                }
+            }
+        }
+
         setStrings()
         subscribeObserver()
 
     }
 
     private fun setStrings() {
-        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
         mDataBinding.selectFavoriteTypeTitle.hint = LanguageData.getStringValue("SelectFavorite")
         mDataBinding.btnNext.text = LanguageData.getStringValue("Submit")
+        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
+        mDataBinding.inputPhoneNumberHint.text =
+            LanguageData.getStringValue("EnterReceiversMobileNumber")
     }
 
     private fun subscribeObserver() {
@@ -134,7 +166,7 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
 
     override fun onNextClickListner(view: View) {
         if (isValidForAll()) {
-            mActivityViewModel.requestForAirTimeQuoteApi(activity,msisdnEntered)
+            mActivityViewModel.requestForAirTimeQuoteApi(activity, msisdnEntered)
         }
     }
 
@@ -148,12 +180,15 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
         //todo NUmber Lenght is Pending
         if (mDataBinding.inputPhoneNumber.text.isNullOrEmpty() || mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_MSISDN_LENGTH.toInt() - 2) {
             isValidForAll = false
-            mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+            mDataBinding.inputLayoutPhoneNumber.error =
+                LanguageData.getStringValue("PleaseEnterValidMobileNumber")
             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+            mDataBinding.inputLayoutPhoneNumber.hint =
+                LanguageData.getStringValue("EnterReceiversMobileNumber")
+            mDataBinding.inputPhoneNumberHint.visibility = View.GONE
         } else {
             mDataBinding.inputLayoutPhoneNumber.error = ""
             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
-
             var userMsisdn = mDataBinding.inputPhoneNumber.text.toString()
             if (userMsisdn.startsWith("0", false)) {
                 checkNumberExistInFavorites(userMsisdn)
@@ -163,19 +198,23 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
                 userMSISDNwithPrefix = Constants.APP_MSISDN_PREFIX + userMSISDNwithPrefix
                 userMSISDNwithPrefix = userMSISDNwithPrefix.removePrefix("+")
 
-                if(isNumberRegexMatches){
+                if (isNumberRegexMatches) {
                     mDataBinding.inputLayoutPhoneNumber.error = ""
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
-
                     msisdnEntered = userMSISDNwithPrefix
-                }else{
+                } else {
                     isValidForAll = false
-                    mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                    mDataBinding.inputLayoutPhoneNumber.error =
+                        LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                    mDataBinding.inputLayoutPhoneNumber.hint =
+                        LanguageData.getStringValue("EnterReceiversMobileNumber")
+                    mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                 }
             } else {
                 isValidForAll = false
-                mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                mDataBinding.inputLayoutPhoneNumber.error =
+                    LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
             }
         }
@@ -189,26 +228,26 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         var selectedFavorites = mDataBinding.spinnerSelectFavorites.selectedItem.toString()
-        if(!selectedFavorites.equals(LanguageData.getStringValue("SelectFavorite"))){
+        if (!selectedFavorites.equals(LanguageData.getStringValue("SelectFavorite"))) {
             selectedFavorites = selectedFavorites.substringAfter("-")
             mDataBinding.inputPhoneNumber.setText(selectedFavorites)
             mActivityViewModel.isUserSelectedFromFavorites.set(true)
-        }else{
+        } else {
             mDataBinding.inputPhoneNumber.setText("")
             mActivityViewModel.isUserSelectedFromFavorites.set(false)
         }
     }
 
     private fun checkNumberExistInFavorites(userMsisdn: String) {
-        for(i in 0 until list_of_favorites.size){
+        for (i in 0 until list_of_favorites.size) {
             var favoriteNumber = list_of_favorites[i].substringAfter("-")
-            if(favoriteNumber.equals(userMsisdn)){
+            if (favoriteNumber.equals(userMsisdn)) {
                 mActivityViewModel.isUserSelectedFromFavorites.set(true)
-                Log.i("FavoritesCheck","true")
+                Log.i("FavoritesCheck", "true")
                 break
-            }else{
+            } else {
                 mActivityViewModel.isUserSelectedFromFavorites.set(false)
-                Log.i("FavoritesCheck","false")
+                Log.i("FavoritesCheck", "false")
             }
         }
     }

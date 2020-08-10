@@ -98,6 +98,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                 mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
                 mDataBinding.inputPhoneNumberHint.visibility = View.GONE
             }else{
+                mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
                 mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
             }
         }
@@ -106,8 +107,8 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
 
     private fun setStrings() {
         mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("EnterMsisdnToProceed")
-        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
         mDataBinding.btnLogin.text = LanguageData.getStringValue("BtnTitle_Login")
+        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
         mDataBinding.inputPhoneNumberHint.text = LanguageData.getStringValue("EnterMobileNumber")
     }
 

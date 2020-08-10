@@ -95,10 +95,34 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         mDataBinding.phonebook.setOnClickListener{
                     (activity as SendMoneyActivity).openPhoneBook()
         }
+        mDataBinding.inputPhoneNumber.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                mDataBinding.inputLayoutPhoneNumber.hint =
+                    LanguageData.getStringValue("EnterReceiversMobileNumber")
+                mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+            } else {
+                if (mDataBinding.inputLayoutPhoneNumber.isErrorEnabled) {
+                    mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+                    mDataBinding.inputLayoutPhoneNumber.hint =
+                        LanguageData.getStringValue("EnterReceiversMobileNumber")
+                }else{
+                    if (mDataBinding.inputPhoneNumber.text.isEmpty()) {
+                        mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
+                        mDataBinding.inputLayoutPhoneNumber.hint =
+                            LanguageData.getStringValue("MSISDNPlaceholder")
+
+                    } else {
+                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+                        mDataBinding.inputLayoutPhoneNumber.hint =
+                            LanguageData.getStringValue("EnterReceiversMobileNumber")
+                    }
+                }
+            }
+        }
     }
 
     private fun setStrings() {
-        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+//        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
         mDataBinding.selectFavoriteTypeTitle.hint = LanguageData.getStringValue("SelectFavorite")
         mDataBinding.btnScanQR.text = LanguageData.getStringValue("ScanQr")
 
@@ -110,6 +134,8 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
             )
         }
 
+        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
+        mDataBinding.inputPhoneNumberHint.text = LanguageData.getStringValue("EnterReceiversMobileNumber")
     }
 
     private fun subscribeObserver() {
@@ -177,6 +203,8 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         if(mDataBinding.inputPhoneNumber.text.isNotEmpty() && mDataBinding.inputPhoneNumber.text.toString().length< Constants.APP_MSISDN_LENGTH.toInt()-2){
             mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
+            mDataBinding.inputPhoneNumberHint.visibility = View.GONE
         }else{
             mDataBinding.inputLayoutPhoneNumber.error = ""
             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
@@ -200,10 +228,14 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                     }else{
                         mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
+                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                     }
             }else{
                 mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
+                mDataBinding.inputPhoneNumberHint.visibility = View.GONE
             }
         }
     }
