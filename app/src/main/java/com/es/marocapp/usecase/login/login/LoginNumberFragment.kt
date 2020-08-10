@@ -96,8 +96,9 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
         mDataBinding.inputPhoneNumber.setOnFocusChangeListener { view, hasFocus ->
             if(hasFocus){
                 mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
+                mDataBinding.inputPhoneNumberHint.visibility = View.GONE
             }else{
-                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("0XXXXXXXXX")
+                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
             }
         }
 
@@ -105,8 +106,9 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
 
     private fun setStrings() {
         mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("EnterMsisdnToProceed")
-        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("0XXXXXXXXX")
+        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
         mDataBinding.btnLogin.text = LanguageData.getStringValue("BtnTitle_Login")
+        mDataBinding.inputPhoneNumberHint.text = LanguageData.getStringValue("EnterMobileNumber")
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -153,6 +155,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                     LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
                 mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
+                mDataBinding.inputPhoneNumberHint.visibility = View.GONE
             } else {
                 mDataBinding.inputLayoutPhoneNumber.error = ""
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
