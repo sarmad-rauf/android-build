@@ -93,11 +93,19 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
         subscribe()
         setStrings()
 
+        mDataBinding.inputPhoneNumber.setOnFocusChangeListener { view, hasFocus ->
+            if(hasFocus){
+                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
+            }else{
+                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("0XXXXXXXXX")
+            }
+        }
+
     }
 
     private fun setStrings() {
         mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("EnterMsisdnToProceed")
-        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
+        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("0XXXXXXXXX")
         mDataBinding.btnLogin.text = LanguageData.getStringValue("BtnTitle_Login")
     }
 
@@ -144,6 +152,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                 mDataBinding.inputLayoutPhoneNumber.error =
                     LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
             } else {
                 mDataBinding.inputLayoutPhoneNumber.error = ""
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
@@ -253,7 +262,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                         override fun onCustomDialogOkClickListner() {
                             mActivityViewModel.isFromLoginUserScreen.set(true)
                             mDataBinding.inputPin.setText("")
-                            (activity as LoginActivity).navController.navigate(R.id.action_signUpNumberFragment_to_resetPasswordFragment)
+                            (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)
                         }
 
                     }
