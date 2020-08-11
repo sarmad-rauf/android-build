@@ -62,9 +62,57 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
         (activity as FavoritesActivity).setHeader(LanguageData.getStringValue("Add").toString())
         mDataBinding.inputPhoneNumber.addTextChangedListener(this)
 
+        mDataBinding.inputPhoneNumber.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                setInputHint()
+            } else {
+                if (mDataBinding.inputLayoutPhoneNumber.isErrorEnabled) {
+                    setInputHint()
+                }else{
+                    if (mDataBinding.inputPhoneNumber.text.isEmpty()) {
+                        mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
+                        if(mActivitViewModel.isPaymentSelected.get()!!){
+                            if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!){
+                                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("CINPlaceholder")
+                                mDataBinding.inputPhoneNumberHint.text =
+                                    LanguageData.getStringValue("EnterCilNumber")
+                            }else{
+                                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
+                                mDataBinding.inputPhoneNumberHint.text =
+                                    LanguageData.getStringValue("EnterContactNumber")
+                            }
+                        }else{
+                            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
+                            mDataBinding.inputPhoneNumberHint.text =
+                                LanguageData.getStringValue("EnterContactNumber")
+                        }
+
+                    } else {
+                        setInputHint()
+                    }
+                }
+            }
+        }
+
 
         setStrings()
         subscribeObserver()
+    }
+
+    fun setInputHint(){
+        if(mActivitViewModel.isPaymentSelected.get()!!){
+            if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!){
+                mDataBinding.inputLayoutPhoneNumber.hint =
+                    LanguageData.getStringValue("EnterCilNumber")
+            }else{
+                mDataBinding.inputLayoutPhoneNumber.hint =
+                    LanguageData.getStringValue("EnterContactNumber")
+            }
+        }else{
+            mDataBinding.inputLayoutPhoneNumber.hint =
+                LanguageData.getStringValue("EnterContactNumber")
+        }
+        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
     }
 
     private fun subscribeObserver() {
@@ -95,12 +143,18 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
         mDataBinding.btnAddToFavorites.text = LanguageData.getStringValue("BtnTitle_AddToFavorites")
         if(mActivitViewModel.isPaymentSelected.get()!!){
             if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!){
-                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterCilNumber")
+                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("CINPlaceholder")
+                mDataBinding.inputPhoneNumberHint.text =
+                    LanguageData.getStringValue("EnterCilNumber")
             }else{
-                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterContactNumber")
+                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
+                mDataBinding.inputPhoneNumberHint.text =
+                    LanguageData.getStringValue("EnterContactNumber")
             }
         }else{
-            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterContactNumber")
+            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
+            mDataBinding.inputPhoneNumberHint.text =
+                LanguageData.getStringValue("EnterContactNumber")
         }
 
         mDataBinding.inputLayoutName.hint = LanguageData.getStringValue("EnterName")
@@ -137,6 +191,9 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
                     isValidForAll = false
                     mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidCILNumber")
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                    mDataBinding.inputLayoutPhoneNumber.hint =
+                        LanguageData.getStringValue("EnterCilNumber")
+                    mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                 } else {
                     mDataBinding.inputLayoutPhoneNumber.error = ""
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
@@ -150,6 +207,9 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
                         isValidForAll = false
                         mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidCILNumber")
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                        mDataBinding.inputLayoutPhoneNumber.hint =
+                            LanguageData.getStringValue("EnterCilNumber")
+                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                     }
 
                 }
@@ -158,6 +218,9 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
                     isValidForAll = false
                     mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidContactNumber")
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                    mDataBinding.inputLayoutPhoneNumber.hint =
+                        LanguageData.getStringValue("EnterContactNumber")
+                    mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                 } else {
                     mDataBinding.inputLayoutPhoneNumber.error = ""
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
@@ -179,11 +242,17 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
                             isValidForAll = false
                             mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidContactNumber")
                             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                            mDataBinding.inputLayoutPhoneNumber.hint =
+                                LanguageData.getStringValue("EnterContactNumber")
+                            mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                         }
                     } else {
                         isValidForAll = false
                         mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidContactNumber")
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                        mDataBinding.inputLayoutPhoneNumber.hint =
+                            LanguageData.getStringValue("EnterContactNumber")
+                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                     }
                 }
             }
@@ -192,6 +261,9 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
                 isValidForAll = false
                 mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidContactNumber")
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                mDataBinding.inputLayoutPhoneNumber.hint =
+                    LanguageData.getStringValue("EnterContactNumber")
+                mDataBinding.inputPhoneNumberHint.visibility = View.GONE
             } else {
                 mDataBinding.inputLayoutPhoneNumber.error = ""
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
@@ -213,11 +285,17 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
                         isValidForAll = false
                         mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidContactNumber")
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                        mDataBinding.inputLayoutPhoneNumber.hint =
+                            LanguageData.getStringValue("EnterContactNumber")
+                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                     }
                 } else {
                     isValidForAll = false
                     mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidContactNumber")
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                    mDataBinding.inputLayoutPhoneNumber.hint =
+                        LanguageData.getStringValue("EnterContactNumber")
+                    mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                 }
             }
         }
