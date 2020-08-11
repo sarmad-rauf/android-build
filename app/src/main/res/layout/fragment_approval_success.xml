@@ -198,7 +198,7 @@
                             app:layout_constraintTop_toBottomOf="@+id/tvReceiverNumberTitle" />
 
                         <com.es.marocapp.widgets.MarocLightTextView
-                            android:id="@+id/tvOwnerNameTitle2"
+                            android:id="@+id/amountLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_16sdp"
@@ -209,36 +209,58 @@
                             app:layout_constraintTop_toBottomOf="@+id/dottedLine1" />
 
                         <com.es.marocapp.widgets.MarocRegularTextView
-                            android:id="@+id/tvOwnerNameVal2"
+                            android:id="@+id/amountValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:text="John Ptrucci"
+                            tools:text="DH 10"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/_14sdp"
-                            app:layout_constraintBottom_toBottomOf="@+id/tvOwnerNameTitle2"
+                            app:layout_constraintBottom_toBottomOf="@+id/amountLabel"
                             app:layout_constraintEnd_toEndOf="@+id/tvCompanyNameVal" />
 
                         <com.es.marocapp.widgets.MarocLightTextView
-                            android:id="@+id/tvContactNumTitle2"
+                            android:id="@+id/feeLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_16sdp"
                             android:text="@string/fee"
                             android:textColor="@color/colorConfirmationTitle"
                             android:textSize="@dimen/_12sdp"
-                            app:layout_constraintStart_toStartOf="@+id/tvOwnerNameTitle2"
-                            app:layout_constraintTop_toBottomOf="@+id/tvOwnerNameTitle2" />
+                            app:layout_constraintStart_toStartOf="@+id/amountLabel"
+                            app:layout_constraintTop_toBottomOf="@+id/amountLabel" />
 
                         <com.es.marocapp.widgets.MarocRegularTextView
-                            android:id="@+id/tvContactNumVal2"
+                            android:id="@+id/feeValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_8sdp"
-                            tools:text="+212 88716 9918"
+                            tools:text="DH 5"
                             android:textColor="@color/colorBlack"
                             android:textSize="@dimen/_14sdp"
-                            app:layout_constraintBottom_toBottomOf="@+id/tvContactNumTitle2"
-                            app:layout_constraintEnd_toEndOf="@+id/tvOwnerNameVal2" />
+                            app:layout_constraintBottom_toBottomOf="@+id/feeLabel"
+                            app:layout_constraintEnd_toEndOf="@+id/amountValue" />
+
+                        <com.es.marocapp.widgets.MarocLightTextView
+                            android:id="@+id/totalAmountLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:text="@string/total"
+                            android:textColor="@color/colorConfirmationTitle"
+                            android:textSize="@dimen/_12sdp"
+                            app:layout_constraintStart_toStartOf="@+id/amountLabel"
+                            app:layout_constraintTop_toBottomOf="@+id/feeValue" />
+
+                        <com.es.marocapp.widgets.MarocRegularTextView
+                            android:id="@+id/totalAmountValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            tools:text="DH 15"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/_14sdp"
+                            app:layout_constraintBottom_toBottomOf="@+id/totalAmountLabel"
+                            app:layout_constraintEnd_toEndOf="@+id/amountValue" />
 
                         <ImageView
                             android:id="@+id/dottedLine2"
@@ -248,7 +270,7 @@
                             android:layerType="software"
                             android:visibility="gone"
                             android:src="@drawable/dotted"
-                            app:layout_constraintTop_toBottomOf="@+id/tvContactNumVal2" />
+                            app:layout_constraintTop_toBottomOf="@+id/feeValue" />
 
                         <com.es.marocapp.widgets.MarocLightTextView
                             android:id="@+id/tvDHTitle"
