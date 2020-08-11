@@ -32,14 +32,15 @@
 
         <com.es.marocapp.widgets.MarocRegularTextView
             android:id="@+id/tvApprovalDetailsTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_12sdp"
             android:text="@string/my_approvals"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_19ssp"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgBackButton"
             app:layout_constraintTop_toTopOf="parent"
             app:textAllCaps="true" />
 
@@ -212,6 +213,27 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvExourtVal" />
 
                 <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/tvAmountTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/amount"
+                    android:textColor="@color/colorConfirmationTitle"
+                    android:textSize="@dimen/_12sdp"
+                    app:layout_constraintStart_toStartOf="@+id/tvRequestIndicatorTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/dottedLine2" />
+
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/tvAmountVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="DH0.00"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/_14sdp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvAmountTitle"
+                    app:layout_constraintEnd_toEndOf="@+id/tvRequestIndicatorVal" />
+
+                <com.es.marocapp.widgets.MarocLightTextView
                     android:id="@+id/tvTransactionFeeTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -220,7 +242,7 @@
                     android:textColor="@color/colorConfirmationTitle"
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintStart_toStartOf="@+id/tvRequestIndicatorTitle"
-                    app:layout_constraintTop_toBottomOf="@+id/dottedLine2" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvAmountTitle" />
 
                 <com.es.marocapp.widgets.MarocRegularTextView
                     android:id="@+id/tvTransactionFeeVal"
@@ -303,10 +325,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <include android:id="@+id/Gif_Loader"
-            layout="@layout/layout_dialog"
-            android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
-            />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

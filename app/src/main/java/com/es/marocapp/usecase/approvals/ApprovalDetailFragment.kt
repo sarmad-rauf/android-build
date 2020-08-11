@@ -51,7 +51,8 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
     }
 
     private fun setStrings() {
-        mDataBinding.tvApprovalDetailsTitle.text = LanguageData.getStringValue("MyApprovals")
+
+        mDataBinding.tvApprovalDetailsTitle.text = LanguageData.getStringValue("Details")
 
         mDataBinding.tvRequestIndicatorTitle.text = LanguageData.getStringValue("RequestInitiator")
         mDataBinding.tvIndicatorName.text = LanguageData.getStringValue("InitiatorName")
@@ -60,6 +61,10 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
         mDataBinding.tvExourtTitle.text = LanguageData.getStringValue("Exourt")
         mDataBinding.tvTransactionFeeTitle.text = LanguageData.getStringValue("TransactionFee")
         mDataBinding.tvTotalTitle.text = LanguageData.getStringValue("Total")
+        mDataBinding.tvAmountTitle.text = LanguageData.getStringValue("Amount")
+
+        mDataBinding.btnConfirmationCancel.text = LanguageData.getStringValue("BtnTitle_Cancel")
+        mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("Approve")
 
     }
 
@@ -68,8 +73,10 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
         tvApprovalTypeVal.text=selectedApprovalData?.approvaltype
         tvApprovalIDVal.text=selectedApprovalData?.approvalid.toString()
         tvTransactionFeeVal.text=selectedApprovalData?.fee?.currency.plus(" ").plus(selectedApprovalData?.fee?.amount)
-        tvTotalVal.text=selectedApprovalData?.amount?.currency.plus(" ").plus(selectedApprovalData?.amount?.amount)
+        tvAmountVal.text=selectedApprovalData?.amount?.currency.plus(" ").plus(selectedApprovalData?.amount?.amount)
         tvExourtVal.text=Constants.getZoneFormattedDateAndTime(selectedApprovalData?.approvalexpirytime.toString())
+
+        mDataBinding.tvTotalVal.text=selectedApprovalData?.amount?.currency.plus(" ").plus(Constants.addAmountAndFee(selectedApprovalData?.amount?.amount!!.toDouble() , selectedApprovalData?.fee?.amount!!.toDouble()))
     }
 
     private fun subscribeFoUserApprovalsResponse() {

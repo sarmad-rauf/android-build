@@ -21,10 +21,10 @@ class ApprovalsItemAdapter(private val approvalsItems: ArrayList<Approvaldetail>
 
     override fun onBindViewHolder(holder: ApprovalsItemViewHolder, position: Int) {
         holder.approvalItemName.text = approvalsItems[position].approvaltype
-       // holder.approvalItemType.text = approvalsItemsType[position]
+        holder.approvalItemType.text = approvalsItems[position]?.amount?.currency.plus(" ").plus(approvalsItems[position]?.amount?.amount)
 
         holder.mApprovalsItemLayout.setOnClickListener {
-            listner.onApprovalItemTypeClick()
+            listner.onApprovalItemTypeClick(position)
         }
     }
 
@@ -36,6 +36,6 @@ class ApprovalsItemAdapter(private val approvalsItems: ArrayList<Approvaldetail>
 
 
     interface ApprovalItemClickListner{
-        fun onApprovalItemTypeClick()
+        fun onApprovalItemTypeClick(position: Int)
     }
 }

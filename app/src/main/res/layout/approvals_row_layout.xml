@@ -31,15 +31,17 @@
 
             <com.es.marocapp.widgets.MarocRegularTextView
                 android:id="@+id/approvalName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
-                tools:text="Marketplace"
+                tools:text="Cash_OUT"
                 android:textSize="@dimen/_16ssp"
                 android:textColor="@color/colorGreyDark"
                 android:layout_marginStart="@dimen/_32sdp"
+                android:layout_marginEnd="@dimen/_4sdp"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/approvalType"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 />
@@ -53,7 +55,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/approvalName"
                 app:layout_constraintBottom_toTopOf="@+id/approvalName"
                 android:textSize="@dimen/_14ssp"
-                android:textColor="@color/colorGreyDark"
+                android:textColor="@color/colorBlack"
                 tools:text="Debit"
                 android:textAllCaps="true"
                 />

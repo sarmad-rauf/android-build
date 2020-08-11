@@ -13,6 +13,7 @@ import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.approvals.ApprovalFragment
 import com.es.marocapp.usecase.approvals.ApprovalViewModel
+import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.fragment_approval_success.*
 
@@ -41,10 +42,26 @@ class ApprovalSuccessFragment : BaseFragment<FragmentApprovalSuccessBinding>(),
         userApprovalData =
             arguments?.getParcelable<UserApprovalResponse>(ApprovalFragment.USER_APPROVAL_KEY)!!
 
-          setUIData()
+
+        setStrings()
+        setUIData()
 
         subscribeForGetBalanceResponse()
         approvalViewModel.requestForGetBalanceApi(context)
+    }
+
+    private fun setStrings() {
+        mDataBinding.tvSuccessTitle.text = LanguageData.getStringValue("MyApprovals")
+
+        mDataBinding.tvContactNumTitle.text = LanguageData.getStringValue("RequestInitiator")
+        mDataBinding.tvCompanyNameTitle.text = LanguageData.getStringValue("ApprovalType")
+        mDataBinding.tvOwnerNameTitle.text = LanguageData.getStringValue("ApprovalID")
+
+        mDataBinding.newBalanceTitle.text =  LanguageData.getStringValue("YourNewBalanceIs")
+        mDataBinding.feeLabel.text = LanguageData.getStringValue("TransactionFee")
+        mDataBinding.totalAmountLabel.text = LanguageData.getStringValue("Total")
+        mDataBinding.tvContactNumTitle.text = LanguageData.getStringValue("RequestInitiator")
+        mDataBinding.amountLabel.text = LanguageData.getStringValue("Amount")
     }
 
     private fun subscribeForGetBalanceResponse() {
@@ -59,14 +76,16 @@ class ApprovalSuccessFragment : BaseFragment<FragmentApprovalSuccessBinding>(),
     }
 
     private fun setUIData() {
+
         tvCompanyNameVal.text=userApprovalData.approvaltype
         tvOwnerNameVal.text=userApprovalData.approvalid
 
-        tvOwnerNameVal2.text=userApprovalData.amount?.currency.plus(userApprovalData.amount?.amount)
+        mDataBinding.feeValue.text=userApprovalData?.fee?.currency.plus(" ").plus(userApprovalData?.fee?.amount)
 
-        tvContactNumVal2.text=userApprovalData.fee?.currency.plus(userApprovalData.fee?.amount)
+        mDataBinding.totalAmountValue.text=userApprovalData?.amount?.currency.plus(" ").plus(Constants.addAmountAndFee(userApprovalData?.amount?.amount!!.toDouble() , userApprovalData?.fee?.amount!!.toDouble()))
 
-        mDataBinding.tvContactNumTitle.text = LanguageData.getStringValue("RequestInitiator")
+        mDataBinding.amountValue.text=userApprovalData?.amount?.currency.plus(" ").plus(userApprovalData?.amount?.amount)
+
         mDataBinding.tvContactNumVal.text=userApprovalData.initiatingaccountholderid
     }
 
