@@ -6,7 +6,7 @@ import android.database.Cursor
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.view.View
-import android.widget.Toast
+import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -16,6 +16,7 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.widgets.MarocEditText
+import com.es.marocapp.widgets.MarocMediumTextView
 import com.google.android.material.textfield.TextInputLayout
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.layout_simple_header.view.*
@@ -32,6 +33,7 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
 
     lateinit var mInputField : MarocEditText
     lateinit var mInputFieldLayout : TextInputLayout
+    lateinit var mInputHint : MarocMediumTextView
      val PICK_CONTACT = 10021
 
     override fun init(savedInstanceState: Bundle?) {
@@ -60,10 +62,12 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
 
     fun startQRScan(
         inputPhoneNumber: MarocEditText,
-        inputLayoutPhoneNumber: TextInputLayout
+        inputLayoutPhoneNumber: TextInputLayout,
+        inputPhoneNumberHint: MarocMediumTextView
     ) {
         mInputFieldLayout = inputLayoutPhoneNumber
         mInputField = inputPhoneNumber
+        mInputHint = inputPhoneNumberHint
         val integrator = IntentIntegrator(this@SendMoneyActivity)
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES)
         integrator.setPrompt("")
@@ -112,6 +116,9 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
                     mInputFieldLayout.isErrorEnabled = true
                     mInputFieldLayout.error =
                         LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+
+                    mInputFieldLayout.hint = LanguageData.getStringValue("EnterMobileNumber")
+                    mInputHint.visibility = View.GONE
                 } else {
                     var sResult = number
 
@@ -126,6 +133,8 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
 //                DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
                     mInputFieldLayout.isErrorEnabled = true
                     mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
+                    mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+                    mInputHint.visibility = View.GONE
                 } else {
                     var sResult = result.contents
 
@@ -138,6 +147,8 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
 //            DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
                 mInputFieldLayout.isErrorEnabled = true
                 mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
+                mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+                mInputHint.visibility = View.GONE
             }
         }
     }
@@ -150,8 +161,12 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
             if (msisdn.contains("212")) {
                 msisdn = msisdn.substringAfter("212")
                 msisdn = msisdn.substringAfter("+212")
+                msisdn = msisdn.replace("-","")
+                msisdn = msisdn.trim()
                 msisdn = "0$msisdn"
             }
+            mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+            mInputHint.visibility = View.GONE
             mInputField.setText(msisdn)
         } else {
             mInputField.setText("")
@@ -160,10 +175,14 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
             if(isFromPhonebook){
                 mInputFieldLayout.error =
                     LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+                mInputHint.visibility = View.GONE
             }
             else {
                 mInputFieldLayout.error =
                     LanguageData.getStringValue("PleaseScanValidQRDot")
+                mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+                mInputHint.visibility = View.GONE
             }
         }
     }
@@ -174,6 +193,8 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
         if(result.contains("212")){
             msisdn = msisdn.substringAfter("212")
             msisdn = msisdn.substringAfter("+212")
+            msisdn = msisdn.replace("-","")
+            msisdn = msisdn.trim()
             msisdn = "0$msisdn"
         }
         var msisdnLenght = msisdn.length

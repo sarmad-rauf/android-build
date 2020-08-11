@@ -52,6 +52,33 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
         var userBalance =
             mActivityViewModel.mBalanceInforAndResponseObserver.get()!!.balance!!.toFloat()
         var userBalanceInt = userBalance.toInt()
+        mDataBinding.plusAmountTotal.setOnClickListener {
+            var currentBalance = mDataBinding.etAmountEntered.text.toString()
+            if(currentBalance.isEmpty()){
+                currentBalance = "0.00"
+            }
+            var currentBalanceDouble = currentBalance.toDouble()
+            var currentBalanceInt = currentBalanceDouble.toInt()
+            var newAmount= currentBalanceInt+1
+            if(newAmount<= userBalance){
+                mDataBinding.etAmountEntered.setText(newAmount.toString())
+            }
+        }
+
+        mDataBinding.minuAmountTotal.setOnClickListener {
+            var currentBalance = mDataBinding.etAmountEntered.text.toString()
+            if(currentBalance.isEmpty()){
+                currentBalance = "0.00"
+            }
+            var currentBalanceDouble = currentBalance.toDouble()
+            var currentBalanceInt = currentBalanceDouble.toInt()
+            var newAmount = 0
+            if(currentBalanceInt!=0){
+                newAmount = currentBalanceInt-1
+            }
+
+            mDataBinding.etAmountEntered.setText(newAmount.toString())
+        }
         mDataBinding.AmountSeekBar.max = userBalanceInt
         mDataBinding.AmountSeekBar.progress = 0
 

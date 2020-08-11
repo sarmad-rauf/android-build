@@ -2,7 +2,6 @@ package com.es.marocapp.usecase.sendmoney.tranferfundcase
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
@@ -81,7 +80,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         )
 
         mDataBinding.btnScanQR.setOnClickListener{
-            (activity as SendMoneyActivity).startQRScan(mDataBinding.inputPhoneNumber, mDataBinding.inputLayoutPhoneNumber)
+            (activity as SendMoneyActivity).startQRScan(mDataBinding.inputPhoneNumber, mDataBinding.inputLayoutPhoneNumber,mDataBinding.inputPhoneNumberHint)
         }
 
         mActivityViewModel.popBackStackTo = -1
@@ -89,6 +88,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         mDataBinding.inputPhoneNumber.addTextChangedListener(this)
         (activity as SendMoneyActivity).mInputField = mDataBinding.inputPhoneNumber
         (activity as SendMoneyActivity).mInputFieldLayout = mDataBinding.inputLayoutPhoneNumber
+        (activity as SendMoneyActivity).mInputHint = mDataBinding.inputPhoneNumberHint
         setStrings()
         subscribeObserver()
 
@@ -203,7 +203,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         if(mDataBinding.inputPhoneNumber.text.isNotEmpty() && mDataBinding.inputPhoneNumber.text.toString().length< Constants.APP_MSISDN_LENGTH.toInt()-2){
             mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
-            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
+            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
             mDataBinding.inputPhoneNumberHint.visibility = View.GONE
         }else{
             mDataBinding.inputLayoutPhoneNumber.error = ""
@@ -228,13 +228,13 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                     }else{
                         mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
-                        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
+                        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
                         mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                     }
             }else{
                 mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
-                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
+                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
                 mDataBinding.inputPhoneNumberHint.visibility = View.GONE
             }
         }
@@ -285,9 +285,15 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
             selectedFavorites = selectedFavorites.substringAfter("-")
             mDataBinding.inputPhoneNumber.setText(selectedFavorites)
             mActivityViewModel.isUserSelectedFromFavorites.set(true)
+            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+            mDataBinding.inputPhoneNumberHint.visibility = View.GONE
         }else{
             mDataBinding.inputPhoneNumber.setText("")
             mActivityViewModel.isUserSelectedFromFavorites.set(false)
+            mDataBinding.inputPhoneNumber.clearFocus()
+            mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
+            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
+            mDataBinding.inputPhoneNumberHint.text = LanguageData.getStringValue("EnterReceiversMobileNumber")
         }
     }
 
