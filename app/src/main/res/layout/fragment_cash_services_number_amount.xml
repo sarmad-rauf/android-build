@@ -43,8 +43,8 @@
         android:id="@+id/input_layout_phone_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/_32sdp"
+        app:layout_constraintTop_toBottomOf="@+id/input_phone_number_hint"
+        app:layout_goneMarginTop="@dimen/_32sdp"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_16sdp"
         >
