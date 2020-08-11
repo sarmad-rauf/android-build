@@ -232,9 +232,15 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
             selectedFavorites = selectedFavorites.substringAfter("-")
             mDataBinding.inputPhoneNumber.setText(selectedFavorites)
             mActivityViewModel.isUserSelectedFromFavorites.set(true)
+            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+            mDataBinding.inputPhoneNumberHint.visibility = View.GONE
         } else {
             mDataBinding.inputPhoneNumber.setText("")
             mActivityViewModel.isUserSelectedFromFavorites.set(false)
+            mDataBinding.inputPhoneNumber.clearFocus()
+            mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
+            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
+            mDataBinding.inputPhoneNumberHint.text = LanguageData.getStringValue("EnterReceiversMobileNumber")
         }
     }
 

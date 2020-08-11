@@ -434,6 +434,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         var selectedFavorites = mDataBinding.spinnerSelectFavorites.selectedItem.toString()
         if (!selectedFavorites.equals(LanguageData.getStringValue("SelectFavorite"))) {
+            setInputLayoutHint()
             if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
                 selectedFavorites = selectedFavorites.substringAfter("-")
                 mDataBinding.inputPhoneNumber.setText(selectedFavorites)
@@ -456,6 +457,26 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         } else {
             mDataBinding.inputPhoneNumber.setText("")
             mActivityViewModel.isUserSelectedFromFavorites.set(false)
+            mDataBinding.inputPhoneNumber.clearFocus()
+            mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
+            if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("CINPlaceholder")
+                mDataBinding.inputPhoneNumberHint.text =
+                    LanguageData.getStringValue("EnterCilNumber")
+            }
+            if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
+                if (mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!) {
+                    mDataBinding.inputLayoutPhoneNumber.hint =
+                        LanguageData.getStringValue("MSISDNPlaceholder")
+                    mDataBinding.inputPhoneNumberHint.text =
+                        LanguageData.getStringValue("PhoneNumber")
+                } else if (mActivityViewModel.isInternetSelected.get()!!) {
+                    mDataBinding.inputLayoutPhoneNumber.hint =
+                        LanguageData.getStringValue("MSISDNPlaceholder")
+                    mDataBinding.inputPhoneNumberHint.text =
+                        LanguageData.getStringValue("EnterPaymentIdentifier")
+                }
+            }
         }
     }
 
