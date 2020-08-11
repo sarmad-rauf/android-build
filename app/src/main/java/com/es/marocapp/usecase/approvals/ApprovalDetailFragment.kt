@@ -51,6 +51,7 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
     }
 
     private fun setStrings() {
+
         mDataBinding.tvApprovalDetailsTitle.text = LanguageData.getStringValue("MyApprovals")
 
         mDataBinding.tvRequestIndicatorTitle.text = LanguageData.getStringValue("RequestInitiator")
@@ -60,6 +61,9 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
         mDataBinding.tvExourtTitle.text = LanguageData.getStringValue("Exourt")
         mDataBinding.tvTransactionFeeTitle.text = LanguageData.getStringValue("TransactionFee")
         mDataBinding.tvTotalTitle.text = LanguageData.getStringValue("Total")
+
+        mDataBinding.btnConfirmationCancel.text = LanguageData.getStringValue("BtnTitle_Cancel")
+        mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("Approve")
 
     }
 

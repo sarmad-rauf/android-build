@@ -59,12 +59,29 @@ class ApprovalSuccessFragment : BaseFragment<FragmentApprovalSuccessBinding>(),
     }
 
     private fun setUIData() {
+        mDataBinding.tvSuccessTitle.text = LanguageData.getStringValue("MyApprovals")
+
+        mDataBinding.tvContactNumTitle.text = LanguageData.getStringValue("RequestInitiator")
+        mDataBinding.tvCompanyNameTitle.text = LanguageData.getStringValue("ApprovalType")
+        mDataBinding.tvOwnerNameTitle.text = LanguageData.getStringValue("ApprovalID")
+
+        mDataBinding.newBalanceTitle.text =  LanguageData.getStringValue("YourNewBalanceIs")
+
+
+
         tvCompanyNameVal.text=userApprovalData.approvaltype
         tvOwnerNameVal.text=userApprovalData.approvalid
 
-        tvOwnerNameVal2.text=userApprovalData.amount?.currency.plus(userApprovalData.amount?.amount)
+        //tvOwnerNameVal2.text=userApprovalData.amount?.currency.plus(userApprovalData.amount?.amount)
 
-        tvContactNumVal2.text=userApprovalData.fee?.currency.plus(userApprovalData.fee?.amount)
+        //tvContactNumVal2.text=userApprovalData.fee?.currency.plus(userApprovalData.fee?.amount)
+
+        mDataBinding.tvOwnerNameTitle2.text = LanguageData.getStringValue("TransactionFee")
+        mDataBinding.tvOwnerNameVal2.text=userApprovalData?.fee?.currency.plus(" ").plus(userApprovalData?.fee?.amount)
+
+        mDataBinding.tvContactNumTitle2.text = LanguageData.getStringValue("Total")
+
+        mDataBinding.tvContactNumVal2.text=userApprovalData?.amount?.currency.plus(" ").plus(userApprovalData?.amount?.amount)
 
         mDataBinding.tvContactNumTitle.text = LanguageData.getStringValue("RequestInitiator")
         mDataBinding.tvContactNumVal.text=userApprovalData.initiatingaccountholderid

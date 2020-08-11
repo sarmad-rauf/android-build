@@ -1,7 +1,6 @@
 package com.es.marocapp.usecase.approvals
 
 import android.os.Bundle
-import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,10 +41,10 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
         approvalViewModel.requestForGetApprovalsApi(activity)
 
         mApprovalsItemAdapter = ApprovalsItemAdapter(mApprovalsList, object : ApprovalsItemAdapter.ApprovalItemClickListner{
-            override fun onApprovalItemTypeClick() {
+            override fun onApprovalItemTypeClick(position: Int) {
               //  val bundle= bundleOf("data",mApprovalsList.get(0) as ArrayList<Approvaldetail>)
                 val b = Bundle()
-                b.putParcelable(SELECTED_APPROVAL_KEY, mApprovalsList.get(0) as Approvaldetail)
+                b.putParcelable(SELECTED_APPROVAL_KEY, mApprovalsList.get(position) as Approvaldetail)
                 (activity as MainActivity).navController.navigate(R.id.action_navigation_approval_to_approvalDetailFragment,b)
             }
 

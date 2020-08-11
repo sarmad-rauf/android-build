@@ -24,7 +24,7 @@ class ApprovalsItemAdapter(private val approvalsItems: ArrayList<Approvaldetail>
        // holder.approvalItemType.text = approvalsItemsType[position]
 
         holder.mApprovalsItemLayout.setOnClickListener {
-            listner.onApprovalItemTypeClick()
+            listner.onApprovalItemTypeClick(position)
         }
     }
 
@@ -36,6 +36,6 @@ class ApprovalsItemAdapter(private val approvalsItems: ArrayList<Approvaldetail>
 
 
     interface ApprovalItemClickListner{
-        fun onApprovalItemTypeClick()
+        fun onApprovalItemTypeClick(position: Int)
     }
 }
