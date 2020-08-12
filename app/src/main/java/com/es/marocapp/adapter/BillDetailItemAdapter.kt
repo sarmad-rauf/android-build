@@ -38,7 +38,8 @@ class BillDetailItemAdapter(private val bills : ArrayList<InvoiceCustomModel>) :
         holder.billDueDateVal.text = date
         holder.billingMonthVal.text = Constants.getMonthFromParsedDate(date)
 
-        holder.billingAmountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+bills[position].openAmount
+        holder.billingAmountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+ Constants.converValueToTwoDecimalPlace(
+           (bills[position].openAmount.toDouble()/Constants.AMOUNT_CONVERSION_VALUE.toDouble()))
 
         holder.isBillSelected.setOnClickListener{
             if ((it as CompoundButton).isChecked) {
