@@ -31,18 +31,20 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
 
     lateinit var navHostFragment: NavHostFragment
 
-    lateinit var mInputField : MarocEditText
-    lateinit var mInputFieldLayout : TextInputLayout
-    lateinit var mInputHint : MarocMediumTextView
-     val PICK_CONTACT = 10021
+    lateinit var mInputField: MarocEditText
+    lateinit var mInputFieldLayout: TextInputLayout
+    lateinit var mInputHint: MarocMediumTextView
+    val PICK_CONTACT = 10021
 
     override fun init(savedInstanceState: Bundle?) {
-        mActivityViewModel = ViewModelProvider(this@SendMoneyActivity).get(SendMoneyViewModel::class.java)
+        mActivityViewModel =
+            ViewModelProvider(this@SendMoneyActivity).get(SendMoneyViewModel::class.java)
         mDataBinding.apply {
             viewmodel = mActivityViewModel
         }
 
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_send_money_host_fragment) as NavHostFragment
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_send_money_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
         mDataBinding.root.simpleHeaderBack.setOnClickListener {
@@ -78,54 +80,53 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
         integrator.initiateScan()
     }
 
-    fun openPhoneBook(){
+    fun openPhoneBook() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
         startActivityForResult(intent, PICK_CONTACT)
     }
 
-    fun setHeaderTitle(title : String){
+    fun setHeaderTitle(title: String) {
         mDataBinding.headerBillPayment.rootView.simpleHeaderTitle.text = title
     }
 
-    fun setHeaderVisibility(isVisible: Boolean){
-        if(isVisible){
+    fun setHeaderVisibility(isVisible: Boolean) {
+        if (isVisible) {
             mDataBinding.headerBillPayment.visibility = View.VISIBLE
-        }else{
+        } else {
             mDataBinding.headerBillPayment.visibility = View.GONE
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-            if (requestCode == PICK_CONTACT && resultCode === Activity.RESULT_OK) {
-                val contactData = data!!.data
-                val cursor: Cursor? = contentResolver.query(
-                    contactData!!,
-                    null,
-                    null,
-                    null,
-                    null
-                )
-                cursor?.moveToFirst()
+        if (requestCode == PICK_CONTACT && resultCode === Activity.RESULT_OK) {
+            val contactData = data!!.data
+            val cursor: Cursor? = contentResolver.query(
+                contactData!!,
+                null,
+                null,
+                null,
+                null
+            )
+            cursor?.moveToFirst()
 
-                val number =
-                    cursor?.getString(cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER))
+            val number =
+                cursor?.getString(cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER))
 
-                if (number == null || number.isNullOrEmpty()) {
-                    mInputFieldLayout.isErrorEnabled = true
-                    mInputFieldLayout.error =
-                        LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+            if (number == null || number.isNullOrEmpty()) {
+                mInputFieldLayout.isErrorEnabled = true
+                mInputFieldLayout.error =
+                    LanguageData.getStringValue("PleaseEnterValidMobileNumber")
 
-                    mInputFieldLayout.hint = LanguageData.getStringValue("EnterMobileNumber")
-                    mInputHint.visibility = View.GONE
-                } else {
-                    var sResult = number
+                mInputFieldLayout.hint = LanguageData.getStringValue("EnterMobileNumber")
+                mInputHint.visibility = View.GONE
+            } else {
+                var sResult = number
 
-                    verifyAndSetMsisdn(sResult,true)
-                }
+                verifyAndSetMsisdn(sResult, true)
             }
-        else {
+        } else {
             val result =
                 IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
             if (result != null) {
@@ -133,12 +134,13 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
 //                DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
                     mInputFieldLayout.isErrorEnabled = true
                     mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
-                    mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+                    mInputFieldLayout.hint =
+                        LanguageData.getStringValue("EnterReceiversMobileNumber")
                     mInputHint.visibility = View.GONE
                 } else {
                     var sResult = result.contents
 
-                    verifyAndSetMsisdn(sResult,false)
+                    verifyAndSetMsisdn(sResult, false)
                 }
             } else {
                 // This is important, otherwise the result will not be passed to the fragment
@@ -153,7 +155,7 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
         }
     }
 
-    private fun verifyAndSetMsisdn(sResult: String?,isFromPhonebook:Boolean) {
+    private fun verifyAndSetMsisdn(sResult: String?, isFromPhonebook: Boolean) {
         if (isValidNumber(sResult!!)) {
             mInputFieldLayout.isErrorEnabled = false
             mInputFieldLayout.error = ""
@@ -161,7 +163,7 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
             if (msisdn.contains("212")) {
                 msisdn = msisdn.substringAfter("212")
                 msisdn = msisdn.substringAfter("+212")
-                msisdn = msisdn.replace("-","")
+                msisdn = msisdn.replace("-", "")
                 msisdn = msisdn.trim()
                 msisdn = "0$msisdn"
             }
@@ -172,13 +174,12 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
             mInputField.setText("")
 //                    DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
             mInputFieldLayout.isErrorEnabled = true
-            if(isFromPhonebook){
+            if (isFromPhonebook) {
                 mInputFieldLayout.error =
                     LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                 mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
                 mInputHint.visibility = View.GONE
-            }
-            else {
+            } else {
                 mInputFieldLayout.error =
                     LanguageData.getStringValue("PleaseScanValidQRDot")
                 mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
@@ -190,16 +191,19 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
     private fun isValidNumber(result: String): Boolean {
         var isNumberRegexMatches = false
         var msisdn = result
-        if(result.contains("212")){
+        if (result.contains("212")) {
             msisdn = msisdn.substringAfter("212")
             msisdn = msisdn.substringAfter("+212")
-            msisdn = msisdn.replace("-","")
+            msisdn = msisdn.replace("-", "")
             msisdn = msisdn.trim()
             msisdn = "0$msisdn"
         }
         var msisdnLenght = msisdn.length
         isNumberRegexMatches =
-            (msisdnLenght > 0 && msisdnLenght == Constants.APP_MSISDN_LENGTH.toInt()-2 && Pattern.matches(Constants.APP_MSISDN_REGEX, msisdn))
+            (msisdnLenght > 0 && msisdnLenght == Constants.APP_MSISDN_LENGTH.toInt() - 2 && Pattern.matches(
+                Constants.APP_MSISDN_REGEX,
+                msisdn
+            ))
         return isNumberRegexMatches
     }
 }
