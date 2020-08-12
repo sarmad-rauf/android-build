@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cash_in_via_card_nav_graph"
-    app:startDestination="@id/cashInViaCardEmailFragment">
+    app:startDestination="@id/cashInViaCashWebViewFragment">
 
     <fragment
         android:id="@+id/cashInViaCardEmailFragment"

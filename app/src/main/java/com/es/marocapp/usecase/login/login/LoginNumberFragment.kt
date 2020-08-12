@@ -103,6 +103,11 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
             }
         }
 
+        if(isRegFlow){
+            mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
+            showTermsConditionsAndSignup()
+        }
     }
 
     private fun setStrings() {
@@ -320,6 +325,9 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
         mDataBinding.root.cross.setOnClickListener {
             mDataBinding.root.toast_layout_root.visibility = View.GONE
         }
+
+        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
     }
 
     fun checkUserRegsitrationAndActicationSenario(response: GetAccountHolderInformationResponse) {

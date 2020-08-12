@@ -290,10 +290,14 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         }else{
             mDataBinding.inputPhoneNumber.setText("")
             mActivityViewModel.isUserSelectedFromFavorites.set(false)
-            mDataBinding.inputPhoneNumber.clearFocus()
-            mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
-            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
-            mDataBinding.inputPhoneNumberHint.text = LanguageData.getStringValue("EnterReceiversMobileNumber")
+            if(mDataBinding.inputLayoutPhoneNumber.isErrorEnabled){
+
+            }else{
+                mDataBinding.inputPhoneNumber.clearFocus()
+                mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
+                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
+                mDataBinding.inputPhoneNumberHint.text = LanguageData.getStringValue("EnterReceiversMobileNumber")
+            }
         }
     }
 

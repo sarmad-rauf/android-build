@@ -457,24 +457,28 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         } else {
             mDataBinding.inputPhoneNumber.setText("")
             mActivityViewModel.isUserSelectedFromFavorites.set(false)
-            mDataBinding.inputPhoneNumber.clearFocus()
-            mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
-            if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("CINPlaceholder")
-                mDataBinding.inputPhoneNumberHint.text =
-                    LanguageData.getStringValue("EnterCilNumber")
-            }
-            if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
-                if (mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!) {
-                    mDataBinding.inputLayoutPhoneNumber.hint =
-                        LanguageData.getStringValue("MSISDNPlaceholder")
+            if(mDataBinding.inputLayoutPhoneNumber.isErrorEnabled){
+
+            }else{
+                mDataBinding.inputPhoneNumber.clearFocus()
+                mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
+                if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+                    mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("CINPlaceholder")
                     mDataBinding.inputPhoneNumberHint.text =
-                        LanguageData.getStringValue("PhoneNumber")
-                } else if (mActivityViewModel.isInternetSelected.get()!!) {
-                    mDataBinding.inputLayoutPhoneNumber.hint =
-                        LanguageData.getStringValue("MSISDNPlaceholder")
-                    mDataBinding.inputPhoneNumberHint.text =
-                        LanguageData.getStringValue("EnterPaymentIdentifier")
+                        LanguageData.getStringValue("EnterCilNumber")
+                }
+                if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
+                    if (mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!) {
+                        mDataBinding.inputLayoutPhoneNumber.hint =
+                            LanguageData.getStringValue("MSISDNPlaceholder")
+                        mDataBinding.inputPhoneNumberHint.text =
+                            LanguageData.getStringValue("PhoneNumber")
+                    } else if (mActivityViewModel.isInternetSelected.get()!!) {
+                        mDataBinding.inputLayoutPhoneNumber.hint =
+                            LanguageData.getStringValue("MSISDNPlaceholder")
+                        mDataBinding.inputPhoneNumberHint.text =
+                            LanguageData.getStringValue("EnterPaymentIdentifier")
+                    }
                 }
             }
         }

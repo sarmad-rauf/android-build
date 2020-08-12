@@ -38,5 +38,6 @@ data class GetPreLoginDataResponse(
     val termsAndConditions: String,
     val walletBalanceLimitKey: String,
     val url: String,
-    val version: String
+    val version: String,
+    val cmiWebpageUrl: String
 )

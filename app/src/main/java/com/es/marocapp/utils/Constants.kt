@@ -56,6 +56,7 @@ object Constants {
     var URL_FOR_UPDATE_APP =""
     var KEY_FOR_WALLET_BALANCE_MAX =""
     var PREVIOUS_DAYS_TRANSACTION_COUNT ="30"
+    var CASH_IN_VIA_CARD_URL ="30"
 
 
     var APPLICATION_IP_ADDRESS = ""
