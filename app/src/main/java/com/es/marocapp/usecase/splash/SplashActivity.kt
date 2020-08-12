@@ -154,7 +154,9 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.URL_FOR_UPDATE_APP = it.url
                 Constants.KEY_FOR_WALLET_BALANCE_MAX = it.walletBalanceLimitKey
                 Constants.PREVIOUS_DAYS_TRANSACTION_COUNT = it.numberOfTransactions
-                Constants.CASH_IN_VIA_CARD_URL = it.cmiWebpageUrl
+                if(it.cmiWebpageUrl!=null){
+                    Constants.CASH_IN_VIA_CARD_URL = it.cmiWebpageUrl
+                }
                 if(Tools.isFirstTime(this)) {
                     if (!it.defaultLanguage.isNullOrEmpty()) {
                         LocaleManager.selectedLanguage = it.defaultLanguage

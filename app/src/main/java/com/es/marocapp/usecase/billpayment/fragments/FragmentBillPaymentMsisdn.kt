@@ -3,6 +3,7 @@ package com.es.marocapp.usecase.billpayment.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
@@ -55,6 +56,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
         list_of_favorites.clear()
         if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+            mDataBinding.inputPhoneNumber.setInputType(InputType.TYPE_CLASS_TEXT);
             var selectedFatorati =
                 "BillPayment_Fatourati_${mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier}"
             for (contacts in Constants.mContactListArray) {
@@ -67,6 +69,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         }
 
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
+            mDataBinding.inputPhoneNumber.setInputType(InputType.TYPE_CLASS_NUMBER);
             for (contacts in Constants.mContactListArray) {
                 var contactNumber = contacts.fri
                 var contactName = contacts.contactName
