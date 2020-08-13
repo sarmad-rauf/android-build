@@ -250,7 +250,8 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
                             selectedFatoratiListOfInvoice[i].idArticle,
                             selectedFatoratiListOfInvoice[i].prixTTC,
                             selectedFatoratiListOfInvoice[i].typeArticle,
-                            quoteId!!
+                            quoteId!!,
+                            mActivityViewModel.isMultipleBillSelected
                         )
                     } else {
                         mActivityViewModel.listOfFatorati.add(
@@ -292,7 +293,8 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
                             selectedListOfInvoice[i].ohrefnum,
                             selectedListOfInvoice[i].ohxact,
                             selectedListOfInvoice[i].openAmount,
-                            quoteId!!
+                            quoteId!!,
+                            mActivityViewModel.isMultipleBillSelected
                         )
                     } else {
                         mActivityViewModel.listOfPostPaidBillPayment.add(

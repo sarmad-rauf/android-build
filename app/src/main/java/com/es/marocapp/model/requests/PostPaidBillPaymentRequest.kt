@@ -16,5 +16,6 @@ data class PostPaidBillPaymentRequest(
     val invoiceMonth: String,
     val invoiceOhrefnum : String,
     val invoiceOhxact: String,
-    val invoiceOpenAmount: String
+    val invoiceOpenAmount: String,
+    val isMultipleInvoice : String
 )

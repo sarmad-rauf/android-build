@@ -42,12 +42,10 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     var ReceiverName = ""
     var qouteId = ""
     var transactionID = ""
-
     var totalSelectedBillAmount = "0.00"
-
-
     var totalBillSelected = -1
 
+    var isMultipleBillSelected = "false"
 
     //UseCase Observer
     var isBillUseCaseSelected = ObservableField<Boolean>()
@@ -278,7 +276,8 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
         context: Context?,  invoiceMonth: String,
         ohrefnum: String,
         ohxact: String,
-        openAmount: String, mQuoteId: String
+        openAmount: String, mQuoteId: String,
+        isMultipleBillSelected : String
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
@@ -309,7 +308,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPostPaidBillPayment(
                 PostPaidBillPaymentRequest(
                     convertedAmountValue,mCodeEntered,ApiConstant.CONTEXT_AFTER_LOGIN,custId,custname,"1",mQuoteId,transferdAmountTo,
-                    Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),selectBillAmount,Constants.TYPE_PAYMENT,domain,invoiceMonth,ohrefnum,ohxact,convertedOpenAmount
+                    Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),selectBillAmount,Constants.TYPE_PAYMENT,domain,invoiceMonth,ohrefnum,ohxact,convertedOpenAmount,isMultipleBillSelected
                 )
             )
                 .compose(applyIOSchedulers())
@@ -693,7 +692,8 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                                    amount: String,idArticle:String,
                                    prixTTC : String,
                                    typeArticle :String,
-                              quoteId : String
+                              quoteId : String,
+                              isMultipleBillSelected: String
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
@@ -703,7 +703,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatorati(
                 BillPaymentFatoratiRequest(amount,fatoratiTypeSelected.get()!!.codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
                     "true", Param(idArticle,prixTTC,typeArticle),quoteId,Constants.getFatoratiAlias(transferdAmountTo),
-                    Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_BILL_PAYMENT
+                    Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_BILL_PAYMENT,isMultipleBillSelected
                 )
             )
                 .compose(applyIOSchedulers())

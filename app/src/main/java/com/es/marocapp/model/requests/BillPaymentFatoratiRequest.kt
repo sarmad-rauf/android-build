@@ -10,7 +10,8 @@ data class BillPaymentFatoratiRequest(
     val quoteid: String,
     val receiver: String,
     val sender: String,
-    val transferType: String
+    val transferType: String,
+    val isMultipleInvoice : String
 )
 
 data class Param(

@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/colorWhite"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/_16sdp"
+            >
+
+            <ImageView
+                android:id="@+id/nav_back_button"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_margin="@dimen/_16sdp"
+                app:srcCompat="@drawable/ic_back_black_svg"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <com.es.marocapp.widgets.MarocBoldTextView
+                android:id="@+id/nav_title_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_16sdp"
+                android:textSize="@dimen/_22ssp"
+                tools:text="My Space"
+                android:gravity="center"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/nav_back_button"
+                app:layout_constraintEnd_toStartOf="@+id/nav_edit_button"
+                />
+
+            <ImageView
+                android:id="@+id/nav_edit_button"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_margin="@dimen/_16sdp"
+                android:src="@drawable/nav_edit_black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <com.es.marocapp.widgets.MarocMediumTextView
+                android:id="@+id/personal_information_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_16sdp"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/colorBlack"
+                tools:text="Personal Information"
+                app:layout_constraintTop_toBottomOf="@+id/nav_title_name"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/nav_logged_in_user_detail_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_12sdp"
+                app:cardElevation="@dimen/_12sdp"
+                android:background="@color/colorWhite"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                app:layout_constraintTop_toBottomOf="@+id/personal_information_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="parent"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/_8sdp"
+                    >
+
+                    <com.es.marocapp.widgets.MarocRegularTextView
+                        android:id="@+id/nav_logged_in_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="Alok Malok"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        />
+
+                    <com.es.marocapp.widgets.MarocRegularTextView
+                        android:id="@+id/nav_logged_in_user_detials"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Client Niveau 1"
+                        android:textSize="@dimen/_10ssp"
+                        android:textColor="@color/colorGreyDark"
+                        app:layout_constraintStart_toStartOf="@+id/nav_logged_in_user_name"
+                        app:layout_constraintTop_toBottomOf="@+id/nav_logged_in_user_name"
+                        />
+
+                    <com.es.marocapp.widgets.MarocRegularTextView
+                        android:id="@+id/nav_logged_in_user_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="alok.mallick@gmail.com"
+                        android:textSize="@dimen/_14ssp"
+                        android:textColor="@color/colorBlack"
+                        app:layout_constraintStart_toStartOf="@+id/nav_logged_in_user_detials"
+                        app:layout_constraintTop_toBottomOf="@+id/nav_logged_in_user_detials"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <com.es.marocapp.widgets.MarocMediumTextView
+                android:id="@+id/complete_mt_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_16sdp"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/colorBlack"
+                tools:text="Compte MT Cash"
+                app:layout_constraintTop_toBottomOf="@+id/nav_logged_in_user_detail_container"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/nav_mt_cash_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_12sdp"
+                app:cardElevation="@dimen/_12sdp"
+                android:background="@color/colorWhite"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                app:layout_constraintTop_toBottomOf="@+id/complete_mt_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="parent"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/_8sdp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/cashInViaCardImage"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:src="@drawable/nav_cash_in_card_black"
+                        app:layout_constraintTop_toBottomOf="@+id/cashInViaCardTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/cashInViaCardTitle"
+                        />
+
+                    <com.es.marocapp.widgets.MarocRegularTextView
+                        android:id="@+id/cashInViaCardTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="Cash In Via Card"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/cashInViaCardImage"
+                        app:layout_constraintEnd_toStartOf="@+id/cashInViaCardImageNext"
+                        />
+
+                    <ImageView
+                        android:id="@+id/cashInViaCardImageNext"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_next_black_svg"
+                        app:layout_constraintTop_toBottomOf="@+id/cashInViaCardTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/cashInViaCardTitle"
+                        />
+
+                    <ImageView
+                        android:id="@+id/balanceAndAccountImage"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:src="@drawable/nav_balance_account_black"
+                        app:layout_constraintTop_toBottomOf="@+id/balanceAndAccountTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/balanceAndAccountTitle"
+                        />
+
+                    <com.es.marocapp.widgets.MarocRegularTextView
+                        android:id="@+id/balanceAndAccountTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="Balance and Accounts"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        app:layout_constraintTop_toBottomOf="@+id/cashInViaCardTitle"
+                        app:layout_constraintStart_toEndOf="@+id/balanceAndAccountImage"
+                        app:layout_constraintEnd_toStartOf="@+id/balanceAndAccountNext"
+                        />
+
+                    <ImageView
+                        android:id="@+id/balanceAndAccountNext"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_next_black_svg"
+                        app:layout_constraintTop_toBottomOf="@+id/balanceAndAccountTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/balanceAndAccountTitle"
+                        />
+
+                    <ImageView
+                        android:id="@+id/statementsImage"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:src="@drawable/nav_statement_black"
+                        app:layout_constraintTop_toBottomOf="@+id/statementsTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/statementsTitle"
+                        />
+
+                    <com.es.marocapp.widgets.MarocRegularTextView
+                        android:id="@+id/statementsTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="Statements"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        app:layout_constraintTop_toBottomOf="@+id/balanceAndAccountTitle"
+                        app:layout_constraintStart_toEndOf="@+id/statementsImage"
+                        app:layout_constraintEnd_toStartOf="@+id/statementsNext"
+                        />
+
+                    <ImageView
+                        android:id="@+id/statementsNext"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_next_black_svg"
+                        app:layout_constraintTop_toBottomOf="@+id/statementsTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/statementsTitle"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <com.es.marocapp.widgets.MarocMediumTextView
+                android:id="@+id/nav_third_container_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_16sdp"
+                android:textSize="@dimen/_14ssp"
+                android:textColor="@color/colorBlack"
+                tools:text="Gestion de mon compte"
+                app:layout_constraintTop_toBottomOf="@+id/nav_mt_cash_container"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/nav_third_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/_12sdp"
+                app:cardElevation="@dimen/_12sdp"
+                android:background="@color/colorWhite"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                app:layout_constraintTop_toBottomOf="@+id/nav_third_container_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="parent"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/_8sdp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/changePasswordImage"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:src="@drawable/nav_lock_black"
+                        app:layout_constraintTop_toBottomOf="@+id/changePasswordTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/changePasswordTitle"
+                        />
+
+                    <com.es.marocapp.widgets.MarocRegularTextView
+                        android:id="@+id/changePasswordTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="Change Password"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/changePasswordImage"
+                        app:layout_constraintEnd_toStartOf="@+id/changePasswordImageNext"
+                        />
+
+                    <ImageView
+                        android:id="@+id/changePasswordImageNext"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_next_black_svg"
+                        app:layout_constraintTop_toBottomOf="@+id/changePasswordTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/changePasswordTitle"
+                        />
+
+                    <ImageView
+                        android:id="@+id/beneficaryManagementImage"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:src="@drawable/nav_balance_account_black"
+                        app:layout_constraintTop_toBottomOf="@+id/beneficaryManagementTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/beneficaryManagementTitle"
+                        />
+
+                    <com.es.marocapp.widgets.MarocRegularTextView
+                        android:id="@+id/beneficaryManagementTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="Beneficiary Management"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        app:layout_constraintTop_toBottomOf="@+id/changePasswordTitle"
+                        app:layout_constraintStart_toEndOf="@+id/beneficaryManagementImage"
+                        app:layout_constraintEnd_toStartOf="@+id/beneficaryManagementImageNext"
+                        />
+
+                    <ImageView
+                        android:id="@+id/beneficaryManagementImageNext"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_next_black_svg"
+                        app:layout_constraintTop_toBottomOf="@+id/beneficaryManagementTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/beneficaryManagementTitle"
+                        />
+
+                    <ImageView
+                        android:id="@+id/levelUpImage"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:src="@drawable/nav_level_up_black"
+                        app:layout_constraintTop_toBottomOf="@+id/levelUpTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/levelUpTitle"
+                        />
+
+                    <com.es.marocapp.widgets.MarocRegularTextView
+                        android:id="@+id/levelUpTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="Beneficiary Management"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        app:layout_constraintTop_toBottomOf="@+id/beneficaryManagementTitle"
+                        app:layout_constraintStart_toEndOf="@+id/levelUpImage"
+                        app:layout_constraintEnd_toStartOf="@+id/levelUpImageNext"
+                        />
+
+                    <ImageView
+                        android:id="@+id/levelUpImageNext"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_next_black_svg"
+                        app:layout_constraintTop_toBottomOf="@+id/levelUpTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/levelUpTitle"
+                        />
+
+                    <ImageView
+                        android:id="@+id/mtCashDefaultImage"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:src="@drawable/nav_wallet_hollow_black"
+                        app:layout_constraintTop_toBottomOf="@+id/mtCashDefaultTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/mtCashDefaultTitle"
+                        />
+
+                    <com.es.marocapp.widgets.MarocRegularTextView
+                        android:id="@+id/mtCashDefaultTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="MT Cash Wallet by default"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        app:layout_constraintTop_toBottomOf="@+id/levelUpTitle"
+                        app:layout_constraintStart_toEndOf="@+id/mtCashDefaultImage"
+                        app:layout_constraintEnd_toStartOf="@+id/mtCashDefaultImageNext"
+                        />
+
+                    <ImageView
+                        android:id="@+id/mtCashDefaultImageNext"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_next_black_svg"
+                        app:layout_constraintTop_toBottomOf="@+id/mtCashDefaultTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/mtCashDefaultTitle"
+                        />
+
+                    <ImageView
+                        android:id="@+id/oppositionMTCashImage"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:src="@drawable/nav_bell_black"
+                        app:layout_constraintTop_toBottomOf="@+id/oppositionMTCashTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/oppositionMTCashTitle"
+                        />
+
+                    <com.es.marocapp.widgets.MarocRegularTextView
+                        android:id="@+id/oppositionMTCashTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="Opposition on my M-Wallet"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        app:layout_constraintTop_toBottomOf="@+id/mtCashDefaultTitle"
+                        app:layout_constraintStart_toEndOf="@+id/oppositionMTCashImage"
+                        app:layout_constraintEnd_toStartOf="@+id/oppositionMTCashImageNext"
+                        />
+
+                    <ImageView
+                        android:id="@+id/oppositionMTCashImageNext"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_next_black_svg"
+                        app:layout_constraintTop_toBottomOf="@+id/oppositionMTCashTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/oppositionMTCashTitle"
+                        />
+
+                    <ImageView
+                        android:id="@+id/changeLanguageImage"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:src="@drawable/nav_change_language_black"
+                        app:layout_constraintTop_toBottomOf="@+id/changeLanguageTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/changeLanguageTitle"
+                        />
+
+                    <com.es.marocapp.widgets.MarocRegularTextView
+                        android:id="@+id/changeLanguageTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="Change Language"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        app:layout_constraintTop_toBottomOf="@+id/oppositionMTCashTitle"
+                        app:layout_constraintStart_toEndOf="@+id/changeLanguageImage"
+                        app:layout_constraintEnd_toStartOf="@+id/changeLanguageImageNext"
+                        />
+
+                    <ImageView
+                        android:id="@+id/changeLanguageImageNext"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_next_black_svg"
+                        app:layout_constraintTop_toBottomOf="@+id/changeLanguageTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/changeLanguageTitle"
+                        />
+
+                    <ImageView
+                        android:id="@+id/logOutImage"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:src="@drawable/log_out_black"
+                        app:layout_constraintTop_toBottomOf="@+id/logOutTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/logOutTitle"
+                        />
+
+                    <com.es.marocapp.widgets.MarocRegularTextView
+                        android:id="@+id/logOutTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="Log Out"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        app:layout_constraintTop_toBottomOf="@+id/changeLanguageTitle"
+                        app:layout_constraintStart_toEndOf="@+id/logOutImage"
+                        app:layout_constraintEnd_toStartOf="@+id/logOutImageNext"
+                        />
+
+                    <ImageView
+                        android:id="@+id/logOutImageNext"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_next_black_svg"
+                        app:layout_constraintTop_toBottomOf="@+id/logOutTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/logOutTitle"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -210,6 +210,12 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
 
             mActivityViewModel.totalBillSelected = selectedFatoratiListOfInvoice.size
             mActivityViewModel.selectedFatoraitIvoicesList.set(selectedFatoratiListOfInvoice)
+            //check for Multiple Bill Invoices Fatorati Use Case
+            if(selectedListOfInvoice.size>1){
+                mActivityViewModel.isMultipleBillSelected = "true"
+            }else{
+                mActivityViewModel.isMultipleBillSelected = "false"
+            }
             for(i in selectedFatoratiListOfInvoice.indices){
 
                 var convertedBillAmount  = selectedFatoratiListOfInvoice[i].prixTTC
@@ -232,6 +238,12 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
             mDataBinding.btnNext.isActivated = true
             mActivityViewModel.totalBillSelected = selectedListOfInvoice.size
             mActivityViewModel.selectedIvoicesList.set(selectedListOfInvoice)
+            //check for Multiple Bill Invoices Bill Use Case
+            if(selectedListOfInvoice.size>1){
+                mActivityViewModel.isMultipleBillSelected = "true"
+            }else{
+                mActivityViewModel.isMultipleBillSelected = "false"
+            }
             for(i in selectedListOfInvoice.indices){
                 //Ohrefnum(16) + month (8) + OpenAmount (15) + OHXACT (38)
                 var convertedBillAmount  = (selectedListOfInvoice[i].openAmount.toDouble()/Constants.AMOUNT_CONVERSION_VALUE.toDouble()).toString()
