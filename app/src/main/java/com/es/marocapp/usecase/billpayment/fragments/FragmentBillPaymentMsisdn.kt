@@ -371,7 +371,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             }
         }
         if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-            if (mDataBinding.inputPhoneNumber.text.isNullOrEmpty() || mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_CIL_LENGTH.toInt()) {
+            if (mDataBinding.inputPhoneNumber.text.isNullOrEmpty() /*|| mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_CIL_LENGTH.toInt()*/) {
                 isValidForAll = false
                 mDataBinding.inputLayoutPhoneNumber.error =
                     LanguageData.getStringValue("PleaseEnterValidCILNumber")
