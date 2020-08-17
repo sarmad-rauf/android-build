@@ -11,7 +11,6 @@ import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
-import com.es.marocapp.usecase.airtime.AirTimeActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentClickListner
 import com.es.marocapp.usecase.billpayment.BillPaymentViewModel
@@ -54,6 +53,7 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
         setStrings()
         updateUI()
         subscribeObserver()
+        subcribeForPostPaidSequenceCall()
 
 
     }
@@ -121,6 +121,22 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
         )
     }
 
+    private fun subcribeForPostPaidSequenceCall(){
+        mActivityViewModel.triggerPostPaidNextCall.observe(this@FragmentBillPaymentPostPaidConfirmation,
+            Observer {
+                callPostPaidBillsInSequence(mActivityViewModel.postPaidCounter)
+            }
+        )
+    }
+
+    private fun subcribeForFatoratiSequenceCall(){
+        mActivityViewModel.triggerFatoratiNextCall.observe(this@FragmentBillPaymentPostPaidConfirmation,
+            Observer {
+                callFatoratiBillsInSequence(mActivityViewModel.fatoratiCounter)
+            }
+        )
+    }
+
     private fun updateUI() {
         //        tvCompanyNameVal == ReceiverNumber
 //        tvOwnerNameVal == ReceiverName
@@ -153,7 +169,7 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
         if(mActivityViewModel.isBillUseCaseSelected.get()!!){
             for(i in mActivityViewModel.listOfPostPaidBillPaymentQuote.indices){
                 var item = mActivityViewModel.listOfPostPaidBillPaymentQuote[i]
-                if(item.quoteList.isNotEmpty()){
+                if(item.quoteList!=null && item.quoteList.isNotEmpty()){
                     mActivityViewModel.listOfSelectedBillFee.add(item.quoteList[0].fee.amount.toString())
                     totalFee = (totalFee.toDouble()+item.quoteList[0].fee.amount).toString()
                 }
@@ -236,77 +252,88 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
 
         mActivityViewModel.totalBillSelected = selectedFatoratiListOfInvoice.size
         if(selectedFatoratiListOfInvoice!=null && mActivityViewModel.selectedIvoicesQuoteHash!=null) {
-            for (i in selectedFatoratiListOfInvoice.indices) {
-                var quoteId: String?
-                quoteId =
-                    mActivityViewModel.selectedIvoicesQuoteHash[selectedFatoratiListOfInvoice[i].idArticle]
+           callFatoratiBillsInSequence(mActivityViewModel.fatoratiCounter)
+        }
+    }
 
-                mActivityViewModel.selectBillAmount = selectedFatoratiListOfInvoice[i].prixTTC
-                if (!mActivityViewModel.selectedIvoicesQuoteList.get().isNullOrEmpty()) {
-                    if (!mActivityViewModel.selectedIvoicesQuoteList.get()!![i].equals("-1")) {
-                        mActivityViewModel.requestForFatoratiApi(
-                            activity,
-                            selectedFatoratiListOfInvoice[i].prixTTC,
-                            selectedFatoratiListOfInvoice[i].idArticle,
-                            selectedFatoratiListOfInvoice[i].prixTTC,
-                            selectedFatoratiListOfInvoice[i].typeArticle,
-                            quoteId!!,
-                            mActivityViewModel.isMultipleBillSelected
-                        )
-                    } else {
-                        mActivityViewModel.listOfFatorati.add(
-                            BillPaymentFatoratiResponse(
-                                arrayListOf(), "", "Failed", "", "",
-                                FatoratieFinancialReceiptResponse(
-                                    "",
-                                    Financialreceipt(
-                                        FatoratieAmount(0.0, ""), "", "", FatoratieFee(0.0, ""),
-                                        "", "", "", "", "", "", "", ""
-                                    ), ""
-                                )
-                                , "", "1500", "", "", "", ""
+    private fun callFatoratiBillsInSequence(fatoratiCounter: Int) {
+
+        var i = fatoratiCounter
+            var quoteId: String?
+            quoteId =
+                mActivityViewModel.selectedIvoicesQuoteHash[selectedFatoratiListOfInvoice[i].idArticle]
+
+            mActivityViewModel.selectBillAmount = selectedFatoratiListOfInvoice[i].prixTTC
+            if (!mActivityViewModel.selectedIvoicesQuoteList.get().isNullOrEmpty()) {
+                if (!mActivityViewModel.selectedIvoicesQuoteList.get()!![i].equals("-1")) {
+                    mActivityViewModel.requestForFatoratiApi(
+                        activity,
+                        selectedFatoratiListOfInvoice[i].prixTTC,
+                        selectedFatoratiListOfInvoice[i].idArticle,
+                        selectedFatoratiListOfInvoice[i].prixTTC,
+                        selectedFatoratiListOfInvoice[i].typeArticle,
+                        quoteId!!,
+                        mActivityViewModel.isMultipleBillSelected
+                    )
+                } else {
+                    mActivityViewModel.listOfFatorati.add(
+                        BillPaymentFatoratiResponse(
+                            arrayListOf(), "", "Failed", "", "",
+                            FatoratieFinancialReceiptResponse(
+                                "",
+                                Financialreceipt(
+                                    FatoratieAmount(0.0, ""), "", "", FatoratieFee(0.0, ""),
+                                    "", "", "", "", "", "", "", ""
+                                ), ""
                             )
+                            , "", "1500", "", "", "", ""
                         )
-                    }
+                    )
                 }
             }
-        }
+        mActivityViewModel.fatoratiCounter=mActivityViewModel.fatoratiCounter+1
     }
 
     private fun payPostPaidBills() {
         selectedListOfInvoice.addAll(mActivityViewModel.selectedIvoicesList.get()!!)
         mActivityViewModel.totalBillSelected = selectedListOfInvoice.size
         if(selectedListOfInvoice!=null && mActivityViewModel.selectedIvoicesQuoteHash!=null) {
-            for (i in selectedListOfInvoice.indices) {
-                var quoteId: String?
-                quoteId =
-                    mActivityViewModel.selectedIvoicesQuoteHash[selectedListOfInvoice[i].ohrefnum]
-                //Ohrefnum(16) + month (8) + OpenAmount (15) + OHXACT (38)
-                var selectBillInvoice =
-                    selectedListOfInvoice[i].ohrefnum + selectedListOfInvoice[i].month + selectedListOfInvoice[i].openAmount + selectedListOfInvoice[i].ohxact
-                mActivityViewModel.selectBillAmount = selectedListOfInvoice[i].openAmount
-                if (!mActivityViewModel.selectedIvoicesQuoteList.get().isNullOrEmpty()) {
-                    if (!mActivityViewModel.selectedIvoicesQuoteList.get()!![i].equals("-1")) {
-                        mActivityViewModel.requestForPostPaidBillPaymentApi(
-                            activity,
-                            selectedListOfInvoice[i].month,
-                            selectedListOfInvoice[i].ohrefnum,
-                            selectedListOfInvoice[i].ohxact,
-                            selectedListOfInvoice[i].openAmount,
-                            quoteId!!,
-                            mActivityViewModel.isMultipleBillSelected
+           callPostPaidBillsInSequence(mActivityViewModel.postPaidCounter)
+        }
+    }
+
+    private fun callPostPaidBillsInSequence(postPaidCounter: Int) {
+        var i = postPaidCounter
+            var quoteId: String?
+            quoteId =
+                mActivityViewModel.selectedIvoicesQuoteHash[selectedListOfInvoice[i].ohrefnum]
+            //Ohrefnum(16) + month (8) + OpenAmount (15) + OHXACT (38)
+            var selectBillInvoice =
+                selectedListOfInvoice[i].ohrefnum + selectedListOfInvoice[i].month + selectedListOfInvoice[i].openAmount + selectedListOfInvoice[i].ohxact
+            mActivityViewModel.selectBillAmount = selectedListOfInvoice[i].openAmount
+            if (!mActivityViewModel.selectedIvoicesQuoteList.get().isNullOrEmpty()) {
+                if (!mActivityViewModel.selectedIvoicesQuoteList.get()!![i].equals("-1")) {
+                    mActivityViewModel.requestForPostPaidBillPaymentApi(
+                        activity,
+                        selectedListOfInvoice[i].month,
+                        selectedListOfInvoice[i].ohrefnum,
+                        selectedListOfInvoice[i].ohxact,
+                        selectedListOfInvoice[i].openAmount,
+                        quoteId!!,
+                        mActivityViewModel.isMultipleBillSelected
+                    )
+                } else {
+                    mActivityViewModel.listOfPostPaidBillPayment.add(
+                        PostPaidBillPaymentResponse(
+                            arrayListOf(), "", "Failed", "", "", "", "",
+                            "1500", "", "", "", ""
                         )
-                    } else {
-                        mActivityViewModel.listOfPostPaidBillPayment.add(
-                            PostPaidBillPaymentResponse(
-                                arrayListOf(), "", "Failed", "", "", "", "",
-                                "1500", "", "", "", ""
-                            )
-                        )
-                    }
+                    )
                 }
             }
-        }
+
+        mActivityViewModel.postPaidCounter=mActivityViewModel.postPaidCounter+1
+
     }
 
     override fun onBackClickListner(view: View) {

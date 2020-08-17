@@ -35,6 +35,8 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
     var code = ""
     var isNumberRegexMatches = false
     var isCodeRegexMatches = false
+    var applyValidation = false
+    var cilLabel = ""
 
     override fun setLayout(): Int {
         return R.layout.fragment_bill_payment_msisdn
@@ -174,6 +176,12 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 }
             }
         }
+        if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+            mActivityViewModel.requestForFatoratiStepTwoApi(
+                activity,
+               Constants.CURRENT_USER_MSISDN
+            )
+        }
 
         setStrings()
         subscribeObserver()
@@ -182,7 +190,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
     fun setInputLayoutHint() {
         mDataBinding.inputPhoneNumberHint.visibility = View.GONE
         if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterCilNumber")
+            mDataBinding.inputLayoutPhoneNumber.hint = cilLabel
         }
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
             if (mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!) {
@@ -245,7 +253,18 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         mActivityViewModel.getFatoratiStepTwoResponseListner.observe(this@FragmentBillPaymentMsisdn,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                    mActivityViewModel.requestForFatoratiStepFourApi(activity)
+                     cilLabel = it.param.libelle
+                    if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+                        mDataBinding.inputLayoutPhoneNumber.hint = ""
+                        mDataBinding.inputPhoneNumberHint.text =
+                            cilLabel
+                    }
+                    if(it.param.libelle.equals("CIL",false)){
+                        applyValidation=true
+                    }
+                    else{
+                        applyValidation=false
+                    }
                 } else {
                     DialogUtils.showErrorDialoge(activity, it.description)
                 }
@@ -274,7 +293,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             }
 
             if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-                mActivityViewModel.requestForFatoratiStepTwoApi(activity, msisdnEntered)
+                mActivityViewModel.requestForFatoratiStepFourApi(activity)
             }
         }
     }
@@ -374,30 +393,40 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             if (mDataBinding.inputPhoneNumber.text.isNullOrEmpty() /*|| mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_CIL_LENGTH.toInt()*/) {
                 isValidForAll = false
                 mDataBinding.inputLayoutPhoneNumber.error =
-                    LanguageData.getStringValue("PleaseEnterValidCILNumber")
+                    LanguageData.getStringValue("invalid")+" "+cilLabel
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
                 mDataBinding.inputLayoutPhoneNumber.hint =
-                    LanguageData.getStringValue("EnterCilNumber")
+                    LanguageData.getStringValue("invalid")+" "+cilLabel
                 mDataBinding.inputPhoneNumberHint.visibility = View.GONE
             } else {
                 mDataBinding.inputLayoutPhoneNumber.error = ""
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
 
-                if (isNumberRegexMatches) {
+                if(applyValidation) {
+                    if (isNumberRegexMatches) {
+                        mDataBinding.inputLayoutPhoneNumber.error = ""
+                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+
+                        msisdnEntered = mDataBinding.inputPhoneNumber.text.toString().trim()
+
+                        checkNumberExistInFavoritesForFatorati(msisdnEntered)
+                    } else {
+                        isValidForAll = false
+                        mDataBinding.inputLayoutPhoneNumber.error =
+                            LanguageData.getStringValue("invalid")+" "+cilLabel
+                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                        mDataBinding.inputLayoutPhoneNumber.hint =
+                            LanguageData.getStringValue("invalid")+" "+cilLabel
+                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+                    }
+                }
+                else{
                     mDataBinding.inputLayoutPhoneNumber.error = ""
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
 
                     msisdnEntered = mDataBinding.inputPhoneNumber.text.toString().trim()
 
                     checkNumberExistInFavoritesForFatorati(msisdnEntered)
-                } else {
-                    isValidForAll = false
-                    mDataBinding.inputLayoutPhoneNumber.error =
-                        LanguageData.getStringValue("PleaseEnterValidCILNumber")
-                    mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
-                    mDataBinding.inputLayoutPhoneNumber.hint =
-                        LanguageData.getStringValue("EnterCilNumber")
-                    mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                 }
             }
         }

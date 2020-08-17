@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import com.es.marocapp.R
 import com.es.marocapp.model.requests.*
 import com.es.marocapp.model.requests.Param
@@ -99,6 +100,12 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
     var listOfSelectedBillAmount : ArrayList<String> = arrayListOf()
     var listOfSelectedBillFee : ArrayList<String> = arrayListOf()
+
+    var postPaidCounter=0
+    var triggerPostPaidNextCall = SingleLiveEvent<Boolean>()
+
+    var fatoratiCounter=0
+    var triggerFatoratiNextCall = SingleLiveEvent<Boolean>()
 
 
     //Request For PostPaidFinancialResourceInfo
@@ -321,6 +328,9 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                             when(result?.responseCode) {
                                 ApiConstant.API_SUCCESS -> {
                                     listOfPostPaidBillPayment.add(result)
+                                    if(postPaidCounter<totalBillSelected){
+                                        triggerPostPaidNextCall.postValue(true)
+                                    }
                                 }
                                 ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
@@ -716,6 +726,9 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                             when(result?.responseCode) {
                                 ApiConstant.API_SUCCESS -> {
                                     listOfFatorati.add(result)
+                                    if(fatoratiCounter<totalBillSelected){
+                                        triggerFatoratiNextCall.postValue(true)
+                                    }
                                 }
                                 ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
