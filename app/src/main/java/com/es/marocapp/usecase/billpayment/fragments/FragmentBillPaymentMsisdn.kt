@@ -274,7 +274,19 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         mActivityViewModel.getFatoratiStepFourResponseListner.observe(this@FragmentBillPaymentMsisdn,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                    (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMsisdn_to_fragmentPostPaidBillDetails)
+                    if(it.params==null || it.params.isNullOrEmpty() || it.params.size<1){
+                      //  DialogUtils.showErrorDialoge(activity, it.message)
+                        val btnTxt = LanguageData.getStringValue("BtnTitle_OK")
+                        val titleTxt = LanguageData.getStringValue("Error")
+                        DialogUtils.showCustomDialogue(activity,btnTxt,it.message,titleTxt,object : DialogUtils.OnCustomDialogListner{
+                            override fun onCustomDialogOkClickListner() {
+
+                            }
+                        })
+                    }
+                    else {
+                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMsisdn_to_fragmentPostPaidBillDetails)
+                    }
                 } else {
                     DialogUtils.showErrorDialoge(activity, it.description)
                 }
