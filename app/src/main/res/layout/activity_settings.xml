@@ -58,6 +58,7 @@
      <androidx.cardview.widget.CardView
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
+         android:visibility="gone"
          android:layout_margin="@dimen/_16sdp"
          android:id="@+id/cvChangeLanguage"
          app:layout_constraintTop_toBottomOf="@+id/headerSettings"
@@ -113,6 +114,7 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:layout_margin="@dimen/_16sdp"
+         android:visibility="gone"
          android:id="@+id/cvManageFavorites"
          app:layout_constraintTop_toBottomOf="@+id/cvChangeLanguage"
          app:cardCornerRadius="@dimen/_12sdp"
@@ -197,6 +199,7 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:layout_margin="@dimen/_16sdp"
+         android:visibility="gone"
          android:id="@+id/cvBlockAccount"
          app:layout_constraintTop_toBottomOf="@+id/cvDefaultAccount"
          app:cardCornerRadius="@dimen/_12sdp"

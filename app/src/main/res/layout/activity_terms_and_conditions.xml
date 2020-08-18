@@ -18,6 +18,13 @@
     android:background="@color/colorWhite"
     tools:context=".usecase.termsandcondiitons.TermsAndConditions">
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/termandConditionHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="imgBackButton,topHeaderContainer,tvTermConditionTitle"
+        />
+
     <ImageView
         android:id="@+id/topHeaderContainer"
         android:layout_width="match_parent"

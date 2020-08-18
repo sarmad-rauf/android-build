@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/_16sdp"
+    android:background="@color/colorWhite">
+
+    <com.es.marocapp.widgets.MarocRegularTextView
+        android:id="@+id/faqAnswerTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_42sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:textColor="@color/colorGreyDark"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="All users on MySpace will know that there are millions of people out there. Every day besides so many people joining this community, there are many others who will be looking out for friends. This will mean that they are naturally looking out for good people who are interesting enough. For this, the profile has to be very interesting.
+
+To make the profile unique, you can use good MySpace layouts. This will make a world of a difference to the profile. Imagine that someone visits your profile, and they find it without any good information or pictures.
+They would not spend another minute looking at it, and you will quickly lose your reputation.
+
+You will also lose the chance to make a whole new bunch of friends. You cannot expect them to take a second look at your profile. Thus before you lose the chance to make new friends, you should customize the profile as best as you can. You can choose from a great variety, as there are plenty of sites, which are dedicated to MySpace layouts.
+
+You can even make the profile theme based, depending on what you have in mind. For example you could be a fan of a popular actor, and you could use his image for your profile. It is definitely more exciting than looking at some boring default settings on the profile. By having good MySpace layouts on the profile, you will get a lot of curious visitors.
+
+The number of friends and acquaintances will grow in a large number. This is what you should be looking for on this community. Thus it is not worth if you compromise on the profile. It is a very good idea to make the profile based on your interests. Thus you can very creatively talk about yourself without words.
+
+This would even be more appealing, as there would be a variety of images as well as colors. This will be a great pleasure for all the members who are visiting your profile, as you really will be giving them a chance to experience something new. Word might also spread about your unique profile, and thus the list of friends will keep growing.
+
+You need to ensure that you make the profile legible as well. You should not sue MySpace layouts that do not suit your profile content. You should make it a point to make the information stand out clearly. People after all will make friends after reading about you. If you have an ugly profile, there is no way that anyone is even going to give it a second glance.
+
+MySpace layouts can do wonders to a profile, and they can give a complete facelift. What more could you want. Besides this, there are also plenty to choose from."
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,6 +20,7 @@ import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.utils.Constants
 import kotlinx.android.synthetic.main.fragment_approval.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import java.io.File
 
 class TermsAndConditions : BaseActivity<ActivityTermsAndConditionsBinding>() {
@@ -59,13 +60,14 @@ class TermsAndConditions : BaseActivity<ActivityTermsAndConditionsBinding>() {
         navGraph = navController.navInflater.inflate(R.navigation.terms_and_condition_nav_graph)
 
         if(headerText == LanguageData.getStringValue("Faqs")){
-            mActivityViewModel.isLoading.set(true)
+            /*mActivityViewModel.isLoading.set(true)
             val fileName = "faq.pdf"
             downloadPdfFromInternet(
                 Constants.URL_FOR_FAQ,
                 getRootDirPath(this),
                 fileName
-            )
+            )*/
+            setFragmentToShow()
         }else if(headerText == LanguageData.getStringValue("TermsAndConditions")){
             mActivityViewModel.isLoading.set(true)
             val fileName = "terms.pdf"
@@ -138,6 +140,14 @@ class TermsAndConditions : BaseActivity<ActivityTermsAndConditionsBinding>() {
             file.absolutePath
         } else {
             context.applicationContext.filesDir.absolutePath
+        }
+    }
+
+    fun setHeaderVisibilty(isVisible : Boolean){
+        if(isVisible){
+            mDataBinding.termandConditionHeader.visibility = android.view.View.VISIBLE
+        }else{
+            mDataBinding.termandConditionHeader.visibility = android.view.View.GONE
         }
     }
 

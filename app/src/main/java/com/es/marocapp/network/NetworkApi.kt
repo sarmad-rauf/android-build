@@ -244,5 +244,8 @@ interface NetworkApi {
     @POST(EndPoints.updateLanguage)
     fun updateLanguage(@Body request : UpdateLanguageRequest) : Observable<UpdateLanguageResponse>
 
+    //getfaq
+    @GET(EndPoints.getfaq)
+    fun getFaqs() : Observable<GetFaqsResponse>
 
 }

@@ -113,8 +113,14 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
     private fun setStrings() {
         mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("EnterMsisdnToProceed")
         mDataBinding.btnLogin.text = LanguageData.getStringValue("BtnTitle_Login")
-        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
-        mDataBinding.inputPhoneNumberHint.text = LanguageData.getStringValue("EnterMobileNumber")
+        if(mActivityViewModel.isResetPassowrdFlow){
+            mActivityViewModel.isResetPassowrdFlow = false
+            mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
+        }else{
+            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
+            mDataBinding.inputPhoneNumberHint.text = LanguageData.getStringValue("EnterMobileNumber")
+        }
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {

@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name=".ApplicationClass"
@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".usecase.cashinviacard.ActivityCashInViaCard"></activity>
+        <activity android:name=".usecase.changepassword.ChangePasswordActivity"></activity>
+        <activity android:name=".usecase.cashinviacard.ActivityCashInViaCard" />
         <activity android:name=".usecase.consumerregistration.ConsumerRegistrationActivity" />
         <activity android:name=".usecase.transaction.TransactionDetailsActivity" />
         <activity android:name=".usecase.billpayment.BillPaymentActivity" />
