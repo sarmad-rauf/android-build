@@ -232,7 +232,7 @@ object Constants {
     }
 
     fun converValueToTwoDecimalPlace(value : Double) : String{
-        val result = java.lang.String.format("%.2f", value)
+        val result = String.format(Locale.ENGLISH,"%.2f", value)
         return result
     }
 
