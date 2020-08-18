@@ -24,6 +24,7 @@ class TermsAndConditionFragment : BaseFragment<FragmentTermsAndConditionBinding>
         mDataBinding.apply {
             viewmodel = mAcitivtyViewModel
         }
+        (activity as TermsAndConditions).setHeaderVisibilty(true)
 
         showPdfFromFile((activity as TermsAndConditions).downloadedFileFromURL)
     }

@@ -1,16 +1,31 @@
 package com.es.marocapp.usecase.termsandcondiitons
 
 import android.os.Bundle
-import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
+import com.es.marocapp.adapter.FaqsQuestionAnswerAdapter
 import com.es.marocapp.databinding.FragmentFaqsBinding
+import com.es.marocapp.locale.LocaleManager
+import com.es.marocapp.model.FaqsAnswers
+import com.es.marocapp.model.FaqsQuestionModel
+import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
+import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.utils.DialogUtils
 import java.io.File
 
 class FAQsFragment : BaseFragment<FragmentFaqsBinding>(){
 
     private lateinit var mAcitivtyViewModel : TermsAndConditionsVIewModel
+
+    private  var mFaqList : ArrayList<FaqsQuestionModel> = arrayListOf()
+
+    private  var mFaqAnwer : ArrayList<FaqsAnswers> = arrayListOf()
+
+    private lateinit var mFaqAdapter : FaqsQuestionAnswerAdapter
+
 
     override fun setLayout(): Int {
         return R.layout.fragment_faqs
@@ -23,11 +38,50 @@ class FAQsFragment : BaseFragment<FragmentFaqsBinding>(){
             viewmodel = mAcitivtyViewModel
         }
 
-        showPdfFromFile((activity as TermsAndConditions).downloadedFileFromURL)
+        (activity as MainActivity).setHomeToolbarVisibility(false)
+        (activity as MainActivity).isDirectCallForTransaction = false
+        (activity as MainActivity).isTransactionFragmentNotVisible = true
+        mAcitivtyViewModel.requestForAirTimeUseCasesApi(activity)
+        subsribeObserver()
+    }
+
+    private fun subsribeObserver() {
+        mAcitivtyViewModel.getFaqsResponseLisnter.observe(this@FAQsFragment, Observer {
+            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                for(i in it.faqList.indices){
+                    var answerList = arrayListOf<FaqsAnswers>()
+                    if(LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_EN)){
+                        answerList.add(FaqsAnswers(it.faqList[i].answerEN))
+                        mFaqList.add(FaqsQuestionModel(it.faqList[i].questionEN,answerList))
+                    }else if(LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_AR)){
+                        answerList.add(FaqsAnswers(it.faqList[i].answerAR))
+                        mFaqList.add(FaqsQuestionModel(it.faqList[i].questionAR,answerList))
+                    }
+                    else if(LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_FR)){
+                        answerList.add(FaqsAnswers(it.faqList[i].answerFR))
+                        mFaqList.add(FaqsQuestionModel(it.faqList[i].questionFR,answerList))
+                    }
+                }
+
+                mFaqAdapter = FaqsQuestionAnswerAdapter(activity as MainActivity,mFaqList)
+
+                mDataBinding.faqRecycler.apply {
+                    layoutManager = LinearLayoutManager(activity as MainActivity)
+                    adapter = mFaqAdapter
+                }
+
+            }else{
+                DialogUtils.showErrorDialoge(activity,it.description)
+            }
+        })
+
+        mAcitivtyViewModel.errorText.observe(this@FAQsFragment, Observer {
+            DialogUtils.showErrorDialoge(activity,it)
+        })
     }
 
     private fun showPdfFromFile(file: File) {
-        mDataBinding.pdfView.fromFile(file)
+       /* mDataBinding.pdfView.fromFile(file)
             .password(null)
             .defaultPage(0)
             .enableSwipe(true)
@@ -39,7 +93,7 @@ class FAQsFragment : BaseFragment<FragmentFaqsBinding>(){
                     "Error at page: $page", Toast.LENGTH_LONG
                 ).show()
             }
-            .load()
+            .load()*/
     }
 
 }

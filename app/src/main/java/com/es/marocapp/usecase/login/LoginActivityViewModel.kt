@@ -47,6 +47,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     var previousDeviceId = ""
     var isDeviceChanged = false
     var isSimplePopUp = true
+    var isResetPassowrdFlow = false
 
 
     var getAccountHolderInformationResponseListner = SingleLiveEvent<GetAccountHolderInformationResponse>()

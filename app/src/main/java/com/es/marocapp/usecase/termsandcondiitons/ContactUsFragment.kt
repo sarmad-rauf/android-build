@@ -20,6 +20,8 @@ class ContactUsFragment : BaseFragment<FragmentContactUsBinding>(){
         mDataBinding.apply {
             viewmodel = mAcitivtyViewModel
         }
+
+        (activity as TermsAndConditions).setHeaderVisibilty(true)
     }
 
 }

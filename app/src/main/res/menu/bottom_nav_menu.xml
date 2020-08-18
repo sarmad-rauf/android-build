@@ -17,8 +17,8 @@
         android:title="" />
 
     <item
-        android:id="@+id/navigation_pin"
-        android:icon="@drawable/ic_pin_inactive"
+        android:id="@+id/FAQsFragment2"
+        android:icon="@drawable/ic_faq_question_mark_svg"
         android:title="@string/title_pin_cap" />
 
     <item

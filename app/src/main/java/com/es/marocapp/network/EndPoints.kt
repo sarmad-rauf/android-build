@@ -84,7 +84,7 @@ object EndPoints {
     const val floattransfer_quote = "floattransfer/quote"
 
     //floattransfer
-    const val floattransfer =  "floattransfer"
+    const val floattransfer = "floattransfer"
 
     //getTranslations
     const val getTranslations = "getlanguagelist"
@@ -138,7 +138,8 @@ object EndPoints {
     const val deletecontact = "deletecontact"
 
     //getfinancialresourceinformation/bill/postpaid
-    const val getfinancialresourceinformation_bill_postpaid = "getfinancialresourceinformation/bill/postpaid"
+    const val getfinancialresourceinformation_bill_postpaid =
+        "getfinancialresourceinformation/bill/postpaid"
 
     //payment/bill/postpaid/quote
     const val payment_bill_postpaid_quote = "payment/bill/postpaid/quote"
@@ -147,13 +148,16 @@ object EndPoints {
     const val payment_bill_postpaid = "payment/bill/postpaid"
 
     //getfinancialresourceinformation/bill/fatourati/step1
-    const val getfinancialresourceinformation_bill_fatourati_step1 = "getfinancialresourceinformation/bill/fatourati/step1"
+    const val getfinancialresourceinformation_bill_fatourati_step1 =
+        "getfinancialresourceinformation/bill/fatourati/step1"
 
     ///getfinancialresourceinformation/bill/fatourati/step2
-    const val getfinancialresourceinformation_bill_fatourati_step2 = "getfinancialresourceinformation/bill/fatourati/step2"
+    const val getfinancialresourceinformation_bill_fatourati_step2 =
+        "getfinancialresourceinformation/bill/fatourati/step2"
 
     //getfinancialresourceinformation/bill/fatourati/step4
-    const val getfinancialresourceinformation_bill_fatourati_step4 = "getfinancialresourceinformation/bill/fatourati/step4"
+    const val getfinancialresourceinformation_bill_fatourati_step4 =
+        "getfinancialresourceinformation/bill/fatourati/step4"
 
     //payment/bill/fatourati/quote
     const val payment_bill_fatourati_quote = "payment/bill/fatourati/quote"
@@ -166,5 +170,8 @@ object EndPoints {
 
     //Update Languaga
     const val updateLanguage = "updatelanguage"
+
+    //getfaq
+    const val getfaq = "getfaq"
 
 }

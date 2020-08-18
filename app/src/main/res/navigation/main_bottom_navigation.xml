@@ -60,5 +60,11 @@
         android:label="GernerateQRFragment"
         tools:layout="@layout/fragment_generate_qr"
         />
+    <fragment
+        android:id="@+id/FAQsFragment2"
+        android:name="com.es.marocapp.usecase.termsandcondiitons.FAQsFragment"
+        android:label="FAQsFragment"
+        tools:layout="@layout/fragment_faqs"
+        />
 
 </navigation>

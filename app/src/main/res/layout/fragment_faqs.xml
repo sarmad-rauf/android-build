@@ -14,7 +14,7 @@
         android:background="@color/colorWhite"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
+      <!--  <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="@dimen/_16sdp"
@@ -23,98 +23,119 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true">
+&lt;!&ndash;            <ScrollView&ndash;&gt;
+&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;
+&lt;!&ndash;                android:layout_height="match_parent"&ndash;&gt;
+&lt;!&ndash;                android:fillViewport="true">&ndash;&gt;
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:paddingBottom="@dimen/_16sdp">
 
-                    <com.github.barteksc.pdfviewer.PDFView
-                        android:id="@+id/pdfView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
 
-<!--                    <com.es.marocapp.widgets.MarocRegularTextView-->
-<!--                        android:id="@+id/s1"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_margin="@dimen/_16sdp"-->
-<!--                        android:text="Premiers Pas"-->
-<!--                        android:textColor="@color/colorGreyDark"-->
-<!--                        android:textSize="@dimen/_14ssp"-->
-<!--                        app:layout_constraintStart_toStartOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
-<!--                    <com.es.marocapp.widgets.MarocRegularTextView-->
-<!--                        android:id="@+id/d1"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="@dimen/_8sdp"-->
-<!--                        android:layout_marginEnd="@dimen/_16sdp"-->
-<!--                        android:text="@string/dummyText"-->
-<!--                        android:textColor="@color/colorTextGreyMedium"-->
-<!--                        android:textSize="@dimen/_12ssp"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintStart_toStartOf="@+id/s1"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/s1" />-->
+&lt;!&ndash;                    <com.github.barteksc.pdfviewer.PDFView&ndash;&gt;
+&lt;!&ndash;                        android:id="@+id/pdfView"&ndash;&gt;
+&lt;!&ndash;                        android:layout_width="match_parent"&ndash;&gt;
+&lt;!&ndash;                        android:layout_height="match_parent" />&ndash;&gt;
 
-<!--                    <com.es.marocapp.widgets.MarocRegularTextView-->
-<!--                        android:id="@+id/s2"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="@dimen/_16sdp"-->
-<!--                        android:text="Subject"-->
-<!--                        android:textColor="@color/colorGreyDark"-->
-<!--                        android:textSize="@dimen/_14ssp"-->
-<!--                        app:layout_constraintStart_toStartOf="@+id/s1"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/d1" />-->
+&lt;!&ndash;                    <com.es.marocapp.widgets.MarocRegularTextView&ndash;&gt;
+&lt;!&ndash;                        android:id="@+id/s1"&ndash;&gt;
+&lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;
+&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;
+&lt;!&ndash;                        android:layout_margin="@dimen/_16sdp"&ndash;&gt;
+&lt;!&ndash;                        android:text="Premiers Pas"&ndash;&gt;
+&lt;!&ndash;                        android:textColor="@color/colorGreyDark"&ndash;&gt;
+&lt;!&ndash;                        android:textSize="@dimen/_14ssp"&ndash;&gt;
+&lt;!&ndash;                        app:layout_constraintStart_toStartOf="parent"&ndash;&gt;
+&lt;!&ndash;                        app:layout_constraintTop_toTopOf="parent" />&ndash;&gt;
 
-<!--                    <com.es.marocapp.widgets.MarocRegularTextView-->
-<!--                        android:id="@+id/d2"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="@dimen/_8sdp"-->
-<!--                        android:layout_marginEnd="@dimen/_16sdp"-->
-<!--                        android:text="@string/dummyText"-->
-<!--                        android:textColor="@color/colorTextGreyMedium"-->
-<!--                        android:textSize="@dimen/_12ssp"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintStart_toStartOf="@+id/s2"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/s2" />-->
+&lt;!&ndash;                    <com.es.marocapp.widgets.MarocRegularTextView&ndash;&gt;
+&lt;!&ndash;                        android:id="@+id/d1"&ndash;&gt;
+&lt;!&ndash;                        android:layout_width="0dp"&ndash;&gt;
+&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;
+&lt;!&ndash;                        android:layout_marginTop="@dimen/_8sdp"&ndash;&gt;
+&lt;!&ndash;                        android:layout_marginEnd="@dimen/_16sdp"&ndash;&gt;
+&lt;!&ndash;                        android:text="@string/dummyText"&ndash;&gt;
+&lt;!&ndash;                        android:textColor="@color/colorTextGreyMedium"&ndash;&gt;
+&lt;!&ndash;                        android:textSize="@dimen/_12ssp"&ndash;&gt;
+&lt;!&ndash;                        app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;
+&lt;!&ndash;                        app:layout_constraintStart_toStartOf="@+id/s1"&ndash;&gt;
+&lt;!&ndash;                        app:layout_constraintTop_toBottomOf="@+id/s1" />&ndash;&gt;
 
-<!--                    <com.es.marocapp.widgets.MarocRegularTextView-->
-<!--                        android:id="@+id/s3"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="@dimen/_16sdp"-->
-<!--                        android:text="Subject"-->
-<!--                        android:textColor="@color/colorGreyDark"-->
-<!--                        android:textSize="@dimen/_14ssp"-->
-<!--                        app:layout_constraintStart_toStartOf="@+id/s2"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/d2" />-->
+&lt;!&ndash;                    <com.es.marocapp.widgets.MarocRegularTextView&ndash;&gt;
+&lt;!&ndash;                        android:id="@+id/s2"&ndash;&gt;
+&lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;
+&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;
+&lt;!&ndash;                        android:layout_marginTop="@dimen/_16sdp"&ndash;&gt;
+&lt;!&ndash;                        android:text="Subject"&ndash;&gt;
+&lt;!&ndash;                        android:textColor="@color/colorGreyDark"&ndash;&gt;
+&lt;!&ndash;                        android:textSize="@dimen/_14ssp"&ndash;&gt;
+&lt;!&ndash;                        app:layout_constraintStart_toStartOf="@+id/s1"&ndash;&gt;
+&lt;!&ndash;                        app:layout_constraintTop_toBottomOf="@+id/d1" />&ndash;&gt;
 
-<!--                    <com.es.marocapp.widgets.MarocRegularTextView-->
-<!--                        android:id="@+id/d3"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="@dimen/_8sdp"-->
-<!--                        android:layout_marginEnd="@dimen/_16sdp"-->
-<!--                        android:text="@string/dummyText"-->
-<!--                        android:textColor="@color/colorTextGreyMedium"-->
-<!--                        android:textSize="@dimen/_12ssp"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintStart_toStartOf="@+id/s3"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/s3" />-->
+&lt;!&ndash;                    <com.es.marocapp.widgets.MarocRegularTextView&ndash;&gt;
+&lt;!&ndash;                        android:id="@+id/d2"&ndash;&gt;
+&lt;!&ndash;                        android:layout_width="0dp"&ndash;&gt;
+&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;
+&lt;!&ndash;                        android:layout_marginTop="@dimen/_8sdp"&ndash;&gt;
+&lt;!&ndash;                        android:layout_marginEnd="@dimen/_16sdp"&ndash;&gt;
+&lt;!&ndash;                        android:text="@string/dummyText"&ndash;&gt;
+&lt;!&ndash;                        android:textColor="@color/colorTextGreyMedium"&ndash;&gt;
+&lt;!&ndash;                        android:textSize="@dimen/_12ssp"&ndash;&gt;
+&lt;!&ndash;                        app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;
+&lt;!&ndash;                        app:layout_constraintStart_toStartOf="@+id/s2"&ndash;&gt;
+&lt;!&ndash;                        app:layout_constraintTop_toBottomOf="@+id/s2" />&ndash;&gt;
+
+&lt;!&ndash;                    <com.es.marocapp.widgets.MarocRegularTextView&ndash;&gt;
+&lt;!&ndash;                        android:id="@+id/s3"&ndash;&gt;
+&lt;!&ndash;                        android:layout_width="wrap_content"&ndash;&gt;
+&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;
+&lt;!&ndash;                        android:layout_marginTop="@dimen/_16sdp"&ndash;&gt;
+&lt;!&ndash;                        android:text="Subject"&ndash;&gt;
+&lt;!&ndash;                        android:textColor="@color/colorGreyDark"&ndash;&gt;
+&lt;!&ndash;                        android:textSize="@dimen/_14ssp"&ndash;&gt;
+&lt;!&ndash;                        app:layout_constraintStart_toStartOf="@+id/s2"&ndash;&gt;
+&lt;!&ndash;                        app:layout_constraintTop_toBottomOf="@+id/d2" />&ndash;&gt;
+
+&lt;!&ndash;                    <com.es.marocapp.widgets.MarocRegularTextView&ndash;&gt;
+&lt;!&ndash;                        android:id="@+id/d3"&ndash;&gt;
+&lt;!&ndash;                        android:layout_width="0dp"&ndash;&gt;
+&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;
+&lt;!&ndash;                        android:layout_marginTop="@dimen/_8sdp"&ndash;&gt;
+&lt;!&ndash;                        android:layout_marginEnd="@dimen/_16sdp"&ndash;&gt;
+&lt;!&ndash;                        android:text="@string/dummyText"&ndash;&gt;
+&lt;!&ndash;                        android:textColor="@color/colorTextGreyMedium"&ndash;&gt;
+&lt;!&ndash;                        android:textSize="@dimen/_12ssp"&ndash;&gt;
+&lt;!&ndash;                        app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;
+&lt;!&ndash;                        app:layout_constraintStart_toStartOf="@+id/s3"&ndash;&gt;
+&lt;!&ndash;                        app:layout_constraintTop_toBottomOf="@+id/s3" />&ndash;&gt;
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </ScrollView>
-        </androidx.cardview.widget.CardView>
+&lt;!&ndash;            </ScrollView>&ndash;&gt;
+        </androidx.cardview.widget.CardView>-->
+
+        <ImageView
+            android:id="@+id/faqHeaderImg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/faq_header_img"
+            android:scaleType="fitXY"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/faqRecycler"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/faqHeaderImg"
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
