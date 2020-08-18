@@ -13,7 +13,8 @@ data class GetAccountHolderInformationResponse(
     val profileName: String,
     val responseCode: String,
     val sureName: String,
-    val language: String
+    val language: String,
+    val email:String?
 )
 
 data class CredentialList(
