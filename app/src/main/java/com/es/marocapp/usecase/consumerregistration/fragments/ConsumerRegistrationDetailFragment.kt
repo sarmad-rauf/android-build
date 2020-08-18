@@ -152,6 +152,7 @@ class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistra
                 mActivityViewModel.lastName = mDataBinding.inputLastName.text.toString().trim()
                 mActivityViewModel.email = mDataBinding.inputEmail.text.toString().trim()
 
+                mActivityViewModel.mUserMsisdn=consumerMsisdnEntered
 //                mActivityViewModel.requestForeGetInitialAuthDetailsApi(activity,consumerMsisdnEntered)
                 mActivityViewModel.requestForGetOTPForRegistrationApi(activity,mDataBinding.inputFirstName.text.toString().trim(),mDataBinding.inputLastName.text.toString().trim()
                     ,mDataBinding.inputNationalID.text.toString().trim())
