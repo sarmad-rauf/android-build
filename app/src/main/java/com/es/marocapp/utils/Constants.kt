@@ -73,6 +73,8 @@ object Constants {
     var CURRENT_USER_CREDENTIAL = ""
     var LOGGED_IN_USER = ""
     var LOGGED_IN_USER_COOKIE = ""
+    var CURRENT_USER_NAME =""
+    var CURRENT_USER_EMAIL=""
 
     //USER_PROFILE
     var IS_AGENT_USER = false
@@ -232,7 +234,7 @@ object Constants {
     }
 
     fun converValueToTwoDecimalPlace(value : Double) : String{
-        val result = java.lang.String.format("%.2f", value)
+        val result = String.format(Locale.ENGLISH,"%.2f", value)
         return result
     }
 

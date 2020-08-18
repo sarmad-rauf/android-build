@@ -5,7 +5,8 @@ data class BillPaymentFatoratiStepFourResponse(
     val params: List<FatoratiParam>,
     val refTxFatourati: String,
     val responseCode: String,
-    val totalAmount: String
+    val totalAmount: String,
+    val message:String
 )
 
 data class FatoratiParam(

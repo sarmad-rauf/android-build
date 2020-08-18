@@ -10,7 +10,8 @@ data class LoginWithCertResponse(
     val expires: String,
     val profile: Profile,
     val responseCode: String,
-    val setCookie: String
+    val setCookie: String,
+    val getAccountHolderInformationResponse:GetAccountHolderInformationResponse
 )
 
 data class AllowedMenu(

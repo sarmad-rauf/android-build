@@ -167,6 +167,16 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
                 msisdn = msisdn.trim()
                 msisdn = "0$msisdn"
             }
+            if (msisdn.contains("(")) {
+                msisdn = msisdn.replace("(", "")
+                msisdn = msisdn.replace(")", "")
+                msisdn = msisdn.trim()
+            }
+
+            msisdn = msisdn.replace("-", "")
+            msisdn = msisdn.replace(" ", "")
+            msisdn = msisdn.trim()
+
             mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
             mInputHint.visibility = View.GONE
             mInputField.setText(msisdn)
@@ -191,13 +201,25 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
     private fun isValidNumber(result: String): Boolean {
         var isNumberRegexMatches = false
         var msisdn = result
-        if (result.contains("212")) {
+        if (msisdn.contains("212")) {
             msisdn = msisdn.substringAfter("212")
             msisdn = msisdn.substringAfter("+212")
             msisdn = msisdn.replace("-", "")
             msisdn = msisdn.trim()
             msisdn = "0$msisdn"
         }
+        if (msisdn.contains("(")) {
+            msisdn = msisdn.replace("(", "")
+            msisdn = msisdn.replace(")", "")
+            msisdn = msisdn.trim()
+        }
+
+            msisdn = msisdn.replace("-", "")
+            msisdn = msisdn.replace(" ", "")
+            msisdn = msisdn.trim()
+
+
+
         var msisdnLenght = msisdn.length
         isNumberRegexMatches =
             (msisdnLenght > 0 && msisdnLenght == Constants.APP_MSISDN_LENGTH.toInt() - 2 && Pattern.matches(

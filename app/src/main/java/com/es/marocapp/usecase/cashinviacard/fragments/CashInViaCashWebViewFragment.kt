@@ -44,6 +44,9 @@ class CashInViaCashWebViewFragment : BaseFragment<FragmentCashInViaCardWebviewBi
 
             web_url=Constants.CASH_IN_VIA_CARD_URL.plus("&msisdn=").plus(Constants.CURRENT_USER_MSISDN.replace("212","0"))
                 .plus("&lang=").plus(LocaleManager.selectedLanguage)
+                .plus("&name=").plus(Constants.CURRENT_USER_NAME)
+                .plus("&email=").plus(Constants.CURRENT_USER_EMAIL)
+
         }
 
         mDataBinding.cashInViaCardWebView.getSettings().setJavaScriptEnabled(true)

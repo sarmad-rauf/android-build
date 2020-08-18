@@ -168,6 +168,18 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                     LocaleManager.selectedLanguage=LocaleManager.languageToBeChangedAfterAPI
                     LocaleManager.languageToBeChangedAfterAPI=""
                 }
+                if(it.getAccountHolderInformationResponse!=null){
+                    if(!it.getAccountHolderInformationResponse.firstName.isNullOrEmpty()){
+                        Constants.CURRENT_USER_NAME=it.getAccountHolderInformationResponse.firstName
+                        if(!it.getAccountHolderInformationResponse.sureName.isNullOrEmpty()){
+                            Constants.CURRENT_USER_NAME=it.getAccountHolderInformationResponse.firstName+" "+ it.getAccountHolderInformationResponse.sureName
+                        }
+                    }
+
+                    if(!it.getAccountHolderInformationResponse.email.isNullOrEmpty()){
+                        Constants.CURRENT_USER_EMAIL=it.getAccountHolderInformationResponse.email
+                    }
+                }
                 mActivityViewModel.requestForBalanceInfoAndLimtsAPI(activity)
             }else if(it.responseCode == ApiConstant.API_ACCOUNT_BLOCKED){
                 val btnTxt = LanguageData.getStringValue("BtnTitle_OK")
