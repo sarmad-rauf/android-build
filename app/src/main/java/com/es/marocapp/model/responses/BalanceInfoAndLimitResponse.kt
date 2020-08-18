@@ -8,7 +8,8 @@ data class BalanceInfoAndLimitResponse(
     val limitsList: List<Limits>?,
     val profilename: String?,
     val responseCode: String?,
-    val surname: String?
+    val surname: String?,
+    val email: String?
 )
 
 data class Limits(

@@ -217,7 +217,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         mDataBinding.navigationItem.rootView.personal_information_title.text = LanguageData.getStringValue("PersonalInformation")
         mDataBinding.navigationItem.rootView.nav_logged_in_user_name.text = Constants.balanceInfoAndResponse.firstname+" "+Constants.balanceInfoAndResponse.surname
         mDataBinding.navigationItem.rootView.nav_logged_in_user_detials.text = Constants.balanceInfoAndResponse.profilename
-        mDataBinding.navigationItem.rootView.nav_logged_in_user_email.text = "test@gmail.com" //email is missing in balance info response
+        mDataBinding.navigationItem.rootView.nav_logged_in_user_email.text = getUserEmailAddress()
         mDataBinding.navigationItem.rootView.complete_mt_title.text = LanguageData.getStringValue("MTCashAccount")
         mDataBinding.navigationItem.rootView.cashInViaCardTitle.text = LanguageData.getStringValue("CashInViaCard")
         mDataBinding.navigationItem.rootView.balanceAndAccountTitle.text = LanguageData.getStringValue("BalanceAndAccounts")
@@ -230,6 +230,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         mDataBinding.navigationItem.rootView.oppositionMTCashTitle.text = LanguageData.getStringValue("OppositionOnMyMWallet")
         mDataBinding.navigationItem.rootView.changeLanguageTitle.text = LanguageData.getStringValue("ChangeLanguage")
         mDataBinding.navigationItem.rootView.logOutTitle.text = LanguageData.getStringValue("LogOut")
+    }
+
+    fun getUserEmailAddress() : String{
+        var email = ""
+        if(!Constants.balanceInfoAndResponse.email.isNullOrEmpty()){
+            email = Constants.balanceInfoAndResponse.email!!
+            email = email.removePrefix("ID:")
+            email = email.substringAfter(":")
+            email = email.substringBefore("/")
+        }
+        return  email
     }
 
     private fun setStrings() {
