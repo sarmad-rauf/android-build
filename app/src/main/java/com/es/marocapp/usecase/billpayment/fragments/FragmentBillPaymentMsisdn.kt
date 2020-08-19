@@ -334,7 +334,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
 
                     var userMsisdn = mDataBinding.inputPhoneNumber.text.toString()
-                    if (userMsisdn.startsWith("0", false)) {
+                    /*if (userMsisdn.startsWith("0", false)) {
                         checkNumberExistInFavorites(userMsisdn)
                         mDataBinding.inputLayoutPhoneNumber.error = ""
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
@@ -361,6 +361,21 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                             LanguageData.getStringValue("EnterValidPhoneNumber")
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
                         isValidForAll = false
+                        mDataBinding.inputLayoutPhoneNumber.hint =
+                            LanguageData.getStringValue("PhoneNumber")
+                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+                    }*/
+
+                    if (isNumberRegexMatches) {
+                        mDataBinding.inputLayoutPhoneNumber.error = ""
+                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+
+                        msisdnEntered = userMsisdn
+                    } else {
+                        isValidForAll = false
+                        mDataBinding.inputLayoutPhoneNumber.error =
+                            LanguageData.getStringValue("EnterValidPhoneNumber")
+                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
                         mDataBinding.inputLayoutPhoneNumber.hint =
                             LanguageData.getStringValue("PhoneNumber")
                         mDataBinding.inputPhoneNumberHint.visibility = View.GONE
