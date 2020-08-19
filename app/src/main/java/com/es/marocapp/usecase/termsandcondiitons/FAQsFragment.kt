@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.FaqsQuestionAnswerAdapter
 import com.es.marocapp.databinding.FragmentFaqsBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.FaqsAnswers
 import com.es.marocapp.model.FaqsQuestionModel
@@ -41,7 +42,11 @@ class FAQsFragment : BaseFragment<FragmentFaqsBinding>(){
         (activity as MainActivity).setHomeToolbarVisibility(false)
         (activity as MainActivity).isDirectCallForTransaction = false
         (activity as MainActivity).isTransactionFragmentNotVisible = true
-        mAcitivtyViewModel.requestForAirTimeUseCasesApi(activity)
+        mAcitivtyViewModel.requestForGetFaqs(activity)
+        mDataBinding.tvTransactionHistoryTitle.text = LanguageData.getStringValue("Faqs")
+        mDataBinding.imgBackButton.setOnClickListener {
+            (activity as MainActivity).navController.popBackStack(R.id.navigation_home,false)
+        }
         subsribeObserver()
     }
 

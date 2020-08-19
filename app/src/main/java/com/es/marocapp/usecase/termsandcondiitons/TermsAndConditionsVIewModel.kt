@@ -32,10 +32,11 @@ class TermsAndConditionsVIewModel(application: Application) : AndroidViewModel(a
 
 
     //Request For AirTimeUseCase
-    fun requestForAirTimeUseCasesApi(context: Context?
+    fun requestForGetFaqs(context: Context?
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
+            isLoading.set(true)
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getFaqs()
                 .compose(applyIOSchedulers())
                 .subscribe(
