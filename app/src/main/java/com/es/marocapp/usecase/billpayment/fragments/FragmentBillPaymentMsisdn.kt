@@ -305,6 +305,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             }
 
             if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+                mActivityViewModel.transferdAmountTo=msisdnEntered
                 mActivityViewModel.requestForFatoratiStepFourApi(activity)
             }
         }

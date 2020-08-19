@@ -5,7 +5,6 @@ import android.content.Context
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import com.es.marocapp.R
 import com.es.marocapp.model.requests.*
 import com.es.marocapp.model.requests.Param
@@ -14,7 +13,6 @@ import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
 import com.es.marocapp.usecase.BaseActivity
-import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.SingleLiveEvent
@@ -561,7 +559,8 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     //Request For FatoratiStepFour
-    fun requestForFatoratiStepFourApi(context: Context?
+    fun requestForFatoratiStepFourApi(
+        context: Context?
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
