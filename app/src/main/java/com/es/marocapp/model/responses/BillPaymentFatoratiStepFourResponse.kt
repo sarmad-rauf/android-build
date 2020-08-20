@@ -3,8 +3,8 @@ package com.es.marocapp.model.responses
 data class BillPaymentFatoratiStepFourResponse(
     val description: String,
     val params: List<FatoratiParam>,
-    val refTxFatourati: String,
     val responseCode: String,
+    val refTxFatourati: String,
     val totalAmount: String,
     val message:String
 )

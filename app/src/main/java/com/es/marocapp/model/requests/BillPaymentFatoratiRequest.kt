@@ -11,7 +11,9 @@ data class BillPaymentFatoratiRequest(
     val receiver: String,
     val sender: String,
     val transferType: String,
-    val isMultipleInvoice : String
+    val isMultipleInvoice : String,
+    val refTxFatourati: String,
+    val totalAmount: String
 )
 
 data class Param(
