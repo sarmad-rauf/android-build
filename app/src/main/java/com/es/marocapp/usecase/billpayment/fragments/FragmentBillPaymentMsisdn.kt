@@ -153,9 +153,8 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                         mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
                         if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
                             mDataBinding.inputLayoutPhoneNumber.hint =
-                                LanguageData.getStringValue("CINPlaceholder")
-                            mDataBinding.inputPhoneNumberHint.text =
                                 LanguageData.getStringValue("EnterCilNumber")
+                            mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                         }
                         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
                             if (mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!) {
@@ -206,9 +205,8 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
     private fun setStrings() {
         mDataBinding.inputLayoutCode.hint = LanguageData.getStringValue("EnterCode")
         if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("CINPlaceholder")
-            mDataBinding.inputPhoneNumberHint.text =
-                LanguageData.getStringValue("EnterCilNumber")
+            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterCilNumber")
+            mDataBinding.inputPhoneNumberHint.visibility = View.GONE
         }
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
             if (mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!) {
@@ -523,9 +521,8 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 mDataBinding.inputPhoneNumber.clearFocus()
                 mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
                 if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-                    mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("CINPlaceholder")
-                    mDataBinding.inputPhoneNumberHint.text =
-                        LanguageData.getStringValue("EnterCilNumber")
+                    mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterCilNumber")
+                    mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                 }
                 if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
                     if (mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!) {
