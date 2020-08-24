@@ -54,6 +54,7 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
         updateUI()
         subscribeObserver()
         subcribeForPostPaidSequenceCall()
+        subcribeForFatoratiSequenceCall()
 
 
     }
