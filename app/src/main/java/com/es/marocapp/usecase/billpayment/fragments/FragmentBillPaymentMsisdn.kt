@@ -1,5 +1,6 @@
 package com.es.marocapp.usecase.billpayment.fragments
 
+import android.R.attr.password
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
@@ -23,6 +24,7 @@ import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.layout_activity_header.view.*
 import java.util.regex.Pattern
+
 
 class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>(),
     BillPaymentClickListner, AdapterView.OnItemSelectedListener, TextWatcher {
@@ -122,6 +124,8 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 )
             )
 
+            mDataBinding.inputPhoneNumber.inputType = InputType.TYPE_CLASS_PHONE
+
         }
         if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
             (activity as BillPaymentActivity).mDataBinding.headerBillPayment.rootView.tv_company_title.text =
@@ -136,6 +140,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
             mDataBinding.inputPhoneNumber.filters =
                 arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_CIL_LENGTH.toInt()))
+
+            mDataBinding.inputPhoneNumber.inputType = InputType.TYPE_CLASS_TEXT
+
         }
 
         mActivityViewModel.popBackStackTo = R.id.fragmentPostPaidBillType
