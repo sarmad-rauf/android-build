@@ -10,7 +10,7 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.UserApprovalResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
-import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.approvals.ApprovalActivity
 import com.es.marocapp.usecase.approvals.ApprovalFragment
 import com.es.marocapp.usecase.approvals.ApprovalViewModel
 import com.es.marocapp.utils.Constants
@@ -28,7 +28,7 @@ class ApprovalSuccessFragment : BaseFragment<FragmentApprovalSuccessBinding>(),
     }
 
     override fun init(savedInstanceState: Bundle?) {
-          approvalViewModel = ViewModelProvider(this).get(ApprovalViewModel::class.java)
+          approvalViewModel = ViewModelProvider(activity as ApprovalActivity).get(ApprovalViewModel::class.java)
 
         mDataBinding.apply {
               viewmodel = approvalViewModel
@@ -90,10 +90,10 @@ class ApprovalSuccessFragment : BaseFragment<FragmentApprovalSuccessBinding>(),
     }
 
     override fun onOkClickListener(view: View) {
-        (activity as MainActivity).navController.navigate(R.id.navigation_home)
+        (activity as ApprovalActivity).navController.navigate(R.id.navigation_home)
     }
 
     override fun onBackClickListener(view: View) {
-        (activity as MainActivity).navController.navigateUp()
+        (activity as ApprovalActivity).navController.navigateUp()
     }
 }

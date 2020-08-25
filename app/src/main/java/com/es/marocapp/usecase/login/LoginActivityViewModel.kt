@@ -49,6 +49,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     var isSimplePopUp = true
     var isResetPassowrdFlow = false
 
+    var isUserToShowProfile = false
 
     var getAccountHolderInformationResponseListner = SingleLiveEvent<GetAccountHolderInformationResponse>()
     var getInitialAuthDetailsResponseListner = SingleLiveEvent<GetInitialAuthDetailsReponse>()

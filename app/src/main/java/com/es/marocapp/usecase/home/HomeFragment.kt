@@ -313,6 +313,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 )
             }
 
+            if(Constants.loginWithCertResponse.allowedMenu.MyApprovals != null){
+                this.add(
+                    HomeUseCasesModel(
+                        LanguageData.getStringValue("MyApprovals").toString(),
+                        R.drawable.approval_home_use_case_icon
+                    )
+                )
+            }
+
             /*if (Constants.loginWithCertResponse.allowedMenu.CashInViaCard != null) {
                 this.add(
                     HomeUseCasesModel(
@@ -392,6 +401,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                         }
 
                         LanguageData.getStringValue("ConsumerRegistration").toString() -> {
+                            startActivity(
+                                Intent(
+                                    activity as MainActivity,
+                                    ConsumerRegistrationActivity::class.java
+                                )
+                            )
+                        }
+
+                        LanguageData.getStringValue("MyApprovals").toString() -> {
                             startActivity(
                                 Intent(
                                     activity as MainActivity,
