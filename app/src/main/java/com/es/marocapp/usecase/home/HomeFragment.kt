@@ -19,6 +19,7 @@ import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.airtime.AirTimeActivity
+import com.es.marocapp.usecase.approvals.ApprovalActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentActivity
 import com.es.marocapp.usecase.cashinviacard.ActivityCashInViaCard
 import com.es.marocapp.usecase.cashservices.CashServicesActivity
@@ -413,7 +414,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                             startActivity(
                                 Intent(
                                     activity as MainActivity,
-                                    ConsumerRegistrationActivity::class.java
+                                    ApprovalActivity::class.java
                                 )
                             )
                         }

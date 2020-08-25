@@ -42,7 +42,7 @@ class CashInViaCashWebViewFragment : BaseFragment<FragmentCashInViaCardWebviewBi
             web_url = web_url.replace("superUserContext",ApiConstant.CONTEXT_BEFORE_LOGIN)
             web_url = web_url.replace("loggedInUserLang",LocaleManager.selectedLanguage)*/
 
-            web_url=Constants.CASH_IN_VIA_CARD_URL.plus("&msisdn=").plus(Constants.CURRENT_USER_MSISDN.replace("212","0"))
+            web_url=Constants.CASH_IN_VIA_CARD_URL.plus("&msisdn=").plus(Constants.CURRENT_USER_MSISDN)
                 .plus("&lang=").plus(LocaleManager.selectedLanguage)
                 .plus("&name=").plus(Constants.CURRENT_USER_NAME)
                 .plus("&email=").plus(Constants.CURRENT_USER_EMAIL)

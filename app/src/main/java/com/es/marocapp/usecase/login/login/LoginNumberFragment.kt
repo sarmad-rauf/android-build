@@ -108,6 +108,8 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
             mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
             showTermsConditionsAndSignup()
         }
+
+        mActivityViewModel.isUserToShowProfile=false
     }
 
     private fun setStrings() {

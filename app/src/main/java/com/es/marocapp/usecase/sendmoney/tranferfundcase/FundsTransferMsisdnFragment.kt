@@ -124,7 +124,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
     private fun setStrings() {
 //        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
         mDataBinding.selectFavoriteTypeTitle.hint = LanguageData.getStringValue("SelectFavorite")
-        mDataBinding.btnScanQR.text = LanguageData.getStringValue("ScanQr")
+       // mDataBinding.btnScanQR.text = LanguageData.getStringValue("ScanQr")
 
         mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Next")
 
