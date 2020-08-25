@@ -35,7 +35,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/m_tcash_logo_white"/>
+        android:src="@drawable/m_tcash_logo_white_copy"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

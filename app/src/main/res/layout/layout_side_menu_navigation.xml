@@ -405,7 +405,7 @@
                         android:layout_height="@dimen/_32sdp"
                         android:layout_margin="@dimen/_8sdp"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:src="@drawable/nav_balance_account_black"
+                        android:src="@drawable/via_card_copy_5"
                         app:layout_constraintTop_toBottomOf="@+id/beneficaryManagementTitle"
                         app:layout_constraintBottom_toTopOf="@+id/beneficaryManagementTitle"
                         />
@@ -543,7 +543,7 @@
                         android:layout_height="@dimen/_32sdp"
                         android:layout_margin="@dimen/_8sdp"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:src="@drawable/nav_bell_black"
+                        android:src="@drawable/via_card_copy_7"
                         app:layout_constraintTop_toBottomOf="@+id/oppositionMTCashTitle"
                         app:layout_constraintBottom_toTopOf="@+id/oppositionMTCashTitle"
                         />
