@@ -23,7 +23,7 @@
 
     <item
         android:id="@+id/navigation_approval"
-        android:icon="@drawable/ic_approvals_inactive"
+        android:icon="@drawable/ic_bottom_nav_account_detail"
         android:title="@string/title_approval_cap" />
 
 </menu>

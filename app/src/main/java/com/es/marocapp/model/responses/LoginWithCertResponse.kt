@@ -22,7 +22,8 @@ data class AllowedMenu(
     val MerchantPayment: List<String>,
     val SendMoney: List<String>,
     val ConsumerRegistration: List<String>,
-    val CashInViaCard: List<String>
+    val CashInViaCard: List<String>,
+    val MyApprovals: List<String>
 )
 
 data class Contact(

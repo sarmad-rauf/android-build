@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".usecase.changepassword.ChangePasswordActivity"></activity>
+        <activity android:name=".usecase.approvals.ApprovalActivity"></activity>
+        <activity android:name=".usecase.changepassword.ChangePasswordActivity" />
         <activity android:name=".usecase.cashinviacard.ActivityCashInViaCard" />
         <activity android:name=".usecase.consumerregistration.ConsumerRegistrationActivity" />
         <activity android:name=".usecase.transaction.TransactionDetailsActivity" />

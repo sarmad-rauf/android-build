@@ -2,7 +2,9 @@ package com.es.marocapp.usecase
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
@@ -101,6 +103,37 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
                 )
             )
         }
+
+        mDataBinding.navView.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener{
+            override fun onNavigationItemSelected(item: MenuItem): Boolean {
+                when (item.getItemId()) {
+                    R.id.navigation_home-> {
+                        navController.navigate(R.id.navigation_home)
+                    }
+
+                    R.id.navigation_transaction-> {
+                        navController.popBackStack(R.id.navigation_home,false)
+                        navController.navigate(R.id.navigation_transaction)
+                    }
+                    R.id.FAQsFragment2-> {
+                        navController.popBackStack(R.id.navigation_home,false)
+                        navController.navigate(R.id.FAQsFragment2)
+                    }
+
+                    R.id.navigation_approval ->{
+                        navController.popBackStack(R.id.navigation_home,false)
+                        mDataBinding.drawerLayout.openDrawer(GravityCompat.START)
+                    }
+                }
+                return false
+            }
+
+        })
+
+        var userName = Constants.balanceInfoAndResponse.firstname + " " + Constants.balanceInfoAndResponse.surname
+        Constants.CURRENT_USER_NAME = userName
+        PrefUtils.addString(this@MainActivity, PrefUtils.PreKeywords.PREF_KEY_USER_NAME,Constants.CURRENT_USER_NAME)
+
 
         subscribeForUpdateLanguage()
         subscribeObserver()

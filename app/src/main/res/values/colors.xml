@@ -27,5 +27,6 @@
     <color name="colorFail">#ff4949</color>
     <color name="colorToast">#e8c01f</color>
     <color name="colorConfirmationTitle">#969696</color>
+    <color name="colorUserProfileTxtTitle">#d3d3d3</color>
 
 </resources>

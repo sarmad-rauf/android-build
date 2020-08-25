@@ -11,7 +11,6 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.Approvaldetail
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
-import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.utils.DialogUtils
 
 class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
@@ -30,7 +29,7 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        approvalViewModel = ViewModelProvider(activity as MainActivity).get(ApprovalViewModel::class.java)
+        approvalViewModel = ViewModelProvider(activity as ApprovalActivity).get(ApprovalViewModel::class.java)
 
         mDataBinding.apply {
             viewmodel = approvalViewModel
@@ -45,23 +44,19 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
               //  val bundle= bundleOf("data",mApprovalsList.get(0) as ArrayList<Approvaldetail>)
                 val b = Bundle()
                 b.putParcelable(SELECTED_APPROVAL_KEY, mApprovalsList.get(position) as Approvaldetail)
-                (activity as MainActivity).navController.navigate(R.id.action_navigation_approval_to_approvalDetailFragment,b)
+                (activity as ApprovalActivity).navController.navigate(R.id.action_approvalFragment_to_approvalDetailFragment2,b)
             }
 
         })
 
         mDataBinding.mApprovalsRecycler.apply {
             adapter = mApprovalsItemAdapter
-            layoutManager = LinearLayoutManager(activity as MainActivity)
+            layoutManager = LinearLayoutManager(activity as ApprovalActivity)
         }
 
         mDataBinding.imgBackButton.setOnClickListener {
-            (activity as MainActivity).navController.popBackStack(R.id.navigation_home,false)
+            (activity as ApprovalActivity).finish()
         }
-
-        (activity as MainActivity).setHomeToolbarVisibility(false)
-        (activity as MainActivity).isDirectCallForTransaction = false
-        (activity as MainActivity).isTransactionFragmentNotVisible = true
 
         subscribeForApprovalsResponse()
         setStrings()
@@ -73,7 +68,7 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
     }
 
     private fun subscribeForApprovalsResponse() {
-        approvalViewModel.getApprovalResponseListner.observe(this, Observer {
+        approvalViewModel.getApprovalResponseListner.observe(activity as ApprovalActivity, Observer {
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                // approvalViewModel.requestForUserApprovalsApi(activity,"01","true")
                 mApprovalsList.clear()

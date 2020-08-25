@@ -13,7 +13,6 @@ import com.es.marocapp.model.responses.Approvaldetail
 import com.es.marocapp.model.responses.UserApprovalResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
-import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.approvals.ApprovalFragment.Companion.SELECTED_APPROVAL_KEY
 import com.es.marocapp.usecase.approvals.ApprovalFragment.Companion.USER_APPROVAL_KEY
 import com.es.marocapp.utils.Constants
@@ -31,7 +30,7 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        approvalViewModel = ViewModelProvider(this).get(ApprovalViewModel::class.java)
+        approvalViewModel = ViewModelProvider(activity as ApprovalActivity).get(ApprovalViewModel::class.java)
 
         mDataBinding.apply {
             viewmodel = approvalViewModel
@@ -84,7 +83,7 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                 val bundle = Bundle()
                 bundle.putParcelable(USER_APPROVAL_KEY, it as UserApprovalResponse)
-                (activity as MainActivity).navController.navigate(R.id.action_navigation_approvalDetails_to_approvalSuccessFragment,bundle)
+                (activity as ApprovalActivity).navController.navigate(R.id.action_navigation_approvalDetails_to_approvalSuccessFragment,bundle)
 
             }else{
                 DialogUtils.showErrorDialoge(activity,it.description)
@@ -97,7 +96,7 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
     }
 
     override fun onCancelButtonClick(view: View) {
-        (activity as MainActivity).navController.navigateUp()
+        (activity as ApprovalActivity).navController.navigateUp()
     }
 
 }
