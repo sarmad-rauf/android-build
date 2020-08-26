@@ -1,12 +1,15 @@
 package com.es.marocapp.usecase.billpayment.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentBillPaymentConfimationBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.model.requests.FatoratiQuoteParam
+import com.es.marocapp.model.requests.Param
 import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
@@ -94,7 +97,7 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
 
         mActivityViewModel.getPostPaidFatoratiResponseListner.observe(this@FragmentBillPaymentPostPaidConfirmation,
             Observer {
-                if(!it.isNullOrEmpty()){
+               /* if(!it.isNullOrEmpty()){
                     Constants.HEADERS_FOR_PAYEMNTS = false
                     var isWrongPasswordEntered = false
                     var listOfResponse : ArrayList<String> = arrayListOf()
@@ -111,12 +114,19 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
                     if(isWrongPasswordEntered){
                         DialogUtils.showErrorDialoge(activity,it[0].description)
                     }else{
-                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentPostPaidConfirmation_to_fragmentPostPaidBillPaymentSuccess)
                     }
 
                 }else{
                     Constants.HEADERS_FOR_PAYEMNTS = false
                     DialogUtils.showErrorDialoge(activity,LanguageData.getStringValue("SomethingWentWrong"))
+                }*/
+
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentPostPaidConfirmation_to_fragmentPostPaidBillPaymentSuccess)
+                }else if(it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)){
+                    DialogUtils.showErrorDialoge(activity,it.description)
+                }else{
+                    DialogUtils.showErrorDialoge(activity,it.description)
                 }
             }
         )
@@ -259,7 +269,7 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
 
     private fun callFatoratiBillsInSequence(fatoratiCounter: Int) {
 
-        var i = fatoratiCounter
+        /*var i = fatoratiCounter
             var quoteId: String?
             quoteId =
                 mActivityViewModel.selectedIvoicesQuoteHash[selectedFatoratiListOfInvoice[i].idArticle]
@@ -292,7 +302,28 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
                     )
                 }
             }
-        mActivityViewModel.fatoratiCounter=mActivityViewModel.fatoratiCounter+1
+        mActivityViewModel.fatoratiCounter=mActivityViewModel.fatoratiCounter+1*/
+
+        var listOfFatoratiParams : ArrayList<com.es.marocapp.model.requests.Param> = arrayListOf()
+        var totalSelectedBillAmount = "0.00"
+        for(i in selectedFatoratiListOfInvoice.indices){
+
+            var convertedBillAmount  = selectedFatoratiListOfInvoice[i].prixTTC
+            mActivityViewModel.listOfSelectedBillAmount.add(convertedBillAmount)
+            totalSelectedBillAmount = ((totalSelectedBillAmount.toDouble()+convertedBillAmount.toDouble())).toString()
+            Log.i("TotalBillAmount",mActivityViewModel.totalSelectedBillAmount)
+
+            listOfFatoratiParams.add(
+                Param(selectedFatoratiListOfInvoice[i].idArticle,
+                    selectedFatoratiListOfInvoice[i].prixTTC,
+                    selectedFatoratiListOfInvoice[i].typeArticle)
+            )
+        }
+        var quoteId = ""
+        if(mActivityViewModel.selectedIvoicesQuoteList.get()?.isNotEmpty()!!){
+            quoteId = mActivityViewModel.selectedIvoicesQuoteList.get()!![0]
+        }
+        mActivityViewModel.requestForFatoratiApi(activity,mActivityViewModel.totalSelectedBillAmount,quoteId,mActivityViewModel.isMultipleBillSelected,listOfFatoratiParams)
     }
 
     private fun payPostPaidBills() {

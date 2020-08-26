@@ -6,14 +6,14 @@ data class BillPaymentFatoratiRequest(
     val context: String,
     val creancierID: String,
     val paiementTotal: String,
-    val param: Param,
     val quoteid: String,
     val receiver: String,
     val sender: String,
     val transferType: String,
     val isMultipleInvoice : String,
     val refTxFatourati: String,
-    val totalAmount: String
+    val totalAmount: String,
+    val params: List<Param>
 )
 
 data class Param(
