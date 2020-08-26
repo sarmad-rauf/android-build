@@ -122,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_8sdp"
                     android:src="@drawable/home_icon_call"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/dashboard_cash_in_via_card"
                     app:layout_constraintTop_toTopOf="parent" />

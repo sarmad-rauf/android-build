@@ -103,6 +103,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
                 )
             )
         }
+        mDataBinding.callIconHomeScreen.setOnClickListener {
+        Tools.openDialerWithNumber(this)
+        }
 
         mDataBinding.navView.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener{
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
