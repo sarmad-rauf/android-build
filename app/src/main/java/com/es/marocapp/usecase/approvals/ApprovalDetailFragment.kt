@@ -83,7 +83,7 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                 val bundle = Bundle()
                 bundle.putParcelable(USER_APPROVAL_KEY, it as UserApprovalResponse)
-                (activity as ApprovalActivity).navController.navigate(R.id.action_navigation_approvalDetails_to_approvalSuccessFragment,bundle)
+                (activity as ApprovalActivity).navController.navigate(R.id.action_approvalDetailFragment2_to_approvalSuccessFragment2,bundle)
 
             }else{
                 DialogUtils.showErrorDialoge(activity,it.description)

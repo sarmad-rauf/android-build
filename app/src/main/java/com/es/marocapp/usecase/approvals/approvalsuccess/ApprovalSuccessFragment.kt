@@ -90,7 +90,7 @@ class ApprovalSuccessFragment : BaseFragment<FragmentApprovalSuccessBinding>(),
     }
 
     override fun onOkClickListener(view: View) {
-        (activity as ApprovalActivity).navController.navigate(R.id.navigation_home)
+        (activity as ApprovalActivity).finish()
     }
 
     override fun onBackClickListener(view: View) {
