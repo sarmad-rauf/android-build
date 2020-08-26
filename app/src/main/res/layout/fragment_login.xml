@@ -108,9 +108,35 @@
                     android:buttonTint="@color/colorCerulean"
                     android:foregroundTint="@color/colorCerulean"
                     android:visibility="gone"
-                    tools:text="I agree to terms and conditions"
                     app:layout_constraintTop_toBottomOf="@+id/input_layout_phone_number"
                     app:layout_constraintStart_toStartOf="@+id/input_layout_phone_number"/>
+
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/agreeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    tools:text="I Agree"
+                    android:textColor="@color/colorConfirmationTitle"
+                    android:textSize="@dimen/_10ssp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toEndOf="@+id/cb_Terms"
+                    app:layout_constraintTop_toTopOf="@+id/cb_Terms"
+                    app:layout_constraintBottom_toBottomOf="@+id/cb_Terms"/>
+
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/termsTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    tools:text="Terms Conditions"
+                    android:textColor="@color/colorConfirmationTitle"
+                    android:textSize="@dimen/_10ssp"
+                    android:visibility="visible"
+                    android:onClick="@{listener::onTermsConditionsClick}"
+                    app:layout_constraintStart_toEndOf="@+id/agreeTv"
+                    app:layout_constraintTop_toTopOf="@+id/agreeTv"
+                    app:layout_constraintBottom_toBottomOf="@+id/agreeTv"/>
 
                 <com.es.marocapp.widgets.MarocLightTextView
                     android:id="@+id/txtForgotPin"

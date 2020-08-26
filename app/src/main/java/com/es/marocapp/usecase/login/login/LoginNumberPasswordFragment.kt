@@ -309,4 +309,8 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
 
     }
 
+    override fun onTermsConditionsClick(view: View) {
+
+    }
+
 }

@@ -9,4 +9,6 @@ interface LoginClickListener {
     fun onForgotPinClick(view: View)
 
     fun onSignUpClick(view: View)
+
+    fun onTermsConditionsClick(view: View)
 }

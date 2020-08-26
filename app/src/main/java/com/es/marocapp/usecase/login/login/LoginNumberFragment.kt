@@ -2,17 +2,14 @@ package com.es.marocapp.usecase.login.login
 
 
 import android.app.Activity
-import android.os.Build
+import android.graphics.Paint
 import android.os.Bundle
 import android.text.Editable
-import android.text.Html
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
-import android.widget.TextView
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
@@ -22,14 +19,14 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.GetAccountHolderInformationResponse
 import com.es.marocapp.model.responses.GetOptResponse
-import com.es.marocapp.model.responses.ValidateOtpAndUpdateAliasesResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
+import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
+import com.es.marocapp.usecase.termsandcondiitons.TermsAndConditions
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
-import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_login.view.*
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 import kotlinx.android.synthetic.main.toast_layout.view.*
@@ -223,6 +220,12 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
 //        mActivity.navController.navigate(R.id.action_loginFragment_to_signUpNumberFragment)
     }
 
+    override fun onTermsConditionsClick(view: View) {
+        var myBundle: Bundle = Bundle()
+        myBundle.putString("title", LanguageData.getStringValue("TermsAndConditions"))
+        (activity as LoginActivity).startNewActivity(activity as LoginActivity, TermsAndConditions::class.java, myBundle)
+    }
+
     fun subscribe() {
         mActivityViewModel.errorText.observe(this@LoginNumberFragment, Observer {
             DialogUtils.showErrorDialoge(activity as LoginActivity, it)
@@ -316,19 +319,25 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
         mDataBinding.root.tvMsg.text =
             LanguageData.getStringValue("YouMustAgreeToTermsAndConditionsToProceedFurther")
         mDataBinding.root.cb_Terms.visibility = View.VISIBLE
-        val text =
+        mDataBinding.root.agreeTv.visibility = View.VISIBLE
+        mDataBinding.root.termsTv.visibility = View.VISIBLE
+      /*  val text =
             LanguageData.getStringValue("AgreeTo") + LanguageData.getStringValue(
                 "TermsConditionsCaps"
-            )
+            )*/
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        mDataBinding.root.termsTv.setPaintFlags(mDataBinding.root.termsTv.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
+        mDataBinding.root.agreeTv.text = LanguageData.getStringValue("AgreeTo")
+        mDataBinding.root.termsTv.text = LanguageData.getStringValue("TermsConditionsCaps")
+
+    /*    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             mDataBinding.root.cb_Terms.setText(
                 Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY),
                 TextView.BufferType.SPANNABLE
             )
         } else {
             mDataBinding.root.cb_Terms.setText(Html.fromHtml(text), TextView.BufferType.SPANNABLE)
-        }
+        }*/
 
         mDataBinding.root.cross.setOnClickListener {
             mDataBinding.root.toast_layout_root.visibility = View.GONE
