@@ -104,6 +104,14 @@ class CashInViaCardAmountFragment : BaseFragment<FragmentCashInViaCardAmountBind
         mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Next")
     }
 
+    override fun onCashDepositClick(view: View) {
+
+    }
+
+    override fun onBankCardClick(view: View) {
+
+    }
+
     override fun onNextButtonClick(view: View) {
         val sAmount: String = mDataBinding.etAmountEntered.text.toString().trim { it <= ' ' }
 

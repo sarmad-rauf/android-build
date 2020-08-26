@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cash_in_via_card_nav_graph"
-    app:startDestination="@id/cashInViaCashWebViewFragment">
+    app:startDestination="@id/cashInViaCardEmailFragment">
 
     <fragment
         android:id="@+id/cashInViaCardEmailFragment"
@@ -12,8 +12,8 @@
         tools:layout="@layout/fragment_cash_in_via_card_email"
         >
         <action
-            android:id="@+id/action_cashInViaCardEmailFragment_to_cashInViaCardAmountFragment"
-            app:destination="@id/cashInViaCardAmountFragment" />
+            android:id="@+id/action_cashInViaCardEmailFragment_to_cashInViaCardWebviewFragment"
+            app:destination="@id/cashInViaCashWebViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/cashInViaCardAmountFragment"

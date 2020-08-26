@@ -27,6 +27,7 @@
             android:id="@+id/input_layout_enter_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginStart="@dimen/_16sdp"
@@ -44,20 +45,41 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.es.marocapp.widgets.MarocButton
-            android:id="@+id/btnNext"
+            android:id="@+id/btnViaBankCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/next"
+            tools:text="Via Bank Card"
             android:paddingTop="@dimen/_8sdp"
             android:paddingBottom="@dimen/_8sdp"
             android:textColor="@color/colorWhite"
-            android:textStyle="bold"
             android:textSize="@dimen/_16ssp"
-            android:onClick="@{listner::onNextButtonClick}"
+            android:onClick="@{listner::onBankCardClick}"
             android:background="@drawable/button_enable"
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginEnd="@dimen/_16sdp"
-            android:layout_marginBottom="@dimen/_16sdp"
+            app:layout_constraintVertical_chainStyle="packed"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btnViaCashDeposit"
+
+            />
+        <com.es.marocapp.widgets.MarocButton
+            android:id="@+id/btnViaCashDeposit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Via Cash Deposit"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:textColor="@color/colorTextOrange"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:layout_constraintTop_toBottomOf="@+id/btnViaBankCard"
+
+            android:textSize="@dimen/_16ssp"
+            android:onClick="@{listner::onCashDepositClick}"
+            android:background="@drawable/button_disable"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             />
 

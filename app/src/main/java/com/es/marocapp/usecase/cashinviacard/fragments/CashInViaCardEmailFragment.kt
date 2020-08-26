@@ -13,6 +13,7 @@ import com.es.marocapp.usecase.cashinviacard.CashInViaCardClickListners
 import com.es.marocapp.usecase.cashinviacard.CashInViaCardViewModel
 import com.es.marocapp.usecase.cashservices.CashServicesActivity
 import com.es.marocapp.usecase.cashservices.CashServicesViewModel
+import com.es.marocapp.utils.DialogUtils
 
 class CashInViaCardEmailFragment : BaseFragment<FragmentCashInViaCardEmailBinding>(),
     CashInViaCardClickListners {
@@ -39,8 +40,9 @@ class CashInViaCardEmailFragment : BaseFragment<FragmentCashInViaCardEmailBindin
     }
 
     private fun setStrings() {
-        mDataBinding.inputLayoutEnterEmail.hint = LanguageData.getStringValue("EnterYourEmail")
-        mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Next")
+       // mDataBinding.inputLayoutEnterEmail.hint = LanguageData.getStringValue("EnterYourEmail")
+        mDataBinding.btnViaCashDeposit.text = LanguageData.getStringValue("ViaCashDeposit")
+        mDataBinding.btnViaBankCard.text = LanguageData.getStringValue("ViaBankCard")
     }
 
     fun isEmailValid() : Boolean{
@@ -67,10 +69,23 @@ class CashInViaCardEmailFragment : BaseFragment<FragmentCashInViaCardEmailBindin
 
     }
 
+
+
+    override fun onCashDepositClick(view: View) {
+        DialogUtils.showUpdateAPPDailog(activity,LanguageData.getStringValue("CashInViaCardAlertMessage"),object : DialogUtils.OnCustomDialogListner{
+            override fun onCustomDialogOkClickListner() {
+
+            }
+
+        },R.drawable.update_blue)
+    }
+
+    override fun onBankCardClick(view: View) {
+        (activity as ActivityCashInViaCard).navController.navigate(R.id.action_cashInViaCardEmailFragment_to_cashInViaCardWebviewFragment)
+    }
+
     override fun onNextButtonClick(view: View) {
-        if(isEmailValid()){
-            (activity as ActivityCashInViaCard).navController.navigate(R.id.action_cashInViaCardEmailFragment_to_cashInViaCardAmountFragment)
-        }
+
     }
 
 }
