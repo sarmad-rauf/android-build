@@ -12,6 +12,7 @@ import com.es.marocapp.adapter.BillDetailFatoratiItemAdapter
 import com.es.marocapp.adapter.BillDetailItemAdapter
 import com.es.marocapp.databinding.FragmentBillPaymentBillDetailsBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.model.requests.FatoratiQuoteParam
 import com.es.marocapp.model.responses.FatoratiCustomParamModel
 import com.es.marocapp.model.responses.InvoiceCustomModel
 import com.es.marocapp.network.ApiConstant
@@ -148,7 +149,15 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
 
         mActivityViewModel.getPostPaidFatoratiQuoteResponseListner.observe(this@FragmentPostPaidBillDetails,
             Observer {
-                if(!it.isNullOrEmpty()){
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    if(it.quoteList.isNotEmpty()){
+                        mActivityViewModel.selectedIvoicesQuoteList.set(arrayListOf(it.quoteList[0].quoteid))
+                    }
+                    (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidBillDetails_to_fragmentBillPaymentPostPaidConfirmation)
+                }else{
+                    DialogUtils.showErrorDialoge(activity,it.description)
+                }
+                /*if(!it.isNullOrEmpty()){
                     var isAllBillPaymentSucceed = false
                     var mQouteList : ArrayList<String> = arrayListOf()
                     var mQouteHash = HashMap<String,String>()
@@ -168,13 +177,11 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
                     if(isAllBillPaymentSucceed){
                         mActivityViewModel.selectedIvoicesQuoteList.set(mQouteList)
                         mActivityViewModel.selectedIvoicesQuoteHash=mQouteHash
-                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidBillDetails_to_fragmentBillPaymentPostPaidConfirmation)
                     }else{
                         DialogUtils.showErrorDialoge(activity,LanguageData.getStringValue("SomethingWentWrong"))
                     }
                 }else{
-                    DialogUtils.showErrorDialoge(activity,LanguageData.getStringValue("SomethingWentWrong"))
-                }
+                }*/
             }
         )
     }
@@ -216,16 +223,24 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
             }else{
                 mActivityViewModel.isMultipleBillSelected = "false"
             }
+
+            var listOfFatoratiParams : ArrayList<FatoratiQuoteParam> = arrayListOf()
             for(i in selectedFatoratiListOfInvoice.indices){
 
                 var convertedBillAmount  = selectedFatoratiListOfInvoice[i].prixTTC
                 mActivityViewModel.listOfSelectedBillAmount.add(convertedBillAmount)
                 mActivityViewModel.totalSelectedBillAmount = ((mActivityViewModel.totalSelectedBillAmount.toDouble()+convertedBillAmount.toDouble())).toString()
                 Log.i("TotalBillAmount",mActivityViewModel.totalSelectedBillAmount)
-                mActivityViewModel.requestForFatoratiQuoteApi(activity,selectedFatoratiListOfInvoice[i].prixTTC,selectedFatoratiListOfInvoice[i].idArticle,
-                    selectedFatoratiListOfInvoice[i].prixTTC,
-                    selectedFatoratiListOfInvoice[i].typeArticle)
+
+                listOfFatoratiParams.add(
+                    FatoratiQuoteParam(selectedFatoratiListOfInvoice[i].idArticle,
+                        selectedFatoratiListOfInvoice[i].prixTTC,
+                        selectedFatoratiListOfInvoice[i].typeArticle)
+                )
             }
+
+            mActivityViewModel.requestForFatoratiQuoteApi(activity,mActivityViewModel.totalSelectedBillAmount,mActivityViewModel.fatoratiStepFourObserver.get()?.refTxFatourati.toString(),
+                mActivityViewModel.fatoratiStepFourObserver.get()?.totalAmount.toString(),listOfFatoratiParams)
         }
     }
 

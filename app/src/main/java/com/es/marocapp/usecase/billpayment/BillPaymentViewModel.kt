@@ -91,10 +91,10 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     var getFatoratiStepFourResponseListner = SingleLiveEvent<BillPaymentFatoratiStepFourResponse>()
 
     var listOfFatoratiQuote = arrayListOf<BillPaymentFatoratiQuoteResponse>()
-    var getPostPaidFatoratiQuoteResponseListner = SingleLiveEvent<ArrayList<BillPaymentFatoratiQuoteResponse>>()
+    var getPostPaidFatoratiQuoteResponseListner = SingleLiveEvent<BillPaymentFatoratiQuoteResponse>()
 
     var listOfFatorati = arrayListOf<BillPaymentFatoratiResponse>()
-    var getPostPaidFatoratiResponseListner = SingleLiveEvent<ArrayList<BillPaymentFatoratiResponse>>()
+    var getPostPaidFatoratiResponseListner = SingleLiveEvent<BillPaymentFatoratiResponse>()
 
     var listOfSelectedBillAmount : ArrayList<String> = arrayListOf()
     var listOfSelectedBillFee : ArrayList<String> = arrayListOf()
@@ -626,9 +626,10 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
     //Request For FatoratiQuotePayment
     fun requestForFatoratiQuoteApi(context: Context?,
-                                   amount: String,idArticle:String,
-                                   prixTTC : String,
-                                   typeArticle :String
+                                   amount: String,
+                                   refTxFatourati : String,
+                                   totalAmount : String,
+                                   paramsForFatoratiPayment : List<FatoratiQuoteParam>
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
@@ -639,8 +640,8 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiQuote(
                 BillPaymentFatoratiQuoteRequest(amount,fatoratiTypeSelected.get()!!.codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
-                    "true", FatoratiQuoteParam(idArticle,prixTTC,typeArticle),Constants.getFatoratiAlias(transferdAmountTo),
-                    Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_BILL_PAYMENT,fatoratiStepFourObserver.get()?.refTxFatourati.toString(),fatoratiStepFourObserver.get()?.totalAmount.toString()
+                    "true",Constants.getFatoratiAlias(transferdAmountTo),
+                    Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_BILL_PAYMENT,refTxFatourati,totalAmount,paramsForFatoratiPayment
                 )
             )
                 .compose(applyIOSchedulers())
@@ -652,24 +653,24 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                         {
                             when(result?.responseCode) {
                                 ApiConstant.API_SUCCESS -> {
-                                    listOfFatoratiQuote.add(result)
+                                    getPostPaidFatoratiQuoteResponseListner.postValue(result)
                                 }
                                 ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
                                 ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_INVALID)
                                 else ->  {
-                                    listOfFatoratiQuote.add(result)
+                                    getPostPaidFatoratiQuoteResponseListner.postValue(result)
                                 }
                             }
 
                         } else {
-                            listOfFatoratiQuote.add(result)
+                            getPostPaidFatoratiQuoteResponseListner.postValue(result)
                         }
 
-                        if(listOfFatoratiQuote.size.equals(totalBillSelected)){
+                        /*if(listOfFatoratiQuote.size.equals(totalBillSelected)){
                             getPostPaidFatoratiQuoteResponseListner.postValue(listOfFatoratiQuote)
-                        }
+                        }*/
 
 
                     },
@@ -698,11 +699,10 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
     //Request For FatoratiPayment
     fun requestForFatoratiApi(context: Context?,
-                                   amount: String,idArticle:String,
-                                   prixTTC : String,
-                                   typeArticle :String,
+                              amount: String,
                               quoteId : String,
-                              isMultipleBillSelected: String
+                              isMultipleBillSelected: String,
+                              paramsForFatoratiPayment : List<Param>
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
@@ -711,9 +711,9 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatorati(
                 BillPaymentFatoratiRequest(amount,fatoratiTypeSelected.get()!!.codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
-                    "true", Param(idArticle,prixTTC,typeArticle),quoteId,Constants.getFatoratiAlias(transferdAmountTo),
+                    "true", quoteId,Constants.getFatoratiAlias(transferdAmountTo),
                     Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_BILL_PAYMENT,isMultipleBillSelected,fatoratiStepFourObserver.get()?.refTxFatourati.toString(),
-                    fatoratiStepFourObserver.get()?.totalAmount.toString()
+                    fatoratiStepFourObserver.get()?.totalAmount.toString(),paramsForFatoratiPayment
                 )
             )
                 .compose(applyIOSchedulers())
@@ -725,28 +725,28 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                         {
                             when(result?.responseCode) {
                                 ApiConstant.API_SUCCESS -> {
-                                    listOfFatorati.add(result)
-                                    if(fatoratiCounter<totalBillSelected){
+                                    getPostPaidFatoratiResponseListner.postValue(result)
+                                    /*if(fatoratiCounter<totalBillSelected){
                                         triggerFatoratiNextCall.postValue(true)
-                                    }
+                                    }*/
                                 }
                                 ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
                                 ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_INVALID)
                                 else ->  {
-                                    listOfFatorati.add(result)
+                                    getPostPaidFatoratiResponseListner.postValue(result)
                                 }
                             }
 
                         } else {
-                            listOfFatorati.add(result)
+                            getPostPaidFatoratiResponseListner.postValue(result)
                         }
 
-                        if(listOfFatorati.size.equals(totalBillSelected)){
+                        /*if(listOfFatorati.size.equals(totalBillSelected)){
                             billPaymentPostFatoratiResponseObserver.set(listOfFatorati)
                             getPostPaidFatoratiResponseListner.postValue(listOfFatorati)
-                        }
+                        }*/
 
 
                     },
