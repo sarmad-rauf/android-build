@@ -13,12 +13,12 @@ import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.utils.Constants
 import java.util.ArrayList
 
-class FatoratiPaidBillAdapter (private val billStatus : ArrayList<BillPaymentFatoratiResponse>, val listOfSelectedBillAmount : ArrayList<String>,
-                             val listOfSelectedBillFee : ArrayList<String>,
-                             val receiverNumber : String
+class FatoratiPaidBillAdapter(private val billStatus: BillPaymentFatoratiResponse, val listOfSelectedBillAmount: ArrayList<String>,
+                              val listOfSelectedBillFee: String,
+                              val receiverNumber: String
 ) : RecyclerView.Adapter<FatoratiPaidBillAdapter.BillPaymentItemViewHolder>() {
 
-    override fun getItemCount() = billStatus.size
+    override fun getItemCount() = listOfSelectedBillAmount.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BillPaymentItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.layout_bill_paid_item_layout, parent, false)
@@ -37,28 +37,27 @@ class FatoratiPaidBillAdapter (private val billStatus : ArrayList<BillPaymentFat
         holder.tvReceiverNameVal.visibility = View.GONE
         holder.tvReceiverNumberVal.text = receiverNumber
         holder.tvAmountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+listOfSelectedBillAmount[position]
-        holder.tvFeeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+listOfSelectedBillFee[position]
-        holder.tvTotalCostVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+Constants.addAmountAndFee(listOfSelectedBillAmount[position].toDouble(), listOfSelectedBillFee[position].toDouble())
+        holder.tvFeeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+listOfSelectedBillFee
+        holder.tvTotalCostVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+Constants.addAmountAndFee(listOfSelectedBillAmount[position].toDouble(), listOfSelectedBillFee.toDouble())
 
-        if(!billStatus.isNullOrEmpty()){
 
-            if(billStatus[position].responseCode.equals(ApiConstant.API_SUCCESS)){
+
+            if(billStatus.responseCode.equals(ApiConstant.API_SUCCESS)){
                 holder.titleBillStatus.text = LanguageData.getStringValue("Successful")
                 holder.imgBillStatus.setImageResource(R.drawable.ic_payment_successfull)
                 holder.titleBillStatus.setTextColor(R.color.colorSuccess)
 
-            }else if(billStatus[position].responseCode.equals(ApiConstant.API_FAILURE)){
+            }else if(billStatus.responseCode.equals(ApiConstant.API_FAILURE)){
                 holder.titleBillStatus.text = LanguageData.getStringValue("Failed")
                 holder.imgBillStatus.setImageResource(R.drawable.ic_payment_failed)
                 holder.titleBillStatus.setTextColor(R.color.colorFail)
 
-            }else if(billStatus[position].responseCode.equals(ApiConstant.API_PENDING)){
+            }else if(billStatus.responseCode.equals(ApiConstant.API_PENDING)){
                 holder.titleBillStatus.text = LanguageData.getStringValue("Pending")
                 holder.imgBillStatus.setImageResource(R.drawable.ic_payment_pending)
                 holder.titleBillStatus.setTextColor(R.color.colorPending)
             }
 
-        }
 
     }
 

@@ -72,6 +72,8 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     var selectedFatoraitIvoicesList = ObservableField<ArrayList<FatoratiCustomParamModel>>()
     var billPaymentPostFatoratiResponseObserver = ObservableField<ArrayList<BillPaymentFatoratiResponse>>()
 
+    var fatoratiFee = "0.00"
+
 
     //Post PIad Bill Payment API Listner
     var getPostPaidResourceInfoResponseListner = SingleLiveEvent<PostPaidFinancialResourceInfoResponse>()
@@ -636,12 +638,10 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
             isLoading.set(true)
 
-
-
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiQuote(
-                BillPaymentFatoratiQuoteRequest(amount,fatoratiTypeSelected.get()!!.codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
+                BillPaymentFatoratiQuoteRequest(Constants.converValueToTwoDecimalPlace(amount.toDouble()),fatoratiTypeSelected.get()!!.codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
                     "true",Constants.getFatoratiAlias(transferdAmountTo),
-                    Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_BILL_PAYMENT,refTxFatourati,totalAmount,paramsForFatoratiPayment
+                    Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_BILL_PAYMENT,refTxFatourati,Constants.converValueToTwoDecimalPlace(amount.toDouble()),paramsForFatoratiPayment
                 )
             )
                 .compose(applyIOSchedulers())
@@ -710,10 +710,10 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
             isLoading.set(true)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatorati(
-                BillPaymentFatoratiRequest(amount,fatoratiTypeSelected.get()!!.codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
+                BillPaymentFatoratiRequest(Constants.converValueToTwoDecimalPlace(amount.toDouble()),fatoratiTypeSelected.get()!!.codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
                     "true", quoteId,Constants.getFatoratiAlias(transferdAmountTo),
                     Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_BILL_PAYMENT,isMultipleBillSelected,fatoratiStepFourObserver.get()?.refTxFatourati.toString(),
-                    fatoratiStepFourObserver.get()?.totalAmount.toString(),paramsForFatoratiPayment
+                    /*fatoratiStepFourObserver.get()?.totalAmount.toString()*/Constants.converValueToTwoDecimalPlace(amount.toDouble()),paramsForFatoratiPayment
                 )
             )
                 .compose(applyIOSchedulers())

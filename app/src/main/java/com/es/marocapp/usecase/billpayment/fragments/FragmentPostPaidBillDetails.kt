@@ -152,6 +152,7 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                     if(it.quoteList.isNotEmpty()){
                         mActivityViewModel.selectedIvoicesQuoteList.set(arrayListOf(it.quoteList[0].quoteid))
+                        mActivityViewModel.fatoratiFee = it.quoteList[0].fee.amount.toString()
                     }
                     (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidBillDetails_to_fragmentBillPaymentPostPaidConfirmation)
                 }else{

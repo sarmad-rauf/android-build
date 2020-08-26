@@ -20,7 +20,8 @@ import com.es.marocapp.usecase.billpayment.BillPaymentViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 
-class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPaymentConfimationBinding>(),
+class FragmentBillPaymentPostPaidConfirmation :
+    BaseFragment<FragmentBillPaymentConfimationBinding>(),
     BillPaymentClickListner {
 
     private lateinit var mActivityViewModel: BillPaymentViewModel
@@ -34,7 +35,8 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        mActivityViewModel = ViewModelProvider(activity as BillPaymentActivity).get(BillPaymentViewModel::class.java)
+        mActivityViewModel =
+            ViewModelProvider(activity as BillPaymentActivity).get(BillPaymentViewModel::class.java)
         mDataBinding.apply {
             listner = this@FragmentBillPaymentPostPaidConfirmation
             viewmodel = mActivityViewModel
@@ -63,76 +65,79 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
     }
 
     private fun subscribeObserver() {
-        mActivityViewModel.errorText.observe(this@FragmentBillPaymentPostPaidConfirmation, Observer {
-            DialogUtils.showErrorDialoge(activity,it)
-        })
+        mActivityViewModel.errorText.observe(
+            this@FragmentBillPaymentPostPaidConfirmation,
+            Observer {
+                DialogUtils.showErrorDialoge(activity, it)
+            })
 
         mActivityViewModel.getPostPaidBillPaymentResponseListner.observe(this@FragmentBillPaymentPostPaidConfirmation,
             Observer {
-                if(!it.isNullOrEmpty()){
+                if (!it.isNullOrEmpty()) {
                     Constants.HEADERS_FOR_PAYEMNTS = false
                     var isWrongPasswordEntered = false
-                    var listOfResponse : ArrayList<String> = arrayListOf()
-                    for(i in it.indices){
-                        if(it[i].responseCode.equals(ApiConstant.API_WRONG_PASSWORD)){
+                    var listOfResponse: ArrayList<String> = arrayListOf()
+                    for (i in it.indices) {
+                        if (it[i].responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
                             isWrongPasswordEntered = true
-                        }else{
+                        } else {
                             listOfResponse.add(it[i].responseCode)
                         }
                     }
 
                     mActivityViewModel.selectedIvoicesBillPaymentStatus.set(listOfResponse)
 
-                    if(isWrongPasswordEntered){
-                        DialogUtils.showErrorDialoge(activity,it[0].description)
-                    }else{
+                    if (isWrongPasswordEntered) {
+                        DialogUtils.showErrorDialoge(activity, it[0].description)
+                    } else {
                         (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentPostPaidConfirmation_to_fragmentPostPaidBillPaymentSuccess)
                     }
-                }else{
+                } else {
                     Constants.HEADERS_FOR_PAYEMNTS = false
-                    DialogUtils.showErrorDialoge(activity,LanguageData.getStringValue("SomethingWentWrong"))
+                    DialogUtils.showErrorDialoge(
+                        activity,
+                        LanguageData.getStringValue("SomethingWentWrong")
+                    )
                 }
             }
         )
 
         mActivityViewModel.getPostPaidFatoratiResponseListner.observe(this@FragmentBillPaymentPostPaidConfirmation,
             Observer {
-               /* if(!it.isNullOrEmpty()){
-                    Constants.HEADERS_FOR_PAYEMNTS = false
-                    var isWrongPasswordEntered = false
-                    var listOfResponse : ArrayList<String> = arrayListOf()
-                    for(i in it.indices){
-                        if(it[i].responseCode.equals(ApiConstant.API_WRONG_PASSWORD)){
-                            isWrongPasswordEntered = true
-                        }else{
-                            listOfResponse.add(it[i].responseCode)
-                        }
-                    }
+                /* if(!it.isNullOrEmpty()){
+                     Constants.HEADERS_FOR_PAYEMNTS = false
+                     var isWrongPasswordEntered = false
+                     var listOfResponse : ArrayList<String> = arrayListOf()
+                     for(i in it.indices){
+                         if(it[i].responseCode.equals(ApiConstant.API_WRONG_PASSWORD)){
+                             isWrongPasswordEntered = true
+                         }else{
+                             listOfResponse.add(it[i].responseCode)
+                         }
+                     }
 
-                    mActivityViewModel.selectedIvoicesBillPaymentStatus.set(listOfResponse)
+                     mActivityViewModel.selectedIvoicesBillPaymentStatus.set(listOfResponse)
 
-                    if(isWrongPasswordEntered){
-                        DialogUtils.showErrorDialoge(activity,it[0].description)
-                    }else{
-                    }
+                     if(isWrongPasswordEntered){
+                         DialogUtils.showErrorDialoge(activity,it[0].description)
+                     }else{
+                     }
 
-                }else{
-                    Constants.HEADERS_FOR_PAYEMNTS = false
-                    DialogUtils.showErrorDialoge(activity,LanguageData.getStringValue("SomethingWentWrong"))
-                }*/
+                 }else{
+                     Constants.HEADERS_FOR_PAYEMNTS = false
+                     DialogUtils.showErrorDialoge(activity,LanguageData.getStringValue("SomethingWentWrong"))
+                 }*/
 
-                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                if (it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
+                    DialogUtils.showErrorDialoge(activity, it.description)
+                } else {
                     (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentPostPaidConfirmation_to_fragmentPostPaidBillPaymentSuccess)
-                }else if(it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)){
-                    DialogUtils.showErrorDialoge(activity,it.description)
-                }else{
-                    DialogUtils.showErrorDialoge(activity,it.description)
                 }
             }
         )
     }
 
-    private fun subcribeForPostPaidSequenceCall(){
+    private fun subcribeForPostPaidSequenceCall() {
         mActivityViewModel.triggerPostPaidNextCall.observe(this@FragmentBillPaymentPostPaidConfirmation,
             Observer {
                 callPostPaidBillsInSequence(mActivityViewModel.postPaidCounter)
@@ -140,7 +145,7 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
         )
     }
 
-    private fun subcribeForFatoratiSequenceCall(){
+    private fun subcribeForFatoratiSequenceCall() {
         mActivityViewModel.triggerFatoratiNextCall.observe(this@FragmentBillPaymentPostPaidConfirmation,
             Observer {
                 callFatoratiBillsInSequence(mActivityViewModel.fatoratiCounter)
@@ -156,49 +161,53 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
 //
 //        tvAmountVal == AmountTotal
 
-        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname +" "+ Constants.balanceInfoAndResponse.surname
+        mDataBinding.tvSenderNameVal.text =
+            Constants.balanceInfoAndResponse.firstname + " " + Constants.balanceInfoAndResponse.surname
         mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
 
-        if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+        if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
             mDataBinding.tvOwnerNameVal.visibility = View.GONE
             mDataBinding.tvOwnerNameTitle.visibility = View.GONE
             mDataBinding.divider2.visibility = View.GONE
         }
 
-        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+        if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
             mDataBinding.tvOwnerNameVal.visibility = View.GONE
             mDataBinding.tvOwnerNameTitle.visibility = View.GONE
             mDataBinding.divider2.visibility = View.GONE
         }
 
-        mDataBinding.tvCompanyNameVal.text = mActivityViewModel.transferdAmountTo.substringBefore("@")
+        mDataBinding.tvCompanyNameVal.text =
+            mActivityViewModel.transferdAmountTo.substringBefore("@")
 //        var ReceiverName = Constants.balanceInfoAndResponse.firstname +" " +Constants.balanceInfoAndResponse.surname
         mActivityViewModel.ReceiverName = mActivityViewModel.custname
         mDataBinding.tvOwnerNameVal.text = mActivityViewModel.ReceiverName
 
         var totalFee = "0.00"
-        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
-            for(i in mActivityViewModel.listOfPostPaidBillPaymentQuote.indices){
+        if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
+            for (i in mActivityViewModel.listOfPostPaidBillPaymentQuote.indices) {
                 var item = mActivityViewModel.listOfPostPaidBillPaymentQuote[i]
-                if(item.quoteList!=null && item.quoteList.isNotEmpty()){
+                if (item.quoteList != null && item.quoteList.isNotEmpty()) {
                     mActivityViewModel.listOfSelectedBillFee.add(item.quoteList[0].fee.amount.toString())
-                    totalFee = (totalFee.toDouble()+item.quoteList[0].fee.amount).toString()
+                    totalFee = (totalFee.toDouble() + item.quoteList[0].fee.amount).toString()
                 }
             }
         }
-        if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
-            for(i in mActivityViewModel.listOfFatoratiQuote.indices){
+        if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+            /*for(i in mActivityViewModel.listOfFatoratiQuote.indices){
                 var item = mActivityViewModel.listOfFatoratiQuote[i]
                 if(item.quoteList!=null && item.quoteList.isNotEmpty()){
                     mActivityViewModel.listOfSelectedBillFee.add(item.quoteList[0].fee.amount.toString())
                     totalFee = (totalFee.toDouble()+item.quoteList[0].fee.amount).toString()
                 }
-            }
+            }*/
+            totalFee = mActivityViewModel.fatoratiFee
         }
 
         mActivityViewModel.feeAmount = Constants.converValueToTwoDecimalPlace(totalFee.toDouble())
 
-        var totalAmount = Constants.converValueToTwoDecimalPlace(mActivityViewModel.totalSelectedBillAmount.toDouble())
+        var totalAmount =
+            Constants.converValueToTwoDecimalPlace(mActivityViewModel.totalSelectedBillAmount.toDouble())
         mDataBinding.tvReceiptCodeVal.text =
             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + totalAmount
         mDataBinding.tvDHVal.text =
@@ -240,21 +249,22 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
     }
 
     override fun onSubmitClickListner(view: View) {
-        DialogUtils.showPasswordDialoge(activity,object : DialogUtils.OnPasswordDialogClickListner{
-            override fun onDialogYesClickListner(password: String) {
-                Constants.HEADERS_FOR_PAYEMNTS = true
-                Constants.CURRENT_USER_CREDENTIAL = password
+        DialogUtils.showPasswordDialoge(activity,
+            object : DialogUtils.OnPasswordDialogClickListner {
+                override fun onDialogYesClickListner(password: String) {
+                    Constants.HEADERS_FOR_PAYEMNTS = true
+                    Constants.CURRENT_USER_CREDENTIAL = password
 
-                if(mActivityViewModel.isBillUseCaseSelected.get()!!){
-                    payPostPaidBills()
+                    if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
+                        payPostPaidBills()
+                    }
+
+                    if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+                        payFatoratiBills()
+                    }
                 }
 
-                if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
-                    payFatoratiBills()
-                }
-            }
-
-        })
+            })
     }
 
     private fun payFatoratiBills() {
@@ -262,8 +272,8 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
 
 
         mActivityViewModel.totalBillSelected = selectedFatoratiListOfInvoice.size
-        if(selectedFatoratiListOfInvoice!=null && mActivityViewModel.selectedIvoicesQuoteHash!=null) {
-           callFatoratiBillsInSequence(mActivityViewModel.fatoratiCounter)
+        if (selectedFatoratiListOfInvoice != null && mActivityViewModel.selectedIvoicesQuoteHash != null) {
+            callFatoratiBillsInSequence(mActivityViewModel.fatoratiCounter)
         }
     }
 
@@ -304,67 +314,76 @@ class FragmentBillPaymentPostPaidConfirmation : BaseFragment<FragmentBillPayment
             }
         mActivityViewModel.fatoratiCounter=mActivityViewModel.fatoratiCounter+1*/
 
-        var listOfFatoratiParams : ArrayList<com.es.marocapp.model.requests.Param> = arrayListOf()
+        var listOfFatoratiParams: ArrayList<com.es.marocapp.model.requests.Param> = arrayListOf()
         var totalSelectedBillAmount = "0.00"
-        for(i in selectedFatoratiListOfInvoice.indices){
+        for (i in selectedFatoratiListOfInvoice.indices) {
 
-            var convertedBillAmount  = selectedFatoratiListOfInvoice[i].prixTTC
-            mActivityViewModel.listOfSelectedBillAmount.add(convertedBillAmount)
-            totalSelectedBillAmount = ((totalSelectedBillAmount.toDouble()+convertedBillAmount.toDouble())).toString()
-            Log.i("TotalBillAmount",mActivityViewModel.totalSelectedBillAmount)
+            var convertedBillAmount = selectedFatoratiListOfInvoice[i].prixTTC
+//            mActivityViewModel.listOfSelectedBillAmount.add(convertedBillAmount)
+            totalSelectedBillAmount =
+                ((totalSelectedBillAmount.toDouble() + convertedBillAmount.toDouble())).toString()
+            Log.i("TotalBillAmount", mActivityViewModel.totalSelectedBillAmount)
 
             listOfFatoratiParams.add(
-                Param(selectedFatoratiListOfInvoice[i].idArticle,
+                Param(
+                    selectedFatoratiListOfInvoice[i].idArticle,
                     selectedFatoratiListOfInvoice[i].prixTTC,
-                    selectedFatoratiListOfInvoice[i].typeArticle)
+                    selectedFatoratiListOfInvoice[i].typeArticle
+                )
             )
         }
         var quoteId = ""
-        if(mActivityViewModel.selectedIvoicesQuoteList.get()?.isNotEmpty()!!){
+        if (mActivityViewModel.selectedIvoicesQuoteList.get()?.isNotEmpty()!!) {
             quoteId = mActivityViewModel.selectedIvoicesQuoteList.get()!![0]
         }
-        mActivityViewModel.requestForFatoratiApi(activity,mActivityViewModel.totalSelectedBillAmount,quoteId,mActivityViewModel.isMultipleBillSelected,listOfFatoratiParams)
+        mActivityViewModel.requestForFatoratiApi(
+            activity,
+            mActivityViewModel.totalSelectedBillAmount,
+            quoteId,
+            mActivityViewModel.isMultipleBillSelected,
+            listOfFatoratiParams
+        )
     }
 
     private fun payPostPaidBills() {
         selectedListOfInvoice.addAll(mActivityViewModel.selectedIvoicesList.get()!!)
         mActivityViewModel.totalBillSelected = selectedListOfInvoice.size
-        if(selectedListOfInvoice!=null && mActivityViewModel.selectedIvoicesQuoteHash!=null) {
-           callPostPaidBillsInSequence(mActivityViewModel.postPaidCounter)
+        if (selectedListOfInvoice != null && mActivityViewModel.selectedIvoicesQuoteHash != null) {
+            callPostPaidBillsInSequence(mActivityViewModel.postPaidCounter)
         }
     }
 
     private fun callPostPaidBillsInSequence(postPaidCounter: Int) {
         var i = postPaidCounter
-            var quoteId: String?
-            quoteId =
-                mActivityViewModel.selectedIvoicesQuoteHash[selectedListOfInvoice[i].ohrefnum]
-            //Ohrefnum(16) + month (8) + OpenAmount (15) + OHXACT (38)
-            var selectBillInvoice =
-                selectedListOfInvoice[i].ohrefnum + selectedListOfInvoice[i].month + selectedListOfInvoice[i].openAmount + selectedListOfInvoice[i].ohxact
-            mActivityViewModel.selectBillAmount = selectedListOfInvoice[i].openAmount
-            if (!mActivityViewModel.selectedIvoicesQuoteList.get().isNullOrEmpty()) {
-                if (!mActivityViewModel.selectedIvoicesQuoteList.get()!![i].equals("-1")) {
-                    mActivityViewModel.requestForPostPaidBillPaymentApi(
-                        activity,
-                        selectedListOfInvoice[i].month,
-                        selectedListOfInvoice[i].ohrefnum,
-                        selectedListOfInvoice[i].ohxact,
-                        selectedListOfInvoice[i].openAmount,
-                        quoteId!!,
-                        mActivityViewModel.isMultipleBillSelected
+        var quoteId: String?
+        quoteId =
+            mActivityViewModel.selectedIvoicesQuoteHash[selectedListOfInvoice[i].ohrefnum]
+        //Ohrefnum(16) + month (8) + OpenAmount (15) + OHXACT (38)
+        var selectBillInvoice =
+            selectedListOfInvoice[i].ohrefnum + selectedListOfInvoice[i].month + selectedListOfInvoice[i].openAmount + selectedListOfInvoice[i].ohxact
+        mActivityViewModel.selectBillAmount = selectedListOfInvoice[i].openAmount
+        if (!mActivityViewModel.selectedIvoicesQuoteList.get().isNullOrEmpty()) {
+            if (!mActivityViewModel.selectedIvoicesQuoteList.get()!![i].equals("-1")) {
+                mActivityViewModel.requestForPostPaidBillPaymentApi(
+                    activity,
+                    selectedListOfInvoice[i].month,
+                    selectedListOfInvoice[i].ohrefnum,
+                    selectedListOfInvoice[i].ohxact,
+                    selectedListOfInvoice[i].openAmount,
+                    quoteId!!,
+                    mActivityViewModel.isMultipleBillSelected
+                )
+            } else {
+                mActivityViewModel.listOfPostPaidBillPayment.add(
+                    PostPaidBillPaymentResponse(
+                        arrayListOf(), "", "Failed", "", "", "", "",
+                        "1500", "", "", "", ""
                     )
-                } else {
-                    mActivityViewModel.listOfPostPaidBillPayment.add(
-                        PostPaidBillPaymentResponse(
-                            arrayListOf(), "", "Failed", "", "", "", "",
-                            "1500", "", "", "", ""
-                        )
-                    )
-                }
+                )
             }
+        }
 
-        mActivityViewModel.postPaidCounter=mActivityViewModel.postPaidCounter+1
+        mActivityViewModel.postPaidCounter = mActivityViewModel.postPaidCounter + 1
 
     }
 

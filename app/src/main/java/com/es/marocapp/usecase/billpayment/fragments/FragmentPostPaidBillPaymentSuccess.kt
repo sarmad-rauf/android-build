@@ -6,7 +6,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
-import com.es.marocapp.adapter.BillDetailItemAdapter
 import com.es.marocapp.adapter.FatoratiPaidBillAdapter
 import com.es.marocapp.adapter.PaidBillStatusAdpater
 import com.es.marocapp.databinding.FragmentBillPaymentSuccessBinding
@@ -14,7 +13,6 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
-import com.es.marocapp.usecase.airtime.AirTimeActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentClickListner
 import com.es.marocapp.usecase.billpayment.BillPaymentViewModel
@@ -95,9 +93,10 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
     }
 
     private fun populateFatoratiBillList() {
-        var receiverNumber = mActivityViewModel.transferdAmountTo.substringBefore("@")
-        receiverNumber = receiverNumber.substringBefore("/")
-        mFatoratiBillPaidAdapter = FatoratiPaidBillAdapter(mActivityViewModel.listOfFatorati,mActivityViewModel.listOfSelectedBillAmount,mActivityViewModel.listOfSelectedBillFee,
+        var receiverNumber = Constants.getFatoratiAlias(mActivityViewModel.transferdAmountTo)/*.substringBefore("@")
+        receiverNumber = receiverNumber.substringBefore("/")*/
+        mFatoratiBillPaidAdapter = FatoratiPaidBillAdapter(
+            mActivityViewModel.getPostPaidFatoratiResponseListner.value!!,mActivityViewModel.listOfSelectedBillAmount,mActivityViewModel.fatoratiFee,
             receiverNumber)
 
         mDataBinding.mPaidBillsRecycler.apply {
