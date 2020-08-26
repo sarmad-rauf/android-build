@@ -130,10 +130,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         })
 
-        var userName = Constants.balanceInfoAndResponse.firstname + " " + Constants.balanceInfoAndResponse.surname
-        Constants.CURRENT_USER_NAME = userName
-        PrefUtils.addString(this@MainActivity, PrefUtils.PreKeywords.PREF_KEY_USER_NAME,Constants.CURRENT_USER_NAME)
-
 
         subscribeForUpdateLanguage()
         subscribeObserver()

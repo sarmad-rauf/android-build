@@ -7,6 +7,7 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.CompoundButton
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.BuildConfig
@@ -28,6 +29,7 @@ import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.PrefUtils
 import com.es.marocapp.utils.PrefUtils.PreKeywords.PREF_KEY_USER_MSISDN
+import kotlinx.android.synthetic.main.fragment_login_number_password.*
 import kotlinx.android.synthetic.main.layout_logged_in_user_header.view.*
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 import kotlinx.android.synthetic.main.layout_login_header.view.txtHeaderTitle
@@ -39,6 +41,7 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
 
     lateinit var mActivityViewModel: LoginActivityViewModel
     var isPasswordVisible = false
+    var isRememberMeEnabled=false
 
     override fun setLayout(): Int {
         return R.layout.fragment_login_number_password
@@ -82,6 +85,8 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
         if(mActivityViewModel.isUserToShowProfile){
             mDataBinding.loginHeader.rootView.currentLoggedInUserGroup.visibility = View.VISIBLE
             mDataBinding.loginHeader.rootView.LoggedInHeaderTitle.visibility = View.GONE
+            mDataBinding.rememberMeToggle.visibility=View.GONE
+            mDataBinding.rememberMeTv.visibility=View.GONE
 
             if(Constants.CURRENT_USER_NAME.isNullOrEmpty()){
                 mDataBinding.loginHeader.rootView.currentLoggedInUser.text = ""
@@ -95,6 +100,8 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
             mDataBinding.loginHeader.rootView.LoggedInHeaderTitle.visibility = View.VISIBLE
 
             mDataBinding.phoneNumberFiedlGroup.visibility = View.VISIBLE
+            mDataBinding.rememberMeToggle.visibility=View.VISIBLE
+            mDataBinding.rememberMeTv.visibility=View.VISIBLE
 
         }
 
@@ -105,6 +112,15 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
         mDataBinding.userAnotherAccountIcon.setOnClickListener {
             (activity as LoginActivity).navController.navigateUp()
         }
+
+        mDataBinding.rememberMeToggle.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked) {
+                isRememberMeEnabled=isChecked
+            }
+            else{
+                isRememberMeEnabled=isChecked
+            }
+        })
 
         mActivityViewModel.isSimplePopUp = false
         subscribeObserver()
@@ -119,6 +135,7 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
         mDataBinding.inputLayoutPin.hint = LanguageData.getStringValue("Password")
         mDataBinding.txtForgotPin.paintFlags = mDataBinding.txtForgotPin.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         mDataBinding.txtForgotPin.text = LanguageData.getStringValue("ForgotPasswordQuestion")
+        mDataBinding.rememberMeTv.text = LanguageData.getStringValue("RememberMe")
 
         mDataBinding.btnLoginIN.text = LanguageData.getStringValue("BtnTitle_Login")
     }
@@ -138,7 +155,15 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                             Constants.getAccountsResponse = it.accounts[i]
                         }*/
                     }
-                    PrefUtils.addString(activity!!,PREF_KEY_USER_MSISDN,Constants.CURRENT_USER_MSISDN)
+                    if(isRememberMeEnabled){
+                        PrefUtils.addString(activity!!,PREF_KEY_USER_MSISDN,Constants.CURRENT_USER_MSISDN)
+                        PrefUtils.addString(
+                            activity!!,
+                            PrefUtils.PreKeywords.PREF_KEY_USER_NAME,
+                            Constants.CURRENT_USER_NAME
+                        )
+                    }
+
                     (activity as LoginActivity).startNewActivityAndClear(
                         activity as LoginActivity,
                         MainActivity::class.java
@@ -151,12 +176,26 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
 
         val mBalanceInfoAndLimtListner = Observer<BalanceInfoAndLimitResponse> {
             if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                var userName = it?.firstname + " " + it?.surname
+                Constants.CURRENT_USER_NAME = userName
+
                 if(Constants.IS_AGENT_USER){
                     Constants.balanceInfoAndResponse = it
                     mActivityViewModel.requestForGetAccountsAPI(activity)
                 }else{
                     Constants.balanceInfoAndResponse = it
-                    PrefUtils.addString(activity!!,PREF_KEY_USER_MSISDN,Constants.CURRENT_USER_MSISDN)
+                    if(isRememberMeEnabled) {
+                        PrefUtils.addString(
+                            activity!!,
+                            PREF_KEY_USER_MSISDN,
+                            Constants.CURRENT_USER_MSISDN
+                        )
+                        PrefUtils.addString(
+                            activity!!,
+                            PrefUtils.PreKeywords.PREF_KEY_USER_NAME,
+                            Constants.CURRENT_USER_NAME
+                        )
+                    }
                     (activity as LoginActivity).startNewActivityAndClear(
                         activity as LoginActivity,
                         MainActivity::class.java
