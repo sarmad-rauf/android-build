@@ -24,7 +24,8 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
     }
 
     override fun onBindViewHolder(holder: BillPaymentItemViewHolder, position: Int) {
-        holder.billDueDateTitle.text = LanguageData.getStringValue("Description")
+//        holder.billDueDateTitle.text = LanguageData.getStringValue("Description")
+        holder.billDueDateTitle.text = LanguageData.getStringValue("ReferenceNumber")//-------------------------> Changed From Description TO Reference Number
         holder.billingMonthTitle.text = LanguageData.getStringValue("Amount")
         holder.billStatusTitle.text = LanguageData.getStringValue("Status")
 //        holder.billingAmountTitle.text = LanguageData.getStringValue("Amount")
@@ -39,7 +40,8 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
 
 
         holder.billingMonthVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + bills[position].prixTTC
-        holder.billDueDateVal.text = bills[position].description
+//        holder.billDueDateVal.text = bills[position].description
+        holder.billDueDateVal.text = bills[position].idArticle //-------------------------> Changed From Address TO bill Number
 
         holder.isBillSelected.setOnClickListener{
             if ((it as CompoundButton).isChecked) {

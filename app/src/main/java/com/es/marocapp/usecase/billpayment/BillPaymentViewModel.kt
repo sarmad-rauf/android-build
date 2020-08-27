@@ -641,7 +641,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiQuote(
                 BillPaymentFatoratiQuoteRequest(Constants.converValueToTwoDecimalPlace(amount.toDouble()),fatoratiTypeSelected.get()!!.codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
                     "true",Constants.getFatoratiAlias(transferdAmountTo),
-                    Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_BILL_PAYMENT,refTxFatourati,Constants.converValueToTwoDecimalPlace(amount.toDouble()),paramsForFatoratiPayment
+                    Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_BILL_PAYMENT,refTxFatourati,totalAmount,paramsForFatoratiPayment
                 )
             )
                 .compose(applyIOSchedulers())
@@ -713,7 +713,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                 BillPaymentFatoratiRequest(Constants.converValueToTwoDecimalPlace(amount.toDouble()),fatoratiTypeSelected.get()!!.codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
                     "true", quoteId,Constants.getFatoratiAlias(transferdAmountTo),
                     Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_BILL_PAYMENT,isMultipleBillSelected,fatoratiStepFourObserver.get()?.refTxFatourati.toString(),
-                    /*fatoratiStepFourObserver.get()?.totalAmount.toString()*/Constants.converValueToTwoDecimalPlace(amount.toDouble()),paramsForFatoratiPayment
+                    fatoratiStepFourObserver.get()?.totalAmount.toString(),paramsForFatoratiPayment
                 )
             )
                 .compose(applyIOSchedulers())

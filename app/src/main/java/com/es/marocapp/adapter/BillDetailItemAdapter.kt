@@ -28,7 +28,7 @@ class BillDetailItemAdapter(private val bills : ArrayList<InvoiceCustomModel>) :
 
     override fun onBindViewHolder(holder: BillPaymentItemViewHolder, position: Int) {
         holder.billDueDateTitle.text = LanguageData.getStringValue("DueDate")
-        holder.billingMonthTitle.text = LanguageData.getStringValue("BillingMonth")
+        holder.billingMonthTitle.text = LanguageData.getStringValue("ReferenceNumber") //-------------------------> Changed From BillingMonth TO Reference Number
         holder.billStatusTitle.text = LanguageData.getStringValue("Status")
         holder.billingAmountTitle.text = LanguageData.getStringValue("Amount")
         holder.billStatusVal.text = LanguageData.getStringValue("Unpaid")
@@ -36,7 +36,8 @@ class BillDetailItemAdapter(private val bills : ArrayList<InvoiceCustomModel>) :
         holder.isBillSelected.isChecked = bills[position].isBillSelected
         var date = Constants.parseDateFromString(bills[position].month)
         holder.billDueDateVal.text = date
-        holder.billingMonthVal.text = Constants.getMonthFromParsedDate(date)
+//        holder.billingMonthVal.text = Constants.getMonthFromParsedDate(date)
+        holder.billingMonthVal.text = bills[position].ohrefnum //-------------------------> Changed From Month TO bill Number
 
         holder.billingAmountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+ Constants.converValueToTwoDecimalPlace(
            (bills[position].openAmount.toDouble()/Constants.AMOUNT_CONVERSION_VALUE.toDouble()))
