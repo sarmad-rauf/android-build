@@ -93,8 +93,8 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
     }
 
     private fun populateFatoratiBillList() {
-        var receiverNumber = Constants.getFatoratiAlias(mActivityViewModel.transferdAmountTo)/*.substringBefore("@")
-        receiverNumber = receiverNumber.substringBefore("/")*/
+        var receiverNumber = mActivityViewModel.transferdAmountTo.substringBefore("@")
+        receiverNumber = receiverNumber.substringBefore("/")
         mFatoratiBillPaidAdapter = FatoratiPaidBillAdapter(
             mActivityViewModel.getPostPaidFatoratiResponseListner.value!!,mActivityViewModel.listOfSelectedBillAmount,mActivityViewModel.fatoratiFee,
             receiverNumber)
