@@ -50,10 +50,27 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
                     tranferAmountToWithoutAlias = tranferAmountToWithoutAlias.substringBefore("/")
 
                     if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
-                        var fatoratiNickName = "BillPayment_Fatourati_${mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier}@$nickName"
+
+                        /*Storing Fatorai bill Fav as
+                        BillPayment_Fatourati_Redal@MyNickName,codeCreance,creancierID,nomChamp,refTxFatourati
+*/
+                        var fatoratiNickName = "BillPayment_Fatourati_${mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier}@$nickName" +
+                                ",${mActivityViewModel.fatoratiTypeSelected.get()!!.codeCreance}," +
+                                mActivityViewModel.fatoratiTypeSelected.get()!!.codeCreancier+","+mActivityViewModel.fatoratiStepTwoObserver.get()!!.param.nomChamp+","+
+                                mActivityViewModel.fatoratiStepTwoObserver.get()!!.refTxFatourati
+
                         mActivityViewModel.requestForAddFavoritesApi(activity,fatoratiNickName,Constants.getFatoratiAlias(mActivityViewModel.transferdAmountTo))
-                    }else{
-                        mActivityViewModel.requestForAddFavoritesApi(activity,nickName,tranferAmountToWithoutAlias)
+                    }else if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+
+                        var billPaymentNickName = ""
+
+                        if(mActivityViewModel.isInternetSelected.get()!!){
+                            var billPaymentNickName = "BillPayment_TelecomBill_${mActivityViewModel.billTypeSelected.get()!!}@$nickName"
+
+                        }else{
+                            var billPaymentNickName = "BillPayment_TelecomBill_${mActivityViewModel.billTypeSelected.get()!!}@$nickName,${mActivityViewModel.mCodeEntered}"
+                        }
+                        mActivityViewModel.requestForAddFavoritesApi(activity,billPaymentNickName,tranferAmountToWithoutAlias)
                     }
                 }
 
