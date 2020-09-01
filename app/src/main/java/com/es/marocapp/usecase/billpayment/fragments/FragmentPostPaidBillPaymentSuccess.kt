@@ -65,10 +65,12 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
                         var billPaymentNickName = ""
 
                         if(mActivityViewModel.isInternetSelected.get()!!){
-                            var billPaymentNickName = "BillPayment_TelecomBill_${mActivityViewModel.billTypeSelected.get()!!}@$nickName"
+                            billPaymentNickName = "BillPayment_TelecomBill_Internet@$nickName"
 
-                        }else{
-                            var billPaymentNickName = "BillPayment_TelecomBill_${mActivityViewModel.billTypeSelected.get()!!}@$nickName,${mActivityViewModel.mCodeEntered}"
+                        }else if(mActivityViewModel.isPostPaidMobileSelected.get()!!){
+                            billPaymentNickName = "BillPayment_TelecomBill_PostpaidMobile@$nickName,${mActivityViewModel.mCodeEntered}"
+                        }else if(mActivityViewModel.isPostPaidFixSelected.get()!!){
+                            billPaymentNickName = "BillPayment_TelecomBill_PostpaidFix@$nickName,${mActivityViewModel.mCodeEntered}"
                         }
                         mActivityViewModel.requestForAddFavoritesApi(activity,billPaymentNickName,tranferAmountToWithoutAlias)
                     }

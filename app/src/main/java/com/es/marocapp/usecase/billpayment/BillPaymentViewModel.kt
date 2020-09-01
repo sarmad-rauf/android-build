@@ -13,6 +13,7 @@ import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
 import com.es.marocapp.usecase.BaseActivity
+import com.es.marocapp.usecase.favorites.FavoritesActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.SingleLiveEvent
@@ -50,6 +51,8 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     var isBillUseCaseSelected = ObservableField<Boolean>()
     var isFatoratiUseCaseSelected = ObservableField<Boolean>()
 
+    var isQuickRechargeCallForBillOrFatouratie = ObservableField<Boolean>()
+
     //Post PIad Bill Payment Observer
     var isPostPaidMobileSelected = ObservableField<Boolean>()
     var isPostPaidFixSelected = ObservableField<Boolean>()
@@ -71,6 +74,8 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
     var selectedFatoraitIvoicesList = ObservableField<ArrayList<FatoratiCustomParamModel>>()
     var billPaymentPostFatoratiResponseObserver = ObservableField<ArrayList<BillPaymentFatoratiResponse>>()
+
+    var getDeleteFavoritesResponseListner = SingleLiveEvent<DeleteContactResponse>()
 
     var fatoratiFee = "0.00"
 
@@ -747,6 +752,66 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                             billPaymentPostFatoratiResponseObserver.set(listOfFatorati)
                             getPostPaidFatoratiResponseListner.postValue(listOfFatorati)
                         }*/
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For DeleteFavorite
+    fun requestForDeleteFavoriteApi(context: Context?,
+                                    contactIdentity : String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getDeleteContact(
+                DeleteContactRequest(contactIdentity,ApiConstant.CONTEXT_AFTER_LOGIN)
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getDeleteFavoritesResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getDeleteFavoritesResponseListner.postValue(result)
+                                }
+                            }
+
+                        } else {
+                            getDeleteFavoritesResponseListner.postValue(result)
+                        }
 
 
                     },
