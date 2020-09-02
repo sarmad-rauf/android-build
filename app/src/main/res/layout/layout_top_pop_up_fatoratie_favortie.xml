@@ -4,7 +4,9 @@
     android:orientation="vertical"
     android:background="@color/colorWhite"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:id="@+id/billPaymentFavContainer"
+    >
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
@@ -23,12 +25,49 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/dummyImageView"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                app:layout_constraintTop_toBottomOf="@+id/img_delete_favorite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+
+            <ImageView
                 android:id="@+id/fav_main_image"
                 android:layout_width="@dimen/_32sdp"
                 android:layout_height="@dimen/_32sdp"
                 android:src="@drawable/iam"
-                android:layout_margin="@dimen/_16sdp"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                app:layout_constraintTop_toBottomOf="@+id/img_delete_favorite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <com.es.marocapp.widgets.MarocMediumTextView
+                android:id="@+id/fav_telecom_bill_img"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:text="B"
+                android:textColor="@color/colorWhite"
+                android:gravity="center"
+                android:visibility="gone"
+                android:background="@drawable/blue_circle"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                app:layout_constraintTop_toBottomOf="@+id/img_delete_favorite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -47,14 +86,14 @@
                 android:layout_marginBottom="@dimen/_8sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fav_main_image"
+                app:layout_constraintTop_toBottomOf="@+id/dummyImageView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
 
             <ImageView
                 android:id="@+id/img_delete_favorite"
-                android:layout_width="@dimen/_15sdp"
-                android:layout_height="@dimen/_15sdp"
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_10sdp"
                 android:src="@drawable/cross_blue_icons"
                 android:layout_margin="@dimen/_8sdp"
                 app:layout_constraintTop_toTopOf="parent"

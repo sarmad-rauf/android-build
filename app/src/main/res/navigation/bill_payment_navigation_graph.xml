@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_fragmentPostPaidPaymentTypes_to_fragmentPostPaidServiceProvider"
             app:destination="@id/fragmentPostPaidServiceProvider" />
+        <action
+            android:id="@+id/action_fragmentPostPaidPaymentTypes_to_fragmentPostPaidBillDetails"
+            app:destination="@id/fragmentPostPaidBillDetails" />
     </fragment>
     <fragment
         android:id="@+id/fragmentPostPaidServiceProvider"

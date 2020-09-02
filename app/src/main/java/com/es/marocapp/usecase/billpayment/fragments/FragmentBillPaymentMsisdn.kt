@@ -67,24 +67,38 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 var contactName = contacts.contactName
                 if (contactName.contains(selectedFatorati)) {
                     contactName = contactName.substringAfter("@")
+                    contactName = contactName.substringBefore(",")
                     list_of_favorites.add(contactName)
                 }
             }
         }
 
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
-            mDataBinding.inputPhoneNumber.setInputType(InputType.TYPE_CLASS_NUMBER);
+            mDataBinding.inputPhoneNumber.setInputType(InputType.TYPE_CLASS_NUMBER)
+            var selectedBillType = ""
+            if(mActivityViewModel.isInternetSelected.get()!!){
+                selectedBillType = "BillPayment_TelecomBill_Internet@"
+
+            }else if(mActivityViewModel.isPostPaidMobileSelected.get()!!){
+                selectedBillType = "BillPayment_TelecomBill_PostpaidMobile@"
+            }else if(mActivityViewModel.isPostPaidFixSelected.get()!!){
+                selectedBillType = "BillPayment_TelecomBill_PostpaidFix@"
+            }
             for (contacts in Constants.mContactListArray) {
-                var contactNumber = contacts.fri
                 var contactName = contacts.contactName
-                contactNumber = contactNumber.substringBefore("@")
-                contactNumber = contactNumber.substringBefore("/")
-                contactNumber = contactNumber.removePrefix(Constants.APP_MSISDN_PREFIX)
-                contactNumber = "0$contactNumber"
-                //todo also here remove lenght-2 check in max line
-                if (contactNumber.length.equals(Constants.APP_MSISDN_LENGTH.toInt() - 2)) {
-                    var name_number_favorite = "$contactName-$contactNumber"
-                    list_of_favorites.add(name_number_favorite)
+                var contactNameWithoutPrefix = contactName.substringAfter("@")
+                var contactNameWithoutPostfix = contactNameWithoutPrefix.substringBefore(",")
+                if (contactName.contains(selectedBillType)) {
+                    var contactNumber = contacts.fri
+                    contactNumber = contactNumber.substringBefore("@")
+                    contactNumber = contactNumber.substringBefore("/")
+                    contactNumber = contactNumber.removePrefix(Constants.APP_MSISDN_PREFIX)
+                    contactNumber = "0$contactNumber"
+                    //todo also here remove lenght-2 check in max line
+                    if (contactNumber.length.equals(Constants.APP_MSISDN_LENGTH.toInt() - 2)) {
+                        var name_number_favorite = "$contactNameWithoutPostfix-$contactNumber"
+                        list_of_favorites.add(name_number_favorite)
+                    }
                 }
             }
         }
@@ -185,7 +199,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
             mActivityViewModel.requestForFatoratiStepTwoApi(
                 activity,
-               Constants.CURRENT_USER_MSISDN
+                Constants.CURRENT_USER_MSISDN
             )
         }
 
@@ -258,17 +272,16 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         mActivityViewModel.getFatoratiStepTwoResponseListner.observe(this@FragmentBillPaymentMsisdn,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                     cilLabel = it.param.libelle
+                    cilLabel = it.param.libelle
                     if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
                         mDataBinding.inputLayoutPhoneNumber.hint = ""
                         mDataBinding.inputPhoneNumberHint.text =
                             cilLabel
                     }
-                    if(it.param.libelle.equals("CIL",false)){
-                        applyValidation=true
-                    }
-                    else{
-                        applyValidation=false
+                    if (it.param.libelle.equals("CIL", false)) {
+                        applyValidation = true
+                    } else {
+                        applyValidation = false
                     }
                 } else {
                     DialogUtils.showErrorDialoge(activity, it.description)
@@ -279,17 +292,21 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         mActivityViewModel.getFatoratiStepFourResponseListner.observe(this@FragmentBillPaymentMsisdn,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                    if(it.params==null || it.params.isNullOrEmpty() || it.params.size<1){
-                      //  DialogUtils.showErrorDialoge(activity, it.message)
+                    if (it.params == null || it.params.isNullOrEmpty() || it.params.size < 1) {
+                        //  DialogUtils.showErrorDialoge(activity, it.message)
                         val btnTxt = LanguageData.getStringValue("BtnTitle_OK")
                         val titleTxt = LanguageData.getStringValue("Error")
-                        DialogUtils.showCustomDialogue(activity,btnTxt,it.message,titleTxt,object : DialogUtils.OnCustomDialogListner{
-                            override fun onCustomDialogOkClickListner() {
+                        DialogUtils.showCustomDialogue(
+                            activity,
+                            btnTxt,
+                            it.message,
+                            titleTxt,
+                            object : DialogUtils.OnCustomDialogListner {
+                                override fun onCustomDialogOkClickListner() {
 
-                            }
-                        })
-                    }
-                    else {
+                                }
+                            })
+                    } else {
                         (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMsisdn_to_fragmentPostPaidBillDetails)
                     }
                 } else {
@@ -310,7 +327,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             }
 
             if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-                mActivityViewModel.transferdAmountTo=msisdnEntered
+                mActivityViewModel.transferdAmountTo = msisdnEntered
                 mActivityViewModel.requestForFatoratiStepFourApi(activity)
             }
         }
@@ -374,7 +391,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                     if (isNumberRegexMatches) {
                         mDataBinding.inputLayoutPhoneNumber.error = ""
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
-
+                        checkNumberExistInFavorites(userMsisdn)
                         msisdnEntered = userMsisdn
                     } else {
                         isValidForAll = false
@@ -407,7 +424,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                     if (isNumberRegexMatches) {
                         mDataBinding.inputLayoutPhoneNumber.error = ""
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
-
+                        checkNumberExistInFavorites(userMsisdn)
                         msisdnEntered = userMsisdn
                     } else {
                         isValidForAll = false
@@ -426,16 +443,16 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             if (mDataBinding.inputPhoneNumber.text.isNullOrEmpty() /*|| mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_CIL_LENGTH.toInt()*/) {
                 isValidForAll = false
                 mDataBinding.inputLayoutPhoneNumber.error =
-                    LanguageData.getStringValue("invalid")+" "+cilLabel
+                    LanguageData.getStringValue("invalid") + " " + cilLabel
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
                 mDataBinding.inputLayoutPhoneNumber.hint =
-                    LanguageData.getStringValue("invalid")+" "+cilLabel
+                    LanguageData.getStringValue("invalid") + " " + cilLabel
                 mDataBinding.inputPhoneNumberHint.visibility = View.GONE
             } else {
                 mDataBinding.inputLayoutPhoneNumber.error = ""
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
 
-                if(applyValidation) {
+                if (applyValidation) {
                     if (isNumberRegexMatches) {
                         mDataBinding.inputLayoutPhoneNumber.error = ""
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
@@ -446,14 +463,13 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                     } else {
                         isValidForAll = false
                         mDataBinding.inputLayoutPhoneNumber.error =
-                            LanguageData.getStringValue("invalid")+" "+cilLabel
+                            LanguageData.getStringValue("invalid") + " " + cilLabel
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
                         mDataBinding.inputLayoutPhoneNumber.hint =
-                            LanguageData.getStringValue("invalid")+" "+cilLabel
+                            LanguageData.getStringValue("invalid") + " " + cilLabel
                         mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                     }
-                }
-                else{
+                } else {
                     mDataBinding.inputLayoutPhoneNumber.error = ""
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
 
@@ -501,18 +517,42 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         if (!selectedFavorites.equals(LanguageData.getStringValue("SelectFavorite"))) {
             setInputLayoutHint()
             if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
-                selectedFavorites = selectedFavorites.substringAfter("-")
-                mDataBinding.inputPhoneNumber.setText(selectedFavorites)
-                mActivityViewModel.isUserSelectedFromFavorites.set(true)
+                if (mActivityViewModel.isInternetSelected.get()!!) {
+                    selectedFavorites = selectedFavorites.substringAfter("-")
+                    mDataBinding.inputPhoneNumber.setText(selectedFavorites)
+                    mActivityViewModel.isUserSelectedFromFavorites.set(true)
+                }
+                if (mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!) {
+                    selectedFavorites = selectedFavorites.substringAfter("-")
+                    mDataBinding.inputPhoneNumber.setText(selectedFavorites)
+                    mActivityViewModel.isUserSelectedFromFavorites.set(true)
+
+                    var selectedBillType =
+                        "BillPayment_TelecomBill_${mActivityViewModel.billTypeSelected.get()!!}"
+                    for (contacts in Constants.mContactListArray) {
+                        var contactName = contacts.contactName
+                        var contactNameWithoutPrefix = contactName.substringAfter("@")
+                        var contactNumberCode =
+                            contactNameWithoutPrefix.substringAfter(",")
+                        if (contactName.contains(selectedBillType)) {
+                            var contactNumber = contacts.fri
+                            if(contactNumber.equals(selectedFavorites)){
+                                mDataBinding.inputCode.setText(contactNumberCode)
+                            }
+                        }
+                    }
+                }
             }
 
             if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
                 for (contacts in Constants.mContactListArray) {
                     var contactName = contacts.contactName
                     contactName = contactName.substringAfter("@")
+                    contactName = contactName.substringBefore(",")
                     if (selectedFavorites.equals(contactName)) {
                         var selectedFri = contacts.fri.substringBefore("@")
                         mDataBinding.inputPhoneNumber.setText(selectedFri)
+                        mActivityViewModel.isUserSelectedFromFavorites.set(true)
                         break
                     }
 
@@ -522,13 +562,14 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         } else {
             mDataBinding.inputPhoneNumber.setText("")
             mActivityViewModel.isUserSelectedFromFavorites.set(false)
-            if(mDataBinding.inputLayoutPhoneNumber.isErrorEnabled){
+            if (mDataBinding.inputLayoutPhoneNumber.isErrorEnabled) {
 
-            }else{
+            } else {
                 mDataBinding.inputPhoneNumber.clearFocus()
                 mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
                 if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-                    mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterCilNumber")
+                    mDataBinding.inputLayoutPhoneNumber.hint =
+                        LanguageData.getStringValue("EnterCilNumber")
                     mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                 }
                 if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
@@ -565,9 +606,20 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
 
     private fun checkNumberExistInFavorites(userMsisdn: String) {
+        var updateMsisdn = ""
+        if (!userMsisdn.startsWith("0", false)) {
+            var appMsisdnPrefix = Constants.APP_MSISDN_PREFIX.removePrefix("+")
+            if (userMsisdn.startsWith(appMsisdnPrefix)) {
+                updateMsisdn = userMsisdn.replace(appMsisdnPrefix, "0")
+            } else {
+                updateMsisdn = userMsisdn
+            }
+        } else {
+            updateMsisdn = userMsisdn
+        }
         for (i in 0 until list_of_favorites.size) {
             var favoriteNumber = list_of_favorites[i].substringAfter("-")
-            if (favoriteNumber.equals(userMsisdn)) {
+            if (favoriteNumber.equals(updateMsisdn)) {
                 mActivityViewModel.isUserSelectedFromFavorites.set(true)
                 Log.i("FavoritesCheck", "true")
                 break

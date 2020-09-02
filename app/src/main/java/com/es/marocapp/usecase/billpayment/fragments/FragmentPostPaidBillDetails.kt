@@ -54,7 +54,11 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
         (activity as BillPaymentActivity).setHeaderVisibility(true)
         (activity as BillPaymentActivity).setCompanyIconToolbarVisibility(false)
 
-        mActivityViewModel.popBackStackTo = R.id.fragmentBillPaymentMsisdn
+        if(mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.get()!!){
+            mActivityViewModel.popBackStackTo = R.id.fragmentPostPaidPaymentTypes
+        }else{
+            mActivityViewModel.popBackStackTo = R.id.fragmentBillPaymentMsisdn
+        }
 
         listOfCustomInvoice.clear()
         if(mActivityViewModel.isBillUseCaseSelected.get()!!){
