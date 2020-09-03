@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/colorWhite"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.es.marocapp.widgets.MarocMediumTextView
+        android:id="@+id/input_phone_number_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        tools:text="Enter Mobile Number"
+        android:textSize="@dimen/_16ssp"
+        android:textColor="@color/colorEditTextGreyMedium"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/_18sdp"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        app:layout_goneMarginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@+id/input_phone_number_hint"
+        >
+
+        <com.es.marocapp.widgets.MarocEditText
+            android:id="@+id/input_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="@string/enter_receiver_s_mobile_number_caps"
+            android:inputType="phone"
+            android:ellipsize="end"
+            android:maxLength="12"
+            android:textSize="@dimen/_14ssp"
+            android:theme="@style/myTextInputLabel" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_recharge_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        app:layout_goneMarginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout_phone_number"
+        >
+
+        <com.es.marocapp.widgets.MarocEditText
+            android:id="@+id/input_recharge_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            tools:hint="RECHARGE TYPE"
+            android:enabled="false"
+            android:clickable="false"
+            android:editable="false"
+            android:ellipsize="end"
+            android:drawableEnd="@drawable/spinner_icon_background_grey"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_14ssp"
+            android:theme="@style/myTextInputLabel" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_recharge_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        app:layout_goneMarginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout_recharge_type"
+        >
+
+        <com.es.marocapp.widgets.MarocEditText
+            android:id="@+id/input_recharge_plan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            tools:hint="RECHARGE PLAN"
+            android:drawableEnd="@drawable/spinner_icon_background_grey"
+            android:singleLine="true"
+            android:enabled="false"
+            android:clickable="false"
+            android:editable="false"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_14ssp"
+            android:theme="@style/myTextInputLabel" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_recharge_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        app:layout_goneMarginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout_recharge_plan"
+        >
+
+        <com.es.marocapp.widgets.MarocEditText
+            android:id="@+id/input_recharge_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            tools:hint="RECHARGE AMOUNT"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:enabled="false"
+            android:clickable="false"
+            android:editable="false"
+            android:ellipsize="end"
+            android:drawableEnd="@drawable/spinner_icon_background_grey"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_14ssp"
+            android:theme="@style/myTextInputLabel" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_profile_Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        app:layout_goneMarginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout_recharge_amount"
+        >
+
+        <com.es.marocapp.widgets.MarocEditText
+            android:id="@+id/input_profile_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="Profile Name"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:enabled="false"
+            android:clickable="false"
+            android:editable="false"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_14ssp"
+            android:theme="@style/myTextInputLabel" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.es.marocapp.widgets.MarocRegularTextView
+        android:id="@+id/generateQrTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Scannez le QR code"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/colorBlack"
+        android:layout_marginTop="@dimen/_32sdp"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout_profile_Name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnScanQR"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:elevation="@dimen/_12sdp"
+        app:cardCornerRadius="@dimen/_8sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/generateQrTv"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_8sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/qr_image"/>
+    </androidx.cardview.widget.CardView>
+    <com.es.marocapp.widgets.MarocButton
+        android:id="@+id/btnNext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/submit"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:background="@drawable/button_enable"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

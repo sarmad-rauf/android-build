@@ -43,7 +43,7 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
                 (activity as AirTimeActivity).finish()
             }else{
                 (activity as AirTimeActivity).navController.popBackStack(
-                    R.id.airTimeMsisdnFragment,
+                    R.id.airTimeMainFragment,
                     false
                 )
             }

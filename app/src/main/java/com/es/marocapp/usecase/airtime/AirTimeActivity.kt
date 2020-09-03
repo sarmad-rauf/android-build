@@ -73,7 +73,7 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
             mActivityViewModel.airTimeAmountSelected.set(quickRechargeAmount)
             navGraph.startDestination = R.id.airTimeConfirmationFragment
         }else{
-            navGraph.startDestination = R.id.airTimeTypeFragment
+            navGraph.startDestination = R.id.airTimeMainFragment
         }
 
         navController.setGraph(navGraph)
