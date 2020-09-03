@@ -2,7 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/air_time_nav_graph">
+    android:id="@+id/air_time_nav_graph"
+    app:startDestination="@id/airTimeMainFragment">
 
     <fragment
         android:id="@+id/airTimeTypeFragment"
@@ -71,4 +72,14 @@
         android:label="AirTimePendingFragment"
         tools:layout="@layout/fragment_cash_services_pending"
         />
+    <fragment
+        android:id="@+id/airTimeMainFragment"
+        android:name="com.es.marocapp.usecase.airtime.airtimeplansandamounts.AirTimeMainFragment"
+        android:label="AirTimeMainFragment"
+        tools:layout="@layout/fragment_air_time_main"
+        >
+        <action
+            android:id="@+id/action_airTimeMainFragment_to_airTimeConfirmationFragment"
+            app:destination="@id/airTimeConfirmationFragment" />
+    </fragment>
 </navigation>
