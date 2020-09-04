@@ -233,8 +233,10 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                 if(it.getAccountHolderInformationResponse!=null){
                     if(!it.getAccountHolderInformationResponse.firstName.isNullOrEmpty()){
                         Constants.CURRENT_USER_NAME=it.getAccountHolderInformationResponse.firstName
+                        Constants.CURRENT_USER_FIRST_NAME=it.getAccountHolderInformationResponse.firstName
                         if(!it.getAccountHolderInformationResponse.sureName.isNullOrEmpty()){
                             Constants.CURRENT_USER_NAME=it.getAccountHolderInformationResponse.firstName+ it.getAccountHolderInformationResponse.sureName
+                            Constants.CURRENT_USER_LAST_NAME=it.getAccountHolderInformationResponse.sureName
                         }
                     }
 

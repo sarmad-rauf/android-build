@@ -6,5 +6,7 @@ data class SetDefaultAccountRequest(
     val receiver: String,
     val operation: String,
     val language: String,
-    val profile : String?
+    val profile : String?,
+    val firstName : String?,
+    val lastName : String?
 )

@@ -116,7 +116,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             }
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.setDefaultAccountStatus(
-                SetDefaultAccountRequest(ApiConstant.CONTEXT_AFTER_LOGIN, receiver,"enrollment",LocaleManager.selectedLanguage,Constants?.balanceInfoAndResponse?.profilename)
+                SetDefaultAccountRequest(ApiConstant.CONTEXT_AFTER_LOGIN, receiver,"enrollment",LocaleManager.selectedLanguage,Constants?.balanceInfoAndResponse?.profilename,Constants.CURRENT_USER_FIRST_NAME,Constants.CURRENT_USER_LAST_NAME)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -185,7 +185,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             }
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.unregisterDefaultAccountStatus(
-                SetDefaultAccountRequest(ApiConstant.CONTEXT_AFTER_LOGIN, receiver,"unsubscribe",LocaleManager.selectedLanguage,Constants?.balanceInfoAndResponse?.profilename)
+                SetDefaultAccountRequest(ApiConstant.CONTEXT_AFTER_LOGIN, receiver,"unsubscribe",LocaleManager.selectedLanguage,Constants?.balanceInfoAndResponse?.profilename,Constants.CURRENT_USER_FIRST_NAME,Constants.CURRENT_USER_LAST_NAME)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(

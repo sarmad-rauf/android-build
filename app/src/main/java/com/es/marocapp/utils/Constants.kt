@@ -75,6 +75,8 @@ object Constants {
     var LOGGED_IN_USER_COOKIE = ""
     var CURRENT_USER_NAME =""
     var CURRENT_USER_EMAIL=""
+    var CURRENT_USER_FIRST_NAME=""
+    var CURRENT_USER_LAST_NAME=""
 
     //USER_PROFILE
     var IS_AGENT_USER = false
