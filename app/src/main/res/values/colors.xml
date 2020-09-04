@@ -28,5 +28,6 @@
     <color name="colorToast">#e8c01f</color>
     <color name="colorConfirmationTitle">#969696</color>
     <color name="colorUserProfileTxtTitle">#d3d3d3</color>
+    <color name="qr_border">#0A6CB5</color>
 
 </resources>

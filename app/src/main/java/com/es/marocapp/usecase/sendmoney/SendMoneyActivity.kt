@@ -14,6 +14,7 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivitySendMoneyBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseActivity
+import com.es.marocapp.usecase.qrcode.ScanQRActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.widgets.MarocEditText
 import com.es.marocapp.widgets.MarocMediumTextView
@@ -35,6 +36,10 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
     lateinit var mInputFieldLayout: TextInputLayout
     lateinit var mInputHint: MarocMediumTextView
     val PICK_CONTACT = 10021
+    companion object {
+        val SCAN_QR = 1213
+        val KEY_SCANNED_DATA="key.scanned.string"
+    }
 
     override fun init(savedInstanceState: Bundle?) {
         mActivityViewModel =
@@ -70,14 +75,16 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
         mInputFieldLayout = inputLayoutPhoneNumber
         mInputField = inputPhoneNumber
         mInputHint = inputPhoneNumberHint
-        val integrator = IntentIntegrator(this@SendMoneyActivity)
+
+        startActivityForResult(Intent(this, ScanQRActivity::class.java),SCAN_QR)
+        /*val integrator = IntentIntegrator(this@SendMoneyActivity)
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES)
         integrator.setPrompt("")
         integrator.setOrientationLocked(false)
         integrator.setCameraId(0)
         integrator.setBeepEnabled(false)
         integrator.setBarcodeImageEnabled(false)
-        integrator.initiateScan()
+        integrator.initiateScan()*/
     }
 
     fun openPhoneBook() {
@@ -126,11 +133,11 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
 
                 verifyAndSetMsisdn(sResult, true)
             }
-        } else {
-            val result =
-                IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        } else if (requestCode == SCAN_QR) {
+            val result = data
+            val scannedString=result?.getStringExtra(KEY_SCANNED_DATA)
             if (result != null) {
-                if (result.contents == null) {
+                if (scannedString.isNullOrEmpty()) {
 //                DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
                     mInputFieldLayout.isErrorEnabled = true
                     mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
@@ -138,9 +145,9 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
                         LanguageData.getStringValue("EnterReceiversMobileNumber")
                     mInputHint.visibility = View.GONE
                 } else {
-                    var sResult = result.contents
+                    //var sResult = result.contents
 
-                    verifyAndSetMsisdn(sResult, false)
+                    verifyAndSetMsisdn(scannedString, false)
                 }
             } else {
                 // This is important, otherwise the result will not be passed to the fragment
