@@ -46,6 +46,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".usecase.qrcode.GenerateQrActivity" />
+        <activity android:name=".usecase.qrcode.ScanQRActivity"/>
 
         <service android:name=".services.MyFirebaseInstanceService">
             <intent-filter>

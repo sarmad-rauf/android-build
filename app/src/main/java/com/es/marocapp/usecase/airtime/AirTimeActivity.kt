@@ -1,5 +1,6 @@
 package com.es.marocapp.usecase.airtime
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,8 +14,16 @@ import com.es.marocapp.databinding.ActivityCashServicesBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.cashservices.CashServicesViewModel
+import com.es.marocapp.usecase.qrcode.ScanQRActivity
+import com.es.marocapp.usecase.sendmoney.SendMoneyActivity.Companion.KEY_SCANNED_DATA
+import com.es.marocapp.usecase.sendmoney.SendMoneyActivity.Companion.SCAN_QR
+import com.es.marocapp.utils.Constants
+import com.es.marocapp.widgets.MarocEditText
+import com.es.marocapp.widgets.MarocMediumTextView
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.layout_activity_header.view.*
 import kotlinx.android.synthetic.main.layout_simple_header.view.*
+import java.util.regex.Pattern
 
 class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
 
@@ -28,6 +37,10 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
 
     var isQuickRechargeUseCase = false
     var quickRechargeAmount = ""
+
+    lateinit var mInputField: MarocEditText
+    lateinit var mInputFieldLayout: TextInputLayout
+    lateinit var mInputHint: MarocMediumTextView
 
     override fun setLayout(): Int {
         return R.layout.activity_air_time
@@ -105,5 +118,122 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
         mDataBinding.headerAirTime.rootView.first_letter_icons.visibility = View.VISIBLE
 
         mDataBinding.headerAirTime.rootView.first_letter_icons.text = amount
+    }
+
+    fun startQRScan(
+        inputPhoneNumber: MarocEditText,
+        inputLayoutPhoneNumber: TextInputLayout,
+        inputPhoneNumberHint: MarocMediumTextView
+    ) {
+        mInputFieldLayout = inputLayoutPhoneNumber
+        mInputField = inputPhoneNumber
+        mInputHint = inputPhoneNumberHint
+
+        startActivityForResult(Intent(this, ScanQRActivity::class.java),SCAN_QR)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        if (requestCode == SCAN_QR) {
+            val result = data
+            val scannedString=result?.getStringExtra(KEY_SCANNED_DATA)
+            if (result != null) {
+                if (scannedString.isNullOrEmpty()) {
+//                DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
+                    mInputFieldLayout.isErrorEnabled = true
+                    mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
+                    mInputFieldLayout.hint =
+                        LanguageData.getStringValue("EnterReceiversMobileNumber")
+                    mInputHint.visibility = View.GONE
+                } else {
+                    //var sResult = result.contents
+
+                    verifyAndSetMsisdn(scannedString, false)
+                }
+            } else {
+                // This is important, otherwise the result will not be passed to the fragment
+                super.onActivityResult(requestCode, resultCode, data)
+                mInputField.setText("")
+//            DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
+                mInputFieldLayout.isErrorEnabled = true
+                mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
+                mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+                mInputHint.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun verifyAndSetMsisdn(sResult: String?, isFromPhonebook: Boolean) {
+        if (isValidNumber(sResult!!)) {
+            mInputFieldLayout.isErrorEnabled = false
+            mInputFieldLayout.error = ""
+            var msisdn = sResult
+            if (msisdn.contains("212")) {
+                msisdn = msisdn.substringAfter("212")
+                msisdn = msisdn.substringAfter("+212")
+                msisdn = msisdn.replace("-", "")
+                msisdn = msisdn.trim()
+                msisdn = "0$msisdn"
+            }
+            if (msisdn.contains("(")) {
+                msisdn = msisdn.replace("(", "")
+                msisdn = msisdn.replace(")", "")
+                msisdn = msisdn.trim()
+            }
+
+            msisdn = msisdn.replace("-", "")
+            msisdn = msisdn.replace(" ", "")
+            msisdn = msisdn.trim()
+
+            mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+            mInputHint.visibility = View.GONE
+            mInputField.setText(msisdn)
+        } else {
+            mInputField.setText("")
+//                    DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
+            mInputFieldLayout.isErrorEnabled = true
+            if (isFromPhonebook) {
+                mInputFieldLayout.error =
+                    LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+                mInputHint.visibility = View.GONE
+            } else {
+                mInputFieldLayout.error =
+                    LanguageData.getStringValue("PleaseScanValidQRDot")
+                mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+                mInputHint.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun isValidNumber(result: String): Boolean {
+        var isNumberRegexMatches = false
+        var msisdn = result
+        if (msisdn.contains("212")) {
+            msisdn = msisdn.substringAfter("212")
+            msisdn = msisdn.substringAfter("+212")
+            msisdn = msisdn.replace("-", "")
+            msisdn = msisdn.trim()
+            msisdn = "0$msisdn"
+        }
+        if (msisdn.contains("(")) {
+            msisdn = msisdn.replace("(", "")
+            msisdn = msisdn.replace(")", "")
+            msisdn = msisdn.trim()
+        }
+
+        msisdn = msisdn.replace("-", "")
+        msisdn = msisdn.replace(" ", "")
+        msisdn = msisdn.trim()
+
+
+
+        var msisdnLenght = msisdn.length
+        isNumberRegexMatches =
+            (msisdnLenght > 0 && msisdnLenght == Constants.APP_MSISDN_LENGTH.toInt() - 2 && Pattern.matches(
+                Constants.APP_MSISDN_REGEX,
+                msisdn
+            ))
+        return isNumberRegexMatches
     }
 }

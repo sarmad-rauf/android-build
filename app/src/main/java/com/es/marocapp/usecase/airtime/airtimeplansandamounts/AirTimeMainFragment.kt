@@ -245,6 +245,11 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
         subscribeObserver()
         initListner()
 
+        mDataBinding.btnScanQR.setOnClickListener{
+            (activity as AirTimeActivity).startQRScan(mDataBinding.inputPhoneNumber, mDataBinding.inputLayoutPhoneNumber,mDataBinding.inputPhoneNumberHint)
+
+        }
+
     }
 
     private fun initListner() {

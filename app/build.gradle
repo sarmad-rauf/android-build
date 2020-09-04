@@ -54,10 +54,12 @@ android {
             } else if (baseUrlType == 3) {// Development
                 buildConfigField "String", "SERVER_URL", "\"http://124.109.32.135:8080/mobileapi/\""
             }
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
+
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            buildConfigField "boolean", "SSL_ENABLED", "true"
+            buildConfigField "boolean", "SSL_ENABLED", "false"
             buildConfigField "boolean", "LOG_ENABLED", "false"
         }
 
@@ -148,5 +150,8 @@ dependencies {
 
     //--------------Expandable Recycler VIew----------------
     implementation 'com.thoughtbot:expandablerecyclerview:1.4'
+
+    implementation 'com.budiyev.android:code-scanner:2.1.0'
+
 
 }

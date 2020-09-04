@@ -16,6 +16,7 @@ import com.es.marocapp.databinding.FragmentFundsTransferEnterMsisdnBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
+import com.es.marocapp.usecase.qrcode.ScanQRActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyViewModel
 import com.es.marocapp.utils.Constants
@@ -81,6 +82,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
 
         mDataBinding.btnScanQR.setOnClickListener{
             (activity as SendMoneyActivity).startQRScan(mDataBinding.inputPhoneNumber, mDataBinding.inputLayoutPhoneNumber,mDataBinding.inputPhoneNumberHint)
+
         }
 
         mActivityViewModel.popBackStackTo = -1
@@ -124,7 +126,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
     private fun setStrings() {
 //        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
         mDataBinding.selectFavoriteTypeTitle.hint = LanguageData.getStringValue("SelectFavorite")
-       // mDataBinding.btnScanQR.text = LanguageData.getStringValue("ScanQr")
+        mDataBinding.generateQrTv.text = LanguageData.getStringValue("ScanQr")
 
         mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Next")
 
