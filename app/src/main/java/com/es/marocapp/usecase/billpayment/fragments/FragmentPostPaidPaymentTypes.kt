@@ -62,7 +62,13 @@ class FragmentPostPaidPaymentTypes : BaseFragment<LayoutBillPaymentTypeQuickRech
                 var contactName = contacts.contactName
                 if(contactName.contains("BillPayment_TelecomBill_Internet@") || contactName.contains("BillPayment_TelecomBill_PostpaidMobile@") ||
                         contactName.contains("BillPayment_TelecomBill_PostpaidFix@") || contactName.contains("BillPayment_Fatourati_")){
-                    mFavoritesList.add(contacts)
+                    if(contactName.contains("BillPayment_Fatourati_")){
+                        if(contactName.contains(",")){
+                            mFavoritesList.add(contacts)
+                        }
+                    }else{
+                        mFavoritesList.add(contacts)
+                    }
                 }
             }
 
@@ -111,6 +117,22 @@ class FragmentPostPaidPaymentTypes : BaseFragment<LayoutBillPaymentTypeQuickRech
                             mActivityViewModel.isPostPaidFixSelected.set(false)
                             mActivityViewModel.isInternetSelected.set(true)
 
+                            mActivityViewModel.isUserSelectedFromFavorites.set(true)
+                            mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(true)
+
+                            var number = selectedContact.fri
+                            number = number.substringBefore("@")
+                            number = number.substringBefore("/")
+
+                            var msisdnEntered = number
+                            var code = ""
+
+                            mActivityViewModel.requestForPostPaidFinancialResourceInfoApi(
+                                activity,
+                                code,
+                                msisdnEntered
+                            )
+
                             //TelecomBillPayment Internet Use Case
                         }else if(selectedContact.contactName.contains("BillPayment_TelecomBill_PostpaidMobile@")){
                             mActivityViewModel.isBillUseCaseSelected.set(true)
@@ -119,6 +141,26 @@ class FragmentPostPaidPaymentTypes : BaseFragment<LayoutBillPaymentTypeQuickRech
                             mActivityViewModel.isPostPaidFixSelected.set(false)
                             mActivityViewModel.isInternetSelected.set(false)
 
+                            mActivityViewModel.isUserSelectedFromFavorites.set(true)
+                            mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(true)
+
+                            var contactName = selectedContact.contactName
+                            contactName = contactName.substringAfter("@")
+                            contactName = contactName.substringAfter(",")
+
+                            var number = selectedContact.fri
+                            number = number.substringBefore("@")
+                            number = number.substringBefore("/")
+
+                            var msisdnEntered = number
+                            var code = contactName
+
+                            mActivityViewModel.requestForPostPaidFinancialResourceInfoApi(
+                                activity,
+                                code,
+                                msisdnEntered
+                            )
+
                             //TelecomBillPayment PostPaidMobile Use Case
                         }else if(selectedContact.contactName.contains("BillPayment_TelecomBill_PostpaidFix@")){
                             mActivityViewModel.isBillUseCaseSelected.set(true)
@@ -126,6 +168,26 @@ class FragmentPostPaidPaymentTypes : BaseFragment<LayoutBillPaymentTypeQuickRech
                             mActivityViewModel.isPostPaidMobileSelected.set(false)
                             mActivityViewModel.isPostPaidFixSelected.set(true)
                             mActivityViewModel.isInternetSelected.set(false)
+
+                            mActivityViewModel.isUserSelectedFromFavorites.set(true)
+                            mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(true)
+
+                            var contactName = selectedContact.contactName
+                            contactName = contactName.substringAfter("@")
+                            contactName = contactName.substringAfter(",")
+
+                            var number = selectedContact.fri
+                            number = number.substringBefore("@")
+                            number = number.substringBefore("/")
+
+                            var msisdnEntered = number
+                            var code = contactName
+
+                            mActivityViewModel.requestForPostPaidFinancialResourceInfoApi(
+                                activity,
+                                code,
+                                msisdnEntered
+                            )
 
                             //TelecomBillPayment PostPaidFix Use Case
                         }
@@ -212,6 +274,23 @@ class FragmentPostPaidPaymentTypes : BaseFragment<LayoutBillPaymentTypeQuickRech
                     } else {
                         (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidPaymentTypes_to_fragmentPostPaidBillDetails)
                     }
+                } else {
+                    DialogUtils.showErrorDialoge(activity, it.description)
+                }
+            }
+        )
+
+        mActivityViewModel.getPostPaidResourceInfoResponseListner.observe(this@FragmentPostPaidPaymentTypes,
+            Observer {
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    if (it.response.custId != null) {
+                        mActivityViewModel.custId = it.response.custId
+                    }
+                    if (it.response.custname != null) {
+                        mActivityViewModel.custname = it.response.custname
+                    }
+                    mActivityViewModel.totalamount = it.response.totalamount
+                    (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidPaymentTypes_to_fragmentPostPaidBillDetails)
                 } else {
                     DialogUtils.showErrorDialoge(activity, it.description)
                 }

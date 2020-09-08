@@ -268,6 +268,7 @@ class FragmentBillPaymentPostPaidConfirmation :
     }
 
     private fun payFatoratiBills() {
+        selectedFatoratiListOfInvoice.clear()
         selectedFatoratiListOfInvoice.addAll(mActivityViewModel.selectedFatoraitIvoicesList.get()!!)
 
 
@@ -346,6 +347,7 @@ class FragmentBillPaymentPostPaidConfirmation :
     }
 
     private fun payPostPaidBills() {
+        selectedListOfInvoice.clear()
         selectedListOfInvoice.addAll(mActivityViewModel.selectedIvoicesList.get()!!)
         mActivityViewModel.totalBillSelected = selectedListOfInvoice.size
         if (selectedListOfInvoice != null && mActivityViewModel.selectedIvoicesQuoteHash != null) {

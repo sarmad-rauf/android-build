@@ -88,14 +88,25 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 var contactName = contacts.contactName
                 var contactNameWithoutPrefix = contactName.substringAfter("@")
                 var contactNameWithoutPostfix = contactNameWithoutPrefix.substringBefore(",")
+
+                var contactNumber = contacts.fri
                 if (contactName.contains(selectedBillType)) {
                     var contactNumber = contacts.fri
                     contactNumber = contactNumber.substringBefore("@")
                     contactNumber = contactNumber.substringBefore("/")
-                    contactNumber = contactNumber.removePrefix(Constants.APP_MSISDN_PREFIX)
-                    contactNumber = "0$contactNumber"
+                    if(contactName.contains(Constants.APP_MSISDN_PREFIX)){
+                        contactNumber = contactNumber.removePrefix(Constants.APP_MSISDN_PREFIX)
+                        contactNumber = "0$contactNumber"
+                    }
                     //todo also here remove lenght-2 check in max line
-                    if (contactNumber.length.equals(Constants.APP_MSISDN_LENGTH.toInt() - 2)) {
+//                    if (contactNumber.length.equals(Constants.APP_MSISDN_LENGTH.toInt() - 2)) {
+                        var name_number_favorite = "$contactNameWithoutPostfix-$contactNumber"
+                        list_of_favorites.add(name_number_favorite)
+//                    }
+                }else{
+                    contactNumber = contactNumber.substringBefore("@")
+                    contactNumber = contactNumber.substringBefore("/")
+                    if(contactNumber.length.equals(Constants.APP_MSISDN_LENGTH.toInt() - 2)){
                         var name_number_favorite = "$contactNameWithoutPostfix-$contactNumber"
                         list_of_favorites.add(name_number_favorite)
                     }

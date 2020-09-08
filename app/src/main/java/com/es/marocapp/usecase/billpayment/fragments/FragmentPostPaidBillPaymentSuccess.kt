@@ -72,7 +72,7 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
                         }else if(mActivityViewModel.isPostPaidFixSelected.get()!!){
                             billPaymentNickName = "BillPayment_TelecomBill_PostpaidFix@$nickName,${mActivityViewModel.mCodeEntered}"
                         }
-                        mActivityViewModel.requestForAddFavoritesApi(activity,billPaymentNickName,tranferAmountToWithoutAlias)
+                        mActivityViewModel.requestForAddFavoritesApi(activity,billPaymentNickName,mActivityViewModel.transferdAmountTo)
                     }
                 }
 

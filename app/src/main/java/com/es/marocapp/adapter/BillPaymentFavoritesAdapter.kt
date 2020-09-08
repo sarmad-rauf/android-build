@@ -26,30 +26,45 @@ class BillPaymentFavoritesAdapter(private val favContacts: ArrayList<Contact>,
         var name = paymentItems[position].nomCreancier
         holder.paymentItemIcon.text = name[0].toString()*/
         if(favContacts[position].contactName.contains("BillPayment_TelecomBill_Internet@")){
-            holder.fav_main_image.visibility = View.VISIBLE
-            holder.fav_telecom_bill_img.visibility = View.GONE
-
+            holder.fav_main_image.visibility = View.GONE
             holder.fav_main_image.setImageResource(R.drawable.internet_blue)
+
+            holder.fav_telecom_bill_img.visibility = View.VISIBLE
+            var name = favContacts[position].contactName
+            name = name.substringBefore("@")
+            name = name.substringAfter("_")
+            name = name.substringAfter("_")
+            holder.fav_telecom_bill_img.text = name[0].toString()
 
             var number = favContacts[position].fri
             number = number.substringBefore("@")
             number = number.substringBefore("/")
             holder.fav_name.text = number
         }else if(favContacts[position].contactName.contains("BillPayment_TelecomBill_PostpaidMobile@")){
-            holder.fav_main_image.visibility = View.VISIBLE
-            holder.fav_telecom_bill_img.visibility = View.GONE
-
+            holder.fav_main_image.visibility = View.GONE
             holder.fav_main_image.setImageResource(R.drawable.postpaid_blue)
+
+            holder.fav_telecom_bill_img.visibility = View.VISIBLE
+            var name = favContacts[position].contactName
+            name = name.substringBefore("@")
+            name = name.substringAfter("_")
+            name = name.substringAfter("_")
+            holder.fav_telecom_bill_img.text = name[0].toString()
 
             var number = favContacts[position].fri
             number = number.substringBefore("@")
             number = number.substringBefore("/")
             holder.fav_name.text = number
         }else if(favContacts[position].contactName.contains("BillPayment_TelecomBill_PostpaidFix@")){
-            holder.fav_main_image.visibility = View.VISIBLE
-            holder.fav_telecom_bill_img.visibility = View.GONE
-
+            holder.fav_main_image.visibility = View.GONE
             holder.fav_main_image.setImageResource(R.drawable.postpaid_fix_blue)
+
+            holder.fav_telecom_bill_img.visibility = View.VISIBLE
+            var name = favContacts[position].contactName
+            name = name.substringBefore("@")
+            name = name.substringAfter("_")
+            name = name.substringAfter("_")
+            holder.fav_telecom_bill_img.text = name[0].toString()
 
             var number = favContacts[position].fri
             number = number.substringBefore("@")
