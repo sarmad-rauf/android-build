@@ -251,17 +251,37 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                                 }
                             } else {
                                 if (mActivityViewModel.isAccountHolderInformationFailed.get()!!) {
-                                    mActivityViewModel.requestForSimplePayementApi(
-                                        activity,
-                                        mActivityViewModel.qouteId,
-                                        Constants.CURRENT_USER_MSISDN
-                                    )
+                                    if(mActivityViewModel.isFundTransferUseCase.get()!!){
+                                        mActivityViewModel.requestForSimplePayementApi(
+                                            activity,
+                                            mActivityViewModel.qouteId,
+                                            Constants.CURRENT_USER_MSISDN,
+                                            Constants.PAYMENT_TYPE_SEND_MONEY
+                                        )
+                                    } else if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
+                                        mActivityViewModel.requestForSimplePayementApi(
+                                            activity,
+                                            mActivityViewModel.qouteId,
+                                            Constants.CURRENT_USER_MSISDN,
+                                            Constants.PAYMENT_TYPE_INITIATE_MERCHANT
+                                        )
+                                    }
                                 } else {
-                                    mActivityViewModel.requestFoPayementApi(
-                                        activity,
-                                        mActivityViewModel.qouteId,
-                                        Constants.CURRENT_USER_MSISDN
-                                    )
+                                    if(mActivityViewModel.isFundTransferUseCase.get()!!){
+                                        mActivityViewModel.requestFoPayementApi(
+                                            activity,
+                                            mActivityViewModel.qouteId,
+                                            Constants.CURRENT_USER_MSISDN,
+                                            Constants.PAYMENT_TYPE_SEND_MONEY
+                                        )
+                                    } else if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
+                                        mActivityViewModel.requestFoPayementApi(
+                                            activity,
+                                            mActivityViewModel.qouteId,
+                                            Constants.CURRENT_USER_MSISDN,
+                                            Constants.PAYMENT_TYPE_INITIATE_MERCHANT
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -284,17 +304,37 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                             }
                         } else {
                             if (mActivityViewModel.isAccountHolderInformationFailed.get()!!) {
-                                mActivityViewModel.requestForSimplePayementApi(
-                                    activity,
-                                    mActivityViewModel.qouteId,
-                                    Constants.CURRENT_USER_MSISDN
-                                )
+                                if(mActivityViewModel.isFundTransferUseCase.get()!!){
+                                    mActivityViewModel.requestForSimplePayementApi(
+                                        activity,
+                                        mActivityViewModel.qouteId,
+                                        Constants.CURRENT_USER_MSISDN,
+                                        Constants.PAYMENT_TYPE_SEND_MONEY
+                                    )
+                                } else if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
+                                    mActivityViewModel.requestForSimplePayementApi(
+                                        activity,
+                                        mActivityViewModel.qouteId,
+                                        Constants.CURRENT_USER_MSISDN,
+                                        Constants.PAYMENT_TYPE_INITIATE_MERCHANT
+                                    )
+                                }
                             } else {
-                                mActivityViewModel.requestFoPayementApi(
-                                    activity,
-                                    mActivityViewModel.qouteId,
-                                    Constants.CURRENT_USER_MSISDN
-                                )
+                                if(mActivityViewModel.isFundTransferUseCase.get()!!){
+                                    mActivityViewModel.requestFoPayementApi(
+                                        activity,
+                                        mActivityViewModel.qouteId,
+                                        Constants.CURRENT_USER_MSISDN,
+                                        Constants.PAYMENT_TYPE_SEND_MONEY
+                                    )
+                                } else if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
+                                    mActivityViewModel.requestFoPayementApi(
+                                        activity,
+                                        mActivityViewModel.qouteId,
+                                        Constants.CURRENT_USER_MSISDN,
+                                        Constants.PAYMENT_TYPE_INITIATE_MERCHANT
+                                    )
+                                }
                             }
                         }
 

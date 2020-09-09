@@ -7,7 +7,8 @@ data class PaymentRequest(
     val receiver: String,
     val sender: String,
     val transferType:String,
-    val loggedInUserProfile : String
+    val loggedInUserProfile : String,
+    val paymentType : String
 )
 
 data class SimplePaymentRequest(
@@ -16,5 +17,6 @@ data class SimplePaymentRequest(
     val quoteid: String,
     val receiver: String,
     val sender: String,
-    val transferType:String
+    val transferType:String,
+    val paymentType : String
 )

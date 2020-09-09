@@ -32,6 +32,8 @@ object Constants {
     const val OPERATION_TYPE_CREANCE = "creance"
     const val OPERATION_TYPE_IMPAYES = "impayes"
     const val TYPE_CASH_IN = "CASH_IN"
+    const val PAYMENT_TYPE_SEND_MONEY = "sendmoney"
+    const val PAYMENT_TYPE_INITIATE_MERCHANT = "initiatemerchant"
 
     //preLoginData
     var APP_DATE_FORMAT = "yyyy-mm-dd"

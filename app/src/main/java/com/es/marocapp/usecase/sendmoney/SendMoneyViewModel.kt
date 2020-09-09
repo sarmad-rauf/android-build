@@ -521,7 +521,8 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
     //Request For Payment
     fun requestFoPayementApi(context: Context?,
                              qouteID : String,
-                             sender: String
+                             sender: String,
+                             paymentType: String
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
@@ -549,7 +550,8 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPaymentCall(
-                PaymentRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,receiver,Constants.getNumberMsisdn(sender),transferType,Constants.balanceInfoAndResponse.profilename.toString())
+                PaymentRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,receiver,Constants.getNumberMsisdn(sender),transferType,
+                    Constants.balanceInfoAndResponse.profilename.toString(),paymentType)
 
             )
                 .compose(applyIOSchedulers())
@@ -688,7 +690,8 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
     //Request For Payment
     fun requestForSimplePayementApi(context: Context?,
                              qouteID : String,
-                             sender: String
+                             sender: String,
+                                    paymentType: String
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
@@ -716,7 +719,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getSimplePaymentCall(
-                SimplePaymentRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,receiver,Constants.getNumberMsisdn(sender),transferType)
+                SimplePaymentRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,receiver,Constants.getNumberMsisdn(sender),transferType,paymentType)
 
             )
                 .compose(applyIOSchedulers())
