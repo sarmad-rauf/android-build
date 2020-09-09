@@ -246,7 +246,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     }
 
     private fun showOTPdialogue() {
-        DialogUtils.showOTPDialogue(activity, object : DialogUtils.OnOTPDialogClickListner {
+        DialogUtils.showOTPDialogue(activity,true, object : DialogUtils.OnOTPDialogClickListner {
 
             override fun onOTPDialogYesClickListner(otp: String) {
                 homeViewModel.requestForVerifyOTPForSetDefaultAccount(context, referenceNumber, otp)

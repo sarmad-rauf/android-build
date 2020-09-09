@@ -39,5 +39,7 @@ data class GetPreLoginDataResponse(
     val walletBalanceLimitKey: String,
     val url: String,
     val version: String,
-    val cmiWebpageUrl: String
+    val cmiWebpageUrl: String,
+    val defaultAccountOtpLength:Int
+
 )

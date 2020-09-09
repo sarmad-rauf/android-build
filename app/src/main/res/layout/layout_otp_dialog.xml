@@ -64,7 +64,7 @@
                 android:inputType="text"
                 android:textSize="@dimen/_14ssp"
                 android:hint="@string/enter_otp"
-                android:maxLength="12" />
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.es.marocapp.widgets.MarocButton

@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.text.Editable
 import android.text.InputFilter
+import android.text.InputType
 import android.text.TextWatcher
 import android.view.*
 import android.widget.*
@@ -312,7 +313,10 @@ object DialogUtils {
 
     fun showOTPDialogue(
         mContext: Context?,
+        isFromDefaultAccount:Boolean,
         listner: OnOTPDialogClickListner
+
+
     ) {
         var isOTPRegexMatches = false
         val addDialog = Dialog(mContext!!)
@@ -351,23 +355,46 @@ object DialogUtils {
             addDialog.findViewById<TextInputLayout>(R.id.otp_dialog_layout_enter_otp)
         otpFieldInput.hint = LanguageData.getStringValue("EnterOTP")
 
-        otpField.filters =
-            arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_OTP_LENGTH))
-        otpField.addTextChangedListener(object : TextWatcher{
-            override fun afterTextChanged(p0: Editable?) {
-                var otp = otpField.text.toString().trim()
-                var otpLenght = otp.length
-                isOTPRegexMatches =
-                    (otpLenght > 0 && Pattern.matches(Constants.APP_OTP_REGEX, otp))
-            }
+        if(isFromDefaultAccount) {
+          //  otpField.setInputType(InputType.TYPE_CLASS_TEXT);
+            otpField.filters =
+                arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH))
+            otpField.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                    var otp = otpField.text.toString().trim()
+                    var otpLenght = otp.length
+                    isOTPRegexMatches =
+                        (otpLenght > 0 && Pattern.matches(Constants.APP_OTP_REGEX, otp))
+                }
 
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
 
-        })
+            })
+        }
+        else{
+           // otpField.setInputType(InputType.TYPE_CLASS_NUMBER)
+            otpField.filters =
+                arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_OTP_LENGTH))
+            otpField.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                    var otp = otpField.text.toString().trim()
+                    var otpLenght = otp.length
+                    isOTPRegexMatches =
+                        (otpLenght > 0 && Pattern.matches(Constants.APP_OTP_REGEX, otp))
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+            })
+        }
 
         addDialog.findViewById<View>(R.id.otp_dialog_yes_btn).setOnClickListener {
             var otp = otpField.text.toString().trim()

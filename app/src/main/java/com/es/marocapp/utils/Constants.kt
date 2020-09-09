@@ -41,6 +41,7 @@ object Constants {
     var APP_CN_LENGTH = "8"
     var APP_OTP_REGEX = "^[a-zA-Z0-9]*$"
     var APP_OTP_LENGTH = 8
+    var APP_DEFAULT_ACCOUNT_OTP_LENGTH= 6
     var APP_MSISDN_PREFIX = "+000"
     var APP_MSISDN_LENGTH = "12"
     var APP_MSISDN_REGEX = ""

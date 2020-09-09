@@ -120,7 +120,7 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     mActivityViewModel.isOTPFlow.set(true)
-                    DialogUtils.showOTPDialogue(activity,
+                    DialogUtils.showOTPDialogue(activity,false,
                         object : DialogUtils.OnOTPDialogClickListner {
                             override fun onOTPDialogYesClickListner(otp: String) {
                                 mActivityViewModel.requestForCashInWithOtpQouteApi(
