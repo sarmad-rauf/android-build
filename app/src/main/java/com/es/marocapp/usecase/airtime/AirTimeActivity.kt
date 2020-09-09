@@ -1,10 +1,13 @@
 package com.es.marocapp.usecase.airtime
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
@@ -48,6 +51,7 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
     lateinit var mInputHint: MarocMediumTextView
 
     private val CAMERA_REQUEST_CODE = 113
+    val PICK_CONTACT = 10021
 
     override fun setLayout(): Int {
         return R.layout.activity_air_time
@@ -151,8 +155,34 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == PICK_CONTACT && resultCode === Activity.RESULT_OK) {
+            val contactData = data!!.data
+            val cursor: Cursor? = contentResolver.query(
+                contactData!!,
+                null,
+                null,
+                null,
+                null
+            )
+            cursor?.moveToFirst()
 
-        if (requestCode == SCAN_QR) {
+            val number =
+                cursor?.getString(cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER))
+
+            if (number == null || number.isNullOrEmpty()) {
+                mInputFieldLayout.isErrorEnabled = true
+                mInputFieldLayout.error =
+                    LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+
+                mInputFieldLayout.hint = LanguageData.getStringValue("EnterMobileNumber")
+                mInputHint.visibility = View.GONE
+            } else {
+                var sResult = number
+
+                verifyAndSetMsisdn(sResult, true)
+            }
+        }
+        else if (requestCode == SCAN_QR) {
             val result = data
             val scannedString=result?.getStringExtra(KEY_SCANNED_DATA)
             if (result != null) {
@@ -279,5 +309,16 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
                 }
             }
         }
+    }
+
+    fun openPhoneBook(   inputPhoneNumber: MarocEditText,
+                         inputLayoutPhoneNumber: TextInputLayout,
+                         inputPhoneNumberHint: MarocMediumTextView) {
+        mInputFieldLayout = inputLayoutPhoneNumber
+        mInputField = inputPhoneNumber
+        mInputHint = inputPhoneNumberHint
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+        startActivityForResult(intent, PICK_CONTACT)
     }
 }

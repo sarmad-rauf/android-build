@@ -262,6 +262,12 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
             layoutManager = LinearLayoutManager(activity as AirTimeActivity)
         }
 
+        mDataBinding.phonebook.setOnClickListener{
+            (activity as AirTimeActivity).openPhoneBook(  mDataBinding.inputPhoneNumber,
+                mDataBinding.inputLayoutPhoneNumber,
+                mDataBinding.inputPhoneNumberHint)
+        }
+
         list_of_favorites.clear()
         for (contacts in Constants.mContactListArray) {
             var contactNumber = contacts.fri
