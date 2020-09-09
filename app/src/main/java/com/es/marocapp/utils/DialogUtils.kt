@@ -204,7 +204,7 @@ object DialogUtils {
         nickNameFieldInput.hint = LanguageData.getStringValue("AddNick")
 
         nickNameField.filters =
-               arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_ADDFAVORITE_NICK_LENGTH))
+               arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_ADDFAVORITE_NICK_LENGTH!!))
 
         nickNameField.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {

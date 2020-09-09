@@ -1,12 +1,17 @@
 package com.es.marocapp.usecase.sendmoney
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import android.view.View
 import android.widget.EditText
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -35,6 +40,7 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
     lateinit var mInputField: MarocEditText
     lateinit var mInputFieldLayout: TextInputLayout
     lateinit var mInputHint: MarocMediumTextView
+    private val CAMERA_REQUEST_CODE = 113
     val PICK_CONTACT = 10021
     companion object {
         val SCAN_QR = 1213
@@ -76,7 +82,19 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
         mInputField = inputPhoneNumber
         mInputHint = inputPhoneNumberHint
 
-        startActivityForResult(Intent(this, ScanQRActivity::class.java),SCAN_QR)
+        val permission = ContextCompat.checkSelfPermission(
+            this,
+            android.Manifest.permission.CAMERA
+        )
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            Log.d("CameraPermission", "Permission to access camera denied")
+            makeRequestPermission()
+        } else {
+            startActivityForResult(Intent(this, ScanQRActivity::class.java),SCAN_QR)
+        }
+
+
         /*val integrator = IntentIntegrator(this@SendMoneyActivity)
         integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES)
         integrator.setPrompt("")
@@ -234,5 +252,32 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
                 msisdn
             ))
         return isNumberRegexMatches
+    }
+
+
+    fun makeRequestPermission() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(android.Manifest.permission.CAMERA),
+            CAMERA_REQUEST_CODE
+        )
+    }
+    @SuppressLint("MissingPermission")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            CAMERA_REQUEST_CODE -> {
+
+                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+
+                    Log.d("CameraPermission", "Permission to access camera denied")
+                } else {
+                    startActivityForResult(Intent(this, ScanQRActivity::class.java),SCAN_QR)
+                }
+            }
+        }
     }
 }

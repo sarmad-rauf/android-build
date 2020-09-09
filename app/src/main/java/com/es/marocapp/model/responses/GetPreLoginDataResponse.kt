@@ -40,8 +40,8 @@ data class GetPreLoginDataResponse(
     val url: String,
     val version: String,
     val cmiWebpageUrl: String,
-    val defaultAccountOtpLength:Int,
-    val billFavoriteLength:Int,
-    val defaultAccountOtpRegex: String
+    val defaultAccountOtpLength:Int?,
+    val billFavoriteLength:Int?,
+    val defaultAccountOtpRegex: String?
 
 )

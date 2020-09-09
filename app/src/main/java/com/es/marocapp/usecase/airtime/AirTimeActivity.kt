@@ -1,9 +1,14 @@
 package com.es.marocapp.usecase.airtime
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
@@ -41,6 +46,8 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
     lateinit var mInputField: MarocEditText
     lateinit var mInputFieldLayout: TextInputLayout
     lateinit var mInputHint: MarocMediumTextView
+
+    private val CAMERA_REQUEST_CODE = 113
 
     override fun setLayout(): Int {
         return R.layout.activity_air_time
@@ -129,7 +136,18 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
         mInputField = inputPhoneNumber
         mInputHint = inputPhoneNumberHint
 
-        startActivityForResult(Intent(this, ScanQRActivity::class.java),SCAN_QR)
+        val permission = ContextCompat.checkSelfPermission(
+            this,
+            android.Manifest.permission.CAMERA
+        )
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            Log.d("CameraPermission", "Permission to access camera denied")
+            makeRequestPermission()
+        } else {
+            startActivityForResult(Intent(this, ScanQRActivity::class.java),SCAN_QR)
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -235,5 +253,31 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
                 msisdn
             ))
         return isNumberRegexMatches
+    }
+
+    fun makeRequestPermission() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(android.Manifest.permission.CAMERA),
+            CAMERA_REQUEST_CODE
+        )
+    }
+    @SuppressLint("MissingPermission")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            CAMERA_REQUEST_CODE -> {
+
+                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+
+                    Log.d("CameraPermission", "Permission to access camera denied")
+                } else {
+                    startActivityForResult(Intent(this, ScanQRActivity::class.java),SCAN_QR)
+                }
+            }
+        }
     }
 }
