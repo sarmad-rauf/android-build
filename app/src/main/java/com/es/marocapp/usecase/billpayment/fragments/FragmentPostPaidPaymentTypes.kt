@@ -60,9 +60,9 @@ class FragmentPostPaidPaymentTypes : BaseFragment<LayoutBillPaymentTypeQuickRech
             mFavoritesList.clear()
             for(contacts in Constants.mContactListArray){
                 var contactName = contacts.contactName
-                if(contactName.contains("BillPayment_TelecomBill_Internet@") || contactName.contains("BillPayment_TelecomBill_PostpaidMobile@") ||
-                        contactName.contains("BillPayment_TelecomBill_PostpaidFix@") || contactName.contains("BillPayment_Fatourati_")){
-                    if(contactName.contains("BillPayment_Fatourati_")){
+                if(contactName.contains("Telec_Internet@") || contactName.contains("Telec_PostpaidMobile@") ||
+                        contactName.contains("Telec_PostpaidFix@") || contactName.contains("Util_")){
+                    if(contactName.contains("Util_")){
                         if(contactName.contains(",")){
                             mFavoritesList.add(contacts)
                         }
@@ -79,7 +79,7 @@ class FragmentPostPaidPaymentTypes : BaseFragment<LayoutBillPaymentTypeQuickRech
 
                 mBillPaymentFavouritesAdapter = BillPaymentFavoritesAdapter(mFavoritesList,object : BillPaymentFavoritesAdapter.BillPaymentFavoriteClickListner{
                     override fun onFavoriteItemTypeClick(selectedContact: Contact) {
-                        if(selectedContact.contactName.contains("BillPayment_Fatourati_")){
+                        if(selectedContact.contactName.contains("Util_")){
                             mActivityViewModel.isBillUseCaseSelected.set(false)
                             mActivityViewModel.isFatoratiUseCaseSelected.set(true)
 
@@ -110,7 +110,7 @@ class FragmentPostPaidPaymentTypes : BaseFragment<LayoutBillPaymentTypeQuickRech
                             mActivityViewModel.transferdAmountTo = number
                             mActivityViewModel.requestForFatoratiStepFourApi(activity)
 
-                        }else if(selectedContact.contactName.contains("BillPayment_TelecomBill_Internet@")){
+                        }else if(selectedContact.contactName.contains("Telec_Internet@")){
                             mActivityViewModel.isBillUseCaseSelected.set(true)
                             mActivityViewModel.isFatoratiUseCaseSelected.set(false)
                             mActivityViewModel.isPostPaidMobileSelected.set(false)
@@ -134,7 +134,7 @@ class FragmentPostPaidPaymentTypes : BaseFragment<LayoutBillPaymentTypeQuickRech
                             )
 
                             //TelecomBillPayment Internet Use Case
-                        }else if(selectedContact.contactName.contains("BillPayment_TelecomBill_PostpaidMobile@")){
+                        }else if(selectedContact.contactName.contains("Telec_PostpaidMobile@")){
                             mActivityViewModel.isBillUseCaseSelected.set(true)
                             mActivityViewModel.isFatoratiUseCaseSelected.set(false)
                             mActivityViewModel.isPostPaidMobileSelected.set(true)
@@ -162,7 +162,7 @@ class FragmentPostPaidPaymentTypes : BaseFragment<LayoutBillPaymentTypeQuickRech
                             )
 
                             //TelecomBillPayment PostPaidMobile Use Case
-                        }else if(selectedContact.contactName.contains("BillPayment_TelecomBill_PostpaidFix@")){
+                        }else if(selectedContact.contactName.contains("Telec_PostpaidFix@")){
                             mActivityViewModel.isBillUseCaseSelected.set(true)
                             mActivityViewModel.isFatoratiUseCaseSelected.set(false)
                             mActivityViewModel.isPostPaidMobileSelected.set(false)
@@ -313,8 +313,8 @@ class FragmentPostPaidPaymentTypes : BaseFragment<LayoutBillPaymentTypeQuickRech
                         mFavoritesList.clear()
                         for(contacts in Constants.mContactListArray){
                             var contactName = contacts.contactName
-                            if(contactName.contains("BillPayment_TelecomBill_Internet@") || contactName.contains("BillPayment_TelecomBill_PostpaidMobile@") ||
-                                contactName.contains("BillPayment_TelecomBill_PostpaidFix@") || contactName.contains("BillPayment_Fatourati_")){
+                            if(contactName.contains("Telec_Internet@") || contactName.contains("Telec_PostpaidMobile@") ||
+                                contactName.contains("Telec_PostpaidFix@") || contactName.contains("Util_")){
                                 mFavoritesList.add(contacts)
                             }
                         }

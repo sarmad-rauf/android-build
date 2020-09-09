@@ -183,6 +183,8 @@ object DialogUtils {
             addDialog.findViewById<TextView>(R.id.add_toFavorite_dialog_description)
         var otpDialogFieldTitle = addDialog.findViewById<TextView>(R.id.add_toFavorite_dialog_title)
 
+        var lengthTv =addDialog.findViewById<TextView>(R.id.lengthTv)
+
 
         btnNO.setOnClickListener {
             listner.onDialogNoClickListner()
@@ -200,6 +202,22 @@ object DialogUtils {
         var nickNameFieldInput =
             addDialog.findViewById<TextInputLayout>(R.id.favorite_dialog_layout_enter_nick)
         nickNameFieldInput.hint = LanguageData.getStringValue("AddNick")
+
+        nickNameField.filters =
+               arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_ADDFAVORITE_NICK_LENGTH))
+
+        nickNameField.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                lengthTv.setText(p0?.length.toString() +"/" + Constants.APP_ADDFAVORITE_NICK_LENGTH.toString())
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+        })
 
         btnYes.setOnClickListener {
             var nickName = nickNameField.text.toString().trim()
@@ -357,14 +375,14 @@ object DialogUtils {
 
         if(isFromDefaultAccount) {
           //  otpField.setInputType(InputType.TYPE_CLASS_TEXT);
-            otpField.filters =
-                arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH))
+          /*  otpField.filters =
+                arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH))*/
             otpField.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(p0: Editable?) {
                     var otp = otpField.text.toString().trim()
                     var otpLenght = otp.length
                     isOTPRegexMatches =
-                        (otpLenght > 0 && Pattern.matches(Constants.APP_OTP_REGEX, otp))
+                        (otpLenght > 0 && Pattern.matches(Constants.APP_DEFAULT_ACCOUNT_OTP_REGEX, otp))
                 }
 
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

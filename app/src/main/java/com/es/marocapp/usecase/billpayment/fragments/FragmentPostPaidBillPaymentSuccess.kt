@@ -54,7 +54,7 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
                         /*Storing Fatorai bill Fav as
                         BillPayment_Fatourati_Redal@MyNickName,codeCreance,creancierID,nomChamp,refTxFatourati
 */
-                        var fatoratiNickName = "BillPayment_Fatourati_${mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier}@$nickName" +
+                        var fatoratiNickName = "Util_${mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier}@$nickName" +
                                 ",${mActivityViewModel.fatoratiTypeSelected.get()!!.codeCreance}," +
                                 mActivityViewModel.fatoratiTypeSelected.get()!!.codeCreancier+","+mActivityViewModel.fatoratiStepTwoObserver.get()!!.param.nomChamp+","+
                                 mActivityViewModel.fatoratiStepTwoObserver.get()!!.refTxFatourati
@@ -65,12 +65,13 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
                         var billPaymentNickName = ""
 
                         if(mActivityViewModel.isInternetSelected.get()!!){
-                            billPaymentNickName = "BillPayment_TelecomBill_Internet@$nickName"
+                           // billPaymentNickName = "BillPayment_TelecomBill_Internet@$nickName"
+                            billPaymentNickName = "Telec_Internet@$nickName"
 
                         }else if(mActivityViewModel.isPostPaidMobileSelected.get()!!){
-                            billPaymentNickName = "BillPayment_TelecomBill_PostpaidMobile@$nickName,${mActivityViewModel.mCodeEntered}"
+                            billPaymentNickName = "Telec_PostpaidMobile@$nickName,${mActivityViewModel.mCodeEntered}"
                         }else if(mActivityViewModel.isPostPaidFixSelected.get()!!){
-                            billPaymentNickName = "BillPayment_TelecomBill_PostpaidFix@$nickName,${mActivityViewModel.mCodeEntered}"
+                            billPaymentNickName = "Telec_PostpaidFix@$nickName,${mActivityViewModel.mCodeEntered}"
                         }
                         mActivityViewModel.requestForAddFavoritesApi(activity,billPaymentNickName,mActivityViewModel.transferdAmountTo)
                     }

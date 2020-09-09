@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="@dimen/_16sdp"
     app:cardElevation="0dp"
     app:cardUseCompatPadding="true"
@@ -48,12 +49,14 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/favorite_dialog_layout_enter_nick"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/add_toFavorite_dialog_description"
             android:layout_marginTop="@dimen/_16sdp"
+            app:layout_constraintEnd_toStartOf="@+id/lengthTv"
             android:layout_marginStart="@dimen/_16sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
+
             >
 
             <com.es.marocapp.widgets.MarocEditText
@@ -68,6 +71,17 @@
                 android:hint="@string/addNick"
                 />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.es.marocapp.widgets.MarocMediumTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lengthTv"
+            tools:text="4/4"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/favorite_dialog_layout_enter_nick"
+            app:layout_constraintBottom_toBottomOf="@+id/favorite_dialog_layout_enter_nick"
+            app:layout_constraintStart_toEndOf="@+id/favorite_dialog_layout_enter_nick"/>
 
         <com.es.marocapp.widgets.MarocButton
             android:id="@+id/favorites_dialog_cancel_btn"
