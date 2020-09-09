@@ -25,7 +25,7 @@ class BillPaymentFavoritesAdapter(private val favContacts: ArrayList<Contact>,
         /*holder.paymentItem.text = paymentItems[position].nomCreancier
         var name = paymentItems[position].nomCreancier
         holder.paymentItemIcon.text = name[0].toString()*/
-        if(favContacts[position].contactName.contains("BillPayment_TelecomBill_Internet@")){
+        if(favContacts[position].contactName.contains("Telec_Internet@")){
             holder.fav_main_image.visibility = View.GONE
             holder.fav_main_image.setImageResource(R.drawable.internet_blue)
 
@@ -40,7 +40,7 @@ class BillPaymentFavoritesAdapter(private val favContacts: ArrayList<Contact>,
             number = number.substringBefore("@")
             number = number.substringBefore("/")
             holder.fav_name.text = number
-        }else if(favContacts[position].contactName.contains("BillPayment_TelecomBill_PostpaidMobile@")){
+        }else if(favContacts[position].contactName.contains("Telec_PostpaidMobile@")){
             holder.fav_main_image.visibility = View.GONE
             holder.fav_main_image.setImageResource(R.drawable.postpaid_blue)
 
@@ -55,7 +55,7 @@ class BillPaymentFavoritesAdapter(private val favContacts: ArrayList<Contact>,
             number = number.substringBefore("@")
             number = number.substringBefore("/")
             holder.fav_name.text = number
-        }else if(favContacts[position].contactName.contains("BillPayment_TelecomBill_PostpaidFix@")){
+        }else if(favContacts[position].contactName.contains("Telec_PostpaidFix@")){
             holder.fav_main_image.visibility = View.GONE
             holder.fav_main_image.setImageResource(R.drawable.postpaid_fix_blue)
 
@@ -70,7 +70,7 @@ class BillPaymentFavoritesAdapter(private val favContacts: ArrayList<Contact>,
             number = number.substringBefore("@")
             number = number.substringBefore("/")
             holder.fav_name.text = number
-        }else if(favContacts[position].contactName.contains("BillPayment_Fatourati_")){
+        }else if(favContacts[position].contactName.contains("Util_")){
             holder.fav_main_image.visibility = View.GONE
             holder.fav_telecom_bill_img.visibility = View.VISIBLE
 
