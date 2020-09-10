@@ -33,13 +33,15 @@ class BillPaymentFavoritesAdapter(private val favContacts: ArrayList<Contact>,
             var name = favContacts[position].contactName
             name = name.substringBefore("@")
             name = name.substringAfter("_")
-            name = name.substringAfter("_")
             holder.fav_telecom_bill_img.text = name[0].toString()
 
-            var number = favContacts[position].fri
+            /*var number = favContacts[position].fri
             number = number.substringBefore("@")
-            number = number.substringBefore("/")
-            holder.fav_name.text = number
+            number = number.substringBefore("/")*/
+            var nickName = favContacts[position].contactName
+            nickName = nickName.substringAfter("@")
+            nickName = nickName.substringBefore(",")
+            holder.fav_name.text = nickName
         }else if(favContacts[position].contactName.contains("Telec_PostpaidMobile@")){
             holder.fav_main_image.visibility = View.GONE
             holder.fav_main_image.setImageResource(R.drawable.postpaid_blue)
@@ -48,13 +50,15 @@ class BillPaymentFavoritesAdapter(private val favContacts: ArrayList<Contact>,
             var name = favContacts[position].contactName
             name = name.substringBefore("@")
             name = name.substringAfter("_")
-            name = name.substringAfter("_")
             holder.fav_telecom_bill_img.text = name[0].toString()
 
-            var number = favContacts[position].fri
+            /*var number = favContacts[position].fri
             number = number.substringBefore("@")
-            number = number.substringBefore("/")
-            holder.fav_name.text = number
+            number = number.substringBefore("/")*/
+            var nickName = favContacts[position].contactName
+            nickName = nickName.substringAfter("@")
+            nickName = nickName.substringBefore(",")
+            holder.fav_name.text = nickName
         }else if(favContacts[position].contactName.contains("Telec_PostpaidFix@")){
             holder.fav_main_image.visibility = View.GONE
             holder.fav_main_image.setImageResource(R.drawable.postpaid_fix_blue)
@@ -63,13 +67,15 @@ class BillPaymentFavoritesAdapter(private val favContacts: ArrayList<Contact>,
             var name = favContacts[position].contactName
             name = name.substringBefore("@")
             name = name.substringAfter("_")
-            name = name.substringAfter("_")
             holder.fav_telecom_bill_img.text = name[0].toString()
 
-            var number = favContacts[position].fri
+            /*var number = favContacts[position].fri
             number = number.substringBefore("@")
-            number = number.substringBefore("/")
-            holder.fav_name.text = number
+            number = number.substringBefore("/")*/
+            var nickName = favContacts[position].contactName
+            nickName = nickName.substringAfter("@")
+            nickName = nickName.substringBefore(",")
+            holder.fav_name.text = nickName
         }else if(favContacts[position].contactName.contains("Util_")){
             holder.fav_main_image.visibility = View.GONE
             holder.fav_telecom_bill_img.visibility = View.VISIBLE
@@ -77,12 +83,14 @@ class BillPaymentFavoritesAdapter(private val favContacts: ArrayList<Contact>,
             var name = favContacts[position].contactName
             name = name.substringBefore("@")
             name = name.substringAfter("_")
-            name = name.substringAfter("_")
             holder.fav_telecom_bill_img.text = name[0].toString()
 
-            var number = favContacts[position].fri
-            number = number.substringBefore("@")
-            holder.fav_name.text = number
+            /*var number = favContacts[position].fri
+            number = number.substringBefore("@")*/
+            var nickName = favContacts[position].contactName
+            nickName = nickName.substringAfter("@")
+            nickName = nickName.substringBefore(",")
+            holder.fav_name.text = nickName
         }
 
         holder.img_delete_favorite.setOnClickListener {

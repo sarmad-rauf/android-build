@@ -165,7 +165,7 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
             var nickName = mDataBinding.inputName.text.toString().trim()
             if(mActivitViewModel.isPaymentSelected.get()!!){
                 if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!){
-                    var fatoratiNickName = "BillPayment_Fatourati_${mActivitViewModel.fatoratiTypeSelected}@$nickName"
+                    var fatoratiNickName = "Util_${mActivitViewModel.fatoratiTypeSelected}@$nickName"
                     mActivitViewModel.requestForAddFavoritesApi(activity,fatoratiNickName,Constants.getFatoratiAlias(msisdnEntered))
                 }else{
                     mActivitViewModel.requestForAddFavoritesApi(activity,nickName,Constants.getNumberMsisdn(msisdnEntered))

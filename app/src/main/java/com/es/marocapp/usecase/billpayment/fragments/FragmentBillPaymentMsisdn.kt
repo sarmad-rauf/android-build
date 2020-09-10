@@ -62,7 +62,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
             mDataBinding.inputPhoneNumber.setInputType(InputType.TYPE_CLASS_TEXT);
             var selectedFatorati =
-                "BillPayment_Fatourati_${mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier}"
+                "Util_${mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier}"
             for (contacts in Constants.mContactListArray) {
                 var contactName = contacts.contactName
                 if (contactName.contains(selectedFatorati)) {
@@ -77,12 +77,12 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             mDataBinding.inputPhoneNumber.setInputType(InputType.TYPE_CLASS_NUMBER)
             var selectedBillType = ""
             if(mActivityViewModel.isInternetSelected.get()!!){
-                selectedBillType = "BillPayment_TelecomBill_Internet@"
+                selectedBillType = "Telec_Internet@@"
 
             }else if(mActivityViewModel.isPostPaidMobileSelected.get()!!){
-                selectedBillType = "BillPayment_TelecomBill_PostpaidMobile@"
+                selectedBillType = "Telec_PostpaidMobile@"
             }else if(mActivityViewModel.isPostPaidFixSelected.get()!!){
-                selectedBillType = "BillPayment_TelecomBill_PostpaidFix@"
+                selectedBillType = "Telec_PostpaidFix@"
             }
             for (contacts in Constants.mContactListArray) {
                 var contactName = contacts.contactName
@@ -538,8 +538,12 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                     mDataBinding.inputPhoneNumber.setText(selectedFavorites)
                     mActivityViewModel.isUserSelectedFromFavorites.set(true)
 
-                    var selectedBillType =
-                        "BillPayment_TelecomBill_${mActivityViewModel.billTypeSelected.get()!!}"
+                    var selectedBillType = ""
+                    if(mActivityViewModel.isPostPaidMobileSelected.get()!!){
+                        selectedBillType = "Telec_PostpaidMobile@"
+                    }else if(mActivityViewModel.isPostPaidFixSelected.get()!!){
+                        selectedBillType = "Telec_PostpaidFix@"
+                    }
                     for (contacts in Constants.mContactListArray) {
                         var contactName = contacts.contactName
                         var contactNameWithoutPrefix = contactName.substringAfter("@")
@@ -548,7 +552,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                         if (contactName.contains(selectedBillType)) {
                             var contactNumber = contacts.fri
                             if(contactNumber.equals(selectedFavorites)){
-                                mDataBinding.inputCode.setText(contactNumberCode)
+                                if(!contactNumberCode.isNullOrEmpty()){
+                                    mDataBinding.inputCode.setText(contactNumberCode)
+                                }
                             }
                         }
                     }
