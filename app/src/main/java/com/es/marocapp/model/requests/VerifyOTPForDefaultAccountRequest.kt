@@ -8,5 +8,7 @@ data class VerifyOTPForDefaultAccountRequest(
     val language: String,
     val profile : String?,
     val referenceNumber : String,
-    val otp : String
+    val otp : String,
+    val firstName : String?,
+    val lastName : String?
 )

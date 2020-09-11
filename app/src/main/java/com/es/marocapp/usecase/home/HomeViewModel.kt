@@ -198,7 +198,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.verifyOTPforSetDefaultAccountStatus(
                 VerifyOTPForDefaultAccountRequest(ApiConstant.CONTEXT_AFTER_LOGIN, receiver,"confirm",LocaleManager.selectedLanguage,Constants?.balanceInfoAndResponse?.profilename,referenceNumber,
-                    EncryptionUtils.encryptString(otp))
+                    EncryptionUtils.encryptString(otp),Constants.CURRENT_USER_FIRST_NAME,Constants.CURRENT_USER_LAST_NAME)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(

@@ -63,6 +63,7 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
 
     private fun setStrings() {
         mDataBinding.tvTransactionHistoryTitle.text = LanguageData.getStringValue("TransactionHistory")
+        mDataBinding.tvNoDataFound.text = LanguageData.getStringValue("NoDataFound")
     }
 
     private fun subscribeObserver() {
@@ -83,10 +84,11 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
                             }
                         }*/
 
+                        mDataBinding.tvNoDataFound.visibility = View.GONE
                         mTransactionHistoryAdapter.updateHistoryList(it.historyResponse)
 
                     }else{
-                        Toast.makeText(activity,"List Empty",Toast.LENGTH_SHORT).show()
+                        mDataBinding.tvNoDataFound.visibility = View.VISIBLE
                     }
                 }else{
                     DialogUtils.showErrorDialoge(activity,it.description)

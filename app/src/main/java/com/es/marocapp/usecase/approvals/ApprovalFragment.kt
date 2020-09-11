@@ -1,6 +1,7 @@
 package com.es.marocapp.usecase.approvals
 
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -65,16 +66,22 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
     private fun setStrings() {
         mDataBinding.allApprovalTitle.text = LanguageData.getStringValue("All Approvals")
         mDataBinding.tvTransactionHistoryTitle.text = LanguageData.getStringValue("MyApprovals")
+        mDataBinding.tvNoDataFound.text = LanguageData.getStringValue("NoDataFound")
     }
 
     private fun subscribeForApprovalsResponse() {
         approvalViewModel.getApprovalResponseListner.observe(activity as ApprovalActivity, Observer {
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                // approvalViewModel.requestForUserApprovalsApi(activity,"01","true")
-                mApprovalsList.clear()
-                mApprovalsList.apply {
-                    addAll(it.approvaldetails as ArrayList<Approvaldetail>)
-                    mApprovalsItemAdapter.notifyDataSetChanged()
+                if(it.approvaldetails.isNullOrEmpty()){
+                    mDataBinding.tvNoDataFound.visibility = View.VISIBLE
+                }else{
+                    mDataBinding.tvNoDataFound.visibility = View.GONE
+                    mApprovalsList.clear()
+                    mApprovalsList.apply {
+                        addAll(it.approvaldetails as ArrayList<Approvaldetail>)
+                        mApprovalsItemAdapter.notifyDataSetChanged()
+                    }
                 }
             }else{
               DialogUtils.showErrorDialoge(activity,it.description)

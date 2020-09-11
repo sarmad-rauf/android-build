@@ -252,17 +252,17 @@ class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistra
             mDataBinding.inputLayoutGender.isErrorEnabled = false
         }
 
-        if(mDataBinding.inputEmail.text.isNullOrEmpty() || !mDataBinding.inputEmail.text.trim().matches(emailPattern)){
-            isValidForAll = false
-            if(mDataBinding.inputEmail.text.isNullOrEmpty()) {
+        if(!mDataBinding.inputEmail.text.isNullOrEmpty()){
+            if(!mDataBinding.inputEmail.text.trim().matches(emailPattern)) {
+                isValidForAll = false
                 mDataBinding.inputLayoutEmail.error =
                     LanguageData.getStringValue("PleaseEnterEmailAddress")
+
+                mDataBinding.inputLayoutEmail.isErrorEnabled = true
+            }else{
+                mDataBinding.inputLayoutEmail.error = ""
+                mDataBinding.inputLayoutEmail.isErrorEnabled = false
             }
-            else{
-                mDataBinding.inputLayoutEmail.error =
-                    LanguageData.getStringValue("PleaseEnterValidEmail")
-            }
-            mDataBinding.inputLayoutEmail.isErrorEnabled = true
         }else{
             mDataBinding.inputLayoutEmail.error = ""
             mDataBinding.inputLayoutEmail.isErrorEnabled = false
