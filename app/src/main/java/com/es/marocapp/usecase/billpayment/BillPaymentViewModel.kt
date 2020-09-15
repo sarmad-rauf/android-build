@@ -21,6 +21,9 @@ import com.es.marocapp.utils.Tools
 import io.reactivex.disposables.Disposable
 import retrofit2.HttpException
 import java.text.DecimalFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class BillPaymentViewModel(application: Application) : AndroidViewModel(application){
     lateinit var disposable: Disposable
@@ -212,13 +215,21 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
             try {
                 convertedAmountValue = String.format(
                     "%.2f",
-                    (selectBillAmount.toDouble() / Constants.AMOUNT_CONVERSION_VALUE.toDouble())
+                    (selectBillAmount.toDouble() / Constants.AMOUNT_CONVERSION_VALUE.toDouble()),
+                    Locale.US
                 )
+
+                if(convertedAmountValue.contains(",")){
+                    convertedAmountValue=convertedAmountValue.replace(",",".")
+                }
                 Log.d("convertedAmountValue", convertedAmountValue)
 
                 convertedOpenAmount =
                     (DecimalFormat("#").format((convertedAmountValue.toDouble() * Constants.AMOUNT_CONVERSION_VALUE.toDouble()))).toString()
 
+                if(convertedOpenAmount.contains(",")){
+                    convertedOpenAmount=convertedOpenAmount.replace(",",".")
+                }
                 // convertedOpenAmount = String.format("%.0f", convertedOpenAmount)
 
                 Log.d("convertedOpenAmount", convertedOpenAmount)
@@ -303,13 +314,20 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                     "%.2f",
                     (selectBillAmount.toDouble() / Constants.AMOUNT_CONVERSION_VALUE.toDouble())
                 )
+
+                if(convertedAmountValue.contains(",")){
+                    convertedAmountValue=convertedAmountValue.replace(",",".")
+                }
+
                 Log.d("convertedAmountValue", convertedAmountValue)
 
                 convertedOpenAmount =
                     (DecimalFormat("#").format((convertedAmountValue.toDouble() * Constants.AMOUNT_CONVERSION_VALUE.toDouble()))).toString()
 
                // convertedOpenAmount = String.format("%.0f", convertedOpenAmount)
-
+                if(convertedOpenAmount.contains(",")){
+                    convertedOpenAmount=convertedOpenAmount.replace(",",".")
+                }
                 Log.d("convertedOpenAmount", convertedOpenAmount)
 
             }
