@@ -21,8 +21,8 @@ import com.es.marocapp.utils.Tools
 import io.reactivex.disposables.Disposable
 import retrofit2.HttpException
 import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class BillPaymentViewModel(application: Application) : AndroidViewModel(application){
@@ -213,19 +213,19 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
 
             try {
-                convertedAmountValue = String.format(
+                convertedAmountValue = String.format(Locale.US,
                     "%.2f",
-                    (selectBillAmount.toDouble() / Constants.AMOUNT_CONVERSION_VALUE.toDouble()),
-                    Locale.US
+                    (selectBillAmount.toDouble() / Constants.AMOUNT_CONVERSION_VALUE.toDouble())
+
                 )
 
                 if(convertedAmountValue.contains(",")){
                     convertedAmountValue=convertedAmountValue.replace(",",".")
                 }
                 Log.d("convertedAmountValue", convertedAmountValue)
-
+                val symbolsEN_US: DecimalFormatSymbols = DecimalFormatSymbols.getInstance(Locale.US)
                 convertedOpenAmount =
-                    (DecimalFormat("#").format((convertedAmountValue.toDouble() * Constants.AMOUNT_CONVERSION_VALUE.toDouble()))).toString()
+                    (DecimalFormat("#",symbolsEN_US).format((convertedAmountValue.toDouble() * Constants.AMOUNT_CONVERSION_VALUE.toDouble()))).toString()
 
                 if(convertedOpenAmount.contains(",")){
                     convertedOpenAmount=convertedOpenAmount.replace(",",".")
@@ -310,7 +310,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
 
             try {
-                convertedAmountValue = String.format(
+                convertedAmountValue = String.format(Locale.US,
                     "%.2f",
                     (selectBillAmount.toDouble() / Constants.AMOUNT_CONVERSION_VALUE.toDouble())
                 )
@@ -320,9 +320,10 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                 }
 
                 Log.d("convertedAmountValue", convertedAmountValue)
+                val symbolsEN_US: DecimalFormatSymbols = DecimalFormatSymbols.getInstance(Locale.US)
 
                 convertedOpenAmount =
-                    (DecimalFormat("#").format((convertedAmountValue.toDouble() * Constants.AMOUNT_CONVERSION_VALUE.toDouble()))).toString()
+                    (DecimalFormat("#", symbolsEN_US).format((convertedAmountValue.toDouble() * Constants.AMOUNT_CONVERSION_VALUE.toDouble()))).toString()
 
                // convertedOpenAmount = String.format("%.0f", convertedOpenAmount)
                 if(convertedOpenAmount.contains(",")){
