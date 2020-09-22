@@ -7,12 +7,14 @@ import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.util.Log
+import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.utils.PrefUtils.PreKeywords.PREF_KEY_IS_FIRSTTIME
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
 import com.google.zxing.qrcode.QRCodeWriter
 import kotlinx.android.synthetic.main.fragment_generate_qr.*
+import java.time.LocalDate
 
 object Tools {
 
@@ -73,6 +75,44 @@ object Tools {
             Log.e("QR ERROR", e.toString())
             return null
         }
+    }
+
+    fun generateEMVcoString(number: String):String{
+
+        var Paid_Entity_Reference_VALUE=EncryptionUtils.encryptStringAESCBC(number)
+        var Masked_Paid_Entity_Reference_VALUE=number
+
+       var qrString=  Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE +
+                Constants.EMVco.Point_Of_Initiation_Method_ID + Constants.EMVco.Point_Of_Initiation_Method_SIZE + Constants.EMVco.Point_Of_Initiation_Method_VALUE +
+                Constants.EMVco.Merchant_Account_Information_ID + Constants.EMVco.Merchant_Account_Information_SIZE + Constants.EMVco.Merchant_Account_Information_Value +
+                Constants.EMVco.Globally_Unique_Identifier_ID + Constants.EMVco.Globally_Unique_Identifier_SIZE + Constants.EMVco.Globally_Unique_Identifier_VALUE +
+                Constants.EMVco.Encryption_Format_ID + Constants.EMVco.Encryption_Format_SIZE + Constants.EMVco.Encryption_Format_VALUE +
+                Constants.EMVco.Paid_Entity_Reference_Format_ID + Constants.EMVco.Paid_Entity_Reference_Format_SIZE + Constants.EMVco.Paid_Entity_Reference_Format_VALUE +
+                Constants.EMVco.Paid_Entity_Reference_ID + Constants.EMVco.Paid_Entity_Reference_SIZE + Paid_Entity_Reference_VALUE +
+                Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE + Masked_Paid_Entity_Reference_VALUE
+
+        return qrString
+    }
+
+    fun extractNumberFromEMVcoQR(text:String):String{
+        var num=""
+        try {
+            if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
+                num =
+                    text.split(Constants.EMVco.Paid_Entity_Reference_ID + Constants.EMVco.Paid_Entity_Reference_SIZE)[1]
+                if (text.contains(Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE)) {
+                    num = num.split(Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE)[0]
+                    num = EncryptionUtils.decryptStringAESCBC(num)
+                } else {
+                    num = ""
+                }
+            }
+        }
+        catch (e:Exception){
+            num=""
+        }
+        Log.d("DecryptedNumber",num)
+        return num
     }
 
     fun openDialerWithNumber(context: Context){

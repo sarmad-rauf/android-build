@@ -21,6 +21,7 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.qrcode.ScanQRActivity
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.Tools
 import com.es.marocapp.widgets.MarocEditText
 import com.es.marocapp.widgets.MarocMediumTextView
 import com.google.android.material.textfield.TextInputLayout
@@ -155,7 +156,7 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
             val result = data
             val scannedString=result?.getStringExtra(KEY_SCANNED_DATA)
             if (result != null) {
-                if (scannedString.isNullOrEmpty()) {
+                if (scannedString.isNullOrEmpty() || Tools.extractNumberFromEMVcoQR(scannedString).isNullOrEmpty()) {
 //                DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
                     mInputFieldLayout.isErrorEnabled = true
                     mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
@@ -165,7 +166,7 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
                 } else {
                     //var sResult = result.contents
 
-                    verifyAndSetMsisdn(scannedString, false)
+                    verifyAndSetMsisdn(Tools.extractNumberFromEMVcoQR(scannedString), false)
                 }
             } else {
                 // This is important, otherwise the result will not be passed to the fragment

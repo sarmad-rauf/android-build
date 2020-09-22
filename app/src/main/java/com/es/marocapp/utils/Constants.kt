@@ -262,4 +262,39 @@ object Constants {
         Log.i("DATE", "" + formatted)
         return formatted
     }
+
+    object EMVco{
+        const val Payload_Format_Indicator_ID="00"
+        const val Payload_Format_Indicator_SIZE="02"
+        const val Payload_Format_Indicator_VALUE="01"
+
+        const val Point_Of_Initiation_Method_ID="01"
+        const val Point_Of_Initiation_Method_SIZE="02"
+        const val Point_Of_Initiation_Method_VALUE="12"
+
+        const val Merchant_Account_Information_ID="26"
+        const val Merchant_Account_Information_SIZE="91"
+        const val Merchant_Account_Information_Value=""
+
+        const val Globally_Unique_Identifier_ID="00"
+        const val Globally_Unique_Identifier_SIZE="32"
+        const val Globally_Unique_Identifier_VALUE="5bb66a92d69c0ea742dd4f754590fa0a"
+
+        const val Encryption_Format_ID="02"
+        const val Encryption_Format_SIZE="01"
+        const val Encryption_Format_VALUE="1"
+
+        const val Paid_Entity_Reference_Format_ID="05"
+        const val Paid_Entity_Reference_Format_SIZE="01"
+        const val Paid_Entity_Reference_Format_VALUE="0"
+
+        const val Paid_Entity_Reference_ID="06"
+        const val Paid_Entity_Reference_SIZE="24"
+       // var Paid_Entity_Reference_VALUE=""
+
+        const val Masked_Paid_Entity_Reference_ID="07"
+        const val Masked_Paid_Entity_Reference_SIZE="12"
+     //   var Masked_Paid_Entity_Reference_VALUE=""
+
+    }
 }

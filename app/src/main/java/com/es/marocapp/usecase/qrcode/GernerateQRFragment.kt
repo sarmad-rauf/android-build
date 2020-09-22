@@ -1,6 +1,7 @@
 package com.es.marocapp.usecase.qrcode
 
 import android.os.Bundle
+import android.util.Log
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentGenerateQrBinding
 import com.es.marocapp.locale.LanguageData
@@ -18,8 +19,9 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>(){
     }
 
     override fun init(savedInstanceState: Bundle?) {
-
-        imgResult.setImageBitmap(Tools.generateQR(Constants.CURRENT_USER_MSISDN))
+        var qrString= Tools.generateEMVcoString(Constants.CURRENT_USER_MSISDN)
+        Log.d("QRString",qrString)
+        imgResult.setImageBitmap(Tools.generateQR(qrString))
         mDataBinding.imgBackButton.setOnClickListener {
             (activity as MainActivity).navController.navigateUp()
         }

@@ -26,6 +26,7 @@ import com.es.marocapp.usecase.qrcode.ScanQRActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity.Companion.KEY_SCANNED_DATA
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity.Companion.SCAN_QR
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.Tools
 import com.es.marocapp.widgets.MarocEditText
 import com.es.marocapp.widgets.MarocMediumTextView
 import com.google.android.material.textfield.TextInputLayout
@@ -186,7 +187,7 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
             val result = data
             val scannedString=result?.getStringExtra(KEY_SCANNED_DATA)
             if (result != null) {
-                if (scannedString.isNullOrEmpty()) {
+                if (scannedString.isNullOrEmpty() || Tools.extractNumberFromEMVcoQR(scannedString).isNullOrEmpty()) {
 //                DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
                     mInputFieldLayout.isErrorEnabled = true
                     mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
@@ -196,7 +197,7 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
                 } else {
                     //var sResult = result.contents
 
-                    verifyAndSetMsisdn(scannedString, false)
+                    verifyAndSetMsisdn(Tools.extractNumberFromEMVcoQR(scannedString), false)
                 }
             } else {
                 // This is important, otherwise the result will not be passed to the fragment

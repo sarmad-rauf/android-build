@@ -6,7 +6,9 @@ object EncryptionUtils{
         "2192B39425BBD08B6E8E61C5D1F1BC9F428FC569FBC6F78C0BC48FCCDB0F42AE"
     val hexIV = "E1E592E87225847C11D948684F3B070D"
 
-
+    val hexKeyAESCBC =
+        "B67C1EA886E95E689A1BB3DBAD065C16"
+    val hexIVAESCBC = "48E53E0639A76C5A5E0C5BC9E3A91538"
     public fun encryptString(value:String):String{
         //encrypt - result base64 encoded string
         val encryptedText =
@@ -21,6 +23,26 @@ object EncryptionUtils{
             value,
             AesGcm256.HexToByte(hexKey),
             AesGcm256.HexToByte(hexIV)
+        )
+
+        return  decryptedText
+    }
+
+    public fun encryptStringAESCBC(value:String):String{
+        //encrypt - result base64 encoded string
+        val encryptedText =
+            CryptoHandler.getInstance().encrypt(value, AesGcm256.HexToByte(hexKeyAESCBC), AesGcm256.HexToByte(
+                hexIVAESCBC))
+
+        return  encryptedText
+    }
+
+    public fun decryptStringAESCBC(value:String):String{
+        //decrypt - result plain string
+        val decryptedText = CryptoHandler.getInstance().decrypt(
+            value,
+            AesGcm256.HexToByte(hexKeyAESCBC),
+            AesGcm256.HexToByte(hexIVAESCBC)
         )
 
         return  decryptedText
