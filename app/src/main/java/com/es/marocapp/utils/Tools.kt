@@ -13,8 +13,6 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
 import com.google.zxing.qrcode.QRCodeWriter
-import kotlinx.android.synthetic.main.fragment_generate_qr.*
-import java.time.LocalDate
 
 object Tools {
 
@@ -80,9 +78,20 @@ object Tools {
     fun generateEMVcoString(number: String):String{
 
         var Paid_Entity_Reference_VALUE=EncryptionUtils.encryptStringAESCBC(number)
-        var Masked_Paid_Entity_Reference_VALUE=number
+        var Masked_Paid_Entity_Reference_VALUE=""
 
-       var qrString=  Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE +
+        Masked_Paid_Entity_Reference_VALUE = number.substring(0, 4) + "######" + number.substring(10)
+/*
+        val myName = StringBuilder(number)
+        myName.setCharAt(4, '#')
+        myName.setCharAt(5, '#')
+        myName.setCharAt(6, '#')
+        myName.setCharAt(7, '#')
+        myName.setCharAt(8, '#')
+        myName.setCharAt(9, '#')
+        Masked_Paid_Entity_Reference_VALUE=newName.toString()*/
+
+        var qrString=  Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE +
                 Constants.EMVco.Point_Of_Initiation_Method_ID + Constants.EMVco.Point_Of_Initiation_Method_SIZE + Constants.EMVco.Point_Of_Initiation_Method_VALUE +
                 Constants.EMVco.Merchant_Account_Information_ID + Constants.EMVco.Merchant_Account_Information_SIZE + Constants.EMVco.Merchant_Account_Information_Value +
                 Constants.EMVco.Globally_Unique_Identifier_ID + Constants.EMVco.Globally_Unique_Identifier_SIZE + Constants.EMVco.Globally_Unique_Identifier_VALUE +
