@@ -453,17 +453,19 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
             if(isInitiatePaymenetToMerchantUseCase.get()!!){
                 transferType = Constants.MERCHANT_TYPE_PAYMENT
+                receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
             }else if(isFundTransferUseCase.get()!!){
                 transferType = Constants.TRANSFER_TYPE_PAYMENT
+                receiver = Constants.getTransferReceiverAlias(transferdAmountTo)
             }
 
-            if(Constants.IS_AGENT_USER || Constants.IS_MERCHANT_USER){
+        /*    if(Constants.IS_AGENT_USER || Constants.IS_MERCHANT_USER){
                 receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
             }
             if(Constants.IS_CONSUMER_USER){
                 receiver = Constants.getTransferReceiverAlias(transferdAmountTo)
             }
-
+*/
 
             tranferAmountToWithAlias = receiver
 
@@ -534,16 +536,18 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
             if(isInitiatePaymenetToMerchantUseCase.get()!!){
                 transferType = Constants.MERCHANT_TYPE_PAYMENT
+                receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
             }else if(isFundTransferUseCase.get()!!){
                 transferType = Constants.TRANSFER_TYPE_PAYMENT
+                receiver = Constants.getTransferReceiverAlias(transferdAmountTo)
             }
 
-            if(Constants.IS_AGENT_USER || Constants.IS_MERCHANT_USER){
+          /*  if(Constants.IS_AGENT_USER || Constants.IS_MERCHANT_USER){
                 receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
             }
             if(Constants.IS_CONSUMER_USER){
                 receiver = Constants.getTransferReceiverAlias(transferdAmountTo)
-            }
+            }*/
 
 
             tranferAmountToWithAlias = receiver
@@ -621,16 +625,18 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
             if(isInitiatePaymenetToMerchantUseCase.get()!!){
                 transferType = Constants.MERCHANT_TYPE_PAYMENT
+                receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
              }else if(isFundTransferUseCase.get()!!){
                 transferType = Constants.TRANSFER_TYPE_PAYMENT
+                receiver = Constants.getTransferReceiverAlias(transferdAmountTo)
             }
 
-            if(Constants.IS_AGENT_USER || Constants.IS_MERCHANT_USER){
+          /*  if(Constants.IS_AGENT_USER || Constants.IS_MERCHANT_USER){
                 receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
             }
             if(Constants.IS_CONSUMER_USER){
                 receiver = Constants.getTransferReceiverAlias(transferdAmountTo)
-            }
+            }*/
 
 
             tranferAmountToWithAlias = receiver
@@ -703,16 +709,18 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
             if(isInitiatePaymenetToMerchantUseCase.get()!!){
                 transferType = Constants.MERCHANT_TYPE_PAYMENT
+                receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
             }else if(isFundTransferUseCase.get()!!){
                 transferType = Constants.TRANSFER_TYPE_PAYMENT
+                receiver = Constants.getTransferReceiverAlias(transferdAmountTo)
             }
 
-            if(Constants.IS_AGENT_USER || Constants.IS_MERCHANT_USER){
+            /*if(Constants.IS_AGENT_USER || Constants.IS_MERCHANT_USER){
                 receiver = Constants.getMerchantReceiverAlias(transferdAmountTo)
             }
             if(Constants.IS_CONSUMER_USER){
                 receiver = Constants.getTransferReceiverAlias(transferdAmountTo)
-            }
+            }*/
 
 
             tranferAmountToWithAlias = receiver
