@@ -37,8 +37,10 @@
 
                     <com.es.marocapp.widgets.MarocMediumTextView
                         android:id="@+id/input_phone_number_hint"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        app:layout_constraintEnd_toEndOf="parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_8sdp"
                         android:layout_marginStart="@dimen/_18sdp"
                         android:layout_marginTop="@dimen/_16sdp"
                         android:textColor="@color/colorEditTextGreyMedium"

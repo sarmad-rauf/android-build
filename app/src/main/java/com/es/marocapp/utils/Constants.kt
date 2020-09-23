@@ -293,7 +293,8 @@ object Constants {
        // var Paid_Entity_Reference_VALUE=""
 
         const val Masked_Paid_Entity_Reference_ID="07"
-        const val Masked_Paid_Entity_Reference_SIZE="12"
+        const val Masked_Paid_Entity_Reference_SIZE_12="12"
+        const val Masked_Paid_Entity_Reference_SIZE_13="13"
      //   var Masked_Paid_Entity_Reference_VALUE=""
 
     }

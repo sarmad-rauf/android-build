@@ -98,7 +98,7 @@ object Tools {
                 Constants.EMVco.Encryption_Format_ID + Constants.EMVco.Encryption_Format_SIZE + Constants.EMVco.Encryption_Format_VALUE +
                 Constants.EMVco.Paid_Entity_Reference_Format_ID + Constants.EMVco.Paid_Entity_Reference_Format_SIZE + Constants.EMVco.Paid_Entity_Reference_Format_VALUE +
                 Constants.EMVco.Paid_Entity_Reference_ID + Constants.EMVco.Paid_Entity_Reference_SIZE + Paid_Entity_Reference_VALUE +
-                Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE + Masked_Paid_Entity_Reference_VALUE
+                Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE_12 + Masked_Paid_Entity_Reference_VALUE
 
         return qrString
     }
@@ -109,10 +109,15 @@ object Tools {
             if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
                 num =
                     text.split(Constants.EMVco.Paid_Entity_Reference_ID + Constants.EMVco.Paid_Entity_Reference_SIZE)[1]
-                if (text.contains(Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE)) {
-                    num = num.split(Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE)[0]
+                if (text.contains(Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE_12) ) {
+                    num = num.split(Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE_12)[0]
                     num = EncryptionUtils.decryptStringAESCBC(num)
-                } else {
+                }
+                else if (text.contains(Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE_13) ) {
+                    num = num.split(Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE_13)[0]
+                    num = EncryptionUtils.decryptStringAESCBC(num)
+                }
+                else {
                     num = ""
                 }
             }

@@ -39,7 +39,8 @@
 
             <com.es.marocapp.widgets.MarocMediumTextView
                 android:id="@+id/input_phone_number_hint"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
                 tools:text="Enter Mobile Number"
@@ -48,6 +49,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="@dimen/_34sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 />
 
             <com.google.android.material.textfield.TextInputLayout
