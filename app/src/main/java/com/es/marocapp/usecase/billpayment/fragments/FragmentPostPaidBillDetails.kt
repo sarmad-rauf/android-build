@@ -66,6 +66,10 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
                 var item = mActivityViewModel.PostPaidFinancialResourceInfoObserver.get()!!.invoices[i]
                 listOfCustomInvoice.add(InvoiceCustomModel(false,item.month,item.ohrefnum,item.ohxact,item.openAmount))
             }
+           if(mActivityViewModel.PostPaidFinancialResourceInfoObserver.get()!!.invoices!=null &&
+               mActivityViewModel.PostPaidFinancialResourceInfoObserver.get()!!.invoices.size>0){
+               mDataBinding.noDataTv.visibility=View.INVISIBLE
+           }
         }
 
         listOfFatoratiCustomInvoice.clear()
@@ -73,6 +77,11 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
             for(i in mActivityViewModel.fatoratiStepFourObserver.get()!!.params.indices){
                 var item = mActivityViewModel.fatoratiStepFourObserver.get()!!.params[i]
                 listOfFatoratiCustomInvoice.add(FatoratiCustomParamModel(false,item.description,item.idArticle,item.prixTTC,item.typeArticle))
+            }
+
+            if(mActivityViewModel.fatoratiStepFourObserver.get()!!.params!=null &&
+                mActivityViewModel.fatoratiStepFourObserver.get()!!.params.size>0){
+                mDataBinding.noDataTv.visibility=View.INVISIBLE
             }
         }
 
@@ -193,6 +202,7 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
 
     private fun setStrings() {
         mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Pay")
+        mDataBinding.noDataTv.text = LanguageData.getStringValue("NoDataFound")
     }
 
     override fun onSubmitClickListner(view: View) {
