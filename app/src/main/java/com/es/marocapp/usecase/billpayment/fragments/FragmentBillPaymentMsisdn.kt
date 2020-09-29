@@ -285,7 +285,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     cilLabel = it.param.libelle
                     if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-                        mDataBinding.inputLayoutPhoneNumber.hint = ""
+                        mDataBinding.inputLayoutPhoneNumber.hint = cilLabel
                         mDataBinding.inputPhoneNumberHint.text =
                             cilLabel
                     }
