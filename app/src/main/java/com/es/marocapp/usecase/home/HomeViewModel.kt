@@ -8,10 +8,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.es.marocapp.R
 import com.es.marocapp.locale.LocaleManager
+import com.es.marocapp.model.requests.BalanceInfoAndLimtRequest
 import com.es.marocapp.model.requests.GetAccountHolderInformationRequest
 import com.es.marocapp.model.requests.SetDefaultAccountRequest
 import com.es.marocapp.model.requests.VerifyOTPForDefaultAccountRequest
 import com.es.marocapp.model.responses.AccountHolderAdditionalInformationResponse
+import com.es.marocapp.model.responses.GetBalanceResponse
 import com.es.marocapp.model.responses.SetDefaultAccountResponse
 import com.es.marocapp.model.responses.VerifyOTPForDefaultAccountResponse
 import com.es.marocapp.network.ApiClient
@@ -34,7 +36,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     var getAccountHolderAdditionalInfoResponseListner = SingleLiveEvent<AccountHolderAdditionalInformationResponse>()
     var setDefaultAccountResponseListener = SingleLiveEvent<SetDefaultAccountResponse>()
     var verifyOTPForDefaultAccountResponseListener = SingleLiveEvent<VerifyOTPForDefaultAccountResponse>()
-
+    var getBalanceResponseListner = SingleLiveEvent<GetBalanceResponse>()
     lateinit var disposable: Disposable
 
     private val _text = MutableLiveData<String>().apply {
@@ -221,6 +223,60 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                             }
                         } else {
                             errorText.postValue(result?.description)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For Get Updated Balance
+    fun requestForGetBalanceApi(
+        context: Context?
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBalance(
+                BalanceInfoAndLimtRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if(result?.responseCode != null){
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS ->  getBalanceResponseListner.postValue(result)
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  getBalanceResponseListner.postValue(result)
+                            }
+                        }
+                        else{
+                            getBalanceResponseListner.postValue(result)
                         }
 
 

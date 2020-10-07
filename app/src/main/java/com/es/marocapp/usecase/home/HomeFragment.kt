@@ -21,11 +21,9 @@ import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.airtime.AirTimeActivity
 import com.es.marocapp.usecase.approvals.ApprovalActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentActivity
-import com.es.marocapp.usecase.cashinviacard.ActivityCashInViaCard
 import com.es.marocapp.usecase.cashservices.CashServicesActivity
 import com.es.marocapp.usecase.consumerregistration.ConsumerRegistrationActivity
 import com.es.marocapp.usecase.payments.PaymentsActivity
-import com.es.marocapp.usecase.qrcode.GenerateQrActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
@@ -62,7 +60,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
 
         (activity as MainActivity).setHomeToolbarVisibility(true)
 
-        populateHomeCardView()
+        populateHomeCardView(true, "")
         populateHomeUseCase()
 
         if (Constants.IS_FIRST_TIME) {
@@ -79,6 +77,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         (activity as MainActivity).isTransactionFragmentNotVisible = true
         setStrings()
         setQuickAmountListner()
+
+        subscribeForGetBalanceResponse()
+        homeViewModel.requestForGetBalanceApi(activity)
     }
 
     private fun setQuickAmountListner() {
@@ -446,7 +447,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         }
     }
 
-    private fun populateHomeCardView() {
+    private fun populateHomeCardView(updateBalance: Boolean, amount: String?) {
         var mbalanceInfoAndResonse = Constants.balanceInfoAndResponse
         var maxUserBalance = "0"
         if(!mbalanceInfoAndResonse.limitsList.isNullOrEmpty()){
@@ -458,13 +459,32 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             }
         }
         var listOfFragment : ArrayList<HomeBalanceFragment> = arrayListOf()
-        listOfFragment.add(HomeBalanceFragment(
-            0, CardModel(
-                R.drawable.ic_wallet_balance,
-                LanguageData.getStringValue("Balance").toString(),
-                Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mbalanceInfoAndResonse.balance,maxUserBalance,mbalanceInfoAndResonse.balance!!
-            ),-1
-        ))
+        if(!updateBalance) {
+            listOfFragment.add(
+                HomeBalanceFragment(
+                    0, CardModel(
+                        R.drawable.ic_wallet_balance,
+                        LanguageData.getStringValue("Balance").toString(),
+                        Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mbalanceInfoAndResonse.balance,
+                        maxUserBalance,
+                        mbalanceInfoAndResonse.balance!!
+                    ), -1
+                )
+            )
+        }
+        else{
+            listOfFragment.add(
+                HomeBalanceFragment(
+                    0, CardModel(
+                        R.drawable.ic_wallet_balance,
+                        LanguageData.getStringValue("Balance").toString(),
+                        Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + amount,
+                        maxUserBalance,
+                        amount!!
+                    ), -1
+                )
+            )
+        }
         addAgentBalanceCard(listOfFragment)
         populateBanners(listOfFragment)
         mCardAdapter = HomeCardAdapter(this@HomeFragment.childFragmentManager,listOfFragment)
@@ -560,5 +580,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     override fun onPreviousBalanceCardClick(view: View) {
         val nPosition: Int = mDataBinding.viewpager.currentItem
         mDataBinding.viewpager.currentItem = nPosition - 1
+    }
+
+    private fun subscribeForGetBalanceResponse() {
+        homeViewModel.getBalanceResponseListner.observe(this, Observer {
+            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                 populateHomeCardView(true,it?.amount)
+            }else{
+                DialogUtils.showErrorDialoge(activity,it.description)
+            }
+        })
     }
 }
