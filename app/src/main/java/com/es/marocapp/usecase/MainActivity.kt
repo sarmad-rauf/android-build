@@ -228,8 +228,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         }
 
         mDataBinding.navigationItem.rootView.logOutGroup.setOnClickListener {
+            val confirmationTxt =
+                LanguageData.getStringValue("Message_WantToLogout")
             mDataBinding.drawerLayout.closeDrawer(GravityCompat.START)
-            mActivityViewModel.requestForLogOutUserApi(this@MainActivity)
+            DialogUtils.showConfirmationDialogue(
+                confirmationTxt!!,
+                this@MainActivity,
+                object : DialogUtils.OnConfirmationDialogClickListner {
+                    override fun onDialogYesClickListner() {
+                        mActivityViewModel.requestForLogOutUserApi(this@MainActivity)
+                    }
+
+
+                })
         }
     }
 
