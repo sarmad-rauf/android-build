@@ -277,7 +277,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
     private fun setStrings() {
         mDataBinding.toolbarName.text =
-            "${LanguageData.getStringValue("Hi")} ${Constants.balanceInfoAndResponse.firstname} ${Constants.balanceInfoAndResponse.surname}"
+            "${LanguageData.getStringValue("Hi")} ${Constants.balanceInfoAndResponse.firstname}"
 
        /* mDataBinding.navigationHeader.drawer_header_name.text =
             "${LanguageData.getStringValue("Hi")} ${Constants.balanceInfoAndResponse.firstname} ${Constants.balanceInfoAndResponse.surname}"

@@ -258,27 +258,29 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
 
     private fun populateHomeUseCase() {
         val useCases = ArrayList<HomeUseCasesModel>().apply {
-            if (Constants.loginWithCertResponse.allowedMenu.MerchantPayment != null) {
+            if(Constants.loginWithCertResponse.allowedMenu.MyApprovals != null){
                 this.add(
                     HomeUseCasesModel(
-                        LanguageData.getStringValue("MerchantPayment").toString(),
-                        R.drawable.home_merchant_payment
+                        LanguageData.getStringValue("MyApprovals").toString(),
+                        R.drawable.approval_home_use_case_icon_new
                     )
                 )
             }
-            if (Constants.loginWithCertResponse.allowedMenu.AirTime != null) {
-                this.add(
-                    HomeUseCasesModel(
-                        LanguageData.getStringValue("AirTime").toString(),
-                        R.drawable.home_air_time
-                    )
-                )
-            }
+
             if (Constants.loginWithCertResponse.allowedMenu.SendMoney != null) {
                 this.add(
                     HomeUseCasesModel(
                         LanguageData.getStringValue("SendMoney").toString(),
-                        R.drawable.home_send_money
+                        R.drawable.home_send_money_new
+                    )
+                )
+            }
+
+            if (Constants.loginWithCertResponse.allowedMenu.MerchantPayment != null) {
+                this.add(
+                    HomeUseCasesModel(
+                        LanguageData.getStringValue("MerchantPayment").toString(),
+                        R.drawable.home_merchant_payment_new
                     )
                 )
             }
@@ -290,6 +292,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     )
                 )
             }
+
+            if (Constants.loginWithCertResponse.allowedMenu.AirTime != null) {
+                this.add(
+                    HomeUseCasesModel(
+                        LanguageData.getStringValue("AirTime").toString(),
+                        R.drawable.home_air_time_new
+                    )
+                )
+            }
+
+
            /* if (Constants.loginWithCertResponse.allowedMenu.GenerateQR != null) {
                 this.add(
                     HomeUseCasesModel(
@@ -315,14 +328,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 )
             }
 
-            if(Constants.loginWithCertResponse.allowedMenu.MyApprovals != null){
-                this.add(
-                    HomeUseCasesModel(
-                        LanguageData.getStringValue("MyApprovals").toString(),
-                        R.drawable.approval_home_use_case_icon
-                    )
-                )
-            }
+
 
             /*if (Constants.loginWithCertResponse.allowedMenu.CashInViaCard != null) {
                 this.add(
