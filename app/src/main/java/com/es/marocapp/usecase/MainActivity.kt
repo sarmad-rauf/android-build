@@ -2,12 +2,9 @@ package com.es.marocapp.usecase
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
-import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.core.view.get
@@ -27,19 +24,17 @@ import com.es.marocapp.usecase.accountdetails.AccountDetailsActivity
 import com.es.marocapp.usecase.cashinviacard.ActivityCashInViaCard
 import com.es.marocapp.usecase.changepassword.ChangePasswordActivity
 import com.es.marocapp.usecase.favorites.FavoritesActivity
+import com.es.marocapp.usecase.home.HomeFragment
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.qrcode.GenerateQrActivity
 import com.es.marocapp.usecase.settings.SettingsActivity
 import com.es.marocapp.usecase.termsandcondiitons.TermsAndConditions
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
-import com.es.marocapp.utils.PrefUtils
 import com.es.marocapp.utils.Tools
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.layout_drawer_header.view.*
 import kotlinx.android.synthetic.main.layout_side_menu_navigation.view.*
 
 
@@ -53,8 +48,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
     lateinit var mActivityViewModel: MainActivityViewModel
 
+    lateinit var homeFragment: HomeFragment
+
     var isDirectCallForTransaction = true
     var isTransactionFragmentNotVisible = true
+    var showTransactionsDetailsIndirectly = false
 
     override fun setLayout(): Int {
         return R.layout.activity_main
@@ -111,7 +109,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
                 when (item.getItemId()) {
                     R.id.navigation_home-> {
+                        showTransactionsDetailsIndirectly = false
                         navController.navigate(R.id.navigation_home)
+                        homeFragment.setTransacitonScreenVisisble(
+                            isTransactionDetailsVisible = false,
+                            directCallForTransaction = false,
+                            transactionFragmentNotVisible = false
+                        )
+
                     }
 
                     R.id.navigation_transaction-> {
@@ -124,6 +129,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
                     }
 
                     R.id.navigation_approval ->{
+                        showTransactionsDetailsIndirectly = false
                         navController.popBackStack(R.id.navigation_home,false)
                         mDataBinding.drawerLayout.openDrawer(GravityCompat.START)
                     }
@@ -133,6 +139,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         })
 
+//        homeFragment = supportFragmentManager.findFragmentById(R.id.navigation_home) as HomeFragment
+
+        /*val navFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+        homeFragment = navFragment!!.childFragmentManager.primaryNavigationFragment as HomeFragment*/
 
         subscribeForUpdateLanguage()
         subscribeObserver()
@@ -234,13 +244,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     }
 
     fun onStatementClickLisnter(){
-        if (isTransactionFragmentNotVisible) {
+       /* if (isTransactionFragmentNotVisible) {
             if (isDirectCallForTransaction) {
                 navController.navigate(R.id.action_navigation_home_to_navigation_transaction)
             } else {
                 navController.navigateUp()
                 navController.navigate(R.id.action_navigation_home_to_navigation_transaction)
             }
+        }*/
+        if(isDirectCallForTransaction){
+            homeFragment.setTransacitonScreenVisisble(true,isDirectCallForTransaction,isTransactionFragmentNotVisible)
+        }else{
+
+            navController.popBackStack(R.id.navigation_home,false)
+            homeFragment.setTransacitonScreenVisisble(true,isDirectCallForTransaction,isTransactionFragmentNotVisible)
         }
     }
 

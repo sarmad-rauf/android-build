@@ -8,14 +8,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.es.marocapp.R
 import com.es.marocapp.locale.LocaleManager
-import com.es.marocapp.model.requests.BalanceInfoAndLimtRequest
-import com.es.marocapp.model.requests.GetAccountHolderInformationRequest
-import com.es.marocapp.model.requests.SetDefaultAccountRequest
-import com.es.marocapp.model.requests.VerifyOTPForDefaultAccountRequest
-import com.es.marocapp.model.responses.AccountHolderAdditionalInformationResponse
-import com.es.marocapp.model.responses.GetBalanceResponse
-import com.es.marocapp.model.responses.SetDefaultAccountResponse
-import com.es.marocapp.model.responses.VerifyOTPForDefaultAccountResponse
+import com.es.marocapp.model.requests.*
+import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
@@ -37,6 +31,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     var setDefaultAccountResponseListener = SingleLiveEvent<SetDefaultAccountResponse>()
     var verifyOTPForDefaultAccountResponseListener = SingleLiveEvent<VerifyOTPForDefaultAccountResponse>()
     var getBalanceResponseListner = SingleLiveEvent<GetBalanceResponse>()
+    var getTransactionsResponseListner = SingleLiveEvent<TransactionHistoryResponse>()
     lateinit var disposable: Disposable
 
     private val _text = MutableLiveData<String>().apply {
@@ -277,6 +272,70 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                         }
                         else{
                             getBalanceResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For Get Transactions
+    fun requestForGetTransactionHistoryApi(context: Context?,
+                                           identity : String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+            var currentDate = ""
+            var previousDateForTransactions = ""
+
+            currentDate = Constants.getCurrentDate()
+            previousDateForTransactions = Constants.getPreviousFromCurrentDate(currentDate,Constants.PREVIOUS_DAYS_TRANSACTION_COUNT.toInt())
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getTrasactionHistoryCall(
+                TransactionHistoryRequest(ApiConstant.CONTEXT_AFTER_LOGIN,currentDate,Constants.getNumberMsisdn(identity),"0",previousDateForTransactions)
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getTransactionsResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getTransactionsResponseListner.postValue(result)
+                                }
+                            }
+
+                        } else {
+                            getTransactionsResponseListner.postValue(result)
                         }
 
 

@@ -42,6 +42,7 @@ class FAQsFragment : BaseFragment<FragmentFaqsBinding>(){
         (activity as MainActivity).setHomeToolbarVisibility(false)
         (activity as MainActivity).isDirectCallForTransaction = false
         (activity as MainActivity).isTransactionFragmentNotVisible = true
+        (activity as MainActivity).showTransactionsDetailsIndirectly = true
         mAcitivtyViewModel.requestForGetFaqs(activity)
         mDataBinding.tvTransactionHistoryTitle.text = LanguageData.getStringValue("Faqs")
         mDataBinding.imgBackButton.setOnClickListener {

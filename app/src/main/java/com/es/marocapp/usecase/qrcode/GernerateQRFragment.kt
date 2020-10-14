@@ -30,6 +30,7 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>(){
 
         (activity as MainActivity).isDirectCallForTransaction = false
         (activity as MainActivity).isTransactionFragmentNotVisible = true
+        (activity as MainActivity).showTransactionsDetailsIndirectly = true
         setStrings()
     }
 

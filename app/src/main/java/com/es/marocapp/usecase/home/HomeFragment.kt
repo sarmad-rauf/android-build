@@ -6,15 +6,19 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.HomeCardAdapter
 import com.es.marocapp.adapter.HomeUseCasesAdapter
 import com.es.marocapp.adapter.LanguageCustomSpinnerAdapter
+import com.es.marocapp.adapter.TransactionHistoryAdapter
 import com.es.marocapp.databinding.FragmentHomeBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.CardModel
+import com.es.marocapp.model.CustomModelHistoryItem
 import com.es.marocapp.model.HomeUseCasesModel
+import com.es.marocapp.model.responses.History
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
@@ -25,6 +29,7 @@ import com.es.marocapp.usecase.cashservices.CashServicesActivity
 import com.es.marocapp.usecase.consumerregistration.ConsumerRegistrationActivity
 import com.es.marocapp.usecase.payments.PaymentsActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
+import com.es.marocapp.usecase.transaction.TransactionDetailsActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 
@@ -36,6 +41,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     private lateinit var mCardAdapter: HomeCardAdapter
     private lateinit var mUseCasesAdapter: HomeUseCasesAdapter
     lateinit var mLanguageSpinnerAdapter: LanguageCustomSpinnerAdapter
+    private var mTransactionsList : ArrayList<History> = ArrayList()
+    private lateinit var mTransactionHistoryAdapter: TransactionHistoryAdapter
     var referenceNumber = "";
     var quickRechargeSelectedAmount = ""
 
@@ -60,8 +67,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
 
         (activity as MainActivity).setHomeToolbarVisibility(true)
 
+        (activity as MainActivity).homeFragment = this@HomeFragment
+
         populateHomeCardView(true, "")
         populateHomeUseCase()
+
+        mTransactionHistoryAdapter = TransactionHistoryAdapter(mTransactionsList,object : TransactionHistoryAdapter.HistoryDetailListner{
+            override fun onHistoryDetailClickListner(customModelHistoryItem: History) {
+                Constants.currentTransactionItem = customModelHistoryItem
+                startActivity(Intent(activity as MainActivity, TransactionDetailsActivity::class.java))
+            }
+
+        })
+
+        mDataBinding.transactionsRecyclerView.apply {
+            adapter = mTransactionHistoryAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
 
         if (Constants.IS_FIRST_TIME) {
             if (Constants.IS_CONSUMER_USER || Constants.IS_MERCHANT_USER) {
@@ -79,7 +101,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         setQuickAmountListner()
 
         subscribeForGetBalanceResponse()
-        homeViewModel.requestForGetBalanceApi(activity)
+        subsribeForTransactionHistoryResponse()
+        if((activity as MainActivity).showTransactionsDetailsIndirectly){
+            setTransacitonScreenVisisble(true,(activity as MainActivity).isDirectCallForTransaction,
+                (activity as MainActivity).isTransactionFragmentNotVisible)
+        }else{
+            homeViewModel.requestForGetBalanceApi(activity)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).homeFragment = this@HomeFragment
     }
 
     private fun setQuickAmountListner() {
@@ -157,6 +190,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     private fun setStrings() {
         mDataBinding.textTitleQuickRecharge.text = LanguageData.getStringValue("QuickRecharge")
         mDataBinding.btnQuickRecharge4.text = LanguageData.getStringValue("Recharge")
+        mDataBinding.transactionHistoryTitile.text = LanguageData.getStringValue("TransactionHistory")
+        mDataBinding.tvNoDataFound.text = LanguageData.getStringValue("NoDataFound")
 
         if (Constants.quickRechargeAmountsList.isNotEmpty()) {
             val languageItems = Constants.quickRechargeAmountsList.toTypedArray()
@@ -596,5 +631,47 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 DialogUtils.showErrorDialoge(activity,it.description)
             }
         })
+    }
+
+    fun setTransacitonScreenVisisble(
+        isTransactionDetailsVisible: Boolean,
+        directCallForTransaction: Boolean,
+        transactionFragmentNotVisible: Boolean
+    ){
+        if(isTransactionDetailsVisible){
+            homeViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN)
+            if(transactionFragmentNotVisible){
+                if (directCallForTransaction) {
+                    //setTransactionViewVisible
+                    mDataBinding.transactionViewGroup.visibility = View.VISIBLE
+                    mDataBinding.useCasesRecyclerView.visibility = View.GONE
+                } else {
+                    //setTransactionViewVisible
+                    mDataBinding.transactionViewGroup.visibility = View.VISIBLE
+                    mDataBinding.useCasesRecyclerView.visibility = View.GONE
+                }
+            }
+        }else{
+            mDataBinding.transactionViewGroup.visibility = View.GONE
+            mDataBinding.useCasesRecyclerView.visibility = View.VISIBLE
+        }
+    }
+
+    fun subsribeForTransactionHistoryResponse(){
+        homeViewModel.getTransactionsResponseListner.observe(this@HomeFragment,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    if(!it.historyResponse.isNullOrEmpty()){
+
+                        mDataBinding.tvNoDataFound.visibility = View.GONE
+                        mTransactionHistoryAdapter.updateHistoryList(it.historyResponse)
+
+                    }else{
+                        mDataBinding.tvNoDataFound.visibility = View.VISIBLE
+                    }
+                }else{
+                    DialogUtils.showErrorDialoge(activity,it.description)
+                }
+            })
     }
 }
