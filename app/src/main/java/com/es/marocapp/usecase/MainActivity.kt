@@ -53,6 +53,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     var isDirectCallForTransaction = true
     var isTransactionFragmentNotVisible = true
     var showTransactionsDetailsIndirectly = false
+    var isTransactionDetailsShowing = false
 
     override fun setLayout(): Int {
         return R.layout.activity_main
@@ -130,6 +131,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
                     R.id.navigation_approval ->{
                         showTransactionsDetailsIndirectly = false
+                        homeFragment.setTransacitonScreenVisisble(
+                            isTransactionDetailsVisible = false,
+                            directCallForTransaction = false,
+                            transactionFragmentNotVisible = false
+                        )
                         navController.popBackStack(R.id.navigation_home,false)
                         mDataBinding.drawerLayout.openDrawer(GravityCompat.START)
                     }
@@ -263,6 +269,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
                 navController.navigate(R.id.action_navigation_home_to_navigation_transaction)
             }
         }*/
+        isTransactionDetailsShowing = true
         if(isDirectCallForTransaction){
             homeFragment.setTransacitonScreenVisisble(true,isDirectCallForTransaction,isTransactionFragmentNotVisible)
         }else{
@@ -342,6 +349,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     }
 
     override fun onSideMenuDrawerIconClick(view: View) {
+        showTransactionsDetailsIndirectly = false
+        homeFragment.setTransacitonScreenVisisble(
+            isTransactionDetailsVisible = false,
+            directCallForTransaction = false,
+            transactionFragmentNotVisible = false
+        )
         mDataBinding.drawerLayout.openDrawer(GravityCompat.START)
     }
 
@@ -447,8 +460,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     }
 
     override fun onBackPressed() {
+        showTransactionsDetailsIndirectly = false
         if(mDataBinding.drawerLayout.isDrawerOpen(GravityCompat.START)){
             mDataBinding.drawerLayout.closeDrawers()
+        }else if(isTransactionDetailsShowing){
+            showTransactionsDetailsIndirectly = false
+            homeFragment.setTransacitonScreenVisisble(
+                isTransactionDetailsVisible = false,
+                directCallForTransaction = false,
+                transactionFragmentNotVisible = false
+            )
         }else{
             super.onBackPressed()
         }

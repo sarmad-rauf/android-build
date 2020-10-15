@@ -23,6 +23,7 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>(){
         Log.d("QRString",qrString)
         imgResult.setImageBitmap(Tools.generateQR(qrString))
         mDataBinding.imgBackButton.setOnClickListener {
+            (activity as MainActivity).showTransactionsDetailsIndirectly = false
             (activity as MainActivity).navController.navigateUp()
         }
 
@@ -37,4 +38,5 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>(){
     private fun setStrings() {
         mDataBinding.tvGenerateQRTitle.text = LanguageData.getStringValue("GenerateQR")
     }
+
 }

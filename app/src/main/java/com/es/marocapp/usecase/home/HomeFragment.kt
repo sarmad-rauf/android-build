@@ -105,8 +105,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         if((activity as MainActivity).showTransactionsDetailsIndirectly){
             setTransacitonScreenVisisble(true,(activity as MainActivity).isDirectCallForTransaction,
                 (activity as MainActivity).isTransactionFragmentNotVisible)
+            (activity as MainActivity).isTransactionDetailsShowing = true
         }else{
             homeViewModel.requestForGetBalanceApi(activity)
+            (activity as MainActivity).isTransactionDetailsShowing = false
         }
     }
 

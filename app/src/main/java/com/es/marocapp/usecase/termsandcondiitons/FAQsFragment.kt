@@ -46,6 +46,7 @@ class FAQsFragment : BaseFragment<FragmentFaqsBinding>(){
         mAcitivtyViewModel.requestForGetFaqs(activity)
         mDataBinding.tvTransactionHistoryTitle.text = LanguageData.getStringValue("Faqs")
         mDataBinding.imgBackButton.setOnClickListener {
+            (activity as MainActivity).showTransactionsDetailsIndirectly = false
             (activity as MainActivity).navController.popBackStack(R.id.navigation_home,false)
         }
         subsribeObserver()
