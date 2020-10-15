@@ -10,6 +10,8 @@ import com.es.marocapp.databinding.FragmentChangepasswordBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseActivity
+import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.consumerregistration.ConsumerRegistrationActivity
 import com.es.marocapp.utils.DialogUtils
 
 class ChangePasswordActivity : BaseActivity<FragmentChangepasswordBinding>(),
@@ -53,8 +55,13 @@ class ChangePasswordActivity : BaseActivity<FragmentChangepasswordBinding>(),
 
         pinViewModel.getChangePassResponseListner.observe(this@ChangePasswordActivity, Observer {
             if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                Toast.makeText(this@ChangePasswordActivity, it.description, Toast.LENGTH_SHORT).show()
-                (this@ChangePasswordActivity).finish()
+                DialogUtils.showSuccessDialog(this,it.description,object : DialogUtils.OnConfirmationDialogClickListner{
+                    override fun onDialogYesClickListner() {
+                        (this@ChangePasswordActivity).finish()
+                    }
+
+                })
+
             } else {
                 DialogUtils.showErrorDialoge(this@ChangePasswordActivity, it.description)
             }
