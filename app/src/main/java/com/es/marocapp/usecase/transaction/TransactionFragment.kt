@@ -56,6 +56,15 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
 
         transactionViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN)
         (activity as MainActivity).isTransactionFragmentNotVisible = false
+        (activity as MainActivity).showTransactionsDetailsIndirectly = true
+
+        //----------for handling Backpress of activity----------
+        (activity as MainActivity).isGenerateQRFragmentShowing = false
+        (activity as MainActivity).isFaqsFragmentShowing = false
+        (activity as MainActivity).isSideMenuShowing = false
+        (activity as MainActivity).isTranactionDetailsFragmentShowing = false
+        (activity as MainActivity).isHomeFragmentShowing = false
+        (activity as MainActivity).isTransacitonFragmentShowing = true
 
         subscribeObserver()
         setStrings()
@@ -97,6 +106,7 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
     }
 
     override fun onBackBtnClick(view: View) {
+        (activity as MainActivity).showTransactionsDetailsIndirectly = false
         (activity as MainActivity).navController.popBackStack(R.id.navigation_home,false)
     }
 

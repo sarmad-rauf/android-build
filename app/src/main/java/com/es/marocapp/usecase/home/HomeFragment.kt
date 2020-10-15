@@ -106,9 +106,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             setTransacitonScreenVisisble(true,(activity as MainActivity).isDirectCallForTransaction,
                 (activity as MainActivity).isTransactionFragmentNotVisible)
             (activity as MainActivity).isTransactionDetailsShowing = true
+
+            //----------for handling Backpress of activity----------
+            (activity as MainActivity).isGenerateQRFragmentShowing = false
+            (activity as MainActivity).isFaqsFragmentShowing = false
+            (activity as MainActivity).isSideMenuShowing = false
+            (activity as MainActivity).isTranactionDetailsFragmentShowing = true
+            (activity as MainActivity).isHomeFragmentShowing = false
+            (activity as MainActivity).isTransacitonFragmentShowing = false
         }else{
             homeViewModel.requestForGetBalanceApi(activity)
             (activity as MainActivity).isTransactionDetailsShowing = false
+
+            //----------for handling Backpress of activity----------
+            (activity as MainActivity).isGenerateQRFragmentShowing = false
+            (activity as MainActivity).isFaqsFragmentShowing = false
+            (activity as MainActivity).isSideMenuShowing = false
+            (activity as MainActivity).isTranactionDetailsFragmentShowing = false
+            (activity as MainActivity).isHomeFragmentShowing = true
+            (activity as MainActivity).isTransacitonFragmentShowing = false
         }
     }
 

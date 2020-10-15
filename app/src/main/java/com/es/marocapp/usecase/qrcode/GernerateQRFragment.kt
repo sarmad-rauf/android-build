@@ -32,6 +32,15 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>(){
         (activity as MainActivity).isDirectCallForTransaction = false
         (activity as MainActivity).isTransactionFragmentNotVisible = true
         (activity as MainActivity).showTransactionsDetailsIndirectly = true
+
+        //----------for handling Backpress of activity----------
+        (activity as MainActivity).isGenerateQRFragmentShowing = true
+        (activity as MainActivity).isFaqsFragmentShowing = false
+        (activity as MainActivity).isSideMenuShowing = false
+        (activity as MainActivity).isTranactionDetailsFragmentShowing = false
+        (activity as MainActivity).isHomeFragmentShowing = false
+        (activity as MainActivity).isTransacitonFragmentShowing = false
+
         setStrings()
     }
 

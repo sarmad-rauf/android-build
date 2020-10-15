@@ -43,6 +43,15 @@ class FAQsFragment : BaseFragment<FragmentFaqsBinding>(){
         (activity as MainActivity).isDirectCallForTransaction = false
         (activity as MainActivity).isTransactionFragmentNotVisible = true
         (activity as MainActivity).showTransactionsDetailsIndirectly = true
+
+        //----------for handling Backpress of activity----------
+        (activity as MainActivity).isGenerateQRFragmentShowing = false
+            (activity as MainActivity).isFaqsFragmentShowing = true
+            (activity as MainActivity).isSideMenuShowing = false
+            (activity as MainActivity).isTranactionDetailsFragmentShowing = false
+            (activity as MainActivity).isHomeFragmentShowing = false
+            (activity as MainActivity).isTransacitonFragmentShowing = false
+
         mAcitivtyViewModel.requestForGetFaqs(activity)
         mDataBinding.tvTransactionHistoryTitle.text = LanguageData.getStringValue("Faqs")
         mDataBinding.imgBackButton.setOnClickListener {

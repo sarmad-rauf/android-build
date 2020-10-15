@@ -55,6 +55,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     var showTransactionsDetailsIndirectly = false
     var isTransactionDetailsShowing = false
 
+    var isGenerateQRFragmentShowing = false
+    var isFaqsFragmentShowing = false
+    var isSideMenuShowing = false
+    var isTranactionDetailsFragmentShowing = false
+    var isHomeFragmentShowing = false
+    var isTransacitonFragmentShowing = false
+
     override fun setLayout(): Int {
         return R.layout.activity_main
     }
@@ -91,7 +98,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         mDataBinding.fab.setOnClickListener {
-            onStatementClickLisnter()
+            if(!isTransacitonFragmentShowing){
+                onStatementClickLisnter(false)
+            }else{
+                navController.popBackStack(R.id.navigation_home,false)
+                onStatementClickLisnter(false)
+            }
         }
 
         mDataBinding.dashboardCashInViaCard.setOnClickListener {
@@ -106,44 +118,49 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         Tools.openDialerWithNumber(this)
         }
 
-        mDataBinding.navView.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener{
-            override fun onNavigationItemSelected(item: MenuItem): Boolean {
-                when (item.getItemId()) {
-                    R.id.navigation_home-> {
-                        showTransactionsDetailsIndirectly = false
-                        navController.navigate(R.id.navigation_home)
-                        homeFragment.setTransacitonScreenVisisble(
-                            isTransactionDetailsVisible = false,
-                            directCallForTransaction = false,
-                            transactionFragmentNotVisible = false
-                        )
+        mDataBinding.navView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home-> {
+                    //----------for handling Backpress of activity----------
+                    isGenerateQRFragmentShowing = false
+                    isFaqsFragmentShowing = false
+                    isSideMenuShowing = false
+                    isTranactionDetailsFragmentShowing = false
+                    isHomeFragmentShowing = true
+                    isTransacitonFragmentShowing = false
 
-                    }
+                    showTransactionsDetailsIndirectly = false
+                    navController.navigate(R.id.navigation_home)
+                    homeFragment.setTransacitonScreenVisisble(
+                        isTransactionDetailsVisible = false,
+                        directCallForTransaction = false,
+                        transactionFragmentNotVisible = false
+                    )
 
-                    R.id.navigation_transaction-> {
-                        navController.popBackStack(R.id.navigation_home,false)
-                        navController.navigate(R.id.navigation_transaction)
-                    }
-                    R.id.FAQsFragment2-> {
-                        navController.popBackStack(R.id.navigation_home,false)
-                        navController.navigate(R.id.FAQsFragment2)
-                    }
-
-                    R.id.navigation_approval ->{
-                        showTransactionsDetailsIndirectly = false
-                        homeFragment.setTransacitonScreenVisisble(
-                            isTransactionDetailsVisible = false,
-                            directCallForTransaction = false,
-                            transactionFragmentNotVisible = false
-                        )
-                        navController.popBackStack(R.id.navigation_home,false)
-                        mDataBinding.drawerLayout.openDrawer(GravityCompat.START)
-                    }
                 }
-                return false
-            }
 
-        })
+                R.id.navigation_transaction-> {
+                    navController.popBackStack(R.id.navigation_home,false)
+                    navController.navigate(R.id.navigation_transaction)
+                }
+                R.id.FAQsFragment2-> {
+                    navController.popBackStack(R.id.navigation_home,false)
+                    navController.navigate(R.id.FAQsFragment2)
+                }
+
+                R.id.navigation_approval ->{
+                    showTransactionsDetailsIndirectly = false
+                    homeFragment.setTransacitonScreenVisisble(
+                        isTransactionDetailsVisible = false,
+                        directCallForTransaction = false,
+                        transactionFragmentNotVisible = false
+                    )
+                    navController.popBackStack(R.id.navigation_home,false)
+                    mDataBinding.drawerLayout.openDrawer(GravityCompat.START)
+                }
+            }
+            false
+        }
 
 //        homeFragment = supportFragmentManager.findFragmentById(R.id.navigation_home) as HomeFragment
 
@@ -165,7 +182,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         mDataBinding.navigationItem.rootView.statementsGroup.setOnClickListener{
             mDataBinding.drawerLayout.closeDrawers()
-            onStatementClickLisnter()
+            onStatementClickLisnter(true)
         }
 
         mDataBinding.navigationItem.rootView.balanceAndAccountGroup.setOnClickListener {
@@ -260,22 +277,43 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         }
     }
 
-    fun onStatementClickLisnter(){
-       /* if (isTransactionFragmentNotVisible) {
-            if (isDirectCallForTransaction) {
-                navController.navigate(R.id.action_navigation_home_to_navigation_transaction)
-            } else {
-                navController.navigateUp()
-                navController.navigate(R.id.action_navigation_home_to_navigation_transaction)
+    fun onStatementClickLisnter(showTransactionFragment : Boolean){
+        if(showTransactionFragment){
+            isTransactionDetailsShowing = false
+            if (isTransactionFragmentNotVisible) {
+                if (isDirectCallForTransaction) {
+                    navController.navigate(R.id.action_navigation_home_to_navigation_transaction)
+                } else {
+                    navController.navigateUp()
+                    navController.navigate(R.id.action_navigation_home_to_navigation_transaction)
+                }
             }
-        }*/
-        isTransactionDetailsShowing = true
-        if(isDirectCallForTransaction){
-            homeFragment.setTransacitonScreenVisisble(true,isDirectCallForTransaction,isTransactionFragmentNotVisible)
-        }else{
 
-            navController.popBackStack(R.id.navigation_home,false)
-            homeFragment.setTransacitonScreenVisisble(true,isDirectCallForTransaction,isTransactionFragmentNotVisible)
+            //----------for handling Backpress of activity----------
+            isGenerateQRFragmentShowing = false
+            isFaqsFragmentShowing = false
+            isSideMenuShowing = false
+            isTranactionDetailsFragmentShowing = false
+            isHomeFragmentShowing = true
+            isTransacitonFragmentShowing = false
+
+        }else{
+            isTransactionDetailsShowing = true
+            if(isDirectCallForTransaction){
+                homeFragment.setTransacitonScreenVisisble(true,isDirectCallForTransaction,isTransactionFragmentNotVisible)
+            }else{
+
+                navController.popBackStack(R.id.navigation_home,false)
+                homeFragment.setTransacitonScreenVisisble(true,isDirectCallForTransaction,isTransactionFragmentNotVisible)
+            }
+
+            //----------for handling Backpress of activity----------
+            isGenerateQRFragmentShowing = false
+            isFaqsFragmentShowing = false
+            isSideMenuShowing = false
+            isTranactionDetailsFragmentShowing = true
+            isHomeFragmentShowing = false
+            isTransacitonFragmentShowing = false
         }
     }
 
@@ -460,7 +498,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     }
 
     override fun onBackPressed() {
-        showTransactionsDetailsIndirectly = false
+        /*showTransactionsDetailsIndirectly = false
         if(mDataBinding.drawerLayout.isDrawerOpen(GravityCompat.START)){
             mDataBinding.drawerLayout.closeDrawers()
         }else if(isTransactionDetailsShowing){
@@ -471,6 +509,34 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
                 transactionFragmentNotVisible = false
             )
         }else{
+            super.onBackPressed()
+        }*/
+        /*isGenerateQRFragmentShowing
+        isFaqsFragmentShowing
+        isSideMenuShowing
+        isTranactionDetailsFragmentShowing
+        isHomeFragmentShowing
+        isTransacitonFragmentShowing*/
+        showTransactionsDetailsIndirectly = false
+        if(mDataBinding.drawerLayout.isDrawerOpen(GravityCompat.START)){
+            mDataBinding.drawerLayout.closeDrawers()
+        }else if(isTranactionDetailsFragmentShowing){
+            showTransactionsDetailsIndirectly = false
+            homeFragment.setTransacitonScreenVisisble(
+                isTransactionDetailsVisible = false,
+                directCallForTransaction = false,
+                transactionFragmentNotVisible = false
+            )
+            isGenerateQRFragmentShowing = false
+            isFaqsFragmentShowing = false
+            isSideMenuShowing = false
+            isTranactionDetailsFragmentShowing = false
+            isHomeFragmentShowing = true
+            isTransacitonFragmentShowing = false
+
+        }else if(isHomeFragmentShowing){
+            this@MainActivity.finish()
+        }else if(isFaqsFragmentShowing || isGenerateQRFragmentShowing || isHomeFragmentShowing || isTransacitonFragmentShowing){
             super.onBackPressed()
         }
     }
