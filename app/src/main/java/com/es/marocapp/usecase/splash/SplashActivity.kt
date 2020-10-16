@@ -144,7 +144,9 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.APP_CN_LENGTH = it.cnLength
                 Constants.APP_CN_REGEX = it.cnRegex
                 Constants.APP_OTP_LENGTH = it.androidOtpLength
-                Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH = it?.defaultAccountOtpLength
+                if(it.defaultAccountOtpLength!=null){
+                    Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH = it?.defaultAccountOtpLength
+                }
                 Constants.APP_DEFAULT_ACCOUNT_OTP_REGEX = it?.defaultAccountOtpRegex
                 Constants.APP_ADDFAVORITE_NICK_LENGTH = it?.billFavoriteLength
                 Constants.APP_DATE_FORMAT = it.dateFormat

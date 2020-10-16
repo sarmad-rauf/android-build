@@ -8,6 +8,7 @@ import android.text.method.PasswordTransformationMethod
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.CompoundButton
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.BuildConfig
@@ -125,6 +126,14 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
         mActivityViewModel.isSimplePopUp = false
         subscribeObserver()
         setStrings()
+
+        //for Testing Purpose
+        /*DialogUtils.showDefaultAccountOTPDialogue(activity,object : DialogUtils.OnOTPDialogClickListner{
+            override fun onOTPDialogYesClickListner(password: String) {
+                Toast.makeText(activity as LoginActivity,"Successfully Passed use case",Toast.LENGTH_SHORT).show()
+            }
+
+        })*/
 
     }
 

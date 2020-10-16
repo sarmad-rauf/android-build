@@ -10,6 +10,7 @@ import android.text.TextWatcher
 import android.view.*
 import android.widget.*
 import androidx.core.content.res.ResourcesCompat
+import com.chaos.view.PinView
 import com.es.marocapp.R
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
@@ -23,7 +24,7 @@ object DialogUtils {
     fun showErrorDialoge(
         mContext: Context?,
         description: String?,
-        okBtnText : String = "BtnTitle_OK"
+        okBtnText: String = "BtnTitle_OK"
     ) {
         val addDialog = Dialog(mContext!!)
         addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -41,9 +42,9 @@ object DialogUtils {
         val tvTitle = addDialog.findViewById<TextView>(R.id.error_dialog_title)
         val btnOK = addDialog.findViewById<Button>(R.id.error_dialog_ok_btn)
 
-        if(okBtnText.equals("BtnTitle_OK")){
+        if (okBtnText.equals("BtnTitle_OK")) {
             btnOK.text = LanguageData.getStringValue(okBtnText)
-        }else{
+        } else {
             btnOK.text = okBtnText
         }
         tvTitle.text = LanguageData.getStringValue("Alert")
@@ -70,9 +71,9 @@ object DialogUtils {
     fun showUpdateAPPDailog(
         mContext: Context?,
         description: String?,
-        listner : DialogUtils.OnCustomDialogListner,
-        icon : Int,
-        okBtnText : String = "BtnTitle_OK"
+        listner: DialogUtils.OnCustomDialogListner,
+        icon: Int,
+        okBtnText: String = "BtnTitle_OK"
     ) {
         val addDialog = Dialog(mContext!!)
         addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -92,9 +93,9 @@ object DialogUtils {
 
         iconToShow.setImageResource(icon)
 
-        if(okBtnText.equals("BtnTitle_OK")){
+        if (okBtnText.equals("BtnTitle_OK")) {
             btnOK.text = LanguageData.getStringValue(okBtnText)
-        }else{
+        } else {
             btnOK.text = okBtnText
         }
         tvMessage.text = description
@@ -183,7 +184,7 @@ object DialogUtils {
             addDialog.findViewById<TextView>(R.id.add_toFavorite_dialog_description)
         var otpDialogFieldTitle = addDialog.findViewById<TextView>(R.id.add_toFavorite_dialog_title)
 
-        var lengthTv =addDialog.findViewById<TextView>(R.id.lengthTv)
+        var lengthTv = addDialog.findViewById<TextView>(R.id.lengthTv)
 
 
         btnNO.setOnClickListener {
@@ -204,11 +205,11 @@ object DialogUtils {
         nickNameFieldInput.hint = LanguageData.getStringValue("AddNick")
 
         nickNameField.filters =
-               arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_ADDFAVORITE_NICK_LENGTH!!))
+            arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_ADDFAVORITE_NICK_LENGTH!!))
 
         nickNameField.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-                lengthTv.setText(p0?.length.toString() +"/" + Constants.APP_ADDFAVORITE_NICK_LENGTH.toString())
+                lengthTv.setText(p0?.length.toString() + "/" + Constants.APP_ADDFAVORITE_NICK_LENGTH.toString())
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -331,7 +332,7 @@ object DialogUtils {
 
     fun showOTPDialogue(
         mContext: Context?,
-        isFromDefaultAccount:Boolean,
+        isFromDefaultAccount: Boolean,
         listner: OnOTPDialogClickListner
 
 
@@ -373,16 +374,19 @@ object DialogUtils {
             addDialog.findViewById<TextInputLayout>(R.id.otp_dialog_layout_enter_otp)
         otpFieldInput.hint = LanguageData.getStringValue("EnterOTP")
 
-        if(isFromDefaultAccount) {
-          //  otpField.setInputType(InputType.TYPE_CLASS_TEXT);
-          /*  otpField.filters =
-                arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH))*/
+        if (isFromDefaultAccount) {
+            //  otpField.setInputType(InputType.TYPE_CLASS_TEXT);
+            /*  otpField.filters =
+                  arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH))*/
             otpField.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(p0: Editable?) {
                     var otp = otpField.text.toString().trim()
                     var otpLenght = otp.length
                     isOTPRegexMatches =
-                        (otpLenght > 0 && Pattern.matches(Constants.APP_DEFAULT_ACCOUNT_OTP_REGEX, otp))
+                        (otpLenght > 0 && Pattern.matches(
+                            Constants.APP_DEFAULT_ACCOUNT_OTP_REGEX,
+                            otp
+                        ))
                 }
 
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -392,9 +396,8 @@ object DialogUtils {
                 }
 
             })
-        }
-        else{
-           // otpField.setInputType(InputType.TYPE_CLASS_NUMBER)
+        } else {
+            // otpField.setInputType(InputType.TYPE_CLASS_NUMBER)
             otpField.filters =
                 arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_OTP_LENGTH))
             otpField.addTextChangedListener(object : TextWatcher {
@@ -422,15 +425,117 @@ object DialogUtils {
             } else {
                 otpFieldInput.error = ""
                 otpFieldInput.isErrorEnabled = false
-                if(isOTPRegexMatches){
+                if (isOTPRegexMatches) {
                     otpFieldInput.error = ""
                     otpFieldInput.isErrorEnabled = false
 
                     listner.onOTPDialogYesClickListner(otp)
                     addDialog.dismiss()
-                }else{
+                } else {
                     otpFieldInput.error = LanguageData.getStringValue("PleaseEnterValidOTP")
                     otpFieldInput.isErrorEnabled = true
+                }
+            }
+        }
+    }
+
+
+    fun showDefaultAccountOTPDialogue(
+        mContext: Context?,
+        listner: OnOTPDialogClickListner
+
+
+    ) {
+        var isOTPRegexMatches = false
+        val addDialog = Dialog(mContext!!)
+        addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        addDialog.setContentView(R.layout.layout_default_account_otp_dialog)
+
+        val dialogWindow = addDialog.window
+        val layoutParams = dialogWindow!!.attributes
+        layoutParams.x = Gravity.CENTER_HORIZONTAL
+        layoutParams.y = Gravity.CENTER_VERTICAL
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+        dialogWindow.attributes = layoutParams
+
+        addDialog.show()
+
+        var btnNO = addDialog.findViewById<Button>(R.id.otp_dialog_no_btn)
+        var btnYes = addDialog.findViewById<Button>(R.id.otp_dialog_yes_btn)
+
+
+        addDialog.findViewById<View>(R.id.otp_dialog_no_btn).setOnClickListener {
+            addDialog.dismiss()
+        }
+        var otpDialogFieldDescriotion =
+            addDialog.findViewById<TextView>(R.id.otp_dialog_description)
+        var otpDialogFieldTitle = addDialog.findViewById<TextView>(R.id.otp_dialog_title)
+
+        btnNO.text = LanguageData.getStringValue("BtnTitle_No")
+        btnYes.text = LanguageData.getStringValue("BtnTitle_Yes")
+        otpDialogFieldTitle.text = LanguageData.getStringValue("DearCustomer")
+        otpDialogFieldDescriotion.text =
+            LanguageData.getStringValue("PleaseEnterOtpToProceedFurther")
+
+        var otpField = addDialog.findViewById<PinView>(R.id.otp_dialog_input_enter_otp)
+
+        otpField.itemCount = Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH!!
+
+        var hint = ""
+        for(i in 0 until Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH!!){
+            hint = "$hint-"
+        }
+
+        otpField.hint = hint
+
+        otpField.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                var otp = otpField.text.toString().trim()
+                var otpLenght = otp.length
+                isOTPRegexMatches =
+                    (otpLenght > 0 && Pattern.matches(Constants.APP_DEFAULT_ACCOUNT_OTP_REGEX, otp))
+                Logger.debugLog("PinViewValidations","Regex Boolean $isOTPRegexMatches")
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+        })
+
+
+        addDialog.findViewById<View>(R.id.otp_dialog_yes_btn).setOnClickListener {
+            var otp = otpField.text.toString().trim()
+            if (otp.equals("")) {
+                /*otpFieldInput.error = LanguageData.getStringValue("PleaseEnterValidOTP")
+                otpFieldInput.isErrorEnabled = true*/
+                otpField.error = LanguageData.getStringValue("PleaseEnterValidOTP")
+                Logger.debugLog("PinViewValidations","OTP Empty")
+            } else {
+                /*otpFieldInput.error = ""
+                otpFieldInput.isErrorEnabled = false
+                if (isOTPRegexMatches) {
+                    otpFieldInput.error = ""
+                    otpFieldInput.isErrorEnabled = false
+
+                    listner.onOTPDialogYesClickListner(otp)
+                    addDialog.dismiss()
+                } else {
+                    otpFieldInput.error = LanguageData.getStringValue("PleaseEnterValidOTP")
+                    otpFieldInput.isErrorEnabled = true
+                }*/
+                if(isOTPRegexMatches){
+                    otpField.error = ""
+                    listner.onOTPDialogYesClickListner(otp)
+                    addDialog.dismiss()
+                    Logger.debugLog("PinViewValidations","Regex Matches")
+                    Logger.debugLog("PinViewValidations","Regex $otp")
+                }else{
+                    otpField.error = LanguageData.getStringValue("PleaseEnterValidOTP")
+                    Logger.debugLog("PinViewValidations","Regex Not Matches")
                 }
             }
         }
@@ -508,9 +613,9 @@ object DialogUtils {
         var tvDialogTitle = addDialog.findViewById<TextView>(R.id.language_dialog_title)
 
         var btnYes = addDialog.findViewById<Button>(R.id.language_dialog_yes_btn)
-        var rbEnglish =  addDialog.findViewById<RadioButton>(R.id.rb_English)
-        var rbFrench =  addDialog.findViewById<RadioButton>(R.id.rb_French)
-        var rbArabic =  addDialog.findViewById<RadioButton>(R.id.rb_Arabic)
+        var rbEnglish = addDialog.findViewById<RadioButton>(R.id.rb_English)
+        var rbFrench = addDialog.findViewById<RadioButton>(R.id.rb_French)
+        var rbArabic = addDialog.findViewById<RadioButton>(R.id.rb_Arabic)
 
         var radioGrp = addDialog.findViewById<RadioGroup>(R.id.language_dialog_radiogroup)
         var selectedLanguage = ""
@@ -520,8 +625,7 @@ object DialogUtils {
         } else if (LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_FR)) {
             radioGrp.check(R.id.rb_French)
             selectedLanguage = mContext.resources.getString(R.string.language_french)
-        }
-        else if (LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_AR)) {
+        } else if (LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_AR)) {
             radioGrp.check(R.id.rb_Arabic)
             selectedLanguage = mContext.resources.getString(R.string.language_arabic)
         }

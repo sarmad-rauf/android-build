@@ -211,7 +211,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
     }
 
     private fun showOTPdialogue() {
-        DialogUtils.showOTPDialogue(this,true,object : DialogUtils.OnOTPDialogClickListner{
+        DialogUtils.showDefaultAccountOTPDialogue(this,object : DialogUtils.OnOTPDialogClickListner{
 
             override fun onOTPDialogYesClickListner(otp: String) {
                 settingsViewModel.requestForVerifyOTPForSetDefaultAccount(this@SettingsActivity,referenceNumber,otp)

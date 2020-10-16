@@ -1,0 +1,132 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/_16sdp"
+    app:cardElevation="0dp"
+    app:cardUseCompatPadding="true"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/_20sdp"
+        android:background="@android:color/transparent"
+        >
+
+        <com.es.marocapp.widgets.MarocRegularTextView
+            android:id="@+id/otp_dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="@string/dear_customer"
+            android:textColor="@color/colorTextGreyMedium"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.es.marocapp.widgets.MarocRegularTextView
+            android:id="@+id/otp_dialog_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:gravity="center"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:singleLine="false"
+            android:text="@string/default_account_otp"
+            android:textColor="@color/colorGreyDark"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/otp_dialog_title" />
+
+       <!-- <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/otp_dialog_layout_enter_otp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/otp_dialog_description"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            >
+
+            <com.es.marocapp.widgets.MarocEditText
+                android:id="@+id/otp_dialog_input_enter_otp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/myTextInputLabel"
+                android:focusableInTouchMode="true"
+                android:focusable="true"
+                android:inputType="text"
+                android:textSize="@dimen/_14ssp"
+                android:hint="@string/enter_otp"
+                />
+        </com.google.android.material.textfield.TextInputLayout>-->
+
+        <com.chaos.view.PinView
+            android:id="@+id/otp_dialog_input_enter_otp"
+            style="@style/PinWidget.PinView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:cursorVisible="true"
+            app:cursorColor="#0283c6"
+            android:inputType="number"
+            android:padding="16dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
+            app:hideLineWhenFilled="false"
+            app:itemSpacing="@dimen/_8sdp"
+            app:itemWidth="@dimen/_25sdp"
+            app:lineColor="@drawable/otp_selection_theme"
+            app:lineWidth="@dimen/_2sdp"
+            app:viewType="line"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/otp_dialog_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <com.es.marocapp.widgets.MarocButton
+            android:id="@+id/otp_dialog_yes_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:background="@drawable/button_enable"
+            android:text="@string/yes"
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/otp_dialog_no_btn"
+            app:layout_constraintTop_toBottomOf="@+id/otp_dialog_input_enter_otp" />
+
+        <com.es.marocapp.widgets.MarocButton
+            android:id="@+id/otp_dialog_no_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:textSize="@dimen/_14ssp"
+            android:background="@drawable/button_disable"
+            android:text="@string/no"
+            android:textColor="@color/colorTextOrange"
+            app:layout_constraintEnd_toStartOf="@+id/otp_dialog_yes_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/otp_dialog_input_enter_otp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
