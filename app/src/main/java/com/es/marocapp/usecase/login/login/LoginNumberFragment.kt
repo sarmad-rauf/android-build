@@ -145,11 +145,13 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
     }
 
     override fun onLoginButtonClick(view: View) {
-        if (isRegFlow == true) {
+        if (isRegFlow) {
             if (mDataBinding.root.cb_Terms.isChecked) {
                 mDataBinding.root.toast_layout_root.visibility = View.GONE
                 mActivityViewModel.isSignUpFlow.set(true)
-                (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_signUpDetailFragment)
+                //todo Registration Flow Changed Fragment Navigation
+//                (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_signUpDetailFragment)
+                mActivityViewModel.requestForGetOtp(activity)
             } else {
                 DialogUtils.showUpdateAPPDailog(activity,LanguageData.getStringValue("YouMustAgreeToTermsAndConditionsToProceedFurther"),object : DialogUtils.OnCustomDialogListner{
                     override fun onCustomDialogOkClickListner() {
@@ -301,6 +303,14 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                 DialogUtils.showErrorDialoge(activity as LoginActivity, it.description)
             }
         }
+
+        mActivityViewModel.getSimppleOtpForRegistrationResponseListner.observe(this@LoginNumberFragment, Observer {
+            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_verifyNumberFragment)
+            }else if(it.responseCode.equals(ApiConstant.API_FAILURE)){
+                DialogUtils.showErrorDialoge(activity,it.description)
+            }
+        })
 
         mActivityViewModel.getAccountHolderInformationResponseListner.observe(
             this,

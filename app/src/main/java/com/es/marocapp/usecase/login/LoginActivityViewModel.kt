@@ -54,6 +54,8 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     var getAccountHolderInformationResponseListner = SingleLiveEvent<GetAccountHolderInformationResponse>()
     var getInitialAuthDetailsResponseListner = SingleLiveEvent<GetInitialAuthDetailsReponse>()
     var getOtpForRegistrationResponseListner = SingleLiveEvent<GetOtpForRegistrationResponse>()
+    var getSimppleOtpForRegistrationResponseListner = SingleLiveEvent<GetOtpSimpleResponse>()
+    var getVerifyOtpResponseListner = SingleLiveEvent<VerifyOtpResponse>()
     var getRegisterUserResponseListner = SingleLiveEvent<RegisterUserResponse>()
     var getActivateUserResponseListner = SingleLiveEvent<ActivateUserResponse>()
     var getOTPResponseListner = SingleLiveEvent<GetOptResponse>()
@@ -234,11 +236,112 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
     }
 
+
+    // API Called on OTP Fragment For Registration Purpose OTP
+    fun requestForGetOtp(
+        context: Context?
+    ) {
+
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            //TODO authorization & MSISDN parameter pending
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getSimpleOTPForRegistration(
+                GetOtpSimpleRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,
+                    Constants.getNumberMsisdn(mUserMsisdn))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null) {
+                            getSimppleOtpForRegistrationResponseListner.postValue(result)
+
+                        } else {
+                            errorText.postValue(result.description)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    // API Called on Verify OTP Fragment For Registration Purpose OTP
+    fun requestForVerifyOtp(
+        context: Context?,
+        otp : String
+    ) {
+
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            //TODO authorization & MSISDN parameter pending
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getVerifyOtp(
+                VerifyOtpRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,
+                    Constants.getNumberMsisdn(mUserMsisdn),EncryptionUtils.encryptString(otp))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null) {
+                            getVerifyOtpResponseListner.postValue(result)
+
+                        } else {
+                            errorText.postValue(result.description)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
     // API Called on SignUp Detail Fragment For Registration Purpose
     fun requestForRegisterUserApi(
         context: Context?,
-        deviceID_UserMsisdn : String,
-        otp : String
+        deviceID_UserMsisdn : String
     ) {
 
         if (Tools.checkNetworkStatus(getApplication())) {
@@ -247,7 +350,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getRegisterUser(
                 RegisterUserRequest(Accountholder(DOB,identificationNumber,firstName,gender,postalAddress,lastName),
-                    ApiConstant.CONTEXT_BEFORE_LOGIN,deviceID_UserMsisdn,email,Constants.getNumberMsisdn(mUserMsisdn),EncryptionUtils.encryptString(otp))
+                    ApiConstant.CONTEXT_BEFORE_LOGIN,deviceID_UserMsisdn,email,Constants.getNumberMsisdn(mUserMsisdn))
 
             )
                 .compose(applyIOSchedulers())

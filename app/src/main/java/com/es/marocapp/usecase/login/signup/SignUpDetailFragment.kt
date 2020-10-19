@@ -93,6 +93,14 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
             DialogUtils.showErrorDialoge(activity as LoginActivity,it)
         })
 
+        mActivityViewModel.getRegisterUserResponseListner.observe(this@SignUpDetailFragment, Observer {
+            if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_setYourPinFragment)
+            } else {
+                DialogUtils.showErrorDialoge(activity as LoginActivity, it.description)
+            }
+        })
+
         val mInitialAuthDetailsResonseObserver = Observer<GetInitialAuthDetailsReponse>{
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
 
@@ -103,16 +111,15 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
             }
         }
 
-        val mOTPForRegistrationResonseObserver = Observer<GetOtpForRegistrationResponse>{
+        /*val mOTPForRegistrationResonseObserver = Observer<GetOtpForRegistrationResponse>{
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                 (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_verifyNumberFragment)
             }else{
                 DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
             }
-        }
+        }*/
 
         mActivityViewModel.getInitialAuthDetailsResponseListner.observe(this,mInitialAuthDetailsResonseObserver)
-        mActivityViewModel.getOtpForRegistrationResponseListner.observe(this,mOTPForRegistrationResonseObserver)
     }
 
     private fun showDatePickerDialog() {
@@ -178,8 +185,14 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
 //            mActivityViewModel.requestForeGetInitialAuthDetailsApi(activity)
 
-            mActivityViewModel.requestForGetOTPForRegistrationApi(activity,mDataBinding.inputFirstName.text.toString().trim(),mDataBinding.inputLastName.text.toString().trim()
-                ,mDataBinding.inputNationalID.text.toString().trim())
+            //todo Registration Flow Changed Reigstration Call Instead of OTP Call
+            mActivityViewModel.requestForRegisterUserApi(
+                activity,
+                Constants.CURRENT_NUMBER_DEVICE_ID
+            )
+
+            /*mActivityViewModel.requestForGetOTPForRegistrationApi(activity,mDataBinding.inputFirstName.text.toString().trim(),mDataBinding.inputLastName.text.toString().trim()
+                ,mDataBinding.inputNationalID.text.toString().trim())*/
         }
         //For Without API Calling Uncomment Below Line
 //        (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_verifyNumberFragment)

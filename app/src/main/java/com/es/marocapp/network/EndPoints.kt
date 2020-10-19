@@ -20,6 +20,9 @@ object EndPoints {
     //RegisterUser
     const val registeruser = "registeruser"
 
+    //RegisterConsumerUser
+    const val registerconsumer_viaagent = "registerconsumer/viaagent"
+
     //Activate
     const val activate = "activate"
 
@@ -28,6 +31,9 @@ object EndPoints {
 
     //getotp
     const val getotp = "getotp"
+
+    //verifyotp
+    const val verifyotp = "verifyotp"
 
     //createcredentials
     const val createcredentials = "createcredentials"

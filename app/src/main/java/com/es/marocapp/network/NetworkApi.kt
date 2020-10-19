@@ -30,6 +30,10 @@ interface NetworkApi {
     @POST(EndPoints.registeruser)
     fun getRegisterUser(@Body request : RegisterUserRequest) : Observable<RegisterUserResponse>
 
+    //Request for RegisterConsumerUserCall
+    @POST(EndPoints.registerconsumer_viaagent)
+    fun getRegisterConsumerUser(@Body request : RegisterConsumerUserRequest) : Observable<RegisterUserResponse>
+
     //Request for ActivateUserCall
     @POST(EndPoints.activate)
     fun getActivateUser(@Body request : ActivateUserRequest) : Observable<ActivateUserResponse>
@@ -41,6 +45,14 @@ interface NetworkApi {
     //Request for GetOtp
     @POST(EndPoints.getotp)
     fun getOTP(@Body request : GetOptRequest) : Observable<GetOptResponse>
+
+    //Request for GetSimpleOtpForRegistration
+    @POST(EndPoints.getotp)
+    fun getSimpleOTPForRegistration(@Body request : GetOtpSimpleRequest) : Observable<GetOtpSimpleResponse>
+
+    //Request for VerifyOtp
+    @POST(EndPoints.verifyotp)
+    fun getVerifyOtp(@Body request : VerifyOtpRequest) : Observable<VerifyOtpResponse>
 
     //Request for CreateCredentials
     @POST(EndPoints.createcredentials)

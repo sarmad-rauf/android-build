@@ -67,7 +67,9 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
             if(mActivityViewModel.isDeviceChanged){
                 mActivityViewModel.requestForGetOtpApi(activity)
             }else{
-                mActivityViewModel.requestForGetOTPForRegistrationApi(context,mActivityViewModel.firstName,mActivityViewModel.lastName,mActivityViewModel.identificationNumber)
+                //todo Registration Flow Changed OTP Calling
+//                mActivityViewModel.requestForGetOTPForRegistrationApi(context,mActivityViewModel.firstName,mActivityViewModel.lastName,mActivityViewModel.identificationNumber)
+                mActivityViewModel.requestForGetOtp(activity)
             }
         }
 
@@ -113,12 +115,27 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
             }
         }
 
+        //todo Registration Flow Changed Navigation From OTP to SignUpDetailsFragment
+        mActivityViewModel.getVerifyOtpResponseListner.observe(this@VerifyNumberFragment, Observer {
+            if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_signUpDetailFragment)
+            } else {
+                DialogUtils.showErrorDialoge(activity as LoginActivity, it.description)
+            }
+        })
+
         mActivityViewModel.getOtpForRegistrationResponseListner.observe(this@VerifyNumberFragment,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_FAILURE)){
                     DialogUtils.showErrorDialoge(activity,it.description)
                 }
             })
+
+        mActivityViewModel.getSimppleOtpForRegistrationResponseListner.observe(this@VerifyNumberFragment, Observer {
+            if(it.responseCode.equals(ApiConstant.API_FAILURE)){
+                DialogUtils.showErrorDialoge(activity,it.description)
+            }
+        })
 
         mActivityViewModel.getRegisterUserResponseListner.observe(
             this,
@@ -174,11 +191,16 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
                     mDataBinding.inputVerifyOtpBox.text.toString().trim()
                 )
             }else{
-                mActivityViewModel.requestForRegisterUserApi(
+                //todo Registration Flow Changed OTP Verify Call
+                mActivityViewModel.requestForVerifyOtp(
+                    activity,
+                    mDataBinding.inputVerifyOtpBox.text.toString().trim()
+                )
+                /*mActivityViewModel.requestForRegisterUserApi(
                     activity,
                     Constants.CURRENT_NUMBER_DEVICE_ID,
                     mDataBinding.inputVerifyOtpBox.text.toString().trim()
-                )
+                )*/
             }
         }else{
             DialogUtils.showUpdateAPPDailog(activity,LanguageData.getStringValue("PleaseEnterValidOTP"),object : DialogUtils.OnCustomDialogListner{

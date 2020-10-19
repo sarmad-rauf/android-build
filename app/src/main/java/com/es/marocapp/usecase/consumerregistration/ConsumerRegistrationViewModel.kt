@@ -5,10 +5,7 @@ import android.content.Context
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import com.es.marocapp.R
-import com.es.marocapp.model.requests.Accountholder
-import com.es.marocapp.model.requests.GetInitialAuthDetailsRequest
-import com.es.marocapp.model.requests.GetOtpForRegistrationRequest
-import com.es.marocapp.model.requests.RegisterUserRequest
+import com.es.marocapp.model.requests.*
 import com.es.marocapp.model.responses.GetInitialAuthDetailsReponse
 import com.es.marocapp.model.responses.GetOtpForRegistrationResponse
 import com.es.marocapp.model.responses.RegisterUserResponse
@@ -184,8 +181,8 @@ class ConsumerRegistrationViewModel(application: Application) : AndroidViewModel
 
             isLoading.set(true)
 
-            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getRegisterUser(
-                RegisterUserRequest(
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getRegisterConsumerUser(
+                RegisterConsumerUserRequest(
                     Accountholder(DOB,identificationNumber,firstName,gender,postalAddress,lastName),
                     ApiConstant.CONTEXT_BEFORE_LOGIN,deviceID_UserMsisdn,email,Constants.getNumberMsisdn(mUserMsisdn),
                     EncryptionUtils.encryptString(otp))
