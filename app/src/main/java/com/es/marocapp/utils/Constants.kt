@@ -1,13 +1,20 @@
 package com.es.marocapp.utils
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context.WIFI_SERVICE
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.text.format.Formatter.formatIpAddress
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.TextView
+import com.es.marocapp.R
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.*
+import com.github.florent37.tutoshowcase.TutoShowcase
+import me.toptas.fancyshowcase.FancyShowCaseView
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -90,6 +97,7 @@ object Constants {
 
     var IS_DEFAULT_ACCOUNT_SET = false
     var IS_FIRST_TIME = true
+    var isTutorialShowing = true
     
     //Responses
     lateinit var balanceInfoAndResponse : BalanceInfoAndLimitResponse
@@ -98,6 +106,8 @@ object Constants {
     lateinit var loginWithCertResponse : LoginWithCertResponse
     lateinit var currentTransactionItem : History
     var mContactListArray : ArrayList<Contact> = arrayListOf()
+    private lateinit var mFancyShowCaseView: FancyShowCaseView
+
 
     fun getCurrentDate() : String{
         /*val calendar = Calendar.getInstance(TimeZone.getDefault())
@@ -263,7 +273,167 @@ object Constants {
         return formatted
     }
 
-    object EMVco{
+    fun showTutorial(activityContext : Activity, viewForShowignTutorial : View,tutorialDescrption : String ,drawableIcon : Int = -1){
+        /*
+
+            .focusOn(viewForShowignTutorial)
+            .focusShape(FocusShape.ROUNDED_RECTANGLE)
+            .roundRectRadius(10)
+            .disableFocusAnimation()
+            .
+            .enableTouchOnFocusedView(true)
+            */
+
+        //Get screen size
+        /*val location = IntArray(2)
+
+        viewForShowignTutorial.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                viewForShowignTutorial.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                viewHegiht = viewForShowignTutorial.height //height is ready
+                viewWidth = viewForShowignTutorial.width //width is ready
+            }
+        })*/
+
+       /* val location = IntArray(2)
+        viewForShowignTutorial.getLocationOnScreen(location)
+        val viewPosX = location[0] + 330
+        val viewPosY = location[1] + 160
+
+        var viewWidth = -1
+        var viewHegiht = -1
+
+
+        viewHegiht = viewForShowignTutorial.height
+        viewWidth = viewForShowignTutorial.width
+
+        Log.d("viewPositionX",viewPosX.toString())
+        Log.d("viewPositionY",viewPosY.toString())
+        Log.d("viewPositionWidth",viewWidth.toString())
+        Log.d("viewPositionHeight",viewHegiht.toString())
+
+        val rootLayout: View = viewForShowignTutorial.rootView.findViewById(android.R.id.content)
+
+        val viewLocation = IntArray(2)
+        viewForShowignTutorial.getLocationInWindow(viewLocation)
+
+        val rootLocation = IntArray(2)
+        rootLayout.getLocationInWindow(rootLocation)
+
+        val relativeLeft = viewLocation[0] - rootLocation[0]
+        val relativeTop = viewLocation[1] - rootLocation[1]
+
+
+        mFancyShowCaseView = FancyShowCaseView.Builder(activityContext)
+            .focusRectAtPosition(relativeLeft,relativeTop,viewWidth,viewHegiht)
+            .roundRectRadius(60)
+            .customView(R.layout.tutorial_custom_view, object :
+                OnViewInflateListener {
+                override fun onViewInflated(view: View) {
+                    val image = (view as RelativeLayout).findViewById<ImageView>(R.id.iv_tutorial_custom_view)
+                    val tutorialText = (view as RelativeLayout).findViewById<TextView>(R.id.tv_tutorial_custom_view)
+
+                    tutorialText.text = tutorialDescrption
+                    val params = image.layoutParams as RelativeLayout.LayoutParams
+
+                    if(drawableIcon==-1){
+                        image.visibility = View.GONE
+
+                        tutorialText.post {
+                            params.leftMargin = mFancyShowCaseView!!.focusCenterX - image.width / 2
+                            params.topMargin = mFancyShowCaseView!!.focusCenterY - mFancyShowCaseView!!.focusHeight - image.height
+                            image.layoutParams = params
+                        }
+                    }else{
+                        image.visibility = View.VISIBLE
+
+                        image.setImageResource(drawableIcon)
+
+                        image.post {
+                            params.leftMargin = mFancyShowCaseView!!.focusCenterX - image.width / 2
+                            params.topMargin = mFancyShowCaseView!!.focusCenterY - mFancyShowCaseView!!.focusHeight - image.height
+                            image.layoutParams = params
+                        }
+                    }
+
+                }
+            })
+            .closeOnTouch(true)
+            .build()
+*/
+       /* mFancyShowCaseView = FancyShowCaseView.Builder(activityContext)
+            .focusOn(viewForShowignTutorial)
+            .focusShape(FocusShape.ROUNDED_RECTANGLE)
+            .roundRectRadius(10)
+            .enableTouchOnFocusedView(true)
+            .customView(R.layout.tutorial_custom_view, object :
+                OnViewInflateListener {
+                override fun onViewInflated(view: View) {
+                    val image = (view as RelativeLayout).findViewById<ImageView>(R.id.iv_tutorial_custom_view)
+                    val tutorialText = (view as RelativeLayout).findViewById<TextView>(R.id.tv_tutorial_custom_view)
+
+                    tutorialText.text = tutorialDescrption
+                    val params = image.layoutParams as RelativeLayout.LayoutParams
+
+                    if(drawableIcon==-1){
+                        image.visibility = View.GONE
+
+                        tutorialText.post {
+                            params.leftMargin = mFancyShowCaseView!!.focusCenterX - image.width / 2
+                            params.topMargin = mFancyShowCaseView!!.focusCenterY - mFancyShowCaseView!!.focusHeight - image.height
+                            image.layoutParams = params
+                        }
+                    }else{
+                        image.visibility = View.VISIBLE
+
+                        image.setImageResource(drawableIcon)
+
+                        image.post {
+                            params.leftMargin = mFancyShowCaseView!!.focusCenterX - image.width / 2
+                            params.topMargin = mFancyShowCaseView!!.focusCenterY - mFancyShowCaseView!!.focusHeight - image.height
+                            image.layoutParams = params
+                        }
+                    }
+
+                }
+            })
+            .closeOnTouch(true)
+            .build()*/
+//        mFancyShowCaseView?.show()
+    }
+
+    fun displayTuto(activityContext : Activity, viewForShowignTutorial : View,tutorialDescrption : String ,drawableIcon : Int = -1) {
+        TutoShowcase.from(activityContext)
+            .setContentView(R.layout.tutorial_custom_view)
+            .setFitsSystemWindows(true)
+            .on(viewForShowignTutorial)
+            .addRoundRect()
+            .onClick(View.OnClickListener { })
+            .show()
+
+        /*val factory: LayoutInflater = activityContext.layoutInflater
+
+        val textEntryView: View = factory.inflate(R.layout.tutorial_custom_view, null)
+
+        val tutorialDexcrptionTv =
+            textEntryView.findViewById<View>(R.id.tv_tutorial_custom_view) as TextView
+
+        tutorialDexcrptionTv.text = tutorialDescrption*/
+
+        // inflate the layout
+
+        // inflate the layout
+        val myLayout: View =
+            LayoutInflater.from(activityContext).inflate(R.layout.tutorial_custom_view, null)
+
+        // load the text view
+
+        // load the text view
+        val myView = myLayout.findViewById<View>(R.id.tv_tutorial_custom_view) as TextView
+        myView.text = tutorialDescrption
+    }
+
+        object EMVco{
         const val Payload_Format_Indicator_ID="00"
         const val Payload_Format_Indicator_SIZE="02"
         const val Payload_Format_Indicator_VALUE="01"

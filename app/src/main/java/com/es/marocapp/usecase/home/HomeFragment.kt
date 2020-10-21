@@ -3,6 +3,9 @@ package com.es.marocapp.usecase.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -32,6 +35,10 @@ import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.usecase.transaction.TransactionDetailsActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import kotlinx.android.synthetic.main.tutorial_custom_view.*
+import me.toptas.fancyshowcase.FancyShowCaseView
+import me.toptas.fancyshowcase.FocusShape
+import me.toptas.fancyshowcase.listener.OnViewInflateListener
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChangeListener,
@@ -40,9 +47,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var mCardAdapter: HomeCardAdapter
     private lateinit var mUseCasesAdapter: HomeUseCasesAdapter
+    private lateinit var mUseCaseGridLayoutManager : GridLayoutManager
     lateinit var mLanguageSpinnerAdapter: LanguageCustomSpinnerAdapter
     private var mTransactionsList : ArrayList<History> = ArrayList()
     private lateinit var mTransactionHistoryAdapter: TransactionHistoryAdapter
+    private lateinit var mFancyShowCaseView: FancyShowCaseView
     var referenceNumber = "";
     var quickRechargeSelectedAmount = ""
 
@@ -190,18 +199,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         }*/
 
         mDataBinding.btnQuickRecharge4.setOnClickListener {
-            var itemPos = mDataBinding.quickRechargeSpinner.selectedItemPosition
-            var amount = Constants.quickRechargeAmountsList.get(itemPos)
-            amount = amount.removePrefix("DH")
-            amount = amount.substringBefore("DH")
-            quickRechargeSelectedAmount = amount.trim()
-            var intent = Intent(
-                activity as MainActivity,
-                AirTimeActivity::class.java
-            )
-            intent.putExtra("isQuickRechargeCase", true)
-            intent.putExtra("quickRechargeAmount", quickRechargeSelectedAmount)
-            startActivity(intent)
+            if(Constants.isTutorialShowing){
+                Constants.displayTuto(activity!!,mDataBinding.quickRechargeContainer,LanguageData.getStringValue("QuickRechargeTutorial").toString()
+                    ,R.drawable.ic_tutorial_home_quick_recharge)
+            }else{
+                var itemPos = mDataBinding.quickRechargeSpinner.selectedItemPosition
+                var amount = Constants.quickRechargeAmountsList.get(itemPos)
+                amount = amount.removePrefix("DH")
+                amount = amount.substringBefore("DH")
+                quickRechargeSelectedAmount = amount.trim()
+                var intent = Intent(
+                    activity as MainActivity,
+                    AirTimeActivity::class.java
+                )
+                intent.putExtra("isQuickRechargeCase", true)
+                intent.putExtra("quickRechargeAmount", quickRechargeSelectedAmount)
+                startActivity(intent)
+            }
         }
     }
 
@@ -423,19 +437,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                         }
 
                         LanguageData.getStringValue("SendMoney").toString() -> {
-                            val intent = Intent(
-                                activity as MainActivity,
-                                SendMoneyActivity::class.java
-                            )
+                            if(Constants.isTutorialShowing){
+                                Constants.displayTuto(activity as MainActivity,mUseCaseGridLayoutManager.findViewByPosition(position)!!.findViewById(R.id.useCasesParentLayout),
+                                LanguageData.getStringValue("SendMoneyTutorial").toString())
+                            }else{
+                                val intent = Intent(
+                                    activity as MainActivity,
+                                    SendMoneyActivity::class.java
+                                )
 
-                            intent.putExtra("isFundTransferUseCase", true)
-                            intent.putExtra("isInitiatePaymenetToMerchantUseCase", false)
-                            intent.putExtra(
-                                "useCaseType",
-                                LanguageData.getStringValue("FundsTransfer")
-                            )
+                                intent.putExtra("isFundTransferUseCase", true)
+                                intent.putExtra("isInitiatePaymenetToMerchantUseCase", false)
+                                intent.putExtra(
+                                    "useCaseType",
+                                    LanguageData.getStringValue("FundsTransfer")
+                                )
 
-                            startActivity(intent)
+                                startActivity(intent)
+                            }
                         }
 
                         LanguageData.getStringValue("BillPayment").toString() -> {
@@ -500,9 +519,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 }
 
             }, activity as MainActivity)
+        mUseCaseGridLayoutManager = GridLayoutManager(activity as MainActivity, 3)
         mDataBinding.useCasesRecyclerView.apply {
             adapter = mUseCasesAdapter
-            layoutManager = GridLayoutManager(activity as MainActivity, 3)
+            layoutManager = mUseCaseGridLayoutManager
         }
     }
 
