@@ -7,9 +7,8 @@ import android.net.wifi.WifiManager
 import android.os.Build
 import android.text.format.Formatter.formatIpAddress
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.TextView
+import android.widget.LinearLayout
 import com.es.marocapp.R
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.*
@@ -411,6 +410,7 @@ object Constants {
             .onClick(View.OnClickListener { })
             .show()
 
+        /////////////////----------------ist Methond----------------------
         /*val factory: LayoutInflater = activityContext.layoutInflater
 
         val textEntryView: View = factory.inflate(R.layout.tutorial_custom_view, null)
@@ -420,8 +420,8 @@ object Constants {
 
         tutorialDexcrptionTv.text = tutorialDescrption*/
 
-        // inflate the layout
-
+        ////////////////-----------------------Second Method-----------------
+        /*
         // inflate the layout
         val myLayout: View =
             LayoutInflater.from(activityContext).inflate(R.layout.tutorial_custom_view, null)
@@ -430,7 +430,8 @@ object Constants {
 
         // load the text view
         val myView = myLayout.findViewById<View>(R.id.tv_tutorial_custom_view) as TextView
-        myView.text = tutorialDescrption
+        myView.text = tutorialDescrption*/
+
     }
 
         object EMVco{
