@@ -84,6 +84,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'com.google.android.material:material:1.1.0-alpha05'
@@ -154,5 +155,8 @@ dependencies {
 
     implementation 'com.budiyev.android:code-scanner:2.1.0'
 
+    //----------------Tutorial Library----------------
+    implementation 'me.toptas.fancyshowcase:fancyshowcaseview:1.3.3'
+    implementation 'com.github.florent37:tutoshowcase:1.0.1'
 
 }

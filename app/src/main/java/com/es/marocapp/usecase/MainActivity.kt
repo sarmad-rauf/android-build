@@ -2,6 +2,7 @@ package com.es.marocapp.usecase
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -36,6 +37,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.layout_side_menu_navigation.view.*
+import me.toptas.fancyshowcase.FancyShowCaseView
+import me.toptas.fancyshowcase.FocusShape
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListeners {
@@ -98,24 +101,37 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         mDataBinding.fab.setOnClickListener {
-            if(!isTransacitonFragmentShowing){
-                onStatementClickLisnter(false)
+            if(Constants.isTutorialShowing){
+                Constants.displayTuto(this@MainActivity,mDataBinding.fab,LanguageData.getStringValue("TransactionHistoryTutorial").toString())
             }else{
-                navController.popBackStack(R.id.navigation_home,false)
-                onStatementClickLisnter(false)
+                if(!isTransacitonFragmentShowing){
+                    onStatementClickLisnter(false)
+                }else{
+                    navController.popBackStack(R.id.navigation_home,false)
+                    onStatementClickLisnter(false)
+                }
             }
         }
 
         mDataBinding.dashboardCashInViaCard.setOnClickListener {
-            startActivity(
-                Intent(
-                    this@MainActivity,
-                    ActivityCashInViaCard::class.java
+            if(Constants.isTutorialShowing){
+                Constants.displayTuto(this@MainActivity,mDataBinding.callIconHomeScreen,LanguageData.getStringValue("CashInViaCardTutorial").toString(),
+                R.drawable.ic_tutorial_home_cash_in_wallet)
+            }else{
+                startActivity(
+                    Intent(
+                        this@MainActivity,
+                        ActivityCashInViaCard::class.java
+                    )
                 )
-            )
+            }
         }
         mDataBinding.callIconHomeScreen.setOnClickListener {
-        Tools.openDialerWithNumber(this)
+            if(Constants.isTutorialShowing){
+                Constants.displayTuto(this@MainActivity,mDataBinding.callIconHomeScreen,LanguageData.getStringValue("CallTutorial").toString())
+            }else{
+                Tools.openDialerWithNumber(this)
+            }
         }
 
         mDataBinding.navView.setOnNavigationItemSelectedListener { item ->
