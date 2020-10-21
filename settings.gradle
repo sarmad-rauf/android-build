@@ -1,2 +1,3 @@
+include ':tutoshowcase'
 include ':app'
 rootProject.name='Maroc'
