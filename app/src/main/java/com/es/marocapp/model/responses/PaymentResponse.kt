@@ -6,7 +6,7 @@ data class PaymentResponse(
     val description: String,
     val discount: Any,
     val feeAmount: Any,
-    val financialReceiptResponse: String,
+    val financialReceiptResponse: FinancialReceiptResponse,
     val masterPassTransactionId: Any,
     val responseCode: String,
     val senderBalanceafter: String,

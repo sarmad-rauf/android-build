@@ -36,9 +36,6 @@ import com.es.marocapp.usecase.transaction.TransactionDetailsActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.tutorial_custom_view.*
-import me.toptas.fancyshowcase.FancyShowCaseView
-import me.toptas.fancyshowcase.FocusShape
-import me.toptas.fancyshowcase.listener.OnViewInflateListener
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChangeListener,
@@ -51,7 +48,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     lateinit var mLanguageSpinnerAdapter: LanguageCustomSpinnerAdapter
     private var mTransactionsList : ArrayList<History> = ArrayList()
     private lateinit var mTransactionHistoryAdapter: TransactionHistoryAdapter
-    private lateinit var mFancyShowCaseView: FancyShowCaseView
     var referenceNumber = "";
     var quickRechargeSelectedAmount = ""
 

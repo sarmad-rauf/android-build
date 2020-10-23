@@ -13,7 +13,6 @@ import com.es.marocapp.R
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.*
 import com.github.florent37.tutoshowcase.TutoShowcase
-import me.toptas.fancyshowcase.FancyShowCaseView
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -96,7 +95,7 @@ object Constants {
 
     var IS_DEFAULT_ACCOUNT_SET = false
     var IS_FIRST_TIME = true
-    var isTutorialShowing = true
+    var isTutorialShowing = false
     
     //Responses
     lateinit var balanceInfoAndResponse : BalanceInfoAndLimitResponse
@@ -105,7 +104,6 @@ object Constants {
     lateinit var loginWithCertResponse : LoginWithCertResponse
     lateinit var currentTransactionItem : History
     var mContactListArray : ArrayList<Contact> = arrayListOf()
-    private lateinit var mFancyShowCaseView: FancyShowCaseView
 
 
     fun getCurrentDate() : String{
