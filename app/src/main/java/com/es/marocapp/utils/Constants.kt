@@ -12,7 +12,9 @@ import android.widget.LinearLayout
 import com.es.marocapp.R
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.*
+/*
 import com.github.florent37.tutoshowcase.TutoShowcase
+*/
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -400,13 +402,13 @@ object Constants {
     }
 
     fun displayTuto(activityContext : Activity, viewForShowignTutorial : View,tutorialDescrption : String ,drawableIcon : Int = -1) {
-        TutoShowcase.from(activityContext)
+      /*  TutoShowcase.from(activityContext)
             .setContentView(R.layout.tutorial_custom_view)
             .setFitsSystemWindows(true)
             .on(viewForShowignTutorial)
             .addRoundRect()
             .onClick(View.OnClickListener { })
-            .show()
+            .show()*/
 
         /////////////////----------------ist Methond----------------------
         /*val factory: LayoutInflater = activityContext.layoutInflater

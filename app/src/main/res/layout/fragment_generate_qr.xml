@@ -45,20 +45,61 @@
             app:layout_constraintBottom_toTopOf="@+id/tvGenerateQRTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvGenerateQRTitle" />
+        <com.es.marocapp.widgets.MarocRegularTextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_32sdp"
+            tools:text="Enter Mobile Number"
+            android:textSize="@dimen/_12ssp"
+            android:textColor="@color/colorEditTextGreyMedium"
+            app:layout_constraintTop_toBottomOf="@+id/imgBackButton"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/_18sdp"
+            />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_description"
+            app:layout_constraintBottom_toTopOf="@+id/cardView"
+            android:layoutDirection="inherit"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="true"
+            android:layout_gravity="start"
+            android:gravity="start"
+            android:textAlignment="textStart"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            >
 
+            <com.es.marocapp.widgets.MarocEditText
+                android:id="@+id/input_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layoutDirection="inherit"
+                android:textDirection="anyRtl"
+                android:maxLength="5"
+                android:textAlignment="viewStart"
+                android:theme="@style/myTextInputLabel"
+                android:hint="@string/amount"
+                android:inputType="phone"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_margin="@dimen/_16sdp"
             app:cardElevation="@dimen/_12sdp"
             app:cardCornerRadius="@dimen/_12sdp"
             app:cardUseCompatPadding="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/cardView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_amount"
             >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -66,8 +107,8 @@
 
                 <ImageView
                     android:id="@+id/imgResult"
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
                     android:scaleType="fitXY"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

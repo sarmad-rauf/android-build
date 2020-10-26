@@ -1,6 +1,8 @@
 package com.es.marocapp.usecase.qrcode
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentGenerateQrBinding
@@ -19,7 +21,7 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>(){
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        var qrString= Tools.generateEMVcoString(Constants.CURRENT_USER_MSISDN)
+        var qrString= Tools.generateEMVcoString(Constants.CURRENT_USER_MSISDN,"")
         Log.d("QRString",qrString)
         imgResult.setImageBitmap(Tools.generateQR(qrString))
         mDataBinding.imgBackButton.setOnClickListener {
@@ -42,10 +44,24 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>(){
         (activity as MainActivity).isTransacitonFragmentShowing = false
 
         setStrings()
+
+        mDataBinding.inputAmount.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(s: CharSequence, start: Int,count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int,before: Int, count: Int) {
+                var qrString= Tools.generateEMVcoString(Constants.CURRENT_USER_MSISDN,s.toString())
+                Log.d("QRString",qrString)
+                imgResult.setImageBitmap(Tools.generateQR(qrString))
+            }
+        })
     }
 
     private fun setStrings() {
         mDataBinding.tvGenerateQRTitle.text = LanguageData.getStringValue("GenerateQR")
+        mDataBinding.tvDescription.text  = LanguageData.getStringValue("GenerateQRDescription")
+        mDataBinding.inputAmount.hint  = LanguageData.getStringValue("Amount")
     }
 
 }

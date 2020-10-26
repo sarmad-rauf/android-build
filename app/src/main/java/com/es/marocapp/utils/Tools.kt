@@ -55,9 +55,9 @@ object Tools {
      fun generateQR(texto: String): Bitmap? {
         val writer = QRCodeWriter()
         try {
-            val bitMatrix: BitMatrix = writer.encode(texto, BarcodeFormat.QR_CODE, 512, 512)
-            val width = 512
-            val height = 512
+            val bitMatrix: BitMatrix = writer.encode(texto, BarcodeFormat.QR_CODE, 150, 150)
+            val width = 150
+            val height = 150
             val bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
             for (x in 0 until width) {
                 for (y in 0 until height) {
@@ -75,7 +75,7 @@ object Tools {
         }
     }
 
-    fun generateEMVcoString(number: String):String{
+    fun generateEMVcoString(number: String, amount: String?):String{
 
         var Paid_Entity_Reference_VALUE=EncryptionUtils.encryptStringAESCBC(number)
         var Masked_Paid_Entity_Reference_VALUE=""
@@ -98,7 +98,7 @@ object Tools {
                 Constants.EMVco.Encryption_Format_ID + Constants.EMVco.Encryption_Format_SIZE + Constants.EMVco.Encryption_Format_VALUE +
                 Constants.EMVco.Paid_Entity_Reference_Format_ID + Constants.EMVco.Paid_Entity_Reference_Format_SIZE + Constants.EMVco.Paid_Entity_Reference_Format_VALUE +
                 Constants.EMVco.Paid_Entity_Reference_ID + Constants.EMVco.Paid_Entity_Reference_SIZE + Paid_Entity_Reference_VALUE +
-                Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE_12 + Masked_Paid_Entity_Reference_VALUE
+                Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE_12 + Masked_Paid_Entity_Reference_VALUE + amount
 
         return qrString
     }

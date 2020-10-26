@@ -20,7 +20,7 @@ class GenerateQrActivity:BaseActivity<FragmentGenerateQrBinding>(){
 
     override fun init(savedInstanceState: Bundle?) {
 
-       var qrString= Tools.generateEMVcoString(Constants.CURRENT_USER_MSISDN)
+       var qrString= Tools.generateEMVcoString(Constants.CURRENT_USER_MSISDN, "")
         Log.d("QRString",qrString)
         imgResult.setImageBitmap(Tools.generateQR(qrString))
         mDataBinding.imgBackButton.setOnClickListener {
