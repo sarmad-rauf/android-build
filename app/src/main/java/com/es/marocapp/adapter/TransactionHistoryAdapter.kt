@@ -66,13 +66,20 @@ class TransactionHistoryAdapter(
             holder.tvBillDate?.text = dateToShow
 
             val sName: String = Constants.balanceInfoAndResponse.firstname + " " + Constants.balanceInfoAndResponse.surname
-            if(sName.equals(models!![position].toname)){
-                holder.tvBillAmount?.text = "+"+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+models!![position].toamount
+        if(models!![position].transactionstatus.equals("FAILED",true)){
+            holder.tvBillAmount?.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + models!![position].toamount
+        }
+        else {
+            if (sName.equals(models!![position].toname)) {
+                holder.tvBillAmount?.text =
+                    "+" + Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + models!![position].toamount
                 holder.tvBillAmount?.setTextColor(Color.parseColor("#008000"))
-            }else{
-                holder.tvBillAmount?.text = "-"+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+models!![position].toamount
+            } else {
+                holder.tvBillAmount?.text =
+                    "-" + Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + models!![position].toamount
                 holder.tvBillAmount?.setTextColor(Color.parseColor("#ff0000"))
             }
+        }
 
             when(models!![position].transfertype){
                 "PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.transaction_circle_merchant_payment)
