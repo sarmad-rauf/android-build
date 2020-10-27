@@ -8,6 +8,7 @@ import android.os.Build
 import android.text.format.Formatter.formatIpAddress
 import android.util.Log
 import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.es.marocapp.R
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.*
@@ -399,7 +400,7 @@ object Constants {
     }
 
     fun displayTuto(activityContext : Activity, viewForShowignTutorial : View,tutorialDescrption : String ,drawableIcon : Int = -1) {
-        var temp = TutoShowcase.from(activityContext)
+        var tutShowCase = TutoShowcase.from(activityContext)
             .setContentView(R.layout.tutorial_custom_view)
             .setFitsSystemWindows(true)
             .on(viewForShowignTutorial)
@@ -408,7 +409,12 @@ object Constants {
             .show()
         var x= viewForShowignTutorial.x
         var y=viewForShowignTutorial.y
-        temp.setTextView(R.id.tv_tutorial_custom_view,tutorialDescrption,x,y)
+        tutShowCase.setTextView(R.id.tv_tutorial_custom_view,tutorialDescrption)
+
+
+        tutShowCase.setPosition(R.id.mainView,x,y)
+
+
 
 
        // temp.setIcon(R.id.iv_tutorial_custom_view,drawableIcon)

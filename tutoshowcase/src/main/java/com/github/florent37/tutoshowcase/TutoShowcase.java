@@ -29,6 +29,7 @@ import android.view.Window;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.tutoshowcase.R;
@@ -101,11 +102,16 @@ public final class TutoShowcase {
         return this;
     }
 
-    public TutoShowcase setTextView(@IdRes int viewId, String text, float x, float y) {
+    public TutoShowcase setTextView(@IdRes int viewId, String text) {
         TextView view = container.findViewById(viewId);
-     //   view.setX(x);
-        view.setY(y);
         view.setText(text);
+
+        return this;
+    }
+    public TutoShowcase setPosition(@IdRes int viewId, float x, float y) {
+         LinearLayout view = container.findViewById(viewId);
+       // view.setX(x);
+        view.setY(y);
 
         return this;
     }
