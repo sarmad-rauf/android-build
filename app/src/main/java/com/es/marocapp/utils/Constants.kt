@@ -8,13 +8,10 @@ import android.os.Build
 import android.text.format.Formatter.formatIpAddress
 import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
 import com.es.marocapp.R
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.*
-/*
 import com.github.florent37.tutoshowcase.TutoShowcase
-*/
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -97,7 +94,7 @@ object Constants {
 
     var IS_DEFAULT_ACCOUNT_SET = false
     var IS_FIRST_TIME = true
-    var isTutorialShowing = false
+    var isTutorialShowing = true
     
     //Responses
     lateinit var balanceInfoAndResponse : BalanceInfoAndLimitResponse
@@ -402,16 +399,24 @@ object Constants {
     }
 
     fun displayTuto(activityContext : Activity, viewForShowignTutorial : View,tutorialDescrption : String ,drawableIcon : Int = -1) {
-      /*  TutoShowcase.from(activityContext)
+        var temp = TutoShowcase.from(activityContext)
             .setContentView(R.layout.tutorial_custom_view)
             .setFitsSystemWindows(true)
             .on(viewForShowignTutorial)
             .addRoundRect()
             .onClick(View.OnClickListener { })
-            .show()*/
+            .show()
+        var x= viewForShowignTutorial.x
+        var y=viewForShowignTutorial.y
+        temp.setTextView(R.id.tv_tutorial_custom_view,tutorialDescrption,x,y)
 
-        /////////////////----------------ist Methond----------------------
-        /*val factory: LayoutInflater = activityContext.layoutInflater
+
+       // temp.setIcon(R.id.iv_tutorial_custom_view,drawableIcon)
+
+
+
+        /*/////////////////----------------ist Methond----------------------
+        val factory: LayoutInflater = activityContext.layoutInflater
 
         val textEntryView: View = factory.inflate(R.layout.tutorial_custom_view, null)
 
@@ -420,8 +425,7 @@ object Constants {
 
         tutorialDexcrptionTv.text = tutorialDescrption*/
 
-        ////////////////-----------------------Second Method-----------------
-        /*
+      /*  ////////////////-----------------------Second Method-----------------
         // inflate the layout
         val myLayout: View =
             LayoutInflater.from(activityContext).inflate(R.layout.tutorial_custom_view, null)

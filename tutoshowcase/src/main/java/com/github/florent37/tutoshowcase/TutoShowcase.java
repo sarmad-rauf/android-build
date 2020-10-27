@@ -37,11 +37,13 @@ import com.github.florent37.tutoshowcase.shapes.RoundRect;
 
 public final class TutoShowcase {
 
+
+
     public interface Listener {
         void onDismissed();
     }
 
-    public static final float DEFAULT_ADDITIONAL_RADIUS_RATIO = 1.5f;
+    public static final float DEFAULT_ADDITIONAL_RADIUS_RATIO = 0.5f;
     private static final String SHARED_TUTO = "SHARED_TUTO";
     private FrameLayout container;
     private TutoView tutoView;
@@ -99,10 +101,18 @@ public final class TutoShowcase {
         return this;
     }
 
-    public TutoShowcase setTextView(@IdRes int viewId, String text) {
+    public TutoShowcase setTextView(@IdRes int viewId, String text, float x, float y) {
         TextView view = container.findViewById(viewId);
-
+     //   view.setX(x);
+        view.setY(y);
         view.setText(text);
+
+        return this;
+    }
+    public TutoShowcase setIcon(@IdRes int viewId, int drawableIcon) {
+        ImageView view = container.findViewById(viewId);
+
+        view.setImageResource(drawableIcon);
 
         return this;
     }

@@ -37,8 +37,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.layout_side_menu_navigation.view.*
-import me.toptas.fancyshowcase.FancyShowCaseView
-import me.toptas.fancyshowcase.FocusShape
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListeners {
