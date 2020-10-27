@@ -100,7 +100,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         mDataBinding.fab.setOnClickListener {
             if(Constants.isTutorialShowing){
-                Constants.displayTuto(this@MainActivity,mDataBinding.fab,LanguageData.getStringValue("TransactionHistoryTutorial").toString())
+                Constants.displayTutorial(this@MainActivity,mDataBinding.fab,LanguageData.getStringValue("TransactionHistoryTutorial").toString())
             }else{
                 if(!isTransacitonFragmentShowing){
                     onStatementClickLisnter(false)
@@ -113,7 +113,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         mDataBinding.dashboardCashInViaCard.setOnClickListener {
             if(Constants.isTutorialShowing){
-                Constants.displayTuto(this@MainActivity,mDataBinding.callIconHomeScreen,LanguageData.getStringValue("CashInViaCardTutorial").toString(),
+                Constants.displayTutorial(this@MainActivity,mDataBinding.callIconHomeScreen,LanguageData.getStringValue("CashInViaCardTutorial").toString(),
                 R.drawable.ic_tutorial_home_cash_in_wallet)
             }else{
                 startActivity(
@@ -126,7 +126,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         }
         mDataBinding.callIconHomeScreen.setOnClickListener {
             if(Constants.isTutorialShowing){
-                Constants.displayTuto(this@MainActivity,mDataBinding.callIconHomeScreen,LanguageData.getStringValue("CallTutorial").toString())
+                Constants.displayTutorial(this@MainActivity,mDataBinding.callIconHomeScreen,LanguageData.getStringValue("CallTutorial").toString())
             }else{
                 Tools.openDialerWithNumber(this)
             }

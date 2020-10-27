@@ -399,7 +399,7 @@ object Constants {
 //        mFancyShowCaseView?.show()
     }
 
-    fun displayTuto(activityContext : Activity, viewForShowignTutorial : View,tutorialDescrption : String ,drawableIcon : Int = -1) {
+    fun displayTutorial(activityContext : Activity, viewForShowignTutorial : View,tutorialDescrption : String ,drawableIcon : Int = -1) {
         var tutShowCase = TutoShowcase.from(activityContext)
             .setContentView(R.layout.tutorial_custom_view)
             .setFitsSystemWindows(true)
@@ -411,36 +411,10 @@ object Constants {
         var y=viewForShowignTutorial.y
         tutShowCase.setTextView(R.id.tv_tutorial_custom_view,tutorialDescrption)
 
-
         tutShowCase.setPosition(R.id.mainView,x,y)
 
+        tutShowCase.setIcon(R.id.iv_tutorial_custom_view,drawableIcon)
 
-
-
-       // temp.setIcon(R.id.iv_tutorial_custom_view,drawableIcon)
-
-
-
-        /*/////////////////----------------ist Methond----------------------
-        val factory: LayoutInflater = activityContext.layoutInflater
-
-        val textEntryView: View = factory.inflate(R.layout.tutorial_custom_view, null)
-
-        val tutorialDexcrptionTv =
-            textEntryView.findViewById<View>(R.id.tv_tutorial_custom_view) as TextView
-
-        tutorialDexcrptionTv.text = tutorialDescrption*/
-
-      /*  ////////////////-----------------------Second Method-----------------
-        // inflate the layout
-        val myLayout: View =
-            LayoutInflater.from(activityContext).inflate(R.layout.tutorial_custom_view, null)
-
-        // load the text view
-
-        // load the text view
-        val myView = myLayout.findViewById<View>(R.id.tv_tutorial_custom_view) as TextView
-        myView.text = tutorialDescrption*/
 
     }
 

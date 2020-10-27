@@ -196,7 +196,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
 
         mDataBinding.btnQuickRecharge4.setOnClickListener {
             if(Constants.isTutorialShowing){
-                Constants.displayTuto(activity!!,mDataBinding.quickRechargeContainer,LanguageData.getStringValue("QuickRechargeTutorial").toString()
+                Constants.displayTutorial(activity!!,mDataBinding.quickRechargeContainer,LanguageData.getStringValue("QuickRechargeTutorial").toString()
                     ,R.drawable.ic_tutorial_home_quick_recharge)
             }else{
                 var itemPos = mDataBinding.quickRechargeSpinner.selectedItemPosition
@@ -434,7 +434,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
 
                         LanguageData.getStringValue("SendMoney").toString() -> {
                             if(Constants.isTutorialShowing){
-                                Constants.displayTuto(activity as MainActivity,mUseCaseGridLayoutManager.findViewByPosition(position)!!.findViewById(R.id.useCasesParentLayout),
+                                Constants.displayTutorial(activity as MainActivity,mUseCaseGridLayoutManager.findViewByPosition(position)!!.findViewById(R.id.useCasesParentLayout),
                                 LanguageData.getStringValue("SendMoneyTutorial").toString())
                             }else{
                                 val intent = Intent(

@@ -44,7 +44,7 @@ public final class TutoShowcase {
         void onDismissed();
     }
 
-    public static final float DEFAULT_ADDITIONAL_RADIUS_RATIO = 0.5f;
+    public static final float DEFAULT_ADDITIONAL_RADIUS_RATIO = 1.5f;
     private static final String SHARED_TUTO = "SHARED_TUTO";
     private FrameLayout container;
     private TutoView tutoView;
@@ -118,7 +118,12 @@ public final class TutoShowcase {
     public TutoShowcase setIcon(@IdRes int viewId, int drawableIcon) {
         ImageView view = container.findViewById(viewId);
 
-        view.setImageResource(drawableIcon);
+        if(drawableIcon==-1){
+            view.setVisibility(View.GONE);
+        }
+        else {
+            view.setImageResource(drawableIcon);
+        }
 
         return this;
     }
