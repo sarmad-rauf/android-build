@@ -113,7 +113,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         mDataBinding.dashboardCashInViaCard.setOnClickListener {
             if(Constants.isTutorialShowing){
-                Constants.displayTutorial(this@MainActivity,mDataBinding.callIconHomeScreen,LanguageData.getStringValue("CashInViaCardTutorial").toString(),
+                Constants.displayTutorial(this@MainActivity,mDataBinding.dashboardCashInViaCard,LanguageData.getStringValue("CashInViaCardTutorial").toString(),
                 R.drawable.ic_tutorial_home_cash_in_wallet)
             }else{
                 startActivity(

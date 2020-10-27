@@ -45,7 +45,8 @@ public class RoundRect extends Shape {
     }
 
     private static void drawRoundedRect(Canvas canvas, float left, float top, float right, float bottom, Paint paint) {
-        float radius = (bottom - top) / 2;
+        //float radius = (bottom - top) / 2;
+        float radius = 0f;
 
         RectF rectF = new RectF(left, top, right, bottom);
         canvas.drawRoundRect(rectF, radius, radius, paint);
