@@ -130,6 +130,10 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
                             override fun onDialogYesClickListner() {
                                 (activity as FavoritesActivity).navController.popBackStack(R.id.favoriteTypesFragment,false)
                             }
+
+                            override fun onDialogNoClickListner() {
+
+                            }
                         })
                     }
                 }else{

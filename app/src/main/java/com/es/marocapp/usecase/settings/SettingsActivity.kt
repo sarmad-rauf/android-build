@@ -195,6 +195,10 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
                 settingsViewModel.requestForSetDefaultAccount(this@SettingsActivity)
             }
 
+            override fun onDialogNoClickListner() {
+
+            }
+
 
         })
     }
@@ -206,6 +210,10 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
                 settingsViewModel.requestForUnRegisterDefaultAccount(this@SettingsActivity)
             }
 
+            override fun onDialogNoClickListner() {
+
+            }
+
 
         })
     }
@@ -215,6 +223,10 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
 
             override fun onOTPDialogYesClickListner(otp: String) {
                 settingsViewModel.requestForVerifyOTPForSetDefaultAccount(this@SettingsActivity,referenceNumber,otp)
+            }
+
+            override fun onOTPDialogNoClickListner() {
+
             }
 
         })

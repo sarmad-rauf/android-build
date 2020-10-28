@@ -3,13 +3,12 @@ package com.es.marocapp.usecase.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.es.marocapp.R
 import com.es.marocapp.adapter.HomeCardAdapter
@@ -19,7 +18,6 @@ import com.es.marocapp.adapter.TransactionHistoryAdapter
 import com.es.marocapp.databinding.FragmentHomeBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.CardModel
-import com.es.marocapp.model.CustomModelHistoryItem
 import com.es.marocapp.model.HomeUseCasesModel
 import com.es.marocapp.model.responses.History
 import com.es.marocapp.network.ApiConstant
@@ -35,7 +33,6 @@ import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.usecase.transaction.TransactionDetailsActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
-import kotlinx.android.synthetic.main.tutorial_custom_view.*
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChangeListener,
@@ -97,6 +94,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 subscribeForDefaultAccountStatus()
                 subscribeForSetDefaultAccountStatus()
                 subscribeForVerifyOTPForSetDefaultAccountStatus()
+            }else{
+                (activity as MainActivity).startTutorialsTrail()
             }
         }
 
@@ -194,10 +193,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             }
         }*/
 
+        Constants.tutorialQuickRechargeContainer = mDataBinding.quickRechargeContainer
+
         mDataBinding.btnQuickRecharge4.setOnClickListener {
             if(Constants.isTutorialShowing){
-                Constants.displayTutorial(activity!!,mDataBinding.quickRechargeContainer,LanguageData.getStringValue("QuickRechargeTutorial").toString()
-                    ,R.drawable.ic_tutorial_home_quick_recharge)
+                /*Constants.displayTutorial(activity!!,mDataBinding.quickRechargeContainer,LanguageData.getStringValue("QuickRechargeTutorial").toString()
+                    ,R.drawable.ic_tutorial_home_quick_recharge)*/
             }else{
                 var itemPos = mDataBinding.quickRechargeSpinner.selectedItemPosition
                 var amount = Constants.quickRechargeAmountsList.get(itemPos)
@@ -249,10 +250,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                             showPopUp()
                         } else {
                             Constants.IS_DEFAULT_ACCOUNT_SET = true
+                            (activity as MainActivity).startTutorialsTrail()
                         }
                     }
                 } else {
                     DialogUtils.showErrorDialoge(activity, it.description)
+                    (activity as MainActivity).startTutorialsTrail()
                 }
             }
         )
@@ -267,6 +270,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     showOTPdialogue()
                 } else {
                     DialogUtils.showErrorDialoge(activity, it.description)
+                    (activity as MainActivity).startTutorialsTrail()
                 }
             }
         )
@@ -283,12 +287,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                         LanguageData.getStringValue("OperationPerformedSuccessfullyDot"),
                         0
                     )
+                    (activity as MainActivity).startTutorialsTrail()
                 } else {
                     DialogUtils.successFailureDialogue(
                         context,
                         LanguageData.getStringValue("FailedToPerformOperationDot"),
                         1
                     )
+                    (activity as MainActivity).startTutorialsTrail()
                 }
             }
         )
@@ -305,6 +311,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     homeViewModel.requestForSetDefaultAccount(context)
                 }
 
+                override fun onDialogNoClickListner() {
+                    (activity as MainActivity).startTutorialsTrail()
+                }
+
 
             })
     }
@@ -314,6 +324,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
 
             override fun onOTPDialogYesClickListner(otp: String) {
                 homeViewModel.requestForVerifyOTPForSetDefaultAccount(context, referenceNumber, otp)
+            }
+
+            override fun onOTPDialogNoClickListner() {
+                (activity as MainActivity).startTutorialsTrail()
             }
 
         })
@@ -434,8 +448,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
 
                         LanguageData.getStringValue("SendMoney").toString() -> {
                             if(Constants.isTutorialShowing){
-                                Constants.displayTutorial(activity as MainActivity,mUseCaseGridLayoutManager.findViewByPosition(position)!!.findViewById(R.id.useCasesParentLayout),
-                                LanguageData.getStringValue("SendMoneyTutorial").toString())
+                               /* Constants.displayTutorial(activity as MainActivity,mUseCaseGridLayoutManager.findViewByPosition(position)!!.findViewById(R.id.useCasesParentLayout),
+                                LanguageData.getStringValue("SendMoneyTutorial").toString())*/
                             }else{
                                 val intent = Intent(
                                     activity as MainActivity,
@@ -520,6 +534,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             adapter = mUseCasesAdapter
             layoutManager = mUseCaseGridLayoutManager
         }
+
+        mDataBinding.useCasesRecyclerView.postDelayed(Runnable {
+            for(i in 0 until useCases.size){
+                if(useCases[i].useCaseTitle == LanguageData.getStringValue("SendMoney").toString()){
+                    val holder =
+                        mDataBinding.useCasesRecyclerView.findViewHolderForAdapterPosition(i) as RecyclerView.ViewHolder
+                    Constants.tutorialSendMoney = holder.itemView.findViewById<ConstraintLayout>(R.id.useCasesParentLayout)
+                    break
+                }
+            }
+        }, 50)
     }
 
     private fun populateHomeCardView(updateBalance: Boolean, amount: String?) {

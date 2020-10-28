@@ -100,7 +100,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         mDataBinding.fab.setOnClickListener {
             if(Constants.isTutorialShowing){
-                Constants.displayTutorial(this@MainActivity,mDataBinding.fab,LanguageData.getStringValue("TransactionHistoryTutorial").toString())
+               /* Constants.displayTutorial(this@MainActivity,mDataBinding.fab,LanguageData.getStringValue("TransactionHistoryTutorial").toString())*/
             }else{
                 if(!isTransacitonFragmentShowing){
                     onStatementClickLisnter(false)
@@ -113,8 +113,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         mDataBinding.dashboardCashInViaCard.setOnClickListener {
             if(Constants.isTutorialShowing){
-                Constants.displayTutorial(this@MainActivity,mDataBinding.dashboardCashInViaCard,LanguageData.getStringValue("CashInViaCardTutorial").toString(),
-                R.drawable.ic_tutorial_home_cash_in_wallet)
+                /*Constants.displayTutorial(this@MainActivity,mDataBinding.dashboardCashInViaCard,LanguageData.getStringValue("CashInViaCardTutorial").toString(),
+                R.drawable.ic_tutorial_home_cash_in_wallet)*/
             }else{
                 startActivity(
                     Intent(
@@ -126,7 +126,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         }
         mDataBinding.callIconHomeScreen.setOnClickListener {
             if(Constants.isTutorialShowing){
-                Constants.displayTutorial(this@MainActivity,mDataBinding.callIconHomeScreen,LanguageData.getStringValue("CallTutorial").toString())
+                /*Constants.displayTutorial(this@MainActivity,mDataBinding.callIconHomeScreen,LanguageData.getStringValue("CallTutorial").toString())*/
             }else{
                 Tools.openDialerWithNumber(this)
             }
@@ -187,6 +187,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         setSideMenuStrings()
         setSideMenuListner()
         checkCashInViaCardFunctinalityAgainstUser()
+
+        Constants.tutorialCallIconHomeScreen = mDataBinding.callIconHomeScreen
+        Constants.tutorialDashboardCashInViaCard = mDataBinding.dashboardCashInViaCard
+    }
+
+    fun startTutorialsTrail(){
+        if(Constants.isTutorialShowing){
+            Constants.displayTutorial(this@MainActivity,mDataBinding.fab,LanguageData.getStringValue("TransactionHistoryTutorial").toString())
+        }
     }
 
     private fun setSideMenuListner() {
@@ -284,6 +293,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
                 object : DialogUtils.OnConfirmationDialogClickListner {
                     override fun onDialogYesClickListner() {
                         mActivityViewModel.requestForLogOutUserApi(this@MainActivity)
+                    }
+
+                    override fun onDialogNoClickListner() {
+
                     }
 
 

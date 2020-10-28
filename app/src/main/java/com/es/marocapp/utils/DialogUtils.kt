@@ -274,6 +274,7 @@ object DialogUtils {
         tvConfirmation.text = confirmationTxt
 
         addDialog.findViewById<View>(R.id.confirmation_dialog_no_btn).setOnClickListener {
+            listner.onDialogNoClickListner()
             addDialog.dismiss()
         }
         addDialog.findViewById<View>(R.id.confirmation_dialog_yes_btn).setOnClickListener {
@@ -328,6 +329,7 @@ object DialogUtils {
 
     interface OnConfirmationDialogClickListner {
         fun onDialogYesClickListner()
+        fun onDialogNoClickListner()
     }
 
     fun showOTPDialogue(
@@ -357,6 +359,7 @@ object DialogUtils {
 
 
         addDialog.findViewById<View>(R.id.otp_dialog_no_btn).setOnClickListener {
+            listner.onOTPDialogNoClickListner()
             addDialog.dismiss()
         }
         var otpDialogFieldDescriotion =
@@ -466,6 +469,7 @@ object DialogUtils {
 
 
         addDialog.findViewById<View>(R.id.otp_dialog_no_btn).setOnClickListener {
+            listner.onOTPDialogNoClickListner()
             addDialog.dismiss()
         }
         var otpDialogFieldDescriotion =
@@ -543,6 +547,7 @@ object DialogUtils {
 
     interface OnOTPDialogClickListner {
         fun onOTPDialogYesClickListner(password: String)
+        fun onOTPDialogNoClickListner()
     }
 
     //0 for Success Dialogue & 1 For Failure Dialogue

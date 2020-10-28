@@ -128,6 +128,10 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
                                 )
                             }
 
+                            override fun onOTPDialogNoClickListner() {
+
+                            }
+
                         })
                 } else {
                     DialogUtils.showErrorDialoge(activity, it.description)

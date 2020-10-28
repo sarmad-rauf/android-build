@@ -8,8 +8,12 @@ import android.os.Build
 import android.text.format.Formatter.formatIpAddress
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.es.marocapp.R
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.*
 import com.github.florent37.tutoshowcase.TutoShowcase
@@ -96,7 +100,14 @@ object Constants {
     var IS_DEFAULT_ACCOUNT_SET = false
     var IS_FIRST_TIME = true
     var isTutorialShowing = true
-    
+    var isFirstTimeTutorialShowing = 0
+
+    lateinit var tutorialDashboardCashInViaCard : ImageView
+    lateinit var tutorialCallIconHomeScreen : ImageView
+    lateinit var tutorialQuickRechargeContainer : CardView
+    lateinit var tutorialSendMoney : ConstraintLayout
+//    lateinit var tutorialSendMoney : View
+
     //Responses
     lateinit var balanceInfoAndResponse : BalanceInfoAndLimitResponse
       var getAccountsResponse : Account? =null
@@ -400,6 +411,7 @@ object Constants {
     }
 
     fun displayTutorial(activityContext : Activity, viewForShowignTutorial : View,tutorialDescrption : String ,drawableIcon : Int = -1) {
+        isFirstTimeTutorialShowing++
         var tutShowCase = TutoShowcase.from(activityContext)
             .setContentView(R.layout.tutorial_custom_view)
             .setFitsSystemWindows(true)
@@ -415,7 +427,46 @@ object Constants {
 
         tutShowCase.setIcon(R.id.iv_tutorial_custom_view,drawableIcon)
 
-
+        tutShowCase.setListener {
+            when(isFirstTimeTutorialShowing){
+                //for dashboardCashInViaCardTutorial
+                1->{
+                    if (loginWithCertResponse.allowedMenu.CashInViaCard != null) {
+                        displayTutorial(activityContext, tutorialDashboardCashInViaCard,
+                            LanguageData.getStringValue("CashInViaCardTutorial").toString(),
+                            R.drawable.ic_tutorial_home_cash_in_wallet)
+                    }else{
+                        isFirstTimeTutorialShowing = 2
+                        displayTutorial(activityContext,
+                            tutorialCallIconHomeScreen,LanguageData.getStringValue("CallTutorial").toString())
+                    }
+                }
+                // for callIconHomeScreen Tutorial
+                2->{
+                    displayTutorial(activityContext,
+                        tutorialCallIconHomeScreen,LanguageData.getStringValue("CallTutorial").toString())
+                }
+                // for Home Screen Quick Recharge Tutorial
+                3->{
+                    displayTutorial(activityContext,
+                        tutorialQuickRechargeContainer,LanguageData.getStringValue("QuickRechargeTutorial").toString()
+                        ,R.drawable.ic_tutorial_home_quick_recharge)
+                }
+                // for Send Money Tutorial
+                4->{
+                    displayTutorial(activityContext,
+                        tutorialSendMoney,LanguageData.getStringValue("SendMoneyTutorial").toString())
+                }
+                5->{
+                    isFirstTimeTutorialShowing = -1
+                    isTutorialShowing = false
+                    Toast.makeText(activityContext,"Tutorials Ended",Toast.LENGTH_LONG).show()
+                }
+                else ->{
+                    isTutorialShowing = false
+                }
+            }
+        }
     }
 
         object EMVco{
