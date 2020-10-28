@@ -13,6 +13,7 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
 import com.google.zxing.qrcode.QRCodeWriter
+import java.text.DecimalFormat
 
 object Tools {
 
@@ -75,7 +76,15 @@ object Tools {
         }
     }
 
-    fun generateEMVcoString(number: String, amount: String?):String{
+    fun generateEMVcoString(number: String, enteredAmount: String):String{
+        var amount=enteredAmount
+        if(!amount.isNullOrBlank()){
+            var df = DecimalFormat("00000")
+            amount = df.format(Integer.parseInt( amount)).toString()
+        }
+        else{
+            amount="00000"
+        }
 
         var Paid_Entity_Reference_VALUE=EncryptionUtils.encryptStringAESCBC(number)
         var Masked_Paid_Entity_Reference_VALUE=""
@@ -98,7 +107,9 @@ object Tools {
                 Constants.EMVco.Encryption_Format_ID + Constants.EMVco.Encryption_Format_SIZE + Constants.EMVco.Encryption_Format_VALUE +
                 Constants.EMVco.Paid_Entity_Reference_Format_ID + Constants.EMVco.Paid_Entity_Reference_Format_SIZE + Constants.EMVco.Paid_Entity_Reference_Format_VALUE +
                 Constants.EMVco.Paid_Entity_Reference_ID + Constants.EMVco.Paid_Entity_Reference_SIZE + Paid_Entity_Reference_VALUE +
-                Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE_12 + Masked_Paid_Entity_Reference_VALUE + amount
+                Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE_12 + Masked_Paid_Entity_Reference_VALUE +
+                Constants.EMVco.Currency_Transaction_ID + Constants.EMVco.Currency_Transaction_SIZE + Constants.EMVco.Currency_Transaction_VALUE +
+                Constants.EMVco.Amount_Transaction_ID + Constants.EMVco.Amount_Transaction_SIZE + amount + Constants.EMVco.dynamic
 
         return qrString
     }
@@ -127,6 +138,23 @@ object Tools {
         }
         Log.d("DecryptedNumber",num)
         return num
+    }
+
+    fun extractAmountFromEMVcoQR(text:String):String{
+        var amount=""
+        try {
+            if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
+                amount =
+                    text.split(Constants.EMVco.Amount_Transaction_ID + Constants.EMVco.Amount_Transaction_SIZE)[1]
+
+                amount=amount.substring(0,5)
+            }
+        }
+        catch (e:Exception){
+            amount=""
+        }
+        Log.d("Amount",amount)
+        return amount
     }
 
     fun openDialerWithNumber(context: Context){

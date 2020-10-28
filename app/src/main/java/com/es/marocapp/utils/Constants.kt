@@ -503,5 +503,16 @@ object Constants {
         const val Masked_Paid_Entity_Reference_SIZE_13="13"
      //   var Masked_Paid_Entity_Reference_VALUE=""
 
+        const val Currency_Transaction_ID="53"
+        const val Currency_Transaction_SIZE="03"
+        const val Currency_Transaction_VALUE="504"
+
+            const val Amount_Transaction_ID="54"
+            const val Amount_Transaction_SIZE="05"
+            const val Amount_Transaction_VALUE="80000"
+
+            const val dynamic="62230819QR dynamic transfer 6304FCA8"
+
+
     }
 }

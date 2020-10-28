@@ -65,7 +65,6 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 
         subscribeForTranslationsApiResponse()
 
-
     }
 
     fun setupPermissions() {
