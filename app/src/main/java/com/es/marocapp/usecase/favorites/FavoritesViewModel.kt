@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.es.marocapp.R
 import com.es.marocapp.model.requests.AddContactRequest
 import com.es.marocapp.model.requests.BillPaymentFatoratiStepOneRequest
+import com.es.marocapp.model.requests.BillPaymentFatoratiStepTwoRequest
 import com.es.marocapp.model.requests.DeleteContactRequest
 import com.es.marocapp.model.responses.AddContactResponse
 import com.es.marocapp.model.responses.BillPaymentFatoratiStepOneResponse
@@ -32,6 +33,10 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
 
     var popBackStackTo = -1
     var fatoratiTypeSelected = ""
+    var codeCreance = ""
+    var creancierID = ""
+    var nomChamp = ""
+    var refTxFatourati = ""
 
     //Observerable Fileds
     var isPaymentSelected = ObservableField<Boolean>()
@@ -45,6 +50,9 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
 
     var getAddFavoritesResponseListner = SingleLiveEvent<AddContactResponse>()
     var getDeleteFavoritesResponseListner = SingleLiveEvent<DeleteContactResponse>()
+
+    var fatoratiStepTwoObserver = ObservableField<BillPaymentFatoratiStepTwoResponse>()
+    var getFatoratiStepTwoResponseListner = SingleLiveEvent<BillPaymentFatoratiStepTwoResponse>()
 
 
     //Request For FatoratiStepOne
@@ -86,6 +94,70 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
 
                         } else {
                             getFatoratiStepOneResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For FatoratiStepTwo
+    fun requestForFatoratiStepTwoApi(context: Context?,
+                                     receiver: String,
+                                     codeCreancier : String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiStepTwo(
+                BillPaymentFatoratiStepTwoRequest(ApiConstant.CONTEXT_AFTER_LOGIN,codeCreancier,Constants.OPERATION_TYPE_CREANCE,
+                    Constants.getFatoratiAlias(receiver),Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    fatoratiStepTwoObserver.set(result)
+                                    getFatoratiStepTwoResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    fatoratiStepTwoObserver.set(result)
+                                    getFatoratiStepTwoResponseListner.postValue(result)
+                                }
+                            }
+
+                        } else {
+                            getFatoratiStepTwoResponseListner.postValue(result)
                         }
 
 

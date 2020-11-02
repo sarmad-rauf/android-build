@@ -52,7 +52,7 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
                     if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
 
                         /*Storing Fatorai bill Fav as
-                        BillPayment_Fatourati_Redal@MyNickName,codeCreance,creancierID,nomChamp,refTxFatourati
+                        Util_Redal@MyNickName,codeCreance,creancierID,nomChamp,refTxFatourati
 */
                         var fatoratiNickName = "Util_${mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier}@$nickName" +
                                 ",${mActivityViewModel.fatoratiTypeSelected.get()!!.codeCreance}," +
@@ -63,17 +63,20 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
                     }else if(mActivityViewModel.isBillUseCaseSelected.get()!!){
 
                         var billPaymentNickName = ""
+                        var billPaymentNumber = ""
 
                         if(mActivityViewModel.isInternetSelected.get()!!){
                            // billPaymentNickName = "BillPayment_TelecomBill_Internet@$nickName"
                             billPaymentNickName = "Telec_Internet@$nickName"
-
+                            billPaymentNumber = Constants.getPostPaidInternetDomainAlias(mActivityViewModel.transferdAmountTo)
                         }else if(mActivityViewModel.isPostPaidMobileSelected.get()!!){
                             billPaymentNickName = "Telec_PostpaidMobile@$nickName,${mActivityViewModel.mCodeEntered}"
+                            billPaymentNumber = Constants.getPostPaidMobileDomainAlias(mActivityViewModel.transferdAmountTo)
                         }else if(mActivityViewModel.isPostPaidFixSelected.get()!!){
                             billPaymentNickName = "Telec_PostpaidFix@$nickName,${mActivityViewModel.mCodeEntered}"
+                            billPaymentNumber = Constants.getPostPaidFixedDomainAlias(mActivityViewModel.transferdAmountTo)
                         }
-                        mActivityViewModel.requestForAddFavoritesApi(activity,billPaymentNickName,mActivityViewModel.transferdAmountTo)
+                        mActivityViewModel.requestForAddFavoritesApi(activity,billPaymentNickName,billPaymentNumber)
                     }
                 }
 

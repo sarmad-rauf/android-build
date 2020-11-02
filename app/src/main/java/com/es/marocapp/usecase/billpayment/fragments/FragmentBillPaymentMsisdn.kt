@@ -77,7 +77,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             mDataBinding.inputPhoneNumber.setInputType(InputType.TYPE_CLASS_NUMBER)
             var selectedBillType = ""
             if(mActivityViewModel.isInternetSelected.get()!!){
-                selectedBillType = "Telec_Internet@@"
+                selectedBillType = "Telec_Internet@"
 
             }else if(mActivityViewModel.isPostPaidMobileSelected.get()!!){
                 selectedBillType = "Telec_PostpaidMobile@"

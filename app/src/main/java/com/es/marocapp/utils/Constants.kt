@@ -99,7 +99,7 @@ object Constants {
 
     var IS_DEFAULT_ACCOUNT_SET = false
     var IS_FIRST_TIME = true
-    var isTutorialShowing = true
+    var isTutorialShowing = false
     var isFirstTimeTutorialShowing = 0
 
     lateinit var tutorialDashboardCashInViaCard : ImageView

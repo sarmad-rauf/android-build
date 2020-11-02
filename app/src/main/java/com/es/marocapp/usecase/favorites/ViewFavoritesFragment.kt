@@ -91,7 +91,15 @@ class ViewFavoritesFragment : BaseFragment<FragmentFavoritesViewBinding>(),
                 }
             }else{
                 for(contact in mContact){
-                    if(!contact.fri.contains(Constants.getFatoratiAlias(""))){
+                    if(contact.fri.contains(Constants.getPostPaidInternetDomainAlias(""))){
+                        mList.add(contact)
+                    }
+
+                    if(contact.fri.contains(Constants.getPostPaidFixedDomainAlias(""))){
+                        mList.add(contact)
+                    }
+
+                    if(contact.fri.contains(Constants.getPostPaidMobileDomainAlias(""))){
                         mList.add(contact)
                     }
                 }

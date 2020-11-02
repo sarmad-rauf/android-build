@@ -25,11 +25,35 @@
         android:background="@color/colorWhite"
         >
 
+        <com.es.marocapp.widgets.MarocRegularTextView
+            android:id="@+id/selectBillTypeTypeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Select bill type"
+            android:textSize="@dimen/_12ssp"
+            android:textColor="@color/colorTextGreyMedium"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:textAllCaps="true"
+            />
+
+        <Spinner
+            android:id="@+id/spinnerSelectBillType"
+            android:layout_width="271dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_32sdp"
+            android:background="@drawable/spinner_icon_background_grey"
+            app:layout_constraintStart_toStartOf="@+id/selectBillTypeTypeTitle"
+            app:layout_constraintTop_toBottomOf="@+id/selectBillTypeTypeTitle" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerSelectBillType"
             android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginEnd="@dimen/_16sdp"
@@ -74,6 +98,26 @@
                 android:layout_height="wrap_content"
                 android:theme="@style/myTextInputLabel"
                 android:hint="@string/enter_contact_number"
+                android:inputType="phone"
+                android:maxLength="12" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/input_layout_phone_number"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            >
+
+            <com.es.marocapp.widgets.MarocEditText
+                android:id="@+id/input_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/myTextInputLabel"
+                android:hint="@string/enter_code"
                 android:inputType="phone"
                 android:maxLength="12" />
         </com.google.android.material.textfield.TextInputLayout>
