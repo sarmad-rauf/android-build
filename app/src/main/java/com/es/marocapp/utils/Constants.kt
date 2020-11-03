@@ -105,7 +105,7 @@ object Constants {
     lateinit var tutorialDashboardCashInViaCard : ImageView
     lateinit var tutorialCallIconHomeScreen : ImageView
     lateinit var tutorialQuickRechargeContainer : CardView
-    lateinit var tutorialSendMoney : ConstraintLayout
+     var tutorialSendMoney : ConstraintLayout? =null
 //    lateinit var tutorialSendMoney : View
 
     //Responses
@@ -454,8 +454,10 @@ object Constants {
                 }
                 // for Send Money Tutorial
                 4->{
-                    displayTutorial(activityContext,
-                        tutorialSendMoney,LanguageData.getStringValue("SendMoneyTutorial").toString())
+                    tutorialSendMoney?.let {
+                        displayTutorial(activityContext,
+                            it,LanguageData.getStringValue("SendMoneyTutorial").toString())
+                    }
                 }
                 5->{
                     isFirstTimeTutorialShowing = -1
