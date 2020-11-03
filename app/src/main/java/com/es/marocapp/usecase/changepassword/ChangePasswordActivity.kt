@@ -60,6 +60,10 @@ class ChangePasswordActivity : BaseActivity<FragmentChangepasswordBinding>(),
                         (this@ChangePasswordActivity).finish()
                     }
 
+                    override fun onDialogNoClickListner() {
+
+                    }
+
                 })
 
             } else {

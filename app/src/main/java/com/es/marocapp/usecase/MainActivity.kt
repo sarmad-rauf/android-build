@@ -60,7 +60,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     var isFaqsFragmentShowing = false
     var isSideMenuShowing = false
     var isTranactionDetailsFragmentShowing = false
-    var isHomeFragmentShowing = false
+    var isHomeFragmentShowing = true
     var isTransacitonFragmentShowing = false
 
     override fun setLayout(): Int {

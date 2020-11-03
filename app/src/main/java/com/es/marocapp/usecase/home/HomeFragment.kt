@@ -535,16 +535,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             layoutManager = mUseCaseGridLayoutManager
         }
 
-        mDataBinding.useCasesRecyclerView.postDelayed(Runnable {
-            for(i in 0 until useCases.size){
-                if(useCases[i].useCaseTitle == LanguageData.getStringValue("SendMoney").toString()){
-                    val holder =
-                        mDataBinding.useCasesRecyclerView.findViewHolderForAdapterPosition(i) as RecyclerView.ViewHolder
-                    Constants.tutorialSendMoney = holder.itemView.findViewById<ConstraintLayout>(R.id.useCasesParentLayout)
-                    break
+        if((activity as MainActivity).isHomeFragmentShowing){
+            mDataBinding.useCasesRecyclerView.postDelayed(Runnable {
+                for(i in 0 until useCases.size){
+                    if(useCases[i].useCaseTitle == LanguageData.getStringValue("SendMoney").toString()){
+                        val holder =
+                            mDataBinding.useCasesRecyclerView.findViewHolderForAdapterPosition(i) as RecyclerView.ViewHolder
+                        Constants.tutorialSendMoney = holder.itemView.findViewById<ConstraintLayout>(R.id.useCasesParentLayout)
+                        break
+                    }
                 }
-            }
-        }, 50)
+            }, 50)
+        }
     }
 
     private fun populateHomeCardView(updateBalance: Boolean, amount: String?) {

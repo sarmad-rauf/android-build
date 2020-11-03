@@ -74,6 +74,10 @@ class ConsumerRegistrationVerifyOtpFragment : BaseFragment<FragmentConsumerRegis
                             )
                         }
 
+                        override fun onDialogNoClickListner() {
+
+                        }
+
                     })
                 }else{
                     DialogUtils.showErrorDialoge(activity,it.description)
