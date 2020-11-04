@@ -36,7 +36,7 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
 
     lateinit var mActivityViewModel: LoginActivityViewModel
 
-    var isOTPRegexMatches = false
+    var isOTPRegexMatches = true
 
 
     override fun setLayout(): Int {
@@ -265,10 +265,10 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
     }
 
     override fun afterTextChanged(p0: Editable?) {
-        var otp = mDataBinding.inputVerifyOtpBox.text.toString().trim()
+        /*var otp = mDataBinding.inputVerifyOtpBox.text.toString().trim()
         var otpLenght = otp.length
         isOTPRegexMatches =
-            (otpLenght > 0 && otpLenght==Constants.APP_OTP_LENGTH && Pattern.matches(Constants.APP_OTP_REGEX, otp))
+            (otpLenght > 0 && otpLenght==Constants.APP_OTP_LENGTH && Pattern.matches(Constants.APP_OTP_REGEX, otp))*/
     }
 
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

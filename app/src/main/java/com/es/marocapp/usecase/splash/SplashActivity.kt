@@ -144,10 +144,10 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.APP_CN_REGEX = it.cnRegex
                 Constants.APP_OTP_LENGTH = it.androidOtpLength
                 if(it.defaultAccountOtpLength!=null){
-                    Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH = it?.defaultAccountOtpLength
+                    Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH = it?.defaultAccountOtpLength?.toInt()
                 }
                 Constants.APP_DEFAULT_ACCOUNT_OTP_REGEX = it?.defaultAccountOtpRegex
-                Constants.APP_ADDFAVORITE_NICK_LENGTH = it?.billFavoriteLength
+                Constants.APP_ADDFAVORITE_NICK_LENGTH = it?.billFavoriteLength?.toInt()
                 Constants.APP_DATE_FORMAT = it.dateFormat
                 Constants.CURRENT_CURRENCY_TYPE = it.currencyOnEwp
                 Constants.CURRENT_CURRENCY_TYPE_TO_SHOW = it.currencyToShow
@@ -159,6 +159,33 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.URL_FOR_UPDATE_APP = it.url
                 Constants.KEY_FOR_WALLET_BALANCE_MAX = it.walletBalanceLimitKey
                 Constants.PREVIOUS_DAYS_TRANSACTION_COUNT = it.numberOfTransactions
+
+                //Adding Aliases Value from API to Contants
+                Constants.NUMBER_MSISDN_ALIAS = it.numberAlias
+                Constants.TRANSFER_RECEIVER_ALIAS = it.getTransferReceiverAlias
+                Constants.MERCHANT_RECEIVER_ALIAS = it.getMerchantReceiverAlias
+                Constants.AIR_TIME_RECEIVER_ALIAS = it.getAirtimeReceiverAlias
+                Constants.AGNET_RECEIVER_ALIAS = it.getAgentReceiverAlias
+                Constants.POST_PAID_MOBILE_ALIAS = it.getPostPaidMobileDomainAlias
+                Constants.POST_PAID_FIXED_ALIAS = it.getPostPaidFixedDomainAlias
+                Constants.POST_PAID_INTERNET_ALIAS = it.getPostPaidInternetDomainAlias
+                Constants.FATOURATI_ALIAS = it.getFatouratiAlias
+                //--------------------------------------------------------------------------------------
+
+                //Adding Transfer Type From API to Contants
+                Constants.TRANSFER_TYPE_PAYMENT = it.transferTypePayment
+                Constants.MERCHANT_TYPE_PAYMENT= it.merchantTypePayment
+                Constants.TYPE_PAYMENT= it.typePayment
+                Constants.TYPE_BILL_PAYMENT = it.typeBillPayment
+                Constants.TYPE_COMMISSIONING = it.typeCommisioning
+                Constants.OPERATION_TYPE_CREANCIER = it.operationTypeCreancier
+                Constants.OPERATION_TYPE_CREANCE = it.operationTypeCreance
+                Constants.OPERATION_TYPE_IMPAYES = it.operationTypeImpayes
+                Constants.TYPE_CASH_IN = it.typeCashIn
+                Constants.PAYMENT_TYPE_SEND_MONEY = it.paymentTypeSendMoney
+                Constants.PAYMENT_TYPE_INITIATE_MERCHANT = it.paymentTypeInitiateMerchant
+                //--------------------------------------------------------------------------------------
+
                 if(it.cmiWebpageUrl!=null){
                     Constants.CASH_IN_VIA_CARD_URL = it.cmiWebpageUrl
                 }
