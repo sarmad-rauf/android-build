@@ -32,17 +32,29 @@ object Constants {
 
     const val IDENTIFICATION_TYPE = "CNIC"
     const val SECRET_TYPE = "password"
-    const val TRANSFER_TYPE_PAYMENT = "INTEROP_TRANSFER"
-    const val MERCHANT_TYPE_PAYMENT = "CUSTOM_INTEROP_TRANSFER_SEND"
-    const val TYPE_PAYMENT = "PAYMENT"
-    const val TYPE_BILL_PAYMENT = "BILL_PAYMENT"
-    const val TYPE_COMMISSIONING = "COMMISSIONING"
-    const val OPERATION_TYPE_CREANCIER = "creancier"
-    const val OPERATION_TYPE_CREANCE = "creance"
-    const val OPERATION_TYPE_IMPAYES = "impayes"
-    const val TYPE_CASH_IN = "CASH_IN"
-    const val PAYMENT_TYPE_SEND_MONEY = "sendmoney"
-    const val PAYMENT_TYPE_INITIATE_MERCHANT = "initiatemerchant"
+    /*var TRANSFER_TYPE_PAYMENT = "INTEROP_TRANSFER"
+    var MERCHANT_TYPE_PAYMENT = "CUSTOM_INTEROP_TRANSFER_SEND"
+    var TYPE_PAYMENT = "PAYMENT"
+    var TYPE_BILL_PAYMENT = "BILL_PAYMENT"
+    var TYPE_COMMISSIONING = "COMMISSIONING"
+    var OPERATION_TYPE_CREANCIER = "creancier"
+    var OPERATION_TYPE_CREANCE = "creance"
+    var OPERATION_TYPE_IMPAYES = "impayes"
+    var TYPE_CASH_IN = "CASH_IN"
+    var PAYMENT_TYPE_SEND_MONEY = "sendmoney"
+    var PAYMENT_TYPE_INITIATE_MERCHANT = "initiatemerchant"*/
+
+    var TRANSFER_TYPE_PAYMENT = ""
+    var MERCHANT_TYPE_PAYMENT = ""
+    var TYPE_PAYMENT = ""
+    var TYPE_BILL_PAYMENT = ""
+    var TYPE_COMMISSIONING = ""
+    var OPERATION_TYPE_CREANCIER = ""
+    var OPERATION_TYPE_CREANCE = ""
+    var OPERATION_TYPE_IMPAYES = ""
+    var TYPE_CASH_IN = ""
+    var PAYMENT_TYPE_SEND_MONEY = ""
+    var PAYMENT_TYPE_INITIATE_MERCHANT = ""
 
     //preLoginData
     var APP_DATE_FORMAT = "yyyy-mm-dd"
@@ -197,40 +209,60 @@ object Constants {
         return decodedString
     }
 
+    //Alias's from PreLoginData
+    var NUMBER_MSISDN_ALIAS = ""
+    var TRANSFER_RECEIVER_ALIAS = ""
+    var MERCHANT_RECEIVER_ALIAS = ""
+    var AIR_TIME_RECEIVER_ALIAS = ""
+    var AGNET_RECEIVER_ALIAS = ""
+    var POST_PAID_MOBILE_ALIAS = ""
+    var POST_PAID_FIXED_ALIAS = ""
+    var POST_PAID_INTERNET_ALIAS = ""
+    var FATOURATI_ALIAS = ""
+
     fun getNumberMsisdn(number : String) : String{
-        return "$number/MSISDN"
+//        return "$number/MSISDN"
+        return "$number$NUMBER_MSISDN_ALIAS"
     }
 
     fun getTransferReceiverAlias(number: String) : String{
-        return "$number@hpss.sub.sp/SP"
+//        return "$number@hpss.sub.sp/SP"
+        return "$number$TRANSFER_RECEIVER_ALIAS"
     }
 
     fun getMerchantReceiverAlias(number: String) : String{
-        return "$number@hpss.mer.sp/SP"
+//        return "$number@hpss.mer.sp/SP"
+        return "$number$MERCHANT_RECEIVER_ALIAS"
     }
 
     fun getAirTimeReceiverAlias(number : String) : String{
-        return "$number@ocs.prepaid.sp/SP"
+//        return "$number@ocs.prepaid.sp/SP"
+        return "$number$AIR_TIME_RECEIVER_ALIAS"
     }
 
     fun getAgentReceiverAlias(number: String) : String{
-        return "$number@hpss.mer.sp/SP"
+//        return "$number@hpss.mer.sp/SP"
+        return "$number$AGNET_RECEIVER_ALIAS"
     }
 
     fun getPostPaidMobileDomainAlias(number: String) : String{
-        return "$number@bscs.mobile.sp/SP"
+//        return "$number@bscs.mobile.sp/SP"
+        return "$number$POST_PAID_MOBILE_ALIAS"
     }
 
     fun getPostPaidFixedDomainAlias(number: String) : String{
-        return "$number@bscs.fixed.sp/SP"
+//        return "$number@bscs.fixed.sp/SP"
+        return "$number$POST_PAID_FIXED_ALIAS"
     }
 
     fun getPostPaidInternetDomainAlias(number: String) : String{
-        return "$number@bscs.internet.sp/SP"
+//        return "$number@bscs.internet.sp/SP"
+        return "$number$POST_PAID_INTERNET_ALIAS"
     }
 
     fun getFatoratiAlias(number: String) :String{
-        return "$number@fatourati.sp/SP"
+//        return "$number@fatourati.sp/SP"
+        return "$number$FATOURATI_ALIAS"
     }
 
     fun addAmountAndFee(amount : Double, fee : Double): String{
