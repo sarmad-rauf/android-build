@@ -4,6 +4,7 @@ import android.content.Context
 import com.es.marocapp.BuildConfig
 import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.RootValues
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -111,14 +112,7 @@ public class ApiClient() : Dependencies() {
     }*/
 
     override fun setSslCertificate(): ArrayList<String> {
-
-        var publicKeysList: ArrayList<String> = ArrayList<String>()
-      //  publicKeysList.add("CSRAtwO/YS+LAKcoae6Yy5lNa43DhjQTJWrDodxguVs=")
-
-        publicKeysList.add("EbmVRuVFiv5FDIvVCnjqSiH+DLLIpku9/I024/54Oms=")
-
-        return publicKeysList
-       //return RootValues.getInstance().keysPublicServerFromNdk
+       return RootValues.getInstance().keysPublicServerFromNdk
     }
 
     override fun setSslCertificateFile(): InputStream? {

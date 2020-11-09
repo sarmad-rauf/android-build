@@ -1,14 +1,16 @@
 package com.es.marocapp.security
 
+import com.es.marocapp.utils.RootValues
+
 object EncryptionUtils{
     //using above code these key and iv was generated
-    val hexKey =
-        "2192B39425BBD08B6E8E61C5D1F1BC9F428FC569FBC6F78C0BC48FCCDB0F42AE"
-    val hexIV = "E1E592E87225847C11D948684F3B070D"
+    val hexKey = RootValues.getInstance().hexKeyAesGcm
 
-    val hexKeyAESCBC =
-        "B67C1EA886E95E689A1BB3DBAD065C16"
-    val hexIVAESCBC = "48E53E0639A76C5A5E0C5BC9E3A91538"
+    val hexIV = RootValues.getInstance().hexIVAesGcm
+
+    val hexKeyAESCBC =RootValues.getInstance().hexKeyAesCBC
+
+    val hexIVAESCBC = RootValues.getInstance().hexIVAesCBC
     public fun encryptString(value:String):String{
         //encrypt - result base64 encoded string
         val encryptedText =

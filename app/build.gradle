@@ -23,6 +23,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+            }
+        }
+
         multiDexEnabled true
         def today = new Date().format('dd-MMM-yyyy-HHmmss').toString()
         // project.ext.set("archivesBaseName", "Maroc-Android-Build-" + today + "-V" + version + "-" + versionCode + "-Api-" + baseUrlType)
@@ -66,6 +72,14 @@ android {
 
 
     }
+
+    // CPP
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+
 
     // Databinding Set
     dataBinding {

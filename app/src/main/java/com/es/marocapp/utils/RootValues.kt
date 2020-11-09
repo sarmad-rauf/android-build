@@ -43,4 +43,16 @@ class RootValues private constructor() {
         } catch (e: Exception) {
         }
     }
+
+    // NDK Key Values
+    var keyValueFromNdk: String = ""
+
+    // NDK Public Keys From Server
+    var keysPublicServerFromNdk: ArrayList<String> = ArrayList()
+
+    var hexKeyAesGcm:String=""
+    var hexIVAesGcm:String=""
+    var hexKeyAesCBC:String=""
+    var hexIVAesCBC:String=""
+
 }

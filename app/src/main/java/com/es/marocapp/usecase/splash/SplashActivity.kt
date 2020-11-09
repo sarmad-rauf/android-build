@@ -29,11 +29,9 @@ import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.login.LoginActivity
-import com.es.marocapp.utils.Constants
-import com.es.marocapp.utils.DialogUtils
-import com.es.marocapp.utils.PrefUtils
-import com.es.marocapp.utils.Tools
+import com.es.marocapp.utils.*
 import java.lang.reflect.Method
+import java.util.ArrayList
 
 
 class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
@@ -44,6 +42,14 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 
     override fun setLayout(): Int {
         return R.layout.acitivty_splash
+    }
+
+    companion object {
+
+        // Used to load the 'native-lib' library on application startup.
+        init {
+            System.loadLibrary("native-lib")
+        }
     }
 
     lateinit var mActivityViewModel: SplashActivityViewModel
@@ -58,7 +64,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
             viewmodel = mActivityViewModel
 
         }
-
+        loadNDKValues()
         setupPermissions()
         Constants.getIPAddress(application)
         subscribe()
@@ -66,6 +72,14 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
         subscribeForTranslationsApiResponse()
 
     }
+
+    // NDK methods Start
+    external fun getSecureKeyValues(): String
+    external fun getServerPublicKeys(): String
+    external fun getAesGcmHexKey(): String
+    external fun getAesGcmHexIV(): String
+    external fun getAesCBCHexKey(): String
+    external fun getAesCBCHexIV(): String
 
     fun setupPermissions() {
         val permission = ContextCompat.checkSelfPermission(
@@ -373,4 +387,32 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
         }
         return deviceID
     }
+
+    fun loadNDKValues() {
+
+        try {// The Key used for encription decription
+            RootValues.getInstance().keyValueFromNdk = getSecureKeyValues()
+            RootValues.getInstance().hexKeyAesGcm = getAesGcmHexKey()
+            RootValues.getInstance().hexIVAesGcm = getAesGcmHexIV()
+
+            RootValues.getInstance().hexKeyAesCBC = getAesCBCHexKey()
+            RootValues.getInstance().hexIVAesCBC = getAesCBCHexIV()
+
+            // get Server Public Keys
+            val keysPublicServer = getServerPublicKeys()
+            val separator = ":::::::" //7 chars
+            if (keysPublicServer != null) {
+                val keysArray = keysPublicServer.split(separator)
+                if (keysArray != null && keysArray.size > 0) {
+                    if (RootValues.getInstance().keysPublicServerFromNdk == null) {
+                        RootValues.getInstance().keysPublicServerFromNdk = ArrayList()
+                    }
+                    RootValues.getInstance().keysPublicServerFromNdk.addAll(keysArray)
+                }
+            }
+        } catch (e: Exception) {
+        }
+
+    }
+// NDK methods End
 }
