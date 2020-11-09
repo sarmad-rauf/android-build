@@ -113,9 +113,9 @@ public class ApiClient() : Dependencies() {
     override fun setSslCertificate(): ArrayList<String> {
 
         var publicKeysList: ArrayList<String> = ArrayList<String>()
-        publicKeysList.add("CSRAtwO/YS+LAKcoae6Yy5lNa43DhjQTJWrDodxguVs=")
+      //  publicKeysList.add("CSRAtwO/YS+LAKcoae6Yy5lNa43DhjQTJWrDodxguVs=")
 
-       /* publicKeysList.add("EbmVRuVFiv5FDIvVCnjqSiH+DLLIpku9/I024/54Oms=")*/
+        publicKeysList.add("EbmVRuVFiv5FDIvVCnjqSiH+DLLIpku9/I024/54Oms=")
 
         return publicKeysList
        //return RootValues.getInstance().keysPublicServerFromNdk
