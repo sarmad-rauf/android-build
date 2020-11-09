@@ -54,7 +54,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
     var feeAmount = ""
     var qouteId = ""
     var transactionID = ""
-    var senderBalanceAfter =""
+    var senderBalanceAfter :String? =""
     var ReceiverName =""
     var mBalanceInforAndResponseObserver = ObservableField<BalanceInfoAndLimitResponse>()
     var mAccountHolderInfoResponseObserver = ObservableField<GetAccountHolderInformationResponse>()

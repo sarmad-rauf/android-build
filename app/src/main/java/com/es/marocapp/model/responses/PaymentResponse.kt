@@ -9,7 +9,7 @@ data class PaymentResponse(
     val financialReceiptResponse: FinancialReceiptResponse,
     val masterPassTransactionId: Any,
     val responseCode: String,
-    val senderBalanceafter: String,
+    val senderBalanceafter: String?,
     val transDate: Any,
     val transTime: Any,
     val transactionId: String
