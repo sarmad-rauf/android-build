@@ -127,7 +127,7 @@
                             android:id="@+id/descriptionOfTransaction"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Your Payment is Pending"
+                            tools:text="Your Payment is Pending"
                             android:textColor="@color/colorBtnDisable"
                             android:textSize="@dimen/_15ssp"
                             app:layout_constraintTop_toTopOf="parent"

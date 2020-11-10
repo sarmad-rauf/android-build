@@ -70,7 +70,10 @@ class FundsTransferPendingFragment : BaseFragment<FragmentFundsTransferPendingBi
     }
 
     private fun updateUI() {
-        mDataBinding.descriptionOfTransaction.text = mActivityViewModel.sendMoneyFailureOrPendingDescription.get()!!
+        if(mActivityViewModel.sendMoneyFailureOrPendingDescription.get()!=null) {
+            mDataBinding.descriptionOfTransaction.text =
+                mActivityViewModel.sendMoneyFailureOrPendingDescription.get()!!
+        }
 
         if(mActivityViewModel.isTransactionFailed.get()!!){
             mDataBinding.imgSuccess.setImageResource(R.drawable.img_payment_failure)
