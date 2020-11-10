@@ -552,8 +552,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     private fun populateHomeCardView(updateBalance: Boolean, amount: String?) {
         var mbalanceInfoAndResonse = Constants.balanceInfoAndResponse
         var maxUserBalance = "0"
-        if(!mbalanceInfoAndResonse.limitsList.isNullOrEmpty()){
-            for(index in mbalanceInfoAndResonse.limitsList!!.indices){
+        if(!mbalanceInfoAndResonse?.limitsList.isNullOrEmpty()){
+            for(index in mbalanceInfoAndResonse?.limitsList!!.indices){
                if(mbalanceInfoAndResonse.limitsList!![index].name.equals(Constants.KEY_FOR_WALLET_BALANCE_MAX)){
                    maxUserBalance = mbalanceInfoAndResonse.limitsList!![index].threshhold!!
                    maxUserBalance = maxUserBalance.removePrefix("DH").trim()
@@ -567,9 +567,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     0, CardModel(
                         R.drawable.ic_wallet_balance,
                         LanguageData.getStringValue("Balance").toString(),
-                        Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mbalanceInfoAndResonse.balance,
+                        Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mbalanceInfoAndResonse?.balance,
                         maxUserBalance,
-                        mbalanceInfoAndResonse.balance!!
+                        mbalanceInfoAndResonse?.balance!!
                     ), -1
                 )
             )

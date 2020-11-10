@@ -65,7 +65,7 @@ class TransactionHistoryAdapter(
             var dateToShow : String = Constants.getZoneFormattedDateAndTime(models!![position].date)
             holder.tvBillDate?.text = dateToShow
 
-            val sName: String = Constants.balanceInfoAndResponse.firstname + " " + Constants.balanceInfoAndResponse.surname
+            val sName: String = Constants.balanceInfoAndResponse?.firstname + " " + Constants.balanceInfoAndResponse?.surname
         if(models!![position].transactionstatus.equals("FAILED",true)){
             holder.tvBillAmount?.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + models!![position].toamount
         }

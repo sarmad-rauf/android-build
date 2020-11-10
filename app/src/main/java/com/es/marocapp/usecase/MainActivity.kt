@@ -32,6 +32,7 @@ import com.es.marocapp.usecase.settings.SettingsActivity
 import com.es.marocapp.usecase.termsandcondiitons.TermsAndConditions
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.PrefUtils
 import com.es.marocapp.utils.Tools
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -347,8 +348,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     private fun setSideMenuStrings() {
         mDataBinding.navigationItem.rootView.nav_title_name.text = LanguageData.getStringValue("MySpace")
         mDataBinding.navigationItem.rootView.personal_information_title.text = LanguageData.getStringValue("PersonalInformation")
-        mDataBinding.navigationItem.rootView.nav_logged_in_user_name.text = Constants.balanceInfoAndResponse.firstname+" "+Constants.balanceInfoAndResponse.surname
-        mDataBinding.navigationItem.rootView.nav_logged_in_user_detials.text = Constants.balanceInfoAndResponse.profilename
+        mDataBinding.navigationItem.rootView.nav_logged_in_user_name.text = Constants.balanceInfoAndResponse?.firstname+" "+Constants.balanceInfoAndResponse?.surname
+        mDataBinding.navigationItem.rootView.nav_logged_in_user_detials.text = Constants.balanceInfoAndResponse?.profilename
         mDataBinding.navigationItem.rootView.nav_logged_in_user_email.text = getUserEmailAddress()
         mDataBinding.navigationItem.rootView.complete_mt_title.text = LanguageData.getStringValue("MTCashAccount")
         mDataBinding.navigationItem.rootView.cashInViaCardTitle.text = LanguageData.getStringValue("CashInViaCard")
@@ -366,8 +367,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
     fun getUserEmailAddress() : String{
         var email = ""
-        if(!Constants.balanceInfoAndResponse.email.isNullOrEmpty()){
-            email = Constants.balanceInfoAndResponse.email!!
+        if(!Constants.balanceInfoAndResponse?.email.isNullOrEmpty()){
+            email = Constants.balanceInfoAndResponse?.email!!
             email = email.removePrefix("ID:")
             email = email.substringAfter(":")
             email = email.substringBefore("/")
@@ -377,7 +378,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
     private fun setStrings() {
         mDataBinding.toolbarName.text =
-            "${LanguageData.getStringValue("Hi")} ${Constants.balanceInfoAndResponse.firstname}"
+            "${LanguageData.getStringValue("Hi")} ${Constants.balanceInfoAndResponse?.firstname}"
 
        /* mDataBinding.navigationHeader.drawer_header_name.text =
             "${LanguageData.getStringValue("Hi")} ${Constants.balanceInfoAndResponse.firstname} ${Constants.balanceInfoAndResponse.surname}"
@@ -516,12 +517,41 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
                             LocaleManager.KEY_LANGUAGE_AR,
                             MainActivity::class.java)
                     }
+                    mActivityViewModel.requestForBalanceInfoAndLimtsAPI(this@MainActivity)
                     // DialogUtils.successFailureDialogue(this@SettingsActivity,it.description,0)
                 }else{
                     DialogUtils.successFailureDialogue(this@MainActivity,it.description,1)
                 }
             }
         )
+
+        mActivityViewModel.getBalanceInforAndLimitResponseListner.observe(this@MainActivity,
+            Observer {
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    var userName = it?.firstname + " " + it?.surname
+                    Constants.CURRENT_USER_NAME = userName
+
+                    Constants.balanceInfoAndResponse = Constants.balanceInfoAndResponse?.copy(it)
+                    /*if(Constants.IS_AGENT_USER){
+                        Constants.balanceInfoAndResponse = null
+                        var mydata = it
+                        Constants.balanceInfoAndResponse = mydata
+                    }else{
+                        *//*Constants.newbalanceInfoAndResponse?.balance = it.balance
+                        Constants.newbalanceInfoAndResponse?.currnecy = it.currnecy
+                        Constants.newbalanceInfoAndResponse?.description = it.description
+                        Constants.newbalanceInfoAndResponse?.email = it.email
+                        Constants.newbalanceInfoAndResponse?.firstname = it.firstname
+                        Constants.newbalanceInfoAndResponse?.surname = it.surname
+                        Constants.newbalanceInfoAndResponse?.profilename = it.profilename
+                        Constants.newbalanceInfoAndResponse?.responseCode = it.responseCode
+                        Constants.newbalanceInfoAndResponse?.limitsList = it.limitsList*//*
+                        Constants.balanceInfoAndResponse = Constants.balanceInfoAndResponse?.copy(it)
+                    }*/
+                } else {
+                    DialogUtils.showErrorDialoge(this@MainActivity,it.description)
+                }
+            })
     }
 
     override fun onBackPressed() {

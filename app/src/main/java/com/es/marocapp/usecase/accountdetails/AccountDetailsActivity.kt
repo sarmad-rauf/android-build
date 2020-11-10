@@ -24,7 +24,7 @@ class AccountDetailsActivity : BaseActivity<LayoutAccountDetailsBinding>(){
             viewmodel = mActivityViewModel
         }
 
-        var respone = mActivityViewModel.mBalanceInforAndResponseObserver.get()
+        var respone = Constants.balanceInfoAndResponse
 
         mDataBinding.accountDetailName.text = respone?.firstname+" "+respone?.surname+"!"
         mDataBinding.accountDetailAccountNum.text = Constants.CURRENT_USER_MSISDN

@@ -2,19 +2,26 @@ package com.es.marocapp.model.responses
 
 data class BalanceInfoAndLimitResponse(
     var balance: String?,
-    val currnecy: String?,
-    val description: String?,
-    val firstname: String?,
-    val limitsList: List<Limits>?,
-    val profilename: String?,
-    val responseCode: String?,
-    val surname: String?,
-    val email: String?
-)
+    var currnecy: String?,
+    var description: String?,
+    var firstname: String?,
+    var limitsList: List<Limits>?,
+    var profilename: String?,
+    var responseCode: String?,
+    var surname: String?,
+    var email: String?
+){
+
+    fun copy(newVal : BalanceInfoAndLimitResponse) : BalanceInfoAndLimitResponse {
+        //uses the fields name and property defined in the constructor
+        return BalanceInfoAndLimitResponse(newVal.balance,newVal.currnecy,newVal.description,newVal.firstname,newVal.limitsList,newVal.profilename,newVal.responseCode,
+            newVal.surname,newVal.email)
+    }
+}
 
 data class Limits(
-    val name: String?,
-    val periodType: String?,
-    val periodlength: String?,
-    val threshhold: String?
+    var name: String?,
+    var periodType: String?,
+    var periodlength: String?,
+    var threshhold: String?
 )

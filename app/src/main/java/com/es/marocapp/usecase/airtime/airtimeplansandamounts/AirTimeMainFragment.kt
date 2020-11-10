@@ -487,7 +487,7 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
             LanguageData.getStringValue("Amount")
         mDataBinding.inputLayoutProfileName.hint =
             LanguageData.getStringValue("UserProfile") //-------------------------------------> need to change from LanguageData nw showing hardcoded
-        mDataBinding.inputProfileName.setText(Constants.balanceInfoAndResponse.firstname + " " + Constants.balanceInfoAndResponse.surname)
+        mDataBinding.inputProfileName.setText(Constants.balanceInfoAndResponse?.firstname + " " + Constants.balanceInfoAndResponse?.surname)
         mDataBinding.btnNext.text = LanguageData.getStringValue("Submit")
         mDataBinding.inputLayoutPhoneNumber.hint =
             LanguageData.getStringValue("MSISDNPlaceholder")

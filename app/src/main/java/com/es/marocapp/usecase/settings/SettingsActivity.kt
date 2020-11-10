@@ -180,12 +180,33 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
                             LocaleManager.KEY_LANGUAGE_AR,
                             SettingsActivity::class.java)
                     }
+
+                    settingsViewModel.requestForBalanceInfoAndLimtsAPI(this@SettingsActivity)
                    // DialogUtils.successFailureDialogue(this@SettingsActivity,it.description,0)
                 }else{
                     DialogUtils.successFailureDialogue(this@SettingsActivity,it.description,1)
                 }
             }
         )
+
+        settingsViewModel.getBalanceInforAndLimitResponseListner.observe(this@SettingsActivity,
+            Observer {
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    var userName = it?.firstname + " " + it?.surname
+                    Constants.CURRENT_USER_NAME = userName
+
+                    /*if(Constants.IS_AGENT_USER){
+                        Constants.balanceInfoAndResponse = null
+                        Constants.balanceInfoAndResponse = it
+                    }else{
+                        Constants.balanceInfoAndResponse = null
+                        Constants.balanceInfoAndResponse = it
+                    }*/
+                    Constants.balanceInfoAndResponse = Constants.balanceInfoAndResponse?.copy(it)
+                } else {
+                    DialogUtils.showErrorDialoge(this@SettingsActivity,it.description)
+                }
+            })
     }
 
     private fun showPopUp() {

@@ -470,7 +470,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
             tranferAmountToWithAlias = receiver
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPaymentQouteCall(
-                PaymentQuoteRequest(amount,ApiConstant.CONTEXT_AFTER_LOGIN,receiver,Constants.getNumberMsisdn(sender),transferType,Constants.balanceInfoAndResponse.profilename.toString())
+                PaymentQuoteRequest(amount,ApiConstant.CONTEXT_AFTER_LOGIN,receiver,Constants.getNumberMsisdn(sender),transferType,Constants.balanceInfoAndResponse?.profilename.toString())
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -555,7 +555,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPaymentCall(
                 PaymentRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,qouteID,receiver,Constants.getNumberMsisdn(sender),transferType,
-                    Constants.balanceInfoAndResponse.profilename.toString(),paymentType)
+                    Constants.balanceInfoAndResponse?.profilename.toString(),paymentType)
 
             )
                 .compose(applyIOSchedulers())

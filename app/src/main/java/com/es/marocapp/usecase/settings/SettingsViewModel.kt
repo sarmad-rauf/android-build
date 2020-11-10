@@ -8,10 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.es.marocapp.R
 import com.es.marocapp.locale.LocaleManager
-import com.es.marocapp.model.requests.GetAccountHolderInformationRequest
-import com.es.marocapp.model.requests.SetDefaultAccountRequest
-import com.es.marocapp.model.requests.UpdateLanguageRequest
-import com.es.marocapp.model.requests.VerifyOTPForDefaultAccountRequest
+import com.es.marocapp.model.requests.*
 import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
@@ -34,6 +31,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     var verifyOTPForDefaultAccountResponseListener = SingleLiveEvent<VerifyOTPForDefaultAccountResponse>()
     var unregisterDefaultAccountResponseListener = SingleLiveEvent<UnRegisterDefaultAccountResponse>()
     var updateLanguageResponseListener = SingleLiveEvent<UpdateLanguageResponse>()
+    var getBalanceInforAndLimitResponseListner = SingleLiveEvent<BalanceInfoAndLimitResponse>()
 
     lateinit var disposable: Disposable
 
@@ -71,6 +69,56 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
                         } else {
                             errorText.postValue(result?.description)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    // API For BalanceInfoAndLimit API
+    fun requestForBalanceInfoAndLimtsAPI(
+        context: Context?
+    ) {
+
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBalancesInfoAndLimtCall(
+                BalanceInfoAndLimtRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null )
+                        {
+                            getBalanceInforAndLimitResponseListner.postValue(result)
+
+                        } else {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
                         }
 
 

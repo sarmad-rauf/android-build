@@ -121,7 +121,8 @@ object Constants {
 //    lateinit var tutorialSendMoney : View
 
     //Responses
-    lateinit var balanceInfoAndResponse : BalanceInfoAndLimitResponse
+    var balanceInfoAndResponse : BalanceInfoAndLimitResponse? = null
+    var newbalanceInfoAndResponse : BalanceInfoAndLimitResponse? = null
       var getAccountsResponse : Account? =null
     lateinit var getAccountsResponseArray : ArrayList<Account>
     lateinit var loginWithCertResponse : LoginWithCertResponse

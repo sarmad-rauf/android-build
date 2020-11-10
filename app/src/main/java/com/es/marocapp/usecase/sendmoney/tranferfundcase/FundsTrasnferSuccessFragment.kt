@@ -125,7 +125,7 @@ class FundsTrasnferSuccessFragment : BaseFragment<FragmentFundsTransferSuccessBi
             mDataBinding.tvContactNumVal.visibility = View.GONE
         }
 
-        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse.firstname +" "+ Constants.balanceInfoAndResponse.surname
+        mDataBinding.tvSenderNameVal.text = Constants.balanceInfoAndResponse?.firstname +" "+ Constants.balanceInfoAndResponse?.surname
         mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
 
 
@@ -139,7 +139,7 @@ class FundsTrasnferSuccessFragment : BaseFragment<FragmentFundsTransferSuccessBi
         var amountToTransfer = Constants.addAmountAndFee(mActivityViewModel.amountToTransfer.toDouble(),mActivityViewModel.feeAmount.toDouble())
         mDataBinding.tvDHVal.text =Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+amountToTransfer
 
-        Constants.balanceInfoAndResponse.balance = mActivityViewModel.senderBalanceAfter
+        Constants.balanceInfoAndResponse?.balance = mActivityViewModel.senderBalanceAfter
 
         mDataBinding.newBalanceVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.senderBalanceAfter
 

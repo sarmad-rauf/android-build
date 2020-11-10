@@ -192,7 +192,7 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
 //        tvAmountVal == AmountTotal
 
         mDataBinding.tvSenderNameVal.text =
-            Constants.balanceInfoAndResponse.firstname +" "+ Constants.balanceInfoAndResponse.surname
+            Constants.balanceInfoAndResponse?.firstname +" "+ Constants.balanceInfoAndResponse?.surname
         mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
 
         mDataBinding.tvCompanyNameVal.text = mActivityViewModel.transferdAmountTo

@@ -81,7 +81,7 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
 
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAirTimeUseCasesCall(
-                GetAirTimeUseCasesRequest(ApiConstant.CONTEXT_AFTER_LOGIN,LocaleManager.selectedLanguage,Constants.balanceInfoAndResponse.profilename!!,userType)
+                GetAirTimeUseCasesRequest(ApiConstant.CONTEXT_AFTER_LOGIN,LocaleManager.selectedLanguage,Constants.balanceInfoAndResponse?.profilename!!,userType)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
