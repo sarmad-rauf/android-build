@@ -2,6 +2,7 @@ package com.es.marocapp.usecase
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,7 @@ abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
     lateinit var mDataBinding:T
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //setContentView(setLayout())
 
         setLocale()
