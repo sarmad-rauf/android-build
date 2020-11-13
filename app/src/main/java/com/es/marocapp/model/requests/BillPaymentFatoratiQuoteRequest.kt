@@ -11,7 +11,8 @@ data class BillPaymentFatoratiQuoteRequest(
     val transferType: String,
     val refTxFatourati: String,
     val totalAmount: String,
-    val params: List<FatoratiQuoteParam>
+    val params: List<FatoratiQuoteParam>,
+    val companyName:String?
 )
 
 data class FatoratiQuoteParam(

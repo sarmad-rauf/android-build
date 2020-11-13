@@ -13,7 +13,8 @@ data class BillPaymentFatoratiRequest(
     val isMultipleInvoice : String,
     val refTxFatourati: String,
     val totalAmount: String,
-    val params: List<Param>
+    val params: List<Param>,
+    val companyName:String?
 )
 
 data class Param(
