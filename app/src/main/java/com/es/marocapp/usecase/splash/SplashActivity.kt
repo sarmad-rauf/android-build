@@ -172,6 +172,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.APP_VERSION = it.version
                 Constants.URL_FOR_UPDATE_APP = it.url
                 Constants.KEY_FOR_WALLET_BALANCE_MAX = it.walletBalanceLimitKey
+                Constants.KEY_FOR_POST_PAID_TELECOM_BILL = it.billTypePostPaid
                 Constants.PREVIOUS_DAYS_TRANSACTION_COUNT = it.numberOfTransactions
 
                 //Adding Aliases Value from API to Contants

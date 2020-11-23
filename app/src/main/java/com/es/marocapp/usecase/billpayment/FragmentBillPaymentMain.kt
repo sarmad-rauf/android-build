@@ -338,7 +338,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                     childPosition)?.subCompanyTitle)
 
                 if(listDataChild?.get(listDataHeader[groupPosition].companyTilte)?.get(
-                        childPosition)?.subCompanyTitle.equals("IAM")){
+                        childPosition)?.subCompanyTitle.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)){
                     val state =
                         if (sheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED)
                             BottomSheetBehavior.STATE_COLLAPSED
@@ -359,7 +359,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                     if(!mActivityViewModel.getBillPaymentCompaniesResponseObserver.get()?.bills.isNullOrEmpty()){
                         var billList = mActivityViewModel.getBillPaymentCompaniesResponseObserver.get()?.bills
                         for(i in billList!!.indices){
-                            if(!billList[i].name.equals("IAM")){
+                            if(!billList[i].name.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)){
                                 var billCompaniesList = mActivityViewModel.getBillPaymentCompaniesResponseObserver.get()?.bills?.get(i)?.companies
                                 for(j in billCompaniesList?.indices!!){
                                     if(selectedCreancer?.equals(billCompaniesList[j].nomCreancier)!!){
@@ -427,7 +427,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                         sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
                         if (selectedTelecomBillSubMenu.equals(
-                                "Mobile"
+                                LanguageData.getStringValue("PostpaidMobile")
                             )
                         ) {
                             /*Toast.makeText(
@@ -447,7 +447,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
 
 
                         } else if (selectedTelecomBillSubMenu.equals(
-                                "Fixie"
+                                LanguageData.getStringValue("PostpaidFix")
                             )
                         ) {
                             /*Toast.makeText(
@@ -467,7 +467,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
 
 
                         } else if (selectedTelecomBillSubMenu.equals(
-                                "Internet"
+                                LanguageData.getStringValue("Internet")
                             )
                         ) {
                             /*Toast.makeText(
@@ -581,7 +581,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                 if(!it.bills.isNullOrEmpty()){
                     listDataHeader = arrayListOf()
                     for(i in it.bills.indices){
-                        if(it.bills[i].name.equals("IAM")){
+                        if(it.bills[i].name.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)){
                             listDataHeader.add(BillPaymentMenuModel(LanguageData.getStringValue("Bill").toString(),R.drawable.telecom_bill_updated_icon))
 
                             //Adding SubMenu
@@ -592,7 +592,8 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
 
                             mTelecomBillSubMenusData.clear()
                             for(companyIndex in it.bills[i].companies.indices){
-                                mTelecomBillSubMenusData.add(it.bills[i].companies[companyIndex].nomCreancier)
+                                mTelecomBillSubMenusData.add(LanguageData.getStringValue(it.bills[i].companies[companyIndex].nomCreancier)
+                                    .toString())
                             }
                         }else{
                             listDataHeader.add(BillPaymentMenuModel(it.bills[i].name,R.drawable.water_electricity_update_icon))

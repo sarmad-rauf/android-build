@@ -64,5 +64,6 @@ data class GetPreLoginDataResponse(
     val typePayment: String,
     val url: String,
     val version: String,
+    val billTypePostPaid: String,
     val walletBalanceLimitKey: String
 )
