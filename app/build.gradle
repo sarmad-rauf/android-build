@@ -174,4 +174,9 @@ dependencies {
     implementation 'me.toptas.fancyshowcase:fancyshowcaseview:1.3.3'
     implementation 'com.github.florent37:tutoshowcase:1.0.1'*/
 
+    //---------------------------Expandaleb ReyclcerView-----------------------
+    implementation 'com.thoughtbot:expandablerecyclerview:1.4'
+
+    //-------------------Picasso--------------------------------
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 }

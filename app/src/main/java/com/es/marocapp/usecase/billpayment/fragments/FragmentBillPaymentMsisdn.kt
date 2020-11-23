@@ -170,7 +170,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
         }
 
-        mActivityViewModel.popBackStackTo = R.id.fragmentPostPaidBillType
+        mActivityViewModel.popBackStackTo = R.id.fragmentBillPaymentMain
         mDataBinding.inputPhoneNumber.addTextChangedListener(this)
         mDataBinding.inputCode.addTextChangedListener(this)
 

@@ -153,6 +153,9 @@ object EndPoints {
     //payment/bill/postpaid
     const val payment_bill_postpaid = "payment/bill/postpaid"
 
+    //bills/fatourati/step1
+    const val bills_fatourati_step1 = "bills/fatourati/step1"
+
     //getfinancialresourceinformation/bill/fatourati/step1
     const val getfinancialresourceinformation_bill_fatourati_step1 =
         "getfinancialresourceinformation/bill/fatourati/step1"

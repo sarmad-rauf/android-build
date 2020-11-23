@@ -55,7 +55,7 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
         (activity as BillPaymentActivity).setCompanyIconToolbarVisibility(false)
 
         if(mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.get()!!){
-            mActivityViewModel.popBackStackTo = R.id.fragmentPostPaidPaymentTypes
+            mActivityViewModel.popBackStackTo = R.id.fragmentBillPaymentMain
         }else{
             mActivityViewModel.popBackStackTo = R.id.fragmentBillPaymentMsisdn
         }

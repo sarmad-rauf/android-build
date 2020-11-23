@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bill_payment_navigation_graph"
-    app:startDestination="@id/fragmentPostPaidPaymentTypes">
+    app:startDestination="@id/fragmentBillPaymentMain">
 
     <fragment
         android:id="@+id/fragmentPostPaidPaymentTypes"
@@ -74,5 +74,18 @@
         android:label="FragmentPostPaidBillPaymentSuccess"
         tools:layout="@layout/fragment_bill_payment_success"
         />
+    <fragment
+        android:id="@+id/fragmentBillPaymentMain"
+        android:name="com.es.marocapp.usecase.billpayment.FragmentBillPaymentMain"
+        android:label="FragmentBillPaymentMain"
+        tools:layout="@layout/fragment_bill_payment_main_type_layout"
+        >
+        <action
+            android:id="@+id/action_fragmentBillPaymentMain_to_fragmentPostPaidBillDetails"
+            app:destination="@id/fragmentPostPaidBillDetails" />
+        <action
+            android:id="@+id/action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn"
+            app:destination="@id/fragmentBillPaymentMsisdn" />
+    </fragment>
 
 </navigation>

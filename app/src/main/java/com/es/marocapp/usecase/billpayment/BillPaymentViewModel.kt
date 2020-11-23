@@ -95,6 +95,10 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
     var getAddFavoritesResponseListner = SingleLiveEvent<AddContactResponse>()
 
+    //BillPaymentCompnies API Response Listner
+    var getBillPaymentCompaniesResponseListner = SingleLiveEvent<BillPaymentCompaniesResponse>()
+    var getBillPaymentCompaniesResponseObserver = ObservableField<BillPaymentCompaniesResponse>()
+
     //Fatorati API Listner
     var getFatoratiStepOneResponseListner = SingleLiveEvent<BillPaymentFatoratiStepOneResponse>()
     var getFatoratiStepTwoResponseListner = SingleLiveEvent<BillPaymentFatoratiStepTwoResponse>()
@@ -856,5 +860,66 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
     }
 
+    //Request For BillPaymentCompanies
+    fun requestForBillPaymentCompaniesApi(context: Context?
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentCompanies(
+                BillPaymentCompaniesRequest(
+                    ApiConstant.CONTEXT_BEFORE_LOGIN
+                )
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null) {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getBillPaymentCompaniesResponseListner.postValue(result)
+                                    getBillPaymentCompaniesResponseObserver.set(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getBillPaymentCompaniesResponseListner.postValue(result)
+                                    getBillPaymentCompaniesResponseObserver.set(result)
+                                }
+                            }
+                        } else {
+                            getBillPaymentCompaniesResponseListner.postValue(result)
+                            getBillPaymentCompaniesResponseObserver.set(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
 
 }

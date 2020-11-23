@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/menu_layout"
+    android:background="@color/colorWhite"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+    <com.es.marocapp.widgets.MarocRegularTextView
+        android:id="@+id/tv_company_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="@dimen/_16ssp"
+        android:textColor="@color/colorGreyDark"
+        tools:text= "Facture Telecom"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_company_icon"
+        app:layout_constraintEnd_toStartOf="@+id/img_list_state"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        />
+
+    <ImageView
+        android:id="@+id/img_company_icon"
+        android:layout_width="@dimen/_32sdp"
+        android:layout_height="@dimen/_32sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_company_name"
+        app:layout_constraintBottom_toTopOf="@+id/tv_company_name"
+        android:src="@drawable/water_electricity_update_icon"
+        />
+
+    <ImageView
+        android:id="@+id/img_list_state"
+        android:layout_width="@dimen/_32sdp"
+        android:layout_height="@dimen/_32sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_company_name"
+        app:layout_constraintBottom_toTopOf="@+id/tv_company_name"
+        android:src="@drawable/list_closed_icon"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2sdp"
+        android:background="@color/colorGreyLight"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
