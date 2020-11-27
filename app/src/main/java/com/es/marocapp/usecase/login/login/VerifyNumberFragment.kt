@@ -92,7 +92,7 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
     }
 
     private fun setStrings() {
-        mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("VerifyYourNumber")
+        mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("VerifyYourNumber")?.replace(Constants.OTP_LENGTH_PLACEHOLDER_TO_BE_REPLACED,Constants.APP_OTP_LENGTH.toString())
         mDataBinding.tvEnterOTPTitile.text= LanguageData.getStringValue("EnterOTP")
 
         mDataBinding.txtOtpNotRecieved.text = LanguageData.getStringValue("OTPNotRecieved")+ " "

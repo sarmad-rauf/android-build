@@ -310,7 +310,7 @@ class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistra
         singleChoiceItems.apply {
             add(LanguageData.getStringValue("Male").toString())
             add(LanguageData.getStringValue("Female").toString())
-            add(LanguageData.getStringValue("Other").toString())
+           // add(LanguageData.getStringValue("Other").toString())
         }
 
         var list = singleChoiceItems.toTypedArray()

@@ -115,6 +115,8 @@ object Constants {
     var isTutorialShowing = false
     var isFirstTimeTutorialShowing = 0
 
+   const val OTP_LENGTH_PLACEHOLDER_TO_BE_REPLACED = "<otp-length>"
+
     lateinit var tutorialDashboardCashInViaCard : ImageView
     lateinit var tutorialCallIconHomeScreen : ImageView
     lateinit var tutorialQuickRechargeContainer : CardView
