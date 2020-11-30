@@ -2,10 +2,10 @@ package com.es.marocapp.usecase.sendmoney.tranferfundcase
 
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.View
 import android.widget.SeekBar
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,7 +19,10 @@ import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyViewModel
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.DecimalDigitsInputFilter
 import com.es.marocapp.utils.DialogUtils
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.floor
 import kotlin.math.roundToInt
 
@@ -109,6 +112,8 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
 
         mActivityViewModel.popBackStackTo = R.id.fundsTransferMsisdnFragment
 
+        mDataBinding.etAmountEntered.filters = arrayOf<InputFilter>(DecimalDigitsInputFilter(2))
+
         setStrings()
         subscribeObserver()
     }
@@ -180,12 +185,21 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
     }
 
     override fun onNextClickListner(view: View) {
-        val sAmount: String = mDataBinding.etAmountEntered.text.toString().trim { it <= ' ' }
+        var sAmount: String = mDataBinding.etAmountEntered.text.toString().trim { it <= ' ' }
+        sAmount=sAmount.replace(",",".")
 
-        if (sAmount == "" || SumAmountEditText() == "0" || sAmount == ".") {
+        val bill: Double = sAmount.toDouble()
+        sAmount = String.format(
+            Locale.US,
+            "%.2f",
+            (bill)
+        )
+
+        if (sAmount == "" || SumAmountEditText(sAmount) == "0" || sAmount == ".") {
             mDataBinding.etAmountEntered.error = LanguageData.getStringValue("PleaseEnterValidAmountToProceed.")
             return
         }
+
         if(Constants.IS_AGENT_USER){
             if(mActivityViewModel.isFundTransferUseCase.get()!!){
                 mActivityViewModel.requestForFloatTransferQuoteApi(activity,sAmount)
@@ -245,9 +259,9 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
     override fun onStopTrackingTouch(p0: SeekBar?) {
     }
 
-    private fun SumAmountEditText(): String? {
+    private fun SumAmountEditText(sAmount: String): String? {
         val dNum: Double =
-            mDataBinding.etAmountEntered.text.toString().trim { it <= ' ' }.toDouble()
+            sAmount.trim { it <= ' ' }.toDouble()
         val nNum = dNum.roundToInt()
         return nNum.toString()
     }
@@ -256,7 +270,7 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
         var sAmount: String = mDataBinding.etAmountEntered.text.toString().trim { it <= ' ' }
 
         if (sAmount == "" || sAmount == ".") sAmount = "0"
-
+        sAmount = sAmount.replace(",",".")
         mDataBinding.etAmountEntered.setSelection(mDataBinding.etAmountEntered.text.length)
         mDataBinding.AmountSeekBar.progress = floor(sAmount.toDouble()).toInt()
     }

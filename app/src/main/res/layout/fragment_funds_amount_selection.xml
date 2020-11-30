@@ -63,7 +63,7 @@
                 android:focusableInTouchMode="true"
                 android:focusable="true"
                 android:inputType="numberDecimal"
-                android:digits="0123456789."
+                android:digits="0123456789.,"
                 android:cursorVisible="false"
                 android:textAlignment="center"
                 android:textColorHint="@color/colorEditTextGreyMedium"

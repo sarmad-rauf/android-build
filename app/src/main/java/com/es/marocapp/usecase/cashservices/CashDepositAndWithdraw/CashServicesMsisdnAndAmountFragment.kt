@@ -17,6 +17,7 @@ import com.es.marocapp.usecase.cashservices.CashServicesActivity
 import com.es.marocapp.usecase.cashservices.CashServicesClickListner
 import com.es.marocapp.usecase.cashservices.CashServicesViewModel
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.DecimalDigitsInputFilter
 import com.es.marocapp.utils.DialogUtils
 import java.util.regex.Pattern
 import kotlin.math.roundToInt
@@ -83,6 +84,7 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
                 }
             }
         }
+        mDataBinding.inputAmount.filters = arrayOf<InputFilter>(DecimalDigitsInputFilter(2))
 
         subscribeObserver()
         setStrings()
