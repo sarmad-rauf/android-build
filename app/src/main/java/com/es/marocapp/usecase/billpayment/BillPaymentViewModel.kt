@@ -870,7 +870,8 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentCompanies(
                 BillPaymentCompaniesRequest(
-                    ApiConstant.CONTEXT_BEFORE_LOGIN
+                    ApiConstant.CONTEXT_AFTER_LOGIN,Constants.OPERATION_TYPE_CREANCIER,
+                    Constants.getFatoratiAlias(Constants.CURRENT_USER_MSISDN),Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN)
                 )
             )
                 .compose(applyIOSchedulers())
