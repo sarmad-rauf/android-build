@@ -147,10 +147,14 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
                                 mAirTimeAmountData.clear()
                                 if (airTimeResponse.rechargeFixe.planList.isNotEmpty()) {
                                     for (index in airTimeResponse.rechargeFixe.planList.indices) {
-                                        var airTimeAmount =
+                                        /*var airTimeAmount =
                                             airTimeResponse.rechargeFixe.planList[index].removeSuffix(
                                                 "DH"
-                                            )
+                                            )*/
+
+                                        var airTimeAmount =
+                                            airTimeResponse.rechargeFixe.planList[index]
+
                                         mAirTimeAmountData.add(airTimeAmount.trim())
                                     }
                                 }
@@ -219,7 +223,8 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
                                         airTimeResponse.rechargeMobile.planList[index].amounts[amountIndex].substringBefore(
                                             " "
                                         )
-                                    airTimeAmount = airTimeAmount.removeSuffix("DH").trim()
+                                    /*airTimeAmount = airTimeAmount.removeSuffix("DH").trim()*/
+                                    airTimeAmount = airTimeAmount.trim()
                                     mAirTimeAmountData.add(airTimeAmount.trim())
                                 }
                             }
