@@ -70,7 +70,6 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         if(mItemDetailsToShow.toname.isNullOrEmpty()){
             mDataBinding.ReceiverNameVal.text = "-"
         }else{
-
             mDataBinding.ReceiverNameVal.text = mItemDetailsToShow.toname
         }
 
@@ -121,7 +120,12 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         totalAmount = Constants.converValueToTwoDecimalPlace(totalAmount.toDouble())
         mDataBinding.totalAmountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+totalAmount
 
-        mDataBinding.receiverNameGroup.visibility = View.VISIBLE
+
+        if(mItemDetailsToShow.toaccount.contains(Constants.AIR_TIME_RECEIVER_ALIAS)){
+            mDataBinding.receiverNameGroup.visibility = View.GONE
+        }else{
+            mDataBinding.receiverNameGroup.visibility = View.VISIBLE
+        }
     }
 
     private fun getFri(fri: String): String {
