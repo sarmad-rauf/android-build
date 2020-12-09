@@ -121,7 +121,10 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         mDataBinding.totalAmountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+totalAmount
 
 
-        if(mItemDetailsToShow.toaccount.contains(Constants.AIR_TIME_RECEIVER_ALIAS)){
+        if(mItemDetailsToShow.toaccount.contains(Constants.AIR_TIME_RECEIVER_ALIAS)
+            || mItemDetailsToShow.toaccount.contains(Constants.POST_PAID_MOBILE_ALIAS)
+            || mItemDetailsToShow.toaccount.contains(Constants.POST_PAID_FIXED_ALIAS)
+            || mItemDetailsToShow.toaccount.contains(Constants.POST_PAID_INTERNET_ALIAS)){
             mDataBinding.receiverNameGroup.visibility = View.GONE
         }else{
             mDataBinding.receiverNameGroup.visibility = View.VISIBLE

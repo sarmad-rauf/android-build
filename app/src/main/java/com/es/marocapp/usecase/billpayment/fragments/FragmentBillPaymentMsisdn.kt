@@ -235,7 +235,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
     }
 
     private fun setStrings() {
-        mDataBinding.inputLayoutCode.hint = LanguageData.getStringValue("EnterCode")
+        mDataBinding.inputLayoutCode.hint = LanguageData.getStringValue("FidelioCode")
         if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
             mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterCilNumber")
             mDataBinding.inputPhoneNumberHint.visibility = View.GONE
@@ -498,7 +498,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 ) {
                     isValidForAll = false
                     mDataBinding.inputLayoutCode.error =
-                        LanguageData.getStringValue("PleaseEnterValidCode")
+                        LanguageData.getStringValue("InvalidFidelioCode")
                     mDataBinding.inputLayoutCode.isErrorEnabled = true
                 } else {
                     if (isCodeRegexMatches) {
@@ -508,7 +508,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                     } else {
                         isValidForAll = false
                         mDataBinding.inputLayoutCode.error =
-                            LanguageData.getStringValue("PleaseEnterValidCode")
+                            LanguageData.getStringValue("InvalidFidelioCode")
                         mDataBinding.inputLayoutCode.isErrorEnabled = true
                     }
                 }
