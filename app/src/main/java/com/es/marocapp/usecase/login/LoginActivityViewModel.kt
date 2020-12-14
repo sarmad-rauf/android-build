@@ -30,6 +30,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     var isNewUserRegisterd : ObservableField<Boolean> = ObservableField(false)
     var isFromLoginUserScreen : ObservableField<Boolean> = ObservableField(false)
     lateinit var accountHolderInfoResponse : GetAccountHolderInformationResponse
+    var accountHolderInfoUserProfile : String? =null
     var isLoading = ObservableField<Boolean>()
     var errorText = SingleLiveEvent<String>()
     lateinit var disposable: Disposable
@@ -399,9 +400,12 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
         if (Tools.checkNetworkStatus(getApplication())) {
 
             isLoading.set(true)
+            if(accountHolderInfoUserProfile.isNullOrEmpty()){
+                accountHolderInfoUserProfile=""
+            }
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getActivateUser(
-                ActivateUserRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(mUserMsisdn),EncryptionUtils.encryptString(seceret),Constants.SECRET_TYPE)
+                ActivateUserRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(mUserMsisdn),EncryptionUtils.encryptString(seceret),Constants.SECRET_TYPE,accountHolderInfoUserProfile!!)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(

@@ -410,13 +410,14 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
             } else {
                 // Create Crednetial Api is Called
                 //this check means user is register with state Active but didn't registered Password as his account having credetial type pin
-
+                mActivityViewModel.accountHolderInfoUserProfile=response.profileName
                 mActivityViewModel.activeUserWithoutPasswordType.set(true)
                 mActivityViewModel.activeUserWithoutPassword.set(false)
 
                 (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_setYourPinFragment)
             }
         } else {
+            mActivityViewModel.accountHolderInfoUserProfile=response.profileName
             //activation Api is called on next screens
             // This Check Means User Register Itself verifies OTP but Close App before setting his/her pin so user is redirected to setup Pin Fragment
             mActivityViewModel.activeUserWithoutPassword.set(true)
