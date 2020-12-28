@@ -86,6 +86,14 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/selectFavoritesGroup"
+            app:constraint_referenced_ids="spinnerSelectFavorites,selectFavoriteTypeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            />
+
         <com.es.marocapp.widgets.MarocRegularTextView
             android:id="@+id/selectFavoriteTypeTitle"
             android:layout_width="wrap_content"

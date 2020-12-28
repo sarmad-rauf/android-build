@@ -114,6 +114,19 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
 
         mDataBinding.etAmountEntered.filters = arrayOf<InputFilter>(DecimalDigitsInputFilter(2))
 
+        if(!mActivityViewModel.amountScannedFromQR.equals("0")){
+            mDataBinding.etAmountEntered.setText(mActivityViewModel.amountScannedFromQR)
+
+
+            //for SeekBar
+            var sAmount: String = mDataBinding.etAmountEntered.text.toString().trim { it <= ' ' }
+
+            if (sAmount == "" || sAmount == ".") sAmount = "0"
+            sAmount = sAmount.replace(",",".")
+            mDataBinding.etAmountEntered.setSelection(mDataBinding.etAmountEntered.text.length)
+            mDataBinding.AmountSeekBar.progress = floor(sAmount.toDouble()).toInt()
+        }
+
         setStrings()
         subscribeObserver()
     }

@@ -221,6 +221,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         mDataBinding.btnQuickRecharge4.text = LanguageData.getStringValue("Recharge")
         mDataBinding.transactionHistoryTitile.text = LanguageData.getStringValue("TransactionHistory")
         mDataBinding.tvNoDataFound.text = LanguageData.getStringValue("NoDataFound")
+        mDataBinding.textTitleMtCashQuickRecharge.text = LanguageData.getStringValue("MTCashQuickRecharge")
 
         if (Constants.quickRechargeAmountsList.isNotEmpty()) {
             val languageItems = Constants.quickRechargeAmountsList.toTypedArray()

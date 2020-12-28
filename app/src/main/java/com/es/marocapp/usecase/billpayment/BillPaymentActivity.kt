@@ -81,4 +81,12 @@ class BillPaymentActivity : BaseActivity<ActivityBillPaymentBinding>() {
         }
     }
 
+    override fun onBackPressed() {
+        if (mActivityViewModel.popBackStackTo == -1) {
+            this@BillPaymentActivity.finish()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
 }

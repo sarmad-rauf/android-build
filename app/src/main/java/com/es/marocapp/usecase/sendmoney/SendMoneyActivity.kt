@@ -21,12 +21,14 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.qrcode.ScanQRActivity
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.Tools
 import com.es.marocapp.widgets.MarocEditText
 import com.es.marocapp.widgets.MarocMediumTextView
 import com.google.android.material.textfield.TextInputLayout
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.layout_simple_header.view.*
+import org.apache.commons.lang3.StringUtils
 import java.util.regex.Pattern
 
 
@@ -168,6 +170,23 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
 
                     verifyAndSetMsisdn(Tools.extractNumberFromEMVcoQR(scannedString), false)
                 }
+
+                if(scannedString.isNullOrEmpty() || Tools.extractAmountFromEMVcoQR(scannedString).isNullOrEmpty()){
+                    mActivityViewModel.amountScannedFromQR = "0"
+                    Logger.debugLog("TestingAmount", mActivityViewModel.amountScannedFromQR)
+                }else{
+                    var amount = Tools.extractAmountFromEMVcoQR(scannedString)
+                    if(amount.equals("00000")){
+                        mActivityViewModel.amountScannedFromQR = "0"
+                    }else{
+//                        amount = amount.replaceFirst("^0+(?!$)", "")
+                        var withoutStartingZeroAmount = StringUtils.stripStart(amount,"0")
+                        mActivityViewModel.amountScannedFromQR = withoutStartingZeroAmount
+                        Logger.debugLog("TestingAmountAfterRegex", withoutStartingZeroAmount)
+                    }
+                    Logger.debugLog("TestingAmount", mActivityViewModel.amountScannedFromQR)
+                }
+
             } else {
                 // This is important, otherwise the result will not be passed to the fragment
                 super.onActivityResult(requestCode, resultCode, data)
@@ -177,6 +196,8 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
                 mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
                 mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
                 mInputHint.visibility = View.GONE
+                mActivityViewModel.amountScannedFromQR = "0"
+                Logger.debugLog("TestingAmount", mActivityViewModel.amountScannedFromQR)
             }
         }
     }

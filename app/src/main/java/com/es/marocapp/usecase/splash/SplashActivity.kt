@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.net.wifi.WifiManager
@@ -64,6 +65,9 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
             viewmodel = mActivityViewModel
 
         }
+
+        Constants.isTutorialShowing = PrefUtils.getBoolean(this@SplashActivity,PrefUtils.PreKeywords.PREF_KEY_IS_SHOW_TUTORIALS,true)
+
         loadNDKValues()
         setupPermissions()
         Constants.getIPAddress(application)

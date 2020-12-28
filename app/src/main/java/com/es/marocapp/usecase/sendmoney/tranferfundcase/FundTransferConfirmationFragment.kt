@@ -44,6 +44,7 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                 false
             )
         }
+
         setStrings()
         updateUI()
         subscribeObserver()
@@ -59,14 +60,18 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
 
         mDataBinding.tvCompanyNameTitle.text = LanguageData.getStringValue("ReceiverNumber")
         mDataBinding.tvOwnerNameTitle.text = LanguageData.getStringValue("ReceiverName")
-        mDataBinding.tvReceiptCodeTitle.text = LanguageData.getStringValue("Bill")
+        if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
+            mDataBinding.tvReceiptCodeTitle.text = LanguageData.getStringValue("Amount")
+        }else{
+            mDataBinding.tvReceiptCodeTitle.text = LanguageData.getStringValue("Bill")
+        }
         mDataBinding.tvDHTitle.text = LanguageData.getStringValue("Fee")
         mDataBinding.tvAmountTitle.text = LanguageData.getStringValue("TotalCost")
 
         mDataBinding.tvConfirmationTitle.text = LanguageData.getStringValue("Confirmation")
 
         mDataBinding.btnConfirmationCancel.text = LanguageData.getStringValue("BtnTitle_Cancel")
-        mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("BtnTitle_Pay")
+        mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("BtnTitle_Validate")
 
         mDataBinding.tvSendNameTitle.text = LanguageData.getStringValue("SenderName")
         mDataBinding.tvSendNumberTitle.text = LanguageData.getStringValue("SenderNumber")
@@ -224,6 +229,11 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
         }
 
         mDataBinding.receiverNameGroup.visibility = View.GONE
+
+        if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
+            mDataBinding.tvDHTitle.visibility = View.GONE
+            mDataBinding.tvDHVal.visibility = View.GONE
+        }
     }
 
     override fun onNextClickListner(view: View) {

@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/navigation_transaction"
-        android:icon="@drawable/ic_transactions_inactive"
+        android:icon="@drawable/icons_updated_qr"
         android:title="@string/title_transaction_cap" />
 
     <item

@@ -15,6 +15,8 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.requests.FatoratiQuoteParam
 import com.es.marocapp.model.responses.FatoratiCustomParamModel
 import com.es.marocapp.model.responses.InvoiceCustomModel
+import com.es.marocapp.model.responses.PostPaidBillPaymentQuoteResponse
+import com.es.marocapp.model.responses.PostPaidBillPaymentResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.billpayment.BillPaymentActivity
@@ -203,6 +205,7 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
     private fun setStrings() {
         mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Pay")
         mDataBinding.noDataTv.text = LanguageData.getStringValue("NoDataFound")
+        mDataBinding.selectInvocieLabel.text = LanguageData.getStringValue("BillPaymentSelectInvoicesToPay")
     }
 
     override fun onSubmitClickListner(view: View) {

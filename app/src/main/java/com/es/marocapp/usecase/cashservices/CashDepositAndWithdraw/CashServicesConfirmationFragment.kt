@@ -64,7 +64,8 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
         mDataBinding.tvConfirmationTitle.text = LanguageData.getStringValue("Confirmation")
 
         mDataBinding.btnConfirmationCancel.text = LanguageData.getStringValue("BtnTitle_Cancel")
-        mDataBinding.btnConfirmationPay.text = mActivityViewModel.trasferTypeSelected.get()!!
+//        mDataBinding.btnConfirmationPay.text = mActivityViewModel.trasferTypeSelected.get()!! // before it is showing as deposit and Withdraw in button text on base of use case
+        mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("BtnTitle_Validate")
 
         mDataBinding.tvSendNameTitle.text = LanguageData.getStringValue("SenderName")
         mDataBinding.tvSendNumberTitle.text = LanguageData.getStringValue("SenderNumber")

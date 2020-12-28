@@ -134,7 +134,7 @@
                 >
 
                 <com.es.marocapp.widgets.MarocRegularTextView
-                    android:id="@+id/textTitleQuickRecharge"
+                    android:id="@+id/textTitleMtCashQuickRecharge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
@@ -144,6 +144,17 @@
                     android:textSize="@dimen/_14ssp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/textTitleQuickRecharge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:text="@string/quick_recharge"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textTitleMtCashQuickRecharge" />
 
                 <Spinner
                     android:id="@+id/quickRechargeSpinner"
@@ -172,7 +183,7 @@
                     tools:text="Recharge"
                     android:textColor="@color/colorDarkBlue"
                     android:textSize="@dimen/_14ssp"
-                    app:layout_constraintTop_toTopOf="@+id/textTitleQuickRecharge"
+                    app:layout_constraintTop_toTopOf="@+id/textTitleMtCashQuickRecharge"
                     app:layout_constraintBottom_toBottomOf="@+id/quickRechargeSpinner"
                     app:layout_constraintEnd_toEndOf="parent"
                     />

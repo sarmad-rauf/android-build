@@ -68,7 +68,7 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
 
         mDataBinding.tvCompanyNameTitle.text = LanguageData.getStringValue("ReceiverNumber")
         mDataBinding.tvOwnerNameTitle.text = LanguageData.getStringValue("ReceiverName")
-        mDataBinding.tvReceiptCodeTitle.text = LanguageData.getStringValue("Bill")
+        mDataBinding.tvReceiptCodeTitle.text = LanguageData.getStringValue("Recharge")
         mDataBinding.tvDHTitle.text = LanguageData.getStringValue("Fee")
         mDataBinding.tvAmountTitle.text = LanguageData.getStringValue("Amount")
 

@@ -61,6 +61,7 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>(){
     private fun setStrings() {
         mDataBinding.tvGenerateQRTitle.text = LanguageData.getStringValue("GenerateQR")
         mDataBinding.tvDescription.text  = LanguageData.getStringValue("GenerateQRDescription")
+        mDataBinding.tvDescriptionGenerated.text  = LanguageData.getStringValue("QRDescription")
         mDataBinding.inputAmount.hint  = LanguageData.getStringValue("Amount")
     }
 

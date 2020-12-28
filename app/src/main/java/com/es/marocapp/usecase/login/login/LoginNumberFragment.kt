@@ -244,6 +244,11 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
 
                     deviceID = deviceID.trim()
                 }
+
+                if(!it.profileName.isNullOrEmpty()){
+                    mActivityViewModel.accountHolderInfoUserProfile = it.profileName
+                }
+
                 if (deviceID.equals(Constants.CURRENT_NUMBER_DEVICE_ID)) {
                     checkUserRegsitrationAndActicationSenario(it)
                 } else {
@@ -359,6 +364,9 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
 
     fun checkUserRegsitrationAndActicationSenario(response: GetAccountHolderInformationResponse) {
         if (response.accountHolderStatus.equals("ACTIVE", true)) {
+            if(!response.profileName.isNullOrEmpty()){
+                mActivityViewModel.accountHolderInfoUserProfile = response.profileName
+            }
             if (response.credentialList.credentials.isNotEmpty()) {
 
                 for (i in response.credentialList.credentials.indices) {
@@ -400,7 +408,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                     } else {
                         // Create Crednetial Api is Called
                         //this check means user is register with state Active but didn't registered Password as his account having credetial type pin
-
+                        mActivityViewModel.accountHolderInfoUserProfile = response.profileName
                         mActivityViewModel.activeUserWithoutPasswordType.set(true)
                         mActivityViewModel.activeUserWithoutPassword.set(false)
 

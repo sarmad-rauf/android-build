@@ -138,6 +138,30 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
 
         mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
         mDataBinding.inputPhoneNumberHint.text = LanguageData.getStringValue("EnterReceiversMobileNumber")
+
+        mDataBinding.inputPhoneNumber.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                setInputLayoutHint()
+            } else {
+                if (mDataBinding.inputLayoutPhoneNumber.isErrorEnabled) {
+                    setInputLayoutHint()
+                } else {
+                    if (mDataBinding.inputPhoneNumber.text.isEmpty()) {
+                        mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
+                            mDataBinding.inputLayoutPhoneNumber.hint =
+                                LanguageData.getStringValue("EnterReceiversMobileNumber")
+                            mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+                    } else {
+                        setInputLayoutHint()
+                    }
+                }
+            }
+        }
+    }
+
+    fun setInputLayoutHint() {
+        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
     }
 
     private fun subscribeObserver() {
@@ -316,4 +340,6 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
     }
 
+
+//    android:ellipsize="end"
 }

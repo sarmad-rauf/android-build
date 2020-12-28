@@ -55,8 +55,8 @@ class FavoriteTypesFragment : BaseFragment<FragmentFavoritesTypeBinding>(){
         mFavoritesItemTypeAdapter = FavoritesTypeItemAdapter(mFavoritesTypes,mFavoritesTypesIcon ,
             object : FavoritesTypeItemAdapter.FavoritesItemTypeClickListner{
             override fun onFavoriteItemTypeClick(itemType: String) {
-                if(itemType.equals(LanguageData.getStringValue("Payments"),true)){
-                    mActivityViewModel.selectedFavoritesType.set(LanguageData.getStringValue("Payments"))
+                if(itemType.equals(LanguageData.getStringValue("FavoritesPayments"),true)){
+                    mActivityViewModel.selectedFavoritesType.set(LanguageData.getStringValue("FavoritesPayments"))
                     mActivityViewModel.isPaymentSelected.set(true)
                     (activity as FavoritesActivity).navController.navigate(R.id.action_favoriteTypesFragment_to_fragmentFavoritesPaymentTypes)
                 }else if(itemType.equals(LanguageData.getStringValue("SendMoney"),true)){
@@ -67,8 +67,8 @@ class FavoriteTypesFragment : BaseFragment<FragmentFavoritesTypeBinding>(){
                     mActivityViewModel.selectedFavoritesType.set(LanguageData.getStringValue("MerchantPayment"))
                     mActivityViewModel.isPaymentSelected.set(false)
                     (activity as FavoritesActivity).navController.navigate(R.id.action_favoriteTypesFragment_to_favoritesAddOrViewFragment)
-                }else if(itemType.equals(LanguageData.getStringValue("AirTime"),true)){
-                    mActivityViewModel.selectedFavoritesType.set(LanguageData.getStringValue("AirTime"))
+                }else if(itemType.equals(LanguageData.getStringValue("FavoritesAirtime"),true)){
+                    mActivityViewModel.selectedFavoritesType.set(LanguageData.getStringValue("FavoritesAirtime"))
                     mActivityViewModel.isPaymentSelected.set(false)
                     (activity as FavoritesActivity).navController.navigate(R.id.action_favoriteTypesFragment_to_favoritesAddOrViewFragment)
                 }

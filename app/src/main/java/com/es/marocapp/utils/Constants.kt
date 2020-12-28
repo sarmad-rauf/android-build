@@ -498,10 +498,12 @@ object Constants {
                 5->{
                     isFirstTimeTutorialShowing = -1
                     isTutorialShowing = false
+                    PrefUtils.addBoolean(activityContext,PrefUtils.PreKeywords.PREF_KEY_IS_SHOW_TUTORIALS,false)
                     Toast.makeText(activityContext,"Tutorials Ended",Toast.LENGTH_LONG).show()
                 }
                 else ->{
                     isTutorialShowing = false
+                    PrefUtils.addBoolean(activityContext,PrefUtils.PreKeywords.PREF_KEY_IS_SHOW_TUTORIALS,false)
                 }
             }
         }

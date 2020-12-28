@@ -99,6 +99,8 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
             mDataBinding.addToFavoriteCheckBox.isClickable = true
         }
 
+        mActivityViewModel.popBackStackTo = -1
+
         (activity as BillPaymentActivity).setHeaderVisibility(false)
         (activity as BillPaymentActivity).setCompanyIconToolbarVisibility(false)
 

@@ -49,6 +49,20 @@
         app:layout_constraintBottom_toBottomOf="@+id/selectAllCheckBox"
         />
 
+    <com.es.marocapp.widgets.MarocMediumTextView
+        android:id="@+id/selectInvocieLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        tools:text="@string/payment_type"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/_14ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/selectAllCheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/selectAllTitle"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mBillsRecycler"
         android:layout_width="match_parent"
@@ -56,7 +70,7 @@
         android:layout_marginTop="@dimen/_16sdp"
         android:paddingBottom="@dimen/_8sdp"
         android:layout_marginBottom="@dimen/_8sdp"
-        app:layout_constraintTop_toBottomOf="@+id/selectAllCheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/selectInvocieLabel"
         app:layout_constraintBottom_toTopOf="@+id/btnNext"
         />
 

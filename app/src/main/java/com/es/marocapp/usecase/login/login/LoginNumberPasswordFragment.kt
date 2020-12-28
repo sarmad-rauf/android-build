@@ -128,9 +128,13 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
         setStrings()
 
         //for Testing Purpose
-        /*DialogUtils.showDefaultAccountOTPDialogue(activity,object : DialogUtils.OnOTPDialogClickListner{
+       /* DialogUtils.showDefaultAccountOTPDialogue(activity,object : DialogUtils.OnOTPDialogClickListner{
             override fun onOTPDialogYesClickListner(password: String) {
                 Toast.makeText(activity as LoginActivity,"Successfully Passed use case",Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onOTPDialogNoClickListner() {
+
             }
 
         })*/

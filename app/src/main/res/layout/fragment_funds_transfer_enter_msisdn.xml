@@ -58,8 +58,8 @@
             android:focusable="true"
             android:textSize="@dimen/_14ssp"
             android:hint="@string/enter_receiver_s_mobile_number_caps"
-            android:paddingEnd="@dimen/_24sdp"
             android:ellipsize="end"
+            android:paddingEnd="@dimen/_24sdp"
             android:inputType="phone"
             android:maxLength="12" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -74,6 +74,14 @@
         app:layout_constraintEnd_toEndOf="@+id/input_layout_phone_number"
         app:layout_constraintBottom_toBottomOf="@+id/input_layout_phone_number"
         app:layout_constraintTop_toTopOf="@+id/input_layout_phone_number"
+        />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/selectFavoritesGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="selectFavoriteTypeTitle,spinnerSelectFavorites"
         />
 
     <com.es.marocapp.widgets.MarocRegularTextView

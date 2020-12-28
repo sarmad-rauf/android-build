@@ -97,6 +97,9 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
 
                                 //TelecomBillPayment Fatourati Use Case
                                 var contactName = selectedContact.contactName
+                                var companyNameUtilString  = contactName.substringBefore("@")
+                                var companyName = companyNameUtilString.substringAfter("_").trim()
+                                Logger.debugLog("CompanyNameFatorati",companyName)
                                 contactName = contactName.substringAfter("@")
                                 var name = contactName.substringBefore(",")
                                 var withoutNameCommaSepratedString = contactName.substringAfter(",")
@@ -105,7 +108,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                 /*for(value in result){
                                     Log.d("dataFromString",value)
                                 }*/
-                                var creancier = Creancier(result[0], result[1], "", "")
+                                var creancier = Creancier(result[0], result[1], "", companyName)
                                 mActivityViewModel.fatoratiTypeSelected.set(creancier)
 
                                 var stepTwoResponseDummy = BillPaymentFatoratiStepTwoResponse(
@@ -366,6 +369,8 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                         mActivityViewModel.fatoratiTypeSelected.set(Creancier(billCompaniesList[j].codeCreance,billCompaniesList[j].codeCreancier,
                                             billCompaniesList[j].nomCreance,billCompaniesList[j].nomCreancier))
                                         Logger.debugLog("BillPaymentTesting",mActivityViewModel.fatoratiTypeSelected.get().toString())
+//                                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn)
+                                        (activity as BillPaymentActivity).navController?.navigateUp()
                                         (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn)
                                     }
                                 }
@@ -582,13 +587,13 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                     listDataHeader = arrayListOf()
                     for(i in it.bills.indices){
                         if(it.bills[i].name.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)){
-                            listDataHeader.add(BillPaymentMenuModel(LanguageData.getStringValue("Bill").toString(),R.drawable.telecom_bill_updated_icon))
+                            listDataHeader.add(BillPaymentMenuModel(LanguageData.getStringValue("BillPaymentTelecomBill").toString(),R.drawable.telecom_bill_updated_icon))
 
                             //Adding SubMenu
                             var arrayListOfSubMenu : ArrayList<BillPaymentSubMenuModel> = arrayListOf()
                             arrayListOfSubMenu.add(BillPaymentSubMenuModel(it.bills[i].name,""))
 
-                            listDataChild?.put(LanguageData.getStringValue("Bill").toString(),arrayListOfSubMenu)
+                            listDataChild?.put(LanguageData.getStringValue("BillPaymentTelecomBill").toString(),arrayListOfSubMenu)
 
                             mTelecomBillSubMenusData.clear()
                             for(companyIndex in it.bills[i].companies.indices){

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.es.marocapp.R
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.FatoratiCustomParamModel
-import com.es.marocapp.model.responses.InvoiceCustomModel
 import com.es.marocapp.utils.Constants
 import java.util.ArrayList
 
@@ -25,8 +24,10 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
 
     override fun onBindViewHolder(holder: BillPaymentItemViewHolder, position: Int) {
 //        holder.billDueDateTitle.text = LanguageData.getStringValue("Description")
+        holder.customerNameTitle.text = LanguageData.getStringValue("CustomerName")//-------------------------> Changed From Description TO Reference Number
         holder.billDueDateTitle.text = LanguageData.getStringValue("ReferenceNumber")//-------------------------> Changed From Description TO Reference Number
         holder.billingMonthTitle.text = LanguageData.getStringValue("Amount")
+        holder.billingAmountTitle.text = LanguageData.getStringValue("Address")
         holder.billStatusTitle.text = LanguageData.getStringValue("Status")
 //        holder.billingAmountTitle.text = LanguageData.getStringValue("Amount")
         holder.billStatusVal.text = LanguageData.getStringValue("Unpaid")
@@ -53,10 +54,34 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
             }
         }
 
-        holder.billingAmountTitle.visibility = View.GONE
-        holder.billingAmountVal.visibility = View.GONE
+        /*holder.billingAmountTitle.visibility = View.GONE
+        holder.billingAmountVal.visibility = View.GONE*/
+
+
+        holder.billingAmountVal.text = getAddressFromString(bills[position].description)
+        holder.customerNameVal.text = getNameFromString(bills[position].description)
     }
 
+
+    fun getAddressFromString(description: String): String{
+
+        //"description":"NOM: Mohammed TEMSAMANI - ADRESSE:99000, Av., Hassan II, - DATE : 20170522"
+        // Name - Address - Date
+
+        var withoutNameString = description.substringAfter("-") //ADRESSE:99000, Av., Hassan II, - DATE : 20170522
+        var withoutDateString = withoutNameString.substringBefore("-") //ADRESSE:99000, Av., Hassan II,
+        var withoutAddressCollen = withoutDateString.substringAfter(":").removeSuffix(",").trim()
+        return withoutAddressCollen
+    }
+
+    fun getNameFromString(description: String) : String{
+        //"description":"NOM: Mohammed TEMSAMANI - ADRESSE:99000, Av., Hassan II, - DATE : 20170522"
+        // Name - Address - Date
+
+        var withoutAdressAndDateString = description.substringBefore("-")
+        var withoutCollenName = withoutAdressAndDateString.substringAfter(":").trim()
+        return withoutCollenName
+    }
 
     class BillPaymentItemViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var billDueDateTitle : TextView = view.findViewById(R.id.dueDateTitle)
@@ -67,6 +92,9 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
         var billStatusVal : TextView = view.findViewById(R.id.billStatusVal)
         var billingAmountTitle : TextView = view.findViewById(R.id.billingAmountTitle)
         var billingAmountVal : TextView = view.findViewById(R.id.billingAmountVal)
+
+        var customerNameTitle : TextView = view.findViewById(R.id.customerNameTitle)
+        var customerNameVal : TextView = view.findViewById(R.id.customerNameVal)
 
         var isBillSelected : CheckBox = view.findViewById(R.id.isBillSelectedCheckBox)
     }

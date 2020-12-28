@@ -120,6 +120,19 @@
         </androidx.cardview.widget.CardView>
 
 
+        <com.es.marocapp.widgets.MarocRegularTextView
+            android:id="@+id/tv_description_generated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            tools:text="Enter Mobile Number"
+            android:textSize="@dimen/_12ssp"
+            android:textColor="@color/colorEditTextGreyMedium"
+            app:layout_constraintTop_toBottomOf="@+id/cardView"
+            app:layout_constraintStart_toEndOf="@+id/cardView"
+            app:layout_constraintEnd_toStartOf="@+id/cardView"
+            android:layout_marginStart="@dimen/_18sdp"
+            />
 
 
 

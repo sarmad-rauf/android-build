@@ -42,6 +42,8 @@ class FragmentBillPaymentPostPaidConfirmation :
             viewmodel = mActivityViewModel
         }
 
+        mActivityViewModel.popBackStackTo = -1
+
         (activity as BillPaymentActivity).setHeaderVisibility(false)
         (activity as BillPaymentActivity).setCompanyIconToolbarVisibility(false)
 
@@ -233,7 +235,7 @@ class FragmentBillPaymentPostPaidConfirmation :
 //
 //        tvAmountVal == AmountTotal
 
-        mDataBinding.tvCompanyNameTitle.text = LanguageData.getStringValue("ReceiverNumber")
+        mDataBinding.tvCompanyNameTitle.text = LanguageData.getStringValue("BillPaymentBillerName")
         mDataBinding.tvOwnerNameTitle.text = LanguageData.getStringValue("ReceiverName")
         mDataBinding.tvReceiptCodeTitle.text = LanguageData.getStringValue("Bill")
         mDataBinding.tvDHTitle.text = LanguageData.getStringValue("TotalFee")

@@ -51,6 +51,7 @@ class SendMoneyViewModel (application: Application) : AndroidViewModel(applicati
 
     var transferdAmountTo = ""
     var amountToTransfer = ""
+    var amountScannedFromQR = ""
     var feeAmount = ""
     var qouteId = ""
     var transactionID = ""

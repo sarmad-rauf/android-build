@@ -128,8 +128,8 @@ object DialogUtils {
         var btnYes = addDialog.findViewById<Button>(R.id.password_dialog_yes_btn)
 
 
-        btnNO.text = LanguageData.getStringValue("BtnTitle_No")
-        btnYes.text = LanguageData.getStringValue("BtnTitle_Yes")
+        btnNO.text = LanguageData.getStringValue("BtnTitle_Cancel")
+        btnYes.text = LanguageData.getStringValue("BtnTitle_Validate")
 
         btnNO.setOnClickListener {
             addDialog.dismiss()
@@ -506,6 +506,11 @@ object DialogUtils {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                var otp = otpField.text.toString().toString()
+                var otpLenght = otp.length
+                if(otpLenght == 3){
+                    otpField.setText(otp+"-")
+                }
             }
 
         })
