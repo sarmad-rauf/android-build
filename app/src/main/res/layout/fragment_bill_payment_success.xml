@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -89,6 +90,38 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvSuccessTitle"
                 />
 
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/fatoratiFeeGroup"
+                app:constraint_referenced_ids="tvFatoratiFeeTitle,tvFatoratiFeeVal"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.es.marocapp.widgets.MarocLightTextView
+                android:id="@+id/tvFatoratiFeeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                tools:text="@string/transaction_id"
+                android:textColor="@color/colorConfirmationTitle"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addToFavoritesTitle" />
+
+            <com.es.marocapp.widgets.MarocRegularTextView
+                android:id="@+id/tvFatoratiFeeVal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Fatorati Fee Value"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_14sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvFatoratiFeeTitle"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/mPaidBillsRecycler"
                 android:layout_width="match_parent"
@@ -98,7 +131,7 @@
                 android:layout_marginTop="@dimen/_16sdp"
                 android:paddingBottom="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
-                app:layout_constraintTop_toBottomOf="@+id/addToFavoritesTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvFatoratiFeeVal"
                 app:layout_constraintBottom_toTopOf="@+id/btnNext"
                 />
 

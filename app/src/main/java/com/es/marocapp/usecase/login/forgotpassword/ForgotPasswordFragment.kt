@@ -48,6 +48,16 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
 //            (activity as LoginActivity).navController.navigateUp()
 //        }
 
+        mDataBinding.inputForgotOtp.filters =
+            arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_OTP_LENGTH))
+
+        mDataBinding.inputForgotPassword.filters =
+            arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_MAX_PASSWORD_LENGTH))
+
+        mDataBinding.inputForgotConfirmPassword.filters =
+            arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_MAX_PASSWORD_LENGTH))
+
+
         mDataBinding.root.imgBackButton.setOnClickListener {
             (activity as LoginActivity).navController.navigateUp()
         }

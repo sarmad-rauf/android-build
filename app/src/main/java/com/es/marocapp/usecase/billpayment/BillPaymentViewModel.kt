@@ -38,6 +38,8 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     var custId = ""
     var custname = ""
     var feeAmount = ""
+    var fatoratiFeeAmountCalculated = "0.00"
+    var fatoratiFeeAmountCaseImplemented = false
     var senderBalanceAfter ="0.00"
     var mInvoiceOfSelectedBill = ""
     var billTypeSelectedIcon = R.drawable.others

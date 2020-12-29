@@ -6,6 +6,8 @@ data class BillPaymentFatoratiStepFourResponse(
     val responseCode: String,
     val refTxFatourati: String,
     val totalAmount: String,
+    val typeFrais: String,
+    val valeurFrais: String,
     val message:String
 )
 
@@ -22,4 +24,13 @@ data class FatoratiCustomParamModel(
     var idArticle: String,
     var prixTTC: String,
     var typeArticle: String
+)
+
+data class FatoratiCustomDateParamModel(
+    var isItemSelected : Boolean,
+    var description: String,
+    var idArticle: String,
+    var prixTTC: String,
+    var typeArticle: String,
+    var date: String
 )

@@ -85,7 +85,7 @@
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_8sdp"
-                app:layout_constraintTop_toBottomOf="@+id/customerNameTitle"
+                app:layout_constraintTop_toBottomOf="@+id/customerNameVal"
                 app:layout_constraintStart_toEndOf="@+id/isBillSelectedCheckBox"
                 app:layout_constraintEnd_toStartOf="@+id/dueDateVal"
                 />
@@ -149,12 +149,15 @@
 
             <com.es.marocapp.widgets.MarocRegularTextView
                 android:id="@+id/billingAmountVal"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/_12ssp"
                 android:text="DH 20"
+                android:gravity="end"
                 android:textColor="@color/colorBlack"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
+                app:layout_constraintTop_toTopOf="@+id/billingAmountTitle"
                 app:layout_constraintBottom_toBottomOf="@+id/billingAmountTitle"
                 app:layout_constraintStart_toEndOf="@+id/billingAmountTitle"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -169,7 +172,7 @@
                 android:textColor="@color/colorConfirmationTitle"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 android:layout_marginTop="@dimen/_8sdp"
-                app:layout_constraintTop_toBottomOf="@+id/billingAmountTitle"
+                app:layout_constraintTop_toBottomOf="@+id/billingAmountVal"
                 app:layout_constraintStart_toStartOf="@+id/billingMonthTitle"
                 app:layout_constraintEnd_toStartOf="@+id/billStatusVal"
                 />

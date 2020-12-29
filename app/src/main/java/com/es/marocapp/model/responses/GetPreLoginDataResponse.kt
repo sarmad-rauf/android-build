@@ -17,6 +17,8 @@ data class GetPreLoginDataResponse(
     val currencyOnEwp: String,
     val currencyToShow: String,
     val dateFormat: String,
+    val minPasswordLength: String,
+    val maxPasswordLength: String,
     val defaultAccountOtpLength: String,
     val defaultAccountOtpRegex: String,
     val defaultLanguage: String,

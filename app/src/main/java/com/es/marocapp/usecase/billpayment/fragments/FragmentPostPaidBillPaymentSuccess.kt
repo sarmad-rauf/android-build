@@ -108,10 +108,16 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
 
         if(mActivityViewModel.isBillUseCaseSelected.get()!!){
             populatePaidBillList()
+
+            mDataBinding.fatoratiFeeGroup.visibility = View.GONE
         }
 
         if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
             populateFatoratiBillList()
+            mDataBinding.fatoratiFeeGroup.visibility = View.VISIBLE
+
+            mDataBinding.tvFatoratiFeeTitle.text = LanguageData.getStringValue("BillPaymentMTCashFee")
+            mDataBinding.tvFatoratiFeeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.fatoratiFeeAmountCalculated
         }
 
         subscribeObserver()

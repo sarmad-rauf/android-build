@@ -91,7 +91,7 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
         )
 
         if (permission != PackageManager.PERMISSION_GRANTED) {
-            Log.d("CameraPermission", "Permission to access camera denied")
+            Logger.debugLog("CameraPermission", "Permission to access camera denied")
             makeRequestPermission()
         } else {
             startActivityForResult(Intent(this, ScanQRActivity::class.java),SCAN_QR)
@@ -295,7 +295,7 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
 
                 if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
 
-                    Log.d("CameraPermission", "Permission to access camera denied")
+                    Logger.debugLog("CameraPermission", "Permission to access camera denied")
                 } else {
                     startActivityForResult(Intent(this, ScanQRActivity::class.java),SCAN_QR)
                 }

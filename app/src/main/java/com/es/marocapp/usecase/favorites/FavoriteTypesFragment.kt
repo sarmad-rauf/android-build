@@ -38,7 +38,7 @@ class FavoriteTypesFragment : BaseFragment<FragmentFavoritesTypeBinding>(){
         super.onViewCreated(view, savedInstanceState)
         mFavoritesTypes.clear()
         mFavoritesTypes.apply {
-            add(LanguageData.getStringValue("Payments").toString())
+            add(LanguageData.getStringValue("FavoritesPayments").toString())
             add(LanguageData.getStringValue("SendMoney").toString())
             add(LanguageData.getStringValue("MerchantPayment").toString())
             add(LanguageData.getStringValue("AirTime").toString())

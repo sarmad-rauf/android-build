@@ -163,6 +163,16 @@ class FragmentBillPaymentPostPaidConfirmation :
 //
 //        tvAmountVal == AmountTotal
 
+        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+            mDataBinding.tvFatoratiFeeTitle.visibility = View.GONE
+            mDataBinding.tvFatoratiFeeVal.visibility = View.GONE
+        }else if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+            mDataBinding.tvFatoratiFeeTitle.visibility = View.VISIBLE
+            mDataBinding.tvFatoratiFeeVal.visibility = View.VISIBLE
+
+            mDataBinding.tvFatoratiFeeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.fatoratiFeeAmountCalculated
+        }
+
         mDataBinding.tvSenderNameVal.text =
             Constants.balanceInfoAndResponse?.firstname + " " + Constants.balanceInfoAndResponse?.surname
         mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
@@ -212,13 +222,38 @@ class FragmentBillPaymentPostPaidConfirmation :
             Constants.converValueToTwoDecimalPlace(mActivityViewModel.totalSelectedBillAmount.toDouble())
         mDataBinding.tvReceiptCodeVal.text =
             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + totalAmount
-        mDataBinding.tvDHVal.text =
-            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.feeAmount
+        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+            mDataBinding.tvDHVal.text =
+                Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.feeAmount
+        }else if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+            if(mActivityViewModel.feeAmount.equals("0.00") || mActivityViewModel.feeAmount.equals("0")){
+                mDataBinding.tvDHTitle.visibility = View.GONE
+                mDataBinding.tvDHVal.visibility = View.GONE
+            }else{
+                mDataBinding.tvDHTitle.visibility = View.VISIBLE
+                mDataBinding.tvDHVal.visibility = View.VISIBLE
+            }
 
-        amountToTransfer = Constants.addAmountAndFee(
-            mActivityViewModel.totalSelectedBillAmount.toDouble(),
-            totalFee.toDouble()
-        )
+            mDataBinding.tvDHVal.text =
+                Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.feeAmount
+        }
+
+        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+            amountToTransfer = Constants.addAmountAndFee(
+                mActivityViewModel.totalSelectedBillAmount.toDouble(),
+                totalFee.toDouble()
+            )
+        } else if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+            amountToTransfer = Constants.addAmountAndFee(
+                mActivityViewModel.totalSelectedBillAmount.toDouble(),
+                totalFee.toDouble()
+            )
+
+            amountToTransfer = Constants.addAmountAndFee(
+                amountToTransfer.toDouble(),
+                mActivityViewModel.fatoratiFeeAmountCalculated.toDouble()
+            )
+        }
 
         var totalCost = Constants.converValueToTwoDecimalPlace(amountToTransfer.toDouble())
         mDataBinding.tvAmountVal.text =
@@ -238,7 +273,11 @@ class FragmentBillPaymentPostPaidConfirmation :
         mDataBinding.tvCompanyNameTitle.text = LanguageData.getStringValue("BillPaymentBillerName")
         mDataBinding.tvOwnerNameTitle.text = LanguageData.getStringValue("ReceiverName")
         mDataBinding.tvReceiptCodeTitle.text = LanguageData.getStringValue("Bill")
-        mDataBinding.tvDHTitle.text = LanguageData.getStringValue("TotalFee")
+        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+            mDataBinding.tvDHTitle.text = LanguageData.getStringValue("TotalFee")
+        }else if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+            mDataBinding.tvDHTitle.text = LanguageData.getStringValue("BillPaymentMTCashFee")
+        }
         mDataBinding.tvAmountTitle.text = LanguageData.getStringValue("Amount")
 
         mDataBinding.tvConfirmationTitle.text = LanguageData.getStringValue("Confirmation")
@@ -248,6 +287,11 @@ class FragmentBillPaymentPostPaidConfirmation :
 
         mDataBinding.tvSendNameTitle.text = LanguageData.getStringValue("SenderName")
         mDataBinding.tvSendNumberTitle.text = LanguageData.getStringValue("SenderNumber")
+
+        mDataBinding.tvContactNumTitle.text = LanguageData.getStringValue("Source")
+        mDataBinding.tvContactNumVal.text = LanguageData.getStringValue("Wallet")
+
+        mDataBinding.tvFatoratiFeeTitle.text = LanguageData.getStringValue("TotalFee")
     }
 
     override fun onSubmitClickListner(view: View) {
@@ -334,14 +378,41 @@ class FragmentBillPaymentPostPaidConfirmation :
                     selectedFatoratiListOfInvoice[i].typeArticle
                 )
             )
+
+            if(mActivityViewModel.fatoratiFeeAmountCaseImplemented){
+                listOfFatoratiParams.add(
+                    Param(
+                        mActivityViewModel.fatoratiStepFourObserver.get()!!.typeFrais,
+                        mActivityViewModel.fatoratiFeeAmountCalculated,
+                        "1"
+                    )
+                )
+
+            }
         }
         var quoteId = ""
         if (mActivityViewModel.selectedIvoicesQuoteList.get()?.isNotEmpty()!!) {
             quoteId = mActivityViewModel.selectedIvoicesQuoteList.get()!![0]
         }
-        mActivityViewModel.requestForFatoratiApi(
+
+        var amountToSendInRequest = ""
+        if(mActivityViewModel.fatoratiFeeAmountCaseImplemented){
+            amountToSendInRequest = (mActivityViewModel.totalSelectedBillAmount.toDouble() + mActivityViewModel.fatoratiFeeAmountCalculated.toDouble()).toString()
+        }else{
+            amountToSendInRequest = mActivityViewModel.totalSelectedBillAmount
+        }
+
+
+        /*mActivityViewModel.requestForFatoratiApi(
             activity,
             mActivityViewModel.totalSelectedBillAmount,
+            quoteId,
+            mActivityViewModel.isMultipleBillSelected,
+            listOfFatoratiParams
+        )*/
+        mActivityViewModel.requestForFatoratiApi(
+            activity,
+            amountToSendInRequest,
             quoteId,
             mActivityViewModel.isMultipleBillSelected,
             listOfFatoratiParams

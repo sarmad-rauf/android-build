@@ -30,6 +30,17 @@ object Constants {
     val SHOW_INTERNET_ERROR = "Please check your internet!"
     val SHOW_SERVER_ERROR = "Something went wrong!"
 
+    //For Bill Payment Fee Charge on Bills Keys in Fatorati Bill use case
+/*
+    Summary:-
+    forfait_facture --> Fee on per invoice
+    forfait --> Fee on total amount of selected bills
+    commission --> Fee on total amount of selected bills*/
+    const val BILL_PAYMENT_TYPE_FORFAIT_FACTURE = "forfait_facture"  //Number of Bill * valeurFrais
+    const val BILL_PAYMENT_TYPE_FORFAIT = "forfait" //valeurFrais + Total Amount
+    const val BILL_PAYMENT_TYPE_COMISSION = "commission" //Amount * valeurFrais /100
+
+
     const val IDENTIFICATION_TYPE = "CNIC"
     const val SECRET_TYPE = "password"
     /*var TRANSFER_TYPE_PAYMENT = "INTEROP_TRANSFER"
@@ -62,6 +73,8 @@ object Constants {
     var APP_CN_LENGTH = "8"
     var APP_OTP_REGEX = "^[a-zA-Z0-9]*$"
     var APP_OTP_LENGTH = 8
+    var APP_MIN_PASSWORD_LENGTH = 8
+    var APP_MAX_PASSWORD_LENGTH = 16
     var APP_DEFAULT_ACCOUNT_OTP_LENGTH:Int?= 7
     var APP_DEFAULT_ACCOUNT_OTP_REGEX:String?= ""
     var APP_ADDFAVORITE_NICK_LENGTH:Int?= 8

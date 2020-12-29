@@ -3,6 +3,7 @@ package com.es.marocapp.usecase.login.login
 
 import android.graphics.Paint
 import android.os.Bundle
+import android.text.InputFilter
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import androidx.fragment.app.Fragment
@@ -82,6 +83,10 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
 //        mDataBinding.root.imgBackButton.setOnClickListener {
 //            (activity as LoginActivity).finish()
 //        }
+
+
+        mDataBinding.inputPin.filters =
+            arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_MAX_PASSWORD_LENGTH))
 
         if(mActivityViewModel.isUserToShowProfile){
             mDataBinding.loginHeader.rootView.currentLoggedInUserGroup.visibility = View.VISIBLE

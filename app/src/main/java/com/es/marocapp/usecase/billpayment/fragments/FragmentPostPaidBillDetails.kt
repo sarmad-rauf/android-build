@@ -1,5 +1,6 @@
 package com.es.marocapp.usecase.billpayment.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,10 +14,7 @@ import com.es.marocapp.adapter.BillDetailItemAdapter
 import com.es.marocapp.databinding.FragmentBillPaymentBillDetailsBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.requests.FatoratiQuoteParam
-import com.es.marocapp.model.responses.FatoratiCustomParamModel
-import com.es.marocapp.model.responses.InvoiceCustomModel
-import com.es.marocapp.model.responses.PostPaidBillPaymentQuoteResponse
-import com.es.marocapp.model.responses.PostPaidBillPaymentResponse
+import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.billpayment.BillPaymentActivity
@@ -24,6 +22,8 @@ import com.es.marocapp.usecase.billpayment.BillPaymentClickListner
 import com.es.marocapp.usecase.billpayment.BillPaymentViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.Logger
+import java.text.SimpleDateFormat
 
 class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsBinding>(),
     BillPaymentClickListner {
@@ -37,6 +37,7 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
     private var selectedListOfInvoice = arrayListOf<InvoiceCustomModel>()
 
     private var listOfFatoratiCustomInvoice = arrayListOf<FatoratiCustomParamModel>()
+    private var listOfFatoratiCustomDateInvoice = arrayListOf<FatoratiCustomDateParamModel>()
     private var selectedFatoratiListOfInvoice = arrayListOf<FatoratiCustomParamModel>()
 
     override fun setLayout(): Int {
@@ -75,16 +76,27 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
         }
 
         listOfFatoratiCustomInvoice.clear()
+        listOfFatoratiCustomDateInvoice.clear()
         if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
             for(i in mActivityViewModel.fatoratiStepFourObserver.get()!!.params.indices){
                 var item = mActivityViewModel.fatoratiStepFourObserver.get()!!.params[i]
                 listOfFatoratiCustomInvoice.add(FatoratiCustomParamModel(false,item.description,item.idArticle,item.prixTTC,item.typeArticle))
+                listOfFatoratiCustomDateInvoice.add(FatoratiCustomDateParamModel(false,item.description,item.idArticle,item.prixTTC,item.typeArticle,getDateFromString(item.description)))
             }
 
             if(mActivityViewModel.fatoratiStepFourObserver.get()!!.params!=null &&
                 mActivityViewModel.fatoratiStepFourObserver.get()!!.params.size>0){
                 mDataBinding.noDataTv.visibility=View.INVISIBLE
             }
+        }
+
+        for(i in listOfFatoratiCustomDateInvoice.indices){
+            Logger.debugLog("TestingDateList",listOfFatoratiCustomDateInvoice[i].date)
+        }
+
+        listOfFatoratiCustomDateInvoice.sortedByDescending { it.date }
+        for(j in listOfFatoratiCustomDateInvoice.indices){
+            Logger.debugLog("TestingDateListParsed",listOfFatoratiCustomDateInvoice[j].date )
         }
 
         mBillDetailsAdapter = BillDetailItemAdapter(listOfCustomInvoice)
@@ -123,6 +135,22 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
         setStrings()
         subscribeObserver()
 
+    }
+
+    fun getDateFromString(description: String) : String{
+        //"description":"NOM: Mohammed TEMSAMANI - ADRESSE:99000, Av., Hassan II, - DATE : 20170522" yyyyMMdd
+        // Name - Address - Date
+        return if(description.isNullOrEmpty()){
+            Constants.getCurrentDate()
+        }else{
+            var withoutNameString = description.substringAfter("-")
+            var withoutAddressNameString = withoutNameString.substringAfter("-")
+            var withoutCollenDate  = withoutAddressNameString.substringAfter(":").trim()
+            Logger.debugLog("TestingDate",withoutCollenDate)
+            val date = Constants.parseDateFromString(withoutCollenDate)
+            Logger.debugLog("TestingDateParsed",date)
+            return date
+        }
     }
 
     private fun subscribeObserver() {
@@ -257,7 +285,81 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
                 )
             }
 
-            mActivityViewModel.requestForFatoratiQuoteApi(activity,mActivityViewModel.totalSelectedBillAmount,mActivityViewModel.fatoratiStepFourObserver.get()?.refTxFatourati.toString(),
+            if(!mActivityViewModel.fatoratiStepFourObserver.get()?.typeFrais.isNullOrEmpty()){
+                if(!mActivityViewModel.fatoratiStepFourObserver.get()?.valeurFrais.isNullOrEmpty()){
+                    if(mActivityViewModel.fatoratiStepFourObserver.get()?.typeFrais.equals(Constants.BILL_PAYMENT_TYPE_FORFAIT_FACTURE)){
+                        var forfaitFactureFeeToApplied  = mActivityViewModel.fatoratiStepFourObserver.get()?.valeurFrais?.toInt()
+                        var fortaitFactureFee  = selectedListOfInvoice.size * forfaitFactureFeeToApplied!!
+                        var fortaitFactureFeeInDouble = Constants.converValueToTwoDecimalPlace(fortaitFactureFee.toDouble())
+                        var totalFeeAfterAddingForfaitFactureFee = mActivityViewModel.totalSelectedBillAmount.toDouble() + fortaitFactureFee
+
+                        Logger.debugLog("forfaitFactureFeeToApplied",forfaitFactureFeeToApplied.toString())
+                        Logger.debugLog("fortaitFactureFee",fortaitFactureFee.toString() + "Number Of Bill Selected = ${selectedListOfInvoice.size}")
+                        Logger.debugLog("fortaitFactureFeeInDouble",fortaitFactureFeeInDouble)
+                        Logger.debugLog("fortaitFactureFeeAfterAddingInTotal",totalFeeAfterAddingForfaitFactureFee.toString() + "Total Bill Amount is = ${mActivityViewModel.totalSelectedBillAmount}")
+
+                        listOfFatoratiParams.add(
+                            FatoratiQuoteParam(mActivityViewModel.fatoratiStepFourObserver.get()?.typeFrais!!,
+                                fortaitFactureFee.toString(),
+                                "1")
+                        )
+
+                        mActivityViewModel.fatoratiFeeAmountCalculated = fortaitFactureFee.toString()
+                        mActivityViewModel.fatoratiFeeAmountCaseImplemented = true
+
+                    }else if(mActivityViewModel.fatoratiStepFourObserver.get()?.typeFrais.equals(Constants.BILL_PAYMENT_TYPE_FORFAIT)){
+                        var fortaitFeeToApplied = mActivityViewModel.fatoratiStepFourObserver.get()?.valeurFrais?.toDouble()
+                        var forfaitFeeCalculated = mActivityViewModel.totalSelectedBillAmount.toDouble() + fortaitFeeToApplied!!
+
+                        Logger.debugLog("fortaitFeeToApplied",fortaitFeeToApplied.toString())
+                        Logger.debugLog("forfaitFeeCalculated",forfaitFeeCalculated.toString())
+
+                        listOfFatoratiParams.add(
+                            FatoratiQuoteParam(mActivityViewModel.fatoratiStepFourObserver.get()?.typeFrais!!,
+                                fortaitFeeToApplied.toString(),
+                                "1")
+                        )
+
+                        mActivityViewModel.fatoratiFeeAmountCalculated = fortaitFeeToApplied.toString()
+                        mActivityViewModel.fatoratiFeeAmountCaseImplemented = true
+
+                    }else if(mActivityViewModel.fatoratiStepFourObserver.get()?.typeFrais.equals(Constants.BILL_PAYMENT_TYPE_COMISSION)){
+                        var commissionFee  = mActivityViewModel.fatoratiStepFourObserver.get()?.valeurFrais?.toInt()
+                        var commissionFeeCalculated: Float = ((mActivityViewModel.totalSelectedBillAmount.toInt()* commissionFee!!)/100).toFloat()
+                        var commissionFeeCalculatedAddedInTotalAmount = commissionFeeCalculated.toDouble() + mActivityViewModel.totalSelectedBillAmount.toDouble()
+
+                        Logger.debugLog("commissionFee",commissionFee.toString())
+                        Logger.debugLog("commissionFeeCalculated",commissionFeeCalculated.toString())
+                        Logger.debugLog("commissionFeeCalculatedAddedInTotalAmount",commissionFeeCalculatedAddedInTotalAmount.toString())
+
+                        listOfFatoratiParams.add(
+                            FatoratiQuoteParam(mActivityViewModel.fatoratiStepFourObserver.get()?.typeFrais!!,
+                                commissionFeeCalculated.toString(),
+                                "1")
+                        )
+
+                        mActivityViewModel.fatoratiFeeAmountCalculated = commissionFeeCalculated.toString()
+                        mActivityViewModel.fatoratiFeeAmountCaseImplemented = true
+                    }
+                }else{
+                    mActivityViewModel.fatoratiFeeAmountCalculated = "0.00"
+                    mActivityViewModel.fatoratiFeeAmountCaseImplemented = false
+                }
+            }else {
+                mActivityViewModel.fatoratiFeeAmountCalculated = "0.00"
+                mActivityViewModel.fatoratiFeeAmountCaseImplemented = false
+            }
+
+            var amountToSendInRequest = ""
+            if(mActivityViewModel.fatoratiFeeAmountCaseImplemented){
+                amountToSendInRequest = (mActivityViewModel.totalSelectedBillAmount.toDouble() + mActivityViewModel.fatoratiFeeAmountCalculated.toDouble()).toString()
+            }else{
+                amountToSendInRequest = mActivityViewModel.totalSelectedBillAmount
+            }
+
+            /*mActivityViewModel.requestForFatoratiQuoteApi(activity,mActivityViewModel.totalSelectedBillAmount,mActivityViewModel.fatoratiStepFourObserver.get()?.refTxFatourati.toString(),
+                mActivityViewModel.fatoratiStepFourObserver.get()?.totalAmount.toString(),listOfFatoratiParams)*/
+            mActivityViewModel.requestForFatoratiQuoteApi(activity,amountToSendInRequest,mActivityViewModel.fatoratiStepFourObserver.get()?.refTxFatourati.toString(),
                 mActivityViewModel.fatoratiStepFourObserver.get()?.totalAmount.toString(),listOfFatoratiParams)
         }
     }

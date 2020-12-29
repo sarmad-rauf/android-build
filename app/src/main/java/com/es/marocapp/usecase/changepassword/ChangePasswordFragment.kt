@@ -1,6 +1,7 @@
 package com.es.marocapp.usecase.changepassword
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -12,6 +13,7 @@ import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.login.LoginActivity
+import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 
 class ChangePasswordFragment : BaseFragment<FragmentChangepasswordBinding>(), ChangePasswordClickListener {
@@ -38,6 +40,15 @@ class ChangePasswordFragment : BaseFragment<FragmentChangepasswordBinding>(), Ch
         (activity as MainActivity).isDirectCallForTransaction = false
         (activity as MainActivity).isTransactionFragmentNotVisible = true
 
+
+        mDataBinding.inputOldPassword.filters =
+            arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_MAX_PASSWORD_LENGTH))
+
+        mDataBinding.inputNewPassword.filters =
+            arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_MAX_PASSWORD_LENGTH))
+
+        mDataBinding.inputConfirmPassword.filters =
+            arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_MAX_PASSWORD_LENGTH))
 
 //        pinViewModel.text.observe(this, Observer {
 //            text_notifications.text = it

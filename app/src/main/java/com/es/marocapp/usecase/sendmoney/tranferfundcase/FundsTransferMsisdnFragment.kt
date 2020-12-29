@@ -21,6 +21,7 @@ import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.Logger
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.fragment_funds_transfer_enter_msisdn.*
 import java.util.regex.Pattern
@@ -274,7 +275,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                 break
             }else{
                 mActivityViewModel.isUserSelectedFromFavorites.set(false)
-                Log.i("FavoritesCheck","false")
+                Logger.debugLog("FavoritesCheck","false")
             }
         }
     }

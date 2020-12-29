@@ -1,5 +1,6 @@
 package com.es.marocapp.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import com.es.marocapp.R
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.FatoratiCustomParamModel
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.Logger
+import java.text.SimpleDateFormat
 import java.util.ArrayList
 
 class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustomParamModel>) : RecyclerView.Adapter<BillDetailFatoratiItemAdapter.BillPaymentItemViewHolder>() {
@@ -60,6 +63,7 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
 
         holder.billingAmountVal.text = getAddressFromString(bills[position].description)
         holder.customerNameVal.text = getNameFromString(bills[position].description)
+        getDateFromString(bills[position].description)
     }
 
 
@@ -67,21 +71,44 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
 
         //"description":"NOM: Mohammed TEMSAMANI - ADRESSE:99000, Av., Hassan II, - DATE : 20170522"
         // Name - Address - Date
-
-        var withoutNameString = description.substringAfter("-") //ADRESSE:99000, Av., Hassan II, - DATE : 20170522
-        var withoutDateString = withoutNameString.substringBefore("-") //ADRESSE:99000, Av., Hassan II,
-        var withoutAddressCollen = withoutDateString.substringAfter(":").removeSuffix(",").trim()
-        return withoutAddressCollen
+        return if(description.isNullOrEmpty()){
+            "-"
+        }else{
+            var withoutNameString = description.substringAfter("-") //ADRESSE:99000, Av., Hassan II, - DATE : 20170522
+            var withoutDateString = withoutNameString.substringBefore("-") //ADRESSE:99000, Av., Hassan II,
+            var withoutAddressCollen = withoutDateString.substringAfter(":").removeSuffix(",").trim()
+            withoutAddressCollen
+        }
     }
 
     fun getNameFromString(description: String) : String{
-        //"description":"NOM: Mohammed TEMSAMANI - ADRESSE:99000, Av., Hassan II, - DATE : 20170522"
+        //"description":"NOM: Mohammed TEMSAMANI - ADRESSE:99000, Av., Hassan II, - DATE : 20170522" yyyyMMdd
         // Name - Address - Date
-
-        var withoutAdressAndDateString = description.substringBefore("-")
-        var withoutCollenName = withoutAdressAndDateString.substringAfter(":").trim()
-        return withoutCollenName
+        return if(description.isNullOrEmpty()){
+            "-"
+        }else{
+            var withoutAdressAndDateString = description.substringBefore("-")
+            var withoutCollenName = withoutAdressAndDateString.substringAfter(":").trim()
+            return withoutCollenName
+        }
     }
+
+    fun getDateFromString(description: String) : String{
+        //"description":"NOM: Mohammed TEMSAMANI - ADRESSE:99000, Av., Hassan II, - DATE : 20170522" yyyyMMdd
+        // Name - Address - Date
+        return if(description.isNullOrEmpty()){
+            "-"
+        }else{
+            var withoutNameString = description.substringAfter("-")
+            var withoutAddressNameString = withoutNameString.substringAfter("-")
+            var withoutCollenDate  = withoutAddressNameString.substringAfter(":").trim()
+//            Logger.debugLog("TestingDateAdapter",withoutCollenDate)
+            val date = Constants.parseDateFromString(withoutCollenDate)
+//            Logger.debugLog("TestingDateAdapterParsed",date.toString())
+            return date
+        }
+    }
+
 
     class BillPaymentItemViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var billDueDateTitle : TextView = view.findViewById(R.id.dueDateTitle)

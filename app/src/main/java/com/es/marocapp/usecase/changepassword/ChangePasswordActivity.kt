@@ -1,6 +1,7 @@
 package com.es.marocapp.usecase.changepassword
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -12,6 +13,7 @@ import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.consumerregistration.ConsumerRegistrationActivity
+import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 
 class ChangePasswordActivity : BaseActivity<FragmentChangepasswordBinding>(),
@@ -34,6 +36,16 @@ class ChangePasswordActivity : BaseActivity<FragmentChangepasswordBinding>(),
         mDataBinding.imgBackButton.setOnClickListener {
             (this@ChangePasswordActivity).finish()
         }
+
+        mDataBinding.inputOldPassword.filters =
+            arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_MAX_PASSWORD_LENGTH))
+
+        mDataBinding.inputNewPassword.filters =
+            arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_MAX_PASSWORD_LENGTH))
+
+        mDataBinding.inputConfirmPassword.filters =
+            arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_MAX_PASSWORD_LENGTH))
+
 
         subscribeObserver()
         setStrings()
