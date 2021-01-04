@@ -77,6 +77,7 @@ object Constants {
     var APP_MAX_PASSWORD_LENGTH = 16
     var APP_DEFAULT_ACCOUNT_OTP_LENGTH:Int?= 7
     var APP_DEFAULT_ACCOUNT_OTP_REGEX:String?= ""
+    var APP_AIR_TIME_FIXE_REGEX:String?= ""
     var APP_ADDFAVORITE_NICK_LENGTH:Int?= 8
     var APP_MSISDN_PREFIX = "+000"
     var APP_MSISDN_LENGTH = "12"
