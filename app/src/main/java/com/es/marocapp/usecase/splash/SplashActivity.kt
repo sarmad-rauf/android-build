@@ -165,6 +165,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                     Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH = it?.defaultAccountOtpLength?.toInt()
                 }
                 Constants.APP_DEFAULT_ACCOUNT_OTP_REGEX = it?.defaultAccountOtpRegex
+                Constants.APP_AIR_TIME_FIXE_REGEX = it?.msisdnFixedLineRegex
                 Constants.APP_ADDFAVORITE_NICK_LENGTH = it?.billFavoriteLength?.toInt()
                 Constants.APP_DATE_FORMAT = it.dateFormat
                 Constants.CURRENT_CURRENCY_TYPE = it.currencyOnEwp

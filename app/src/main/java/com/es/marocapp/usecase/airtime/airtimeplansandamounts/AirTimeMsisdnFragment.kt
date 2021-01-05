@@ -265,8 +265,13 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
     override fun afterTextChanged(p0: Editable?) {
         var msisdn = mDataBinding.inputPhoneNumber.text.toString().trim()
         var msisdnLenght = msisdn.length
-        isNumberRegexMatches =
-            !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_MSISDN_REGEX, msisdn))
+        if(mActivityViewModel.isRechargeMobileUseCase.get()!!){
+            isNumberRegexMatches =
+                !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_MSISDN_REGEX, msisdn))
+        }else if(mActivityViewModel.isRechargeFixeUseCase.get()!!){
+            isNumberRegexMatches =
+                !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_AIR_TIME_FIXE_REGEX, msisdn))
+        }
     }
 
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

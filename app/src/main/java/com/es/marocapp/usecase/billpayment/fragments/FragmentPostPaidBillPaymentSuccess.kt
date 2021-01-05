@@ -116,7 +116,7 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
             populateFatoratiBillList()
             mDataBinding.fatoratiFeeGroup.visibility = View.VISIBLE
 
-            mDataBinding.tvFatoratiFeeTitle.text = LanguageData.getStringValue("BillPaymentMTCashFee")
+            mDataBinding.tvFatoratiFeeTitle.text = LanguageData.getStringValue("FatouratiTotalFeeCharged")
             mDataBinding.tvFatoratiFeeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.fatoratiFeeAmountCalculated
         }
 

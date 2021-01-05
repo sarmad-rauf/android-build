@@ -13,6 +13,7 @@ data class GetPreLoginDataResponse(
     val cnLength: String,
     val cnRegex: String,
     val commissionsBalanceLimitKey: String,
+    val msisdnFixedLineRegex: String,
     val consumerRegistrationProfile: String,
     val currencyOnEwp: String,
     val currencyToShow: String,
