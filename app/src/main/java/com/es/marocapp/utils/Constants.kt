@@ -75,28 +75,28 @@ object Constants {
     var APP_OTP_LENGTH = 8
     var APP_MIN_PASSWORD_LENGTH = 8
     var APP_MAX_PASSWORD_LENGTH = 16
-    var APP_DEFAULT_ACCOUNT_OTP_LENGTH:Int?= 7
-    var APP_DEFAULT_ACCOUNT_OTP_REGEX:String?= ""
-    var APP_ADDFAVORITE_NICK_LENGTH:Int?= 8
+    var APP_DEFAULT_ACCOUNT_OTP_LENGTH: Int? = 7
+    var APP_DEFAULT_ACCOUNT_OTP_REGEX: String? = ""
+    var APP_ADDFAVORITE_NICK_LENGTH: Int? = 8
     var APP_MSISDN_PREFIX = "+000"
     var APP_MSISDN_LENGTH = "12"
     var APP_MSISDN_REGEX = ""
-    var APP_MSISDN_POSTPAIDBILL_MOBILE_REGEX=""
-    var APP_MSISDN_POSTPAIDBILL_FIXE_REGEX=""
-    var APP_MSISDN_POSTPAIDBILL_INTERNET_REGEX=""
-    var APP_BILL_PAYMENT_CODE_REGEX=""
+    var APP_MSISDN_POSTPAIDBILL_MOBILE_REGEX = ""
+    var APP_MSISDN_POSTPAIDBILL_FIXE_REGEX = ""
+    var APP_MSISDN_POSTPAIDBILL_INTERNET_REGEX = ""
+    var APP_BILL_PAYMENT_CODE_REGEX = ""
     var APP_CIL_LENGTH = ""
     var APP_CIL_REGEX = ""
-    var quickAmountsList : ArrayList<String> = arrayListOf()
-    var quickRechargeAmountsList : ArrayList<String> = arrayListOf()
-    var URL_FOR_FAQ =""
-    var URL_FOR_TERMSANDCONDITIONS =""
-    var APP_VERSION =""
-    var URL_FOR_UPDATE_APP =""
-    var KEY_FOR_WALLET_BALANCE_MAX =""
-    var KEY_FOR_POST_PAID_TELECOM_BILL =""
-    var PREVIOUS_DAYS_TRANSACTION_COUNT ="30"
-    var CASH_IN_VIA_CARD_URL =""
+    var quickAmountsList: ArrayList<String> = arrayListOf()
+    var quickRechargeAmountsList: ArrayList<String> = arrayListOf()
+    var URL_FOR_FAQ = ""
+    var URL_FOR_TERMSANDCONDITIONS = ""
+    var APP_VERSION = ""
+    var URL_FOR_UPDATE_APP = ""
+    var KEY_FOR_WALLET_BALANCE_MAX = ""
+    var KEY_FOR_POST_PAID_TELECOM_BILL = ""
+    var PREVIOUS_DAYS_TRANSACTION_COUNT = "30"
+    var CASH_IN_VIA_CARD_URL = ""
 
 
     var APPLICATION_IP_ADDRESS = ""
@@ -104,8 +104,8 @@ object Constants {
     var CURRENT_NUMBER_DEVICE_ID = ""
     var CURRENT_CURRENCY_TYPE = ""
     var CURRENT_CURRENCY_TYPE_TO_SHOW = ""
-    var AMOUNT_CONVERSION_VALUE= ""
-    var HELPLINE_NUMBER= ""
+    var AMOUNT_CONVERSION_VALUE = ""
+    var HELPLINE_NUMBER = ""
 
     var HEADERS_AFTER_LOGINS = false
     var HEADERS_FOR_PAYEMNTS = false
@@ -113,10 +113,10 @@ object Constants {
     var CURRENT_USER_CREDENTIAL = ""
     var LOGGED_IN_USER = ""
     var LOGGED_IN_USER_COOKIE = ""
-    var CURRENT_USER_NAME =""
-    var CURRENT_USER_EMAIL=""
-    var CURRENT_USER_FIRST_NAME=""
-    var CURRENT_USER_LAST_NAME=""
+    var CURRENT_USER_NAME = ""
+    var CURRENT_USER_EMAIL = ""
+    var CURRENT_USER_FIRST_NAME = ""
+    var CURRENT_USER_LAST_NAME = ""
 
     //USER_PROFILE
     var IS_AGENT_USER = false
@@ -128,25 +128,25 @@ object Constants {
     var isTutorialShowing = false
     var isFirstTimeTutorialShowing = 0
 
-   const val OTP_LENGTH_PLACEHOLDER_TO_BE_REPLACED = "<otp-length>"
+    const val OTP_LENGTH_PLACEHOLDER_TO_BE_REPLACED = "<otp-length>"
 
-    lateinit var tutorialDashboardCashInViaCard : ImageView
-    lateinit var tutorialCallIconHomeScreen : ImageView
-    lateinit var tutorialQuickRechargeContainer : CardView
-     var tutorialSendMoney : ConstraintLayout? =null
+    lateinit var tutorialDashboardCashInViaCard: ImageView
+    lateinit var tutorialCallIconHomeScreen: ImageView
+    lateinit var tutorialQuickRechargeContainer: CardView
+    var tutorialSendMoney: ConstraintLayout? = null
 //    lateinit var tutorialSendMoney : View
 
     //Responses
-    var balanceInfoAndResponse : BalanceInfoAndLimitResponse? = null
-    var newbalanceInfoAndResponse : BalanceInfoAndLimitResponse? = null
-      var getAccountsResponse : Account? =null
-    lateinit var getAccountsResponseArray : ArrayList<Account>
-    lateinit var loginWithCertResponse : LoginWithCertResponse
-    lateinit var currentTransactionItem : History
-    var mContactListArray : ArrayList<Contact> = arrayListOf()
+    var balanceInfoAndResponse: BalanceInfoAndLimitResponse? = null
+    var newbalanceInfoAndResponse: BalanceInfoAndLimitResponse? = null
+    var getAccountsResponse: Account? = null
+    lateinit var getAccountsResponseArray: ArrayList<Account>
+    lateinit var loginWithCertResponse: LoginWithCertResponse
+    lateinit var currentTransactionItem: History
+    var mContactListArray: ArrayList<Contact> = arrayListOf()
 
 
-    fun getCurrentDate() : String{
+    fun getCurrentDate(): String {
         /*val calendar = Calendar.getInstance(TimeZone.getDefault())
 
         val currentYear = calendar[Calendar.YEAR].toString()
@@ -155,19 +155,19 @@ object Constants {
         var formattedDate = "$currentYear-$currentMonth-$currentDay"
         return formattedDate*/
         val c = Calendar.getInstance().time
-        Log.i("CurrentTime",c.toString())
+        Log.i("CurrentTime", c.toString())
 
 //        val df = SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault())
         val df = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val formattedDate = df.format(c)
-        Log.i("CurrentTime",formattedDate)
+        Log.i("CurrentTime", formattedDate)
         return formattedDate
     }
 
-    fun getPreviousFromCurrentDate (
+    fun getPreviousFromCurrentDate(
         currentDate: String,
         previousDaysTransactionCount: Int
-    ) : String{
+    ): String {
         val dateFormat =
             SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val date = dateFormat.parse(currentDate)
@@ -175,48 +175,52 @@ object Constants {
         calendar.time = date
         calendar.add(Calendar.DATE, -previousDaysTransactionCount)
         val previousDateAsString = dateFormat.format(calendar.time)
-        Log.i("CurrentTimePrevious",previousDateAsString)
+        Log.i("CurrentTimePrevious", previousDateAsString)
 
         return previousDateAsString
     }
 
-    fun createUserToken() : String{
-        var token = SimpleDateFormat("yyyyMMddHHmmssSS",Locale.ENGLISH)
+    fun createUserToken(): String {
+        var token = SimpleDateFormat("yyyyMMddHHmmssSS", Locale.ENGLISH)
             .format(Date()) + Random()
             .nextInt(999998) + "($LOGGED_IN_USER)"
         return token
     }
 
-    fun getSelectedLanguage() : String{
+    fun getSelectedLanguage(): String {
         return LocaleManager.selectedLanguage
     }
 
-    fun createUserLoggedInToken() : String{
+    fun createUserLoggedInToken(): String {
         var token = SimpleDateFormat("yyyyMMddHHmmssSS")
             .format(Date()) + Random()
             .nextInt(999998) + "($CURRENT_USER_MSISDN)"
         return token
     }
 
-    fun getIPAddress(application: Application){
+    fun getIPAddress(application: Application) {
         val wm =
             application.getSystemService(WIFI_SERVICE) as WifiManager?
         APPLICATION_IP_ADDRESS = formatIpAddress(wm!!.connectionInfo.ipAddress)
     }
 
-    fun setBase64EncodedString(str : String) {
+    fun setBase64EncodedString(str: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LOGGED_IN_USER_COOKIE = Base64.getEncoder().encodeToString(str.toByteArray())
-            Log.d("Base64",Base64.getEncoder().encodeToString(str.toByteArray()));
+            Log.d("Base64", Base64.getEncoder().encodeToString(str.toByteArray()));
         } else {
-            LOGGED_IN_USER_COOKIE = android.util.Base64.encodeToString(str.toByteArray(), android.util.Base64.NO_WRAP)
+            LOGGED_IN_USER_COOKIE =
+                android.util.Base64.encodeToString(str.toByteArray(), android.util.Base64.NO_WRAP)
         }
-        Log.d("Base64",android.util.Base64.encodeToString(str.toByteArray(), android.util.Base64.NO_WRAP));
+        Log.d(
+            "Base64",
+            android.util.Base64.encodeToString(str.toByteArray(), android.util.Base64.NO_WRAP)
+        );
 
 
     }
 
-    fun getBase64EncryptedToString(encrptedString : String) : String{
+    fun getBase64EncryptedToString(encrptedString: String): String {
         val decodedBytes = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Base64.getDecoder().decode(encrptedString)
         } else {
@@ -237,82 +241,82 @@ object Constants {
     var POST_PAID_INTERNET_ALIAS = ""
     var FATOURATI_ALIAS = ""
 
-    fun getNumberMsisdn(number : String) : String{
+    fun getNumberMsisdn(number: String): String {
 //        return "$number/MSISDN"
         return "$number$NUMBER_MSISDN_ALIAS"
     }
 
-    fun getTransferReceiverAlias(number: String) : String{
+    fun getTransferReceiverAlias(number: String): String {
 //        return "$number@hpss.sub.sp/SP"
         return "$number$TRANSFER_RECEIVER_ALIAS"
     }
 
-    fun getMerchantReceiverAlias(number: String) : String{
+    fun getMerchantReceiverAlias(number: String): String {
 //        return "$number@hpss.mer.sp/SP"
         return "$number$MERCHANT_RECEIVER_ALIAS"
     }
 
-    fun getAirTimeReceiverAlias(number : String) : String{
+    fun getAirTimeReceiverAlias(number: String): String {
 //        return "$number@ocs.prepaid.sp/SP"
         return "$number$AIR_TIME_RECEIVER_ALIAS"
     }
 
-    fun getAgentReceiverAlias(number: String) : String{
+    fun getAgentReceiverAlias(number: String): String {
 //        return "$number@hpss.mer.sp/SP"
         return "$number$AGNET_RECEIVER_ALIAS"
     }
 
-    fun getPostPaidMobileDomainAlias(number: String) : String{
+    fun getPostPaidMobileDomainAlias(number: String): String {
 //        return "$number@bscs.mobile.sp/SP"
         return "$number$POST_PAID_MOBILE_ALIAS"
     }
 
-    fun getPostPaidFixedDomainAlias(number: String) : String{
+    fun getPostPaidFixedDomainAlias(number: String): String {
 //        return "$number@bscs.fixed.sp/SP"
         return "$number$POST_PAID_FIXED_ALIAS"
     }
 
-    fun getPostPaidInternetDomainAlias(number: String) : String{
+    fun getPostPaidInternetDomainAlias(number: String): String {
 //        return "$number@bscs.internet.sp/SP"
         return "$number$POST_PAID_INTERNET_ALIAS"
     }
 
-    fun getFatoratiAlias(number: String) :String{
+    fun getFatoratiAlias(number: String): String {
 //        return "$number@fatourati.sp/SP"
         return "$number$FATOURATI_ALIAS"
     }
 
-    fun addAmountAndFee(amount : Double, fee : Double): String{
-        return (amount+fee).toString()
+    fun addAmountAndFee(amount: Double, fee: Double): String {
+        return (amount + fee).toString()
     }
 
-    fun parseDateFromString(dateString : String) : String{
+    fun parseDateFromString(dateString: String): String {
         var myDate = ""
         var df: DateFormat = SimpleDateFormat("yyyyMMdd")
         val d: Date
         try {
             d = df.parse(dateString)
             df = SimpleDateFormat("dd/MM/yyyy")
-            myDate= df.format(d)
+            myDate = df.format(d)
         } catch (e: ParseException) {
         }
 
         return myDate
     }
 
-    fun getMonthFromParsedDate(date : String) : String{
+    fun getMonthFromParsedDate(date: String): String {
         val d = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse(date)
         val cal = Calendar.getInstance()
         cal.time = d
         return SimpleDateFormat("MMMM").format(cal.time)
     }
 
-    fun converValueToTwoDecimalPlace(value : Double) : String{
-        val result = String.format(Locale.ENGLISH,"%.2f", value)
+    fun converValueToTwoDecimalPlace(value: Double): String {
+        val result = String.format(Locale.ENGLISH, "%.2f", value)
         return result
     }
 
-    fun getZoneFormattedDateAndTime(dateToFormat : String): String {
+    fun getZoneFormattedDateAndTime(dateToFormat: String): String {
         val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
         val output = SimpleDateFormat("yyyy-MM-dd hh:mm a")
 
@@ -321,7 +325,7 @@ object Constants {
         try {
             d = input.parse(dateToFormat)
 
-         formatted = output.format(d)
+            formatted = output.format(d)
 
         } catch (e: ParseException) {
             e.printStackTrace()
@@ -330,7 +334,12 @@ object Constants {
         return formatted
     }
 
-    fun showTutorial(activityContext : Activity, viewForShowignTutorial : View,tutorialDescrption : String ,drawableIcon : Int = -1){
+    fun showTutorial(
+        activityContext: Activity,
+        viewForShowignTutorial: View,
+        tutorialDescrption: String,
+        drawableIcon: Int = -1
+    ) {
         /*
 
             .focusOn(viewForShowignTutorial)
@@ -352,114 +361,119 @@ object Constants {
             }
         })*/
 
-       /* val location = IntArray(2)
-        viewForShowignTutorial.getLocationOnScreen(location)
-        val viewPosX = location[0] + 330
-        val viewPosY = location[1] + 160
+        /* val location = IntArray(2)
+         viewForShowignTutorial.getLocationOnScreen(location)
+         val viewPosX = location[0] + 330
+         val viewPosY = location[1] + 160
 
-        var viewWidth = -1
-        var viewHegiht = -1
-
-
-        viewHegiht = viewForShowignTutorial.height
-        viewWidth = viewForShowignTutorial.width
-
-        Log.d("viewPositionX",viewPosX.toString())
-        Log.d("viewPositionY",viewPosY.toString())
-        Log.d("viewPositionWidth",viewWidth.toString())
-        Log.d("viewPositionHeight",viewHegiht.toString())
-
-        val rootLayout: View = viewForShowignTutorial.rootView.findViewById(android.R.id.content)
-
-        val viewLocation = IntArray(2)
-        viewForShowignTutorial.getLocationInWindow(viewLocation)
-
-        val rootLocation = IntArray(2)
-        rootLayout.getLocationInWindow(rootLocation)
-
-        val relativeLeft = viewLocation[0] - rootLocation[0]
-        val relativeTop = viewLocation[1] - rootLocation[1]
+         var viewWidth = -1
+         var viewHegiht = -1
 
 
-        mFancyShowCaseView = FancyShowCaseView.Builder(activityContext)
-            .focusRectAtPosition(relativeLeft,relativeTop,viewWidth,viewHegiht)
-            .roundRectRadius(60)
-            .customView(R.layout.tutorial_custom_view, object :
-                OnViewInflateListener {
-                override fun onViewInflated(view: View) {
-                    val image = (view as RelativeLayout).findViewById<ImageView>(R.id.iv_tutorial_custom_view)
-                    val tutorialText = (view as RelativeLayout).findViewById<TextView>(R.id.tv_tutorial_custom_view)
+         viewHegiht = viewForShowignTutorial.height
+         viewWidth = viewForShowignTutorial.width
 
-                    tutorialText.text = tutorialDescrption
-                    val params = image.layoutParams as RelativeLayout.LayoutParams
+         Log.d("viewPositionX",viewPosX.toString())
+         Log.d("viewPositionY",viewPosY.toString())
+         Log.d("viewPositionWidth",viewWidth.toString())
+         Log.d("viewPositionHeight",viewHegiht.toString())
 
-                    if(drawableIcon==-1){
-                        image.visibility = View.GONE
+         val rootLayout: View = viewForShowignTutorial.rootView.findViewById(android.R.id.content)
 
-                        tutorialText.post {
-                            params.leftMargin = mFancyShowCaseView!!.focusCenterX - image.width / 2
-                            params.topMargin = mFancyShowCaseView!!.focusCenterY - mFancyShowCaseView!!.focusHeight - image.height
-                            image.layoutParams = params
-                        }
-                    }else{
-                        image.visibility = View.VISIBLE
+         val viewLocation = IntArray(2)
+         viewForShowignTutorial.getLocationInWindow(viewLocation)
 
-                        image.setImageResource(drawableIcon)
+         val rootLocation = IntArray(2)
+         rootLayout.getLocationInWindow(rootLocation)
 
-                        image.post {
-                            params.leftMargin = mFancyShowCaseView!!.focusCenterX - image.width / 2
-                            params.topMargin = mFancyShowCaseView!!.focusCenterY - mFancyShowCaseView!!.focusHeight - image.height
-                            image.layoutParams = params
-                        }
-                    }
+         val relativeLeft = viewLocation[0] - rootLocation[0]
+         val relativeTop = viewLocation[1] - rootLocation[1]
 
-                }
-            })
-            .closeOnTouch(true)
-            .build()
-*/
-       /* mFancyShowCaseView = FancyShowCaseView.Builder(activityContext)
-            .focusOn(viewForShowignTutorial)
-            .focusShape(FocusShape.ROUNDED_RECTANGLE)
-            .roundRectRadius(10)
-            .enableTouchOnFocusedView(true)
-            .customView(R.layout.tutorial_custom_view, object :
-                OnViewInflateListener {
-                override fun onViewInflated(view: View) {
-                    val image = (view as RelativeLayout).findViewById<ImageView>(R.id.iv_tutorial_custom_view)
-                    val tutorialText = (view as RelativeLayout).findViewById<TextView>(R.id.tv_tutorial_custom_view)
 
-                    tutorialText.text = tutorialDescrption
-                    val params = image.layoutParams as RelativeLayout.LayoutParams
+         mFancyShowCaseView = FancyShowCaseView.Builder(activityContext)
+             .focusRectAtPosition(relativeLeft,relativeTop,viewWidth,viewHegiht)
+             .roundRectRadius(60)
+             .customView(R.layout.tutorial_custom_view, object :
+                 OnViewInflateListener {
+                 override fun onViewInflated(view: View) {
+                     val image = (view as RelativeLayout).findViewById<ImageView>(R.id.iv_tutorial_custom_view)
+                     val tutorialText = (view as RelativeLayout).findViewById<TextView>(R.id.tv_tutorial_custom_view)
 
-                    if(drawableIcon==-1){
-                        image.visibility = View.GONE
+                     tutorialText.text = tutorialDescrption
+                     val params = image.layoutParams as RelativeLayout.LayoutParams
 
-                        tutorialText.post {
-                            params.leftMargin = mFancyShowCaseView!!.focusCenterX - image.width / 2
-                            params.topMargin = mFancyShowCaseView!!.focusCenterY - mFancyShowCaseView!!.focusHeight - image.height
-                            image.layoutParams = params
-                        }
-                    }else{
-                        image.visibility = View.VISIBLE
+                     if(drawableIcon==-1){
+                         image.visibility = View.GONE
 
-                        image.setImageResource(drawableIcon)
+                         tutorialText.post {
+                             params.leftMargin = mFancyShowCaseView!!.focusCenterX - image.width / 2
+                             params.topMargin = mFancyShowCaseView!!.focusCenterY - mFancyShowCaseView!!.focusHeight - image.height
+                             image.layoutParams = params
+                         }
+                     }else{
+                         image.visibility = View.VISIBLE
 
-                        image.post {
-                            params.leftMargin = mFancyShowCaseView!!.focusCenterX - image.width / 2
-                            params.topMargin = mFancyShowCaseView!!.focusCenterY - mFancyShowCaseView!!.focusHeight - image.height
-                            image.layoutParams = params
-                        }
-                    }
+                         image.setImageResource(drawableIcon)
 
-                }
-            })
-            .closeOnTouch(true)
-            .build()*/
+                         image.post {
+                             params.leftMargin = mFancyShowCaseView!!.focusCenterX - image.width / 2
+                             params.topMargin = mFancyShowCaseView!!.focusCenterY - mFancyShowCaseView!!.focusHeight - image.height
+                             image.layoutParams = params
+                         }
+                     }
+
+                 }
+             })
+             .closeOnTouch(true)
+             .build()
+ */
+        /* mFancyShowCaseView = FancyShowCaseView.Builder(activityContext)
+             .focusOn(viewForShowignTutorial)
+             .focusShape(FocusShape.ROUNDED_RECTANGLE)
+             .roundRectRadius(10)
+             .enableTouchOnFocusedView(true)
+             .customView(R.layout.tutorial_custom_view, object :
+                 OnViewInflateListener {
+                 override fun onViewInflated(view: View) {
+                     val image = (view as RelativeLayout).findViewById<ImageView>(R.id.iv_tutorial_custom_view)
+                     val tutorialText = (view as RelativeLayout).findViewById<TextView>(R.id.tv_tutorial_custom_view)
+
+                     tutorialText.text = tutorialDescrption
+                     val params = image.layoutParams as RelativeLayout.LayoutParams
+
+                     if(drawableIcon==-1){
+                         image.visibility = View.GONE
+
+                         tutorialText.post {
+                             params.leftMargin = mFancyShowCaseView!!.focusCenterX - image.width / 2
+                             params.topMargin = mFancyShowCaseView!!.focusCenterY - mFancyShowCaseView!!.focusHeight - image.height
+                             image.layoutParams = params
+                         }
+                     }else{
+                         image.visibility = View.VISIBLE
+
+                         image.setImageResource(drawableIcon)
+
+                         image.post {
+                             params.leftMargin = mFancyShowCaseView!!.focusCenterX - image.width / 2
+                             params.topMargin = mFancyShowCaseView!!.focusCenterY - mFancyShowCaseView!!.focusHeight - image.height
+                             image.layoutParams = params
+                         }
+                     }
+
+                 }
+             })
+             .closeOnTouch(true)
+             .build()*/
 //        mFancyShowCaseView?.show()
     }
 
-    fun displayTutorial(activityContext : Activity, viewForShowignTutorial : View,tutorialDescrption : String ,drawableIcon : Int = -1) {
+    fun displayTutorial(
+        activityContext: Activity,
+        viewForShowignTutorial: View,
+        tutorialDescrption: String,
+        drawableIcon: Int = -1
+    ) {
         isFirstTimeTutorialShowing++
         var tutShowCase = TutoShowcase.from(activityContext)
             .setContentView(R.layout.tutorial_custom_view)
@@ -468,104 +482,236 @@ object Constants {
             .addRoundRect()
             .onClick(View.OnClickListener { })
             .show()
-        var x= viewForShowignTutorial.x
-        var y=viewForShowignTutorial.y
-        tutShowCase.setTextView(R.id.tv_tutorial_custom_view,tutorialDescrption)
+        var x = viewForShowignTutorial.x
+        var y = viewForShowignTutorial.y
+        tutShowCase.setTextView(R.id.tv_tutorial_custom_view, tutorialDescrption)
 
-        tutShowCase.setPosition(R.id.mainView,x,y)
+        tutShowCase.setPosition(R.id.mainView, x, y)
 
-        tutShowCase.setIcon(R.id.iv_tutorial_custom_view,drawableIcon)
+        tutShowCase.setIcon(R.id.iv_tutorial_custom_view, drawableIcon)
 
         tutShowCase.setListener {
-            when(isFirstTimeTutorialShowing){
+            when (isFirstTimeTutorialShowing) {
                 //for dashboardCashInViaCardTutorial
-                1->{
+                1 -> {
                     if (loginWithCertResponse.allowedMenu.CashInViaCard != null) {
-                        displayTutorial(activityContext, tutorialDashboardCashInViaCard,
+                        displayTutorial(
+                            activityContext, tutorialDashboardCashInViaCard,
                             LanguageData.getStringValue("CashInViaCardTutorial").toString(),
-                            R.drawable.ic_tutorial_home_cash_in_wallet)
-                    }else{
+                            R.drawable.ic_tutorial_home_cash_in_wallet
+                        )
+                    } else {
                         isFirstTimeTutorialShowing = 2
-                        displayTutorial(activityContext,
-                            tutorialCallIconHomeScreen,LanguageData.getStringValue("CallTutorial").toString())
+                        displayTutorial(
+                            activityContext,
+                            tutorialCallIconHomeScreen,
+                            LanguageData.getStringValue("CallTutorial").toString()
+                        )
                     }
                 }
                 // for callIconHomeScreen Tutorial
-                2->{
-                    displayTutorial(activityContext,
-                        tutorialCallIconHomeScreen,LanguageData.getStringValue("CallTutorial").toString())
+                2 -> {
+                    displayTutorial(
+                        activityContext,
+                        tutorialCallIconHomeScreen,
+                        LanguageData.getStringValue("CallTutorial").toString()
+                    )
                 }
                 // for Home Screen Quick Recharge Tutorial
-                3->{
-                    displayTutorial(activityContext,
-                        tutorialQuickRechargeContainer,LanguageData.getStringValue("QuickRechargeTutorial").toString()
-                        ,R.drawable.ic_tutorial_home_quick_recharge)
+                3 -> {
+                    displayTutorial(
+                        activityContext,
+                        tutorialQuickRechargeContainer,
+                        LanguageData.getStringValue("QuickRechargeTutorial").toString(),
+                        R.drawable.ic_tutorial_home_quick_recharge
+                    )
                 }
                 // for Send Money Tutorial
-                4->{
+                4 -> {
                     tutorialSendMoney?.let {
-                        displayTutorial(activityContext,
-                            it,LanguageData.getStringValue("SendMoneyTutorial").toString())
+                        displayTutorial(
+                            activityContext,
+                            it, LanguageData.getStringValue("SendMoneyTutorial").toString()
+                        )
                     }
                 }
-                5->{
+                5 -> {
                     isFirstTimeTutorialShowing = -1
                     isTutorialShowing = false
-                    PrefUtils.addBoolean(activityContext,PrefUtils.PreKeywords.PREF_KEY_IS_SHOW_TUTORIALS,false)
-                    Toast.makeText(activityContext,"Tutorials Ended",Toast.LENGTH_LONG).show()
+                    PrefUtils.addBoolean(
+                        activityContext,
+                        PrefUtils.PreKeywords.PREF_KEY_IS_SHOW_TUTORIALS,
+                        false
+                    )
+                    Toast.makeText(activityContext, "Tutorials Ended", Toast.LENGTH_LONG).show()
                 }
-                else ->{
+                else -> {
                     isTutorialShowing = false
-                    PrefUtils.addBoolean(activityContext,PrefUtils.PreKeywords.PREF_KEY_IS_SHOW_TUTORIALS,false)
+                    PrefUtils.addBoolean(
+                        activityContext,
+                        PrefUtils.PreKeywords.PREF_KEY_IS_SHOW_TUTORIALS,
+                        false
+                    )
                 }
             }
         }
     }
 
-        object EMVco{
-        const val Payload_Format_Indicator_ID="00"
-        const val Payload_Format_Indicator_SIZE="02"
-        const val Payload_Format_Indicator_VALUE="01"
+    object EMVco {
+        const val Payload_Format_Indicator_ID = "00"
+        const val Payload_Format_Indicator_SIZE = "02"
+        const val Payload_Format_Indicator_VALUE = "01"
 
-        const val Point_Of_Initiation_Method_ID="01"
-        const val Point_Of_Initiation_Method_SIZE="02"
-        const val Point_Of_Initiation_Method_VALUE="12"
+        const val Point_Of_Initiation_Method_ID = "01"
+        const val Point_Of_Initiation_Method_SIZE = "02"
+        const val Point_Of_Initiation_Method_VALUE = "12"
+        const val Point_Of_Initiation_Method_VALUE_STATIC = "11"
 
-        const val Merchant_Account_Information_ID="26"
-        const val Merchant_Account_Information_SIZE="91"
-        const val Merchant_Account_Information_Value=""
+        const val Merchant_Account_Information_ID = "26"
+        const val Merchant_Account_Information_SIZE = "91"
+        const val Merchant_Account_Information_Value = ""
 
-        const val Globally_Unique_Identifier_ID="00"
-        const val Globally_Unique_Identifier_SIZE="32"
-        const val Globally_Unique_Identifier_VALUE="5bb66a92d69c0ea742dd4f754590fa0a"
+        const val Globally_Unique_Identifier_ID = "00"
+        const val Globally_Unique_Identifier_SIZE = "32"
+        const val Globally_Unique_Identifier_VALUE = "5bb66a92d69c0ea742dd4f754590fa0a"
 
-        const val Encryption_Format_ID="02"
-        const val Encryption_Format_SIZE="01"
-        const val Encryption_Format_VALUE="1"
+        const val Encryption_Format_ID = "02"
+        const val Encryption_Format_SIZE = "01"
+        const val Encryption_Format_VALUE = "1"
 
-        const val Paid_Entity_Reference_Format_ID="05"
-        const val Paid_Entity_Reference_Format_SIZE="01"
-        const val Paid_Entity_Reference_Format_VALUE="0"
+        const val Paid_Entity_Reference_Format_ID = "05"
+        const val Paid_Entity_Reference_Format_SIZE = "01"
+        const val Paid_Entity_Reference_Format_VALUE = "0"
 
-        const val Paid_Entity_Reference_ID="06"
-        const val Paid_Entity_Reference_SIZE="24"
-       // var Paid_Entity_Reference_VALUE=""
+        const val Paid_Entity_Reference_ID = "06"
+        const val Paid_Entity_Reference_SIZE = "24"
+        // var Paid_Entity_Reference_VALUE=""
 
-        const val Masked_Paid_Entity_Reference_ID="07"
-        const val Masked_Paid_Entity_Reference_SIZE_12="12"
-        const val Masked_Paid_Entity_Reference_SIZE_13="13"
-     //   var Masked_Paid_Entity_Reference_VALUE=""
+        const val Masked_Paid_Entity_Reference_ID = "07"
+        const val Masked_Paid_Entity_Reference_SIZE_12 = "12"
+        const val Masked_Paid_Entity_Reference_SIZE_13 = "13"
+        //   var Masked_Paid_Entity_Reference_VALUE=""
 
-        const val Currency_Transaction_ID="53"
-        const val Currency_Transaction_SIZE="03"
-        const val Currency_Transaction_VALUE="504"
+        const val Currency_Transaction_ID = "53"
+        const val Currency_Transaction_SIZE = "03"
+        const val Currency_Transaction_VALUE = "504"
 
-            const val Amount_Transaction_ID="54"
-            const val Amount_Transaction_SIZE="05"
-            const val Amount_Transaction_VALUE="80000"
+        const val Amount_Transaction_ID = "54"
+        const val Amount_Transaction_SIZE = "05"
+        const val Amount_Transaction_VALUE = "80000"
 
-            const val dynamic="62230819QR dynamic transfer 6304FCA8"
+        const val Unreserved_Template_ID = "80"
+        const val Unreserved_Template_SIZE = "62"
+        const val Unreserved_Template_VALUE = ""
 
+        const val Unreserved_Globally_Unique_Identifier_ID = "00"
+        const val Unreserved_Globally_Unique_Identifier_SIZE = "32"
+        const val Unreserved_Globally_Unique_Identifier_VALUE = "37b3a355b830b3bf0974d23608a6f162"
 
+        const val Operation_Type_ID = "01"
+        const val Operation_Type_SIZE = "01"
+        const val Operation_Type_VALUE = "1"
+
+        const val Signature_Format_ID = "04"
+        const val Signature_Format_SIZE = "01"
+        const val Signature_Format_VALUE = "0"
+
+        const val QR_Version_ID = "05"
+        const val QR_Version_SIZE = "06"
+        const val QR_Version_VALUE = "010002"
+
+        const val QR_Instance_ID = "06"
+        const val QR_Instance_SIZE = "02"
+        const val QR_Instance_VALUE = "01"
+
+        const val static = "62220819QR transfer static6304"
+        const val dynamic = "62230819QR dynamic transfer6304"
+    }
+
+    object MerchantEMVco {
+        const val Payload_Format_Indicator_ID = "00"
+        const val Payload_Format_Indicator_SIZE = "02"
+        const val Payload_Format_Indicator_VALUE = "01"
+
+        const val Point_Of_Initiation_Method_ID = "01"
+        const val Point_Of_Initiation_Method_SIZE = "02"
+        const val Point_Of_Initiation_Method_VALUE = "12"
+        const val Point_Of_Initiation_Method_VALUE_STATIC = "11"
+
+        const val Merchant_Account_Information_ID = "26"
+        const val Merchant_Account_Information_SIZE = "91"
+        const val Merchant_Account_Information_Value = ""
+
+        const val Globally_Unique_Identifier_ID = "00"
+        const val Globally_Unique_Identifier_SIZE = "32"
+        const val Globally_Unique_Identifier_VALUE = "5bb66a92d69c0ea742dd4f754590fa0a"
+
+        const val Encryption_Format_ID = "02"
+        const val Encryption_Format_SIZE = "01"
+        const val Encryption_Format_VALUE = "1"
+
+        const val Paid_Entity_Reference_Format_ID = "05"
+        const val Paid_Entity_Reference_Format_SIZE = "01"
+        const val Paid_Entity_Reference_Format_VALUE = "0"
+
+        const val Paid_Entity_Reference_ID = "06"
+        const val Paid_Entity_Reference_SIZE = "24"
+        // var Paid_Entity_Reference_VALUE=""
+
+        const val Masked_Paid_Entity_Reference_ID = "07"
+        const val Masked_Paid_Entity_Reference_SIZE_12 = "12"
+        const val Masked_Paid_Entity_Reference_SIZE_13 = "13"
+        //   var Masked_Paid_Entity_Reference_VALUE=""
+
+        const val Merchant_Category_Code_ID = "52"
+        const val Merchant_Category_Code_SIZE = "04"
+        const val Merchant_Category_Code_VALUE = "5541"
+
+        const val Currency_Transaction_ID = "53"
+        const val Currency_Transaction_SIZE = "03"
+        const val Currency_Transaction_VALUE = "504"
+
+        const val Amount_Transaction_ID = "54"
+        const val Amount_Transaction_SIZE = "05"
+        const val Amount_Transaction_VALUE = "80000"
+
+        const val Country_Code_ID = "58"
+        const val Country_Code_SIZE = "02"
+        const val Country_Code_VALUE = "MY"
+
+        const val Merchant_Name_ID = "59"
+        const val Merchant_Name_SIZE = "22"
+        const val Merchant_Name_VALUE = "MENARA PEPINIERES SARL"
+
+        const val Merchant_City_ID = "60"
+        const val Merchant_City_SIZE = "04"
+        const val Merchant_City_VALUE = "SAFI"
+
+        const val Unreserved_Template_ID = "80"
+        const val Unreserved_Template_SIZE = "62"
+        const val Unreserved_Template_VALUE = ""
+
+        const val Unreserved_Globally_Unique_Identifier_ID = "00"
+        const val Unreserved_Globally_Unique_Identifier_SIZE = "32"
+        const val Unreserved_Globally_Unique_Identifier_VALUE = "37b3a355b830b3bf0974d23608a6f162"
+
+        const val Operation_Type_ID = "01"
+        const val Operation_Type_SIZE = "01"
+        const val Operation_Type_VALUE = "1"
+
+        const val Signature_Format_ID = "04"
+        const val Signature_Format_SIZE = "01"
+        const val Signature_Format_VALUE = "0"
+
+        const val QR_Version_ID = "05"
+        const val QR_Version_SIZE = "06"
+        const val QR_Version_VALUE = "010002"
+
+        const val QR_Instance_ID = "06"
+        const val QR_Instance_SIZE = "02"
+        const val QR_Instance_VALUE = "01"
+
+        const val static = "6304"
+        const val dynamic = "6304"
     }
 }

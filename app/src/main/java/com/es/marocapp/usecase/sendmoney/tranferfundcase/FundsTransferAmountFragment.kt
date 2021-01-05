@@ -233,11 +233,14 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
             }
         }else{
             if(mActivityViewModel.isUserRegistered!=null && mActivityViewModel.isUserRegistered.get()!=null && mActivityViewModel.isUserRegistered.get()!!){
+                // If user is register on EWP
                 if(mActivityViewModel.isFundTransferUseCase.get()!!){
+                    // Send Money
                     mActivityViewModel.requestFoTransferQouteApi(activity,sAmount)
                 }
 
                 if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
+                    // Merchant
                     mActivityViewModel.requestFoMerchantQouteApi(activity,sAmount)
                 }
             }else{

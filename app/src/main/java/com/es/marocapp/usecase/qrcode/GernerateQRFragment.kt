@@ -4,17 +4,26 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentGenerateQrBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.login.LoginActivity
+import com.es.marocapp.usecase.payments.PaymentsViewModel
+import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.Tools
 import kotlinx.android.synthetic.main.fragment_generate_qr.*
 
-class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>(){
+class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>() {
+
+    lateinit var mActivityViewModel: GenerateQRViewModel
 
     override fun setLayout(): Int {
         return R.layout.fragment_generate_qr
@@ -22,9 +31,8 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>(){
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        var qrString= Tools.generateEMVcoString(Constants.CURRENT_USER_MSISDN,"")
-        Logger.debugLog("QRString",qrString)
-        imgResult.setImageBitmap(Tools.generateQR(qrString))
+        mActivityViewModel = ViewModelProvider(this).get(GenerateQRViewModel::class.java)
+        mDataBinding.viewmodel = mActivityViewModel
         mDataBinding.imgBackButton.setOnClickListener {
             (activity as MainActivity).showTransactionsDetailsIndirectly = false
             (activity as MainActivity).navController.navigateUp()
@@ -44,26 +52,66 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>(){
         (activity as MainActivity).isHomeFragmentShowing = false
         (activity as MainActivity).isTransacitonFragmentShowing = false
 
+        if (Constants.IS_MERCHANT_USER) {
+            subscribeToObservers()
+            mActivityViewModel.requestForAccountHolderAddtionalInformationApi(context)
+        } else {
+            var qrString = Tools.generateEMVcoString(Constants.CURRENT_USER_MSISDN, "")
+            Logger.debugLog("QRString - Consumer", qrString)
+            imgResult.setImageBitmap(Tools.generateQR(qrString))
+        }
+
         setStrings()
 
         mDataBinding.inputAmount.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {}
-            override fun beforeTextChanged(s: CharSequence, start: Int,count: Int, after: Int) {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
 
-            override fun onTextChanged(s: CharSequence, start: Int,before: Int, count: Int) {
-                var qrString= Tools.generateEMVcoString(Constants.CURRENT_USER_MSISDN,s.toString())
-                Logger.debugLog("QRString",qrString)
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                var qrString = ""
+                if (Constants.IS_MERCHANT_USER) {
+                    qrString = Tools.generateMerchantEMVcoString(
+                        Constants.CURRENT_USER_MSISDN,
+                        s.toString()
+                    )
+                    Logger.debugLog("QRString - Merchant", qrString)
+                } else {
+                    qrString =
+                        Tools.generateEMVcoString(Constants.CURRENT_USER_MSISDN, s.toString())
+                    Logger.debugLog("QRString - Consumer", qrString)
+                }
                 imgResult.setImageBitmap(Tools.generateQR(qrString))
             }
         })
     }
 
+    private fun subscribeToObservers() {
+        mActivityViewModel.errorText.observe(this@GernerateQRFragment, Observer {
+            DialogUtils.showErrorDialoge(activity as MainActivity, it)
+        })
+
+        mActivityViewModel.getAccountHolderAdditionalInfoResponseListner.observe(this@GernerateQRFragment,
+            Observer {
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    Log.d("GenerateQRFragment", it.additionalinformation.toString())
+
+                    var qrString = Tools.generateMerchantEMVcoString(Constants.CURRENT_USER_MSISDN, "")
+                    Logger.debugLog("QRString - Merchant", qrString)
+
+                    imgResult.setImageBitmap(Tools.generateQR(qrString))
+                } else {
+                    DialogUtils.showErrorDialoge(activity as MainActivity, it.description)
+                }
+            }
+        )
+    }
+
     private fun setStrings() {
         mDataBinding.tvGenerateQRTitle.text = LanguageData.getStringValue("GenerateQR")
-        mDataBinding.tvDescription.text  = LanguageData.getStringValue("GenerateQRDescription")
-        mDataBinding.tvDescriptionGenerated.text  = LanguageData.getStringValue("QRDescription")
-        mDataBinding.inputAmount.hint  = LanguageData.getStringValue("Amount")
+        mDataBinding.tvDescription.text = LanguageData.getStringValue("GenerateQRDescription")
+        mDataBinding.tvDescriptionGenerated.text = LanguageData.getStringValue("QRDescription")
+        mDataBinding.inputAmount.hint = LanguageData.getStringValue("Amount")
     }
 
 }
