@@ -241,7 +241,7 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
                 override fun onSelectedAirTimeData(airTimeAmount: String) {
                     airTimeResponse = mActivityViewModel.mAirTimeUseCaseResponse.get()!!
                     sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                    mActivityViewModel.airTimeAmountSelected.set(airTimeAmount)
+                    mActivityViewModel.airTimeAmountSelected.set(airTimeAmount.removeSuffix("DH").trim())
                     mDataBinding.inputRechargeAmount.setText(airTimeAmount)
 
                     mDataBinding.inputLayoutRechargeAmount.error = ""
