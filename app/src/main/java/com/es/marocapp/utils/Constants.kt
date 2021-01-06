@@ -17,6 +17,9 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.*
 import com.github.florent37.tutoshowcase.TutoShowcase
+import org.apache.http.conn.util.InetAddressUtils
+import java.net.InetAddress
+import java.net.NetworkInterface
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -203,6 +206,35 @@ object Constants {
         val wm =
             application.getSystemService(WIFI_SERVICE) as WifiManager?
         APPLICATION_IP_ADDRESS = formatIpAddress(wm!!.connectionInfo.ipAddress)
+    }
+
+    fun getDeviceIPAddress(useIPv4: Boolean): String? {
+        try {
+            val networkInterfaces: List<NetworkInterface> =
+                Collections.list(NetworkInterface.getNetworkInterfaces())
+            for (networkInterface in networkInterfaces) {
+                val inetAddresses: List<InetAddress> =
+                    Collections.list(networkInterface.getInetAddresses())
+                for (inetAddress in inetAddresses) {
+                    if (!inetAddress.isLoopbackAddress()) {
+                        val sAddr: String = inetAddress.getHostAddress().toUpperCase()
+                        val isIPv4: Boolean = InetAddressUtils.isIPv4Address(sAddr)
+                        if (useIPv4) {
+                            if (isIPv4) return sAddr
+                        } else {
+                            if (!isIPv4) {
+                                // drop ip6 port suffix
+                                val delim = sAddr.indexOf('%')
+                                return if (delim < 0) sAddr else sAddr.substring(0, delim)
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+        return ""
     }
 
     fun setBase64EncodedString(str : String) {
