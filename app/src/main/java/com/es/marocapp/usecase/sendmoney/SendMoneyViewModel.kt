@@ -59,7 +59,8 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
     var transactionID = ""
     var qrType = ""
     var qrValue = ""
-    var merchantName = Constants.balanceInfoAndResponse?.firstname!!.toUpperCase()+Constants.balanceInfoAndResponse?.surname!!.toUpperCase()+"MKESHMA"
+    var merchantName = ""
+    var merchantCode = ""
     var senderBalanceAfter: String? = ""
     var ReceiverName = ""
     var mBalanceInforAndResponseObserver = ObservableField<BalanceInfoAndLimitResponse>()
@@ -541,8 +542,8 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                     Constants.balanceInfoAndResponse?.profilename.toString(),
                     qrType,
                     qrValue,
-                    "",
-                    merchantName
+                    merchantCode,
+                    merchantName.replace(" ", "") + "MKESHMA"
                 )
             )
                 .compose(applyIOSchedulers())
@@ -642,8 +643,8 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                     Constants.balanceInfoAndResponse?.profilename.toString(),
                     qrType,
                     qrValue,
-                    "",
-                    merchantName
+                    merchantCode,
+                    merchantName.replace(" ", "") + "MKESHMA"
                 )
 
             )
@@ -744,8 +745,8 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                     Constants.balanceInfoAndResponse?.profilename.toString(),
                     qrType,
                     qrValue,
-                    "",
-                    merchantName
+                    merchantCode,
+                    merchantName.replace(" ", "") + "MKESHMA"
                 )
             )
                 .compose(applyIOSchedulers())
@@ -844,8 +845,8 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                     Constants.balanceInfoAndResponse?.profilename.toString(),
                     qrType,
                     qrValue,
-                    "",
-                    merchantName
+                    merchantCode,
+                    merchantName.replace(" ", "") + "MKESHMA"
                 )
 
             )
