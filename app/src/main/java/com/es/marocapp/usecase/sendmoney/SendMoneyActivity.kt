@@ -45,9 +45,10 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
     lateinit var mInputHint: MarocMediumTextView
     private val CAMERA_REQUEST_CODE = 113
     val PICK_CONTACT = 10021
+
     companion object {
         val SCAN_QR = 1213
-        val KEY_SCANNED_DATA="key.scanned.string"
+        val KEY_SCANNED_DATA = "key.scanned.string"
     }
 
     override fun init(savedInstanceState: Bundle?) {
@@ -94,7 +95,7 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
             Logger.debugLog("CameraPermission", "Permission to access camera denied")
             makeRequestPermission()
         } else {
-            startActivityForResult(Intent(this, ScanQRActivity::class.java),SCAN_QR)
+            startActivityForResult(Intent(this, ScanQRActivity::class.java), SCAN_QR)
         }
 
 
@@ -156,9 +157,11 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
             }
         } else if (requestCode == SCAN_QR) {
             val result = data
-            val scannedString=result?.getStringExtra(KEY_SCANNED_DATA)
+            val scannedString = result?.getStringExtra(KEY_SCANNED_DATA)
             if (result != null) {
-                if (scannedString.isNullOrEmpty() || Tools.extractNumberFromEMVcoQR(scannedString).isNullOrEmpty()) {
+                if (scannedString.isNullOrEmpty() || Tools.extractNumberFromEMVcoQR(scannedString)
+                        .isNullOrEmpty()
+                ) {
 //                DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
                     mInputFieldLayout.isErrorEnabled = true
                     mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
@@ -171,20 +174,26 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
                     verifyAndSetMsisdn(Tools.extractNumberFromEMVcoQR(scannedString), false)
                 }
 
-                if(scannedString.isNullOrEmpty() || Tools.extractAmountFromEMVcoQR(scannedString).isNullOrEmpty()){
+                if (scannedString.isNullOrEmpty() || Tools.extractAmountFromEMVcoQR(scannedString)
+                        .isNullOrEmpty()
+                ) {
                     mActivityViewModel.amountScannedFromQR = "0"
                     Logger.debugLog("TestingAmount", mActivityViewModel.amountScannedFromQR)
-                }else{
+                } else {
                     var amount = Tools.extractAmountFromEMVcoQR(scannedString)
-                    if(amount.equals("00000")){
+                    if (amount.equals("00000")) {
                         mActivityViewModel.amountScannedFromQR = "0"
-                    }else{
+                    } else {
 //                        amount = amount.replaceFirst("^0+(?!$)", "")
-                        var withoutStartingZeroAmount = StringUtils.stripStart(amount,"0")
+                        var withoutStartingZeroAmount = StringUtils.stripStart(amount, "0")
                         mActivityViewModel.amountScannedFromQR = withoutStartingZeroAmount
                         Logger.debugLog("TestingAmountAfterRegex", withoutStartingZeroAmount)
                     }
                     Logger.debugLog("TestingAmount", mActivityViewModel.amountScannedFromQR)
+                }
+
+                if (!scannedString.isNullOrEmpty()) {
+                    Tools.extractPointOfInitiationFromEMVcoQR(scannedString)
                 }
 
             } else {
@@ -261,10 +270,9 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
             msisdn = msisdn.trim()
         }
 
-            msisdn = msisdn.replace("-", "")
-            msisdn = msisdn.replace(" ", "")
-            msisdn = msisdn.trim()
-
+        msisdn = msisdn.replace("-", "")
+        msisdn = msisdn.replace(" ", "")
+        msisdn = msisdn.trim()
 
 
         var msisdnLenght = msisdn.length
@@ -284,6 +292,7 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
             CAMERA_REQUEST_CODE
         )
     }
+
     @SuppressLint("MissingPermission")
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -297,7 +306,7 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
 
                     Logger.debugLog("CameraPermission", "Permission to access camera denied")
                 } else {
-                    startActivityForResult(Intent(this, ScanQRActivity::class.java),SCAN_QR)
+                    startActivityForResult(Intent(this, ScanQRActivity::class.java), SCAN_QR)
                 }
             }
         }
