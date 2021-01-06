@@ -8,7 +8,12 @@ data class PaymentRequest(
     val sender: String,
     val transferType:String,
     val loggedInUserProfile : String,
-    val paymentType : String
+    val paymentType : String,
+    val profile: String,
+    val qrType: String,
+    val qrValue: String,
+    val typeOfBusiness: String,
+    val merchantName: String
 )
 
 data class SimplePaymentRequest(
@@ -18,5 +23,10 @@ data class SimplePaymentRequest(
     val receiver: String,
     val sender: String,
     val transferType:String,
-    val paymentType : String
+    val paymentType : String,
+    val profile: String,
+    val qrType: String,
+    val qrValue: String,
+    val typeOfBusiness: String,
+    val merchantName: String
 )

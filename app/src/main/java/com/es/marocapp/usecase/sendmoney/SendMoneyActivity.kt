@@ -159,9 +159,39 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
             val result = data
             val scannedString = result?.getStringExtra(KEY_SCANNED_DATA)
             if (result != null) {
-                if (scannedString.isNullOrEmpty() || Tools.extractNumberFromEMVcoQR(scannedString)
-                        .isNullOrEmpty()
-                ) {
+
+                if (scannedString.isNullOrEmpty()) {
+                    mInputFieldLayout.isErrorEnabled = true
+                    mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
+                    mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+                    mInputHint.visibility = View.GONE
+                } else {
+                    if (mActivityViewModel.isFundTransferUseCase.get()!!) {
+                        if (Tools.validateConsumerEMVcoString(scannedString)) {
+                            Logger.debugLog("TestingStringValidate", "Valid Consumer QR String")
+                        } else {
+                            mInputFieldLayout.isErrorEnabled = true
+                            mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
+                            mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+                            mInputHint.visibility = View.GONE
+
+                            return
+                        }
+                    } else {
+                        if (Tools.validateMerchantEMVcoString(scannedString)) {
+                            Logger.debugLog("TestingStringValidate", "Valid Merchant QR String")
+                        } else {
+                            mInputFieldLayout.isErrorEnabled = true
+                            mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
+                            mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+                            mInputHint.visibility = View.GONE
+
+                            return
+                        }
+                    }
+                }
+
+                if (scannedString.isNullOrEmpty() || Tools.extractNumberFromEMVcoQR(scannedString).isNullOrEmpty()) {
 //                DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
                     mInputFieldLayout.isErrorEnabled = true
                     mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
@@ -174,9 +204,7 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
                     verifyAndSetMsisdn(Tools.extractNumberFromEMVcoQR(scannedString), false)
                 }
 
-                if (scannedString.isNullOrEmpty() || Tools.extractAmountFromEMVcoQR(scannedString)
-                        .isNullOrEmpty()
-                ) {
+                if (scannedString.isNullOrEmpty() || Tools.extractAmountFromEMVcoQR(scannedString).isNullOrEmpty()) {
                     mActivityViewModel.amountScannedFromQR = "0"
                     Logger.debugLog("TestingAmount", mActivityViewModel.amountScannedFromQR)
                 } else {
@@ -192,9 +220,38 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
                     Logger.debugLog("TestingAmount", mActivityViewModel.amountScannedFromQR)
                 }
 
-                if (!scannedString.isNullOrEmpty()) {
-                    Tools.extractPointOfInitiationFromEMVcoQR(scannedString)
+                if (scannedString.isNullOrEmpty() || Tools.extractPointOfInitiationFromEMVcoQR(scannedString).isNullOrEmpty()) {
+                    mInputFieldLayout.isErrorEnabled = true
+                    mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
+                    mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+                    mInputHint.visibility = View.GONE
+                } else {
+                    var qrType = Tools.extractPointOfInitiationFromEMVcoQR(scannedString)
+                    mActivityViewModel.qrType = qrType
+                    Logger.debugLog("TestingQRType", qrType)
                 }
+
+                if (scannedString.isNullOrEmpty() || Tools.extractGloballyUniqueIdentifierFromEMVcoQR(scannedString).isNullOrEmpty()) {
+                    mInputFieldLayout.isErrorEnabled = true
+                    mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
+                    mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+                    mInputHint.visibility = View.GONE
+                } else {
+                    var globallyUniqueIdentifier = Tools.extractGloballyUniqueIdentifierFromEMVcoQR(scannedString)
+                    Logger.debugLog("TestingGloballyUniqueIdentifier", globallyUniqueIdentifier)
+                }
+
+                if (scannedString.isNullOrEmpty() || Tools.extractCRCFromEMVcoQR(scannedString).isNullOrEmpty()) {
+                    mInputFieldLayout.isErrorEnabled = true
+                    mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
+                    mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+                    mInputHint.visibility = View.GONE
+                } else {
+                    var CRC = Tools.extractCRCFromEMVcoQR(scannedString)
+                    Logger.debugLog("TestingCRC", CRC)
+                }
+
+                mActivityViewModel.qrValue = scannedString!!
 
             } else {
                 // This is important, otherwise the result will not be passed to the fragment

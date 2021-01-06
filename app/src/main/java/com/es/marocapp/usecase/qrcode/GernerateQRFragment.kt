@@ -25,6 +25,9 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>() {
 
     lateinit var mActivityViewModel: GenerateQRViewModel
 
+    private lateinit var merchantCode: String
+    private lateinit var merchantName: String
+
     override fun setLayout(): Int {
         return R.layout.fragment_generate_qr
 
@@ -73,7 +76,9 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>() {
                 if (Constants.IS_MERCHANT_USER) {
                     qrString = Tools.generateMerchantEMVcoString(
                         Constants.CURRENT_USER_MSISDN,
-                        s.toString()
+                        s.toString(),
+                        merchantCode,
+                        merchantName
                     )
                     Logger.debugLog("QRString - Merchant", qrString)
                 } else {
@@ -95,11 +100,13 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>() {
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     Log.d("GenerateQRFragment", it.additionalinformation.toString())
-
-                    var qrString = Tools.generateMerchantEMVcoString(Constants.CURRENT_USER_MSISDN, "")
-                    Logger.debugLog("QRString - Merchant", qrString)
-
-                    imgResult.setImageBitmap(Tools.generateQR(qrString))
+                    if (!it.additionalinformation.isNullOrEmpty()) {
+                        merchantCode = it.additionalinformation[3].value
+                        merchantName = "${Constants.balanceInfoAndResponse?.firstname!!.toUpperCase()} ${Constants.balanceInfoAndResponse?.surname!!.toUpperCase()}"
+                        var qrString = Tools.generateMerchantEMVcoString(Constants.CURRENT_USER_MSISDN, "", merchantCode, merchantName)
+                        Logger.debugLog("QRString - Merchant", qrString)
+                        imgResult.setImageBitmap(Tools.generateQR(qrString))
+                    }
                 } else {
                     DialogUtils.showErrorDialoge(activity as MainActivity, it.description)
                 }

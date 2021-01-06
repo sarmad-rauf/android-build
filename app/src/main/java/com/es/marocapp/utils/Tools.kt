@@ -67,11 +67,12 @@ object Tools {
             val bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
             for (x in 0 until width) {
                 for (y in 0 until height) {
-                    if (bitMatrix.get(x, y)) bmp.setPixel(x, y, Color.BLACK) else bmp.setPixel(
-                        x,
-                        y,
-                        Color.WHITE
-                    )
+                    if (bitMatrix.get(x, y))
+                        bmp.setPixel(x, y, Color.BLACK)
+                    else
+                        bmp.setPixel(
+                            x, y, Color.WHITE
+                        )
                 }
             }
             return bmp;
@@ -179,7 +180,7 @@ object Tools {
         return amount
     }
 
-    fun extractPointOfInitiationFromEMVcoQR(text: String) {
+    fun extractPointOfInitiationFromEMVcoQR(text: String): String {
         var pointOfInitiation = ""
         try {
             if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
@@ -190,17 +191,65 @@ object Tools {
                     )
 
                 if (pointOfInitiation == "11") {
-                    Log.d("PointOfInitiation", "Static")
+                    return "static"
                 } else {
-                    Log.d("PointOfInitiation", "Dynamic")
+                    return "dynamic"
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
+            pointOfInitiation = ""
         }
+
+        return pointOfInitiation
     }
 
-    fun generateMerchantEMVcoString(number: String, enteredAmount: String): String {
+    fun extractGloballyUniqueIdentifierFromEMVcoQR(text: String): String {
+        var merchantId = ""
+        var globallyUniqueIdentifier = ""
+        try {
+            if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
+                merchantId =
+                    text.split(Constants.EMVco.Merchant_Account_Information_ID + Constants.EMVco.Merchant_Account_Information_SIZE)[1].substring(
+                        0,
+                        4
+                    )
+                globallyUniqueIdentifier =
+                    text.split(Constants.EMVco.Merchant_Account_Information_ID + Constants.EMVco.Merchant_Account_Information_SIZE + merchantId)[1].substring(
+                        0,
+                        32
+                    )
+                return globallyUniqueIdentifier
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            globallyUniqueIdentifier = ""
+        }
+
+        return globallyUniqueIdentifier
+    }
+
+    fun extractCRCFromEMVcoQR(text: String): String {
+        var crc = ""
+        try {
+            if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
+                crc = text.split("6304")[1].substring(0, 4)
+                return crc
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            crc = ""
+        }
+
+        return crc
+    }
+
+    fun generateMerchantEMVcoString(
+        number: String,
+        enteredAmount: String,
+        merchantCode: String,
+        merchantName: String
+    ): String {
         var amount = enteredAmount
         var amountTag = ""
         var CRC = ""
@@ -233,11 +282,11 @@ object Tools {
                     Constants.MerchantEMVco.Paid_Entity_Reference_Format_ID + Constants.MerchantEMVco.Paid_Entity_Reference_Format_SIZE + Constants.MerchantEMVco.Paid_Entity_Reference_Format_VALUE +
                     Constants.MerchantEMVco.Paid_Entity_Reference_ID + Constants.MerchantEMVco.Paid_Entity_Reference_SIZE + Paid_Entity_Reference_VALUE +
                     Constants.MerchantEMVco.Masked_Paid_Entity_Reference_ID + Constants.MerchantEMVco.Masked_Paid_Entity_Reference_SIZE_13 + "+" + Masked_Paid_Entity_Reference_VALUE +
-                    Constants.MerchantEMVco.Merchant_Category_Code_ID + Constants.MerchantEMVco.Merchant_Category_Code_SIZE + Constants.MerchantEMVco.Merchant_Category_Code_VALUE +
+                    Constants.MerchantEMVco.Merchant_Category_Code_ID + Constants.MerchantEMVco.Merchant_Category_Code_SIZE + merchantCode +
                     Constants.MerchantEMVco.Currency_Transaction_ID + Constants.MerchantEMVco.Currency_Transaction_SIZE + Constants.MerchantEMVco.Currency_Transaction_VALUE +
                     amountTag +
                     Constants.MerchantEMVco.Country_Code_ID + Constants.MerchantEMVco.Country_Code_SIZE + Constants.MerchantEMVco.Country_Code_VALUE +
-                    Constants.MerchantEMVco.Merchant_Name_ID + Constants.MerchantEMVco.Merchant_Name_SIZE + Constants.MerchantEMVco.Merchant_Name_VALUE +
+                    Constants.MerchantEMVco.Merchant_Name_ID + Constants.MerchantEMVco.Merchant_Name_SIZE + merchantName +
                     Constants.MerchantEMVco.Merchant_City_ID + Constants.MerchantEMVco.Merchant_City_SIZE + Constants.MerchantEMVco.Merchant_City_VALUE + CRC
         /*Constants.MerchantEMVco.Unreserved_Template_ID + Constants.MerchantEMVco.Unreserved_Template_SIZE + Constants.MerchantEMVco.Unreserved_Template_VALUE +
         Constants.MerchantEMVco.Unreserved_Globally_Unique_Identifier_ID + Constants.MerchantEMVco.Unreserved_Globally_Unique_Identifier_SIZE + Constants.MerchantEMVco.Unreserved_Globally_Unique_Identifier_VALUE +
@@ -272,6 +321,30 @@ object Tools {
             }
         }
         return crc
+    }
+
+    fun validateConsumerEMVcoString(text: String): Boolean {
+        try {
+            if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
+                return text.contains("6222") or text.contains("6223")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return false
+        }
+        return true
+    }
+
+    fun validateMerchantEMVcoString(text: String): Boolean {
+        try {
+            if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
+                return text.contains(Constants.MerchantEMVco.Merchant_Category_Code_ID + Constants.MerchantEMVco.Merchant_Category_Code_SIZE)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return false
+        }
+        return true
     }
 
     fun openDialerWithNumber(context: Context) {

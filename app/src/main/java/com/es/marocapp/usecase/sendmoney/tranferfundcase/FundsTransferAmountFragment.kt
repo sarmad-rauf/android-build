@@ -33,7 +33,7 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
 
     private lateinit var mQuickAmountAdapter: QuickAmountAdapter
 
-    private var mQuickAmountList : ArrayList<QuickAmountModel> = arrayListOf()
+    private var mQuickAmountList: ArrayList<QuickAmountModel> = arrayListOf()
 
     var bFirstLoad = true
 
@@ -49,7 +49,9 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
             viewmodel = mActivityViewModel
         }
 
-        (activity as SendMoneyActivity).setHeaderTitle(LanguageData.getStringValue("Amount").toString())
+        (activity as SendMoneyActivity).setHeaderTitle(
+            LanguageData.getStringValue("Amount").toString()
+        )
         (activity as SendMoneyActivity).setHeaderVisibility(true)
 
         var userBalance =
@@ -57,27 +59,27 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
         var userBalanceInt = userBalance.toInt()
         mDataBinding.plusAmountTotal.setOnClickListener {
             var currentBalance = mDataBinding.etAmountEntered.text.toString()
-            if(currentBalance.isEmpty()){
+            if (currentBalance.isEmpty()) {
                 currentBalance = "0.00"
             }
             var currentBalanceDouble = currentBalance.toDouble()
             var currentBalanceInt = currentBalanceDouble.toInt()
-            var newAmount= currentBalanceInt+1
-            if(newAmount<= userBalance){
+            var newAmount = currentBalanceInt + 1
+            if (newAmount <= userBalance) {
                 mDataBinding.etAmountEntered.setText(newAmount.toString())
             }
         }
 
         mDataBinding.minuAmountTotal.setOnClickListener {
             var currentBalance = mDataBinding.etAmountEntered.text.toString()
-            if(currentBalance.isEmpty()){
+            if (currentBalance.isEmpty()) {
                 currentBalance = "0.00"
             }
             var currentBalanceDouble = currentBalance.toDouble()
             var currentBalanceInt = currentBalanceDouble.toInt()
             var newAmount = 0
-            if(currentBalanceInt!=0){
-                newAmount = currentBalanceInt-1
+            if (currentBalanceInt != 0) {
+                newAmount = currentBalanceInt - 1
             }
 
             mDataBinding.etAmountEntered.setText(newAmount.toString())
@@ -92,17 +94,18 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
         mDataBinding.etAmountEntered.addTextChangedListener(this@FundsTransferAmountFragment)
 
         mQuickAmountList.clear()
-        for(quickAmount in Constants.quickAmountsList){
-            mQuickAmountList.add(QuickAmountModel(quickAmount,false))
+        for (quickAmount in Constants.quickAmountsList) {
+            mQuickAmountList.add(QuickAmountModel(quickAmount, false))
         }
 
-        mQuickAmountAdapter = QuickAmountAdapter(activity as SendMoneyActivity,userBalanceInt,mQuickAmountList,
-            object : QuickAmountAdapter.QuickAmountAdpterListner {
-                override fun onAmountItemTypeClick(amount : String) {
-                    mDataBinding.etAmountEntered.setText(amount)
-                    mDataBinding.AmountSeekBar.progress = floor(amount.toDouble()).toInt()
-                }
-            })
+        mQuickAmountAdapter =
+            QuickAmountAdapter(activity as SendMoneyActivity, userBalanceInt, mQuickAmountList,
+                object : QuickAmountAdapter.QuickAmountAdpterListner {
+                    override fun onAmountItemTypeClick(amount: String) {
+                        mDataBinding.etAmountEntered.setText(amount)
+                        mDataBinding.AmountSeekBar.progress = floor(amount.toDouble()).toInt()
+                    }
+                })
 
         mDataBinding.quickAmountRecycler.apply {
             adapter = mQuickAmountAdapter
@@ -114,7 +117,7 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
 
         mDataBinding.etAmountEntered.filters = arrayOf<InputFilter>(DecimalDigitsInputFilter(2))
 
-        if(!mActivityViewModel.amountScannedFromQR.equals("0")){
+        if (!mActivityViewModel.amountScannedFromQR.equals("0")) {
             mDataBinding.etAmountEntered.setText(mActivityViewModel.amountScannedFromQR)
 
 
@@ -122,7 +125,7 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
             var sAmount: String = mDataBinding.etAmountEntered.text.toString().trim { it <= ' ' }
 
             if (sAmount == "" || sAmount == ".") sAmount = "0"
-            sAmount = sAmount.replace(",",".")
+            sAmount = sAmount.replace(",", ".")
             mDataBinding.etAmountEntered.setSelection(mDataBinding.etAmountEntered.text.length)
             mDataBinding.AmountSeekBar.progress = floor(sAmount.toDouble()).toInt()
         }
@@ -143,63 +146,67 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
 
     private fun subscribeObserver() {
         mActivityViewModel.errorText.observe(this@FundsTransferAmountFragment, Observer {
-            DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it)
+            DialogUtils.showErrorDialoge(activity as SendMoneyActivity, it)
         })
 
-        mActivityViewModel.getFloatTransferQuoteResponseListner.observe(this@FundsTransferAmountFragment, Observer {
-            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                if(it.quoteList.isNotEmpty()){
-                    mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
-                    mActivityViewModel.qouteId = it.quoteList[0].quoteid
-                }
-                (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferAmountFragment_to_fundTransferConfirmationFragment)
-            }else{
-                DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
-            }
-        })
-
-        mActivityViewModel.getTransferQouteResponseListner.observe(this@FundsTransferAmountFragment, Observer {
-            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                if(it.quoteList.isNotEmpty()){
-                   mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
-                    mActivityViewModel.qouteId = it.quoteList[0].quoteid
-                }
-                (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferAmountFragment_to_fundTransferConfirmationFragment)
-            }else{
-                DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
-            }
-        })
-
-        mActivityViewModel.getMerchantQouteResponseListner.observe(this@FundsTransferAmountFragment,
+        mActivityViewModel.getFloatTransferQuoteResponseListner.observe(
+            this@FundsTransferAmountFragment,
             Observer {
-                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                    if(it.quoteList.isNotEmpty()){
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    if (it.quoteList.isNotEmpty()) {
                         mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
                         mActivityViewModel.qouteId = it.quoteList[0].quoteid
                     }
                     (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferAmountFragment_to_fundTransferConfirmationFragment)
-                }else{
-                    DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                } else {
+                    DialogUtils.showErrorDialoge(activity as SendMoneyActivity, it.description)
+                }
+            })
+
+        mActivityViewModel.getTransferQouteResponseListner.observe(
+            this@FundsTransferAmountFragment,
+            Observer {
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    if (it.quoteList.isNotEmpty()) {
+                        mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
+                        mActivityViewModel.qouteId = it.quoteList[0].quoteid
+                    }
+                    (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferAmountFragment_to_fundTransferConfirmationFragment)
+                } else {
+                    DialogUtils.showErrorDialoge(activity as SendMoneyActivity, it.description)
+                }
+            })
+
+        mActivityViewModel.getMerchantQouteResponseListner.observe(this@FundsTransferAmountFragment,
+            Observer {
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    if (it.quoteList.isNotEmpty()) {
+                        mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
+                        mActivityViewModel.qouteId = it.quoteList[0].quoteid
+                    }
+                    (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferAmountFragment_to_fundTransferConfirmationFragment)
+                } else {
+                    DialogUtils.showErrorDialoge(activity as SendMoneyActivity, it.description)
                 }
             })
 
         mActivityViewModel.getPaymentQouteResponseListner.observe(this@FundsTransferAmountFragment,
             Observer {
-                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                    if(it.quoteList.isNotEmpty()){
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    if (it.quoteList.isNotEmpty()) {
                         mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
                         mActivityViewModel.qouteId = it.quoteList[0].quoteid
                     }
                     (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferAmountFragment_to_fundTransferConfirmationFragment)
-                }else{
-                    DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                } else {
+                    DialogUtils.showErrorDialoge(activity as SendMoneyActivity, it.description)
                 }
             })
     }
 
     override fun onNextClickListner(view: View) {
         var sAmount: String = mDataBinding.etAmountEntered.text.toString().trim { it <= ' ' }
-        sAmount=sAmount.replace(",",".")
+        sAmount = sAmount.replace(",", ".")
 
         val bill: Double = sAmount.toDouble()
         sAmount = String.format(
@@ -209,45 +216,62 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
         )
 
         if (sAmount == "" || SumAmountEditText(sAmount) == "0" || sAmount == ".") {
-            mDataBinding.etAmountEntered.error = LanguageData.getStringValue("PleaseEnterValidAmountToProceed.")
+            mDataBinding.etAmountEntered.error =
+                LanguageData.getStringValue("PleaseEnterValidAmountToProceed.")
             return
         }
 
-        if(Constants.IS_AGENT_USER){
-            if(mActivityViewModel.isFundTransferUseCase.get()!!){
-                mActivityViewModel.requestForFloatTransferQuoteApi(activity,sAmount)
+        if (Constants.IS_AGENT_USER) {
+            if (mActivityViewModel.isFundTransferUseCase.get()!!) {
+                mActivityViewModel.requestForFloatTransferQuoteApi(activity, sAmount)
             }
 
-            if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
-                if(mActivityViewModel.isUserRegistered!=null && mActivityViewModel.isUserRegistered.get()!=null && mActivityViewModel.isUserRegistered.get()!!){
-                    if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
-                        mActivityViewModel.requestFoMerchantQouteApi(activity,sAmount)
+            if (mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!) {
+                if (mActivityViewModel.isUserRegistered != null && mActivityViewModel.isUserRegistered.get() != null && mActivityViewModel.isUserRegistered.get()!!) {
+                    if (mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!) {
+                        mActivityViewModel.requestFoMerchantQouteApi(activity, sAmount)
                     }
-                }else{
-                    if(mActivityViewModel.isAccountHolderInformationFailed.get()!!){
-                        mActivityViewModel.requestForSimplePaymentQouteApi(activity,sAmount,Constants.CURRENT_USER_MSISDN)
-                    }else{
-                        mActivityViewModel.requestFoPaymentQouteApi(activity,sAmount,Constants.CURRENT_USER_MSISDN)
+                } else {
+                    if (mActivityViewModel.isAccountHolderInformationFailed.get()!!) {
+                        mActivityViewModel.requestForSimplePaymentQouteApi(
+                            activity,
+                            sAmount,
+                            Constants.CURRENT_USER_MSISDN
+                        )
+                    } else {
+                        mActivityViewModel.requestFoPaymentQouteApi(
+                            activity,
+                            sAmount,
+                            Constants.CURRENT_USER_MSISDN
+                        )
                     }
                 }
             }
-        }else{
-            if(mActivityViewModel.isUserRegistered!=null && mActivityViewModel.isUserRegistered.get()!=null && mActivityViewModel.isUserRegistered.get()!!){
+        } else {
+            if (mActivityViewModel.isUserRegistered != null && mActivityViewModel.isUserRegistered.get() != null && mActivityViewModel.isUserRegistered.get()!!) {
                 // If user is register on EWP
-                if(mActivityViewModel.isFundTransferUseCase.get()!!){
+                if (mActivityViewModel.isFundTransferUseCase.get()!!) {
                     // Send Money
-                    mActivityViewModel.requestFoTransferQouteApi(activity,sAmount)
+                    mActivityViewModel.requestFoTransferQouteApi(activity, sAmount)
                 }
 
-                if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
+                if (mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!) {
                     // Merchant
-                    mActivityViewModel.requestFoMerchantQouteApi(activity,sAmount)
+                    mActivityViewModel.requestFoMerchantQouteApi(activity, sAmount)
                 }
-            }else{
-                if(mActivityViewModel.isAccountHolderInformationFailed.get()!!){
-                    mActivityViewModel.requestForSimplePaymentQouteApi(activity,sAmount,Constants.CURRENT_USER_MSISDN)
-                }else{
-                    mActivityViewModel.requestFoPaymentQouteApi(activity,sAmount,Constants.CURRENT_USER_MSISDN)
+            } else {
+                if (mActivityViewModel.isAccountHolderInformationFailed.get()!!) {
+                    mActivityViewModel.requestForSimplePaymentQouteApi(
+                        activity,
+                        sAmount,
+                        Constants.CURRENT_USER_MSISDN
+                    )
+                } else {
+                    mActivityViewModel.requestFoPaymentQouteApi(
+                        activity,
+                        sAmount,
+                        Constants.CURRENT_USER_MSISDN
+                    )
                 }
             }
         }
@@ -286,7 +310,7 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
         var sAmount: String = mDataBinding.etAmountEntered.text.toString().trim { it <= ' ' }
 
         if (sAmount == "" || sAmount == ".") sAmount = "0"
-        sAmount = sAmount.replace(",",".")
+        sAmount = sAmount.replace(",", ".")
         mDataBinding.etAmountEntered.setSelection(mDataBinding.etAmountEntered.text.length)
         mDataBinding.AmountSeekBar.progress = floor(sAmount.toDouble()).toInt()
     }

@@ -30,7 +30,7 @@ import java.util.regex.Pattern
 class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisdnBinding>(),
     FundsTrasnferClickLisntener, AdapterView.OnItemSelectedListener, TextWatcher {
 
-    private lateinit var mActivityViewModel : SendMoneyViewModel
+    private lateinit var mActivityViewModel: SendMoneyViewModel
 
     private var list_of_favorites = arrayListOf<String>()
     var isNumberRegexMatches = false
@@ -40,13 +40,14 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        mActivityViewModel = ViewModelProvider(activity as SendMoneyActivity).get(SendMoneyViewModel::class.java)
+        mActivityViewModel =
+            ViewModelProvider(activity as SendMoneyActivity).get(SendMoneyViewModel::class.java)
         mDataBinding.apply {
             listener = this@FundsTransferMsisdnFragment
         }
 
         list_of_favorites.clear()
-        for(contacts in Constants.mContactListArray){
+        for (contacts in Constants.mContactListArray) {
             var contactNumber = contacts.fri
             var contactName = contacts.contactName
             contactNumber = contactNumber.substringBefore("@")
@@ -54,23 +55,39 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
             contactNumber = contactNumber.removePrefix(Constants.APP_MSISDN_PREFIX)
             contactNumber = "0$contactNumber"
             //todo also here remove lenght-2 check in max line
-            if(contactNumber.length.equals(Constants.APP_MSISDN_LENGTH.toInt() - 2)){
+            if (contactNumber.length.equals(Constants.APP_MSISDN_LENGTH.toInt() - 2)) {
                 var name_number_favorite = "$contactName-$contactNumber"
                 list_of_favorites.add(name_number_favorite)
             }
         }
-        list_of_favorites.add(0,LanguageData.getStringValue("SelectFavorite").toString())
+        list_of_favorites.add(0, LanguageData.getStringValue("SelectFavorite").toString())
 
-        val adapterFavoriteType = ArrayAdapter<CharSequence>(activity as SendMoneyActivity, R.layout.layout_favorites_spinner_text,
+        val adapterFavoriteType = ArrayAdapter<CharSequence>(
+            activity as SendMoneyActivity, R.layout.layout_favorites_spinner_text,
             list_of_favorites as List<CharSequence>
         )
         mDataBinding.spinnerSelectFavorites.apply {
             adapter = adapterFavoriteType
         }
-        mDataBinding.spinnerSelectFavorites.onItemSelectedListener = this@FundsTransferMsisdnFragment
-        mActivityViewModel.isFundTransferUseCase.set((activity as SendMoneyActivity).intent.getBooleanExtra("isFundTransferUseCase",false))
-        mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set((activity as SendMoneyActivity).intent.getBooleanExtra("isInitiatePaymenetToMerchantUseCase",false))
-        mActivityViewModel.trasferTypeSelected.set((activity as SendMoneyActivity).intent.getStringExtra("useCaseType"))
+        mDataBinding.spinnerSelectFavorites.onItemSelectedListener =
+            this@FundsTransferMsisdnFragment
+        mActivityViewModel.isFundTransferUseCase.set(
+            (activity as SendMoneyActivity).intent.getBooleanExtra(
+                "isFundTransferUseCase",
+                false
+            )
+        )
+        mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set(
+            (activity as SendMoneyActivity).intent.getBooleanExtra(
+                "isInitiatePaymenetToMerchantUseCase",
+                false
+            )
+        )
+        mActivityViewModel.trasferTypeSelected.set(
+            (activity as SendMoneyActivity).intent.getStringExtra(
+                "useCaseType"
+            )
+        )
 
 
         (activity as SendMoneyActivity).setHeaderVisibility(true)
@@ -81,8 +98,12 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
             )
         )
 
-        mDataBinding.btnScanQR.setOnClickListener{
-            (activity as SendMoneyActivity).startQRScan(mDataBinding.inputPhoneNumber, mDataBinding.inputLayoutPhoneNumber,mDataBinding.inputPhoneNumberHint)
+        mDataBinding.btnScanQR.setOnClickListener {
+            (activity as SendMoneyActivity).startQRScan(
+                mDataBinding.inputPhoneNumber,
+                mDataBinding.inputLayoutPhoneNumber,
+                mDataBinding.inputPhoneNumberHint
+            )
 
         }
 
@@ -95,8 +116,8 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         setStrings()
         subscribeObserver()
 
-        mDataBinding.phonebook.setOnClickListener{
-                    (activity as SendMoneyActivity).openPhoneBook()
+        mDataBinding.phonebook.setOnClickListener {
+            (activity as SendMoneyActivity).openPhoneBook()
         }
         mDataBinding.inputPhoneNumber.setOnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
@@ -108,7 +129,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                     mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                     mDataBinding.inputLayoutPhoneNumber.hint =
                         LanguageData.getStringValue("EnterReceiversMobileNumber")
-                }else{
+                } else {
                     if (mDataBinding.inputPhoneNumber.text.isEmpty()) {
                         mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
                         mDataBinding.inputLayoutPhoneNumber.hint =
@@ -138,7 +159,8 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         }
 
         mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
-        mDataBinding.inputPhoneNumberHint.text = LanguageData.getStringValue("EnterReceiversMobileNumber")
+        mDataBinding.inputPhoneNumberHint.text =
+            LanguageData.getStringValue("EnterReceiversMobileNumber")
 
         mDataBinding.inputPhoneNumber.setOnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
@@ -149,9 +171,9 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                 } else {
                     if (mDataBinding.inputPhoneNumber.text.isEmpty()) {
                         mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
-                            mDataBinding.inputLayoutPhoneNumber.hint =
-                                LanguageData.getStringValue("EnterReceiversMobileNumber")
-                            mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+                        mDataBinding.inputLayoutPhoneNumber.hint =
+                            LanguageData.getStringValue("EnterReceiversMobileNumber")
+                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                     } else {
                         setInputLayoutHint()
                     }
@@ -162,60 +184,63 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
 
     fun setInputLayoutHint() {
         mDataBinding.inputPhoneNumberHint.visibility = View.GONE
-        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+        mDataBinding.inputLayoutPhoneNumber.hint =
+            LanguageData.getStringValue("EnterReceiversMobileNumber")
     }
 
     private fun subscribeObserver() {
         mActivityViewModel.errorText.observe(this@FundsTransferMsisdnFragment, Observer {
-            DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it)
+            DialogUtils.showErrorDialoge(activity as SendMoneyActivity, it)
         })
 
         mActivityViewModel.getAccountHolderAdditionalInfoResponseListner.observe(this@FundsTransferMsisdnFragment,
             Observer {
-                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                    if(it.additionalinformation.isNullOrEmpty()){
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    if (it.additionalinformation.isNullOrEmpty()) {
                         mActivityViewModel.isUserRegistered.set(false)
                         (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
-                    }else{
-                        if(it.additionalinformation[0].value.equals("TRUE",true)){
+                    } else {
+                        if (it.additionalinformation[0].value.equals("TRUE", true)) {
                             mActivityViewModel.isUserRegistered.set(true)
                             (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
-                        }else{
+                        } else {
                             mActivityViewModel.isUserRegistered.set(false)
                             (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
                         }
                     }
-                }else{
-                    DialogUtils.showErrorDialoge(activity as SendMoneyActivity,it.description)
+                } else {
+                    DialogUtils.showErrorDialoge(activity as SendMoneyActivity, it.description)
                 }
             }
         )
 
         mActivityViewModel.getAccountHolderInformationResponseListner.observe(this@FundsTransferMsisdnFragment,
             Observer {
-                if(Constants.IS_AGENT_USER){
-                    if(mActivityViewModel.isFundTransferUseCase.get()!!){
-                        if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                if (Constants.IS_AGENT_USER) {
+                    if (mActivityViewModel.isFundTransferUseCase.get()!!) {
+                        if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                             (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
-                        }else{
-                            DialogUtils.showErrorDialoge(activity,it.description)
+                        } else {
+                            DialogUtils.showErrorDialoge(activity, it.description)
                         }
                     }
-                    if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
-                        if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    if (mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!) {
+                        if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                             mActivityViewModel.isAccountHolderInformationFailed.set(false)
-                            mActivityViewModel.requestForAccountHolderAddtionalInformationApi(activity)
-                        }else{
+                            mActivityViewModel.requestForAccountHolderAddtionalInformationApi(
+                                activity
+                            )
+                        } else {
                             mActivityViewModel.isAccountHolderInformationFailed.set(true)
                             mActivityViewModel.isUserRegistered.set(false)
                             (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
                         }
                     }
-                }else{
-                    if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                } else {
+                    if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                         mActivityViewModel.isAccountHolderInformationFailed.set(false)
                         mActivityViewModel.requestForAccountHolderAddtionalInformationApi(activity)
-                    }else{
+                    } else {
                         mActivityViewModel.isAccountHolderInformationFailed.set(true)
                         mActivityViewModel.isUserRegistered.set(false)
                         (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
@@ -227,17 +252,19 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
 
     override fun onNextClickListner(view: View) {
         //TODO MSISDN Lenght Check
-        if(mDataBinding.inputPhoneNumber.text.isNotEmpty() && mDataBinding.inputPhoneNumber.text.toString().length< Constants.APP_MSISDN_LENGTH.toInt()-2){
-            mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+        if (mDataBinding.inputPhoneNumber.text.isNotEmpty() && mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_MSISDN_LENGTH.toInt() - 2) {
+            mDataBinding.inputLayoutPhoneNumber.error =
+                LanguageData.getStringValue("PleaseEnterValidMobileNumber")
             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
-            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+            mDataBinding.inputLayoutPhoneNumber.hint =
+                LanguageData.getStringValue("EnterReceiversMobileNumber")
             mDataBinding.inputPhoneNumberHint.visibility = View.GONE
-        }else{
+        } else {
             mDataBinding.inputLayoutPhoneNumber.error = ""
             mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
 
             var userMsisdn = mDataBinding.inputPhoneNumber.text.toString()
-            if(userMsisdn.startsWith("0",false)){
+            if (userMsisdn.startsWith("0", false)) {
                 checkNumberExistInFavorites(userMsisdn)
                 mDataBinding.inputLayoutPhoneNumber.error = ""
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
@@ -245,37 +272,42 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                 userMSISDNwithPrefix = Constants.APP_MSISDN_PREFIX + userMSISDNwithPrefix
                 userMSISDNwithPrefix = userMSISDNwithPrefix.removePrefix("+")
 
-                    if(isNumberRegexMatches){
-                        mDataBinding.inputLayoutPhoneNumber.error = ""
-                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+                if (isNumberRegexMatches) {
+                    mDataBinding.inputLayoutPhoneNumber.error = ""
+                    mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
 
-                        mActivityViewModel.requestForGetAccountHolderInformationApi(activity,
-                            userMSISDNwithPrefix
-                        )
-                    }else{
-                        mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
-                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
-                        mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
-                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
-                    }
-            }else{
-                mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                    mActivityViewModel.requestForGetAccountHolderInformationApi(
+                        activity,
+                        userMSISDNwithPrefix
+                    )
+                } else {
+                    mDataBinding.inputLayoutPhoneNumber.error =
+                        LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                    mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+                    mDataBinding.inputLayoutPhoneNumber.hint =
+                        LanguageData.getStringValue("EnterReceiversMobileNumber")
+                    mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+                }
+            } else {
+                mDataBinding.inputLayoutPhoneNumber.error =
+                    LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
-                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+                mDataBinding.inputLayoutPhoneNumber.hint =
+                    LanguageData.getStringValue("EnterReceiversMobileNumber")
                 mDataBinding.inputPhoneNumberHint.visibility = View.GONE
             }
         }
     }
 
     private fun checkNumberExistInFavorites(userMsisdn: String) {
-        for(i in 0 until list_of_favorites.size){
+        for (i in 0 until list_of_favorites.size) {
             var favoriteNumber = list_of_favorites[i].substringAfter("-")
-            if(favoriteNumber.equals(userMsisdn)){
+            if (favoriteNumber.equals(userMsisdn)) {
                 mActivityViewModel.isUserSelectedFromFavorites.set(true)
                 break
-            }else{
+            } else {
                 mActivityViewModel.isUserSelectedFromFavorites.set(false)
-                Logger.debugLog("FavoritesCheck","false")
+                Logger.debugLog("FavoritesCheck", "false")
             }
         }
     }
@@ -285,7 +317,10 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
             IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         if (result != null) {
             if (result.contents == null) {
-                DialogUtils.showErrorDialoge(activity, LanguageData.getStringValue("PleaseScanValidQRDot"))
+                DialogUtils.showErrorDialoge(
+                    activity,
+                    LanguageData.getStringValue("PleaseScanValidQRDot")
+                )
             } else {
                 var sResult = result.contents
                 sResult = StringBuilder(sResult!!).insert(2, "-").insert(6, "-").toString()
@@ -294,7 +329,10 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         } else {
             // This is important, otherwise the result will not be passed to the fragment
             super.onActivityResult(requestCode, resultCode, data)
-            DialogUtils.showErrorDialoge(activity, LanguageData.getStringValue("PleaseScanValidQRDot"))
+            DialogUtils.showErrorDialoge(
+                activity,
+                LanguageData.getStringValue("PleaseScanValidQRDot")
+            )
         }
     }
 
@@ -308,22 +346,25 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, pos: Int, p3: Long) {
         var selectedFavorites = mDataBinding.spinnerSelectFavorites.selectedItem.toString()
-        if(!selectedFavorites.equals(LanguageData.getStringValue("SelectFavorite"))){
+        if (!selectedFavorites.equals(LanguageData.getStringValue("SelectFavorite"))) {
             selectedFavorites = selectedFavorites.substringAfter("-")
             mDataBinding.inputPhoneNumber.setText(selectedFavorites)
             mActivityViewModel.isUserSelectedFromFavorites.set(true)
-            mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+            mDataBinding.inputLayoutPhoneNumber.hint =
+                LanguageData.getStringValue("EnterReceiversMobileNumber")
             mDataBinding.inputPhoneNumberHint.visibility = View.GONE
-        }else{
+        } else {
             mDataBinding.inputPhoneNumber.setText("")
             mActivityViewModel.isUserSelectedFromFavorites.set(false)
-            if(mDataBinding.inputLayoutPhoneNumber.isErrorEnabled){
+            if (mDataBinding.inputLayoutPhoneNumber.isErrorEnabled) {
 
-            }else{
+            } else {
                 mDataBinding.inputPhoneNumber.clearFocus()
                 mDataBinding.inputPhoneNumberHint.visibility = View.VISIBLE
-                mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
-                mDataBinding.inputPhoneNumberHint.text = LanguageData.getStringValue("EnterReceiversMobileNumber")
+                mDataBinding.inputLayoutPhoneNumber.hint =
+                    LanguageData.getStringValue("MSISDNPlaceholder")
+                mDataBinding.inputPhoneNumberHint.text =
+                    LanguageData.getStringValue("EnterReceiversMobileNumber")
             }
         }
     }
