@@ -180,6 +180,28 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
                     } else {
                         if (Tools.validateMerchantEMVcoString(scannedString)) {
                             Logger.debugLog("TestingStringValidate", "Valid Merchant QR String")
+
+                            if (scannedString.isNullOrEmpty() || Tools.extractMerchantNameFromEMVcoQR(scannedString).isNullOrEmpty()) {
+                                mInputFieldLayout.isErrorEnabled = true
+                                mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
+                                mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+                                mInputHint.visibility = View.GONE
+                            } else {
+                                var merchantName = Tools.extractMerchantNameFromEMVcoQR(scannedString)
+                                Logger.debugLog("TestingMerchantName", merchantName)
+                                mActivityViewModel.merchantName = merchantName
+                            }
+
+                            if (scannedString.isNullOrEmpty() || Tools.extractMerchantCodeFromEMVcoQR(scannedString).isNullOrEmpty()) {
+                                mInputFieldLayout.isErrorEnabled = true
+                                mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
+                                mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
+                                mInputHint.visibility = View.GONE
+                            } else {
+                                var merchantCode = Tools.extractMerchantCodeFromEMVcoQR(scannedString)
+                                Logger.debugLog("TestingMerchantCode", merchantCode)
+                                mActivityViewModel.merchantCode = merchantCode
+                            }
                         } else {
                             mInputFieldLayout.isErrorEnabled = true
                             mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")

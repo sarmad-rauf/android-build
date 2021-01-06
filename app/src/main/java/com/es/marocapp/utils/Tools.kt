@@ -244,6 +244,41 @@ object Tools {
         return crc
     }
 
+    fun extractMerchantCodeFromEMVcoQR(text: String): String {
+        var merchantCode = ""
+        try {
+            if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
+                merchantCode =
+                    text.split("5204")[1].substring(0, 4)
+                return merchantCode
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            merchantCode = ""
+        }
+
+        return merchantCode
+    }
+
+    fun extractMerchantNameFromEMVcoQR(text: String): String {
+        var merchantName = ""
+        try {
+            if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
+                merchantName =
+                    text.split(Constants.MerchantEMVco.Merchant_Name_ID + Constants.MerchantEMVco.Merchant_Name_SIZE)[1].substring(
+                        0,
+                        22
+                    )
+                return merchantName
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            merchantName = ""
+        }
+
+        return merchantName
+    }
+
     fun generateMerchantEMVcoString(
         number: String,
         enteredAmount: String,

@@ -367,6 +367,14 @@ object Constants {
         return formatted
     }
 
+    fun getMerchantName(name: String) : String {
+        if (name.length > 22) {
+            return name.substring(0, 22)
+        } else {
+            return name.padEnd(22, ' ')
+        }
+    }
+
     fun showTutorial(
         activityContext: Activity,
         viewForShowignTutorial: View,
