@@ -6,8 +6,9 @@ import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.net.Uri
 import android.net.wifi.WifiManager
 import android.os.Build
@@ -32,7 +33,7 @@ import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.*
 import java.lang.reflect.Method
-import java.util.ArrayList
+import java.util.*
 
 
 class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
@@ -70,11 +71,39 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 
         loadNDKValues()
         setupPermissions()
-        Constants.getIPAddress(application)
+        checkInternetOrMobileConnection()
         subscribe()
 
         subscribeForTranslationsApiResponse()
 
+    }
+
+    private fun checkInternetOrMobileConnection() {
+        /*val conMgr: ConnectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val netInfo: NetworkInfo = conMgr.getActiveNetworkInfo()
+        if (netInfo == null) {
+            Constants.getIPAddress(application)
+        } else {
+            Constants.getDeviceIPAddress(true)
+        }*/
+
+        val mgr =
+            this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val netInfo = mgr.activeNetworkInfo
+
+        if (netInfo != null) {
+            if (netInfo.isConnected) {
+                // Internet Available
+                Constants.getIPAddress(application)
+            } else {
+                //No internet
+                Constants.getDeviceIPAddress(true)
+            }
+        } else {
+            //No internet
+            Constants.getDeviceIPAddress(true)
+        }
     }
 
     // NDK methods Start

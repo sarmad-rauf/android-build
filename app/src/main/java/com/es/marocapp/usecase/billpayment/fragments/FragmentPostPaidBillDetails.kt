@@ -324,8 +324,9 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
                         mActivityViewModel.fatoratiFeeAmountCaseImplemented = true
 
                     }else if(mActivityViewModel.fatoratiStepFourObserver.get()?.typeFrais.equals(Constants.BILL_PAYMENT_TYPE_COMISSION)){
-                        var commissionFee  = mActivityViewModel.fatoratiStepFourObserver.get()?.valeurFrais?.toInt()
-                        var commissionFeeCalculated: Float = ((mActivityViewModel.totalSelectedBillAmount.toInt()* commissionFee!!)/100).toFloat()
+                        var commissionFee  = mActivityViewModel.fatoratiStepFourObserver.get()?.valeurFrais?.toDouble()
+                        var commissionFeeCalculated: Double = ((mActivityViewModel.totalSelectedBillAmount.toDouble()* commissionFee!!)/100)
+                        commissionFeeCalculated = Constants.converValueToTwoDecimalPlace(commissionFeeCalculated).toDouble()
                         var commissionFeeCalculatedAddedInTotalAmount = commissionFeeCalculated.toDouble() + mActivityViewModel.totalSelectedBillAmount.toDouble()
 
                         Logger.debugLog("commissionFee",commissionFee.toString())

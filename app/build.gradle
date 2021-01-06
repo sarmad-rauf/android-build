@@ -14,6 +14,7 @@ def baseUrlType = 2  //1:Production,2:Staging,3:Development
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.es.marocapp"
         minSdkVersion 19
