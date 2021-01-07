@@ -102,7 +102,7 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>() {
                     Log.d("GenerateQRFragment", it.additionalinformation.toString())
                     if (!it.additionalinformation.isNullOrEmpty()) {
                         merchantCode = it.additionalinformation[3].value
-                        merchantName = Constants.getMerchantName("${Constants.balanceInfoAndResponse?.firstname!!.toUpperCase()}${Constants.balanceInfoAndResponse?.surname!!.toUpperCase()}")
+                        merchantName = "${Constants.balanceInfoAndResponse?.firstname!!.toUpperCase()} ${Constants.balanceInfoAndResponse?.surname!!.toUpperCase()}"
                         Logger.debugLog("QRString - Merchant Name", merchantName)
                         var qrString = Tools.generateMerchantEMVcoString(Constants.CURRENT_USER_MSISDN, "", merchantCode, merchantName)
                         Logger.debugLog("QRString - Merchant", qrString)

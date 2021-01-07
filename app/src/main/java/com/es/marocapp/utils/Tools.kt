@@ -265,10 +265,9 @@ object Tools {
         try {
             if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
                 merchantName =
-                    text.split(Constants.MerchantEMVco.Merchant_Name_ID + Constants.MerchantEMVco.Merchant_Name_SIZE)[1].substring(
-                        0,
-                        22
-                    )
+                    text.split(Constants.MerchantEMVco.Merchant_Name_ID + Constants.MerchantEMVco.Merchant_Name_SIZE)[1].split(
+                        "6004"
+                    )[0]
                 return merchantName
             }
         } catch (e: Exception) {
