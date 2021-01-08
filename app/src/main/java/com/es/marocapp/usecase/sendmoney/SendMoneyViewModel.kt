@@ -746,7 +746,8 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                     qrType,
                     qrValue,
                     merchantCode,
-                    merchantName.replace(" ", "") + "MKESHMA"
+                    merchantName.replace(" ", "") + "MKESHMA",
+                    Constants.balanceInfoAndResponse?.profilename.toString()
                 )
             )
                 .compose(applyIOSchedulers())
@@ -846,7 +847,8 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                     qrType,
                     qrValue,
                     merchantCode,
-                    merchantName.replace(" ", "") + "MKESHMA"
+                    merchantName.replace(" ", "") + "MKESHMA",
+                    Constants.balanceInfoAndResponse?.profilename.toString()
                 )
 
             )

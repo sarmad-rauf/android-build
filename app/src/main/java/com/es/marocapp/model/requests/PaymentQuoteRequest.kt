@@ -24,5 +24,6 @@ class SimplePaymentQuoteRequest(
     val qrType: String,
     val qrValue: String,
     val typeOfBusiness: String,
-    val merchantName: String
+    val merchantName: String,
+    val loggedInUserProfile: String
 )
