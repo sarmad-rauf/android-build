@@ -18,6 +18,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivitySendMoneyBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.qrcode.ScanQRActivity
 import com.es.marocapp.utils.Constants
@@ -71,6 +72,8 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
         }
 
 //        setHeaderTitle(LanguageData.getStringValue("SendMoney").toString())
+//        val decrptedNumber = EncryptionUtils.decryptStringAESCBC("u6WtONt3EufbU0DP3edx1A==")
+//        Logger.debugLog("AESCBCNumber",decrptedNumber)
     }
 
     override fun setLayout(): Int {

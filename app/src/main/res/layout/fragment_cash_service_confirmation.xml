@@ -130,12 +130,16 @@
 
                     <com.es.marocapp.widgets.MarocRegularTextView
                         android:id="@+id/tvSenderNameVal"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:text="+212 88716 9918"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_14sdp"
+                        android:gravity="end"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        app:layout_constraintStart_toEndOf="@+id/tvSendNameTitle"
+                        app:layout_constraintTop_toTopOf="@+id/tvSendNameTitle"
                         app:layout_constraintBottom_toBottomOf="@+id/tvSendNameTitle"
                         app:layout_constraintEnd_toEndOf="@+id/tvOwnerNameVal" />
 

@@ -75,6 +75,8 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
         subscribe()
 
         subscribeForTranslationsApiResponse()
+        /*val decrptedNumber = EncryptionUtils.decryptStringAESCBC("iIk0fEvEpOB5fuJ2n3mpMQ==")
+        Logger.debugLog("AESCBCNumber",decrptedNumber)*/
 
     }
 

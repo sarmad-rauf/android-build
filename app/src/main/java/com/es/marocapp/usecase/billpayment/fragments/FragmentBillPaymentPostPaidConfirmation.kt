@@ -379,10 +379,22 @@ class FragmentBillPaymentPostPaidConfirmation :
                 )
             )
 
-            if(mActivityViewModel.fatoratiFeeAmountCaseImplemented){
+            /*if(mActivityViewModel.fatoratiFeeAmountCaseImplemented){
                 listOfFatoratiParams.add(
                     Param(
                         mActivityViewModel.fatoratiStepFourObserver.get()!!.typeFrais,
+                        mActivityViewModel.fatoratiFeeAmountCalculated,
+                        "1"
+                    )
+                )
+
+            }
+            Previously We are send idArticle which we are getting from backend in respnose of Step Four API now we are sending Frais hardcoded
+            */
+            if(mActivityViewModel.fatoratiFeeAmountCaseImplemented){
+                listOfFatoratiParams.add(
+                    Param(
+                       "Frais",
                         mActivityViewModel.fatoratiFeeAmountCalculated,
                         "1"
                     )

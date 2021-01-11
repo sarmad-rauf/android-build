@@ -298,8 +298,13 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
                         Logger.debugLog("fortaitFactureFeeInDouble",fortaitFactureFeeInDouble)
                         Logger.debugLog("fortaitFactureFeeAfterAddingInTotal",totalFeeAfterAddingForfaitFactureFee.toString() + "Total Bill Amount is = ${mActivityViewModel.totalSelectedBillAmount}")
 
-                        listOfFatoratiParams.add(
+                       /* listOfFatoratiParams.add(
                             FatoratiQuoteParam(mActivityViewModel.fatoratiStepFourObserver.get()?.typeFrais!!,
+                                fortaitFactureFee.toString(),
+                                "1")
+                        )*/
+                        listOfFatoratiParams.add(
+                            FatoratiQuoteParam("Frais",
                                 fortaitFactureFee.toString(),
                                 "1")
                         )
@@ -314,8 +319,13 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
                         Logger.debugLog("fortaitFeeToApplied",fortaitFeeToApplied.toString())
                         Logger.debugLog("forfaitFeeCalculated",forfaitFeeCalculated.toString())
 
-                        listOfFatoratiParams.add(
+                        /*listOfFatoratiParams.add(
                             FatoratiQuoteParam(mActivityViewModel.fatoratiStepFourObserver.get()?.typeFrais!!,
+                                fortaitFeeToApplied.toString(),
+                                "1")
+                        )*/
+                        listOfFatoratiParams.add(
+                            FatoratiQuoteParam("Frais",
                                 fortaitFeeToApplied.toString(),
                                 "1")
                         )
@@ -333,8 +343,15 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
                         Logger.debugLog("commissionFeeCalculated",commissionFeeCalculated.toString())
                         Logger.debugLog("commissionFeeCalculatedAddedInTotalAmount",commissionFeeCalculatedAddedInTotalAmount.toString())
 
-                        listOfFatoratiParams.add(
+                        /*listOfFatoratiParams.add(
                             FatoratiQuoteParam(mActivityViewModel.fatoratiStepFourObserver.get()?.typeFrais!!,
+                                commissionFeeCalculated.toString(),
+                                "1")
+                        )
+                        Previously We are send idArticle which we are getting from backend in respnose of Step Four API now we are sending Frais hardcoded
+                        */
+                        listOfFatoratiParams.add(
+                            FatoratiQuoteParam("Frais",
                                 commissionFeeCalculated.toString(),
                                 "1")
                         )
