@@ -304,7 +304,7 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
                                 "1")
                         )*/
                         listOfFatoratiParams.add(
-                            FatoratiQuoteParam("Frais",
+                            FatoratiQuoteParam("FRAIS",
                                 fortaitFactureFee.toString(),
                                 "1")
                         )
@@ -325,7 +325,7 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
                                 "1")
                         )*/
                         listOfFatoratiParams.add(
-                            FatoratiQuoteParam("Frais",
+                            FatoratiQuoteParam("FRAIS",
                                 fortaitFeeToApplied.toString(),
                                 "1")
                         )
@@ -351,7 +351,7 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
                         Previously We are send idArticle which we are getting from backend in respnose of Step Four API now we are sending Frais hardcoded
                         */
                         listOfFatoratiParams.add(
-                            FatoratiQuoteParam("Frais",
+                            FatoratiQuoteParam("FRAIS",
                                 commissionFeeCalculated.toString(),
                                 "1")
                         )
