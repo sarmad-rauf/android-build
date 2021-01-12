@@ -163,14 +163,15 @@ class FragmentBillPaymentPostPaidConfirmation :
 //
 //        tvAmountVal == AmountTotal
 
-        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+        if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
             mDataBinding.tvFatoratiFeeTitle.visibility = View.GONE
             mDataBinding.tvFatoratiFeeVal.visibility = View.GONE
-        }else if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+        } else if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
             mDataBinding.tvFatoratiFeeTitle.visibility = View.VISIBLE
             mDataBinding.tvFatoratiFeeVal.visibility = View.VISIBLE
 
-            mDataBinding.tvFatoratiFeeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.fatoratiFeeAmountCalculated
+            mDataBinding.tvFatoratiFeeVal.text =
+                Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.fatoratiFeeAmountCalculated
         }
 
         mDataBinding.tvSenderNameVal.text =
@@ -222,14 +223,14 @@ class FragmentBillPaymentPostPaidConfirmation :
             Constants.converValueToTwoDecimalPlace(mActivityViewModel.totalSelectedBillAmount.toDouble())
         mDataBinding.tvReceiptCodeVal.text =
             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + totalAmount
-        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+        if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
             mDataBinding.tvDHVal.text =
                 Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.feeAmount
-        }else if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
-            if(mActivityViewModel.feeAmount.equals("0.00") || mActivityViewModel.feeAmount.equals("0")){
+        } else if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+            if (mActivityViewModel.feeAmount.equals("0.00") || mActivityViewModel.feeAmount.equals("0")) {
                 mDataBinding.tvDHTitle.visibility = View.GONE
                 mDataBinding.tvDHVal.visibility = View.GONE
-            }else{
+            } else {
                 mDataBinding.tvDHTitle.visibility = View.VISIBLE
                 mDataBinding.tvDHVal.visibility = View.VISIBLE
             }
@@ -238,12 +239,12 @@ class FragmentBillPaymentPostPaidConfirmation :
                 Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.feeAmount
         }
 
-        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+        if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
             amountToTransfer = Constants.addAmountAndFee(
                 mActivityViewModel.totalSelectedBillAmount.toDouble(),
                 totalFee.toDouble()
             )
-        } else if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+        } else if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
             amountToTransfer = Constants.addAmountAndFee(
                 mActivityViewModel.totalSelectedBillAmount.toDouble(),
                 totalFee.toDouble()
@@ -273,9 +274,9 @@ class FragmentBillPaymentPostPaidConfirmation :
         mDataBinding.tvCompanyNameTitle.text = LanguageData.getStringValue("BillPaymentBillerName")
         mDataBinding.tvOwnerNameTitle.text = LanguageData.getStringValue("ReceiverName")
         mDataBinding.tvReceiptCodeTitle.text = LanguageData.getStringValue("Bill")
-        if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+        if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
             mDataBinding.tvDHTitle.text = LanguageData.getStringValue("TotalFee")
-        }else if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+        } else if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
             mDataBinding.tvDHTitle.text = LanguageData.getStringValue("BillPaymentMTCashFee")
         }
         mDataBinding.tvAmountTitle.text = LanguageData.getStringValue("Amount")
@@ -391,10 +392,10 @@ class FragmentBillPaymentPostPaidConfirmation :
             }
             Previously We are send idArticle which we are getting from backend in respnose of Step Four API now we are sending Frais hardcoded
             */
-            if(mActivityViewModel.fatoratiFeeAmountCaseImplemented){
+            if (mActivityViewModel.fatoratiFeeAmountCaseImplemented) {
                 listOfFatoratiParams.add(
                     Param(
-                       "Frais",
+                        "FRAIS",
                         mActivityViewModel.fatoratiFeeAmountCalculated,
                         "1"
                     )
@@ -408,9 +409,10 @@ class FragmentBillPaymentPostPaidConfirmation :
         }
 
         var amountToSendInRequest = ""
-        if(mActivityViewModel.fatoratiFeeAmountCaseImplemented){
-            amountToSendInRequest = (mActivityViewModel.totalSelectedBillAmount.toDouble() + mActivityViewModel.fatoratiFeeAmountCalculated.toDouble()).toString()
-        }else{
+        if (mActivityViewModel.fatoratiFeeAmountCaseImplemented) {
+            amountToSendInRequest =
+                (mActivityViewModel.totalSelectedBillAmount.toDouble() + mActivityViewModel.fatoratiFeeAmountCalculated.toDouble()).toString()
+        } else {
             amountToSendInRequest = mActivityViewModel.totalSelectedBillAmount
         }
 
