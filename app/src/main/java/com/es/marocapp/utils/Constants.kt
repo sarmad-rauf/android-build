@@ -665,7 +665,7 @@ object Constants {
         const val QR_Instance_SIZE = "02"
         const val QR_Instance_VALUE = "01"
 
-        const val static = "62220819QR transfer static6304"
+        const val static = "62220818QR transfer static6304"
         const val dynamic = "62230819QR dynamic transfer6304"
     }
 

@@ -67,7 +67,11 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 
         }
 
-        Constants.isTutorialShowing = PrefUtils.getBoolean(this@SplashActivity,PrefUtils.PreKeywords.PREF_KEY_IS_SHOW_TUTORIALS,true)
+        Constants.isTutorialShowing = PrefUtils.getBoolean(
+            this@SplashActivity,
+            PrefUtils.PreKeywords.PREF_KEY_IS_SHOW_TUTORIALS,
+            true
+        )
 
         loadNDKValues()
         setupPermissions()
@@ -192,7 +196,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.APP_CN_LENGTH = it.cnLength
                 Constants.APP_CN_REGEX = it.cnRegex
                 Constants.APP_OTP_LENGTH = it.androidOtpLength
-                if(it.defaultAccountOtpLength!=null){
+                if (it.defaultAccountOtpLength != null) {
                     Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH = it?.defaultAccountOtpLength?.toInt()
                 }
                 Constants.APP_DEFAULT_ACCOUNT_OTP_REGEX = it?.defaultAccountOtpRegex
@@ -225,8 +229,8 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 
                 //Adding Transfer Type From API to Contants
                 Constants.TRANSFER_TYPE_PAYMENT = it.transferTypePayment
-                Constants.MERCHANT_TYPE_PAYMENT= it.merchantTypePayment
-                Constants.TYPE_PAYMENT= it.typePayment
+                Constants.MERCHANT_TYPE_PAYMENT = it.merchantTypePayment
+                Constants.TYPE_PAYMENT = it.typePayment
                 Constants.TYPE_BILL_PAYMENT = it.typeBillPayment
                 Constants.TYPE_COMMISSIONING = it.typeCommisioning
                 Constants.OPERATION_TYPE_CREANCIER = it.operationTypeCreancier
@@ -237,10 +241,10 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.PAYMENT_TYPE_INITIATE_MERCHANT = it.paymentTypeInitiateMerchant
                 //--------------------------------------------------------------------------------------
 
-                if(it.cmiWebpageUrl!=null){
+                if (it.cmiWebpageUrl != null) {
                     Constants.CASH_IN_VIA_CARD_URL = it.cmiWebpageUrl
                 }
-                if(Tools.isFirstTime(this)) {
+                if (Tools.isFirstTime(this)) {
                     if (!it.defaultLanguage.isNullOrEmpty()) {
                         LocaleManager.selectedLanguage = it.defaultLanguage
                     }
@@ -264,7 +268,8 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 }
                 mActivityViewModel.requestForTranslationsApi(this)
             } else if (it.responseCode.equals(ApiConstant.API_INVALID_VERSION)) {
-                DialogUtils.showUpdateAPPDailog(this@SplashActivity,
+                DialogUtils.showUpdateAPPDailog(
+                    this@SplashActivity,
                     it.description,
                     object : DialogUtils.OnCustomDialogListner {
                         override fun onCustomDialogOkClickListner() {
@@ -289,7 +294,8 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 //                                Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
                             }
                         }
-                    },R.drawable.ic_force_update,getString(R.string.ok))
+                    }, R.drawable.ic_force_update, getString(R.string.ok)
+                )
             } else {
                 DialogUtils.showErrorDialoge(
                     this@SplashActivity,
@@ -300,7 +306,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
         }
 
         val errorText = Observer<String> {
-            DialogUtils.showErrorDialoge(this@SplashActivity, it,getString(R.string.ok))
+            DialogUtils.showErrorDialoge(this@SplashActivity, it, getString(R.string.ok))
         }
 
         mActivityViewModel.mHandler.observe(this, resultObserver)
@@ -335,22 +341,15 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
         var myuniqueID: String?
         val myversion = Integer.valueOf(Build.VERSION.SDK)
         if (myversion < 23) {
-            val manager =
+            /*val manager =
                 applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
             val info = manager.connectionInfo
-            myuniqueID = info.macAddress
-            if (myuniqueID == null) {
-                val mngr =
-                    getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-                if (ActivityCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.READ_PHONE_STATE
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    return
-                }
-                myuniqueID = mngr.deviceId
+            myuniqueID = info.macAddress*/
+            val mngr = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                return
             }
+            myuniqueID = mngr.deviceId
         } else if (myversion > 23 && myversion < 29) {
             val mngr =
                 getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
