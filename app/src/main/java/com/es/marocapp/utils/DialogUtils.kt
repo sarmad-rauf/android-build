@@ -370,7 +370,7 @@ object DialogUtils {
         btnYes.text = LanguageData.getStringValue("BtnTitle_Yes")
         otpDialogFieldTitle.text = LanguageData.getStringValue("DearCustomer")
         otpDialogFieldDescriotion.text =
-            LanguageData.getStringValue("PleaseEnterOtpToProceedFurther")
+            LanguageData.getStringValue("PleaseEnterOtpToProceedFurther")?.replace(Constants.OTP_LENGTH_PLACEHOLDER_TO_BE_REPLACED,Constants.APP_OTP_LENGTH.toString())
 
         var otpField = addDialog.findViewById<EditText>(R.id.otp_dialog_input_enter_otp)
         var otpFieldInput =
@@ -480,7 +480,7 @@ object DialogUtils {
         btnYes.text = LanguageData.getStringValue("BtnTitle_Yes")
         otpDialogFieldTitle.text = LanguageData.getStringValue("DearCustomer")
         otpDialogFieldDescriotion.text =
-            LanguageData.getStringValue("PleaseEnterOtpToProceedFurther")
+            LanguageData.getStringValue("PleaseEnterOtpToProceedFurther")?.replace(Constants.OTP_LENGTH_PLACEHOLDER_TO_BE_REPLACED,Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH.toString())
 
         var otpField = addDialog.findViewById<PinView>(R.id.otp_dialog_input_enter_otp)
 
