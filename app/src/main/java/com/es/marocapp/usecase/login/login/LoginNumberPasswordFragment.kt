@@ -292,6 +292,30 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
             }
         }
 
+        mActivityViewModel.getAccountHolderInformationResponseListner.observe(this@LoginNumberPasswordFragment,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    if(!it.profileName.isNullOrEmpty()){
+                        mActivityViewModel.accountHolderInfoUserProfile = it.profileName
+                    }
+
+                    mActivityViewModel.requestForGetBalanceAndGenerateOtpApi(activity as LoginActivity,mActivityViewModel.accountHolderInfoUserProfile.toString(),
+                        mActivityViewModel.mUserMsisdn)
+
+                }else{
+                    DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
+                }
+            })
+
+        mActivityViewModel.getBalanceAndGenerateOtpResponseListner.observe(this@LoginNumberPasswordFragment, Observer {
+            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                mActivityViewModel.isForgotPasswordDialogToShow = false
+                (activity as LoginActivity).navController.navigate(R.id.action_signUpNumberFragment_to_forgotPasswordFragment)
+            }else{
+                mActivityViewModel.isForgotPasswordDialogToShow = true
+                (activity as LoginActivity).navController.navigate(R.id.action_signUpNumberFragment_to_forgotPasswordFragment)
+            }
+        })
         mActivityViewModel.getBalanceInforAndLimitResponseListner.observe(
             this@LoginNumberPasswordFragment,
             mBalanceInfoAndLimtListner
@@ -322,7 +346,8 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
     }
 
     override fun onForgotPinClick(view: View) {
-        (activity as LoginActivity).navController.navigate(R.id.action_signUpNumberFragment_to_forgotPasswordFragment)
+        mActivityViewModel.requestForGetAccountHolderInformationApi(activity as LoginActivity, mActivityViewModel.mUserMsisdn)
+//        (activity as LoginActivity).navController.navigate(R.id.action_signUpNumberFragment_to_forgotPasswordFragment)
     }
 
     override fun onSignUpClick(view: View) {

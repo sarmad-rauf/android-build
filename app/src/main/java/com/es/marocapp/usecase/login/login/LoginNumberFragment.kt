@@ -289,7 +289,11 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                         override fun onCustomDialogOkClickListner() {
                             mActivityViewModel.isFromLoginUserScreen.set(true)
                             mDataBinding.inputPin.setText("")
-                            (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)
+
+                            //todo add flow here
+                            mActivityViewModel.requestForGetBalanceAndGenerateOtpApi(activity as LoginActivity,mActivityViewModel.accountHolderInfoUserProfile.toString(),
+                                mActivityViewModel.mUserMsisdn)
+//                            (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)
                         }
 
                     }
@@ -314,6 +318,16 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                 (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_verifyNumberFragment)
             }else if(it.responseCode.equals(ApiConstant.API_FAILURE)){
                 DialogUtils.showErrorDialoge(activity,it.description)
+            }
+        })
+
+        mActivityViewModel.getBalanceAndGenerateOtpResponseListner.observe(this@LoginNumberFragment, Observer {
+            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                mActivityViewModel.isForgotPasswordDialogToShow = false
+                (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)
+            }else{
+                mActivityViewModel.isForgotPasswordDialogToShow = true
+                (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)
             }
         })
 
@@ -400,7 +414,11 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                             object : DialogUtils.OnCustomDialogListner {
                                 override fun onCustomDialogOkClickListner() {
                                     mActivityViewModel.isFromLoginUserScreen.set(false)
-                                    (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)
+
+                                    //todo add flow here
+                                    mActivityViewModel.requestForGetBalanceAndGenerateOtpApi(activity as LoginActivity,mActivityViewModel.accountHolderInfoUserProfile.toString(),
+                                        mActivityViewModel.mUserMsisdn)
+//                                    (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)
                                 }
 
                             }
@@ -456,7 +474,10 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                         object : DialogUtils.OnCustomDialogListner {
                             override fun onCustomDialogOkClickListner() {
                                 mActivityViewModel.isFromLoginUserScreen.set(false)
-                                (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)
+                                //todo add flow here
+                                mActivityViewModel.requestForGetBalanceAndGenerateOtpApi(activity as LoginActivity,mActivityViewModel.accountHolderInfoUserProfile.toString(),
+                                    mActivityViewModel.mUserMsisdn)
+//                                (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)
                             }
 
                         }

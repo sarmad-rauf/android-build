@@ -264,4 +264,8 @@ interface NetworkApi {
     @GET(EndPoints.getfaq)
     fun getFaqs() : Observable<GetFaqsResponse>
 
+    //getbalanceandgenerateotp
+    @POST(EndPoints.getbalanceandgenerateotp)
+    fun getBalancesAndGenerateOtp(@Body request : GetBalanceAndGenerateOtpRequest) : Observable<GetBalanceAndGenerateOtpResponse>
+
 }

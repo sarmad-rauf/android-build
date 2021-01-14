@@ -62,14 +62,16 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
             (activity as LoginActivity).navController.navigateUp()
         }
 
-        DialogUtils.showCustomDialogue(activity,LanguageData.getStringValue("BtnTitle_OK"),LanguageData.getStringValue("PleaseCallCallcenterForGeneratingOTP"),
-            LanguageData.getStringValue("OTP"),object : DialogUtils.OnCustomDialogListner{
-                override fun onCustomDialogOkClickListner() {
+        if(mActivityViewModel.isForgotPasswordDialogToShow){
+            DialogUtils.showCustomDialogue(activity,LanguageData.getStringValue("BtnTitle_OK"),LanguageData.getStringValue("PleaseCallCallcenterForGeneratingOTP"),
+                LanguageData.getStringValue("OTP"),object : DialogUtils.OnCustomDialogListner{
+                    override fun onCustomDialogOkClickListner() {
+
+                    }
 
                 }
-
-            }
-        )
+            )
+        }
 
         mDataBinding.inputForgotOtp.filters =
             arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_OTP_LENGTH))

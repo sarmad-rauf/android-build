@@ -183,4 +183,7 @@ object EndPoints {
     //getfaq
     const val getfaq = "getfaq"
 
+    //getbalanceandgenerateotp
+    const val getbalanceandgenerateotp = "getbalanceandgenerateotp"
+
 }

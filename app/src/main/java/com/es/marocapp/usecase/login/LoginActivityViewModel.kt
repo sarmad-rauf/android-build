@@ -49,6 +49,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     var isDeviceChanged = false
     var isSimplePopUp = true
     var isResetPassowrdFlow = false
+    var isForgotPasswordDialogToShow = true
 
     var isUserToShowProfile = false
 
@@ -66,6 +67,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     var getLoginWithCertResponseListner = SingleLiveEvent<LoginWithCertResponse>()
     var getBalanceInforAndLimitResponseListner = SingleLiveEvent<BalanceInfoAndLimitResponse>()
     var getAccountsResponseListner = SingleLiveEvent<GetAccountsResponse>()
+    var getBalanceAndGenerateOtpResponseListner = SingleLiveEvent<GetBalanceAndGenerateOtpResponse>()
 
     private fun postDelay() {
 
@@ -803,5 +805,55 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     }
 
 
+
+    fun requestForGetBalanceAndGenerateOtpApi(
+        context: Context?,
+        profileName : String,
+        currentUserMsisdn : String
+    ) {
+
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBalancesAndGenerateOtp(
+                GetBalanceAndGenerateOtpRequest(ApiConstant.CONTEXT_BEFORE_LOGIN, profileName,Constants.getNumberMsisdn(currentUserMsisdn))
+
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null) {
+                            getBalanceAndGenerateOtpResponseListner.postValue(result)
+
+                        } else {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
 
 }
