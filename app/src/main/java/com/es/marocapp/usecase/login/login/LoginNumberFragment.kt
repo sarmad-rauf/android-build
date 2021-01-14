@@ -266,9 +266,15 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
             } else if (it.responseCode == ApiConstant.API_FAILURE) {
                 isRegFlow = true
                 showTermsConditionsAndSignup()
+                if(!it.profileName.isNullOrEmpty()){
+                    mActivityViewModel.accountHolderInfoUserProfile = it.profileName
+                }
                 /* mActivityViewModel.isSignUpFlow.set(true)
                  mActivity.navController.navigate(R.id.action_loginFragment_to_signUpDetailFragment)*/
             } else if (it.responseCode == ApiConstant.API_ACCOUNT_BLOCKED) {
+                if(!it.profileName.isNullOrEmpty()){
+                    mActivityViewModel.accountHolderInfoUserProfile = it.profileName
+                }
                 val btnTxt = LanguageData.getStringValue("BtnTitle_OK")
                 val titleTxt = LanguageData.getStringValue("AccountBlocked")
                 val descriptionTxt = it.description
@@ -284,6 +290,9 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
 
                     })
             }else if(it.responseCode.equals(ApiConstant.API_WRONG_ATTEMPT_BLOCKED)){
+                if(!it.profileName.isNullOrEmpty()){
+                    mActivityViewModel.accountHolderInfoUserProfile = it.profileName
+                }
                 DialogUtils.showBlockedAccountDialog(activity,LanguageData.getStringValue("BtnTitle_ResetPassword"),LanguageData.getStringValue("BtnTitle_Cancel"),
                     LanguageData.getStringValue("BlockedAndResetAccount"),LanguageData.getStringValue("AccountBlocked"),object : DialogUtils.OnCustomDialogListner{
                         override fun onCustomDialogOkClickListner() {
