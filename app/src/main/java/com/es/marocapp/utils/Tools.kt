@@ -84,14 +84,16 @@ object Tools {
 
     fun generateEMVcoString(number: String, enteredAmount: String): String {
         var amount = enteredAmount
+        var amountLength = ""
         var amountTag = ""
         var purposeOfTransaction = ""
         var pointOfInitiationMethod = ""
         if (!amount.isNullOrBlank()) {
-            var df = DecimalFormat("00000")
-            amount = df.format(Integer.parseInt(amount)).toString()
-            amountTag =
-                Constants.EMVco.Amount_Transaction_ID + Constants.EMVco.Amount_Transaction_SIZE + amount
+            /*var df = DecimalFormat("00000")
+            amount = df.format(Integer.parseInt(amount)).toString()*/
+            var df = DecimalFormat("00")
+            amountLength = df.format(amount.length).toString()
+            amountTag = Constants.EMVco.Amount_Transaction_ID + amountLength + amount
             purposeOfTransaction = Constants.EMVco.dynamic
             pointOfInitiationMethod = Constants.EMVco.Point_Of_Initiation_Method_VALUE
         } else {
@@ -166,12 +168,19 @@ object Tools {
 
     fun extractAmountFromEMVcoQR(text: String): String {
         var amount = ""
+        var amountLength = ""
         try {
             if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
+                amountLength =
+                    text.split(Constants.EMVco.Currency_Transaction_ID + Constants.EMVco.Currency_Transaction_SIZE + Constants.EMVco.Currency_Transaction_VALUE)[1].substring(
+                        2,
+                        4
+                    )
                 amount =
-                    text.split(Constants.EMVco.Amount_Transaction_ID + Constants.EMVco.Amount_Transaction_SIZE)[1]
-
-                amount = amount.substring(0, 5)
+                    text.split(Constants.EMVco.Amount_Transaction_ID + amountLength)[1].substring(
+                        0,
+                        Integer.parseInt(amountLength)
+                    )
             }
         } catch (e: Exception) {
             amount = ""
@@ -261,13 +270,20 @@ object Tools {
     }
 
     fun extractMerchantNameFromEMVcoQR(text: String): String {
+        var merchantNameLength = ""
         var merchantName = ""
         try {
             if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
+                merchantNameLength =
+                    text.split(Constants.MerchantEMVco.Country_Code_ID + Constants.MerchantEMVco.Country_Code_SIZE)[1].substring(
+                        4,
+                        6
+                    )
                 merchantName =
-                    text.split(Constants.MerchantEMVco.Merchant_Name_ID + Constants.MerchantEMVco.Merchant_Name_SIZE)[1].split(
-                        "6004"
-                    )[0]
+                    text.split(Constants.MerchantEMVco.Merchant_Name_ID + merchantNameLength)[1].substring(
+                        0,
+                        Integer.valueOf(merchantNameLength)
+                    )
                 return merchantName
             }
         } catch (e: Exception) {
@@ -285,14 +301,16 @@ object Tools {
         merchantName: String
     ): String {
         var amount = enteredAmount
+        var amountLength = ""
         var amountTag = ""
         var CRC = ""
         var pointOfInitiationMethod = ""
         if (!amount.isNullOrBlank()) {
-            var df = DecimalFormat("00000")
-            amount = df.format(Integer.parseInt(amount)).toString()
-            amountTag =
-                Constants.MerchantEMVco.Amount_Transaction_ID + Constants.MerchantEMVco.Amount_Transaction_SIZE + amount
+            /*var df = DecimalFormat("00000")
+            amount = df.format(Integer.parseInt(amount)).toString()*/
+            var df = DecimalFormat("00")
+            amountLength = df.format(amount.length).toString()
+            amountTag = Constants.MerchantEMVco.Amount_Transaction_ID + amountLength + amount
             CRC = Constants.MerchantEMVco.dynamic
             pointOfInitiationMethod = Constants.MerchantEMVco.Point_Of_Initiation_Method_VALUE
         } else {
@@ -320,7 +338,7 @@ object Tools {
                     Constants.MerchantEMVco.Currency_Transaction_ID + Constants.MerchantEMVco.Currency_Transaction_SIZE + Constants.MerchantEMVco.Currency_Transaction_VALUE +
                     amountTag +
                     Constants.MerchantEMVco.Country_Code_ID + Constants.MerchantEMVco.Country_Code_SIZE + Constants.MerchantEMVco.Country_Code_VALUE +
-                    Constants.MerchantEMVco.Merchant_Name_ID + Constants.MerchantEMVco.Merchant_Name_SIZE + merchantName +
+                    Constants.MerchantEMVco.Merchant_Name_ID + merchantName.length + merchantName +
                     Constants.MerchantEMVco.Merchant_City_ID + Constants.MerchantEMVco.Merchant_City_SIZE + Constants.MerchantEMVco.Merchant_City_VALUE + CRC
         /*Constants.MerchantEMVco.Unreserved_Template_ID + Constants.MerchantEMVco.Unreserved_Template_SIZE + Constants.MerchantEMVco.Unreserved_Template_VALUE +
         Constants.MerchantEMVco.Unreserved_Globally_Unique_Identifier_ID + Constants.MerchantEMVco.Unreserved_Globally_Unique_Identifier_SIZE + Constants.MerchantEMVco.Unreserved_Globally_Unique_Identifier_VALUE +
