@@ -45,11 +45,11 @@ public class CryptoHandler {
             BadPaddingException, InvalidKeyException,
             UnsupportedEncodingException, InvalidAlgorithmParameterException {
 
-        byte[] srcBuff = message.getBytes("UTF8");
+        byte[] srcBuff = message.getBytes("UTF-8");
 
         SecretKeySpec skeySpec = new SecretKeySpec(key, "AES");
         IvParameterSpec ivSpec = new IvParameterSpec(iv);
-        Cipher ecipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+        Cipher ecipher = Cipher.getInstance("AES/CBC/ISO10126Padding");
         ecipher.init(Cipher.ENCRYPT_MODE, skeySpec, ivSpec);
 
         byte[] dstBuff = ecipher.doFinal(srcBuff);
@@ -68,14 +68,14 @@ public class CryptoHandler {
         SecretKeySpec skeySpec = new SecretKeySpec(key, "AES");
         IvParameterSpec ivSpec = new IvParameterSpec(iv);
 
-        Cipher ecipher = Cipher.getInstance("AES/CBC/PKCS7Padding");
+        Cipher ecipher = Cipher.getInstance("AES/CBC/ISO10126Padding");
         ecipher.init(Cipher.DECRYPT_MODE, skeySpec, ivSpec);
 
         byte[] raw = Base64.decode(encrypted, Base64.DEFAULT);
 
         byte[] originalBytes = ecipher.doFinal(raw);
 
-        String original = new String(originalBytes, "UTF8");
+        String original = new String(originalBytes, "UTF-8");
 
         return original;
 
