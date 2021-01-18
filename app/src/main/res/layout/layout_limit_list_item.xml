@@ -14,7 +14,7 @@
         android:layout_marginTop="@dimen/_16sdp"
         android:text="asd"
         app:layout_goneMarginEnd="@dimen/_8sdp"
-        android:textColor="@color/colorConfirmationTitle"
+        android:textColor="@color/colorBlack"
         android:textSize="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:ellipsize="end"
@@ -24,7 +24,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.es.marocapp.widgets.MarocRegularTextView
+    <com.es.marocapp.widgets.MarocBoldTextView
         android:id="@+id/tvYearlySendingLimitVal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,6 +32,7 @@
         android:text="DH250,000.00"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/_14sdp"
+        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="@+id/tvYearlySendingLimitTitle"
         app:layout_constraintBottom_toBottomOf="@+id/tvYearlySendingLimitTitle"
         app:layout_constraintEnd_toEndOf="parent"
