@@ -25,7 +25,7 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>() {
 
     lateinit var mActivityViewModel: GenerateQRViewModel
 
-    private lateinit var merchantCode: String
+    private var merchantCode = ""
     private lateinit var merchantName: String
 
     override fun setLayout(): Int {
@@ -101,10 +101,20 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>() {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     Log.d("GenerateQRFragment", it.additionalinformation.toString())
                     if (!it.additionalinformation.isNullOrEmpty()) {
-                        merchantCode = it.additionalinformation[3].value
+                        for (i in it.additionalinformation.indices) {
+                            if (it.additionalinformation[i].name.contains("merchantid")) {
+                                merchantCode = it.additionalinformation[i].value
+                            }
+                        }
                         merchantName = "${Constants.balanceInfoAndResponse?.firstname!!.toUpperCase()} ${Constants.balanceInfoAndResponse?.surname!!.toUpperCase()}"
+                        Logger.debugLog("QRString - Merchant Code", merchantCode)
                         Logger.debugLog("QRString - Merchant Name", merchantName)
-                        var qrString = Tools.generateMerchantEMVcoString(Constants.CURRENT_USER_MSISDN, "", merchantCode, merchantName)
+                        var qrString = Tools.generateMerchantEMVcoString(
+                            Constants.CURRENT_USER_MSISDN,
+                            "",
+                            merchantCode,
+                            merchantName
+                        )
                         Logger.debugLog("QRString - Merchant", qrString)
                         imgResult.setImageBitmap(Tools.generateQR(qrString))
                     }
