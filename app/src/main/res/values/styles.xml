@@ -18,8 +18,8 @@
     </style>
 
     <style name="QuickAcountTypeSpinner" parent="Widget.AppCompat.Spinner">
-        <item name="backgroundTint">@color/colorWhite</item>
-        <item name="android:textColor">@color/colorWhite</item>
+        <item name="backgroundTint">@color/colorBlack</item>
+        <item name="android:textColor">@color/colorBlack</item>
     </style>
 
     <style name="Widget.Design.TextInputLayout" parent="AppTheme">
