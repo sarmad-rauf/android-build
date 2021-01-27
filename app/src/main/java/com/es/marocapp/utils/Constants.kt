@@ -24,6 +24,7 @@ import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 object Constants {
@@ -32,6 +33,14 @@ object Constants {
     val SHOW_DEFAULT_ERROR = "SHOW_DEFAULT_ERROR"
     val SHOW_INTERNET_ERROR = "Please check your internet!"
     val SHOW_SERVER_ERROR = "Something went wrong!"
+
+    //merchant agent profile name and array
+    //var MERCHANT_AGENT_PROFILE_NAME = "MT Merchant Agent Account Profile"
+    lateinit var MERCHANT_AGENT_PROFILE_NAME: String
+    var acountTypeList :ArrayList<String> = ArrayList()
+     var CURRENT_ACOUNT_TYPE_SELECTED: String? = LanguageData.getStringValue("Wallet")
+    lateinit var LAST_ACOUNT_TYPE_SELECTED:String
+
 
     //For Bill Payment Fee Charge on Bills Keys in Fatorati Bill use case
 /*

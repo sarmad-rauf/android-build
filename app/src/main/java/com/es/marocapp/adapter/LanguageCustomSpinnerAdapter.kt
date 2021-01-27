@@ -11,7 +11,7 @@ import com.es.marocapp.R
 
 class LanguageCustomSpinnerAdapter(
     val applicationContext: Context,
-    var languages: Array<String>,var textColor : Int = applicationContext.resources.getColor(R.color.colorBlack)
+    var languages: Array<String>,var textColor : Int = applicationContext.resources.getColor(R.color.colorBlack),var isAcountTypeSpinner:Boolean
 ) : BaseAdapter() {
 
     private val mInflater: LayoutInflater = LayoutInflater.from(applicationContext)
@@ -20,7 +20,13 @@ class LanguageCustomSpinnerAdapter(
         val view: View
         val vh: ItemRowHolder
         if (convertView == null) {
-            view = mInflater.inflate(R.layout.layout_custom_language_spinner, parent, false)
+           if(isAcountTypeSpinner)
+           {
+               view = mInflater.inflate(R.layout.acount_type_custom_spinner, parent, false)
+           }
+            else {
+               view = mInflater.inflate(R.layout.layout_custom_language_spinner, parent, false)
+           }
             vh = ItemRowHolder(view)
             view?.tag = vh
         } else {

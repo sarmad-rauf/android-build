@@ -2,12 +2,15 @@ package com.es.marocapp.usecase.transaction
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
+import com.es.marocapp.adapter.LanguageCustomSpinnerAdapter
 import com.es.marocapp.adapter.TransactionHistoryAdapter
 import com.es.marocapp.databinding.FragmentTransactionBinding
 import com.es.marocapp.locale.LanguageData
@@ -24,6 +27,7 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
     private lateinit var transactionViewModel: TransactionViewModel
     private var mTransactionsList : ArrayList<History> = ArrayList()
     private lateinit var mTransactionHistoryAdapter: TransactionHistoryAdapter
+    lateinit var acountTypeSpinnerAdapter: LanguageCustomSpinnerAdapter
 
     override fun setLayout(): Int {
         return R.layout.fragment_transaction
@@ -54,7 +58,7 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
             layoutManager = LinearLayoutManager(context)
         }
 
-        transactionViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN)
+        transactionViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN,false)
         (activity as MainActivity).isTransactionFragmentNotVisible = false
         (activity as MainActivity).showTransactionsDetailsIndirectly = true
 
@@ -68,11 +72,56 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
 
         subscribeObserver()
         setStrings()
+        subscribeForSpinnerListner()
     }
 
     private fun setStrings() {
         mDataBinding.tvTransactionHistoryTitle.text = LanguageData.getStringValue("TransactionHistory")
         mDataBinding.tvNoDataFound.text = LanguageData.getStringValue("NoDataFound")
+        mDataBinding.selectAcountTitile.text=LanguageData.getStringValue("SelectAccountType")
+
+        if (Constants.IS_AGENT_USER) {
+            if(Constants.acountTypeList.isEmpty()) {
+            LanguageData.getStringValue("Wallet")?.let { Constants.acountTypeList.add(it) }
+            for( i in Constants.getAccountsResponseArray.indices)
+            {
+                if(Constants.getAccountsResponseArray[i].profileName.equals(Constants.MERCHANT_AGENT_PROFILE_NAME))
+                {
+                    LanguageData.getStringValue("Merchant")?.let { Constants.acountTypeList.add(it) }
+                }
+            }
+            }
+            val acountTypeArray: Array<String> =
+                Constants.acountTypeList.toArray(arrayOfNulls<String>(Constants.acountTypeList.size))
+            acountTypeSpinnerAdapter =
+                LanguageCustomSpinnerAdapter(
+                    activity as MainActivity,
+                    acountTypeArray,
+                    (activity as MainActivity).resources.getColor(R.color.colorBlack),true
+                )
+            //  mDataBinding.acountTypeSpinner
+            mDataBinding.acountTypeSpinner.apply {
+                adapter = acountTypeSpinnerAdapter
+            }
+        }
+        else{
+            if(Constants.acountTypeList.isEmpty()) {
+                LanguageData.getStringValue("Wallet")?.let { Constants.acountTypeList.add(it) }
+            }
+            //Constants.acountTypeList.add("Wallet")
+            val acountTypeArray: Array<String> =
+                Constants.acountTypeList.toArray(arrayOfNulls<String>(Constants.acountTypeList.size))
+            acountTypeSpinnerAdapter =
+                LanguageCustomSpinnerAdapter(
+                    activity as MainActivity,
+                    acountTypeArray,
+                    (activity as MainActivity).resources.getColor(R.color.colorBlack),true
+                )
+            //  mDataBinding.acountTypeSpinner
+            mDataBinding.acountTypeSpinner.apply {
+                adapter = acountTypeSpinnerAdapter
+            }
+        }
     }
 
     private fun subscribeObserver() {
@@ -94,9 +143,12 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
                         }*/
 
                         mDataBinding.tvNoDataFound.visibility = View.GONE
+                        //Clearing Past Data if Any
+                        mTransactionHistoryAdapter.updateHistoryList()
                         mTransactionHistoryAdapter.updateHistoryList(it.historyResponse)
 
                     }else{
+                        mTransactionHistoryAdapter.updateHistoryList()
                         mDataBinding.tvNoDataFound.visibility = View.VISIBLE
                     }
                 }else{
@@ -111,5 +163,46 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
     }
 
     override fun onSortBtnClick(view: View) {
+    }
+
+    private fun subscribeForSpinnerListner() {
+
+        // homeViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN)
+        mDataBinding.acountTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val lastSelection = Constants.CURRENT_ACOUNT_TYPE_SELECTED
+                val currentSelection = Constants.acountTypeList.get(position)
+                if(!lastSelection.equals(currentSelection)) {
+                    Constants.CURRENT_ACOUNT_TYPE_SELECTED = currentSelection
+                    if (lastSelection != null) {
+                        Constants.LAST_ACOUNT_TYPE_SELECTED = lastSelection
+                    }
+                    if(currentSelection.equals(LanguageData.getStringValue("Merchant")))
+                    {
+                        for(i in Constants.getAccountsResponseArray.indices)
+                        {
+                            if(Constants.getAccountsResponseArray.get(i).profileName.equals(Constants.MERCHANT_AGENT_PROFILE_NAME))
+                            {
+                                transactionViewModel.passNewFri(Constants.getAccountsResponseArray.get(i).accountFri)
+                            }
+                        }
+
+                    }
+                    else{
+                        transactionViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN,false)
+                    }
+                }
+            }
+        }
+
+        transactionViewModel.acountFri.observe(this, Observer {
+
+            //excluding String Fri:
+            val fri = it.substring(4,it.length)
+            transactionViewModel.requestForGetTransactionHistoryApi(activity,fri,true)
+        })
     }
 }

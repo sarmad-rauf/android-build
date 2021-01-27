@@ -91,10 +91,34 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:paddingTop="@dimen/_8sdp"
-            app:layout_constraintTop_toBottomOf="@+id/topHeaderContainer"
+            app:layout_constraintTop_toBottomOf="@+id/acountTypeSpinner"
             app:layout_constraintBottom_toBottomOf="parent"
             />
-
+        <TextView
+            android:id="@+id/selectAcountTitile"
+            app:layout_constraintTop_toBottomOf="@id/tvTransactionHistoryTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/_13sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:textColor="@color/colorBtnDisable"
+            android:lineSpacingExtra="8sp"
+            tools:text="Select Account Type"
+            />
+        <Spinner
+            android:id="@+id/acountTypeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_13sdp"
+            android:layout_marginEnd="@dimen/_13sdp"
+            app:layout_constraintTop_toBottomOf="@id/selectAcountTitile"
+            app:layout_constraintStart_toStartOf="parent"
+            android:gravity="start"
+            style="@style/QuickAcountTypeSpinner"
+            android:popupBackground="@color/colorWhite">
+        </Spinner>
         <include android:id="@+id/Gif_Loader"
             layout="@layout/layout_dialog"
             android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"

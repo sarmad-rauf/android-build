@@ -2,6 +2,7 @@ package com.es.marocapp.usecase.home
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -27,6 +28,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     var isLoading = ObservableField<Boolean>()
     var errorText = SingleLiveEvent<String>()
+    var acountFri = MutableLiveData<String>()
     var getAccountHolderAdditionalInfoResponseListner = SingleLiveEvent<AccountHolderAdditionalInformationResponse>()
     var setDefaultAccountResponseListener = SingleLiveEvent<SetDefaultAccountResponse>()
     var verifyOTPForDefaultAccountResponseListener = SingleLiveEvent<VerifyOTPForDefaultAccountResponse>()
@@ -300,7 +302,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     //Request For Get Transactions
     fun requestForGetTransactionHistoryApi(context: Context?,
-                                           identity : String
+                                           identity : String,isMerchant:Boolean
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
@@ -311,8 +313,17 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
             currentDate = Constants.getCurrentDate()
             previousDateForTransactions = Constants.getPreviousFromCurrentDate(currentDate,Constants.PREVIOUS_DAYS_TRANSACTION_COUNT.toInt())
+            var number :String=""
+            if(isMerchant)
+            {
+                number=identity
+            }
+            else{
+                number= Constants.getNumberMsisdn(identity)
+            }
+
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getTrasactionHistoryCall(
-                TransactionHistoryRequest(ApiConstant.CONTEXT_AFTER_LOGIN,currentDate,Constants.getNumberMsisdn(identity),"0",previousDateForTransactions)
+                TransactionHistoryRequest(ApiConstant.CONTEXT_AFTER_LOGIN,currentDate,number,"0",previousDateForTransactions)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -360,5 +371,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             errorText.postValue(Constants.SHOW_INTERNET_ERROR)
         }
 
+    }
+
+    fun passNewFri(accountFri: String) {
+     this.acountFri.value=accountFri
     }
 }

@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import com.es.marocapp.R
 import com.es.marocapp.model.requests.TransactionHistoryRequest
 import com.es.marocapp.model.responses.TransactionHistoryResponse
@@ -24,11 +25,12 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     lateinit var disposable: Disposable
     var isLoading = ObservableField<Boolean>()
     var errorText = SingleLiveEvent<String>()
+    var acountFri = MutableLiveData<String>()
     var getTransactionsResponseListner = SingleLiveEvent<TransactionHistoryResponse>()
 
     //Request For Get Transactions
     fun requestForGetTransactionHistoryApi(context: Context?,
-                                           identity : String
+                                           identity : String,isMerchant:Boolean
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
@@ -39,8 +41,16 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
 
             currentDate = Constants.getCurrentDate()
             previousDateForTransactions = Constants.getPreviousFromCurrentDate(currentDate,Constants.PREVIOUS_DAYS_TRANSACTION_COUNT.toInt())
+            var number :String=""
+            if(isMerchant)
+            {
+                number=identity
+            }
+            else{
+                number= Constants.getNumberMsisdn(identity)
+            }
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getTrasactionHistoryCall(
-                TransactionHistoryRequest(ApiConstant.CONTEXT_AFTER_LOGIN,currentDate,Constants.getNumberMsisdn(identity),"0",previousDateForTransactions)
+                TransactionHistoryRequest(ApiConstant.CONTEXT_AFTER_LOGIN,currentDate,number,"0",previousDateForTransactions)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -89,5 +99,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
         }
 
     }
-
+    fun passNewFri(accountFri: String) {
+        this.acountFri.value=accountFri
+    }
 }

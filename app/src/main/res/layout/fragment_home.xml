@@ -327,13 +327,14 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/selectAcountTitile"
                     />
 
                 <androidx.constraintlayout.widget.Group
                     android:id="@+id/transactionViewGroup"
                     android:visibility="gone"
-                    app:constraint_referenced_ids="transactionHistoryTitile,transactionsRecyclerView,tvNoDataFound"
+                    app:constraint_referenced_ids="transactionHistoryTitile,transactionsRecyclerView,
+                    tvNoDataFound,acountTypeSpinner,selectAcountTitile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -369,14 +370,35 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
                     android:layout_marginEnd="@dimen/_16sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/transactionHistoryTitile"
-                    />
+                    app:layout_constraintTop_toBottomOf="@+id/acountTypeSpinner"/>
+                <TextView
+                    android:id="@+id/selectAcountTitile"
+                    app:layout_constraintTop_toBottomOf="@id/transactionHistoryTitile"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="@dimen/_13sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="normal"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorBtnDisable"
+                    android:lineSpacingExtra="8sp" />
 
+                <Spinner
+                    android:id="@+id/acountTypeSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/QuickAcountTypeSpinner"
+                    android:popupBackground="@color/colorWhite"
+                    app:layout_constraintTop_toBottomOf="@id/selectAcountTitile"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:gravity="start"
+                    android:layout_marginStart="@dimen/_13sdp"
+                    android:layout_marginEnd="@dimen/_13sdp">
+                </Spinner>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

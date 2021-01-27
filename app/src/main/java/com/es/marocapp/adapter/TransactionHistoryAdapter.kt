@@ -121,6 +121,11 @@ class TransactionHistoryAdapter(
         notifyDataSetChanged()
     }
 
+    fun updateHistoryList(){
+        models?.clear()
+        notifyDataSetChanged()
+    }
+
     override fun getItemCount(): Int {
         return models!!.size
     }

@@ -62,9 +62,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
         mActivityViewModel = ViewModelProvider(this).get(SplashActivityViewModel::class.java)
 
         mDataBinding.apply {
-
             viewmodel = mActivityViewModel
-
         }
 
         Constants.isTutorialShowing = PrefUtils.getBoolean(
@@ -196,6 +194,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.APP_CN_LENGTH = it.cnLength
                 Constants.APP_CN_REGEX = it.cnRegex
                 Constants.APP_OTP_LENGTH = it.androidOtpLength
+                Constants.MERCHANT_AGENT_PROFILE_NAME = it.agentMerchantAccountProfile
                 if (it.defaultAccountOtpLength != null) {
                     Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH = it?.defaultAccountOtpLength?.toInt()
                 }
@@ -430,7 +429,6 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
             RootValues.getInstance().keyValueFromNdk = getSecureKeyValues()
             RootValues.getInstance().hexKeyAesGcm = getAesGcmHexKey()
             RootValues.getInstance().hexIVAesGcm = getAesGcmHexIV()
-
             RootValues.getInstance().hexKeyAesCBC = getAesCBCHexKey()
             RootValues.getInstance().hexIVAesCBC = getAesCBCHexIV()
 
