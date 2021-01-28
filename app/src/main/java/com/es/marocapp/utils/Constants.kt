@@ -660,7 +660,7 @@ object Constants {
 
         const val Operation_Type_ID = "01"
         const val Operation_Type_SIZE = "01"
-        const val Operation_Type_VALUE = "1"
+        const val Operation_Type_VALUE = "0"
 
         const val Signature_Format_ID = "04"
         const val Signature_Format_SIZE = "01"
@@ -674,8 +674,10 @@ object Constants {
         const val QR_Instance_SIZE = "02"
         const val QR_Instance_VALUE = "01"
 
-        const val static = "62220818QR transfer static6304"
-        const val dynamic = "62230819QR dynamic transfer6304"
+        const val static = "62220818QR transfer static"
+        const val dynamic = "62230819QR dynamic transfer"
+
+        const val CRC = "6304"
     }
 
     object MerchantEMVco {
@@ -727,7 +729,7 @@ object Constants {
 
         const val Country_Code_ID = "58"
         const val Country_Code_SIZE = "02"
-        const val Country_Code_VALUE = "MY"
+        const val Country_Code_VALUE = "MA"
 
         const val Merchant_Name_ID = "59"
         const val Merchant_Name_SIZE = "22"

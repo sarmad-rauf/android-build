@@ -101,7 +101,7 @@ object Tools {
             pointOfInitiationMethod = Constants.EMVco.Point_Of_Initiation_Method_VALUE_STATIC
         }
 
-        var Paid_Entity_Reference_VALUE = EncryptionUtils.encryptStringAESCBC(number)
+        var Paid_Entity_Reference_VALUE = EncryptionUtils.encryptStringAESCBC("+$number")
         var Masked_Paid_Entity_Reference_VALUE = ""
 
         Masked_Paid_Entity_Reference_VALUE =
@@ -126,13 +126,12 @@ object Tools {
                     Constants.EMVco.Paid_Entity_Reference_ID + Constants.EMVco.Paid_Entity_Reference_SIZE + Paid_Entity_Reference_VALUE +
                     Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE_13 + "+" + Masked_Paid_Entity_Reference_VALUE +
                     Constants.EMVco.Currency_Transaction_ID + Constants.EMVco.Currency_Transaction_SIZE + Constants.EMVco.Currency_Transaction_VALUE +
-                    amountTag + purposeOfTransaction
-        /*Constants.EMVco.Unreserved_Template_ID + Constants.EMVco.Unreserved_Template_SIZE + Constants.EMVco.Unreserved_Template_VALUE +
-        Constants.EMVco.Unreserved_Globally_Unique_Identifier_ID + Constants.EMVco.Unreserved_Globally_Unique_Identifier_SIZE + Constants.EMVco.Unreserved_Globally_Unique_Identifier_VALUE +
-        Constants.EMVco.Operation_Type_ID + Constants.EMVco.Operation_Type_SIZE + Constants.EMVco.Operation_Type_VALUE +
-        Constants.EMVco.Signature_Format_ID + Constants.EMVco.Signature_Format_SIZE + Constants.EMVco.Signature_Format_VALUE +
-        Constants.EMVco.QR_Version_ID + Constants.EMVco.QR_Version_SIZE + Constants.EMVco.QR_Version_VALUE +
-        Constants.EMVco.QR_Instance_ID + Constants.EMVco.QR_Instance_SIZE + Constants.EMVco.QR_Instance_VALUE*/
+                    amountTag + purposeOfTransaction + Constants.EMVco.Unreserved_Template_ID + Constants.EMVco.Unreserved_Template_SIZE + Constants.EMVco.Unreserved_Template_VALUE +
+                    Constants.EMVco.Unreserved_Globally_Unique_Identifier_ID + Constants.EMVco.Unreserved_Globally_Unique_Identifier_SIZE + Constants.EMVco.Unreserved_Globally_Unique_Identifier_VALUE +
+                    Constants.EMVco.Operation_Type_ID + Constants.EMVco.Operation_Type_SIZE + Constants.EMVco.Operation_Type_VALUE +
+                    Constants.EMVco.Signature_Format_ID + Constants.EMVco.Signature_Format_SIZE + Constants.EMVco.Signature_Format_VALUE +
+                    Constants.EMVco.QR_Version_ID + Constants.EMVco.QR_Version_SIZE + Constants.EMVco.QR_Version_VALUE +
+                    Constants.EMVco.QR_Instance_ID + Constants.EMVco.QR_Instance_SIZE + Constants.EMVco.QR_Instance_VALUE + Constants.EMVco.CRC
 
         val generatedCRC = generateChecksumCRC16(qrString.toByteArray())
 
@@ -319,7 +318,7 @@ object Tools {
                 Constants.MerchantEMVco.Point_Of_Initiation_Method_VALUE_STATIC
         }
 
-        var Paid_Entity_Reference_VALUE = EncryptionUtils.encryptStringAESCBC(number)
+        var Paid_Entity_Reference_VALUE = EncryptionUtils.encryptStringAESCBC("+$number")
         var Masked_Paid_Entity_Reference_VALUE = ""
 
         Masked_Paid_Entity_Reference_VALUE =
@@ -339,13 +338,12 @@ object Tools {
                     amountTag +
                     Constants.MerchantEMVco.Country_Code_ID + Constants.MerchantEMVco.Country_Code_SIZE + Constants.MerchantEMVco.Country_Code_VALUE +
                     Constants.MerchantEMVco.Merchant_Name_ID + merchantName.length + merchantName +
-                    Constants.MerchantEMVco.Merchant_City_ID + Constants.MerchantEMVco.Merchant_City_SIZE + Constants.MerchantEMVco.Merchant_City_VALUE + CRC
-        /*Constants.MerchantEMVco.Unreserved_Template_ID + Constants.MerchantEMVco.Unreserved_Template_SIZE + Constants.MerchantEMVco.Unreserved_Template_VALUE +
-        Constants.MerchantEMVco.Unreserved_Globally_Unique_Identifier_ID + Constants.MerchantEMVco.Unreserved_Globally_Unique_Identifier_SIZE + Constants.MerchantEMVco.Unreserved_Globally_Unique_Identifier_VALUE +
-        Constants.MerchantEMVco.Operation_Type_ID + Constants.MerchantEMVco.Operation_Type_SIZE + Constants.MerchantEMVco.Operation_Type_VALUE +
-        Constants.MerchantEMVco.Signature_Format_ID + Constants.MerchantEMVco.Signature_Format_SIZE + Constants.MerchantEMVco.Signature_Format_VALUE +
-        Constants.MerchantEMVco.QR_Version_ID + Constants.MerchantEMVco.QR_Version_SIZE + Constants.MerchantEMVco.QR_Version_VALUE +
-        Constants.MerchantEMVco.QR_Instance_ID + Constants.MerchantEMVco.QR_Instance_SIZE + Constants.MerchantEMVco.QR_Instance_VALUE*/
+                    Constants.MerchantEMVco.Merchant_City_ID + Constants.MerchantEMVco.Merchant_City_SIZE + Constants.MerchantEMVco.Merchant_City_VALUE + Constants.MerchantEMVco.Unreserved_Template_ID + Constants.MerchantEMVco.Unreserved_Template_SIZE + Constants.MerchantEMVco.Unreserved_Template_VALUE +
+                    Constants.MerchantEMVco.Unreserved_Globally_Unique_Identifier_ID + Constants.MerchantEMVco.Unreserved_Globally_Unique_Identifier_SIZE + Constants.MerchantEMVco.Unreserved_Globally_Unique_Identifier_VALUE +
+                    Constants.MerchantEMVco.Operation_Type_ID + Constants.MerchantEMVco.Operation_Type_SIZE + Constants.MerchantEMVco.Operation_Type_VALUE +
+                    Constants.MerchantEMVco.Signature_Format_ID + Constants.MerchantEMVco.Signature_Format_SIZE + Constants.MerchantEMVco.Signature_Format_VALUE +
+                    Constants.MerchantEMVco.QR_Version_ID + Constants.MerchantEMVco.QR_Version_SIZE + Constants.MerchantEMVco.QR_Version_VALUE +
+                    Constants.MerchantEMVco.QR_Instance_ID + Constants.MerchantEMVco.QR_Instance_SIZE + Constants.MerchantEMVco.QR_Instance_VALUE + CRC
 
         val generatedCRC = generateChecksumCRC16(qrString.toByteArray())
 
@@ -378,7 +376,7 @@ object Tools {
     fun validateConsumerEMVcoString(text: String): Boolean {
         try {
             if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
-                return text.contains("6222") or text.contains("6223")
+                return text.contains("01010")
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -388,27 +386,37 @@ object Tools {
     }
 
     fun validateMerchantEMVcoString(text: String): Boolean {
-        var merchantNameLength = ""
-        var merchantName = ""
+//        var merchantNameLength = ""
+//        var merchantName = ""
+//        try {
+//            if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
+//                merchantNameLength =
+//                    text.split(Constants.MerchantEMVco.Country_Code_ID + Constants.MerchantEMVco.Country_Code_SIZE)[1].substring(
+//                        4,
+//                        6
+//                    )
+//                merchantName =
+//                    text.split(Constants.MerchantEMVco.Merchant_Name_ID + merchantNameLength)[1].substring(
+//                        0,
+//                        Integer.valueOf(merchantNameLength)
+//                    )
+//            }
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//            merchantName = ""
+//        }
+//
+//        return merchantName.isNotEmpty()
+
         try {
             if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
-                merchantNameLength =
-                    text.split(Constants.MerchantEMVco.Country_Code_ID + Constants.MerchantEMVco.Country_Code_SIZE)[1].substring(
-                        4,
-                        6
-                    )
-                merchantName =
-                    text.split(Constants.MerchantEMVco.Merchant_Name_ID + merchantNameLength)[1].substring(
-                        0,
-                        Integer.valueOf(merchantNameLength)
-                    )
+                return text.contains("01011")
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            merchantName = ""
+            return false
         }
-
-        return merchantName.isNotEmpty()
+        return true
     }
 
     fun openDialerWithNumber(context: Context) {
