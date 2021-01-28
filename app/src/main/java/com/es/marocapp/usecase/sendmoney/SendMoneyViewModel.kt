@@ -531,6 +531,10 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
 
             tranferAmountToWithAlias = receiver
 
+            if (merchantName.isNotEmpty()) {
+                merchantName = merchantName.replace(" ", "") + "MKESHMA"
+            }
+
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPaymentQouteCall(
                 PaymentQuoteRequest(
                     amount,
@@ -543,7 +547,7 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                     qrType,
                     qrValue,
                     merchantCode,
-                    merchantName.replace(" ", "") + "MKESHMA"
+                    merchantName
                 )
             )
                 .compose(applyIOSchedulers())
@@ -629,6 +633,9 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
 
             tranferAmountToWithAlias = receiver
 
+            if (merchantName.isNotEmpty()) {
+                merchantName = merchantName.replace(" ", "") + "MKESHMA"
+            }
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPaymentCall(
                 PaymentRequest(
@@ -644,7 +651,7 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                     qrType,
                     qrValue,
                     merchantCode,
-                    merchantName.replace(" ", "") + "MKESHMA"
+                    merchantName
                 )
 
             )
@@ -734,6 +741,9 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
 
             tranferAmountToWithAlias = receiver
 
+            if (merchantName.isNotEmpty()) {
+                merchantName = merchantName.replace(" ", "") + "MKESHMA"
+            }
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getSimplePaymentQouteCall(
                 SimplePaymentQuoteRequest(
@@ -746,7 +756,7 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                     qrType,
                     qrValue,
                     merchantCode,
-                    merchantName.replace(" ", "") + "MKESHMA",
+                    merchantName,
                     Constants.balanceInfoAndResponse?.profilename.toString()
                 )
             )
@@ -833,6 +843,9 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
 
             tranferAmountToWithAlias = receiver
 
+            if (merchantName.isNotEmpty()) {
+                merchantName = merchantName.replace(" ", "") + "MKESHMA"
+            }
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getSimplePaymentCall(
                 SimplePaymentRequest(
@@ -847,7 +860,7 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                     qrType,
                     qrValue,
                     merchantCode,
-                    merchantName.replace(" ", "") + "MKESHMA",
+                    merchantName,
                     Constants.balanceInfoAndResponse?.profilename.toString()
                 )
 

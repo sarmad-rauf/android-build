@@ -9,7 +9,7 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 
-def baseUrlType = 1  //1:Production,2:Staging,3:Development
+def baseUrlType = 2  //1:Production,2:Staging,3:Development
 
 android {
     compileSdkVersion 29
@@ -50,7 +50,7 @@ android {
                 buildConfigField "String", "SERVER_URL", "\"http://124.109.32.135:8080/mobileapi/\""
             }
 
-            buildConfigField "boolean", "SSL_ENABLED", "true"
+            buildConfigField "boolean", "SSL_ENABLED", "false"
             buildConfigField "boolean", "LOG_ENABLED", "true"
         }
         release {

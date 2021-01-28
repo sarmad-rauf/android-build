@@ -388,15 +388,27 @@ object Tools {
     }
 
     fun validateMerchantEMVcoString(text: String): Boolean {
+        var merchantNameLength = ""
+        var merchantName = ""
         try {
             if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
-                return text.contains(Constants.MerchantEMVco.Merchant_Category_Code_ID + Constants.MerchantEMVco.Merchant_Category_Code_SIZE)
+                merchantNameLength =
+                    text.split(Constants.MerchantEMVco.Country_Code_ID + Constants.MerchantEMVco.Country_Code_SIZE)[1].substring(
+                        4,
+                        6
+                    )
+                merchantName =
+                    text.split(Constants.MerchantEMVco.Merchant_Name_ID + merchantNameLength)[1].substring(
+                        0,
+                        Integer.valueOf(merchantNameLength)
+                    )
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            return false
+            merchantName = ""
         }
-        return true
+
+        return merchantName.isNotEmpty()
     }
 
     fun openDialerWithNumber(context: Context) {
