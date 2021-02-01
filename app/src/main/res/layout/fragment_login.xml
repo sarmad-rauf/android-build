@@ -90,7 +90,6 @@
                     android:layout_marginStart="@dimen/_32sdp"
                     android:layout_marginEnd="@dimen/_32sdp"
                     >
-
                     <com.es.marocapp.widgets.MarocEditText
                         android:id="@+id/input_pin"
                         android:layout_width="match_parent"

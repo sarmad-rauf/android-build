@@ -11,6 +11,12 @@ object EndPoints {
     //GetAccountHolderInformation
     const val getaccountholderinformation = "getaccountholderinformation"
 
+    //GetAccountDetail
+    const val getaccountDetail = "getaccountdetails"
+
+    //GetAccountHolderInformation
+    const val getaccountholderinformationnew = "getreceiverinfo"
+
     //GetInitialAuthDetials
     const val getinitialauthdetails = "getinitialauthdetails"
 
@@ -49,6 +55,9 @@ object EndPoints {
 
     //getaccounts
     const val getaccounts = "getaccounts"
+
+    //getaccounts/su
+    const val getaccountsu = "getaccounts/su"
 
     //changepassword
     const val changepassword = "changepassword"

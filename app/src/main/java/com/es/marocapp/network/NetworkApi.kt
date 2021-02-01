@@ -18,6 +18,15 @@ interface NetworkApi {
     @POST(EndPoints.getaccountholderinformation)
     fun getAccountHolderInformation(@Body request : GetAccountHolderInformationRequest) : Observable<GetAccountHolderInformationResponse>
 
+    //Request for GetAccountDetailCall
+    @POST(EndPoints.getaccountDetail)
+    fun getAccountDetail(@Body request : GetAccountDetailRequest) : Observable<GetAccountHolderInformationResponse>
+
+    //Request for GetAccountHolderInformationCallnew
+    @POST(EndPoints.getaccountholderinformationnew)
+    fun getAccountHolderInformationnew(@Body request : GetAccountHolderInformationRequest) : Observable<GetAccountHolderInformationResponse>
+
+
     //Request for GetInitialAuthDetialsCall
     @POST(EndPoints.getinitialauthdetails)
     fun getInitialAuthDetials(@Body request : GetInitialAuthDetailsRequest) : Observable<GetInitialAuthDetailsReponse>
@@ -73,6 +82,11 @@ interface NetworkApi {
     //Request for GetAccounts
     @POST(EndPoints.getaccounts)
     fun getAccountsCall(@Body request : GetAccountsRequest) : Observable<GetAccountsResponse>
+
+    //Request for GetAccountsu
+    @Headers("Cache-Control: max-age=640000")
+    @POST(EndPoints.getaccountsu)
+    fun getAccountsuCall(@Body request : GetAccountsRequest) : Observable<GetAccountsResponse>
 
     //Request for ChangePassword
     @POST(EndPoints.changepassword)

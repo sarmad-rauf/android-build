@@ -301,13 +301,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
 
     private fun subscribeForDefaultAccountStatus() {
 
+       var isProfileNameMatched = Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName.equals(Constants.MERCHENTAGENTPROFILEARRAY[0])||
+               Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName.equals(Constants.MERCHENTAGENTPROFILEARRAY[1])
+
         homeViewModel.getAccountHolderAdditionalInfoResponseListner.observe(this@HomeFragment,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     if (it.additionalinformation.isNullOrEmpty()) {
                         showPopUp()
                     } else {
-                        if (it.additionalinformation[0].value.equals("FALSE", true)) {
+                        if (it.additionalinformation[0].value.equals("FALSE", true)&&isProfileNameMatched) {
                             showPopUp()
                         } else {
                             Constants.IS_DEFAULT_ACCOUNT_SET = true

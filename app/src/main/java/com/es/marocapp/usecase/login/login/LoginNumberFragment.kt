@@ -192,7 +192,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                         mDataBinding.inputLayoutPhoneNumber.error = ""
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
 
-                        mActivityViewModel.requestForGetAccountHolderInformationApi(
+                        mActivityViewModel.requestForGetAccountDetailApi(
                             context,
                             userMSISDNwithPrefix
                         )
@@ -233,7 +233,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
             DialogUtils.showErrorDialoge(activity as LoginActivity, it)
         })
 
-        val mAccountHolderInfoResonseObserver = Observer<GetAccountHolderInformationResponse> {
+        val mAccountDetailResonseObserver = Observer<GetAccountHolderInformationResponse> {
             if (it.responseCode == ApiConstant.API_SUCCESS) {
                 mActivityViewModel.isSignUpFlow.set(false)
                 var deviceID = ""
@@ -241,7 +241,6 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                     deviceID = it.deviceId
                     deviceID = deviceID.removePrefix("ID:")
                     deviceID = deviceID.removeSuffix("@device/ALIAS")
-
                     deviceID = deviceID.trim()
                 }
 
@@ -249,21 +248,22 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                     mActivityViewModel.accountHolderInfoUserProfile = it.profileName
                 }
 
-                if (deviceID.equals(Constants.CURRENT_NUMBER_DEVICE_ID)) {
+         //       if (deviceID.equals(Constants.CURRENT_NUMBER_DEVICE_ID)) {
                     checkUserRegsitrationAndActicationSenario(it)
-                } else {
-                    if(checkIfUserIsBlocked(it)){
-                        mActivityViewModel.accountHolderInfoResponse = it
-
-                        mActivityViewModel.previousDeviceId = deviceID
-                        mActivityViewModel.requestForGetOtpApi(activity)
-                    }
-                }
+//                } else {
+//                    if(checkIfUserIsBlocked(it)){
+//                        mActivityViewModel.accountHolderInfoResponse = it
+//
+//                        mActivityViewModel.previousDeviceId = deviceID
+        //               mActivityViewModel.requestForGetOtpApi(activity)
+//                    }
+//                }
 
                 if(!it.language.isNullOrEmpty()) {
                     LocaleManager.languageToBeChangedAfterAPI = it.language
                 }
-            } else if (it.responseCode == ApiConstant.API_FAILURE) {
+            }
+            else if (it.responseCode == ApiConstant.API_FAILURE) {
                 isRegFlow = true
                 showTermsConditionsAndSignup()
                 if(!it.profileName.isNullOrEmpty()){
@@ -271,7 +271,9 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                 }
                 /* mActivityViewModel.isSignUpFlow.set(true)
                  mActivity.navController.navigate(R.id.action_loginFragment_to_signUpDetailFragment)*/
-            } else if (it.responseCode == ApiConstant.API_ACCOUNT_BLOCKED) {
+            }
+            else if (it.responseCode == ApiConstant.API_ACCOUNT_BLOCKED)
+            {
                 if(!it.profileName.isNullOrEmpty()){
                     mActivityViewModel.accountHolderInfoUserProfile = it.profileName
                 }
@@ -307,7 +309,11 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
 
                     }
                 )
-            }  else {
+            }else if (it.responseCode == ApiConstant.DEVICE_ID_MIS_MATCHED)
+            {
+                mActivityViewModel.requestForGetOtpApi(activity)
+            }
+            else {
                 DialogUtils.showErrorDialoge(activity, it.description)
             }
         }
@@ -340,9 +346,9 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
             }
         })
 
-        mActivityViewModel.getAccountHolderInformationResponseListner.observe(
+        mActivityViewModel.getAccountDetailResponseListner.observe(
             this,
-            mAccountHolderInfoResonseObserver
+            mAccountDetailResonseObserver
         )
         mActivityViewModel.getOTPResponseListner.observe(this, mGetOtpResponseListner)
 
@@ -401,11 +407,10 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                             true
                         )
                     ) {
-                        // this check means that User is Register and in active state with password set for his account so direct login api is called
+                        //this check means that User is Register and in active state with password set for his account so direct login api is called
                         //LoginwithCert APi is called
                         mActivityViewModel.activeUserWithoutPasswordType.set(false)
                         mActivityViewModel.activeUserWithoutPassword.set(false)
-
                         (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_signUpNumberFragment)
                     } else if (response.credentialList.credentials[i].credentialstatus.equals(
                             "BLOCKED",
@@ -457,7 +462,6 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
             // This Check Means User Register Itself verifies OTP but Close App before setting his/her pin so user is redirected to setup Pin Fragment
             mActivityViewModel.activeUserWithoutPassword.set(true)
             mActivityViewModel.activeUserWithoutPasswordType.set(false)
-
             (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_setYourPinFragment)
         }
     }

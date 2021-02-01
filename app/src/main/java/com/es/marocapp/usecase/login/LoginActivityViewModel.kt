@@ -2,6 +2,7 @@ package com.es.marocapp.usecase.login
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -53,7 +54,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
     var isUserToShowProfile = false
 
-    var getAccountHolderInformationResponseListner = SingleLiveEvent<GetAccountHolderInformationResponse>()
+    var getAccountDetailResponseListner = SingleLiveEvent<GetAccountHolderInformationResponse>()
     var getInitialAuthDetailsResponseListner = SingleLiveEvent<GetInitialAuthDetailsReponse>()
     var getOtpForRegistrationResponseListner = SingleLiveEvent<GetOtpForRegistrationResponse>()
     var getSimppleOtpForRegistrationResponseListner = SingleLiveEvent<GetOtpSimpleResponse>()
@@ -80,19 +81,18 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
     }
 
-    // API Called on Login Screen to check weather User is Registered or Not
-    fun requestForGetAccountHolderInformationApi(
-        context: Context?,
-        userMsisdn: String
+    // API For GETACCOUNTS API
+    fun requestForGetAccountsAPI(
+        context: Context?
     ) {
 
         if (Tools.checkNetworkStatus(getApplication())) {
 
             isLoading.set(true)
-            mUserMsisdn = userMsisdn
 
-            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAccountHolderInformation(
-                GetAccountHolderInformationRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(userMsisdn))
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAccountsCall(
+                GetAccountsRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(mUserMsisdn))
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -100,13 +100,12 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                         isLoading.set(false)
 
                         if (result?.responseCode != null )
-                         {
-                            getAccountHolderInformationResponseListner.postValue(result)
+                        {
+                            getAccountsResponseListner.postValue(result)
 
-                        }else {
-
+                        } else {
                             errorText.postValue(context!!.getString(R.string.error_msg_generic))
-                    }
+                        }
 
 
                     },
@@ -127,6 +126,96 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
         } else {
 
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    // API Called on Login Screen to check weather User is Registered or Not
+    fun requestForGetAccountHolderInformationApi(
+        context: Context?,
+        userMsisdn: String
+    ) {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+            mUserMsisdn = userMsisdn
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAccountHolderInformation(
+                GetAccountHolderInformationRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(userMsisdn))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null )
+                         {
+                             getAccountDetailResponseListner.postValue(result)
+                        }else {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                    }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+                    })
+        } else {
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+
+     //getAcount detail api
+    fun requestForGetAccountDetailApi(
+        context: Context?,
+        userMsisdn: String
+    ) {
+
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+            mUserMsisdn = userMsisdn
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAccountDetail(
+                GetAccountDetailRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(userMsisdn),Constants.CURRENT_NUMBER_DEVICE_ID)
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null )
+                        {
+                            getAccountDetailResponseListner.postValue(result)
+                        }else {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+                    })
+        } else {
             errorText.postValue(Constants.SHOW_INTERNET_ERROR)
         }
 
@@ -498,7 +587,6 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     // API Called on LOGIN Fragment To Add New Device ID
     fun requestForVerifyOtpAndUpdateAliaseAPI(
         context: Context?,
-        previousDeviceID : String,
         newDeviceID : String,
         otp : String
     ) {
@@ -508,7 +596,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
             isLoading.set(true)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getValidateOtpAndUpdateAliases(
-                ValidateOtpAndUpdateAliasesRequest(previousDeviceID,newDeviceID,ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(mUserMsisdn),EncryptionUtils.encryptString(otp))
+                ValidateOtpAndUpdateAliasesRequest(newDeviceID,ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(mUserMsisdn),EncryptionUtils.encryptString(otp))
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -517,8 +605,15 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
                         if (result?.responseCode != null )
                         {
-                            getValidateOtpAndUpdateAliasResponseListner.postValue(result)
-
+                            if(result?.responseCode==ApiConstant.API_SUCCESS)
+                            {
+                                Log.d("Abro","alias result ${result.toString()}")
+                                getAccountDetailResponseListner.postValue(result.getaccountholderinfo)
+                               // getValidateOtpAndUpdateAliasResponseListner.postValue(result)
+                            }
+                            else {
+                                getValidateOtpAndUpdateAliasResponseListner.postValue(result)
+                            }
                         } else {
                             errorText.postValue(context!!.getString(R.string.error_msg_generic))
                         }
@@ -754,55 +849,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     }
 
 
-    // API For GETACCOUNTS API
-    fun requestForGetAccountsAPI(
-        context: Context?
-    ) {
 
-        if (Tools.checkNetworkStatus(getApplication())) {
-
-            isLoading.set(true)
-
-
-            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAccountsCall(
-                GetAccountsRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(mUserMsisdn))
-            )
-                .compose(applyIOSchedulers())
-                .subscribe(
-                    { result ->
-                        isLoading.set(false)
-
-                        if (result?.responseCode != null )
-                         {
-                            getAccountsResponseListner.postValue(result)
-
-                        } else {
-                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
-                        }
-
-
-                    },
-                    { error ->
-                        isLoading.set(false)
-
-                        //Display Error Result Code with with Configure Message
-                        try {
-                            if (context != null && error != null) {
-                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
-                            }
-                        } catch (e: Exception) {
-                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
-                        }
-
-                    })
-
-
-        } else {
-
-            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
-        }
-
-    }
 
 
 

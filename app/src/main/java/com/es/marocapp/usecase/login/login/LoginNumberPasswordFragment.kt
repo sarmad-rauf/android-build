@@ -174,9 +174,9 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                         }*/
                     }
                     if(isRememberMeEnabled){
-                        PrefUtils.addString(activity!!,PREF_KEY_USER_MSISDN,Constants.CURRENT_USER_MSISDN)
+                        PrefUtils.addString(requireActivity(),PREF_KEY_USER_MSISDN,Constants.CURRENT_USER_MSISDN)
                         PrefUtils.addString(
-                            activity!!,
+                            requireActivity(),
                             PrefUtils.PreKeywords.PREF_KEY_USER_NAME,
                             Constants.CURRENT_USER_NAME
                         )
@@ -204,12 +204,12 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                     Constants.balanceInfoAndResponse = it
                     if(isRememberMeEnabled) {
                         PrefUtils.addString(
-                            activity!!,
+                            requireActivity(),
                             PREF_KEY_USER_MSISDN,
                             Constants.CURRENT_USER_MSISDN
                         )
                         PrefUtils.addString(
-                            activity!!,
+                            requireActivity(),
                             PrefUtils.PreKeywords.PREF_KEY_USER_NAME,
                             Constants.CURRENT_USER_NAME
                         )
@@ -292,7 +292,7 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
             }
         }
 
-        mActivityViewModel.getAccountHolderInformationResponseListner.observe(this@LoginNumberPasswordFragment,
+        mActivityViewModel.getAccountDetailResponseListner.observe(this@LoginNumberPasswordFragment,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                     if(!it.profileName.isNullOrEmpty()){

@@ -2,8 +2,10 @@ package com.es.marocapp.usecase.sendmoney
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import com.es.marocapp.R
 import com.es.marocapp.model.requests.*
 import com.es.marocapp.model.responses.*
@@ -23,7 +25,7 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
     lateinit var disposable: Disposable
     var isLoading = ObservableField<Boolean>()
     var errorText = SingleLiveEvent<String>()
-    var getAccountHolderInformationResponseListner =
+    var getRecieverInformationResponseListner =
         SingleLiveEvent<GetAccountHolderInformationResponse>()
     var getAccountHolderAdditionalInfoResponseListner =
         SingleLiveEvent<AccountHolderAdditionalInformationResponse>()
@@ -36,6 +38,7 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
     var getFloatTransferQuoteResponseListner = SingleLiveEvent<FloatTransferQuoteResponse>()
     var getFloatTransferResponseListner = SingleLiveEvent<FloatTransferResponse>()
     var getAddFavoritesResponseListner = SingleLiveEvent<AddContactResponse>()
+    var getAccountsResponseListner = SingleLiveEvent<GetAccountsResponse>()
 
 
     var isTransactionFailed = ObservableField<Boolean>()
@@ -52,6 +55,7 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
     var isUserSelectedFromFavorites = ObservableField<Boolean>()
 
     var transferdAmountTo = ""
+    var transferdAcountFri = "0"
     var amountToTransfer = ""
     var amountScannedFromQR = ""
     var feeAmount = ""
@@ -63,6 +67,7 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
     var merchantCode = ""
     var senderBalanceAfter: String? = ""
     var ReceiverName = ""
+    var mUserMsisdn = ""
     var mBalanceInforAndResponseObserver = ObservableField<BalanceInfoAndLimitResponse>()
     var mAccountHolderInfoResponseObserver = ObservableField<GetAccountHolderInformationResponse>()
 
@@ -74,8 +79,56 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
         mBalanceInforAndResponseObserver.set(Constants.balanceInfoAndResponse)
     }
 
+
+
+
+
+    fun requestForGetAccountsuAPI(
+        context: Context?
+    ) {
+
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAccountsuCall(
+                GetAccountsRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(transferdAmountTo))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+                        if (result?.responseCode != null )
+                        {
+                            Log.d("Abro","true true true ${result.accounts.get(0).accountFri}")
+                            getAccountsResponseListner.postValue(result)
+
+                        } else {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+                    })
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
     // API Called on Login Screen to check weather User is Registered or Not
-    fun requestForGetAccountHolderInformationApi(
+    fun requestForGetAccountRecieverInformationApi(
         context: Context?,
         userMsisdn: String
     ) {
@@ -85,7 +138,7 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
             isLoading.set(true)
             transferdAmountTo = userMsisdn
             disposable =
-                ApiClient.newApiClientInstance?.getServerAPI()?.getAccountHolderInformation(
+                ApiClient.newApiClientInstance?.getServerAPI()?.getAccountHolderInformationnew(
                     GetAccountHolderInformationRequest(
                         ApiConstant.CONTEXT_BEFORE_LOGIN,
                         Constants.getNumberMsisdn(userMsisdn)
@@ -100,7 +153,7 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                                     ApiConstant.API_SUCCESS, true
                                 )
                             ) {
-                                getAccountHolderInformationResponseListner.postValue(result)
+                                getRecieverInformationResponseListner.postValue(result)
                                 mAccountHolderInfoResponseObserver.set(result)
 
                             } else if (result?.responseCode != null && result.responseCode.equals(
@@ -109,7 +162,7 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                                 )
                             ) {
                                 // if response code is 1500 this means user  user isnot registered redirecting user to Registration flow
-                                getAccountHolderInformationResponseListner.postValue(result)
+                                getRecieverInformationResponseListner.postValue(result)
                                 mAccountHolderInfoResponseObserver.set(result)
                             } else if (result.responseCode.equals(ApiConstant.API_SESSION_OUT)) {
                                 (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(
@@ -122,7 +175,7 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                                     LoginActivity.KEY_REDIRECT_USER_INVALID
                                 )
                             } else {
-                                getAccountHolderInformationResponseListner.postValue(result)
+                                getRecieverInformationResponseListner.postValue(result)
                             }
 
 
@@ -370,11 +423,19 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
             amountToTransfer = amount
             tranferAmountToWithAlias = Constants.getNumberMsisdn(transferdAmountTo)
 
+            var transferingTO:String=""
+            if(!transferdAcountFri.equals("0"))
+            {transferingTO=transferdAcountFri
+            }
+            else {
+                transferingTO= Constants.getNumberMsisdn(transferdAmountTo)
+            }
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getMerchantQouteCall(
+
                 MerchantPaymentQuoteRequest(
                     amount,
                     ApiConstant.CONTEXT_AFTER_LOGIN,
-                    Constants.getNumberMsisdn(transferdAmountTo)
+                    transferingTO
                 )
             )
                 .compose(applyIOSchedulers())
@@ -438,14 +499,20 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
 
             isLoading.set(true)
             tranferAmountToWithAlias = Constants.getNumberMsisdn(transferdAmountTo)
-
+            var transferingTO:String=""
+            if(!transferdAcountFri.equals("0"))
+            {transferingTO=transferdAcountFri
+            }
+            else {
+                transferingTO= Constants.getNumberMsisdn(transferdAmountTo)
+            }
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getMerchantPaymentCall(
                 MerchantPaymentRequest(
                     amountToTransfer,
                     ApiConstant.CONTEXT_AFTER_LOGIN,
                     qouteID,
                     Constants.getNumberMsisdn(sender),
-                    Constants.getNumberMsisdn(transferdAmountTo)
+                    transferingTO
                 )
             )
                 .compose(applyIOSchedulers())
@@ -1121,6 +1188,10 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
             errorText.postValue(Constants.SHOW_INTERNET_ERROR)
         }
 
+    }
+
+    fun addFri(fri: String) {
+transferdAcountFri=fri
     }
 
 }

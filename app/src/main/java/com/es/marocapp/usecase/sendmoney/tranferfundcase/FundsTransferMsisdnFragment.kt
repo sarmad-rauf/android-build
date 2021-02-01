@@ -31,6 +31,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
     FundsTrasnferClickLisntener, AdapterView.OnItemSelectedListener, TextWatcher {
 
     private lateinit var mActivityViewModel: SendMoneyViewModel
+    lateinit var profileName:String
 
     private var list_of_favorites = arrayListOf<String>()
     var isNumberRegexMatches = false
@@ -115,6 +116,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         (activity as SendMoneyActivity).mInputHint = mDataBinding.inputPhoneNumberHint
         setStrings()
         subscribeObserver()
+        subScribeForAcountsResponse()
 
         mDataBinding.phonebook.setOnClickListener {
             (activity as SendMoneyActivity).openPhoneBook()
@@ -202,7 +204,14 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                     } else {
                         if (it.additionalinformation[0].value.equals("TRUE", true)) {
                             mActivityViewModel.isUserRegistered.set(true)
-                            (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
+                            var isProfileNameMatched =
+                                profileName.equals(Constants.MERCHENTAGENTPROFILEARRAY[0]) ||
+                                        profileName.equals(Constants.MERCHENTAGENTPROFILEARRAY[1])
+                            Log.d("Abro", "isMerchantMatched ${isProfileNameMatched}")
+                            if (isProfileNameMatched) {
+                                mActivityViewModel.requestForGetAccountsuAPI(requireContext())
+                            }
+                         //   (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
                         } else {
                             mActivityViewModel.isUserRegistered.set(false)
                             (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
@@ -214,17 +223,37 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
             }
         )
 
-        mActivityViewModel.getAccountHolderInformationResponseListner.observe(this@FundsTransferMsisdnFragment,
+        mActivityViewModel.getRecieverInformationResponseListner.observe(this@FundsTransferMsisdnFragment,
             Observer {
-                if (Constants.IS_AGENT_USER) {
-                    if (mActivityViewModel.isFundTransferUseCase.get()!!) {
-                        if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                            (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
-                        } else {
-                            DialogUtils.showErrorDialoge(activity, it.description)
-                        }
+                Log.d("Abro", "Acount reciever info respnse  ${it.toString()}")
+
+                //Merchant payment Usacese
+                if (mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!) {
+                    if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                        mActivityViewModel.isAccountHolderInformationFailed.set(false)
+                        //calling Acount reciever API
+                         profileName=it.profileName
+                        mActivityViewModel.requestForAccountHolderAddtionalInformationApi(
+                            activity
+                        )
+
+                    } else {
+                        mActivityViewModel.isAccountHolderInformationFailed.set(true)
+                        mActivityViewModel.isUserRegistered.set(false)
+                        (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
                     }
-                    if (mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!) {
+                } else {
+                    if (Constants.IS_AGENT_USER) {
+                        //senMoney Usecase
+                        if (mActivityViewModel.isFundTransferUseCase.get()!!) {
+                            if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                                (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
+                            } else {
+                                DialogUtils.showErrorDialoge(activity, it.description)
+                            }
+                        }
+
+                    } else {
                         if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                             mActivityViewModel.isAccountHolderInformationFailed.set(false)
                             mActivityViewModel.requestForAccountHolderAddtionalInformationApi(
@@ -236,18 +265,28 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                             (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
                         }
                     }
-                } else {
-                    if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                        mActivityViewModel.isAccountHolderInformationFailed.set(false)
-                        mActivityViewModel.requestForAccountHolderAddtionalInformationApi(activity)
-                    } else {
-                        mActivityViewModel.isAccountHolderInformationFailed.set(true)
-                        mActivityViewModel.isUserRegistered.set(false)
-                        (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
-                    }
                 }
             }
         )
+    }
+
+    fun subScribeForAcountsResponse() {
+        mActivityViewModel.getAccountsResponseListner.observe(
+            this@FundsTransferMsisdnFragment,
+            Observer {
+                //  Constants.MERCHANT_AGENT_PROFILE_NAME
+                for (i in it.accounts.indices) {
+                    Log.d("Abro", "Reciever Acount FRI ")
+                    if (it.accounts.get(i).profileName.equals(Constants.MERCHANT_AGENT_PROFILE_NAME)) {
+                        var fri = it.accounts.get(i).accountFri.substring(4, it.accounts.get(i).accountFri.length)
+                        mActivityViewModel.addFri(fri)
+                        (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
+                        //mActivityViewModel.transferdAcountFri = fri
+                        // (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
+                    }
+                    Log.d("Abro", "Reciever Acount FRI ${mActivityViewModel.transferdAcountFri} ")
+                }
+            })
     }
 
     override fun onNextClickListner(view: View) {
@@ -276,7 +315,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                     mDataBinding.inputLayoutPhoneNumber.error = ""
                     mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
 
-                    mActivityViewModel.requestForGetAccountHolderInformationApi(
+                    mActivityViewModel.requestForGetAccountRecieverInformationApi(
                         activity,
                         userMSISDNwithPrefix
                     )

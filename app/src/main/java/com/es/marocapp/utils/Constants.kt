@@ -40,6 +40,9 @@ object Constants {
     var acountTypeList :ArrayList<String> = ArrayList()
      var CURRENT_ACOUNT_TYPE_SELECTED: String? = LanguageData.getStringValue("Wallet")
     lateinit var LAST_ACOUNT_TYPE_SELECTED:String
+    lateinit var RECIEVER_ACOUNT_FRI:String
+
+    lateinit var MERCHENTAGENTPROFILEARRAY:Array<String>
 
 
     //For Bill Payment Fee Charge on Bills Keys in Fatorati Bill use case

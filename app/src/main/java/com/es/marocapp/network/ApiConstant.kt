@@ -6,6 +6,7 @@ object ApiConstant {
     const val API_INVALID_VERSION = "1900"
     const val API_ACCOUNT_BLOCKED = "1700"
     const val API_WRONG_ATTEMPT_BLOCKED = "2000"
+    const val DEVICE_ID_MIS_MATCHED = "2100"
     const val API_PENDING = "1800"
     const val API_SESSION_OUT = "1401"
     const val API_INVALID = "1100"

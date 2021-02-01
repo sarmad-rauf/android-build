@@ -74,8 +74,6 @@ public class ApiClient() : Dependencies() {
     override fun setHeaders(): ConcurrentHashMap<String, String> {
 
         headerParams.clear()
-
-
         headerParams["Accept"] = "application/json"
         headerParams["X-Forwarded-For"] = Constants.APPLICATION_IP_ADDRESS
         headerParams["token"] = Constants.createUserToken()

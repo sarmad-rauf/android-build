@@ -1,10 +1,12 @@
 package com.es.marocapp.usecase.login.login
 
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
@@ -25,7 +27,9 @@ import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import kotlinx.android.synthetic.main.fragment_login.view.*
 import kotlinx.android.synthetic.main.layout_login_header.view.*
+import kotlinx.android.synthetic.main.toast_layout.view.*
 import java.util.regex.Pattern
 
 /**
@@ -35,7 +39,7 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
     VerifyOTPClickListner, TextWatcher, View.OnFocusChangeListener {
 
     lateinit var mActivityViewModel: LoginActivityViewModel
-
+    var isRegFlow = false
     var isOTPRegexMatches = true
 
 
@@ -101,7 +105,83 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
         mDataBinding.btnVerifyOtp.text = LanguageData.getStringValue("BtnTitle_Verify")
 
     }
+    fun checkUserRegsitrationAndActicationSenario(response: GetAccountHolderInformationResponse) {
+        if (response.accountHolderStatus.equals("ACTIVE", true)) {
+            if(!response.profileName.isNullOrEmpty()){
+                mActivityViewModel.accountHolderInfoUserProfile = response.profileName
+            }
+            if (response.credentialList.credentials.isNotEmpty()) {
 
+                for (i in response.credentialList.credentials.indices) {
+                    if (response.credentialList.credentials[i].credentialtype.equals(
+                            "password",
+                            true
+                        ) && response.credentialList.credentials[i].credentialstatus.equals(
+                            "ACTIVE",
+                            true
+                        )
+                    ) {
+                        //this check means that User is Register and in active state with password set for his account so direct login api is called
+                        //LoginwithCert APi is called
+                        mActivityViewModel.activeUserWithoutPasswordType.set(false)
+                        mActivityViewModel.activeUserWithoutPassword.set(false)
+                        (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_signUpNumberFragment)
+                      //  (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_signUpNumberFragment)
+                    } else if (response.credentialList.credentials[i].credentialstatus.equals(
+                            "BLOCKED",
+                            true
+                        ) || response.credentialList.credentials[i].credentialstatus.equals(
+                            "BLOCK",
+                            true
+                        )
+                    ) {
+                        DialogUtils.showBlockedAccountDialog(activity,
+                            LanguageData.getStringValue("BtnTitle_ResetPassword"),
+                            LanguageData.getStringValue("BtnTitle_Cancel"),
+                            LanguageData.getStringValue("BlockedAndResetAccount"),
+                            LanguageData.getStringValue("AccountBlocked"),
+                            object : DialogUtils.OnCustomDialogListner {
+                                override fun onCustomDialogOkClickListner() {
+                                    mActivityViewModel.isFromLoginUserScreen.set(false)
+
+                                    mActivityViewModel.requestForGetBalanceAndGenerateOtpApi(activity as LoginActivity,mActivityViewModel.accountHolderInfoUserProfile.toString(),
+                                        mActivityViewModel.mUserMsisdn)
+//                                    (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)
+                                }
+
+                            }
+                        )
+                    } else {
+                        // Create Crednetial Api is Called
+                        //this check means user is register with state Active but didn't registered Password as his account having credetial type pin
+                        mActivityViewModel.accountHolderInfoUserProfile = response.profileName
+                        mActivityViewModel.activeUserWithoutPasswordType.set(true)
+                        mActivityViewModel.activeUserWithoutPassword.set(false)
+
+                      //  (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_setYourPinFragment)
+                        (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_setYourPinFragment)
+                    }
+                }
+            } else {
+                // Create Crednetial Api is Called
+                //this check means user is register with state Active but didn't registered Password as his account having credetial type pin
+                mActivityViewModel.accountHolderInfoUserProfile=response.profileName
+                mActivityViewModel.activeUserWithoutPasswordType.set(true)
+                mActivityViewModel.activeUserWithoutPassword.set(false)
+
+             //   (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_setYourPinFragment)
+                (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_setYourPinFragment)
+            }
+        } else {
+            mActivityViewModel.accountHolderInfoUserProfile=response.profileName
+            //activation Api is called on next screens
+            // This Check Means User Register Itself verifies OTP but Close App before setting his/her pin so user is redirected to setup Pin Fragment
+            mActivityViewModel.activeUserWithoutPassword.set(true)
+            mActivityViewModel.activeUserWithoutPasswordType.set(false)
+           // (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_setYourPinFragment)
+            (activity as LoginActivity).navController.navigate(R.id.action_verifyNumberFragment_to_setYourPinFragment)
+        }
+    }
     private fun subscribeObserver() {
         mActivityViewModel.errorText.observe(this@VerifyNumberFragment, Observer {
             DialogUtils.showErrorDialoge(activity as LoginActivity, it)
@@ -115,6 +195,92 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
             }
         }
 
+        val mAccountDetailResonseObserver = Observer<GetAccountHolderInformationResponse> {
+            if (it.responseCode == ApiConstant.API_SUCCESS) {
+                mActivityViewModel.isSignUpFlow.set(false)
+                var deviceID = ""
+                if (it.deviceId != null) {
+                    deviceID = it.deviceId
+                    deviceID = deviceID.removePrefix("ID:")
+                    deviceID = deviceID.removeSuffix("@device/ALIAS")
+                    deviceID = deviceID.trim()
+                }
+
+                if(!it.profileName.isNullOrEmpty()){
+                    mActivityViewModel.accountHolderInfoUserProfile = it.profileName
+                }
+
+                //       if (deviceID.equals(Constants.CURRENT_NUMBER_DEVICE_ID)) {
+                checkUserRegsitrationAndActicationSenario(it)
+//                } else {
+//                    if(checkIfUserIsBlocked(it)){
+//                        mActivityViewModel.accountHolderInfoResponse = it
+//
+//                        mActivityViewModel.previousDeviceId = deviceID
+                //                 mActivityViewModel.requestForGetOtpApi(activity)
+//                    }
+//                }
+
+                if(!it.language.isNullOrEmpty()) {
+                    LocaleManager.languageToBeChangedAfterAPI = it.language
+                }
+            }
+            else if (it.responseCode == ApiConstant.API_FAILURE) {
+                isRegFlow = true
+                if(!it.profileName.isNullOrEmpty()){
+                    mActivityViewModel.accountHolderInfoUserProfile = it.profileName
+                }
+                /* mActivityViewModel.isSignUpFlow.set(true)
+                 mActivity.navController.navigate(R.id.action_loginFragment_to_signUpDetailFragment)*/
+            }
+            else if (it.responseCode == ApiConstant.API_ACCOUNT_BLOCKED)
+            {
+                if(!it.profileName.isNullOrEmpty()){
+                    mActivityViewModel.accountHolderInfoUserProfile = it.profileName
+                }
+                val btnTxt = LanguageData.getStringValue("BtnTitle_OK")
+                val titleTxt = LanguageData.getStringValue("AccountBlocked")
+                val descriptionTxt = it.description
+                DialogUtils.showCustomDialogue(
+                    activity,
+                    btnTxt,
+                    descriptionTxt,
+                    titleTxt,
+                    object : DialogUtils.OnCustomDialogListner {
+                        override fun onCustomDialogOkClickListner() {
+                        }
+
+
+                    })
+            }else if(it.responseCode.equals(ApiConstant.API_WRONG_ATTEMPT_BLOCKED)){
+                if(!it.profileName.isNullOrEmpty()){
+                    mActivityViewModel.accountHolderInfoUserProfile = it.profileName
+                }
+                DialogUtils.showBlockedAccountDialog(activity,LanguageData.getStringValue("BtnTitle_ResetPassword"),LanguageData.getStringValue("BtnTitle_Cancel"),
+                    LanguageData.getStringValue("BlockedAndResetAccount"),LanguageData.getStringValue("AccountBlocked"),object : DialogUtils.OnCustomDialogListner{
+                        override fun onCustomDialogOkClickListner() {
+                            mActivityViewModel.isFromLoginUserScreen.set(true)
+                          //  mDataBinding.inputPin.setText("")
+
+                            mActivityViewModel.requestForGetBalanceAndGenerateOtpApi(activity as LoginActivity,mActivityViewModel.accountHolderInfoUserProfile.toString(),
+                                mActivityViewModel.mUserMsisdn)
+//                            (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)
+                        }
+
+                    }
+                )
+            }else if (it.responseCode == ApiConstant.DEVICE_ID_MIS_MATCHED)
+            {
+                mActivityViewModel.requestForGetOtpApi(activity)
+            }
+            else {
+                DialogUtils.showErrorDialoge(activity, it.description)
+            }
+        }
+        mActivityViewModel.getAccountDetailResponseListner.observe(
+            this,
+            mAccountDetailResonseObserver
+        )
         //todo Registration Flow Changed Navigation From OTP to SignUpDetailsFragment
         mActivityViewModel.getVerifyOtpResponseListner.observe(this@VerifyNumberFragment, Observer {
             if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
@@ -150,7 +316,6 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
            }
        })
     }
-
     override fun onOTPVerifyClick(view: View) {
        /* if (mDataBinding.inputVerifyOtp.text.isNullOrEmpty()) {
             mDataBinding.inputLayoutVerifyOtp.error = LanguageData.getStringValue("PleaseEnterValidOTP")
@@ -186,7 +351,6 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
             if(mActivityViewModel.isDeviceChanged){
                 mActivityViewModel.requestForVerifyOtpAndUpdateAliaseAPI(
                     activity,
-                    mActivityViewModel.previousDeviceId,
                     Constants.CURRENT_NUMBER_DEVICE_ID,
                     mDataBinding.inputVerifyOtpBox.text.toString().trim()
                 )
@@ -213,7 +377,8 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
     }
 
     fun checkUserRegsitrationAndActicationSenario() {
-        var response = mActivityViewModel.accountHolderInfoResponse
+        val response = mActivityViewModel.accountHolderInfoResponse
+        Log.d("Abro","result ${response.toString()}")
         if (response.accountHolderStatus.equals("ACTIVE", true)) {
             if (response.credentialList.credentials.isNotEmpty()) {
 
@@ -279,9 +444,9 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
 
     override fun onFocusChange(p0: View?, hasFocus: Boolean) {
         if(hasFocus){
-            mDataBinding.tvEnterOTPTitile.setTextColor(activity!!.resources.getColor(R.color.colorCerulean))
+            mDataBinding.tvEnterOTPTitile.setTextColor(requireActivity().resources.getColor(R.color.colorCerulean))
         }else{
-            mDataBinding.tvEnterOTPTitile.setTextColor(activity!!.resources.getColor(R.color.colorBlack))
+            mDataBinding.tvEnterOTPTitile.setTextColor(requireActivity().resources.getColor(R.color.colorBlack))
         }
     }
 
