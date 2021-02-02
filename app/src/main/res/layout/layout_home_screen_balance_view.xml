@@ -20,7 +20,7 @@
         android:id="@+id/arcSeekBar"
         android:layout_width="@dimen/_300sdp"
         android:layout_height="@dimen/_150sdp"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_12sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:progressWidth="6dp"
         app:progressBackgroundWidth="5dp"
@@ -72,19 +72,18 @@
         tools:text="DH 2000000000"
         android:paddingStart="@dimen/_20sdp"
         android:paddingEnd="@dimen/_20sdp"
+        android:paddingBottom="@dimen/_20sdp"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@+id/progress_value_title"
         app:layout_constraintStart_toStartOf="@+id/inner_semi_circle"
-        app:layout_constraintEnd_toEndOf="@id/inner_semi_circle"
-        />
+        app:layout_constraintEnd_toEndOf="@id/inner_semi_circle" />
 
     <androidx.constraintlayout.widget.Group
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/progress_group"
         android:visibility="gone"
-        app:constraint_referenced_ids="arcSeekBar,inner_semi_circle,progress_value,progress_value_title"
-        />
+        android:id="@+id/progress_group"
+        app:constraint_referenced_ids="arcSeekBar,inner_semi_circle,progress_value,progress_value_title"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -95,6 +94,7 @@
         android:background="@color/colorCerulean"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
+
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
