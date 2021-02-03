@@ -199,7 +199,12 @@ object Tools {
                     )
 
                 if (pointOfInitiation == "11") {
-                    return "static"
+                    val amountLength = text.split(Constants.EMVco.Currency_Transaction_ID + Constants.EMVco.Currency_Transaction_SIZE + Constants.EMVco.Currency_Transaction_VALUE)[1].substring(2, 4)
+                    return if (text.contains(Constants.EMVco.Amount_Transaction_ID + amountLength)) {
+                        "estatic"
+                    } else {
+                        "static"
+                    }
                 } else {
                     return "dynamic"
                 }

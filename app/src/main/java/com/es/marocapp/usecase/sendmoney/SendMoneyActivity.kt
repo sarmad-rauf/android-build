@@ -162,7 +162,7 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
             val result = data
             val scannedString = result?.getStringExtra(KEY_SCANNED_DATA)
             if (result != null) {
-
+                Logger.debugLog("TestingQRString", scannedString!!)
                 if (scannedString.isNullOrEmpty()) {
                     mInputFieldLayout.isErrorEnabled = true
                     mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
@@ -225,7 +225,7 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
                     mInputHint.visibility = View.GONE
                 } else {
                     //var sResult = result.contents
-
+                    Logger.debugLog("TestingPhone", Tools.extractNumberFromEMVcoQR(scannedString))
                     verifyAndSetMsisdn(Tools.extractNumberFromEMVcoQR(scannedString), false)
                 }
 
