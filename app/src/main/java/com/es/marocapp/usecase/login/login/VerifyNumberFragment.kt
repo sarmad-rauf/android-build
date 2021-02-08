@@ -67,7 +67,7 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
             (activity as LoginActivity).navController.navigateUp()
         }
 
-        mDataBinding.txtResend.setOnClickListener {
+        mDataBinding.txtOtpNotRecieved.setOnClickListener {
             if(mActivityViewModel.isDeviceChanged){
                 mActivityViewModel.requestForGetOtpApi(activity)
             }else{
@@ -101,7 +101,7 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
 
         mDataBinding.txtOtpNotRecieved.text = LanguageData.getStringValue("OTPNotRecieved")+ " "
         mDataBinding.txtResend.text = LanguageData.getStringValue("Resend")
-
+        mDataBinding.txtResend.visibility=View.GONE
         mDataBinding.btnVerifyOtp.text = LanguageData.getStringValue("BtnTitle_Verify")
 
     }

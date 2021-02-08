@@ -178,5 +178,6 @@
     <string name="language_arabic">Arabic</string>
     <string name="status" translatable="false">Status</string>
     <string name="dummyitem" translatable="false">dummy Text</string>
+    <string name="law">Add the words “in accordance with Law 09-08, you have the right to access,                  rectify and oppose the processing of your personal data.                  This processing was the subject of an authorization request to the CNDP</string>
 
 </resources>

@@ -31,7 +31,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
     FundsTrasnferClickLisntener, AdapterView.OnItemSelectedListener, TextWatcher {
 
     private lateinit var mActivityViewModel: SendMoneyViewModel
-    lateinit var profileName:String
+     var profileName:String=""
 
     private var list_of_favorites = arrayListOf<String>()
     var isNumberRegexMatches = false
@@ -198,20 +198,20 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         mActivityViewModel.getAccountHolderAdditionalInfoResponseListner.observe(this@FundsTransferMsisdnFragment,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+
                     if (it.additionalinformation.isNullOrEmpty()) {
                         mActivityViewModel.isUserRegistered.set(false)
                         (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
                     } else {
                         if (it.additionalinformation[0].value.equals("TRUE", true)) {
                             mActivityViewModel.isUserRegistered.set(true)
-                            var isProfileNameMatched =
-                                profileName.equals(Constants.MERCHENTAGENTPROFILEARRAY[0]) ||
-                                        profileName.equals(Constants.MERCHENTAGENTPROFILEARRAY[1])
-                            Log.d("Abro", "isMerchantMatched ${isProfileNameMatched}")
-                            if (isProfileNameMatched) {
-                                mActivityViewModel.requestForGetAccountsuAPI(requireContext())
-                            }
-                         //   (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
+//                            var isProfileNameMatched =
+//                                profileName.equals(Constants.MERCHENTAGENTPROFILEARRAY[0]) ||
+//                                        profileName.equals(Constants.MERCHENTAGENTPROFILEARRAY[1])
+//                            if (isProfileNameMatched) {
+//                                mActivityViewModel.requestForGetAccountsuAPI(requireContext())
+//                            }
+                            (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
                         } else {
                             mActivityViewModel.isUserRegistered.set(false)
                             (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)

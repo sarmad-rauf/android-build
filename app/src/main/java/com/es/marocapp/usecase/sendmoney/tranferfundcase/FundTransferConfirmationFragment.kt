@@ -297,7 +297,7 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                         }
 
                     } else {
-                        if (mActivityViewModel.isUserRegistered!=null && mActivityViewModel.isUserRegistered.get()!=null && mActivityViewModel.isUserRegistered.get()!!) {
+                        if ( mActivityViewModel.isUserRegistered.get()!=null && mActivityViewModel.isUserRegistered.get()!!) {
                             if (mActivityViewModel.isFundTransferUseCase.get()!!) {
                                 mActivityViewModel.requestFoTransferApi(
                                     activity,

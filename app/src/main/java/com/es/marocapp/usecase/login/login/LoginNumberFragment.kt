@@ -313,6 +313,9 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
             {
                 mActivityViewModel.requestForGetOtpApi(activity)
             }
+            else if(it.responseCode == ApiConstant.userNotAllowedToProceed) {
+                DialogUtils.showErrorDialoge(activity, it.description)
+            }
             else {
                 DialogUtils.showErrorDialoge(activity, it.description)
             }

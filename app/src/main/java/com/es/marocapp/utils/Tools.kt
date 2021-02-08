@@ -414,8 +414,13 @@ object Tools {
 //        return merchantName.isNotEmpty()
 
         try {
+            Log.d("Abro"," checking value ${Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE}")
+            Log.d("Abro","orignal value ${text}")
             if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
-                return text.contains("01011")
+                //return text.contains("01011")
+               // return text.contains("010211")
+
+                return true
             }
         } catch (e: Exception) {
             e.printStackTrace()

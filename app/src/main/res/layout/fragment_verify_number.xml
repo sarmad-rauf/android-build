@@ -109,10 +109,10 @@
             android:textSize="@dimen/_12ssp"
             android:text="@string/resend"
             android:textAllCaps="true"
+            android:visibility="gone"
             android:layout_marginStart="4dp"
             app:layout_constraintStart_toEndOf="@+id/txtOtpNotRecieved"
-            app:layout_constraintBottom_toBottomOf="@id/txtOtpNotRecieved"
-            />
+            app:layout_constraintBottom_toBottomOf="@id/txtOtpNotRecieved" />
 
         <com.es.marocapp.widgets.MarocButton
             android:id="@+id/btnVerifyOtp"

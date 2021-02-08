@@ -602,15 +602,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         if((activity as MainActivity).isHomeFragmentShowing){
             mDataBinding.useCasesRecyclerView.postDelayed(Runnable {
                 for(i in 0 until useCases.size){
+                    Log.d("abro","usecases list ${useCases[i].useCaseTitle}  sendMoney data ${LanguageData.getStringValue("SendMoney").toString()}")
                     if(useCases[i].useCaseTitle == LanguageData.getStringValue("SendMoney").toString()){
+                        Log.d("abro","usecases list ${useCases[i].useCaseTitle}")
                         val holder =
-                            mDataBinding.useCasesRecyclerView.findViewHolderForAdapterPosition(i) as RecyclerView.ViewHolder
-                        Constants.tutorialSendMoney = holder.itemView.findViewById<ConstraintLayout>(R.id.useCasesParentLayout)
+                            mDataBinding.useCasesRecyclerView.findViewHolderForAdapterPosition(i) as? RecyclerView.ViewHolder
+                        Constants.tutorialSendMoney = holder?.itemView?.findViewById<ConstraintLayout>(R.id.useCasesParentLayout)
                         break
                     }
                 }
             }, 50)
         }
+        Log.d("abro","usecases list ${useCases.toString()}")
     }
 
     private fun populateHomeCardView(updateBalance: Boolean, amount: String?) {

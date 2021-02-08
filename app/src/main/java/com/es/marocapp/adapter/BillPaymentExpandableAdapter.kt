@@ -2,12 +2,14 @@ package com.es.marocapp.adapter
 
 import android.content.Context
 import android.graphics.Typeface
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.es.marocapp.R
 import com.es.marocapp.model.billpaymentmodel.BillPaymentMenuModel
 import com.es.marocapp.model.billpaymentmodel.BillPaymentSubMenuModel
@@ -48,12 +50,21 @@ class BillPaymentExpandableAdapter(
         val childCompanyIcon = convertView?.findViewById(R.id.img_sub_company_icon) as ImageView
 
         childCompanyName.text = childText.subCompanyTitle
+        Log.d("abro","icon ${childText.subCompanyIcon}")
         //todo need to Set Image From URL
         if(childText.subCompanyIcon.isEmpty()){
             childCompanyIcon.setImageResource(R.drawable.default_no_company_icon)
         }else{
-            Picasso.with(_context).load(childText.subCompanyIcon).placeholder(_context.resources.getDrawable(R.drawable.default_no_company_icon)).error(_context.resources.getDrawable(R.drawable.default_no_company_icon))
-                .into(childCompanyIcon)
+//            Picasso.with(_context).load(childText.subCompanyIcon).placeholder(_context.resources.getDrawable(R.drawable.default_no_company_icon)).error(_context.resources.getDrawable(R.drawable.default_no_company_icon))
+//                .into(childCompanyIcon)
+
+            Glide
+                .with(_context)
+                .load(childText.subCompanyIcon)
+                .centerCrop()
+                .placeholder(_context.resources.getDrawable(R.drawable.default_no_company_icon))
+                .into(childCompanyIcon);
+            Log.d("abro","icon ${childText.subCompanyIcon}")
         }
 //        childCompanyIcon.setImageResource(childText.subCompanyIcon)
         return convertView

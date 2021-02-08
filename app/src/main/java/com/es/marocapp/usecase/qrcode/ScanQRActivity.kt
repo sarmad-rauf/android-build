@@ -3,6 +3,7 @@ package com.es.marocapp.usecase.qrcode
 import android.R.id.message
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.budiyev.android.codescanner.*
 import com.es.marocapp.R
@@ -34,6 +35,7 @@ class ScanQRActivity : BaseActivity<ActivityScanQrBinding>() {
         codeScanner.decodeCallback = DecodeCallback {
             runOnUiThread {
                 //Toast.makeText(this, "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
+               // Log.d("Abro","qr value ${it.text}")
                 val intent = Intent()
                 intent.putExtra(KEY_SCANNED_DATA, it.text)
                 setResult(SCAN_QR, intent)

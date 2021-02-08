@@ -196,7 +196,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.APP_OTP_LENGTH = it.androidOtpLength
                 Constants.MERCHANT_AGENT_PROFILE_NAME = it.agentMerchantAccountProfile
                 if (it.defaultAccountOtpLength != null) {
-                    Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH = it?.defaultAccountOtpLength?.toInt()
+                    Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH = it?.defaultAccountOtpLength?.toInt()!!
                 }
                 Constants.APP_DEFAULT_ACCOUNT_OTP_REGEX = it?.defaultAccountOtpRegex
                 Constants.APP_AIR_TIME_FIXE_REGEX = it?.msisdnFixedLineRegex

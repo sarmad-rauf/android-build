@@ -25,6 +25,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.properties.Delegates
 
 
 object Constants {
@@ -90,7 +91,7 @@ object Constants {
     var APP_OTP_LENGTH = 8
     var APP_MIN_PASSWORD_LENGTH = 8
     var APP_MAX_PASSWORD_LENGTH = 16
-    var APP_DEFAULT_ACCOUNT_OTP_LENGTH:Int?= 7
+    var APP_DEFAULT_ACCOUNT_OTP_LENGTH by Delegates.notNull<Int>()
     var APP_DEFAULT_ACCOUNT_OTP_REGEX:String?= ""
     var APP_AIR_TIME_FIXE_REGEX:String?= ""
     var APP_ADDFAVORITE_NICK_LENGTH:Int?= 8

@@ -213,6 +213,22 @@
                     app:layout_constraintEnd_toEndOf="@+id/input_layout_address"
                     app:layout_constraintStart_toStartOf="@+id/input_layout_address"
                     />
+                <com.es.marocapp.widgets.MarocEditText
+                    android:id="@+id/lawText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/myTextInputLabel"
+                    android:textSize="@dimen/_11sdp"
+                    android:textColor="@color/colorTextGreyDark"
+                    android:text="@string/law"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:editable="false"
+                    app:layout_constraintEnd_toEndOf="@+id/input_layout_address"
+                    app:layout_constraintStart_toStartOf="@+id/input_layout_address"
+                    app:layout_constraintTop_toBottomOf="@id/btnNextDetailFragment"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

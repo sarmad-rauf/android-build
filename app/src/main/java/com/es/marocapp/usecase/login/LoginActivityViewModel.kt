@@ -147,6 +147,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                 .compose(applyIOSchedulers())
                 .subscribe(
                     { result ->
+                        Log.d("Abro","results ${result.toString()}")
                         isLoading.set(false)
 
                         if (result?.responseCode != null )
