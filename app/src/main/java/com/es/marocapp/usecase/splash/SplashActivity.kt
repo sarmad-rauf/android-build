@@ -336,7 +336,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 
         LanguageData.stringsHashMap = labelList
         var temp = labelList
-        Log.d("LableListObj", labelList.toString())
+        Logger.debugLog("LableListObj", labelList.toString())
 
     }
 

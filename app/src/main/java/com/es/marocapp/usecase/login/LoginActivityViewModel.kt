@@ -16,6 +16,7 @@ import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.SingleLiveEvent
 import com.es.marocapp.utils.Tools
 import io.reactivex.disposables.Disposable
@@ -148,7 +149,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                 .compose(applyIOSchedulers())
                 .subscribe(
                     { result ->
-                        Log.d("Abro","results ${result.toString()}")
+                        Logger.debugLog("Abro","results ${result.toString()}")
                         isLoading.set(false)
 
                         if (result?.responseCode != null )
@@ -609,7 +610,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                         {
                             if(result?.responseCode==ApiConstant.API_SUCCESS)
                             {
-                                Log.d("Abro","alias result ${result.toString()}")
+                                Logger.debugLog("Abro","alias result ${result.toString()}")
                                 getAccountDetailResponseListner.postValue(result.getaccountholderinfo)
                                // getValidateOtpAndUpdateAliasResponseListner.postValue(result)
                             }

@@ -15,6 +15,7 @@ import com.es.marocapp.network.applyIOSchedulers
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.SingleLiveEvent
 import com.es.marocapp.utils.Tools
 import io.reactivex.disposables.Disposable
@@ -101,7 +102,7 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                         isLoading.set(false)
                         if (result?.responseCode != null )
                         {
-                            Log.d("Abro","true true true ${result.accounts.get(0).accountFri}")
+                            Logger.debugLog("Abro","true true true ${result.accounts.get(0).accountFri}")
                             getAccountsResponseListner.postValue(result)
 
                         } else {

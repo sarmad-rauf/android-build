@@ -225,7 +225,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
 
         mActivityViewModel.getRecieverInformationResponseListner.observe(this@FundsTransferMsisdnFragment,
             Observer {
-                Log.d("Abro", "Acount reciever info respnse  ${it.toString()}")
+                Logger.debugLog("Abro", "Acount reciever info respnse  ${it.toString()}")
 
                 //Merchant payment Usacese
                 if (mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!) {
@@ -276,7 +276,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
             Observer {
                 //  Constants.MERCHANT_AGENT_PROFILE_NAME
                 for (i in it.accounts.indices) {
-                    Log.d("Abro", "Reciever Acount FRI ")
+                    Logger.debugLog("Abro", "Reciever Acount FRI ")
                     if (it.accounts.get(i).profileName.equals(Constants.MERCHANT_AGENT_PROFILE_NAME)) {
                         var fri = it.accounts.get(i).accountFri.substring(4, it.accounts.get(i).accountFri.length)
                         mActivityViewModel.addFri(fri)
@@ -284,7 +284,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                         //mActivityViewModel.transferdAcountFri = fri
                         // (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
                     }
-                    Log.d("Abro", "Reciever Acount FRI ${mActivityViewModel.transferdAcountFri} ")
+                    Logger.debugLog("Abro", "Reciever Acount FRI ${mActivityViewModel.transferdAcountFri} ")
                 }
             })
     }

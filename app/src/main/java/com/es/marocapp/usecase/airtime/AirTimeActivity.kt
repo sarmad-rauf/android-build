@@ -26,6 +26,7 @@ import com.es.marocapp.usecase.qrcode.ScanQRActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity.Companion.KEY_SCANNED_DATA
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity.Companion.SCAN_QR
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.Tools
 import com.es.marocapp.widgets.MarocEditText
 import com.es.marocapp.widgets.MarocMediumTextView
@@ -147,7 +148,7 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
         )
 
         if (permission != PackageManager.PERMISSION_GRANTED) {
-            Log.d("CameraPermission", "Permission to access camera denied")
+            Logger.debugLog("CameraPermission", "Permission to access camera denied")
             makeRequestPermission()
         } else {
             startActivityForResult(Intent(this, ScanQRActivity::class.java),SCAN_QR)
@@ -304,7 +305,7 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
 
                 if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
 
-                    Log.d("CameraPermission", "Permission to access camera denied")
+                    Logger.debugLog("CameraPermission", "Permission to access camera denied")
                 } else {
                     startActivityForResult(Intent(this, ScanQRActivity::class.java),SCAN_QR)
                 }

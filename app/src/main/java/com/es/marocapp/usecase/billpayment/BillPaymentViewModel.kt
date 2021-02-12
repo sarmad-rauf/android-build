@@ -16,6 +16,7 @@ import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.favorites.FavoritesActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.SingleLiveEvent
 import com.es.marocapp.utils.Tools
 import io.reactivex.disposables.Disposable
@@ -228,7 +229,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                 if(convertedAmountValue.contains(",")){
                     convertedAmountValue=convertedAmountValue.replace(",",".")
                 }
-                Log.d("convertedAmountValue", convertedAmountValue)
+                Logger.debugLog("convertedAmountValue", convertedAmountValue)
                 val symbolsEN_US: DecimalFormatSymbols = DecimalFormatSymbols.getInstance(Locale.US)
                 convertedOpenAmount =
                     (DecimalFormat("#",symbolsEN_US).format((convertedAmountValue.toDouble() * Constants.AMOUNT_CONVERSION_VALUE.toDouble()))).toString()
@@ -238,7 +239,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                 }
                 // convertedOpenAmount = String.format("%.0f", convertedOpenAmount)
 
-                Log.d("convertedOpenAmount", convertedOpenAmount)
+                Logger.debugLog("convertedOpenAmount", convertedOpenAmount)
 
             }
             catch (e:Exception){
@@ -325,7 +326,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                     convertedAmountValue=convertedAmountValue.replace(",",".")
                 }
 
-                Log.d("convertedAmountValue", convertedAmountValue)
+                Logger.debugLog("convertedAmountValue", convertedAmountValue)
                 val symbolsEN_US: DecimalFormatSymbols = DecimalFormatSymbols.getInstance(Locale.US)
 
                 convertedOpenAmount =
@@ -335,7 +336,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                 if(convertedOpenAmount.contains(",")){
                     convertedOpenAmount=convertedOpenAmount.replace(",",".")
                 }
-                Log.d("convertedOpenAmount", convertedOpenAmount)
+                Logger.debugLog("convertedOpenAmount", convertedOpenAmount)
 
             }
             catch (e:Exception){

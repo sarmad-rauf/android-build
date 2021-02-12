@@ -27,6 +27,7 @@ import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.Logger
 import kotlinx.android.synthetic.main.fragment_login.view.*
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 import kotlinx.android.synthetic.main.toast_layout.view.*
@@ -378,7 +379,7 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
 
     fun checkUserRegsitrationAndActicationSenario() {
         val response = mActivityViewModel.accountHolderInfoResponse
-        Log.d("Abro","result ${response.toString()}")
+        Logger.debugLog("Abro","result ${response.toString()}")
         if (response.accountHolderStatus.equals("ACTIVE", true)) {
             if (response.credentialList.credentials.isNotEmpty()) {
 

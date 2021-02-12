@@ -16,6 +16,7 @@ import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.cashinviacard.ActivityCashInViaCard
 import com.es.marocapp.usecase.cashinviacard.CashInViaCardViewModel
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.Logger
 
 
 class CashInViaCashWebViewFragment : BaseFragment<FragmentCashInViaCardWebviewBinding>(){
@@ -72,7 +73,7 @@ class CashInViaCashWebViewFragment : BaseFragment<FragmentCashInViaCardWebviewBi
         })
 
         mDataBinding.cashInViaCardWebView.loadUrl(web_url)
-        Log.d("CashInViaCashURL",web_url)
+        Logger.debugLog("CashInViaCashURL",web_url)
       //  mDataBinding.cashInViaCardWebView.loadUrl(web_url)
 
 //        mActivityViewModel.popBackStackTo = R.id.cashInViaCardAmountFragment

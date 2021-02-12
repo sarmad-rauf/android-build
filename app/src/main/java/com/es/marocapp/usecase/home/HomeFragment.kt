@@ -35,6 +35,7 @@ import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.usecase.transaction.TransactionDetailsActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.Logger
 import kotlin.reflect.jvm.internal.impl.load.java.Constant
 
 
@@ -602,9 +603,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         if((activity as MainActivity).isHomeFragmentShowing){
             mDataBinding.useCasesRecyclerView.postDelayed(Runnable {
                 for(i in 0 until useCases.size){
-                    Log.d("abro","usecases list ${useCases[i].useCaseTitle}  sendMoney data ${LanguageData.getStringValue("SendMoney").toString()}")
+                    Logger.debugLog("abro","usecases list ${useCases[i].useCaseTitle}  sendMoney data ${LanguageData.getStringValue("SendMoney").toString()}")
                     if(useCases[i].useCaseTitle == LanguageData.getStringValue("SendMoney").toString()){
-                        Log.d("abro","usecases list ${useCases[i].useCaseTitle}")
+                        Logger.debugLog("abro","usecases list ${useCases[i].useCaseTitle}")
                         val holder =
                             mDataBinding.useCasesRecyclerView.findViewHolderForAdapterPosition(i) as? RecyclerView.ViewHolder
                         Constants.tutorialSendMoney = holder?.itemView?.findViewById<ConstraintLayout>(R.id.useCasesParentLayout)
@@ -613,7 +614,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 }
             }, 50)
         }
-        Log.d("abro","usecases list ${useCases.toString()}")
+        Logger.debugLog("abro","usecases list ${useCases.toString()}")
     }
 
     private fun populateHomeCardView(updateBalance: Boolean, amount: String?) {

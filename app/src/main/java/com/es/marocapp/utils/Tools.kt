@@ -161,7 +161,7 @@ object Tools {
         } catch (e: Exception) {
             num = ""
         }
-        Log.d("DecryptedNumber", num)
+        Logger.debugLog("DecryptedNumber", num)
         return num
     }
 
@@ -184,7 +184,7 @@ object Tools {
         } catch (e: Exception) {
             amount = ""
         }
-        Log.d("Amount", amount)
+        Logger.debugLog("Amount", amount)
         return amount
     }
 
@@ -414,12 +414,10 @@ object Tools {
 //        return merchantName.isNotEmpty()
 
         try {
-            Log.d("Abro"," checking value ${Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE}")
-            Log.d("Abro","orignal value ${text}")
+            Logger.debugLog("Abro"," checking value ${Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE}")
+            Logger.debugLog("Abro","orignal value ${text}")
             if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
                 return text.contains("01011")
-               // return text.contains("010211")
-             //   return true
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -438,7 +436,7 @@ object Tools {
 
         if (PrefUtils.getBoolean(context, PREF_KEY_IS_FIRSTTIME, true)) {
             //the app is being launched for first time, do something
-            Log.d("Comments", "First time")
+            Logger.debugLog("Comments", "First time")
 
             // record the fact that the app has been started at least once
             PrefUtils.addBoolean(context, PREF_KEY_IS_FIRSTTIME, false)

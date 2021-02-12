@@ -131,7 +131,7 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-       Log.d("Abro","qr value ${data.toString()}")
+       Logger.debugLog("Abro","qr value ${data.toString()}")
         if (requestCode == PICK_CONTACT && resultCode === Activity.RESULT_OK) {
             val contactData = data!!.data
             val cursor: Cursor? = contentResolver.query(
@@ -146,7 +146,7 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
             val number =
                 cursor?.getString(cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER))
             if (number == null || number.isNullOrEmpty()) {
-                Log.d("Abro","number is null ${number}")
+                Logger.debugLog("Abro","number is null ${number}")
                 mInputFieldLayout.isErrorEnabled = true
                 mInputFieldLayout.error = LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                 mInputFieldLayout.hint = LanguageData.getStringValue("EnterMobileNumber")
@@ -292,9 +292,9 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
     }
 
     private fun verifyAndSetMsisdn(sResult: String?, isFromPhonebook: Boolean) {
-        Log.d("Abro","qr value ${sResult}")
+        Logger.debugLog("Abro","qr value ${sResult}")
         if (isValidNumber(sResult!!)) {
-            Log.d("Abro","is valid numb")
+            Logger.debugLog("Abro","is valid numb")
             mInputFieldLayout.isErrorEnabled = false
             mInputFieldLayout.error = ""
             var msisdn = sResult
@@ -323,13 +323,13 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
 //                    DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
             mInputFieldLayout.isErrorEnabled = true
             if (isFromPhonebook) {
-                Log.d("Abro","is from phonebook")
+                Logger.debugLog("Abro","is from phonebook")
                 mInputFieldLayout.error =
                     LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                 mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
                 mInputHint.visibility = View.GONE
             } else {
-                Log.d("Abro","is from phonebbok else")
+                Logger.debugLog("Abro","is from phonebbok else")
                 mInputFieldLayout.error =
                     LanguageData.getStringValue("PleaseScanValidQRDot")
                 mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")

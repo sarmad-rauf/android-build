@@ -263,12 +263,12 @@ object Constants {
     fun setBase64EncodedString(str : String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LOGGED_IN_USER_COOKIE = Base64.getEncoder().encodeToString(str.toByteArray())
-            Log.d("Base64", Base64.getEncoder().encodeToString(str.toByteArray()));
+            Logger.debugLog("Base64", Base64.getEncoder().encodeToString(str.toByteArray()));
         } else {
             LOGGED_IN_USER_COOKIE =
                 android.util.Base64.encodeToString(str.toByteArray(), android.util.Base64.NO_WRAP)
         }
-        Log.d(
+        Logger.debugLog(
             "Base64",
             android.util.Base64.encodeToString(str.toByteArray(), android.util.Base64.NO_WRAP)
         );

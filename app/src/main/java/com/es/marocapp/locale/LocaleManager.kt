@@ -7,6 +7,7 @@ import android.content.res.Resources
 import android.os.Build
 import android.util.Log
 import com.es.marocapp.usecase.BaseActivity
+import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.PrefUtils
 import com.es.marocapp.utils.Tools
 import java.util.*
@@ -166,7 +167,7 @@ object LocaleManager {
         resources.updateConfiguration(config, dm)
 
         setLanguageToPref(context,localeCode)
-        Log.d("Language",localeCode)
+        Logger.debugLog("Language",localeCode)
     }
 
 }

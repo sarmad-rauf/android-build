@@ -99,7 +99,7 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>() {
         mActivityViewModel.getAccountHolderAdditionalInfoResponseListner.observe(this@GernerateQRFragment,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                    Log.d("GenerateQRFragment", it.additionalinformation.toString())
+                    Logger.debugLog("GenerateQRFragment", it.additionalinformation.toString())
                     if (!it.additionalinformation.isNullOrEmpty()) {
                         for (i in it.additionalinformation.indices) {
                             if (it.additionalinformation[i].name.contains("merchantid")) {
