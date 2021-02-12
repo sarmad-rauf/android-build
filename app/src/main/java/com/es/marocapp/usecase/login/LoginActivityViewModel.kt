@@ -55,6 +55,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     var isUserToShowProfile = false
 
     var getAccountDetailResponseListner = SingleLiveEvent<GetAccountHolderInformationResponse>()
+    var getProfileResponseListner = SingleLiveEvent<GetProfileResponse>()
     var getInitialAuthDetailsResponseListner = SingleLiveEvent<GetInitialAuthDetailsReponse>()
     var getOtpForRegistrationResponseListner = SingleLiveEvent<GetOtpForRegistrationResponse>()
     var getSimppleOtpForRegistrationResponseListner = SingleLiveEvent<GetOtpSimpleResponse>()
@@ -131,8 +132,8 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
     }
 
-    // API Called on Login Screen to check weather User is Registered or Not
-    fun requestForGetAccountHolderInformationApi(
+    // API Called on Login Screen to get profile name
+    fun requestForGetProfileApi(
         context: Context?,
         userMsisdn: String
     ) {
@@ -141,8 +142,8 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
             isLoading.set(true)
             mUserMsisdn = userMsisdn
 
-            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAccountHolderInformation(
-                GetAccountHolderInformationRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(userMsisdn))
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getProfile(
+                GetProfileRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(userMsisdn))
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -152,7 +153,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
                         if (result?.responseCode != null )
                          {
-                             getAccountDetailResponseListner.postValue(result)
+                             getProfileResponseListner.postValue(result)
                         }else {
                             errorText.postValue(context!!.getString(R.string.error_msg_generic))
                     }

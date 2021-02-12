@@ -207,7 +207,11 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
     override fun onNextClickListner(view: View) {
         var sAmount: String = mDataBinding.etAmountEntered.text.toString().trim { it <= ' ' }
         sAmount = sAmount.replace(",", ".")
-
+        if (sAmount == "" || SumAmountEditText(sAmount) == "0" || sAmount == ".") {
+            mDataBinding.etAmountEntered.error =
+                LanguageData.getStringValue("PleaseEnterValidAmountToProceed.")
+            return
+        }
         val bill: Double = sAmount.toDouble()
         sAmount = String.format(
             Locale.US,
@@ -215,11 +219,7 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
             (bill)
         )
 
-        if (sAmount == "" || SumAmountEditText(sAmount) == "0" || sAmount == ".") {
-            mDataBinding.etAmountEntered.error =
-                LanguageData.getStringValue("PleaseEnterValidAmountToProceed.")
-            return
-        }
+
 
         if (Constants.IS_AGENT_USER) {
             if (mActivityViewModel.isFundTransferUseCase.get()!!) {

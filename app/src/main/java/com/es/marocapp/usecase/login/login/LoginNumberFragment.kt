@@ -400,7 +400,6 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                 mActivityViewModel.accountHolderInfoUserProfile = response.profileName
             }
             if (response.credentialList.credentials.isNotEmpty()) {
-
                 for (i in response.credentialList.credentials.indices) {
                     if (response.credentialList.credentials[i].credentialtype.equals(
                             "password",

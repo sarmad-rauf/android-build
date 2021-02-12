@@ -231,7 +231,7 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
     }
 
     private fun setStrings() {
-        mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Pay")
+        mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Validate")
         mDataBinding.noDataTv.text = LanguageData.getStringValue("NoDataFound")
         mDataBinding.selectInvocieLabel.text = LanguageData.getStringValue("BillPaymentSelectInvoicesToPay")
     }

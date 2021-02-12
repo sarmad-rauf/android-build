@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.content.Context
 import android.text.Editable
 import android.text.InputFilter
-import android.text.InputType
 import android.text.TextWatcher
 import android.view.*
 import android.widget.*
@@ -667,8 +666,92 @@ object DialogUtils {
     interface OnChangeLanguageClickListner {
         fun onChangeLanguageDialogYesClickListner(selectedLanguage: String)
     }
+    fun showUpgradeProfileDialog(
+        mContext: Context?,
+        listner: OnChangeProfileClickListner
+    ) {
+        val addDialog = Dialog(mContext!!)
+        addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        addDialog.setContentView(R.layout.layout_upgrage_profile_dialog)
+        var currentProfile=Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
+        if(currentProfile.equals("")||currentProfile.equals(null))
+        {
+            currentProfile=Constants.UserProfileName
+        }
+        val dialogWindow = addDialog.window
+        val layoutParams = dialogWindow!!.attributes
+        layoutParams.x = Gravity.CENTER_HORIZONTAL
+        layoutParams.y = Gravity.CENTER_VERTICAL
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+        dialogWindow.attributes = layoutParams
+
+        addDialog.show()
+        var tvMsg = addDialog.findViewById<TextView>(R.id.upgradeProfile_dialog_description)
+        var tvDialogTitle = addDialog.findViewById<TextView>(R.id.upgradeProfile_dialog_title)
+        var btnYes = addDialog.findViewById<Button>(R.id.upgradeProfile_dialog_yes_btn)
+        var btnNo= addDialog.findViewById<Button>(R.id.upgradeProfile_dialog_no_btn)
+        var rbLevel2 = addDialog.findViewById<RadioButton>(R.id.level2_radioButton)
+        var rbLevel3 = addDialog.findViewById<RadioButton>(R.id.level3_radioButton)
+        var radioGrp = addDialog.findViewById<RadioGroup>(R.id.upGradeProfile_radioGroup)
+        var selectedLevel = ""
 
 
+        radioGrp.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
+            val checkedRadioButton =
+                group.findViewById<View>(checkedId) as RadioButton
+            val isChecked = checkedRadioButton.isChecked
+            if (isChecked) {
+                val checkedLevel =  checkedRadioButton.text.toString()
+                if(checkedLevel.contains("2")) {
+                    selectedLevel = Constants.reasonUpgradeToLevelTwo
+                }
+                else{
+                    selectedLevel = Constants.reasonUpgradeToLevelThree
+                }
+            }
+            else{
+                selectedLevel=""
+            }
+        })
+
+
+        btnYes.text = LanguageData.getStringValue("BtnTitle_OK")
+        btnNo.text = LanguageData.getStringValue("BtnTitle_Cancel")
+        rbLevel3.text = LanguageData.getStringValue("Level3Profile")
+        rbLevel2.text = LanguageData.getStringValue("Level2Profile")
+        tvDialogTitle.text = LanguageData.getStringValue("UpgradeProfile")
+        tvMsg.text = LanguageData.getStringValue("ChooseProfileToUpgrade")
+        var profile=""
+        if(currentProfile.contains("2"))
+        {
+            profile=currentProfile.replace("profile","")+"to Level 3 Profile KYC"
+            rbLevel2.visibility=View.GONE
+        }
+        else if(currentProfile.contains("3")){
+            rbLevel2.visibility=View.GONE
+            rbLevel3.visibility=View.GONE
+            btnYes.visibility=View.GONE
+        }
+        else if(currentProfile.contains("1"))
+        {
+            profile=currentProfile.replace("profile","")+"to Level 2 Profile KYC"
+        }
+
+
+        addDialog.findViewById<View>(R.id.upgradeProfile_dialog_yes_btn).setOnClickListener {
+            if(!selectedLevel.equals("")) {
+                listner.onUpgradeProfileDialogYesClickListner(selectedLevel,profile)
+            }
+                addDialog.dismiss()
+        }
+        addDialog.findViewById<View>(R.id.upgradeProfile_dialog_no_btn).setOnClickListener {
+            addDialog.dismiss()
+        }
+    }
+    interface OnChangeProfileClickListner {
+        fun onUpgradeProfileDialogYesClickListner(reason: String, currentProfile: String)
+    }
     fun showCustomDialogue(
         mContext: Context?,
         btnTxt: String?,
@@ -704,6 +787,7 @@ object DialogUtils {
             addDialog.dismiss()
         }
     }
+
 
     fun showBlockedAccountDialog(
         mContext: Context?,

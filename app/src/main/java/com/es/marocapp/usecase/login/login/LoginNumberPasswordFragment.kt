@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.InputFilter
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.CompoundButton
@@ -282,7 +283,6 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                             mDataBinding.inputPin.setText("")
                             (activity as LoginActivity).navController.navigate(R.id.action_signUpNumberFragment_to_resetPasswordFragment)
                         }
-
                     }
                 )
             } else {
@@ -292,13 +292,13 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
             }
         }
 
-        mActivityViewModel.getAccountDetailResponseListner.observe(this@LoginNumberPasswordFragment,
+        mActivityViewModel.getProfileResponseListner.observe(this@LoginNumberPasswordFragment,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                     if(!it.profileName.isNullOrEmpty()){
                         mActivityViewModel.accountHolderInfoUserProfile = it.profileName
+                        Constants.UserProfileName=it.profileName
                     }
-
                     mActivityViewModel.requestForGetBalanceAndGenerateOtpApi(activity as LoginActivity,mActivityViewModel.accountHolderInfoUserProfile.toString(),
                         mActivityViewModel.mUserMsisdn)
 
@@ -346,16 +346,14 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
     }
 
     override fun onForgotPinClick(view: View) {
-        mActivityViewModel.requestForGetAccountHolderInformationApi(activity as LoginActivity, mActivityViewModel.mUserMsisdn)
+        mActivityViewModel.requestForGetProfileApi(activity as LoginActivity, mActivityViewModel.mUserMsisdn)
 //        (activity as LoginActivity).navController.navigate(R.id.action_signUpNumberFragment_to_forgotPasswordFragment)
     }
 
     override fun onSignUpClick(view: View) {
-
     }
 
     override fun onTermsConditionsClick(view: View) {
-
     }
 
 }

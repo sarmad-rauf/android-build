@@ -2,9 +2,8 @@ package com.es.marocapp.usecase
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.TypedValue
+import android.util.Log
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.GravityCompat
@@ -32,7 +31,6 @@ import com.es.marocapp.usecase.settings.SettingsActivity
 import com.es.marocapp.usecase.termsandcondiitons.TermsAndConditions
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
-import com.es.marocapp.utils.PrefUtils
 import com.es.marocapp.utils.Tools
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -187,6 +185,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         setStrings()
         setSideMenuStrings()
         setSideMenuListner()
+        setViewsVisibility()
         checkCashInViaCardFunctinalityAgainstUser()
 
         Constants.tutorialCallIconHomeScreen = mDataBinding.callIconHomeScreen
@@ -198,7 +197,52 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             Constants.displayTutorial(this@MainActivity,mDataBinding.fab,LanguageData.getStringValue("TransactionHistoryTutorial").toString())
         }
     }
+    private fun setViewsVisibility() {
 
+        if(Constants.IS_CONSUMER_USER || Constants.IS_MERCHANT_USER){
+            mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility=View.VISIBLE
+        }
+        else {
+            var currentProfilee =
+                Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
+            if (currentProfilee.equals("") || currentProfilee.equals(null)) {
+                currentProfilee = Constants.UserProfileName
+            }
+            var isProfileNameMatchedwithMerchantAgent: Boolean = false
+            for (i in Constants.MERCHENTAGENTPROFILEARRAY.indices) {
+                Log.d("Abro", "${currentProfilee} == ${Constants.MERCHENTAGENTPROFILEARRAY[i]}")
+
+                isProfileNameMatchedwithMerchantAgent =
+                    currentProfilee.equals(Constants.MERCHENTAGENTPROFILEARRAY[i])
+                if(isProfileNameMatchedwithMerchantAgent)
+                {
+                    break
+                }
+            }
+
+            if (isProfileNameMatchedwithMerchantAgent) {
+                Log.d("Abro", "showing}")
+                mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility = View.VISIBLE
+            } else {
+                Log.d("Abro", "not showing}")
+                mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility = View.GONE
+
+            }
+        }
+
+        var currentProfile=Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
+        if(currentProfile.equals("")||currentProfile.equals(null))
+        {
+            currentProfile=Constants.UserProfileName
+        }
+        if(Constants.IS_AGENT_USER||currentProfile.contains("3"))
+        {
+        mDataBinding.navigationItem.rootView.upgradeProfileGroup.visibility=View.GONE
+        }
+        else{
+            mDataBinding.navigationItem.rootView.upgradeProfileGroup.visibility=View.VISIBLE
+        }
+    }
     private fun setSideMenuListner() {
         mDataBinding.navigationItem.nav_back_button.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
@@ -222,6 +266,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
                     ActivityCashInViaCard::class.java
                 )
             )
+        }
+        mDataBinding.navigationItem.rootView.upgradeProfileGroup.setOnClickListener {
+            DialogUtils.showUpgradeProfileDialog(this,object : DialogUtils.OnChangeProfileClickListner{
+                override fun onUpgradeProfileDialogYesClickListner(
+                    reason: String,
+                    currentProfile: String
+                ) {
+                  mActivityViewModel.requestForUpgradeUserProfile(this@MainActivity,reason,currentProfile)
+                }
+            })
         }
 
         mDataBinding.navigationItem.rootView.changePasswordGroup.setOnClickListener {
@@ -362,6 +416,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         mDataBinding.navigationItem.rootView.mtCashDefaultTitle.text = LanguageData.getStringValue("MTCashWalletByDefault")
         mDataBinding.navigationItem.rootView.oppositionMTCashTitle.text = LanguageData.getStringValue("OppositionOnMyMWallet")
         mDataBinding.navigationItem.rootView.changeLanguageTitle.text = LanguageData.getStringValue("ChangeLanguage")
+        mDataBinding.navigationItem.rootView.upgradeProfileTitle.text = LanguageData.getStringValue("UpgradeProfile")
         mDataBinding.navigationItem.rootView.logOutTitle.text = LanguageData.getStringValue("LogOut")
     }
 
@@ -519,6 +574,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
                     }
                     mActivityViewModel.requestForBalanceInfoAndLimtsAPI(this@MainActivity)
                     // DialogUtils.successFailureDialogue(this@SettingsActivity,it.description,0)
+                }else{
+                    DialogUtils.successFailureDialogue(this@MainActivity,it.description,1)
+                }
+            }
+        )
+
+        mActivityViewModel.upgradeProfileResponseListener.observe(this,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    DialogUtils.successFailureDialogue(this@MainActivity,it.description,0)
                 }else{
                     DialogUtils.successFailureDialogue(this@MainActivity,it.description,1)
                 }

@@ -5,14 +5,8 @@ import android.content.Context
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import com.es.marocapp.R
-import com.es.marocapp.model.requests.BalanceInfoAndLimtRequest
-import com.es.marocapp.model.requests.GetApprovalRequest
-import com.es.marocapp.model.requests.LogoutUserRequest
-import com.es.marocapp.model.requests.UpdateLanguageRequest
-import com.es.marocapp.model.responses.BalanceInfoAndLimitResponse
-import com.es.marocapp.model.responses.GetApprovalsResponse
-import com.es.marocapp.model.responses.LogOutUserResponse
-import com.es.marocapp.model.responses.UpdateLanguageResponse
+import com.es.marocapp.model.requests.*
+import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
@@ -30,6 +24,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     var errorText = SingleLiveEvent<String>()
     var getLogOutUserResponseListner = SingleLiveEvent<LogOutUserResponse>()
     var updateLanguageResponseListener = SingleLiveEvent<UpdateLanguageResponse>()
+    var upgradeProfileResponseListener = SingleLiveEvent<UpgradeProfileResponse>()
     var getBalanceInforAndLimitResponseListner = SingleLiveEvent<BalanceInfoAndLimitResponse>()
 
     //Request For Log Out User
@@ -111,6 +106,62 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                                     LoginActivity.KEY_REDIRECT_USER_INVALID)
                                 else ->  {
                                     updateLanguageResponseListener.postValue(result)
+                                }
+                            }
+
+
+                        } else {
+                            errorText.postValue(result?.description)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    // API For Upgrade User Profile Level API
+    fun requestForUpgradeUserProfile(context: Context?,reason:String,currentProfile:String)
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+            isLoading.set(true)
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.upgradeProfile(
+                UpgradeUserProfileRequest(ApiConstant.CONTEXT_BEFORE_LOGIN, Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),reason,currentProfile)
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null) {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    upgradeProfileResponseListener.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    upgradeProfileResponseListener.postValue(result)
                                 }
                             }
 

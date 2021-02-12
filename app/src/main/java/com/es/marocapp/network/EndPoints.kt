@@ -11,6 +11,9 @@ object EndPoints {
     //GetAccountHolderInformation
     const val getaccountholderinformation = "getaccountholderinformation"
 
+    //GetProfile
+    const val getProfile = "getprofile"
+
     //GetAccountDetail
     const val getaccountDetail = "getaccountdetails"
 
@@ -188,6 +191,9 @@ object EndPoints {
 
     //Update Languaga
     const val updateLanguage = "updatelanguage"
+
+    //Upgrde profile
+    const val upgradeProfile = "setprofile"
 
     //getfaq
     const val getfaq = "getfaq"

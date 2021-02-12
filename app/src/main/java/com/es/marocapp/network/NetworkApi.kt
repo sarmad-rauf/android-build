@@ -14,9 +14,9 @@ interface NetworkApi {
     @POST(EndPoints.getprelogindata)
     fun getPreLoginData(@Body request : GetPreLoginDataRequest) : Observable<GetPreLoginDataResponse>
 
-    //Request for GetAccountHolderInformationCall
-    @POST(EndPoints.getaccountholderinformation)
-    fun getAccountHolderInformation(@Body request : GetAccountHolderInformationRequest) : Observable<GetAccountHolderInformationResponse>
+    //Request for GetProfile
+    @POST(EndPoints.getProfile)
+    fun getProfile(@Body request : GetProfileRequest) : Observable<GetProfileResponse>
 
     //Request for GetAccountDetailCall
     @POST(EndPoints.getaccountDetail)
@@ -273,6 +273,10 @@ interface NetworkApi {
     //Request for changeLanguage
     @POST(EndPoints.updateLanguage)
     fun updateLanguage(@Body request : UpdateLanguageRequest) : Observable<UpdateLanguageResponse>
+
+    //Request for Upgrade profile
+    @POST(EndPoints.upgradeProfile)
+    fun upgradeProfile(@Body request : UpgradeUserProfileRequest) : Observable<UpgradeProfileResponse>
 
     //getfaq
     @GET(EndPoints.getfaq)

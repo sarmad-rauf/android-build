@@ -50,7 +50,6 @@ class SplashActivityViewModel(application: Application) : AndroidViewModel(appli
 
                         if (result?.responseCode != null ) {
                             preLoginDataResponseListener.postValue(result)
-
                         } else {
                             errorText.postValue(context!!.getString(R.string.error_msg_generic))
                         }

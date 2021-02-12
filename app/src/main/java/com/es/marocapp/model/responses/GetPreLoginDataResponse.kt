@@ -70,5 +70,8 @@ data class GetPreLoginDataResponse(
     val billTypePostPaid: String,
     val walletBalanceLimitKey: String,
     val agentMerchantAccountProfile: String,
-    val agentMerchantProfile: Array<String>
+    val agentMerchantProfile: Array<String>,
+    val upgradeSupportedProfiles: Array<String>,
+    val reasonUpgradeToLevelTwo:String,
+    val reasonUpgradeToLevelThree:String
 )

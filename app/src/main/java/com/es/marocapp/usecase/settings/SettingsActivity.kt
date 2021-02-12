@@ -2,6 +2,7 @@ package com.es.marocapp.usecase.settings
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.CompoundButton
 import androidx.lifecycle.Observer
@@ -48,18 +49,31 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
         subscribeForUpdateLanguage()
 
         if(Constants.IS_CONSUMER_USER || Constants.IS_MERCHANT_USER){
-            mDataBinding.cvDefaultAccount.visibility=View.VISIBLE
-            /*settingsViewModel.requestForAccountHolderAddtionalInformationApi(this)
-            subscribeForDefaultAccountStatus()*/
-            if(Constants.IS_DEFAULT_ACCOUNT_SET){
-                mDataBinding.defaultAccountSwitch.setChecked(true);
-            }
-            subscribeForSetDefaultAccountStatus()
-            subscribeForVerifyOTPForSetDefaultAccountStatus()
-            subscribeForUnRegisterDefaultAccountStatus()
+           showViews()
         }
         else{
-            mDataBinding.cvDefaultAccount.visibility=View.GONE
+            var currentProfile = Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
+            if(currentProfile.equals("")||currentProfile.equals(null))
+            {
+                currentProfile=Constants.UserProfileName
+            }
+            var isProfileNameMatchedwithMerchantAgent:Boolean=false
+ for(i in Constants.MERCHENTAGENTPROFILEARRAY.indices)
+ {
+
+     isProfileNameMatchedwithMerchantAgent = currentProfile.equals(Constants.MERCHENTAGENTPROFILEARRAY[i])
+     if(isProfileNameMatchedwithMerchantAgent)
+     {
+         break
+     }
+ }
+
+            if(isProfileNameMatchedwithMerchantAgent)
+            {
+                showViews()
+            } else{
+                mDataBinding.cvDefaultAccount.visibility=View.GONE}
+
         }
 
         mDataBinding.defaultAccountSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
@@ -73,6 +87,18 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
                 settingsViewModel.requestForUnRegisterDefaultAccount(this@SettingsActivity)
             }
         })
+    }
+
+    private fun showViews() {
+        mDataBinding.cvDefaultAccount.visibility=View.VISIBLE
+        /*settingsViewModel.requestForAccountHolderAddtionalInformationApi(this)
+        subscribeForDefaultAccountStatus()*/
+        if(Constants.IS_DEFAULT_ACCOUNT_SET){
+            mDataBinding.defaultAccountSwitch.setChecked(true);
+        }
+        subscribeForSetDefaultAccountStatus()
+        subscribeForVerifyOTPForSetDefaultAccountStatus()
+        subscribeForUnRegisterDefaultAccountStatus()
     }
 
     private fun setStrings() {

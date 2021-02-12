@@ -123,6 +123,8 @@
                         app:layout_constraintStart_toStartOf="@+id/nav_logged_in_user_detials"
                         app:layout_constraintTop_toBottomOf="@+id/nav_logged_in_user_detials"
                         />
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
@@ -483,6 +485,7 @@
                     <androidx.constraintlayout.widget.Group
                         android:id="@+id/mtCashDefaulGroup"
                         android:visibility="visible"
+                        app:constraint_referenced_ids="mtCashDefaultImage,mtCashDefaultTitle,mtCashDefaultImageNext"
                         app:layout_constraintStart_toStartOf="@+id/changePasswordImage"
                         app:layout_constraintEnd_toEndOf="@+id/changePasswordImageNext"
                         app:layout_constraintTop_toTopOf="@+id/mtCashDefaultTitle"
@@ -621,6 +624,54 @@
                         app:layout_constraintBottom_toTopOf="@+id/changeLanguageTitle"
                         />
 
+
+                    <androidx.constraintlayout.widget.Group
+                        android:id="@+id/upgradeProfileGroup"
+                        app:constraint_referenced_ids="upgradeProfileTitle,upgradeProfileImageNext,upgradeProfileImage"
+                        app:layout_constraintStart_toStartOf="@+id/changePasswordImage"
+                        app:layout_constraintEnd_toEndOf="@+id/changePasswordImageNext"
+                        app:layout_constraintTop_toTopOf="@+id/upgradeProfileTitle"
+                        app:layout_constraintBottom_toBottomOf="@+id/upgradeProfileTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        />
+                    <ImageView
+                        android:id="@+id/upgradeProfileImage"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:src="@drawable/via_card_copy_3"
+                        app:layout_constraintTop_toBottomOf="@+id/upgradeProfileTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/upgradeProfileTitle"
+                        />
+
+                    <com.es.marocapp.widgets.MarocRegularTextView
+                        android:id="@+id/upgradeProfileTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_14ssp"
+                        tools:text="Upgrade Profile"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        app:layout_constraintTop_toBottomOf="@+id/changeLanguageTitle"
+                        app:layout_constraintStart_toEndOf="@+id/upgradeProfileImage"
+                        app:layout_constraintEnd_toStartOf="@+id/logOutImageNext"
+                        />
+
+                    <ImageView
+                        android:id="@+id/upgradeProfileImageNext"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:srcCompat="@drawable/ic_next_black_svg"
+                        app:layout_constraintTop_toBottomOf="@+id/upgradeProfileTitle"
+                        app:layout_constraintBottom_toTopOf="@+id/upgradeProfileTitle"
+                        />
+
                     <androidx.constraintlayout.widget.Group
                         android:id="@+id/logOutGroup"
                         android:visibility="visible"
@@ -652,7 +703,7 @@
                         android:layout_marginTop="@dimen/_16sdp"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_marginEnd="@dimen/_8sdp"
-                        app:layout_constraintTop_toBottomOf="@+id/changeLanguageTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/upgradeProfileTitle"
                         app:layout_constraintStart_toEndOf="@+id/logOutImage"
                         app:layout_constraintEnd_toStartOf="@+id/logOutImageNext"
                         />

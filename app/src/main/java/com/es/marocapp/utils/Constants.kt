@@ -30,6 +30,16 @@ import kotlin.properties.Delegates
 
 object Constants {
 
+    //profile upgrade reasons
+    lateinit var reasonUpgradeToLevelThree: String
+    lateinit var reasonUpgradeToLevelTwo: String
+
+    //profiles list  geting in preLoginData api
+    lateinit var upgradeSupportedProfiles: Array<String>
+
+    //profile geting from forgot psw flow in getProfile api
+    lateinit var UserProfileName: String
+
     //Error Msgs
     val SHOW_DEFAULT_ERROR = "SHOW_DEFAULT_ERROR"
     val SHOW_INTERNET_ERROR = "Please check your internet!"

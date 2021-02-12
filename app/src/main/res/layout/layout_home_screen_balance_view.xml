@@ -32,6 +32,7 @@
         app:roundEdges="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/_4sdp"
         />
 
     <ImageView
@@ -53,7 +54,7 @@
         android:id="@+id/progress_value_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_2sdp"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_14ssp"
         app:layout_constraintBottom_toBottomOf="@+id/inner_semi_circle"

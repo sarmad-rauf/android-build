@@ -1,0 +1,109 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/_16sdp"
+    app:cardElevation="0dp"
+    app:cardUseCompatPadding="true"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/_20sdp"
+        android:background="@android:color/transparent"
+        >
+
+        <com.es.marocapp.widgets.MarocRegularTextView
+            android:id="@+id/upgradeProfile_dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:textColor="@color/colorTextGreyMedium"
+            android:textSize="@dimen/_18ssp"
+            android:text="daslkaslasm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.es.marocapp.widgets.MarocRegularTextView
+            android:id="@+id/upgradeProfile_dialog_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:gravity="center"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:singleLine="false"
+            android:textColor="@color/colorGreyDark"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/upgradeProfile_dialog_title"
+            android:text="Please choose your language" />
+
+       <RadioGroup
+           android:id="@+id/upGradeProfile_radioGroup"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="@dimen/_20sdp"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintTop_toBottomOf="@id/upgradeProfile_dialog_description"
+           android:orientation="vertical">
+           <RadioButton
+               android:id="@+id/level2_radioButton"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Level 2">
+           </RadioButton>
+           <RadioButton
+               android:id="@+id/level3_radioButton"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Level 3">
+           </RadioButton>
+       </RadioGroup>
+
+
+
+        <com.es.marocapp.widgets.MarocButton
+            android:id="@+id/upgradeProfile_dialog_yes_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:paddingStart="@dimen/_32sdp"
+            android:paddingEnd="@dimen/_32sdp"
+            android:background="@drawable/button_enable"
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/upgradeProfile_dialog_no_btn"
+            app:layout_constraintTop_toBottomOf="@+id/upGradeProfile_radioGroup" />
+
+        <com.es.marocapp.widgets.MarocButton
+            android:id="@+id/upgradeProfile_dialog_no_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:paddingStart="@dimen/_32sdp"
+            android:paddingEnd="@dimen/_32sdp"
+            android:background="@drawable/button_enable"
+            android:textSize="@dimen/_14ssp"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintEnd_toStartOf="@id/upgradeProfile_dialog_yes_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/upGradeProfile_radioGroup" />
+
+     
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

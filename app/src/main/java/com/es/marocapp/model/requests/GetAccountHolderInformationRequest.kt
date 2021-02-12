@@ -5,6 +5,11 @@ data class GetAccountHolderInformationRequest(
     val identity: String
 )
 
+data class GetProfileRequest(
+    val context: String,
+    val identity: String
+)
+
 data class GetAccountDetailRequest(
     val context: String,
     val identity: String,
