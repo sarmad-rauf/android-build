@@ -7,11 +7,14 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
+import com.es.marocapp.adapter.LanguageCustomSpinnerAdapter
 import com.es.marocapp.databinding.FragmentFavoriteDetailsBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.Creancier
+import com.es.marocapp.model.responses.creances
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
+import com.es.marocapp.usecase.billpayment.BillPaymentActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
@@ -24,6 +27,8 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
     private var list_of_paymentType = arrayOf((LanguageData.getStringValue("Fatourati").toString()))
     private var list_of_billType: ArrayList<String> = arrayListOf()
     private var list_of_FatouratieType : ArrayList<Creancier> = arrayListOf()
+
+    lateinit var acountTypeSpinnerAdapter: LanguageCustomSpinnerAdapter
 
     override fun setLayout(): Int {
         return R.layout.fragment_favorite_details
@@ -74,7 +79,7 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
         mActivitViewModel.popBackStackTo = R.id.favoritesAddOrViewFragment
 
         setStrings()
-
+        subscribeForSpinnerListner()
         subscribeObserver()
 
     }
@@ -82,6 +87,58 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
     private fun subscribeObserver() {
         mActivitViewModel.getFatoratiStepTwoResponseListner.observe(this@FavoriteDetailFragment, Observer {
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    mDataBinding.acountTypeSpinner.visibility=View.VISIBLE
+                   hideViews()
+                    mActivitViewModel.setCreancesList(it.creances as ArrayList<creances>)
+                    var nomCreancierList:ArrayList<String> = ArrayList()
+                    for (i in it.creances .indices)
+                    {
+                        nomCreancierList.add(it.creances.get(i).nomCreance)
+                    }
+                    val acountTypeArray: Array<String> =
+                        nomCreancierList.toArray(arrayOfNulls<String>(nomCreancierList.size))
+                    acountTypeSpinnerAdapter =
+                        LanguageCustomSpinnerAdapter(
+                            activity as FavoritesActivity,
+                            acountTypeArray,
+                            (activity as FavoritesActivity).resources.getColor(R.color.colorBlack),true
+                        )
+                    //  mDataBinding.acountTypeSpinner
+                    mDataBinding.acountTypeSpinner.apply {
+                        adapter = acountTypeSpinnerAdapter
+                    }
+
+                    mDataBinding.inputPhoneNumber.isEnabled=false
+                    mDataBinding.inputLayoutPhoneNumber.hint = mActivitViewModel.creancesList.get()
+                        ?.get(0)?.nomCreance
+                    mDataBinding.inputPhoneNumber.setText( mActivitViewModel.creancesList.get()
+                        ?.get(0)?.codeCreance.toString())
+
+
+            }else{
+                DialogUtils.showErrorDialoge(activity,it.description)
+            }
+        })
+
+        mActivitViewModel.getFatoratiStepThreeResponseListner.observe(this@FavoriteDetailFragment, Observer {
+            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                showViews()
+                mActivitViewModel.specialMenuBillSelected=false
+                mActivitViewModel.refTxFatourati = it.refTxFatourati
+                mActivitViewModel.nomChamp = it.param.nomChamp
+
+                Logger.debugLog("selectedFatouratiRefTx", mActivitViewModel.refTxFatourati)
+                Logger.debugLog("selectedFatouratiNonCham", mActivitViewModel.nomChamp)
+                (activity as FavoritesActivity).navController.navigate(R.id.action_favoriteDetailFragment_to_favoriteEnterContactFragment)
+            }else{
+                DialogUtils.showErrorDialoge(activity,it.description)
+            }
+        })
+
+        mActivitViewModel.getFatoratiStepTwoThreeResponseListner.observe(this@FavoriteDetailFragment, Observer {
+            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                showViews()
+                mActivitViewModel.specialMenuBillSelected=false
                 mActivitViewModel.refTxFatourati = it.refTxFatourati
                 mActivitViewModel.nomChamp = it.param.nomChamp
 
@@ -93,8 +150,48 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
         })
 
         mActivitViewModel.errorText.observe(this@FavoriteDetailFragment, Observer {
-            DialogUtils.showErrorDialoge(activity!!,it)
+            DialogUtils.showErrorDialoge(requireActivity(),it)
         })
+    }
+
+    private fun subscribeForSpinnerListner() {
+
+        // homeViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN)
+        mDataBinding.acountTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                mDataBinding.inputPhoneNumber.isEnabled=false
+                mDataBinding.inputLayoutPhoneNumber.hint = mActivitViewModel.creancesList.get()
+                    ?.get(position)?.nomCreance
+                mDataBinding.inputPhoneNumber.setText( mActivitViewModel.creancesList.get()
+                    ?.get(position)?.codeCreance.toString())
+                mActivitViewModel.specialMenuBillSelected=true
+
+                Logger.debugLog("Abro","${mActivitViewModel.creancesList.get()
+                    ?.get(position)?.nomCreance}  and  ${mActivitViewModel.creancesList.get()
+                    ?.get(position)?.codeCreance}  selection ${mActivitViewModel.specialMenuBillSelected}  ")
+            }
+        }
+    }
+
+    private fun hideViews() {
+        mDataBinding.inputLayoutPhoneNumber.isEnabled=false
+        mDataBinding.acountTypeSpinner.visibility=View.VISIBLE
+        mDataBinding.inputLayoutPhoneNumber.visibility=View.VISIBLE
+        mDataBinding.selectPaymentTypeTitle.visibility=View.GONE
+        mDataBinding.spinnerSelectPayment.visibility=View.GONE
+        mDataBinding.selectBillTypeTitle.visibility=View.GONE
+        mDataBinding.spinnerSelectBillType.visibility=View.GONE
+    }
+    private fun showViews() {
+        mDataBinding.acountTypeSpinner.visibility=View.GONE
+        mDataBinding.inputLayoutPhoneNumber.visibility=View.GONE
+        mDataBinding.selectPaymentTypeTitle.visibility=View.VISIBLE
+        mDataBinding.spinnerSelectPayment.visibility=View.VISIBLE
+        mDataBinding.selectBillTypeTitle.visibility=View.VISIBLE
+        mDataBinding.spinnerSelectBillType.visibility=View.VISIBLE
     }
 
     private fun setStrings() {
@@ -104,7 +201,14 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
     }
 
     override fun onNextButtonClick(view: View) {
-        (activity as FavoritesActivity).navController.navigate(R.id.action_favoriteDetailFragment_to_favoriteEnterContactFragment)
+        if(mActivitViewModel.specialMenuBillSelected)
+        {
+            mActivitViewModel.requestForFatoratiStepThreeApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID, mDataBinding.inputPhoneNumber.text.toString())
+        }
+        else{
+            (activity as FavoritesActivity).navController.navigate(R.id.action_favoriteDetailFragment_to_favoriteEnterContactFragment)
+        }
+
     }
 
     override fun onDeleteButtonClick(view: View) {
@@ -119,12 +223,35 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
         //Util_Redal@MyNickName,codeCreance,creancierID,nomChamp,refTxFatourati
         mActivitViewModel.fatoratiTypeSelected = mDataBinding.spinnerSelectBillType.selectedItem.toString()
         if(list_of_FatouratieType.isNotEmpty()){
+
             for(index in list_of_FatouratieType.indices){
+                Logger.debugLog("abro", list_of_FatouratieType[index].nomCreancier)
                 if(mActivitViewModel.fatoratiTypeSelected.equals(list_of_FatouratieType[index].nomCreancier)){
                     mActivitViewModel.codeCreance = list_of_FatouratieType[index].codeCreance
                     mActivitViewModel.creancierID = list_of_FatouratieType[index].codeCreancier
 
-                    mActivitViewModel.requestForFatoratiStepTwoApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID)
+                    var isSelectedBillMatchedwithfatouratiSeperateMenuBillNames: Boolean = false
+                    for (i in Constants.fatouratiSeperateMenuBillNames.indices) {
+
+                        isSelectedBillMatchedwithfatouratiSeperateMenuBillNames =
+                            mActivitViewModel.fatoratiTypeSelected.trim().toLowerCase().equals(Constants.fatouratiSeperateMenuBillNames[i].trim().toLowerCase())
+                        if(isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
+                        {
+                            break
+                        }
+                    }
+
+                    //fatouratiSeperateMenuBillNames
+                    if(isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
+                    {
+                        mActivitViewModel.requestForFatoratiStepTwoApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID)
+                    }
+                    else{
+                        mActivitViewModel.requestForFatoratiStepTwoThreeApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID)
+                    }
+
+
+
                 }
             }
         }

@@ -1,6 +1,5 @@
 package com.es.marocapp.usecase.billpayment.fragments
 
-import android.R.attr.password
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
@@ -13,15 +12,19 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
+import com.es.marocapp.adapter.LanguageCustomSpinnerAdapter
 import com.es.marocapp.databinding.FragmentBillPaymentMsisdnBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
+import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentClickListner
 import com.es.marocapp.usecase.billpayment.BillPaymentViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.Logger
 import kotlinx.android.synthetic.main.layout_activity_header.view.*
 import java.util.regex.Pattern
 
@@ -39,6 +42,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
     var isCodeRegexMatches = false
     var applyValidation = false
     var cilLabel = ""
+
+    lateinit var acountTypeSpinnerAdapter: LanguageCustomSpinnerAdapter
+
 
     override fun setLayout(): Int {
         return R.layout.fragment_bill_payment_msisdn
@@ -208,13 +214,42 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             }
         }
         if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-            mActivityViewModel.requestForFatoratiStepTwoApi(
-                activity,
-                Constants.CURRENT_USER_MSISDN
-            )
+
+            var isSelectedBillMatchedwithfatouratiSeperateMenuBillNames: Boolean = false
+            for (i in Constants.fatouratiSeperateMenuBillNames.indices) {
+
+                isSelectedBillMatchedwithfatouratiSeperateMenuBillNames =
+                    mActivityViewModel.selectedCreancer.get()?.trim()?.toLowerCase().equals(Constants.fatouratiSeperateMenuBillNames[i]?.trim()?.toLowerCase())
+                Logger.debugLog("Abro","${mActivityViewModel.selectedCreancer.get()?.trim()?.toLowerCase()} == ${Constants.fatouratiSeperateMenuBillNames[i]?.trim()?.toLowerCase()}")
+                if(isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
+                {
+                    break
+                }
+            }
+
+            //fatouratiSeperateMenuBillNames
+            if(isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
+            {
+                mActivityViewModel.requestForFatoratiStepTwoApi(
+                    activity,
+                    Constants.CURRENT_USER_MSISDN
+                )
+            }
+            else{
+                mActivityViewModel.requestForFatoratiStepTwoThreeApi(
+                    activity,
+                    Constants.CURRENT_USER_MSISDN
+                )
+            }
+
         }
 
+
+
+
+
         setStrings()
+        subscribeForSpinnerListner()
         subscribeObserver()
     }
 
@@ -283,7 +318,72 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         mActivityViewModel.getFatoratiStepTwoResponseListner.observe(this@FragmentBillPaymentMsisdn,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                    cilLabel = it.param.libelle
+                    if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+                       mDataBinding.acountTypeSpinner.visibility=View.VISIBLE
+                        mActivityViewModel.setCreancesList(it.creances as ArrayList<creances>)
+                        var nomCreancierList:ArrayList<String> = ArrayList()
+                        for (i in it.creances .indices)
+                        {
+                            nomCreancierList.add(it.creances.get(i).nomCreance)
+                        }
+                        val acountTypeArray: Array<String> =
+                            nomCreancierList.toArray(arrayOfNulls<String>(nomCreancierList.size))
+                        acountTypeSpinnerAdapter =
+                            LanguageCustomSpinnerAdapter(
+                                activity as BillPaymentActivity,
+                                acountTypeArray,
+                                (activity as BillPaymentActivity).resources.getColor(R.color.colorBlack),true
+                            )
+                        //  mDataBinding.acountTypeSpinner
+                        mDataBinding.acountTypeSpinner.apply {
+                            adapter = acountTypeSpinnerAdapter
+                        }
+
+                        mDataBinding.inputPhoneNumber.isEnabled=false
+                        mDataBinding.inputLayoutPhoneNumber.hint = mActivityViewModel.creancesList.get()
+                            ?.get(0)?.nomCreance
+                        mDataBinding.inputPhoneNumber.setText( mActivityViewModel.creancesList.get()
+                            ?.get(0)?.codeCreance.toString())
+                    }
+
+                } else {
+                    DialogUtils.showErrorDialoge(activity, it.description)
+                }
+            }
+        )
+
+        mActivityViewModel.getFatoratiStepThreeResponseListner.observe(this@FragmentBillPaymentMsisdn,
+            Observer {
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    mActivityViewModel.specialMenuBillSelected=false
+                    mDataBinding.inputPhoneNumber.isEnabled=true
+                    mDataBinding.inputPhoneNumber.setText("")
+                  mDataBinding.acountTypeSpinner.visibility=View.GONE
+                    cilLabel = it.param.nomChamp
+                    if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+
+                        mDataBinding.inputLayoutPhoneNumber.hint = cilLabel
+                        mDataBinding.inputPhoneNumberHint.text =
+                            cilLabel
+                    }
+                    if (it.param.libelle.equals("CIL", false)) {
+                        applyValidation = true
+                    } else {
+                        applyValidation = false
+                    }
+                } else {
+                    DialogUtils.showErrorDialoge(activity, it.description)
+                }
+            }
+        )
+
+        mActivityViewModel.getFatoratiStepTwothreeResponseListner.observe(this@FragmentBillPaymentMsisdn,
+            Observer {
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    mActivityViewModel.specialMenuBillSelected=false
+                    mDataBinding.inputPhoneNumber.isEnabled=true
+                    mDataBinding.acountTypeSpinner.visibility=View.GONE
+                    cilLabel = it.param.nomChamp
                     if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
                         mDataBinding.inputLayoutPhoneNumber.hint = cilLabel
                         mDataBinding.inputPhoneNumberHint.text =
@@ -327,19 +427,48 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         )
     }
 
-    override fun onSubmitClickListner(view: View) {
-        if (isValidForAll()) {
-            if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
-                mActivityViewModel.requestForPostPaidFinancialResourceInfoApi(
-                    activity,
-                    code,
-                    msisdnEntered
-                )
+    private fun subscribeForSpinnerListner() {
+
+        // homeViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN)
+        mDataBinding.acountTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
             }
 
-            if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-                mActivityViewModel.transferdAmountTo = msisdnEntered
-                mActivityViewModel.requestForFatoratiStepFourApi(activity)
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                mDataBinding.inputPhoneNumber.isEnabled=false
+                mDataBinding.inputLayoutPhoneNumber.hint = mActivityViewModel.creancesList.get()
+                    ?.get(position)?.nomCreance
+                mDataBinding.inputPhoneNumber.setText( mActivityViewModel.creancesList.get()
+                    ?.get(position)?.codeCreance.toString())
+                mActivityViewModel.specialMenuBillSelected=true
+
+            Logger.debugLog("Abro","${mActivityViewModel.creancesList.get()
+                ?.get(position)?.nomCreance}  and  ${mActivityViewModel.creancesList.get()
+                ?.get(position)?.codeCreance}  selection ${mActivityViewModel.specialMenuBillSelected}  ")
+            }
+        }
+    }
+    override fun onSubmitClickListner(view: View) {
+        if(mActivityViewModel.specialMenuBillSelected)
+        {
+            mActivityViewModel.requestForFatoratiStepThreeApi(   activity,
+                Constants.CURRENT_USER_MSISDN,mDataBinding.inputPhoneNumber.text.toString()
+
+            )
+        } else {
+            if (isValidForAll()) {
+                if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
+                    mActivityViewModel.requestForPostPaidFinancialResourceInfoApi(
+                        activity,
+                        code,
+                        msisdnEntered
+                    )
+                }
+
+                if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+                    mActivityViewModel.transferdAmountTo = msisdnEntered
+                    mActivityViewModel.requestForFatoratiStepFourApi(activity)
+                }
             }
         }
     }

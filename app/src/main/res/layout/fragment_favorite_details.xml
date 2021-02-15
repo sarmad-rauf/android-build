@@ -112,5 +112,49 @@
         app:layout_constraintBottom_toBottomOf="parent"
         />
 
+    <Spinner
+        android:id="@+id/acountTypeSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/QuickAcountTypeSpinner"
+        android:popupBackground="@color/colorWhite"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/input_layout_phone_number"
+        android:gravity="start"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:visibility="gone">
+    </Spinner>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_16sdp"
+        app:layout_goneMarginTop="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        app:layout_constraintTop_toBottomOf="@+id/acountTypeSpinner"
+        android:visibility="gone"
+        >
+
+        <com.es.marocapp.widgets.MarocEditText
+            android:id="@+id/input_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:ellipsize="end"
+            android:focusableInTouchMode="true"
+            android:hint="@string/enter_receiver_s_mobile_number_caps"
+            android:inputType="phone"
+            android:maxLength="12"
+            android:textSize="@dimen/_14ssp"
+            android:theme="@style/myTextInputLabel" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

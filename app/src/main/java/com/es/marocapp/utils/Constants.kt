@@ -30,6 +30,8 @@ import kotlin.properties.Delegates
 
 object Constants {
 
+    lateinit var fatouratiSeperateMenuBillNames: Array<String>
+
     //profile upgrade reasons
     lateinit var reasonUpgradeToLevelThree: String
     lateinit var reasonUpgradeToLevelTwo: String

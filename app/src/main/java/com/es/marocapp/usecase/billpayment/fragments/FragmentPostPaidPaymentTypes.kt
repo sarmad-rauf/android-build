@@ -14,10 +14,7 @@ import com.es.marocapp.adapter.PaymentItemsAdapter
 import com.es.marocapp.databinding.FragmentBillPaymentTypeBinding
 import com.es.marocapp.databinding.LayoutBillPaymentTypeQuickRechargeBinding
 import com.es.marocapp.locale.LanguageData
-import com.es.marocapp.model.responses.BillPaymentFatoratiStepTwoResponse
-import com.es.marocapp.model.responses.Contact
-import com.es.marocapp.model.responses.Creancier
-import com.es.marocapp.model.responses.Param
+import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.airtime.AirTimeViewModel
@@ -95,10 +92,10 @@ class FragmentPostPaidPaymentTypes : BaseFragment<LayoutBillPaymentTypeQuickRech
                             var creancier = Creancier(result[0],result[1],"","")
                             mActivityViewModel.fatoratiTypeSelected.set(creancier)
 
-                            var stepTwoResponseDummy = BillPaymentFatoratiStepTwoResponse("",
+                            var stepTwoResponseDummy = BillPaymentFatoratiStepThreeResponse("",
                                 Param("",result[2],""),result[3],""
                             )
-                            mActivityViewModel.fatoratiStepTwoObserver.set(stepTwoResponseDummy)
+                            mActivityViewModel.fatoratiStepThreeObserver.set(stepTwoResponseDummy)
 
                             var number = selectedContact.fri
                             number = number.substringBefore("@")

@@ -2,7 +2,7 @@ package com.es.marocapp.usecase.billpayment
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
+import android.text.Editable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import com.es.marocapp.R
@@ -24,9 +24,14 @@ import retrofit2.HttpException
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class BillPaymentViewModel(application: Application) : AndroidViewModel(application){
+
+    //fatorati special type bil slection
+    var specialMenuBillSelected: Boolean = false
+
     lateinit var disposable: Disposable
     var isLoading = ObservableField<Boolean>()
     var errorText = SingleLiveEvent<String>()
@@ -60,6 +65,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     var isQuickRechargeCallForBillOrFatouratie = ObservableField<Boolean>()
 
     //Post PIad Bill Payment Observer
+
     var isPostPaidMobileSelected = ObservableField<Boolean>()
     var isPostPaidFixSelected = ObservableField<Boolean>()
     var isInternetSelected = ObservableField<Boolean>()
@@ -73,9 +79,13 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     var selectedIvoicesBillPaymentResponseValue = ObservableField<ArrayList<PostPaidBillPaymentResponse>>()
 
     //Fatorati Observer
+    val selectedCreancer = ObservableField<String>()
+    var creancesList = ObservableField<ArrayList<creances>>()
     var fatoratiStepOneObserver = ObservableField<BillPaymentFatoratiStepOneResponse>()
     var fatoratiTypeSelected = ObservableField<Creancier>()
     var fatoratiStepTwoObserver = ObservableField<BillPaymentFatoratiStepTwoResponse>()
+    var fatoratiStepTwoThreeObserver = ObservableField<BillPaymentFatoratiStepThreeResponse>()
+    var fatoratiStepThreeObserver = ObservableField<BillPaymentFatoratiStepThreeResponse>()
     var fatoratiStepFourObserver = ObservableField<BillPaymentFatoratiStepFourResponse>()
 
     var selectedFatoraitIvoicesList = ObservableField<ArrayList<FatoratiCustomParamModel>>()
@@ -105,6 +115,8 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     //Fatorati API Listner
     var getFatoratiStepOneResponseListner = SingleLiveEvent<BillPaymentFatoratiStepOneResponse>()
     var getFatoratiStepTwoResponseListner = SingleLiveEvent<BillPaymentFatoratiStepTwoResponse>()
+    var getFatoratiStepTwothreeResponseListner = SingleLiveEvent<BillPaymentFatoratiStepThreeResponse>()
+    var getFatoratiStepThreeResponseListner = SingleLiveEvent<BillPaymentFatoratiStepThreeResponse>()
     var getFatoratiStepFourResponseListner = SingleLiveEvent<BillPaymentFatoratiStepFourResponse>()
 
     var listOfFatoratiQuote = arrayListOf<BillPaymentFatoratiQuoteResponse>()
@@ -591,6 +603,136 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
     }
 
+    //Request For FatoratiStepTwoThree ** we are getting step 3 response by caling this api **
+    fun requestForFatoratiStepTwoThreeApi(context: Context?,
+                                     receiver: String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+            transferdAmountTo = receiver
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getFatoratiStepTwoThree(
+                BillPaymentFatoratiStepTwoRequest(ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,Constants.OPERATION_TYPE_CREANCE,
+                    Constants.getFatoratiAlias(receiver),Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    fatoratiStepTwoThreeObserver.set(result)
+                                    getFatoratiStepTwothreeResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    fatoratiStepTwoThreeObserver.set(result)
+                                    getFatoratiStepTwothreeResponseListner.postValue(result)
+                                }
+                            }
+
+                        } else {
+                            getFatoratiStepTwothreeResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For FatoratiStepThree
+    fun requestForFatoratiStepThreeApi(
+        context: Context?,
+        receiver: String,
+        codeCreance: String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+            transferdAmountTo = receiver
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiStepThree(
+                BillPaymentFatoratiStepThreeRequest(ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,"forms",
+                    Constants.getFatoratiAlias(receiver),Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),codeCreance)
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    fatoratiStepThreeObserver.set(result)
+                                    getFatoratiStepThreeResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    fatoratiStepThreeObserver.set(result)
+                                    getFatoratiStepThreeResponseListner.postValue(result)
+                                }
+                            }
+
+                        } else {
+                            getFatoratiStepThreeResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
     //Request For FatoratiStepFour
     fun requestForFatoratiStepFourApi(
         context: Context?
@@ -604,8 +746,8 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
                 disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiStepFour(
                     BillPaymentFatoratiStepFourRequest(fatoratiTypeSelected.get()!!.codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
-                        fatoratiStepTwoObserver.get()!!.param.nomChamp,Constants.OPERATION_TYPE_IMPAYES,Constants.getFatoratiAlias(transferdAmountTo),
-                        fatoratiStepTwoObserver.get()!!.refTxFatourati,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
+                        fatoratiStepThreeObserver.get()!!.param.nomChamp,Constants.OPERATION_TYPE_IMPAYES,Constants.getFatoratiAlias(transferdAmountTo),
+                        fatoratiStepThreeObserver.get()!!.refTxFatourati,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
                 )
                     .compose(applyIOSchedulers())
                     .subscribe(
@@ -924,6 +1066,10 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
             errorText.postValue(Constants.SHOW_INTERNET_ERROR)
         }
 
+    }
+
+    fun setCreancesList(creances: ArrayList<creances>) {
+     creancesList.set(creances)
     }
 
 }

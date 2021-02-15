@@ -56,8 +56,8 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
 */
                         var fatoratiNickName = "Util_${mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier}@$nickName" +
                                 ",${mActivityViewModel.fatoratiTypeSelected.get()!!.codeCreance}," +
-                                mActivityViewModel.fatoratiTypeSelected.get()!!.codeCreancier+","+mActivityViewModel.fatoratiStepTwoObserver.get()!!.param.nomChamp+","+
-                                mActivityViewModel.fatoratiStepTwoObserver.get()!!.refTxFatourati
+                                mActivityViewModel.fatoratiTypeSelected.get()!!.codeCreancier+","+mActivityViewModel.fatoratiStepThreeObserver.get()!!.param.nomChamp+","+
+                                mActivityViewModel.fatoratiStepThreeObserver.get()!!.refTxFatourati
 
                         mActivityViewModel.requestForAddFavoritesApi(activity,fatoratiNickName,Constants.getFatoratiAlias(mActivityViewModel.transferdAmountTo))
                     }else if(mActivityViewModel.isBillUseCaseSelected.get()!!){

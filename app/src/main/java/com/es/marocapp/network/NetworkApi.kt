@@ -254,6 +254,15 @@ interface NetworkApi {
     @POST(EndPoints.getfinancialresourceinformation_bill_fatourati_step2)
     fun getBillPaymentFatoratiStepTwo(@Body request : BillPaymentFatoratiStepTwoRequest) : Observable<BillPaymentFatoratiStepTwoResponse>
 
+    //BillPaymentFatoratiStepTwoThree
+    @POST(EndPoints.getfinancialresourceinformation_bill_fatourati_step2_3)
+    fun getFatoratiStepTwoThree(@Body request : BillPaymentFatoratiStepTwoRequest) : Observable<BillPaymentFatoratiStepThreeResponse>
+
+    //BillPaymentFatoratiStepTwo
+    @POST(EndPoints.getfinancialresourceinformation_bill_fatourati_step3)
+    fun getBillPaymentFatoratiStepThree(@Body request : BillPaymentFatoratiStepThreeRequest) : Observable<BillPaymentFatoratiStepThreeResponse>
+
+
     //BillPaymentFatoratiStepFour
     @POST(EndPoints.getfinancialresourceinformation_bill_fatourati_step4)
     fun getBillPaymentFatoratiStepFour(@Body request : BillPaymentFatoratiStepFourRequest) : Observable<BillPaymentFatoratiStepFourResponse>

@@ -71,6 +71,7 @@ data class GetPreLoginDataResponse(
     val walletBalanceLimitKey: String,
     val agentMerchantAccountProfile: String,
     val agentMerchantProfile: Array<String>,
+    val fatouratiSeperateMenuBillNames: Array<String>,
     val upgradeSupportedProfiles: Array<String>,
     val reasonUpgradeToLevelTwo:String,
     val reasonUpgradeToLevelThree:String

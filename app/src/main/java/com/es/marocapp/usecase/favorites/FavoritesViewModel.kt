@@ -6,14 +6,8 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import com.es.marocapp.R
-import com.es.marocapp.model.requests.AddContactRequest
-import com.es.marocapp.model.requests.BillPaymentFatoratiStepOneRequest
-import com.es.marocapp.model.requests.BillPaymentFatoratiStepTwoRequest
-import com.es.marocapp.model.requests.DeleteContactRequest
-import com.es.marocapp.model.responses.AddContactResponse
-import com.es.marocapp.model.responses.BillPaymentFatoratiStepOneResponse
-import com.es.marocapp.model.responses.BillPaymentFatoratiStepTwoResponse
-import com.es.marocapp.model.responses.DeleteContactResponse
+import com.es.marocapp.model.requests.*
+import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
@@ -38,6 +32,9 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
     var nomChamp = ""
     var refTxFatourati = ""
 
+    //fatorati special type bil slection
+    var specialMenuBillSelected: Boolean = false
+
     //Observerable Fileds
     var isPaymentSelected = ObservableField<Boolean>()
     var isFatoratiUsecaseSelected = ObservableField<Boolean>()
@@ -45,6 +42,7 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
     var selectedFavoritesAction = ObservableField<String>()
 
     //Fatorati API Listner
+    var creancesList = ObservableField<ArrayList<creances>>()
     var getFatoratiStepOneResponseListner = SingleLiveEvent<BillPaymentFatoratiStepOneResponse>()
     var fatoratiStepOneObserver = ObservableField<BillPaymentFatoratiStepOneResponse>()
 
@@ -52,7 +50,11 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
     var getDeleteFavoritesResponseListner = SingleLiveEvent<DeleteContactResponse>()
 
     var fatoratiStepTwoObserver = ObservableField<BillPaymentFatoratiStepTwoResponse>()
+    var fatoratiStepThreeObserver = ObservableField<BillPaymentFatoratiStepThreeResponse>()
+    var fatoratiStepTwoThreeObserver = ObservableField<BillPaymentFatoratiStepThreeResponse>()
     var getFatoratiStepTwoResponseListner = SingleLiveEvent<BillPaymentFatoratiStepTwoResponse>()
+    var getFatoratiStepThreeResponseListner = SingleLiveEvent<BillPaymentFatoratiStepThreeResponse>()
+    var getFatoratiStepTwoThreeResponseListner = SingleLiveEvent<BillPaymentFatoratiStepThreeResponse>()
 
 
     //Request For FatoratiStepOne
@@ -158,6 +160,135 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
 
                         } else {
                             getFatoratiStepTwoResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For FatoratiStepTwoThree
+    fun requestForFatoratiStepTwoThreeApi(context: Context?,
+                                     receiver: String,
+                                     codeCreancier : String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getFatoratiStepTwoThree(
+                BillPaymentFatoratiStepTwoRequest(ApiConstant.CONTEXT_AFTER_LOGIN,codeCreancier,Constants.OPERATION_TYPE_CREANCE,
+                    Constants.getFatoratiAlias(receiver),Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    fatoratiStepTwoThreeObserver.set(result)
+                                    getFatoratiStepTwoThreeResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    fatoratiStepTwoThreeObserver.set(result)
+                                    getFatoratiStepTwoThreeResponseListner.postValue(result)
+                                }
+                            }
+
+                        } else {
+                            getFatoratiStepTwoThreeResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For FatoratiStepThree
+    fun requestForFatoratiStepThreeApi(context: Context?,
+                                     receiver: String,
+                                     codeCreancier : String,
+                                       seprateBillCodeCreance:String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiStepThree(
+                BillPaymentFatoratiStepThreeRequest(ApiConstant.CONTEXT_AFTER_LOGIN,codeCreancier,"forms",
+                    Constants.getFatoratiAlias(receiver),Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),seprateBillCodeCreance)
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    fatoratiStepThreeObserver.set(result)
+                                    getFatoratiStepThreeResponseListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    fatoratiStepThreeObserver.set(result)
+                                    getFatoratiStepThreeResponseListner.postValue(result)
+                                }
+                            }
+
+                        } else {
+                            getFatoratiStepThreeResponseListner.postValue(result)
                         }
 
 
@@ -303,6 +434,10 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
             errorText.postValue(Constants.SHOW_INTERNET_ERROR)
         }
 
+    }
+
+    fun setCreancesList(creanceArrayList: ArrayList<creances>) {
+      creancesList.set(creanceArrayList)
     }
 
 

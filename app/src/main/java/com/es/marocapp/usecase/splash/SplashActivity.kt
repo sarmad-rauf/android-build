@@ -198,6 +198,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.upgradeSupportedProfiles = it.upgradeSupportedProfiles
                 Constants.reasonUpgradeToLevelTwo=it.reasonUpgradeToLevelTwo
                 Constants.reasonUpgradeToLevelThree=it.reasonUpgradeToLevelThree
+                Constants.fatouratiSeperateMenuBillNames=it.fatouratiSeperateMenuBillNames
                 if (it.defaultAccountOtpLength != null) {
                     Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH = it?.defaultAccountOtpLength?.toInt()!!
                 }

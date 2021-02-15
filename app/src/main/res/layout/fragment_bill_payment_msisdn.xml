@@ -39,6 +39,20 @@
             android:layout_marginStart="@dimen/_18sdp"
             />
 
+        <Spinner
+            android:id="@+id/acountTypeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/QuickAcountTypeSpinner"
+            android:popupBackground="@color/colorWhite"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/input_layout_phone_number"
+            android:gravity="start"
+            android:layout_margin="@dimen/_16sdp"
+            android:visibility="gone">
+        </Spinner>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_phone_number"
             android:layout_width="match_parent"
@@ -117,6 +131,7 @@
             app:layout_constraintStart_toStartOf="@+id/selectFavoriteTypeTitle"
             app:layout_constraintTop_toBottomOf="@+id/selectFavoriteTypeTitle" />
 
+
         <com.es.marocapp.widgets.MarocButton
             android:id="@+id/btnNext"
             android:layout_width="match_parent"
@@ -129,6 +144,7 @@
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginEnd="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_16sdp"
+
             app:layout_constraintBottom_toBottomOf="parent"
             />
 

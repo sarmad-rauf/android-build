@@ -176,6 +176,15 @@ object EndPoints {
     const val getfinancialresourceinformation_bill_fatourati_step2 =
         "getfinancialresourceinformation/bill/fatourati/step2"
 
+    ///getfinancialresourceinformation/bill/fatourati/step3
+    const val getfinancialresourceinformation_bill_fatourati_step3 =
+        "getfinancialresourceinformation/bill/fatourati/step3"
+
+    ///getfinancialresourceinformation/bill/fatourati/step2-3
+    const val getfinancialresourceinformation_bill_fatourati_step2_3 =
+        "getfinancialresourceinformation/bill/fatourati/step2_3"
+
+
     //getfinancialresourceinformation/bill/fatourati/step4
     const val getfinancialresourceinformation_bill_fatourati_step4 =
         "getfinancialresourceinformation/bill/fatourati/step4"

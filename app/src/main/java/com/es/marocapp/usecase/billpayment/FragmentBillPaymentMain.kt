@@ -18,10 +18,7 @@ import com.es.marocapp.databinding.FragmentBillPaymentMainTypeLayoutBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.billpaymentmodel.BillPaymentMenuModel
 import com.es.marocapp.model.billpaymentmodel.BillPaymentSubMenuModel
-import com.es.marocapp.model.responses.BillPaymentFatoratiStepTwoResponse
-import com.es.marocapp.model.responses.Contact
-import com.es.marocapp.model.responses.Creancier
-import com.es.marocapp.model.responses.Param
+import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.airtime.AirTimeActivity
@@ -112,11 +109,11 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                 var creancier = Creancier(result[0], result[1], "", companyName)
                                 mActivityViewModel.fatoratiTypeSelected.set(creancier)
 
-                                var stepTwoResponseDummy = BillPaymentFatoratiStepTwoResponse(
+                                var stepTwoResponseDummy = BillPaymentFatoratiStepThreeResponse(
                                     "",
                                     Param("", result[2], ""), result[3], ""
                                 )
-                                mActivityViewModel.fatoratiStepTwoObserver.set(stepTwoResponseDummy)
+                                mActivityViewModel.fatoratiStepThreeObserver.set(stepTwoResponseDummy)
 
                                 var number = selectedContact.fri
                                 number = number.substringBefore("@")
@@ -360,6 +357,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
 
                     var selectedCreancer = listDataChild?.get(listDataHeader[groupPosition].companyTilte)?.get(
                         childPosition)?.subCompanyTitle
+                    mActivityViewModel.selectedCreancer.set(selectedCreancer)
                     if(!mActivityViewModel.getBillPaymentCompaniesResponseObserver.get()?.bills.isNullOrEmpty()){
                         var billList = mActivityViewModel.getBillPaymentCompaniesResponseObserver.get()?.bills
                         for(i in billList!!.indices){
