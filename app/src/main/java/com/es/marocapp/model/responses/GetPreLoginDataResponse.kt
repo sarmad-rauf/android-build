@@ -68,11 +68,12 @@ data class GetPreLoginDataResponse(
     val url: String,
     val version: String,
     val billTypePostPaid: String,
-    val walletBalanceLimitKey: String,
+    val walletBalanceLimitKey: Array<String>,
     val agentMerchantAccountProfile: String,
     val agentMerchantProfile: Array<String>,
     val fatouratiSeperateMenuBillNames: Array<String>,
     val upgradeSupportedProfiles: Array<String>,
     val reasonUpgradeToLevelTwo:String,
-    val reasonUpgradeToLevelThree:String
+    val reasonUpgradeToLevelThree:String,
+    val cityNameRegex:String
 )

@@ -25,6 +25,7 @@ import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.Logger
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 import java.util.*
 import java.util.regex.Pattern
@@ -85,6 +86,8 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
         mDataBinding.inputLayoutEmail.hint = LanguageData.getStringValue("EnterEmail")
         mDataBinding.inputLayoutAddress.hint = LanguageData.getStringValue("EnterAddress")
         mDataBinding.btnNextDetailFragment.text = LanguageData.getStringValue("BtnTitle_Next")
+        mDataBinding.lawText.setText(LanguageData.getStringValue("SignUpDescrption"))
+        mDataBinding.inputLayoutCity.hint=(LanguageData.getStringValue("EnterCity"))
 
     }
 
@@ -182,6 +185,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
             mActivityViewModel.postalAddress = mDataBinding.inputAddress.text.toString().trim()
             mActivityViewModel.lastName = mDataBinding.inputLastName.text.toString().trim()
             mActivityViewModel.email = mDataBinding.inputEmail.text.toString().trim()
+            mActivityViewModel.city = mDataBinding.inputCity.text.toString().trim()
 
 //            mActivityViewModel.requestForeGetInitialAuthDetailsApi(activity)
 
@@ -235,6 +239,8 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
             mDataBinding.inputLayoutFirstName.error = ""
             mDataBinding.inputLayoutFirstName.isErrorEnabled = false
         }
+
+
 
         if(mDataBinding.inputLastName.text.isNullOrEmpty()){
             isValidForAll = false
@@ -304,6 +310,24 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
         }else{
             mDataBinding.inputLayoutAddress.error = ""
             mDataBinding.inputLayoutAddress.isErrorEnabled = false
+        }
+
+        if(mDataBinding.inputCity.text.isNullOrEmpty()){
+            isValidForAll = false
+            mDataBinding.inputLayoutCity.error = LanguageData.getStringValue("PleaseEnterCity")
+            mDataBinding.inputLayoutCity.isErrorEnabled = true
+            Logger.debugLog("Signup","nullCity")
+        }else{
+            if(!Pattern.matches(Constants.CityNameRegex, mDataBinding.inputCity.text.trim())) {
+                isValidForAll = false
+                mDataBinding.inputLayoutCity.error =
+                    LanguageData.getStringValue("PleaseEnterCity")
+                Logger.debugLog("Signup","regex not matched  ${Constants.CityNameRegex}")
+                mDataBinding.inputLayoutCity.isErrorEnabled = true
+            }else{
+                mDataBinding.inputLayoutCity.error = ""
+                mDataBinding.inputLayoutCity.isErrorEnabled = false
+            }
         }
 
 

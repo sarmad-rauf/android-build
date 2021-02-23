@@ -47,13 +47,13 @@ class CashServicesTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() 
                     LanguageData.getStringValue("Deposit").toString() -> {
                         mActivityViewModel.isDepositUseCase.set(true)
                         mActivityViewModel.isWithdrawUseCase.set(false)
-                        mActivityViewModel.trasferTypeSelected.set(LanguageData.getStringValue("Deposit").toString())
+                        mActivityViewModel.trasferTypeSelected.set(LanguageData.getStringValue("BtnTitle_Validate").toString())
                         (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesTypeFragment_to_cashMsisdnAndAmountFragment)
                     }
                     LanguageData.getStringValue("Withdraw").toString() ->{
                         mActivityViewModel.isDepositUseCase.set(false)
                         mActivityViewModel.isWithdrawUseCase.set(true)
-                        mActivityViewModel.trasferTypeSelected.set(LanguageData.getStringValue("Withdraw").toString())
+                        mActivityViewModel.trasferTypeSelected.set(LanguageData.getStringValue("BtnTitle_Confirm").toString())
                         (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesTypeFragment_to_cashMsisdnAndAmountFragment)
                     }
                     else -> Toast.makeText(activity,"Nothing Clicked", Toast.LENGTH_SHORT).show()

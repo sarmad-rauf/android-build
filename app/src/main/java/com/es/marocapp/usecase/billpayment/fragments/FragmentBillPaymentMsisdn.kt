@@ -178,7 +178,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
         mActivityViewModel.popBackStackTo = R.id.fragmentBillPaymentMain
         mDataBinding.inputPhoneNumber.addTextChangedListener(this)
-        mDataBinding.inputCode.addTextChangedListener(this)
+      //  mDataBinding.inputCode.setText("")
+     // mDataBinding.inputCode.visibility=View.GONE
+          mDataBinding.inputCode.addTextChangedListener(this)
 
         mDataBinding.inputPhoneNumber.setOnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
@@ -339,11 +341,18 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                             adapter = acountTypeSpinnerAdapter
                         }
 
-                        mDataBinding.inputPhoneNumber.isEnabled=false
-                        mDataBinding.inputLayoutPhoneNumber.hint = mActivityViewModel.creancesList.get()
-                            ?.get(0)?.nomCreance
-                        mDataBinding.inputPhoneNumber.setText( mActivityViewModel.creancesList.get()
+                        Log.d("paiment" ,"${mActivityViewModel.creancesList.get()
+                            ?.get(0)?.nomCreance}")
+                        var hintLable= mActivityViewModel.creancesList.get()
+                            ?.get(0)?.nomCreance?.toLowerCase()?.trim()?.replace("paiement par","")?.trim()
+                        hintLable=hintLable?.replace("de","")
+                        mDataBinding.billTypeInputLayout.visibility=View.VISIBLE
+                        mDataBinding.billTypeInput.isEnabled=false
+                        mDataBinding.billTypeInputLayout.hint = hintLable
+                        mDataBinding.billTypeInput.setText( mActivityViewModel.creancesList.get()
                             ?.get(0)?.codeCreance.toString())
+                        mDataBinding.selectAcountTitile.setText(LanguageData.getStringValue("BillType"))
+                        mDataBinding.selectAcountTitile.visibility=View.VISIBLE
                     }
 
                 } else {
@@ -356,10 +365,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     mActivityViewModel.specialMenuBillSelected=false
-                    mDataBinding.inputPhoneNumber.isEnabled=true
-                    mDataBinding.inputPhoneNumber.setText("")
-                  mDataBinding.acountTypeSpinner.visibility=View.GONE
-                    cilLabel = it.param.nomChamp
+               //   mDataBinding.acountTypeSpinner.visibility=View.GONE
+               //     mDataBinding.selectAcountTitile.visibility=View.GONE
+                    cilLabel = it.param.libelle
                     if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
 
                         mDataBinding.inputLayoutPhoneNumber.hint = cilLabel
@@ -382,8 +390,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     mActivityViewModel.specialMenuBillSelected=false
                     mDataBinding.inputPhoneNumber.isEnabled=true
-                    mDataBinding.acountTypeSpinner.visibility=View.GONE
-                    cilLabel = it.param.nomChamp
+                 //   mDataBinding.acountTypeSpinner.visibility=View.GONE
+                 //   mDataBinding.selectAcountTitile.visibility=View.GONE
+                    cilLabel = it.param.libelle
                     if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
                         mDataBinding.inputLayoutPhoneNumber.hint = cilLabel
                         mDataBinding.inputPhoneNumberHint.text =
@@ -435,12 +444,17 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                mDataBinding.inputPhoneNumber.isEnabled=false
-                mDataBinding.inputLayoutPhoneNumber.hint = mActivityViewModel.creancesList.get()
+                mDataBinding.billTypeInput.isEnabled=false
+               mDataBinding.billTypeInputLayout.hint = mActivityViewModel.creancesList.get()
                     ?.get(position)?.nomCreance
-                mDataBinding.inputPhoneNumber.setText( mActivityViewModel.creancesList.get()
+                mDataBinding.billTypeInput.setText( mActivityViewModel.creancesList.get()
                     ?.get(position)?.codeCreance.toString())
+                mDataBinding.billTypeInputLayout.visibility=View.VISIBLE
                 mActivityViewModel.specialMenuBillSelected=true
+                mActivityViewModel.requestForFatoratiStepThreeApi(   activity,
+                    Constants.CURRENT_USER_MSISDN,mDataBinding.billTypeInput.text.toString()
+
+                )
 
             Logger.debugLog("Abro","${mActivityViewModel.creancesList.get()
                 ?.get(position)?.nomCreance}  and  ${mActivityViewModel.creancesList.get()
@@ -682,7 +696,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                             var contactNumber = contacts.fri
                             if(contactNumber.equals(selectedFavorites)){
                                 if(!contactNumberCode.isNullOrEmpty()){
+                                   // mDataBinding.inputCode.visibility=View.GONE
                                     mDataBinding.inputCode.setText(contactNumberCode)
+                                   // mDataBinding.inputCode.setText("")
                                 }
                             }
                         }
@@ -813,7 +829,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             var codeLenght = code.length
             isCodeRegexMatches =
                 !(codeLenght > 0 && !Pattern.matches(Constants.APP_BILL_PAYMENT_CODE_REGEX, code))
-        }
+       }
 
     }
 

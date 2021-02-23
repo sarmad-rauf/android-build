@@ -32,7 +32,7 @@
         app:roundEdges="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="@dimen/_4sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
         />
 
     <ImageView

@@ -68,6 +68,7 @@ class CashInViaCashWebViewFragment : BaseFragment<FragmentCashInViaCardWebviewBi
                 handler: SslErrorHandler,
                 error: SslError?
             ) {
+                mDataBinding.progressBar.visibility= View.GONE
                 handler.proceed() // Ignore SSL certificate errors
             }
         })

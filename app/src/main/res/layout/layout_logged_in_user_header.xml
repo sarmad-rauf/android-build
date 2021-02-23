@@ -34,7 +34,7 @@
         android:id="@+id/logoForCurrentLoggedInUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/m_tcash_logo_colored"
+        android:src="@drawable/m_tcash_logo_whitee"
         android:layout_marginTop="@dimen/_16sdp"
         app:layout_goneMarginTop="@dimen/_100sdp"
         app:layout_constraintTop_toBottomOf="@+id/LoggedInHeaderTitle"

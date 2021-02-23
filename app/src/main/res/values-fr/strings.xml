@@ -179,5 +179,6 @@
     <string name="update">Update</string>
     <string name="language_arabic">Arabic</string>
     <string name="status">Status</string>
+    <string name="enter_city">Enter City</string>
 
 </resources>

@@ -186,7 +186,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:src="@drawable/ic_drop_down_arrow_svg"
+                app:srcCompat="@drawable/ic_drop_down_arrow_svg"
                 android:onClick="@{listener::onGenderSelectionClick}"
                 app:layout_constraintBottom_toTopOf="@+id/input_layout_gender"
                 app:layout_constraintEnd_toEndOf="@+id/input_layout_gender"
@@ -227,6 +227,23 @@
                     android:hint="@string/enter_address" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_32sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_32sdp"
+                app:layout_constraintTop_toBottomOf="@+id/input_layout_address">
+
+                <com.es.marocapp.widgets.MarocEditText
+                    android:id="@+id/input_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/myTextInputLabel"
+                    android:hint="@string/enter_city" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <com.es.marocapp.widgets.MarocButton
                 android:id="@+id/btnNextDetailFragment"
                 android:layout_width="0dp"
@@ -238,9 +255,9 @@
                 android:background="@drawable/button_enable"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:textColor="@color/colorWhite"
-                app:layout_constraintStart_toStartOf="@+id/input_layout_address"
-                app:layout_constraintTop_toBottomOf="@+id/input_layout_address"
-                app:layout_constraintEnd_toEndOf="@+id/input_layout_address"
+                app:layout_constraintStart_toStartOf="@+id/input_layout_city"
+                app:layout_constraintTop_toBottomOf="@+id/input_layout_city"
+                app:layout_constraintEnd_toEndOf="@+id/input_layout_city"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

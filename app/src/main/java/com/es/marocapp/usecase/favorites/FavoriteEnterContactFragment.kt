@@ -217,7 +217,7 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
 
         mDataBinding.inputLayoutName.hint = LanguageData.getStringValue("EnterName")
         mDataBinding.selectBillTypeTypeTitle.hint = LanguageData.getStringValue("SelectBillType")
-        mDataBinding.inputLayoutCode.hint = LanguageData.getStringValue("EnterCode")
+        //mDataBinding.inputLayoutCode.hint = LanguageData.getStringValue("EnterCode")
     }
 
     override fun onNextButtonClick(view: View) {
@@ -558,6 +558,8 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
             setStrings()
         }else if(selectedPaymentType.equals(LanguageData.getStringValue("PostpaidFix").toString())){
             mDataBinding.inputLayoutCode.visibility = View.VISIBLE
+          //  mDataBinding.inputLayoutCode.visibility = View.GONE
+           // mDataBinding.inputCode.setText("")
             isInternetTypeSelected = false
             isMobileUseCaseSelected = false
             isFixeUseCaseSelected = true
@@ -567,6 +569,8 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
             setStrings()
         }else if(selectedPaymentType.equals(LanguageData.getStringValue("PostpaidMobile").toString())){
             mDataBinding.inputLayoutCode.visibility = View.VISIBLE
+        //    mDataBinding.inputLayoutCode.visibility = View.GONE
+          //  mDataBinding.inputCode.setText("")
             isInternetTypeSelected = false
             isMobileUseCaseSelected = true
             isFixeUseCaseSelected = false

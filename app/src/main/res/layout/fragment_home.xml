@@ -64,7 +64,7 @@
             android:layout_height="0dp"
             android:background="@android:color/black"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/quickRechargeContainer"
+            app:layout_constraintBottom_toTopOf="@+id/quickRechargeContaine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -106,92 +106,109 @@
             android:layout_marginBottom="@dimen/_4sdp"
             app:indicatorPadding="@dimen/_8sdp"
             app:indicatorRadius="@dimen/_2sdp"
-            app:layout_constraintBottom_toTopOf="@+id/quickRechargeContainer"
+            app:layout_constraintBottom_toTopOf="@+id/quickRechargeContaine"
             app:layout_constraintEnd_toStartOf="@+id/View"
             app:layout_constraintStart_toEndOf="@+id/View"
-            app:layout_constraintTop_toBottomOf="@+id/View" />
+            app:layout_constraintTop_toBottomOf="@+id/View"
+            android:background="@color/zxing_transparent"/>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/quickRechargeContainer"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/quickRechargeContaine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:paddingBottom="@dimen/_8sdp"
-            app:cardCornerRadius="@dimen/_12sdp"
-            app:cardBackgroundColor="@color/colorDarkBlue"
             app:layout_constraintBottom_toTopOf="@+id/recyclerContainer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/View"
-            app:layout_constraintVertical_weight=".15">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintVertical_weight=".15"
+            android:background="@color/colorCerulean" >
+            <com.es.marocapp.widgets.MarocRegularTextView
+                android:id="@+id/textTitleMtCashQuickRecharge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_26sdp"
+                android:text="@string/quick_recharge"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/quickRechargeContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
                 android:paddingBottom="@dimen/_8sdp"
+                app:cardCornerRadius="@dimen/_12sdp"
+                app:cardBackgroundColor="@color/colorDarkBlue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textTitleMtCashQuickRecharge"
                 >
 
-                <com.es.marocapp.widgets.MarocRegularTextView
-                    android:id="@+id/textTitleMtCashQuickRecharge"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:text="@string/quick_recharge"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_14ssp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.es.marocapp.widgets.MarocRegularTextView
-                    android:id="@+id/textTitleQuickRecharge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:text="@string/quick_recharge"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/_14ssp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textTitleMtCashQuickRecharge" />
-
-                <Spinner
-                    android:id="@+id/quickRechargeSpinner"
-                    style="@style/QuickAmountSpinner"
-                    android:background="@drawable/spinner_icon_background_white"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:popupBackground="@color/colorDarkBlue"
-                    app:layout_constraintTop_toBottomOf="@+id/textTitleQuickRecharge"
-                    app:layout_constraintStart_toStartOf="@+id/textTitleQuickRecharge"
-                    />
-
-                <com.es.marocapp.widgets.MarocButton
-                    android:id="@+id/btnQuickRecharge4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:background="@drawable/button_quick_recharge_state"
-                    android:minWidth="0dp"
-                    android:minHeight="0dp"
-                    android:paddingStart="@dimen/_16sdp"
-                    android:paddingTop="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_16sdp"
                     android:paddingBottom="@dimen/_8sdp"
-                    tools:text="Recharge"
-                    android:textColor="@color/colorDarkBlue"
-                    android:textSize="@dimen/_14ssp"
-                    app:layout_constraintTop_toTopOf="@+id/textTitleMtCashQuickRecharge"
-                    app:layout_constraintBottom_toBottomOf="@+id/quickRechargeSpinner"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    />
+                    >
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.cardview.widget.CardView>
+                    <com.es.marocapp.widgets.MarocRegularTextView
+                        android:id="@+id/textTitleQuickRecharge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:text="@string/quick_recharge"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Spinner
+                        android:id="@+id/quickRechargeSpinner"
+                        style="@style/QuickAmountSpinner"
+                        android:background="@drawable/spinner_icon_background_white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:popupBackground="@color/colorDarkBlue"
+                        app:layout_constraintTop_toBottomOf="@+id/textTitleQuickRecharge"
+                        app:layout_constraintStart_toStartOf="@+id/textTitleQuickRecharge"
+                        android:mirrorForRtl="false"
+                        android:textDirection="locale"
+                        android:supportsRtl="false"
+                        />
+
+                    <com.es.marocapp.widgets.MarocButton
+                        android:id="@+id/btnQuickRecharge4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:background="@drawable/button_quick_recharge_state"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:paddingStart="@dimen/_16sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_16sdp"
+                        android:paddingBottom="@dimen/_8sdp"
+                        tools:text="Recharge"
+                        android:textColor="@color/colorDarkBlue"
+                        android:textSize="@dimen/_14ssp"
+                        app:layout_constraintTop_toTopOf="@+id/textTitleQuickRecharge"
+                        app:layout_constraintBottom_toBottomOf="@+id/quickRechargeSpinner"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
         <!--            android:id="@+id/quickRechargeContainer"-->
@@ -310,7 +327,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/quickRechargeContainer"
+            app:layout_constraintTop_toBottomOf="@+id/quickRechargeContaine"
             app:layout_constraintVertical_weight=".3"
             >
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -395,7 +412,6 @@
                     android:popupBackground="@color/colorWhite"
                     app:layout_constraintTop_toBottomOf="@id/selectAcountTitile"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:gravity="start"
                     android:layout_marginStart="@dimen/_13sdp"
                     android:layout_marginEnd="@dimen/_13sdp">
                 </Spinner>

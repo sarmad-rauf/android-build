@@ -695,7 +695,7 @@ object DialogUtils {
         var rbLevel3 = addDialog.findViewById<RadioButton>(R.id.level3_radioButton)
         var radioGrp = addDialog.findViewById<RadioGroup>(R.id.upGradeProfile_radioGroup)
         var selectedLevel = ""
-
+        var profile=""
 
         radioGrp.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
             val checkedRadioButton =
@@ -708,6 +708,28 @@ object DialogUtils {
                 }
                 else{
                     selectedLevel = Constants.reasonUpgradeToLevelThree
+                }
+
+                if(currentProfile.contains("2"))
+                {
+                    profile=currentProfile.replace("Profile","").trim()+" to Level 3 Profile KYC"
+                    rbLevel2.visibility=View.GONE
+                }
+                else if(currentProfile.contains("3")){
+                    rbLevel2.visibility=View.GONE
+                    rbLevel3.visibility=View.GONE
+                    btnYes.visibility=View.GONE
+                }
+                else if(currentProfile.contains("1"))
+                {
+                    if(checkedLevel.contains("2")) {
+                        profile=currentProfile.replace("Profile","").trim()+" to Level 2 Profile KYC"
+
+                    }
+                    else if(checkedLevel.contains("3")){
+                        profile=currentProfile.replace("Profile","").trim()+" to Level 3 Profile KYC"
+                    }
+
                 }
             }
             else{
@@ -722,21 +744,7 @@ object DialogUtils {
         rbLevel2.text = LanguageData.getStringValue("Level2Profile")
         tvDialogTitle.text = LanguageData.getStringValue("UpgradeProfile")
         tvMsg.text = LanguageData.getStringValue("ChooseProfileToUpgrade")
-        var profile=""
-        if(currentProfile.contains("2"))
-        {
-            profile=currentProfile.replace("profile","")+"to Level 3 Profile KYC"
-            rbLevel2.visibility=View.GONE
-        }
-        else if(currentProfile.contains("3")){
-            rbLevel2.visibility=View.GONE
-            rbLevel3.visibility=View.GONE
-            btnYes.visibility=View.GONE
-        }
-        else if(currentProfile.contains("1"))
-        {
-            profile=currentProfile.replace("profile","")+"to Level 2 Profile KYC"
-        }
+
 
 
         addDialog.findViewById<View>(R.id.upgradeProfile_dialog_yes_btn).setOnClickListener {

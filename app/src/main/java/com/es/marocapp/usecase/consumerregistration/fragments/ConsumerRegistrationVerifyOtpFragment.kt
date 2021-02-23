@@ -118,6 +118,7 @@ class ConsumerRegistrationVerifyOtpFragment : BaseFragment<FragmentConsumerRegis
                     "",
                     mDataBinding.inputVerifyOtp.text.toString().trim()
                 )
+                //Constants.CURRENT_NUMBER_DEVICE_ID
 
 
             }else{

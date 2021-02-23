@@ -105,7 +105,7 @@ class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistra
         mDataBinding.inputLayoutEmail.hint = LanguageData.getStringValue("EnterEmail")
         mDataBinding.inputLayoutAddress.hint = LanguageData.getStringValue("EnterAddress")
         mDataBinding.btnNextDetailFragment.text = LanguageData.getStringValue("BtnTitle_Next")
-
+        mDataBinding.inputLayoutCity.hint=(LanguageData.getStringValue("EnterCity"))
         mDataBinding.inputLayoutConsumerNumber.hint = LanguageData.getStringValue("MSISDNPlaceholder")
         mDataBinding.inputPhoneNumberHint.text =
             LanguageData.getStringValue("EnterConsumerNumber")
@@ -151,7 +151,7 @@ class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistra
                 mActivityViewModel.postalAddress = mDataBinding.inputAddress.text.toString().trim()
                 mActivityViewModel.lastName = mDataBinding.inputLastName.text.toString().trim()
                 mActivityViewModel.email = mDataBinding.inputEmail.text.toString().trim()
-
+                mActivityViewModel.city = mDataBinding.inputCity.text.toString().trim()
                 mActivityViewModel.mUserMsisdn=consumerMsisdnEntered
 //                mActivityViewModel.requestForeGetInitialAuthDetailsApi(activity,consumerMsisdnEntered)
                 mActivityViewModel.requestForGetOTPForRegistrationApi(activity,mDataBinding.inputFirstName.text.toString().trim(),mDataBinding.inputLastName.text.toString().trim()
@@ -275,6 +275,24 @@ class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistra
         }else{
             mDataBinding.inputLayoutAddress.error = ""
             mDataBinding.inputLayoutAddress.isErrorEnabled = false
+        }
+
+                if(mDataBinding.inputCity.text.isNullOrEmpty()){
+            isValidForAll = false
+            mDataBinding.inputLayoutCity.error = LanguageData.getStringValue("PleaseEnterCity")
+            mDataBinding.inputLayoutCity.isErrorEnabled = true
+        }else{
+
+            if(!Pattern.matches(Constants.CityNameRegex, mDataBinding.inputCity.text.trim())) {
+                isValidForAll = false
+                mDataBinding.inputLayoutCity.error =
+                    LanguageData.getStringValue("PleaseEnterCity")
+
+                mDataBinding.inputLayoutCity.isErrorEnabled = true
+            }else{
+                mDataBinding.inputLayoutCity.error = ""
+                mDataBinding.inputLayoutCity.isErrorEnabled = false
+            }
         }
 
 

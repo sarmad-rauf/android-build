@@ -556,7 +556,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                 .compose(applyIOSchedulers())
                 .subscribe(
                     { result ->
-                        isLoading.set(false)
+                        //isLoading.set(false)
 
                         if (result?.responseCode != null)
                         {

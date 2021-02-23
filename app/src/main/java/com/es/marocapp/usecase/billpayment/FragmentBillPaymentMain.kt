@@ -141,7 +141,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
 
                                 var msisdnEntered = number
                                 var code = ""
-
+                                Logger.debugLog("abro","case selectes: ${selectedContact.toString()}")
                                 mActivityViewModel.requestForPostPaidFinancialResourceInfoApi(
                                     activity,
                                     code,

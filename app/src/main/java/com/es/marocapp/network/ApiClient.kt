@@ -4,6 +4,7 @@ import android.content.Context
 import com.es.marocapp.BuildConfig
 import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.RootValues
 import java.io.InputStream
 import java.text.SimpleDateFormat
@@ -77,6 +78,7 @@ public class ApiClient() : Dependencies() {
         headerParams["Accept"] = "application/json"
         headerParams["X-Forwarded-For"] = Constants.APPLICATION_IP_ADDRESS
         headerParams["token"] = Constants.createUserToken()
+       // headerParams["lang"] = "en"
         headerParams["lang"] = Constants.getSelectedLanguage()
         if(Constants.HEADERS_AFTER_LOGINS){
             if(Constants.HEADERS_FOR_PAYEMNTS){
@@ -85,7 +87,7 @@ public class ApiClient() : Dependencies() {
                 headerParams["authorization"] = Constants.LOGGED_IN_USER_COOKIE
             }
         }
-
+       Logger.debugLog("ok","Headers ${headerParams.toString()}")
         return headerParams
     }
 

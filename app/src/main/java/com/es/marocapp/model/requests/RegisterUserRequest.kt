@@ -14,5 +14,6 @@ data class Accountholder(
     val firstname: String,
     val gender: String,
     val pstlAdr: String,
-    val surname: String
+    val surname: String,
+    val city:String
 )

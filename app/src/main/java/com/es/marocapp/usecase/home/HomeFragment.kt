@@ -19,6 +19,7 @@ import com.es.marocapp.adapter.LanguageCustomSpinnerAdapter
 import com.es.marocapp.adapter.TransactionHistoryAdapter
 import com.es.marocapp.databinding.FragmentHomeBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.CardModel
 import com.es.marocapp.model.HomeUseCasesModel
 import com.es.marocapp.model.responses.History
@@ -68,6 +69,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             viewmodel = homeViewModel
             listener = this@HomeFragment
         }
+        Logger.debugLog("Abroo","${LanguageData.getStringValue("DoYouWantToChooseThisMwalletMtCashDefaultForDoingOperationsQuestion")}")
+        Logger.debugLog("Abroo","${Constants.APP_DEFAULT_ACCOUNT_OTP_REGEX}")
 
         homeViewModel.text.observe(this, Observer {
         })
@@ -100,7 +103,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 subscribeForSetDefaultAccountStatus()
                 subscribeForVerifyOTPForSetDefaultAccountStatus()
             }else{
-                if(Constants.MERCHANT_AGENT_PROFILE_NAME.equals("MT Merchant Agent Account Profile")){
+                var currentProfile = Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
+
+                var isProfileNameMatched: Boolean = false
+                for (i in Constants.MERCHENTAGENTPROFILEARRAY.indices) {
+                    isProfileNameMatched =
+                        currentProfile.equals(Constants.MERCHENTAGENTPROFILEARRAY[i])
+                    if(isProfileNameMatched)
+                    {
+                        break
+                    }
+                }
+                if(isProfileNameMatched){
                     homeViewModel.requestForAccountHolderAddtionalInformationApi(context)
                     Constants.IS_FIRST_TIME = false
                     subscribeForDefaultAccountStatus()
@@ -143,6 +157,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             (activity as MainActivity).isTranactionDetailsFragmentShowing = false
             (activity as MainActivity).isHomeFragmentShowing = true
             (activity as MainActivity).isTransacitonFragmentShowing = false
+        }
+        homeViewModel.requestForGetBalanceApi(activity)
+        if (LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_AR)) {
+            mDataBinding.quickRechargeSpinner.setBackgroundResource(R.drawable.spinner_icon_background_white_left)
         }
     }
 
@@ -238,6 +256,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         mDataBinding.textTitleMtCashQuickRecharge.text = LanguageData.getStringValue("MTCashQuickRecharge")
         mDataBinding.selectAcountTitile.text=LanguageData.getStringValue("SelectAccountType")
 
+
         if (Constants.quickRechargeAmountsList.isNotEmpty()) {
             val languageItems = Constants.quickRechargeAmountsList.toTypedArray()
             mLanguageSpinnerAdapter =
@@ -262,8 +281,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                   if (Constants.getAccountsResponseArray[i].profileName.equals(Constants.MERCHANT_AGENT_PROFILE_NAME)) {
                       LanguageData.getStringValue("Merchant")
                           ?.let { Constants.acountTypeList.add(it) }
+                      break
                   }
               }
+
           }
             val acountTypeArray: Array<String> =
                 Constants.acountTypeList.toArray(arrayOfNulls<String>(Constants.acountTypeList.size))
@@ -302,20 +323,32 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
 
     private fun subscribeForDefaultAccountStatus() {
 
-       var isProfileNameMatched = Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName.equals(Constants.MERCHENTAGENTPROFILEARRAY[0])||
-               Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName.equals(Constants.MERCHENTAGENTPROFILEARRAY[1])
+       var currentProfile = Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
+
+        var isProfileNameMatched: Boolean = false
+        for (i in Constants.MERCHENTAGENTPROFILEARRAY.indices) {
+            isProfileNameMatched =
+                currentProfile.equals(Constants.MERCHENTAGENTPROFILEARRAY[i])
+            if(isProfileNameMatched)
+            {
+                break
+            }
+        }
 
         homeViewModel.getAccountHolderAdditionalInfoResponseListner.observe(this@HomeFragment,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     if (it.additionalinformation.isNullOrEmpty()) {
                         showPopUp()
+                        Logger.debugLog("Abro","show popup")
                     } else {
-                        if (it.additionalinformation[0].value.equals("FALSE", true)&&isProfileNameMatched) {
+                        if (it.additionalinformation[0].value.equals("FALSE", true)|| (it.additionalinformation[0].value.equals("FALSE", true)&&isProfileNameMatched)) {
                             showPopUp()
+                            Logger.debugLog("Abro","show popup if false")
                         } else {
                             Constants.IS_DEFAULT_ACCOUNT_SET = true
                             (activity as MainActivity).startTutorialsTrail()
+                            Logger.debugLog("Abro","true default account acount status")
                         }
                     }
                 } else {
@@ -603,9 +636,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         if((activity as MainActivity).isHomeFragmentShowing){
             mDataBinding.useCasesRecyclerView.postDelayed(Runnable {
                 for(i in 0 until useCases.size){
-                    Logger.debugLog("abro","usecases list ${useCases[i].useCaseTitle}  sendMoney data ${LanguageData.getStringValue("SendMoney").toString()}")
-                    if(useCases[i].useCaseTitle == LanguageData.getStringValue("SendMoney").toString()){
-                        Logger.debugLog("abro","usecases list ${useCases[i].useCaseTitle}")
+                        if(useCases[i].useCaseTitle == LanguageData.getStringValue("SendMoney").toString()){
                         val holder =
                             mDataBinding.useCasesRecyclerView.findViewHolderForAdapterPosition(i) as? RecyclerView.ViewHolder
                         Constants.tutorialSendMoney = holder?.itemView?.findViewById<ConstraintLayout>(R.id.useCasesParentLayout)
@@ -614,18 +645,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 }
             }, 50)
         }
-        Logger.debugLog("abro","usecases list ${useCases.toString()}")
     }
 
     private fun populateHomeCardView(updateBalance: Boolean, amount: String?) {
         var mbalanceInfoAndResonse = Constants.balanceInfoAndResponse
         var maxUserBalance = "0"
+
         if(!mbalanceInfoAndResonse?.limitsList.isNullOrEmpty()){
             for(index in mbalanceInfoAndResonse?.limitsList!!.indices){
-               if(mbalanceInfoAndResonse.limitsList!![index].name.equals(Constants.KEY_FOR_WALLET_BALANCE_MAX)){
-                   maxUserBalance = mbalanceInfoAndResonse.limitsList!![index].threshhold!!
-                   maxUserBalance = maxUserBalance.removePrefix("DH").trim()
-               }
+                Logger.debugLog("Abro","Limits list key ${mbalanceInfoAndResonse.limitsList!![index].name}== ${Constants.KEY_FOR_WALLET_BALANCE_MAX}")
+              for(i in Constants.KEY_FOR_WALLET_BALANCE_MAX.indices)
+              {
+                  if(mbalanceInfoAndResonse.limitsList!![index].name.equals(Constants.KEY_FOR_WALLET_BALANCE_MAX[i])){
+                      maxUserBalance = mbalanceInfoAndResonse.limitsList!![index].threshhold!!
+                      maxUserBalance = maxUserBalance.removePrefix("DH").trim()
+                      Logger.debugLog("Abro","max Balance ${maxUserBalance}")
+                      break
+                  }
+              }
+
             }
         }
         var listOfFragment : ArrayList<HomeBalanceFragment> = arrayListOf()
@@ -701,8 +739,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 }
 
                 if (Constants.getAccountsResponseArray[i].profileName.equals(
-                        Constants.MERCHANT_AGENT_PROFILE_NAME,
-                        true
+                        Constants.MERCHANT_AGENT_PROFILE_NAME) && Constants.getAccountsResponseArray[i].accountStatus.equals(
+                            Constants.ACTIVE
                     )
                 ) {
                     var acountName =LanguageData.getStringValue("Merchant")
@@ -714,6 +752,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + Constants.getAccountsResponse!!.balance,"0","0"
                         ),-1)
                     )
+
                 }
             }
         }

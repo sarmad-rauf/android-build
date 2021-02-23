@@ -47,6 +47,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
     var lastName = ""
     var email = ""
+    var city = ""
     var previousDeviceId = ""
     var isDeviceChanged = false
     var isSimplePopUp = true
@@ -439,12 +440,13 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
         deviceID_UserMsisdn : String
     ) {
 
+
         if (Tools.checkNetworkStatus(getApplication())) {
 
             isLoading.set(true)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getRegisterUser(
-                RegisterUserRequest(Accountholder(DOB,identificationNumber,firstName,gender,postalAddress,lastName),
+                RegisterUserRequest(Accountholder(DOB,identificationNumber,firstName,gender,postalAddress,lastName,city),
                     ApiConstant.CONTEXT_BEFORE_LOGIN,deviceID_UserMsisdn,email,Constants.getNumberMsisdn(mUserMsisdn))
 
             )

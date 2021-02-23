@@ -38,6 +38,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:src="@drawable/m_tcash_logo_whitee"
+                    android:id="@+id/iconMain">
+                </ImageView>
+
                 <com.es.marocapp.widgets.MarocMediumTextView
                     android:id="@+id/input_phone_number_hint"
                     android:layout_width="wrap_content"
@@ -46,7 +58,7 @@
                     tools:text="Enter Mobile Number"
                     android:textSize="@dimen/_16ssp"
                     android:textColor="@color/colorEditTextGreyMedium"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iconMain"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="@dimen/_18sdp"
                     />
@@ -55,14 +67,14 @@
                     android:id="@+id/input_layout_phone_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/input_phone_number_hint"
                     android:layoutDirection="inherit"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true"
                     android:layout_gravity="start"
                     android:gravity="start"
                     android:textAlignment="textStart"
-                    android:layout_marginTop="@dimen/_32sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginEnd="@dimen/_16sdp"
                     >

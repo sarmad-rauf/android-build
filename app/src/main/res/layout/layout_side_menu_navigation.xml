@@ -653,12 +653,13 @@
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_14ssp"
                         tools:text="Upgrade Profile"
+                        android:paddingTop="@dimen/_8sdp"
                         android:layout_marginTop="@dimen/_16sdp"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_marginEnd="@dimen/_8sdp"
                         app:layout_constraintTop_toBottomOf="@+id/changeLanguageTitle"
                         app:layout_constraintStart_toEndOf="@+id/upgradeProfileImage"
-                        app:layout_constraintEnd_toStartOf="@+id/logOutImageNext"
+
                         />
 
                     <ImageView
@@ -705,6 +706,7 @@
                         android:layout_marginEnd="@dimen/_8sdp"
                         app:layout_constraintTop_toBottomOf="@+id/upgradeProfileTitle"
                         app:layout_constraintStart_toEndOf="@+id/logOutImage"
+                        android:gravity="center_vertical"
                         app:layout_constraintEnd_toStartOf="@+id/logOutImageNext"
                         />
 

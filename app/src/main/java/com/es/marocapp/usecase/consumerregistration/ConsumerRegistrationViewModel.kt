@@ -42,6 +42,7 @@ class ConsumerRegistrationViewModel(application: Application) : AndroidViewModel
     var postalAddress = ""
     var lastName = ""
     var email = ""
+    var city = ""
 
     // API Called on SignUp Detail Fragment For Registration Purpose
     fun requestForeGetInitialAuthDetailsApi(
@@ -183,7 +184,7 @@ class ConsumerRegistrationViewModel(application: Application) : AndroidViewModel
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getRegisterConsumerUser(
                 RegisterConsumerUserRequest(
-                    Accountholder(DOB,identificationNumber,firstName,gender,postalAddress,lastName),
+                    Accountholder(DOB,identificationNumber,firstName,gender,postalAddress,lastName,city),
                     ApiConstant.CONTEXT_BEFORE_LOGIN,deviceID_UserMsisdn,email,Constants.getNumberMsisdn(mUserMsisdn),
                     EncryptionUtils.encryptString(otp))
 

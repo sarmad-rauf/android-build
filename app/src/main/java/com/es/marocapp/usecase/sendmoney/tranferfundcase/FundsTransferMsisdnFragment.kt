@@ -46,7 +46,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         mDataBinding.apply {
             listener = this@FundsTransferMsisdnFragment
         }
-
+        Logger.debugLog("Abro", "Mechant agent Acount ${Constants.MERCHANT_AGENT_PROFILE_NAME}")
         list_of_favorites.clear()
         for (contacts in Constants.mContactListArray) {
             var contactNumber = contacts.fri
@@ -205,13 +205,22 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                     } else {
                         if (it.additionalinformation[0].value.equals("TRUE", true)) {
                             mActivityViewModel.isUserRegistered.set(true)
-//                            var isProfileNameMatched =
-//                                profileName.equals(Constants.MERCHENTAGENTPROFILEARRAY[0]) ||
-//                                        profileName.equals(Constants.MERCHENTAGENTPROFILEARRAY[1])
-//                            if (isProfileNameMatched) {
-//                                mActivityViewModel.requestForGetAccountsuAPI(requireContext())
-//                            }
-                            (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
+                            var isProfileNameMatched: Boolean = false
+                            for (i in Constants.MERCHENTAGENTPROFILEARRAY.indices) {
+                                isProfileNameMatched =
+                                    profileName.equals(Constants.MERCHENTAGENTPROFILEARRAY[i])
+                                if(isProfileNameMatched)
+                                {
+                                    break
+                                }
+                            }
+
+                            if (isProfileNameMatched) {
+                                mActivityViewModel.requestForGetAccountsuAPI(requireContext())
+                            }
+                            else {
+                                (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
+                            }
                         } else {
                             mActivityViewModel.isUserRegistered.set(false)
                             (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
@@ -276,7 +285,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
             Observer {
                 //  Constants.MERCHANT_AGENT_PROFILE_NAME
                 for (i in it.accounts.indices) {
-                    Logger.debugLog("Abro", "Reciever Acount FRI ")
+                    Logger.debugLog("Abro", "Mechant agent Acount ${Constants.MERCHANT_AGENT_PROFILE_NAME}")
                     if (it.accounts.get(i).profileName.equals(Constants.MERCHANT_AGENT_PROFILE_NAME)) {
                         var fri = it.accounts.get(i).accountFri.substring(4, it.accounts.get(i).accountFri.length)
                         mActivityViewModel.addFri(fri)

@@ -155,7 +155,6 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
         mDataBinding.txtForgotPin.paintFlags = mDataBinding.txtForgotPin.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         mDataBinding.txtForgotPin.text = LanguageData.getStringValue("ForgotPasswordQuestion")
         mDataBinding.rememberMeTv.text = LanguageData.getStringValue("RememberMe")
-
         mDataBinding.btnLoginIN.text = LanguageData.getStringValue("BtnTitle_Login")
     }
 

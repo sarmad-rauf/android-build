@@ -198,6 +198,23 @@
                         android:hint="@string/enter_address" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_layout_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/input_layout_address">
+
+                    <com.es.marocapp.widgets.MarocEditText
+                        android:id="@+id/input_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/myTextInputLabel"
+                        android:hint="@string/enter_city" />
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <com.es.marocapp.widgets.MarocButton
                     android:id="@+id/btnNextDetailFragment"
                     android:layout_width="0dp"
@@ -209,7 +226,7 @@
                     android:background="@drawable/button_enable"
                     android:layout_marginTop="@dimen/_16sdp"
                     android:textColor="@color/colorWhite"
-                    app:layout_constraintTop_toBottomOf="@+id/input_layout_address"
+                    app:layout_constraintTop_toBottomOf="@+id/input_layout_city"
                     app:layout_constraintEnd_toEndOf="@+id/input_layout_address"
                     app:layout_constraintStart_toStartOf="@+id/input_layout_address"
                     />

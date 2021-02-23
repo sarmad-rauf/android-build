@@ -16,6 +16,7 @@ import com.es.marocapp.usecase.cashservices.CashServicesViewModel
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.Logger
 
 
 class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirmationBinding>(),
@@ -65,8 +66,14 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
 
         mDataBinding.btnConfirmationCancel.text = LanguageData.getStringValue("BtnTitle_Cancel")
 //        mDataBinding.btnConfirmationPay.text = mActivityViewModel.trasferTypeSelected.get()!! // before it is showing as deposit and Withdraw in button text on base of use case
-        mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("BtnTitle_Validate")
 
+      if(mActivityViewModel.isWithdrawUseCase.get()!!) {
+          mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("BtnTitle_Confirm")
+      }
+        else {
+          mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("BtnTitle_Validate")
+        }
+        Logger.debugLog("abro","conform  ${LanguageData.getStringValue("BtnTitle_Confirm")}  validate ${LanguageData.getStringValue("BtnTitle_Validate")}")
         mDataBinding.tvSendNameTitle.text = LanguageData.getStringValue("SenderName")
         mDataBinding.tvSendNumberTitle.text = LanguageData.getStringValue("SenderNumber")
     }

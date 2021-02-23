@@ -30,6 +30,8 @@ import kotlin.properties.Delegates
 
 object Constants {
 
+    lateinit var CityNameRegex: String
+    val ACTIVE: String="ACTIVE"
     lateinit var fatouratiSeperateMenuBillNames: Array<String>
 
     //profile upgrade reasons
@@ -122,7 +124,7 @@ object Constants {
     var URL_FOR_TERMSANDCONDITIONS = ""
     var APP_VERSION = ""
     var URL_FOR_UPDATE_APP = ""
-    var KEY_FOR_WALLET_BALANCE_MAX = ""
+    lateinit var KEY_FOR_WALLET_BALANCE_MAX:Array<String>
     var KEY_FOR_POST_PAID_TELECOM_BILL = ""
     var PREVIOUS_DAYS_TRANSACTION_COUNT = "30"
     var CASH_IN_VIA_CARD_URL = ""
@@ -146,6 +148,7 @@ object Constants {
     var CURRENT_USER_EMAIL = ""
     var CURRENT_USER_FIRST_NAME = ""
     var CURRENT_USER_LAST_NAME = ""
+
 
     //USER_PROFILE
     var IS_AGENT_USER = false
