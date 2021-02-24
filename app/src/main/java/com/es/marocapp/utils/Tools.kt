@@ -144,9 +144,8 @@ object Tools {
         var num = ""
         try {
             if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
-                num =
-                    text.split(Constants.EMVco.Paid_Entity_Reference_ID + Constants.EMVco.Paid_Entity_Reference_SIZE)[1]
-                if (text.contains(Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE_12)) {
+                num = text.split(Constants.EMVco.Paid_Entity_Reference_ID + Constants.EMVco.Paid_Entity_Reference_SIZE)[1]
+                /*if (text.contains(Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE_12)) {
                     num =
                         num.split(Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE_12)[0]
                     num = EncryptionUtils.decryptStringAESCBC(num)
@@ -156,7 +155,10 @@ object Tools {
                     num = EncryptionUtils.decryptStringAESCBC(num)
                 } else {
                     num = ""
-                }
+                }*/
+                num = num.substring(0, 24)
+
+                num = EncryptionUtils.decryptStringAESCBC(num)
             }
         } catch (e: Exception) {
             num = ""
@@ -222,13 +224,10 @@ object Tools {
         var globallyUniqueIdentifier = ""
         try {
             if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
-                merchantId =
-                    text.split(Constants.EMVco.Merchant_Account_Information_ID + Constants.EMVco.Merchant_Account_Information_SIZE)[1].substring(
-                        0,
-                        4
-                    )
+//                merchantId =
+//                    text.split("0032")[]
                 globallyUniqueIdentifier =
-                    text.split(Constants.EMVco.Merchant_Account_Information_ID + Constants.EMVco.Merchant_Account_Information_SIZE + merchantId)[1].substring(
+                    text.split("0032")[1].substring(
                         0,
                         32
                     )
@@ -381,7 +380,7 @@ object Tools {
     fun validateConsumerEMVcoString(text: String): Boolean {
         try {
             if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
-                return text.contains("01010")
+                return !text.contains("01011")
             }
         } catch (e: Exception) {
             e.printStackTrace()

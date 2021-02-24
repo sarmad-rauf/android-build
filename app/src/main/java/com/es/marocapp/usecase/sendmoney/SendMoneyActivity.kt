@@ -298,9 +298,14 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
             mInputFieldLayout.isErrorEnabled = false
             mInputFieldLayout.error = ""
             var msisdn = sResult
+            if (msisdn.contains("+212")) {
+                msisdn = msisdn.substringAfter("+212")
+                msisdn = msisdn.replace("-", "")
+                msisdn = msisdn.trim()
+                msisdn = "0$msisdn"
+            }
             if (msisdn.contains("212")) {
                 msisdn = msisdn.substringAfter("212")
-                msisdn = msisdn.substringAfter("+212")
                 msisdn = msisdn.replace("-", "")
                 msisdn = msisdn.trim()
                 msisdn = "0$msisdn"
@@ -341,9 +346,14 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
     private fun isValidNumber(result: String): Boolean {
         var isNumberRegexMatches = false
         var msisdn = result
+        if (msisdn.contains("+212")) {
+            msisdn = msisdn.substringAfter("+212")
+            msisdn = msisdn.replace("-", "")
+            msisdn = msisdn.trim()
+            msisdn = "0$msisdn"
+        }
         if (msisdn.contains("212")) {
             msisdn = msisdn.substringAfter("212")
-            msisdn = msisdn.substringAfter("+212")
             msisdn = msisdn.replace("-", "")
             msisdn = msisdn.trim()
             msisdn = "0$msisdn"
