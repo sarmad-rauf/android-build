@@ -178,13 +178,13 @@ interface NetworkApi {
     @POST(EndPoints.generateotp)
     fun getGenerateOtpCall(@Body request : GenerateOtpRequest) : Observable<GenerateOtpResponse>
 
-    //Request for CashInWithOtpQuote
-    @POST(EndPoints.cashinwithotp_quote)
-    fun getCashInWithOtpQuoteCall(@Body request : CashInWithOtpQuoteRequest) : Observable<CashInWithOtpQuoteResponse>
+    //Request for CashInQuote
+    @POST(EndPoints.cashin_quote)
+    fun getCashInQuoteCall(@Body request : CashInQuoteRequest) : Observable<CashInWithOtpQuoteResponse>
 
-    //Request for CashInWithOtp
-    @POST(EndPoints.cashinwithotp)
-    fun getCashInWithOtpCall(@Body request : CashInWithOtpRequest) : Observable<CashInWithOtpResponse>
+    //Request for CashIn
+    @POST(EndPoints.cashin)
+    fun getCashInCall(@Body request : CashInRequest) : Observable<CashInWithOtpResponse>
 
     //Request for setDefaultAccountStatus
     @POST(EndPoints.getfinancialresourceinformationStep1)

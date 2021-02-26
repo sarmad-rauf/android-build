@@ -10,7 +10,6 @@ import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
-import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
@@ -180,19 +179,17 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
 
     }
 
-    //Request For CashInWithOtpQoute
-    fun requestForCashInWithOtpQouteApi(context: Context?,
-                                           otp : String
+    //Request For CashInQoute
+    fun requestForCashInQouteApi(context: Context?
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
 
             isLoading.set(true)
-            mOTP = otp
 
-            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getCashInWithOtpQuoteCall(
-                CashInWithOtpQuoteRequest(amountToTransfer, ApiConstant.CONTEXT_AFTER_LOGIN,
-                    EncryptionUtils.encryptString(otp), Constants.getNumberMsisdn(transferdAmountTo),noteToSend)
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getCashInQuoteCall(
+                CashInQuoteRequest(amountToTransfer, ApiConstant.CONTEXT_AFTER_LOGIN,
+                    Constants.getNumberMsisdn(transferdAmountTo),noteToSend)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -241,9 +238,8 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
     }
 
     //Request For CashInWithOtp
-    fun requestForCashInWithOtpApi(context: Context?,
-                                      qouteID : String,
-                                   otp : String
+    fun requestForCashInApi(context: Context?,
+                                      qouteID : String
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
@@ -251,9 +247,9 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
             isLoading.set(true)
 
 
-            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getCashInWithOtpCall(
-                CashInWithOtpRequest(amountToTransfer,
-                    ApiConstant.CONTEXT_AFTER_LOGIN,EncryptionUtils.encryptString(otp),
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getCashInCall(
+                CashInRequest(amountToTransfer,
+                    ApiConstant.CONTEXT_AFTER_LOGIN,
                     Constants.getNumberMsisdn(transferdAmountTo),qouteID,noteToSend)
             )
                 .compose(applyIOSchedulers())
@@ -426,5 +422,11 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
             errorText.postValue(Constants.SHOW_INTERNET_ERROR)
         }
 
+    }
+
+    fun setInputValues(msisdnEntered: String, inputAmount: String, inputNote: String) {
+        transferdAmountTo = msisdnEntered
+        amountToTransfer = inputAmount
+        noteToSend = inputNote
     }
 }

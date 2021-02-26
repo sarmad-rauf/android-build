@@ -94,9 +94,10 @@ class CashServicesVerifyOtpFragment : BaseFragment<FragmentCashServicesVerifyOtp
             mDataBinding.inputLayoutVerifyOtp.error = ""
             mDataBinding.inputLayoutVerifyOtp.isErrorEnabled = false
 
-            mActivityViewModel.requestForCashInWithOtpQouteApi(
-                activity,
-                mDataBinding.inputVerifyOtp.text.toString().trim()
+            mActivityViewModel.requestForCashInQouteApi(
+                activity
+                //,
+              //  mDataBinding.inputVerifyOtp.text.toString().trim()
             )
         }
     }

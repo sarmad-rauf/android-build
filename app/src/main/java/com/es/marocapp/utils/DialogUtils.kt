@@ -478,8 +478,9 @@ object DialogUtils {
         btnNO.text = LanguageData.getStringValue("BtnTitle_No")
         btnYes.text = LanguageData.getStringValue("BtnTitle_Yes")
         otpDialogFieldTitle.text = LanguageData.getStringValue("DearCustomer")
+        val otpLengthToShowInDescription=Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH-1
         otpDialogFieldDescriotion.text =
-            LanguageData.getStringValue("PleaseEnterOtpToProceedFurther")?.replace(Constants.OTP_LENGTH_PLACEHOLDER_TO_BE_REPLACED,Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH.toString())
+            LanguageData.getStringValue("PleaseEnterOtpToProceedFurther")?.replace(Constants.OTP_LENGTH_PLACEHOLDER_TO_BE_REPLACED,otpLengthToShowInDescription.toString())
 
         var otpField = addDialog.findViewById<PinView>(R.id.otp_dialog_input_enter_otp)
 

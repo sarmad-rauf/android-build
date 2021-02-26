@@ -69,8 +69,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             viewmodel = homeViewModel
             listener = this@HomeFragment
         }
-        Logger.debugLog("Abroo","${LanguageData.getStringValue("DoYouWantToChooseThisMwalletMtCashDefaultForDoingOperationsQuestion")}")
-        Logger.debugLog("Abroo","${Constants.APP_DEFAULT_ACCOUNT_OTP_REGEX}")
+
 
         homeViewModel.text.observe(this, Observer {
         })
@@ -347,6 +346,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                             Logger.debugLog("Abro","show popup if false")
                         } else {
                             Constants.IS_DEFAULT_ACCOUNT_SET = true
+                            (activity as MainActivity).setViewsVisibility()
                             (activity as MainActivity).startTutorialsTrail()
                             Logger.debugLog("Abro","true default account acount status")
                         }
@@ -653,13 +653,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
 
         if(!mbalanceInfoAndResonse?.limitsList.isNullOrEmpty()){
             for(index in mbalanceInfoAndResonse?.limitsList!!.indices){
-                Logger.debugLog("Abro","Limits list key ${mbalanceInfoAndResonse.limitsList!![index].name}== ${Constants.KEY_FOR_WALLET_BALANCE_MAX}")
               for(i in Constants.KEY_FOR_WALLET_BALANCE_MAX.indices)
               {
                   if(mbalanceInfoAndResonse.limitsList!![index].name.equals(Constants.KEY_FOR_WALLET_BALANCE_MAX[i])){
                       maxUserBalance = mbalanceInfoAndResonse.limitsList!![index].threshhold!!
                       maxUserBalance = maxUserBalance.removePrefix("DH").trim()
-                      Logger.debugLog("Abro","max Balance ${maxUserBalance}")
+
                       break
                   }
               }

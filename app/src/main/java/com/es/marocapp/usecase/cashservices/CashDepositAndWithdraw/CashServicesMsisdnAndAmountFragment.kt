@@ -5,7 +5,6 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.View
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
@@ -125,8 +124,8 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
                     DialogUtils.showOTPDialogue(activity,false,
                         object : DialogUtils.OnOTPDialogClickListner {
                             override fun onOTPDialogYesClickListner(otp: String) {
-                                mActivityViewModel.requestForCashInWithOtpQouteApi(
-                                    activity, otp
+                                mActivityViewModel.requestForCashInQouteApi(
+                                    activity
                                 )
                             }
 
@@ -158,9 +157,14 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
     override fun onNextClickListner(view: View) {
         if (isValidForAll()) {
             if (mActivityViewModel.isDepositUseCase.get()!!) {
-                mActivityViewModel.requestForGenerateOtpApi(
-                    activity, msisdnEntered, mDataBinding.inputAmount.text.toString().trim(),
-                    mDataBinding.inputNote.text.toString().trim()
+//                mActivityViewModel.requestForGenerateOtpApi(
+//                    activity, msisdnEntered, mDataBinding.inputAmount.text.toString().trim(),
+//                    mDataBinding.inputNote.text.toString().trim()
+//                )
+                mActivityViewModel.setInputValues(msisdnEntered, mDataBinding.inputAmount.text.toString().trim(),
+                   mDataBinding.inputNote.text.toString().trim())
+                mActivityViewModel.requestForCashInQouteApi(
+                    activity
                 )
             }
 

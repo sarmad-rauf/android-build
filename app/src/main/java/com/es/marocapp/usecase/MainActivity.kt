@@ -197,36 +197,48 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             Constants.displayTutorial(this@MainActivity,mDataBinding.fab,LanguageData.getStringValue("TransactionHistoryTutorial").toString())
         }
     }
-    private fun setViewsVisibility() {
+    public fun setViewsVisibility() {
 
         if(Constants.IS_CONSUMER_USER || Constants.IS_MERCHANT_USER){
-            mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility=View.VISIBLE
+            if(Constants.IS_DEFAULT_ACCOUNT_SET)
+            {
+                Log.d("Abro", "consumer or merchant = not showing default acount in Side Menu}")
+                mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility=View.GONE
+            }else{
+                Log.d("Abro", "consumer or merchant =  showing default acount in Side Menu}")
+                mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility=View.VISIBLE
+            }
+
         }
         else {
-            var currentProfilee =
-                Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
-            if (currentProfilee.equals("") || currentProfilee.equals(null)) {
-                currentProfilee = Constants.UserProfileName
-            }
-            var isProfileNameMatchedwithMerchantAgent: Boolean = false
-            for (i in Constants.MERCHENTAGENTPROFILEARRAY.indices) {
-                Log.d("Abro", "${currentProfilee} == ${Constants.MERCHENTAGENTPROFILEARRAY[i]}")
+            if(Constants.IS_DEFAULT_ACCOUNT_SET)
+            {
+                mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility=View.GONE
+            }else {
 
-                isProfileNameMatchedwithMerchantAgent =
-                    currentProfilee.equals(Constants.MERCHENTAGENTPROFILEARRAY[i])
-                if(isProfileNameMatchedwithMerchantAgent)
-                {
-                    break
+                var currentProfilee =
+                    Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
+                if (currentProfilee.equals("") || currentProfilee.equals(null)) {
+                    currentProfilee = Constants.UserProfileName
                 }
-            }
+                var isProfileNameMatchedwithMerchantAgent: Boolean = false
+                for (i in Constants.MERCHENTAGENTPROFILEARRAY.indices) {
 
-            if (isProfileNameMatchedwithMerchantAgent) {
-                Log.d("Abro", "showing}")
-                mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility = View.VISIBLE
-            } else {
-                Log.d("Abro", "not showing}")
-                mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility = View.GONE
+                    isProfileNameMatchedwithMerchantAgent =
+                        currentProfilee.equals(Constants.MERCHENTAGENTPROFILEARRAY[i])
+                    if (isProfileNameMatchedwithMerchantAgent) {
+                        break
+                    }
+                }
 
+                if (isProfileNameMatchedwithMerchantAgent) {
+                    Log.d("Abro", "showing default acount in Side Menu}")
+                    mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility = View.VISIBLE
+                } else {
+                    Log.d("Abro", "not showing default acount in Side Menu}")
+                    mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility = View.GONE
+
+                }
             }
         }
 

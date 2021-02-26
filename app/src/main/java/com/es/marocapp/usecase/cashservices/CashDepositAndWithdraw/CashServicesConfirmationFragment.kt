@@ -175,7 +175,7 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
                 }
 
                 if(mActivityViewModel.isDepositUseCase.get()!!){
-                    mActivityViewModel.requestForCashInWithOtpApi(activity,mActivityViewModel.qouteId,mActivityViewModel.mOTP)
+                    mActivityViewModel.requestForCashInApi(activity,mActivityViewModel.qouteId)
                 }
             }
 

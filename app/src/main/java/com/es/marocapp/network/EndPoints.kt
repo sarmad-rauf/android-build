@@ -116,11 +116,11 @@ object EndPoints {
     //generateotp
     const val generateotp = "generateotp"
 
-    //cashinwithotp/quote
-    const val cashinwithotp_quote = "cashinwithotp/quote"
+    //cashin/quote
+    const val cashin_quote = "cashin/quote"
 
-    //cashinwithotp
-    const val cashinwithotp = "cashinwithotp"
+    //cashin
+    const val cashin = "cashin"
 
     //getfinancialresourceinformationStep1//DefaultAccountStatus
     const val getfinancialresourceinformationStep1 = "getfinancialresourceinformation/step1"
