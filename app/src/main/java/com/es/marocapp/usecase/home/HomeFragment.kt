@@ -81,6 +81,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         populateHomeCardView(true, "")
         populateHomeUseCase()
 
+        homeViewModel.requestForGetAccountHolderPersonalInformationApi(requireContext(),Constants.CURRENT_USER_MSISDN)
+
         mTransactionHistoryAdapter = TransactionHistoryAdapter(mTransactionsList,object : TransactionHistoryAdapter.HistoryDetailListner{
             override fun onHistoryDetailClickListner(customModelHistoryItem: History) {
                 Constants.currentTransactionItem = customModelHistoryItem
@@ -334,6 +336,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             }
         }
 
+        homeViewModel.getAccountHolderPersonalInformationApiResponseListner.observe(
+            this@HomeFragment,
+            Observer {
+                if(it.responseCode==ApiConstant.API_SUCCESS)
+                {
+                    Constants.CURRENT_USER_DATE_OF_BIRTH= it?.dob.toString()
+                    Constants.CURRENT_USER_CITY= it?.city.toString()
+                    Constants.CURRENT_USER_CIN= it?.cin.toString()
+                    Constants.CURRENT_USER_ADRESS= it?.address.toString()
+                }
+            })
+
         homeViewModel.getAccountHolderAdditionalInfoResponseListner.observe(this@HomeFragment,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
@@ -343,6 +357,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     } else {
                         if (it.additionalinformation[0].value.equals("FALSE", true)|| (it.additionalinformation[0].value.equals("FALSE", true)&&isProfileNameMatched)) {
                             showPopUp()
+                            Constants.IS_DEFAULT_ACCOUNT_SET = false
+                            (activity as MainActivity).setViewsVisibility()
                             Logger.debugLog("Abro","show popup if false")
                         } else {
                             Constants.IS_DEFAULT_ACCOUNT_SET = true

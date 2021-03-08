@@ -30,6 +30,10 @@ import kotlin.properties.Delegates
 
 object Constants {
 
+
+    //update profile  listner
+    var shouldUpdate: Boolean=false
+
     lateinit var CityNameRegex: String
     val ACTIVE: String="ACTIVE"
     lateinit var fatouratiSeperateMenuBillNames: Array<String>
@@ -148,6 +152,11 @@ object Constants {
     var CURRENT_USER_EMAIL = ""
     var CURRENT_USER_FIRST_NAME = ""
     var CURRENT_USER_LAST_NAME = ""
+    var CURRENT_USER_DATE_OF_BIRTH=""
+    var CURRENT_USER_CITY=""
+    var CURRENT_USER_ADRESS=""
+    var CURRENT_USER_CIN=""
+    var CURRENT_USER_MIDDLE_NAME=""
 
 
     //USER_PROFILE

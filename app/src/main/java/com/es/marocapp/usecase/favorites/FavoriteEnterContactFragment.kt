@@ -323,23 +323,25 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
                         }
                     }
 
-                    if (mDataBinding.inputCode.text.isNullOrEmpty() || mDataBinding.inputCode.text.toString()
-                            .isEmpty()
-                    ) {
-                        isValidForAll = false
-                        mDataBinding.inputLayoutCode.error =
-                            LanguageData.getStringValue("PleaseEnterValidCode")
-                        mDataBinding.inputLayoutCode.isErrorEnabled = true
-                    } else {
-                        if (isCodeRegexMatches) {
-                            mDataBinding.inputLayoutCode.error = ""
-                            mDataBinding.inputLayoutCode.isErrorEnabled = false
-                            code = mDataBinding.inputCode.text.toString().trim()
-                        } else {
+                    if(Constants.IS_AGENT_USER) {
+                        if (mDataBinding.inputCode.text.isNullOrEmpty() || mDataBinding.inputCode.text.toString()
+                                .isEmpty()
+                        ) {
                             isValidForAll = false
                             mDataBinding.inputLayoutCode.error =
                                 LanguageData.getStringValue("PleaseEnterValidCode")
                             mDataBinding.inputLayoutCode.isErrorEnabled = true
+                        } else {
+                            if (isCodeRegexMatches) {
+                                mDataBinding.inputLayoutCode.error = ""
+                                mDataBinding.inputLayoutCode.isErrorEnabled = false
+                                code = mDataBinding.inputCode.text.toString().trim()
+                            } else {
+                                isValidForAll = false
+                                mDataBinding.inputLayoutCode.error =
+                                    LanguageData.getStringValue("PleaseEnterValidCode")
+                                mDataBinding.inputLayoutCode.isErrorEnabled = true
+                            }
                         }
                     }
 
@@ -557,7 +559,7 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
             mDataBinding.inputCode.setText("")
             setStrings()
         }else if(selectedPaymentType.equals(LanguageData.getStringValue("PostpaidFix").toString())){
-            mDataBinding.inputLayoutCode.visibility = View.VISIBLE
+          //  mDataBinding.inputLayoutCode.visibility = View.VISIBLE
           //  mDataBinding.inputLayoutCode.visibility = View.GONE
            // mDataBinding.inputCode.setText("")
             isInternetTypeSelected = false
@@ -568,7 +570,7 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
             mDataBinding.inputCode.setText("")
             setStrings()
         }else if(selectedPaymentType.equals(LanguageData.getStringValue("PostpaidMobile").toString())){
-            mDataBinding.inputLayoutCode.visibility = View.VISIBLE
+           // mDataBinding.inputLayoutCode.visibility = View.VISIBLE
         //    mDataBinding.inputLayoutCode.visibility = View.GONE
           //  mDataBinding.inputCode.setText("")
             isInternetTypeSelected = false
@@ -586,15 +588,26 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
                 mDataBinding.spinnerSelectBillType.visibility = View.GONE
                 mDataBinding.inputLayoutCode.visibility = View.GONE
                 mDataBinding.selectBillTypeTypeTitle.visibility = View.GONE
+
             }else{
                 mDataBinding.spinnerSelectBillType.visibility = View.VISIBLE
                 mDataBinding.selectBillTypeTypeTitle.visibility = View.VISIBLE
-                mDataBinding.inputLayoutCode.visibility = View.GONE
+
+                if(Constants.IS_AGENT_USER) {
+
+                    mDataBinding.inputLayoutCode.visibility = View.GONE
+                }
+                Logger.debugLog("beneficeryManagment","fadilo gone 1")
             }
         }else{
             mDataBinding.spinnerSelectBillType.visibility = View.GONE
             mDataBinding.inputLayoutCode.visibility = View.GONE
             mDataBinding.selectBillTypeTypeTitle.visibility = View.GONE
+            if(Constants.IS_AGENT_USER) {
+
+                mDataBinding.inputLayoutCode.visibility = View.GONE
+            }
+            Logger.debugLog("beneficeryManagment","fadilo gone 2")
         }
     }
 }

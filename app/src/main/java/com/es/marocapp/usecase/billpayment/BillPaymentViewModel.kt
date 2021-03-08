@@ -484,7 +484,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
         if (Tools.checkNetworkStatus(getApplication())) {
 
             isLoading.set(true)
-
+           Logger.debugLog("billPayment","isLoading ${isLoading}")
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiStepOne(
                 BillPaymentFatoratiStepOneRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.OPERATION_TYPE_CREANCIER,
                     Constants.getFatoratiAlias(Constants.CURRENT_USER_MSISDN),Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
@@ -493,7 +493,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                 .subscribe(
                     { result ->
                         isLoading.set(false)
-
+                        Logger.debugLog("billPayment","isLoading ${isLoading}")
                         if (result?.responseCode != null)
                         {
                             when(result?.responseCode) {
@@ -626,7 +626,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                         {
                             when(result?.responseCode) {
                                 ApiConstant.API_SUCCESS -> {
-                                    fatoratiStepTwoThreeObserver.set(result)
+                                    fatoratiStepThreeObserver.set(result)
                                     getFatoratiStepTwothreeResponseListner.postValue(result)
                                 }
                                 ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
@@ -634,7 +634,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                                 ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_INVALID)
                                 else ->  {
-                                    fatoratiStepTwoThreeObserver.set(result)
+                                    fatoratiStepThreeObserver.set(result)
                                     getFatoratiStepTwothreeResponseListner.postValue(result)
                                 }
                             }
@@ -742,13 +742,12 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
             isLoading.set(true)
 
-
-
                 disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiStepFour(
                     BillPaymentFatoratiStepFourRequest(fatoratiTypeSelected.get()!!.codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
                         fatoratiStepThreeObserver.get()!!.param.nomChamp,Constants.OPERATION_TYPE_IMPAYES,Constants.getFatoratiAlias(transferdAmountTo),
                         fatoratiStepThreeObserver.get()!!.refTxFatourati,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
                 )
+
                     .compose(applyIOSchedulers())
                     .subscribe(
                         { result ->
@@ -1012,7 +1011,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
         if (Tools.checkNetworkStatus(getApplication())) {
 
             isLoading.set(true)
-
+           Logger.debugLog("billPayment","isLoading ${isLoading}")
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentCompanies(
                 BillPaymentCompaniesRequest(
                     ApiConstant.CONTEXT_AFTER_LOGIN,Constants.OPERATION_TYPE_CREANCIER,
@@ -1023,7 +1022,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                 .subscribe(
                     { result ->
                         isLoading.set(false)
-
+                        Logger.debugLog("billPayment","isLoading ${isLoading}")
                         if (result?.responseCode != null) {
                             when(result?.responseCode) {
                                 ApiConstant.API_SUCCESS -> {

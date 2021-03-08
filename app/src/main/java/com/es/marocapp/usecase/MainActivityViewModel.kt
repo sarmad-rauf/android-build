@@ -144,7 +144,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         if (Tools.checkNetworkStatus(getApplication())) {
             isLoading.set(true)
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.upgradeProfile(
-                UpgradeUserProfileRequest(ApiConstant.CONTEXT_AFTER_LOGIN, Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),reason,currentProfile)
+                UpgradeUserProfileRequest(ApiConstant.CONTEXT_BEFORE_LOGIN, Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),reason,currentProfile)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(

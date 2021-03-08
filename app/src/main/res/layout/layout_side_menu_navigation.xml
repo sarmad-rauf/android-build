@@ -102,6 +102,16 @@
                         app:layout_constraintStart_toStartOf="parent"
                         />
 
+                    <ImageView
+                        android:id="@+id/updateProfile"
+                        android:layout_width="@dimen/_22sdp"
+                        android:layout_height="@dimen/_22sdp"
+                        android:layout_margin="@dimen/_8sdp"
+                        android:src="@drawable/edit"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        />
+
                     <com.es.marocapp.widgets.MarocRegularTextView
                         android:id="@+id/nav_logged_in_user_detials"
                         android:layout_width="wrap_content"

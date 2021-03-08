@@ -145,7 +145,6 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
                 mDataBinding.inputDateOfBirth.setText(selectedDate)
             }, year, month, dayOfMonth
         )
-
         datePickerDialog.show()
     }
 

@@ -20,6 +20,9 @@ object EndPoints {
     //GetAccountHolderInformation
     const val getaccountholderinformationnew = "getreceiverinfo"
 
+    //GetAccountHolderPersonalInformation
+    const val getaccountholderpersonalinformation = "getuserdata"
+
     //GetInitialAuthDetials
     const val getinitialauthdetails = "getinitialauthdetails"
 
@@ -58,6 +61,18 @@ object EndPoints {
 
     //getaccounts
     const val getaccounts = "getaccounts"
+
+    //updateEmail
+    const val updateEmail = "setemail"
+
+    //updateAdress city and adress
+    const val updateAdress = "updateaccountholderaddress"
+
+    //updateaccountholderidentification CIN number
+    const val updateaccountholderidentification = "updateaccountholderidentification"
+
+    //updateaccountholderpersonalinformation firstName Lastname MiddleName DOB
+    const val updateaccountholderpersonalinformation = "updateaccountholderpersonalinformation"
 
     //getaccounts/su
     const val getaccountsu = "getaccounts/su"

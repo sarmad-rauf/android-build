@@ -22,15 +22,14 @@ abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //setContentView(setLayout())
 
+
         setLocale()
 
         mDataBinding= DataBindingUtil.setContentView(this, setLayout())
     }
 
     private fun setLocale() {
-
         LocaleManager.setAppLanguage(this, LocaleManager.selectedLanguage)
-
         val configuration: Configuration = this.getResources()!!.getConfiguration()
         configuration.setLayoutDirection(Locale(LocaleManager.selectedLanguage))
         this.getResources().updateConfiguration(configuration, this.getResources().getDisplayMetrics())

@@ -33,7 +33,7 @@ android {
         multiDexEnabled true
         def today = new Date().format('dd-MMM-yyyy-HHmmss').toString()
         // project.ext.set("archivesBaseName", "Maroc-Android-Build-" + today + "-V" + version + "-" + versionCode + "-Api-" + baseUrlType)
-        project.ext.set("archivesBaseName", "Maroc-Android-Build-" + today)
+        setProperty("archivesBaseName", "Maroc-Android-Build-" + today)
     }
     lintOptions {
         abortOnError false
@@ -50,7 +50,7 @@ android {
                 buildConfigField "String", "SERVER_URL", "\"http://124.109.32.135:8080/mobileapi/\""
             }
 
-            buildConfigField "boolean", "SSL_ENABLED", "false"
+            buildConfigField "boolean", "SSL_ENABLED", "true"
             buildConfigField "boolean", "LOG_ENABLED", "true"
         }
         release {
@@ -67,7 +67,7 @@ android {
 
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            buildConfigField "boolean", "SSL_ENABLED", "true"
+            buildConfigField "boolean", "SSL_ENABLED", "false"
             buildConfigField "boolean", "LOG_ENABLED", "false"
         }
 

@@ -164,9 +164,21 @@ class FragmentBillPaymentPostPaidConfirmation :
 //        tvAmountVal == AmountTotal
 
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
+            if(Constants.IS_AGENT_USER)
+            {
+                mDataBinding.divider.visibility=View.GONE
+                mDataBinding.tvDHTitle.visibility=View.GONE
+                mDataBinding.tvDHVal.visibility=View.GONE
+            }
             mDataBinding.tvFatoratiFeeTitle.visibility = View.GONE
             mDataBinding.tvFatoratiFeeVal.visibility = View.GONE
         } else if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+            if(Constants.IS_AGENT_USER)
+            {
+                mDataBinding.divider.visibility=View.GONE
+                mDataBinding.tvDHTitle.visibility=View.GONE
+                mDataBinding.tvDHVal.visibility=View.GONE
+            }
             mDataBinding.tvFatoratiFeeTitle.visibility = View.VISIBLE
             mDataBinding.tvFatoratiFeeVal.visibility = View.VISIBLE
 
@@ -225,7 +237,7 @@ class FragmentBillPaymentPostPaidConfirmation :
             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + totalAmount
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
             mDataBinding.tvDHVal.text =
-                Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.feeAmount
+                Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel?.feeAmount
         } else if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
             if (mActivityViewModel.feeAmount.equals("0.00") || mActivityViewModel.feeAmount.equals("0")) {
                 mDataBinding.tvDHTitle.visibility = View.GONE

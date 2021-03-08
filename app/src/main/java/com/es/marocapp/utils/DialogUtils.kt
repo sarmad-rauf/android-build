@@ -679,6 +679,7 @@ object DialogUtils {
         {
             currentProfile=Constants.UserProfileName
         }
+        Logger.debugLog("upgradeProfile","current Profile ${currentProfile}")
         val dialogWindow = addDialog.window
         val layoutParams = dialogWindow!!.attributes
         layoutParams.x = Gravity.CENTER_HORIZONTAL
@@ -737,6 +738,15 @@ object DialogUtils {
                 selectedLevel=""
             }
         })
+
+        if(currentProfile.contains("2"))
+        {
+            rbLevel2.visibility=View.GONE
+        }else if(currentProfile.contains("3")){
+            rbLevel2.visibility=View.GONE
+            rbLevel3.visibility=View.GONE
+            btnYes.visibility=View.GONE
+        }
 
 
         btnYes.text = LanguageData.getStringValue("BtnTitle_OK")

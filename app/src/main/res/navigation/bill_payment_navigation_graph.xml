@@ -9,8 +9,7 @@
         android:id="@+id/fragmentPostPaidPaymentTypes"
         android:name="com.es.marocapp.usecase.billpayment.fragments.FragmentPostPaidPaymentTypes"
         android:label="FragmentPostPaidPaymentTypes"
-        tools:layout="@layout/fragment_bill_payment_type"
-        >
+        tools:layout="@layout/fragment_bill_payment_type">
         <action
             android:id="@+id/action_fragmentPostPaidPaymentTypes_to_fragmentPostPaidServiceProvider"
             app:destination="@id/fragmentPostPaidServiceProvider" />

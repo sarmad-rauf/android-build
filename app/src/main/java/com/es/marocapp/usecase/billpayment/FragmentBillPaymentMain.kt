@@ -85,7 +85,6 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                 mDataBinding.billPaymentMangeFavGroup.visibility = View.GONE
             } else {
                 mDataBinding.billPaymentMangeFavGroup.visibility = View.VISIBLE
-
                 mBillPaymentFavouritesAdapter = BillPaymentFavoritesAdapter(mFavoritesList,
                     object : BillPaymentFavoritesAdapter.BillPaymentFavoriteClickListner {
                         override fun onFavoriteItemTypeClick(selectedContact: Contact) {
@@ -584,10 +583,25 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                 if(!it.bills.isNullOrEmpty()){
                     listDataHeader = arrayListOf()
+                    var isFatouratiBillEnabled =false
+                    var isTelecomBillEnabled =false
+                    for(b in Constants.loginWithCertResponse.allowedMenu.BillPayment.indices)
+                    {
+                        if(Constants.loginWithCertResponse.allowedMenu.BillPayment[b].equals("WaterAndElectricity"))
+                        {
+                            isFatouratiBillEnabled=true
+                        }
+                        if(Constants.loginWithCertResponse.allowedMenu.BillPayment[b].equals("Bill"))
+                        {
+                            isTelecomBillEnabled=true
+
+                        }
+                    }
+                    Logger.debugLog("billPayment","telecom Constant ${Constants.KEY_FOR_POST_PAID_TELECOM_BILL} ")
                     for(i in it.bills.indices){
                         if(it.bills[i].name.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)){
+                            if(isTelecomBillEnabled){
                             listDataHeader.add(BillPaymentMenuModel(LanguageData.getStringValue("BillPaymentTelecomBill").toString(),R.drawable.telecom_bill_updated_icon))
-
                             //Adding SubMenu
                             var arrayListOfSubMenu : ArrayList<BillPaymentSubMenuModel> = arrayListOf()
                             arrayListOfSubMenu.add(BillPaymentSubMenuModel(it.bills[i].name,""))
@@ -599,8 +613,12 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                 mTelecomBillSubMenusData.add(LanguageData.getStringValue(it.bills[i].companies[companyIndex].nomCreancier)
                                     .toString())
                             }
+                            }
                         }else{
+
+                            if(isFatouratiBillEnabled){
                             listDataHeader.add(BillPaymentMenuModel(it.bills[i].name,R.drawable.water_electricity_update_icon))
+                            Logger.debugLog("bill"," ${it.bills[i].name}")
                             //Addding Sub Menu's
                             var arrayListOfSubMenu : ArrayList<BillPaymentSubMenuModel> = arrayListOf()
                             for(companyIndex in it.bills[i].companies.indices){
@@ -613,6 +631,8 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                 arrayListOfSubMenu.add(BillPaymentSubMenuModel(it.bills[i].companies[companyIndex].nomCreancier,logo))
                             }
                             listDataChild?.put(it.bills[i].name,arrayListOfSubMenu)
+
+                            }
                         }
                     }
 

@@ -1,6 +1,5 @@
 package com.es.marocapp.usecase.billpayment
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
@@ -10,7 +9,6 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityBillPaymentBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseActivity
-import com.es.marocapp.usecase.airtime.AirTimeViewModel
 import kotlinx.android.synthetic.main.layout_activity_header.view.*
 
 class BillPaymentActivity : BaseActivity<ActivityBillPaymentBinding>() {
@@ -41,7 +39,6 @@ class BillPaymentActivity : BaseActivity<ActivityBillPaymentBinding>() {
                 navController.popBackStack(mActivityViewModel.popBackStackTo, false)
             }
         }
-
         setCompanyIconToolbarVisibility(false)
     }
 

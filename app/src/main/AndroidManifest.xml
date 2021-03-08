@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.es.marocapp">
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -8,7 +9,9 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".ApplicationClass"
@@ -18,6 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".usecase.updateprofle.UpdateProfileActivity" />
         <activity android:name=".usecase.approvals.ApprovalActivity" />
         <activity android:name=".usecase.changepassword.ChangePasswordActivity" />
         <activity android:name=".usecase.cashinviacard.ActivityCashInViaCard" />
@@ -46,7 +50,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".usecase.qrcode.GenerateQrActivity" />
-        <activity android:name=".usecase.qrcode.ScanQRActivity"/>
+        <activity android:name=".usecase.qrcode.ScanQRActivity" />
 
         <service android:name=".services.MyFirebaseInstanceService">
             <intent-filter>

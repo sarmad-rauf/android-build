@@ -142,7 +142,10 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
             if (mActivityViewModel.isInternetSelected.get()!!) {
                 mDataBinding.inputLayoutCode.visibility = View.GONE
-            } else {
+            } else if(Constants.IS_AGENT_USER){
+                mDataBinding.inputLayoutCode.visibility = View.GONE
+            }
+            else {
                 mDataBinding.inputLayoutCode.visibility = View.VISIBLE
             }
 
@@ -480,7 +483,14 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 }
 
                 if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-                    mActivityViewModel.transferdAmountTo = msisdnEntered
+
+                    Logger.debugLog("billPayment","${mActivityViewModel?.fatoratiTypeSelected?.get()?.codeCreance}," +
+                            "${mActivityViewModel?.fatoratiTypeSelected?.get()?.codeCreancier}," +
+                            "${mActivityViewModel?.fatoratiStepThreeObserver?.get()?.param?.nomChamp}," +
+                            "${mActivityViewModel. fatoratiStepThreeObserver?.get()?.param?.nomChamp},${Constants.OPERATION_TYPE_IMPAYES}," +
+                            "${Constants.getFatoratiAlias(mActivityViewModel?.transferdAmountTo)}," +
+                            "${mActivityViewModel?.fatoratiStepThreeObserver?.get()?.refTxFatourati},${Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN)}")
+                   mActivityViewModel.transferdAmountTo = msisdnEntered
                     mActivityViewModel.requestForFatoratiStepFourApi(activity)
                 }
             }
@@ -636,6 +646,8 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
             if (mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!) {
+              if(!Constants.IS_AGENT_USER)
+              {
                 if (mDataBinding.inputCode.text.isNullOrEmpty() || mDataBinding.inputCode.text.toString()
                         .isEmpty()
                 ) {
@@ -655,6 +667,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                         mDataBinding.inputLayoutCode.isErrorEnabled = true
                     }
                 }
+               }
             }
         }
 

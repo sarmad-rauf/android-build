@@ -25,3 +25,15 @@ data class Credential(
     val credentialstatus: String,
     val credentialtype: String
 )
+
+data class GetAccountHolderPersonalInformationResponse(
+    val firstName: String,
+    val lastName: String,
+    val responseCode: String,
+    val description: String,
+    val sureName: String,
+    val city:String,
+    val dob: String,
+    val cin: String,
+    val address: String
+)

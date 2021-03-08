@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.core.view.get
 import androidx.lifecycle.Observer
@@ -29,8 +30,10 @@ import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.qrcode.GenerateQrActivity
 import com.es.marocapp.usecase.settings.SettingsActivity
 import com.es.marocapp.usecase.termsandcondiitons.TermsAndConditions
+import com.es.marocapp.usecase.updateprofle.UpdateProfileActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.Tools
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -152,6 +155,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
                 }
 
+
                 R.id.navigation_transaction-> {
                     navController.popBackStack(R.id.navigation_home,false)
                     navController.navigate(R.id.navigation_transaction)
@@ -175,6 +179,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             false
         }
 
+        val toggle =object: ActionBarDrawerToggle(
+            this, mDataBinding.drawerLayout, mDataBinding.toolbarContainer, R.string.open,
+            R.string.close){
+            override fun onDrawerOpened(drawerView: View) {
+                super.onDrawerOpened(drawerView)
+                if(Constants.shouldUpdate)
+                {
+                    Constants.shouldUpdate=false
+                     reflectUpdateProfileChanges()
+                }
+            }
+        }
+        mDataBinding.drawerLayout.addDrawerListener(toggle)
+
+
 //        homeFragment = supportFragmentManager.findFragmentById(R.id.navigation_home) as HomeFragment
 
         /*val navFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
@@ -197,15 +216,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             Constants.displayTutorial(this@MainActivity,mDataBinding.fab,LanguageData.getStringValue("TransactionHistoryTutorial").toString())
         }
     }
-    public fun setViewsVisibility() {
+     fun setViewsVisibility() {
 
         if(Constants.IS_CONSUMER_USER || Constants.IS_MERCHANT_USER){
             if(Constants.IS_DEFAULT_ACCOUNT_SET)
             {
-                Log.d("Abro", "consumer or merchant = not showing default acount in Side Menu}")
                 mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility=View.GONE
             }else{
-                Log.d("Abro", "consumer or merchant =  showing default acount in Side Menu}")
                 mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility=View.VISIBLE
             }
 
@@ -232,10 +249,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
                 }
 
                 if (isProfileNameMatchedwithMerchantAgent) {
-                    Log.d("Abro", "showing default acount in Side Menu}")
                     mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility = View.VISIBLE
                 } else {
-                    Log.d("Abro", "not showing default acount in Side Menu}")
                     mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility = View.GONE
 
                 }
@@ -254,7 +269,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         else{
             mDataBinding.navigationItem.rootView.upgradeProfileGroup.visibility=View.VISIBLE
         }
+
+         if(Constants.IS_CONSUMER_USER)
+         {
+             mDataBinding.navigationItem.rootView.updateProfile.visibility=View.VISIBLE
+         }
+         else{
+             mDataBinding.navigationItem.rootView.updateProfile.visibility=View.GONE
+         }
     }
+
     private fun setSideMenuListner() {
         mDataBinding.navigationItem.nav_back_button.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
@@ -303,6 +327,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         mDataBinding.navigationItem.rootView.mtCashDefaulGroup.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
             startNewActivity(this@MainActivity, SettingsActivity::class.java)
+        }
+
+        mDataBinding.navigationItem.rootView.updateProfile.setOnClickListener {
+            mDataBinding.drawerLayout.closeDrawers()
+            startNewActivity(this@MainActivity, UpdateProfileActivity::class.java)
         }
 
         mDataBinding.navigationItem.rootView.oppositionMTCashGroup.setOnClickListener {
@@ -414,7 +443,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     private fun setSideMenuStrings() {
         mDataBinding.navigationItem.rootView.nav_title_name.text = LanguageData.getStringValue("MySpace")
         mDataBinding.navigationItem.rootView.personal_information_title.text = LanguageData.getStringValue("PersonalInformation")
-        mDataBinding.navigationItem.rootView.nav_logged_in_user_name.text = Constants.balanceInfoAndResponse?.firstname+" "+Constants.balanceInfoAndResponse?.surname
+        //mDataBinding.navigationItem.rootView.nav_logged_in_user_name.text = Constants.balanceInfoAndResponse?.firstname+" "+Constants.balanceInfoAndResponse?.surname
+        mDataBinding.navigationItem.rootView.nav_logged_in_user_name.text = Constants.CURRENT_USER_FIRST_NAME+" "+Constants.CURRENT_USER_LAST_NAME
         mDataBinding.navigationItem.rootView.nav_logged_in_user_detials.text = Constants.balanceInfoAndResponse?.profilename
         mDataBinding.navigationItem.rootView.nav_logged_in_user_email.text = getUserEmailAddress()
         mDataBinding.navigationItem.rootView.complete_mt_title.text = LanguageData.getStringValue("MTCashAccount")
@@ -432,9 +462,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         mDataBinding.navigationItem.rootView.logOutTitle.text = LanguageData.getStringValue("LogOut")
     }
 
+     fun reflectUpdateProfileChanges(){
+         mDataBinding.navigationItem.rootView.nav_logged_in_user_name.text = Constants.CURRENT_USER_FIRST_NAME+" "+Constants.CURRENT_USER_LAST_NAME
+         mDataBinding.navigationItem.rootView.nav_logged_in_user_email.text = getUserEmailAddress()
+     }
+
     fun getUserEmailAddress() : String{
         var email = ""
-        if(!Constants.balanceInfoAndResponse?.email.isNullOrEmpty()){
+    //Constants.CURRENT_USER_EMAIL
+        if(!Constants.CURRENT_USER_EMAIL.isNullOrEmpty()){
             email = Constants.balanceInfoAndResponse?.email!!
             email = email.removePrefix("ID:")
             email = email.substringAfter(":")
