@@ -9,7 +9,6 @@
         <variable
             name="viewmodel"
             type="com.es.marocapp.usecase.sendmoney.SendMoneyViewModel" />
-        
     </data>
     
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

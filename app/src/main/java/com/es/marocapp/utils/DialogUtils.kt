@@ -602,6 +602,59 @@ object DialogUtils {
         }
     }
 
+    //0 for Success Dialogue & 1 For Failure Dialogue
+    fun successFailureDialogue(
+        mContext: Context?,
+        description: String?, dialogueType: Int,
+        listner:OnYesClickListner
+    ) {
+        val addDialog = Dialog(mContext!!)
+        addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        addDialog.setContentView(R.layout.layout_success_failure_dialog)
+
+        val dialogWindow = addDialog.window
+        val layoutParams = dialogWindow!!.attributes
+        layoutParams.x = Gravity.CENTER_HORIZONTAL
+        layoutParams.y = Gravity.CENTER_VERTICAL
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+        dialogWindow.attributes = layoutParams
+
+        val btnOk = addDialog.findViewById<MarocButton>(R.id.dialog_ok_btn)
+        btnOk.text = LanguageData.getStringValue("BtnTitle_OK")
+
+        val tvMessage = addDialog.findViewById<TextView>(R.id.dialog_description)
+        tvMessage.text = description
+        val image = addDialog.findViewById<ImageView>(R.id.dialog_img)
+        if (dialogueType == 0) {
+            image.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    mContext.resources,
+                    R.drawable.success,
+                    null
+                )
+            )
+        } else {
+            image.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    mContext.resources,
+                    R.drawable.failed,
+                    null
+                )
+            )
+        }
+
+        addDialog.show()
+        addDialog.findViewById<View>(R.id.dialog_ok_btn).setOnClickListener {
+            listner.onDialogYesClickListner()
+            addDialog.dismiss()
+        }
+    }
+
+    interface OnYesClickListner {
+        fun onDialogYesClickListner()
+    }
+
     fun showChangeLanguageDialogue(
         mContext: Context?,
         listner: OnChangeLanguageClickListner

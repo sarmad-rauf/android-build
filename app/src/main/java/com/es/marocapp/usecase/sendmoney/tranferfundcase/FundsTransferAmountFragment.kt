@@ -231,7 +231,7 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
                     if (mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!) {
                         mActivityViewModel.requestFoMerchantQouteApi(activity, sAmount)
                     }
-                } else {
+                }else {
                     if (mActivityViewModel.isAccountHolderInformationFailed.get()!!) {
                         mActivityViewModel.requestForSimplePaymentQouteApi(
                             activity,

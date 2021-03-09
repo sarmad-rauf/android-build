@@ -14,6 +14,7 @@ import com.es.marocapp.databinding.LayoutSuccessBillPaymentBinding
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.payments.PaymentsActivity
 import com.es.marocapp.usecase.payments.PaymentsViewModel
+import com.es.marocapp.utils.Constants
 
 class PaymentConfirmationFragment: BaseFragment<LayoutConfirmationBillPaymentBinding>(),
     BillPaymentClickListener {
@@ -31,6 +32,11 @@ class PaymentConfirmationFragment: BaseFragment<LayoutConfirmationBillPaymentBin
         }
         (activity as PaymentsActivity).setCompanyIconToolbarVisibility(false)
         (activity as PaymentsActivity).setToolabarVisibility(false)
+        if(Constants.IS_AGENT_USER)
+        {
+            mDataBinding.tvDHTitle.visibility=View.GONE
+            mDataBinding.tvDHVal.visibility=View.GONE
+        }
     }
 
     override fun onBackClick(view: View) {

@@ -16,6 +16,7 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
@@ -99,7 +100,11 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
               Constants.CURRENT_USER_EMAIL=mDataBinding.inputEmail.text.toString()
                Constants.shouldUpdate=true
               Logger.debugLog("updatePrfile","reflacting changess")
-              DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description,0)
+              DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description,0,object :DialogUtils.OnYesClickListner{
+                  override fun onDialogYesClickListner() {
+                      (activity as UpdateProfileActivity).startNewActivityAndClear(activity as UpdateProfileActivity,MainActivity::class.java)
+                  }
+              })
           }
           else{
               DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description,1)
@@ -116,10 +121,16 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
                     updateProfileViewModel.requestForUpdateEmailAPI(requireContext(),mDataBinding.inputEmail.text.toString())
                 }
                 else{
-                    DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description,0)
+                    updateProfileViewModel.isLoading.set(false)
+                    DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description,0,object :DialogUtils.OnYesClickListner{
+                        override fun onDialogYesClickListner() {
+                            (activity as UpdateProfileActivity).startNewActivityAndClear(activity as UpdateProfileActivity,MainActivity::class.java)
+                        }
+                    })
                 }
             }
             else{
+                updateProfileViewModel.isLoading.set(false)
                 DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description,1)
             }
         })
@@ -136,9 +147,15 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
                 {
                     updateProfileViewModel.requestForUpdateEmailAPI(requireContext(),mDataBinding.inputEmail.text.toString())
                 }else {
-                    DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description, 0)
+                    updateProfileViewModel.isLoading.set(false)
+                    DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description, 0,object :DialogUtils.OnYesClickListner{
+                        override fun onDialogYesClickListner() {
+                            (activity as UpdateProfileActivity).startNewActivityAndClear(activity as UpdateProfileActivity,MainActivity::class.java)
+                        }
+                    })
                 }
             }else{
+                updateProfileViewModel.isLoading.set(false)
                 DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description,1)
             }
         })
@@ -163,9 +180,15 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
                     updateProfileViewModel.requestForUpdateEmailAPI(requireContext(),mDataBinding.inputEmail.text.toString())
                 }
                 else {
-                   DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description, 0)
+                   updateProfileViewModel.isLoading.set(false)
+                   DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description, 0,object :DialogUtils.OnYesClickListner{
+                       override fun onDialogYesClickListner() {
+                           (activity as UpdateProfileActivity).startNewActivityAndClear(activity as UpdateProfileActivity,MainActivity::class.java)
+                       }
+                   })
                }
             }else{
+                updateProfileViewModel.isLoading.set(false)
                 DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description,1)
             }
         })
@@ -215,14 +238,14 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
         mDataBinding.inputAddress.setText(updateProfileViewModel.adress)
         mDataBinding.inputCity.setText(updateProfileViewModel.city)
 
-        //input hint
-        mDataBinding.inputLayoutFirstName.hint=("")
-        mDataBinding.inputLayoutLastName.hint=("")
-        mDataBinding.inputLayoutDateOfBirth.hint=("")
-        mDataBinding.inputLayoutNationalID.hint=("")
-        mDataBinding.inputLayoutEmail.hint=("")
-        mDataBinding.inputLayoutAddress.hint=("")
-        mDataBinding.inputLayoutCity.hint=("")
+
+        mDataBinding.inputLayoutFirstName.hint = LanguageData.getStringValue("EnterFirstName")
+        mDataBinding.inputLayoutLastName.hint = LanguageData.getStringValue("EnterLastName")
+        mDataBinding.inputLayoutDateOfBirth.hint = LanguageData.getStringValue("EnterDateOfBirth")
+        mDataBinding.inputLayoutNationalID.hint = LanguageData.getStringValue("EnterNationalIdentityNumber")
+        mDataBinding.inputLayoutEmail.hint = LanguageData.getStringValue("EnterEmail")
+        mDataBinding.inputLayoutAddress.hint = LanguageData.getStringValue("EnterAddress")
+        mDataBinding.inputLayoutCity.hint=(LanguageData.getStringValue("EnterCity"))
     }
 
     override fun onNextButtonClick(view: View) {
@@ -481,7 +504,7 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
         var email = ""
         //Constants.CURRENT_USER_EMAIL
         if(!Constants.CURRENT_USER_EMAIL.isNullOrEmpty()){
-            email = Constants.balanceInfoAndResponse?.email!!
+            email = Constants?.CURRENT_USER_EMAIL
             email = email.removePrefix("ID:")
             email = email.substringAfter(":")
             email = email.substringBefore("/")

@@ -10,6 +10,7 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.billpayment.BillPaymentActivity
 import com.es.marocapp.usecase.cashservices.CashServicesActivity
 import com.es.marocapp.usecase.cashservices.CashServicesClickListner
 import com.es.marocapp.usecase.cashservices.CashServicesViewModel
@@ -115,7 +116,17 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
                     Constants.HEADERS_FOR_PAYEMNTS = false
                     mActivityViewModel.senderBalanceAfter = it.senderBalanceAfter
                     mActivityViewModel.transactionID = it.financialTransactionId
-                    (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesConfirmationFragment_to_cashServicesSuccessFragment)
+                  //  (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesConfirmationFragment_to_cashServicesSuccessFragment)
+                    DialogUtils.successFailureDialogue(activity as CashServicesActivity,it.description,0,object :DialogUtils.OnYesClickListner{
+                        override fun onDialogYesClickListner() {
+                            mActivityViewModel.isDepositUseCase.set(false)
+                            mActivityViewModel.isWithdrawUseCase.set(false)
+                            (activity as CashServicesActivity).startNewActivityAndClear(
+                                activity as CashServicesActivity,
+                                MainActivity::class.java
+                            )
+                        }
+                    })
                 }else if (it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
                     DialogUtils.showErrorDialoge(activity,it.description)
                 }else{
@@ -124,13 +135,33 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
                         mActivityViewModel.isTransactionPending.set(true)
                         mActivityViewModel.isTransactionFailed.set(false)
                         mActivityViewModel.cashServiceFailureOrPendingDescription.set(it.description)
-                        (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesConfirmationFragment_to_cashServicesPendingFragment)
+                      //  (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesConfirmationFragment_to_cashServicesPendingFragment)
+                        DialogUtils.successFailureDialogue(activity as CashServicesActivity,it.description,0,object :DialogUtils.OnYesClickListner{
+                            override fun onDialogYesClickListner() {
+                                mActivityViewModel.isDepositUseCase.set(false)
+                                mActivityViewModel.isWithdrawUseCase.set(false)
+                                (activity as CashServicesActivity).startNewActivityAndClear(
+                                    activity as CashServicesActivity,
+                                    MainActivity::class.java
+                                )
+                            }
+                        })
                     }else{
                         Constants.HEADERS_FOR_PAYEMNTS = false
                         mActivityViewModel.isTransactionPending.set(false)
                         mActivityViewModel.isTransactionFailed.set(true)
                         mActivityViewModel.cashServiceFailureOrPendingDescription.set(it.description)
-                        (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesConfirmationFragment_to_cashServicesPendingFragment)
+                       // (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesConfirmationFragment_to_cashServicesPendingFragment)
+                        DialogUtils.successFailureDialogue(activity as CashServicesActivity,it.description,0,object :DialogUtils.OnYesClickListner{
+                            override fun onDialogYesClickListner() {
+                                mActivityViewModel.isDepositUseCase.set(false)
+                                mActivityViewModel.isWithdrawUseCase.set(false)
+                                (activity as CashServicesActivity).startNewActivityAndClear(
+                                    activity as CashServicesActivity,
+                                    MainActivity::class.java
+                                )
+                            }
+                        })
                     }
                 }
             }
@@ -140,7 +171,17 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                     mActivityViewModel.senderBalanceAfter = it.amount.toString()
-                    (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesConfirmationFragment_to_cashServicesSuccessFragment)
+                   // (activity as CashServicesActivity).navController.navigate(R.id.action_cashServicesConfirmationFragment_to_cashServicesSuccessFragment)
+                    DialogUtils.successFailureDialogue(activity as CashServicesActivity,it.description,0,object :DialogUtils.OnYesClickListner{
+                        override fun onDialogYesClickListner() {
+                            mActivityViewModel.isDepositUseCase.set(false)
+                            mActivityViewModel.isWithdrawUseCase.set(false)
+                            (activity as CashServicesActivity).startNewActivityAndClear(
+                                activity as CashServicesActivity,
+                                MainActivity::class.java
+                            )
+                        }
+                    })
                 }else{
                     DialogUtils.showErrorDialoge(activity,it.description)
                 }
@@ -160,6 +201,11 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
         mDataBinding.tvAmountVal.text =Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+amountToTransfer
 
         mDataBinding.receiverNameGroup.visibility = View.GONE
+        if(Constants.IS_AGENT_USER)
+        {
+            mDataBinding.tvDHTitle.visibility=View.GONE
+            mDataBinding.tvDHVal.visibility=View.GONE
+        }
 
 
     }

@@ -186,6 +186,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
                 super.onDrawerOpened(drawerView)
                 if(Constants.shouldUpdate)
                 {
+                    Logger.debugLog("updatePrfile","on DrawerOpened")
                     Constants.shouldUpdate=false
                      reflectUpdateProfileChanges()
                 }
@@ -471,7 +472,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         var email = ""
     //Constants.CURRENT_USER_EMAIL
         if(!Constants.CURRENT_USER_EMAIL.isNullOrEmpty()){
-            email = Constants.balanceInfoAndResponse?.email!!
+            email = Constants?.CURRENT_USER_EMAIL
             email = email.removePrefix("ID:")
             email = email.substringAfter(":")
             email = email.substringBefore("/")

@@ -282,9 +282,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
         listDataChild?.put(listDataHeader?.get(0)?.companyTilte!!, myTelecomBillSubMenus)
         listDataChild?.put(listDataHeader?.get(1)?.companyTilte!!, myWaterAndElectricitySubMenus)
 */
-
-        mExpandableRecyclerAdapter = BillPaymentExpandableAdapter(activity as BillPaymentActivity, listDataHeader, listDataChild
-        )
+        mExpandableRecyclerAdapter = BillPaymentExpandableAdapter(activity as BillPaymentActivity, listDataHeader, listDataChild)
 
         // setting list adapter
         mDataBinding.paymentTypeRecycler.setAdapter(mExpandableRecyclerAdapter)
@@ -611,11 +609,9 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                             mTelecomBillSubMenusData.clear()
                             for(companyIndex in it.bills[i].companies.indices){
                                 mTelecomBillSubMenusData.add(LanguageData.getStringValue(it.bills[i].companies[companyIndex].nomCreancier)
-                                    .toString())
-                            }
+                                    .toString())}
                             }
                         }else{
-
                             if(isFatouratiBillEnabled){
                             listDataHeader.add(BillPaymentMenuModel(it.bills[i].name,R.drawable.water_electricity_update_icon))
                             Logger.debugLog("bill"," ${it.bills[i].name}")
@@ -631,11 +627,9 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                 arrayListOfSubMenu.add(BillPaymentSubMenuModel(it.bills[i].companies[companyIndex].nomCreancier,logo))
                             }
                             listDataChild?.put(it.bills[i].name,arrayListOfSubMenu)
-
                             }
                         }
                     }
-
                     prepareDataForBillPayment()
                     populateTelecomBillsSubMenusList()
                 }

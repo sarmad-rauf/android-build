@@ -431,6 +431,7 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
             else {
                 transferingTO= Constants.getNumberMsisdn(transferdAmountTo)
             }
+            Logger.debugLog("MerchantPayment" ,"transfer to ${transferingTO}")
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getMerchantQouteCall(
 
                 MerchantPaymentQuoteRequest(

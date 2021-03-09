@@ -89,7 +89,16 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                     Constants.HEADERS_FOR_PAYEMNTS = false
                     mActivityViewModel.senderBalanceAfter = it.senderBalanceAfter
                     mActivityViewModel.transactionID = it.financialTransactionId
-                    (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
+                    // (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
+                    DialogUtils.successFailureDialogue(activity as SendMoneyActivity,it.description,0,object :DialogUtils.OnYesClickListner{
+                        override fun onDialogYesClickListner() {
+                            mActivityViewModel.isUserRegistered.set(false)
+                            mActivityViewModel.isFundTransferUseCase.set(false)
+                            mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set(false)
+                            Constants.HEADERS_FOR_PAYEMNTS = false
+                            (activity as SendMoneyActivity).startNewActivityAndClear(activity as SendMoneyActivity,MainActivity::class.java)
+                        }
+                    })
                 }else if (it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
                     DialogUtils.showErrorDialoge(activity,it.description)
                 } else {
@@ -115,7 +124,16 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                     Constants.HEADERS_FOR_PAYEMNTS = false
                     mActivityViewModel.senderBalanceAfter = it.senderBalanceAfter
                     mActivityViewModel.transactionID = it.financialTransactionId
-                    (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
+                    // (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
+                    DialogUtils.successFailureDialogue(activity as SendMoneyActivity,it.description,0,object :DialogUtils.OnYesClickListner{
+                        override fun onDialogYesClickListner() {
+                            mActivityViewModel.isUserRegistered.set(false)
+                            mActivityViewModel.isFundTransferUseCase.set(false)
+                            mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set(false)
+                            Constants.HEADERS_FOR_PAYEMNTS = false
+                            (activity as SendMoneyActivity).startNewActivityAndClear(activity as SendMoneyActivity,MainActivity::class.java)
+                        }
+                    })
                 }else if (it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
                     DialogUtils.showErrorDialoge(activity,it.description)
                 } else {
@@ -141,7 +159,16 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                     Constants.HEADERS_FOR_PAYEMNTS = false
                     mActivityViewModel.senderBalanceAfter = it.senderBalanceAfter
                     mActivityViewModel.transactionID = it.transactionId
-                    (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
+                    // (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
+                    DialogUtils.successFailureDialogue( activity as SendMoneyActivity,it.description,0,object :DialogUtils.OnYesClickListner{
+                        override fun onDialogYesClickListner() {
+                            mActivityViewModel.isUserRegistered.set(false)
+                    mActivityViewModel.isFundTransferUseCase.set(false)
+                    mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set(false)
+                    Constants.HEADERS_FOR_PAYEMNTS = false
+                    (activity as SendMoneyActivity).startNewActivityAndClear(activity as SendMoneyActivity,MainActivity::class.java)
+                        }
+                    })
                 }else if (it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
                     DialogUtils.showErrorDialoge(activity,it.description)
                 } else {
@@ -167,7 +194,16 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
                     Constants.HEADERS_FOR_PAYEMNTS = false
                     mActivityViewModel.senderBalanceAfter = it.senderBalanceafter
                     mActivityViewModel.transactionID = it.transactionId
-                    (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
+                    //  (activity as SendMoneyActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
+                    DialogUtils.successFailureDialogue(activity as SendMoneyActivity,it.description,0,object :DialogUtils.OnYesClickListner{
+                        override fun onDialogYesClickListner() {
+                            mActivityViewModel.isUserRegistered.set(false)
+                            mActivityViewModel.isFundTransferUseCase.set(false)
+                            mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set(false)
+                            Constants.HEADERS_FOR_PAYEMNTS = false
+                            (activity as SendMoneyActivity).startNewActivityAndClear(activity as SendMoneyActivity,MainActivity::class.java)
+                        }
+                    })
                 } else if (it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
                     DialogUtils.showErrorDialoge(activity, it.description)
                 } else {
@@ -233,6 +269,11 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
         if(mActivityViewModel.isInitiatePaymenetToMerchantUseCase.get()!!){
             mDataBinding.tvDHTitle.visibility = View.GONE
             mDataBinding.tvDHVal.visibility = View.GONE
+        }
+        if(Constants.IS_AGENT_USER)
+        {
+            mDataBinding.tvDHTitle.visibility=View.GONE
+            mDataBinding.tvDHVal.visibility=View.GONE
         }
     }
 

@@ -107,7 +107,7 @@ class UpdateProfileViewModel(application:Application):AndroidViewModel(applicati
                 .compose(applyIOSchedulers())
                 .subscribe(
                     { result ->
-                        isLoading.set(false)
+
 
                         if (result?.responseCode != null )
                         {
@@ -159,7 +159,7 @@ class UpdateProfileViewModel(application:Application):AndroidViewModel(applicati
                         }
                     },
                     { error ->
-                        isLoading.set(false)
+
                         //Display Error Result Code with with Configure Message
                         try {
                             if (context != null && error != null) {

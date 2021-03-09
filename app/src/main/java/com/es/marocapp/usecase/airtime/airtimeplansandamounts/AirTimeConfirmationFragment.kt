@@ -13,6 +13,7 @@ import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.airtime.AirTimeActivity
 import com.es.marocapp.usecase.airtime.AirTimeClickListner
 import com.es.marocapp.usecase.airtime.AirTimeViewModel
+import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 
@@ -107,7 +108,16 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
                     Constants.HEADERS_FOR_PAYEMNTS = false
                     mActivityViewModel.senderBalanceAfter = it.senderBalanceafter
                     mActivityViewModel.transactionID = it.transactionId
-                    (activity as AirTimeActivity).navController.navigate(R.id.action_airTimeConfirmationFragment_to_airTimeSuccessFragment)
+                    DialogUtils.successFailureDialogue(activity as AirTimeActivity,it.description,0,object :DialogUtils.OnYesClickListner{
+                        override fun onDialogYesClickListner() {
+                            mActivityViewModel.isRechargeFixeUseCase.set(false)
+                            mActivityViewModel.isRechargeMobileUseCase.set(false)
+                            Constants.HEADERS_FOR_PAYEMNTS = false
+                            (activity as AirTimeActivity).startNewActivityAndClear(activity as AirTimeActivity,
+                                MainActivity::class.java)
+                        }
+                    })
+               //     (activity as AirTimeActivity).navController.navigate(R.id.action_airTimeConfirmationFragment_to_airTimeSuccessFragment)
                 } else if (it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
                     DialogUtils.showErrorDialoge(activity,it.description)
                 } else {
@@ -154,8 +164,13 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
         )
         mDataBinding.tvAmountVal.text =
             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + amountToTransfer
-
         mDataBinding.receiverNameGroup.visibility = View.GONE
+
+        if(Constants.IS_AGENT_USER)
+        {
+            mDataBinding.tvDHTitle.visibility=View.GONE
+            mDataBinding.tvDHVal.visibility=View.GONE
+        }
     }
 
     override fun onNextClickListner(view: View) {

@@ -25,8 +25,7 @@
         android:id="@+id/fundsTransferAmountFragment"
         android:name="com.es.marocapp.usecase.sendmoney.tranferfundcase.FundsTransferAmountFragment"
         android:label="FundsTransferAmountFragment"
-        tools:layout="@layout/fragment_funds_amount_selection"
-        >
+        tools:layout="@layout/fragment_funds_amount_selection">
         <action
             android:id="@+id/action_fundsTransferAmountFragment_to_fundTransferConfirmationFragment"
             app:destination="@id/fundTransferConfirmationFragment" />

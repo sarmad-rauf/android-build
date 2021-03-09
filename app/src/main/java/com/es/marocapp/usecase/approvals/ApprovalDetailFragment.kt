@@ -13,8 +13,11 @@ import com.es.marocapp.model.responses.Approvaldetail
 import com.es.marocapp.model.responses.UserApprovalResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
+import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.approvals.ApprovalFragment.Companion.SELECTED_APPROVAL_KEY
 import com.es.marocapp.usecase.approvals.ApprovalFragment.Companion.USER_APPROVAL_KEY
+import com.es.marocapp.usecase.cashservices.CashServicesActivity
+import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.fragment_approval_details.*
@@ -61,7 +64,6 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
         mDataBinding.tvTransactionFeeTitle.text = LanguageData.getStringValue("TransactionFee")
         mDataBinding.tvTotalTitle.text = LanguageData.getStringValue("Total")
         mDataBinding.tvAmountTitle.text = LanguageData.getStringValue("Amount")
-
         mDataBinding.btnConfirmationCancel.text = LanguageData.getStringValue("BtnTitle_Cancel")
         mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("Approve")
 
@@ -74,7 +76,6 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
         tvTransactionFeeVal.text=selectedApprovalData?.fee?.currency.plus(" ").plus(selectedApprovalData?.fee?.amount)
         tvAmountVal.text=selectedApprovalData?.amount?.currency.plus(" ").plus(selectedApprovalData?.amount?.amount)
         tvExourtVal.text=Constants.getZoneFormattedDateAndTime(selectedApprovalData?.approvalexpirytime.toString())
-
         mDataBinding.tvTotalVal.text=selectedApprovalData?.amount?.currency.plus(" ").plus(Constants.addAmountAndFee(selectedApprovalData?.amount?.amount!!.toDouble() , selectedApprovalData?.fee?.amount!!.toDouble()))
     }
 
@@ -83,8 +84,12 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                 val bundle = Bundle()
                 bundle.putParcelable(USER_APPROVAL_KEY, it as UserApprovalResponse)
-                (activity as ApprovalActivity).navController.navigate(R.id.action_approvalDetailFragment2_to_approvalSuccessFragment2,bundle)
-
+              //  (activity as ApprovalActivity).navController.navigate(R.id.action_approvalDetailFragment2_to_approvalSuccessFragment2,bundle)
+                DialogUtils.successFailureDialogue(activity as ApprovalActivity,it.description,0,object :DialogUtils.OnYesClickListner{
+                    override fun onDialogYesClickListner() {
+                        (activity as ApprovalActivity).finish()
+                    }
+                })
             }else{
                 DialogUtils.showErrorDialoge(activity,it.description)
             }

@@ -14,6 +14,7 @@ import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.airtime.AirTimeActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentClickListner
 import com.es.marocapp.usecase.billpayment.BillPaymentViewModel
@@ -92,7 +93,21 @@ class FragmentBillPaymentPostPaidConfirmation :
                     if (isWrongPasswordEntered) {
                         DialogUtils.showErrorDialoge(activity, it[0].description)
                     } else {
-                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentPostPaidConfirmation_to_fragmentPostPaidBillPaymentSuccess)
+                    DialogUtils.successFailureDialogue(activity as  BillPaymentActivity,it[0].description,0,object :DialogUtils.OnYesClickListner{
+                        override fun onDialogYesClickListner() {
+                            mActivityViewModel.isPostPaidMobileSelected.set(false)
+                            mActivityViewModel.isPostPaidFixSelected.set(false)
+                            mActivityViewModel.isInternetSelected.set(false)
+                            mActivityViewModel.isBillUseCaseSelected.set(false)
+                            mActivityViewModel.isFatoratiUseCaseSelected.set(false)
+                            Constants.HEADERS_FOR_PAYEMNTS = false
+                            (activity as BillPaymentActivity).startNewActivityAndClear(
+                                activity as BillPaymentActivity,
+                                MainActivity::class.java
+                            )
+                        }
+                    })
+                    // (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentPostPaidConfirmation_to_fragmentPostPaidBillPaymentSuccess)
                     }
                 } else {
                     Constants.HEADERS_FOR_PAYEMNTS = false
@@ -133,7 +148,21 @@ class FragmentBillPaymentPostPaidConfirmation :
                 if (it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
                     DialogUtils.showErrorDialoge(activity, it.description)
                 } else {
-                    (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentPostPaidConfirmation_to_fragmentPostPaidBillPaymentSuccess)
+                    DialogUtils.successFailureDialogue(activity as  BillPaymentActivity,it.description,0,object :DialogUtils.OnYesClickListner{
+                        override fun onDialogYesClickListner() {
+                            mActivityViewModel.isPostPaidMobileSelected.set(false)
+                            mActivityViewModel.isPostPaidFixSelected.set(false)
+                            mActivityViewModel.isInternetSelected.set(false)
+                            mActivityViewModel.isBillUseCaseSelected.set(false)
+                            mActivityViewModel.isFatoratiUseCaseSelected.set(false)
+                            Constants.HEADERS_FOR_PAYEMNTS = false
+                            (activity as BillPaymentActivity).startNewActivityAndClear(
+                                activity as BillPaymentActivity,
+                                MainActivity::class.java
+                            )
+                        }
+                    })
+                //  (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentPostPaidConfirmation_to_fragmentPostPaidBillPaymentSuccess)
                 }
             }
         )

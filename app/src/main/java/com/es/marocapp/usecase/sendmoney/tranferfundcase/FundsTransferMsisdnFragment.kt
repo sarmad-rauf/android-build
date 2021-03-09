@@ -198,7 +198,6 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         mActivityViewModel.getAccountHolderAdditionalInfoResponseListner.observe(this@FundsTransferMsisdnFragment,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-
                     if (it.additionalinformation.isNullOrEmpty()) {
                         mActivityViewModel.isUserRegistered.set(false)
                         (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
@@ -245,7 +244,10 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                         mActivityViewModel.requestForAccountHolderAddtionalInformationApi(
                             activity
                         )
-
+                    }
+                    else if(it.responseCode.equals(ApiConstant.API_FAILURE))
+                    {
+                        DialogUtils.successFailureDialogue(activity as SendMoneyActivity,it.description,1)
                     } else {
                         mActivityViewModel.isAccountHolderInformationFailed.set(true)
                         mActivityViewModel.isUserRegistered.set(false)
@@ -289,10 +291,12 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                     if (it.accounts.get(i).profileName.equals(Constants.MERCHANT_AGENT_PROFILE_NAME)) {
                         var fri = it.accounts.get(i).accountFri.substring(4, it.accounts.get(i).accountFri.length)
                         mActivityViewModel.addFri(fri)
-                        (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
                         //mActivityViewModel.transferdAcountFri = fri
-                        // (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
+                         (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
+                      break
                     }
+                    it.toString()
+                  //  (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)
                     Logger.debugLog("Abro", "Reciever Acount FRI ${mActivityViewModel.transferdAcountFri} ")
                 }
             })
