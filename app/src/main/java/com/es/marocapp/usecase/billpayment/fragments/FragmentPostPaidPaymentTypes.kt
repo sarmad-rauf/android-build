@@ -92,10 +92,10 @@ class FragmentPostPaidPaymentTypes : BaseFragment<LayoutBillPaymentTypeQuickRech
                             var creancier = Creancier(result[0],result[1],"","")
                             mActivityViewModel.fatoratiTypeSelected.set(creancier)
 
-                            var stepTwoResponseDummy = BillPaymentFatoratiStepThreeResponse("",
-                                Param("",result[2],""),result[3],""
-                            )
-                            mActivityViewModel.fatoratiStepThreeObserver.set(stepTwoResponseDummy)
+//                            var stepTwoResponseDummy = BillPaymentFatoratiStepThreeResponse("",
+//                                Param("",result[2],""),result[3],""
+//                            )
+//                            mActivityViewModel.fatoratiStepThreeObserver.set(stepTwoResponseDummy)
 
                             var number = selectedContact.fri
                             number = number.substringBefore("@")

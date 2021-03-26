@@ -1,6 +1,7 @@
 package com.es.marocapp.usecase.login.login
 
 
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.graphics.Paint
 import android.os.Bundle
 import android.text.InputFilter
@@ -9,6 +10,8 @@ import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.lifecycle.Observer

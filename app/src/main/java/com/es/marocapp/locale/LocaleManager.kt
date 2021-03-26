@@ -38,7 +38,10 @@ object LocaleManager {
                 if (Tools.hasValue(selectedLanguageFromCache)) {
                     selectedLocale = selectedLanguageFromCache!!
                 }
+                Logger.debugLog("ABRAR", "selected language  ${selectedLocale}")
+                Logger.debugLog("ABRAR", "selected language from cache ${selectedLanguageFromCache}")
             }
+
 
         } catch (e: Exception) {
         }

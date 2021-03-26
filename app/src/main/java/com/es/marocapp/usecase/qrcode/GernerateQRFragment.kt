@@ -73,6 +73,11 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>() {
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 var qrString = ""
+
+                val qrstringg="000201010211269100325bb66a92d69c0ea742dd4f754590fa0a02011050100624hCeNuK39e/cWDDroomAv7w==0713+2126######565204431253035045802MA5910REGIS TEST6004SAFI8062003237b3a355b830b3bf0974d23608a6f162010110401005060100020602016304"
+                    val generatedCRC = Tools.generateChecksumCRC16(qrstringg.toByteArray())
+                    Logger.debugLog("abrar","crc=  ${Integer.toHexString(generatedCRC)}")
+                    Logger.debugLog("QRString - Consumer", qrString)
                 if (Constants.IS_MERCHANT_USER) {
                     qrString = Tools.generateMerchantEMVcoString(
                         Constants.CURRENT_USER_MSISDN,
@@ -84,7 +89,7 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>() {
                 } else {
                     qrString =
                         Tools.generateEMVcoString(Constants.CURRENT_USER_MSISDN, s.toString())
-                    Logger.debugLog("QRString - Consumer", qrString)
+
                 }
                 imgResult.setImageBitmap(Tools.generateQR(qrString))
             }

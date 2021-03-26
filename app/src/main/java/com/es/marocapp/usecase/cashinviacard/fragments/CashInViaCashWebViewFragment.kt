@@ -57,6 +57,7 @@ class CashInViaCashWebViewFragment : BaseFragment<FragmentCashInViaCardWebviewBi
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 mDataBinding.progressBar.visibility= View.VISIBLE
                 view.loadUrl(url)
+                Logger.debugLog("urlLoaded","url ${url}")
                 return true
             }
 

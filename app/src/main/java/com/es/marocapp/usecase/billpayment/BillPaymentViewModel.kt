@@ -29,9 +29,15 @@ import kotlin.collections.HashMap
 
 class BillPaymentViewModel(application: Application) : AndroidViewModel(application){
 
+
+
+
     //fatorati special type bil slection
     var specialMenuBillSelected: Boolean = false
 
+     var  validatedParams: ArrayList<ValidatedParam> =ArrayList()
+     var  demoParams: ArrayList<RecievededParam> =ArrayList()
+     var recievedParams: ArrayList<RecievededParam> =ArrayList()
     lateinit var disposable: Disposable
     var isLoading = ObservableField<Boolean>()
     var errorText = SingleLiveEvent<String>()
@@ -61,6 +67,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     //UseCase Observer
     var isBillUseCaseSelected = ObservableField<Boolean>()
     var isFatoratiUseCaseSelected = ObservableField<Boolean>()
+    var isIamFatouratiSelected=false
 
     var isQuickRechargeCallForBillOrFatouratie = ObservableField<Boolean>()
 
@@ -80,6 +87,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
     //Fatorati Observer
     val selectedCreancer = ObservableField<String>()
+    var userSelectedCreancer =""
     var creancesList = ObservableField<ArrayList<creances>>()
     var fatoratiStepOneObserver = ObservableField<BillPaymentFatoratiStepOneResponse>()
     var fatoratiTypeSelected = ObservableField<Creancier>()
@@ -624,10 +632,21 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
                         if (result?.responseCode != null)
                         {
+                            Logger.debugLog("ok","${result.toString()}")
+
+                            //............below (639-644) test data for TGR multiple input flow..........
+
+//                            val mparam = com.es.marocapp.model.responses.Param("codeBarre","Référence de l'avis","text")
+//                            val lis :ArrayList<com.es.marocapp.model.responses.Param> = ArrayList()
+//                            lis.add(mparam)
+//                            val mBillPaymentFatoratiStepThreeResponse = BillPaymentFatoratiStepThreeResponse("Operation performed successfully",lis,"","0000")
+//                            fatoratiStepThreeObserver.set(result)
+//                            getFatoratiStepTwothreeResponseListner.postValue(mBillPaymentFatoratiStepThreeResponse)
+
                             when(result?.responseCode) {
                                 ApiConstant.API_SUCCESS -> {
-                                    fatoratiStepThreeObserver.set(result)
-                                    getFatoratiStepTwothreeResponseListner.postValue(result)
+//                                    fatoratiStepThreeObserver.set(result)
+//                                    getFatoratiStepTwothreeResponseListner.postValue(result)
                                 }
                                 ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
@@ -642,8 +661,6 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                         } else {
                             getFatoratiStepTwothreeResponseListner.postValue(result)
                         }
-
-
                     },
                     { error ->
                         isLoading.set(false)
@@ -692,8 +709,8 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                         {
                             when(result?.responseCode) {
                                 ApiConstant.API_SUCCESS -> {
-                                    fatoratiStepThreeObserver.set(result)
-                                    getFatoratiStepThreeResponseListner.postValue(result)
+//                                    fatoratiStepThreeObserver.set(result)
+//                                    getFatoratiStepThreeResponseListner.postValue(result)
                                 }
                                 ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
@@ -744,7 +761,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
                 disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiStepFour(
                     BillPaymentFatoratiStepFourRequest(fatoratiTypeSelected.get()!!.codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
-                        fatoratiStepThreeObserver.get()!!.param.nomChamp,Constants.OPERATION_TYPE_IMPAYES,Constants.getFatoratiAlias(transferdAmountTo),
+                        validatedParams,Constants.OPERATION_TYPE_IMPAYES,Constants.getFatoratiAlias(transferdAmountTo),
                         fatoratiStepThreeObserver.get()!!.refTxFatourati,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
                 )
 

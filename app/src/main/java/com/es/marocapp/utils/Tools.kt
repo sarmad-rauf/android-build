@@ -123,7 +123,7 @@ object Tools {
                     Constants.EMVco.Globally_Unique_Identifier_ID + Constants.EMVco.Globally_Unique_Identifier_SIZE + Constants.EMVco.Globally_Unique_Identifier_VALUE +
                     Constants.EMVco.Encryption_Format_ID + Constants.EMVco.Encryption_Format_SIZE + Constants.EMVco.Encryption_Format_VALUE +
                     Constants.EMVco.Paid_Entity_Reference_Format_ID + Constants.EMVco.Paid_Entity_Reference_Format_SIZE + Constants.EMVco.Paid_Entity_Reference_Format_VALUE +
-                    Constants.EMVco.Paid_Entity_Reference_ID + Constants.EMVco.Paid_Entity_Reference_SIZE + Paid_Entity_Reference_VALUE +
+                    Constants.EMVco.Paid_Entity_Reference_ID + Constants.EMVco.Paid_Entity_Reference_SIZE + Paid_Entity_Reference_VALUE.trim() +
                     Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE_13 + "+" + Masked_Paid_Entity_Reference_VALUE +
                     Constants.EMVco.Currency_Transaction_ID + Constants.EMVco.Currency_Transaction_SIZE + Constants.EMVco.Currency_Transaction_VALUE +
                     amountTag + purposeOfTransaction + Constants.EMVco.Unreserved_Template_ID + Constants.EMVco.Unreserved_Template_SIZE + Constants.EMVco.Unreserved_Template_VALUE +
@@ -135,7 +135,7 @@ object Tools {
 
         val generatedCRC = generateChecksumCRC16(qrString.toByteArray())
 
-        qrString += Integer.toHexString(generatedCRC)
+        qrString += Integer.toHexString(generatedCRC).toUpperCase()
 
         return qrString
     }
@@ -335,7 +335,7 @@ object Tools {
                     Constants.MerchantEMVco.Globally_Unique_Identifier_ID + Constants.MerchantEMVco.Globally_Unique_Identifier_SIZE + Constants.MerchantEMVco.Globally_Unique_Identifier_VALUE +
                     Constants.MerchantEMVco.Encryption_Format_ID + Constants.MerchantEMVco.Encryption_Format_SIZE + Constants.MerchantEMVco.Encryption_Format_VALUE +
                     Constants.MerchantEMVco.Paid_Entity_Reference_Format_ID + Constants.MerchantEMVco.Paid_Entity_Reference_Format_SIZE + Constants.MerchantEMVco.Paid_Entity_Reference_Format_VALUE +
-                    Constants.MerchantEMVco.Paid_Entity_Reference_ID + Constants.MerchantEMVco.Paid_Entity_Reference_SIZE + Paid_Entity_Reference_VALUE +
+                    Constants.MerchantEMVco.Paid_Entity_Reference_ID + Constants.MerchantEMVco.Paid_Entity_Reference_SIZE + Paid_Entity_Reference_VALUE.trim() +
                     Constants.MerchantEMVco.Masked_Paid_Entity_Reference_ID + Constants.MerchantEMVco.Masked_Paid_Entity_Reference_SIZE_13 + "+" + Masked_Paid_Entity_Reference_VALUE +
                     Constants.MerchantEMVco.Merchant_Category_Code_ID + Constants.MerchantEMVco.Merchant_Category_Code_SIZE + merchantCode +
                     Constants.MerchantEMVco.Currency_Transaction_ID + Constants.MerchantEMVco.Currency_Transaction_SIZE + Constants.MerchantEMVco.Currency_Transaction_VALUE +
@@ -351,12 +351,13 @@ object Tools {
 
         val generatedCRC = generateChecksumCRC16(qrString.toByteArray())
 
-        qrString += Integer.toHexString(generatedCRC)
+
+        qrString += Integer.toHexString(generatedCRC).toUpperCase()
 
         return qrString
     }
 
-    private fun generateChecksumCRC16(bytes: ByteArray): Int {
+    fun generateChecksumCRC16(bytes: ByteArray): Int {
         var crc = 0xFFFF
         var temp: Int
         var crcByte: Int

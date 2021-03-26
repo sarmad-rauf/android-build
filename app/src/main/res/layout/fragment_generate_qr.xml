@@ -57,10 +57,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_18sdp"
+            android:layout_marginEnd="@dimen/_18sdp"
             android:layout_marginTop="@dimen/_32sdp"
+            android:paddingEnd="@dimen/_9sdp"
+            android:paddingStart="@dimen/_9sdp"
             android:textColor="@color/colorEditTextGreyMedium"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imgBackButton"
             tools:text="Enter Mobile Number" />
 
@@ -138,10 +142,10 @@
             app:layout_constraintTop_toBottomOf="@+id/cardView"
             tools:text="Enter Mobile Number" />
 
-        <include
-            android:id="@+id/Gif_Loader"
-            layout="@layout/layout_dialog"
-            android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}" />
+<!--        <include-->
+<!--            android:id="@+id/Gif_Loader"-->
+<!--            layout="@layout/layout_dialog"-->
+<!--            android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

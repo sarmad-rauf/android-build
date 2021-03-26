@@ -31,6 +31,9 @@ import kotlin.properties.Delegates
 object Constants {
 
 
+    //Iam bills list for which fatourati flow will be triggered
+    lateinit var iamBillsTriggerFatouratiFlow: Array<String>
+
     //update profile  listner
     var shouldUpdate: Boolean=false
 

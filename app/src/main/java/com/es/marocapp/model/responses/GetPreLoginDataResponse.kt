@@ -73,6 +73,7 @@ data class GetPreLoginDataResponse(
     val agentMerchantProfile: Array<String>,
     val fatouratiSeperateMenuBillNames: Array<String>,
     val upgradeSupportedProfiles: Array<String>,
+    val iamBillsTriggerFatouratiFlow: Array<String>,
     val reasonUpgradeToLevelTwo:String,
     val reasonUpgradeToLevelThree:String,
     val cityNameRegex:String

@@ -245,10 +245,8 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
                             activity
                         )
                     }
-                    else if(it.responseCode.equals(ApiConstant.API_FAILURE))
-                    {
-                        DialogUtils.successFailureDialogue(activity as SendMoneyActivity,it.description,1)
-                    } else {
+                    else {
+
                         mActivityViewModel.isAccountHolderInformationFailed.set(true)
                         mActivityViewModel.isUserRegistered.set(false)
                         (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferMsisdnFragment_to_fundsTransferAmountFragment)

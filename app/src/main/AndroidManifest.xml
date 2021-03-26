@@ -27,7 +27,8 @@
         <activity android:name=".usecase.cashinviacard.ActivityCashInViaCard" />
         <activity android:name=".usecase.consumerregistration.ConsumerRegistrationActivity" />
         <activity android:name=".usecase.transaction.TransactionDetailsActivity" />
-        <activity android:name=".usecase.billpayment.BillPaymentActivity" />
+        <activity android:name=".usecase.billpayment.BillPaymentActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
         <activity android:name=".usecase.airtime.AirTimeActivity" />
         <activity android:name=".usecase.cashservices.CashServicesActivity" />
         <activity
@@ -40,7 +41,8 @@
         <activity android:name=".usecase.settings.SettingsActivity" />
         <activity
             android:name=".usecase.MainActivity"
-            android:label="@string/title_activity_main" />
+            android:label="@string/title_activity_main"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".usecase.login.LoginActivity" />
         <activity android:name=".usecase.splash.SplashActivity">
             <intent-filter>

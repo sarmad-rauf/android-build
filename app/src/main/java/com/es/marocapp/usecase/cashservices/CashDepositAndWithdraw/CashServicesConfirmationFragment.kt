@@ -69,7 +69,7 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
 //        mDataBinding.btnConfirmationPay.text = mActivityViewModel.trasferTypeSelected.get()!! // before it is showing as deposit and Withdraw in button text on base of use case
 
       if(mActivityViewModel.isWithdrawUseCase.get()!!) {
-          mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("BtnTitle_Confirm")
+          mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("BtnTitle_Validate")
       }
         else {
           mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("BtnTitle_Validate")

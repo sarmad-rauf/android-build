@@ -35,6 +35,9 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
     //fatorati special type bil slection
     var specialMenuBillSelected: Boolean = false
 
+    lateinit var  validatedParams: ArrayList<ValidatedParam>
+    lateinit var recievedParams: ArrayList<RecievededParam>
+
     //Observerable Fileds
     var isPaymentSelected = ObservableField<Boolean>()
     var isFatoratiUsecaseSelected = ObservableField<Boolean>()

@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import androidx.multidex.MultiDex
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.network.ApiClient
+import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.RootValues
 import com.google.android.gms.security.ProviderInstaller
 import java.security.NoSuchAlgorithmException
@@ -36,7 +37,7 @@ class ApplicationClass : Application() {
 
         // Set App saved Language
         LocaleManager.selectedLanguage= LocaleManager.getSelectedLanguageFromPref(this)
-
+        Logger.debugLog("ABRAR", LocaleManager.getSelectedLanguageFromPref(this))
         //SSL pinning
         installSSL()
 

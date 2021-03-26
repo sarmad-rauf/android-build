@@ -108,11 +108,11 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                 var creancier = Creancier(result[0], result[1], "", companyName)
                                 mActivityViewModel.fatoratiTypeSelected.set(creancier)
 
-                                var stepTwoResponseDummy = BillPaymentFatoratiStepThreeResponse(
-                                    "",
-                                    Param("", result[2], ""), result[3], ""
-                                )
-                                mActivityViewModel.fatoratiStepThreeObserver.set(stepTwoResponseDummy)
+//                                var stepTwoResponseDummy = BillPaymentFatoratiStepThreeResponse(
+//                                    "",
+//                                    Param("", result[2], ""), result[3], ""
+//                                )
+                         //       mActivityViewModel.fatoratiStepThreeObserver.set(stepTwoResponseDummy)
 
                                 var number = selectedContact.fri
                                 number = number.substringBefore("@")
@@ -239,13 +239,10 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
         setStrings()
         initListner()
         subscribeObserver()
-
         //todo need to set these value
 /*      mActivityViewModel.isBillUseCaseSelected.set(false)
         mActivityViewModel.isFatoratiUseCaseSelected.set(true)
         mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(false)*/
-
-
     }
 
     private fun setStrings() {
@@ -253,7 +250,6 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
         (activity as BillPaymentActivity).setHeaderTitle(
             LanguageData.getStringValue("BillPayment").toString()
         )
-
         mDataBinding.tvManageFavorites.text = LanguageData.getStringValue("ManageFavorites")
         mDataBinding.btnCancel.text = LanguageData.getStringValue("BtnTitle_Cancel")
     }
@@ -282,7 +278,8 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
         listDataChild?.put(listDataHeader?.get(0)?.companyTilte!!, myTelecomBillSubMenus)
         listDataChild?.put(listDataHeader?.get(1)?.companyTilte!!, myWaterAndElectricitySubMenus)
 */
-        mExpandableRecyclerAdapter = BillPaymentExpandableAdapter(activity as BillPaymentActivity, listDataHeader, listDataChild)
+        mExpandableRecyclerAdapter = BillPaymentExpandableAdapter(activity as BillPaymentActivity, listDataHeader, listDataChild
+        )
 
         // setting list adapter
         mDataBinding.paymentTypeRecycler.setAdapter(mExpandableRecyclerAdapter)
@@ -335,6 +332,27 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                         + listDataChild?.get(listDataHeader[groupPosition].companyTilte)?.get(
                     childPosition)?.subCompanyTitle)
 
+                var currentSelectedBill = listDataChild?.get(listDataHeader[groupPosition].companyTilte)?.get(
+                    childPosition)?.subCompanyTitle
+
+                if (currentSelectedBill != null) {
+                    mActivityViewModel.userSelectedCreancer =
+                        currentSelectedBill
+                }
+
+                for(b in Constants.iamBillsTriggerFatouratiFlow.indices)
+                {
+                    Logger.debugLog("billPayment","iamBillFatoratiList ${Constants.iamBillsTriggerFatouratiFlow[b]}")
+                    if(Constants.iamBillsTriggerFatouratiFlow[b].equals(currentSelectedBill))
+                    {
+                       mActivityViewModel.isIamFatouratiSelected=true
+                        break
+                    }
+                }
+
+                Logger.debugLog("billPayment","isamBillFatorati ${mActivityViewModel.isIamFatouratiSelected}")
+
+
                 if(listDataChild?.get(listDataHeader[groupPosition].companyTilte)?.get(
                         childPosition)?.subCompanyTitle.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)){
                     val state =
@@ -343,42 +361,22 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                         else
                             BottomSheetBehavior.STATE_EXPANDED
                     sheetBehavior.state = state
-
+                    Logger.debugLog("BillPaymentTesting","expand sheet")
                     mActivityViewModel.isBillUseCaseSelected.set(true)
                     mActivityViewModel.isFatoratiUseCaseSelected.set(false)
                     mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(false)
                 }else{
-                    mActivityViewModel.isBillUseCaseSelected.set(false)
-                    mActivityViewModel.isFatoratiUseCaseSelected.set(true)
-                    mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(false)
 
-                    var selectedCreancer = listDataChild?.get(listDataHeader[groupPosition].companyTilte)?.get(
-                        childPosition)?.subCompanyTitle
-                    mActivityViewModel.selectedCreancer.set(selectedCreancer)
-                    if(!mActivityViewModel.getBillPaymentCompaniesResponseObserver.get()?.bills.isNullOrEmpty()){
-                        var billList = mActivityViewModel.getBillPaymentCompaniesResponseObserver.get()?.bills
-                        for(i in billList!!.indices){
-                            if(!billList[i].name.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)){
-                                var billCompaniesList = mActivityViewModel.getBillPaymentCompaniesResponseObserver.get()?.bills?.get(i)?.companies
-                                for(j in billCompaniesList?.indices!!){
-                                    if(selectedCreancer?.equals(billCompaniesList[j].nomCreancier)!!){
-                                        mActivityViewModel.fatoratiTypeSelected.set(Creancier(billCompaniesList[j].codeCreance,billCompaniesList[j].codeCreancier,
-                                            billCompaniesList[j].nomCreance,billCompaniesList[j].nomCreancier))
-                                        Logger.debugLog("BillPaymentTesting",mActivityViewModel.fatoratiTypeSelected.get().toString())
-//                                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn)
-                                        (activity as BillPaymentActivity).navController?.navigateUp()
-                                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn)
-                                    }
-                                }
-                            }
-                        }
-                    }
+
+                 startFatouratiFlow()
                 }
                 return false
             }
 
         })
     }
+
+
 
     private fun initListner() {
         sheetBehavior.setBottomSheetCallback(object :
@@ -426,6 +424,20 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                     override fun onSelectedAirTimeData(selectedTelecomBillSubMenu: String) {
 
                         sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                        for(b in Constants.iamBillsTriggerFatouratiFlow.indices)
+                        {
+                            Logger.debugLog("billPayment","iamBillFatoratiList ${Constants.iamBillsTriggerFatouratiFlow[b]}")
+                            if(Constants.iamBillsTriggerFatouratiFlow[b].equals(selectedTelecomBillSubMenu))
+                            {
+                                mActivityViewModel.isIamFatouratiSelected=true
+                                break
+                            }
+                        }
+
+
+                            mActivityViewModel.userSelectedCreancer =
+                                selectedTelecomBillSubMenu
+
 
                         if (selectedTelecomBillSubMenu.equals(
                                 LanguageData.getStringValue("PostpaidMobile")
@@ -485,6 +497,11 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                             mActivityViewModel.isInternetSelected.set(true)
 
                             (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn)
+                        }else if (mActivityViewModel.isIamFatouratiSelected)
+                         {
+                            //IAM fatourati selected ....flow of fatourati shuld be call for this IAM bill
+                             Logger.debugLog("billPayment","isamBillFatorati ${mActivityViewModel.isIamFatouratiSelected}")
+                           startFatouratiFlow()
                         }
                     }
                 })
@@ -597,7 +614,9 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                     }
                     Logger.debugLog("billPayment","telecom Constant ${Constants.KEY_FOR_POST_PAID_TELECOM_BILL} ")
                     for(i in it.bills.indices){
+                        Logger.debugLog("billPayment","telecom Constant ${it.bills[i].name} ")
                         if(it.bills[i].name.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)){
+
                             if(isTelecomBillEnabled){
                             listDataHeader.add(BillPaymentMenuModel(LanguageData.getStringValue("BillPaymentTelecomBill").toString(),R.drawable.telecom_bill_updated_icon))
                             //Adding SubMenu
@@ -645,5 +664,54 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
             }
         })
     }
+    private fun startFatouratiFlow() {
+        mActivityViewModel.isBillUseCaseSelected.set(false)
+        mActivityViewModel.isFatoratiUseCaseSelected.set(true)
+        mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(false)
+        Logger.debugLog("BillPaymentTesting","else expand sheet")
+        var selectedCreancer = mActivityViewModel?.userSelectedCreancer
+        mActivityViewModel.selectedCreancer.set(selectedCreancer)
+        if(!mActivityViewModel.getBillPaymentCompaniesResponseObserver.get()?.bills.isNullOrEmpty()){
+            var billList = mActivityViewModel.getBillPaymentCompaniesResponseObserver.get()?.bills
+            Logger.debugLog("BillPaymentTesting","else expand sheet1")
+            for(i in billList!!.indices){
+                Logger.debugLog("billsList","billsList ${billList[i].name} } ")
+                if(!billList[i].name.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)){
+                    var billCompaniesList = mActivityViewModel.getBillPaymentCompaniesResponseObserver.get()?.bills?.get(i)?.companies
+                    for(j in billCompaniesList?.indices!!){
 
+                        if(selectedCreancer?.equals(billCompaniesList[j].nomCreancier)!!){
+                            Logger.debugLog("BillPaymentTesting","else expand sheet2")
+                            mActivityViewModel.fatoratiTypeSelected.set(Creancier(billCompaniesList[j].codeCreance,billCompaniesList[j].codeCreancier,
+                                billCompaniesList[j].nomCreance,billCompaniesList[j].nomCreancier))
+                            Logger.debugLog("BillPaymentTesting",mActivityViewModel.fatoratiTypeSelected.get().toString())
+//                                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn)
+                            (activity as BillPaymentActivity).navController?.navigateUp()
+                            (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn)
+                        }
+                    }
+                }
+                else {
+                    if(mActivityViewModel.isIamFatouratiSelected)
+                    {
+                        mActivityViewModel.isIamFatouratiSelected=false
+                        Logger.debugLog("BillPaymentTesting","Selected Creance ${mActivityViewModel.userSelectedCreancer}")
+                        var billCompaniesList = mActivityViewModel.getBillPaymentCompaniesResponseObserver.get()?.bills?.get(i)?.companies
+                        for(j in billCompaniesList?.indices!!){
+
+                            if(selectedCreancer?.equals(billCompaniesList[j].nomCreancier)!!){
+
+                                mActivityViewModel.fatoratiTypeSelected.set(Creancier(billCompaniesList[j].codeCreance,billCompaniesList[j].codeCreancier,
+                                    billCompaniesList[j].nomCreance,billCompaniesList[j].nomCreancier))
+                                Logger.debugLog("BillPaymentTesting",mActivityViewModel.fatoratiTypeSelected.get().toString())
+//                                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn)
+                                (activity as BillPaymentActivity).navController?.navigateUp()
+                                (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

@@ -67,7 +67,7 @@
             android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginEnd="@dimen/_16sdp"
             app:layout_constraintTop_toBottomOf="@+id/acountTypeSpinner"
-            app:layout_constraintBottom_toTopOf="@+id/input_phone_number_hint"
+            app:layout_constraintBottom_toTopOf="@+id/mFieldsRecycler"
             android:visibility="gone">
 
             <com.es.marocapp.widgets.MarocEditText
@@ -86,7 +86,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-              <com.es.marocapp.widgets.MarocMediumTextView
+        <com.es.marocapp.widgets.MarocMediumTextView
             android:id="@+id/input_phone_number_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -94,10 +94,11 @@
             tools:text="Enter Mobile Number"
             android:textSize="@dimen/_16ssp"
             android:textColor="@color/colorEditTextGreyMedium"
-            app:layout_constraintTop_toBottomOf="@id/billTypeInputLayout"
+            app:layout_constraintTop_toBottomOf="@id/mFieldsRecycler"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="@dimen/_18sdp"
             />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_phone_number"
             android:layout_width="match_parent"
@@ -176,7 +177,6 @@
             app:layout_constraintStart_toStartOf="@+id/selectFavoriteTypeTitle"
             app:layout_constraintTop_toBottomOf="@+id/selectFavoriteTypeTitle" />
 
-
         <com.es.marocapp.widgets.MarocButton
             android:id="@+id/btnNext"
             android:layout_width="match_parent"
@@ -191,6 +191,19 @@
             android:layout_marginBottom="@dimen/_16sdp"
 
             app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+       <!--TGR Companies Design-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mFieldsRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            app:layout_constraintTop_toBottomOf="@id/billTypeInputLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

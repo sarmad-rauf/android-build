@@ -220,19 +220,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
      fun setViewsVisibility() {
 
         if(Constants.IS_CONSUMER_USER || Constants.IS_MERCHANT_USER){
-            if(Constants.IS_DEFAULT_ACCOUNT_SET)
-            {
-                mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility=View.GONE
-            }else{
+//            if(Constants.IS_DEFAULT_ACCOUNT_SET)
+//            {
+//                mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility=View.GONE
+//            }else{
                 mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility=View.VISIBLE
-            }
+           // }
 
         }
         else {
-            if(Constants.IS_DEFAULT_ACCOUNT_SET)
-            {
-                mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility=View.GONE
-            }else {
+
 
                 var currentProfilee =
                     Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
@@ -255,7 +252,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
                     mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility = View.GONE
 
                 }
-            }
+
         }
 
         var currentProfile=Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
@@ -327,7 +324,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         mDataBinding.navigationItem.rootView.mtCashDefaulGroup.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
-            startNewActivity(this@MainActivity, SettingsActivity::class.java)
+            if(Constants.IS_DEFAULT_ACCOUNT_SET)
+            {
+                DialogUtils.showUpdateAPPDailog(this@MainActivity,LanguageData.getStringValue("defaultAccountEnabledMsg"),object : DialogUtils.OnCustomDialogListner{
+                    override fun onCustomDialogOkClickListner() {
+                    }
+                },R.drawable.update_blue)
+            }
+            else {
+                startNewActivity(this@MainActivity, SettingsActivity::class.java)
+            }
         }
 
         mDataBinding.navigationItem.rootView.updateProfile.setOnClickListener {
@@ -604,19 +610,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     if(LocaleManager.languageToBeChangedAfterAPI.equals(LanguageData.getStringValue("DropDown_English"))){
-
                         LocaleManager.setLanguageAndUpdate(this@MainActivity,
                             LocaleManager.KEY_LANGUAGE_EN,
                             MainActivity::class.java)
                     }
                     else if(LocaleManager.languageToBeChangedAfterAPI.equals(LanguageData.getStringValue("DropDown_French"))) {
-
                         LocaleManager.setLanguageAndUpdate(this@MainActivity,
                             LocaleManager.KEY_LANGUAGE_FR,
                             MainActivity::class.java)
                     }
                     else if(LocaleManager.languageToBeChangedAfterAPI.equals(LanguageData.getStringValue("DropDown_Arabic"))) {
-
+                        Logger.debugLog("ABRAR", "setting arabic value ${LanguageData.getStringValue("DropDown_Arabic")}")
+                        Logger.debugLog("ABRAR", "old arabic value ${LocaleManager.KEY_LANGUAGE_AR}")
                         LocaleManager.setLanguageAndUpdate(this@MainActivity,
                             LocaleManager.KEY_LANGUAGE_AR,
                             MainActivity::class.java)

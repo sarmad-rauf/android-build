@@ -2,6 +2,8 @@ package com.es.marocapp.network
 
 import android.content.Context
 import com.es.marocapp.BuildConfig
+import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.Logger
@@ -78,8 +80,9 @@ public class ApiClient() : Dependencies() {
         headerParams["Accept"] = "application/json"
         headerParams["X-Forwarded-For"] = Constants.APPLICATION_IP_ADDRESS
         headerParams["token"] = Constants.createUserToken()
-       // headerParams["lang"] = "en"
-        headerParams["lang"] = Constants.getSelectedLanguage()
+        //headerParams["lang"] = "en"
+       headerParams["lang"] = Constants.getSelectedLanguage()
+
         if(Constants.HEADERS_AFTER_LOGINS){
             if(Constants.HEADERS_FOR_PAYEMNTS){
                 headerParams["authorization"] = EncryptionUtils.encryptString("Basic "+Constants.CURRENT_USER_MSISDN+":"+Constants.CURRENT_USER_CREDENTIAL)

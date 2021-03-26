@@ -11,7 +11,10 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
+import com.es.marocapp.adapter.BillDetailFatoratiItemAdapter
+import com.es.marocapp.adapter.FatoratiParamsItemAdapter
 import com.es.marocapp.adapter.LanguageCustomSpinnerAdapter
 import com.es.marocapp.databinding.FragmentBillPaymentMsisdnBinding
 import com.es.marocapp.locale.LanguageData
@@ -32,6 +35,7 @@ import java.util.regex.Pattern
 class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>(),
     BillPaymentClickListner, AdapterView.OnItemSelectedListener, TextWatcher {
 
+    private lateinit var mFatoratiParamsItemAdapter: FatoratiParamsItemAdapter
     private lateinit var mActivityViewModel: BillPaymentViewModel
 
     private var list_of_favorites = arrayListOf<String>()
@@ -370,18 +374,60 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                     mActivityViewModel.specialMenuBillSelected=false
                //   mDataBinding.acountTypeSpinner.visibility=View.GONE
                //     mDataBinding.selectAcountTitile.visibility=View.GONE
-                    cilLabel = it.param.libelle
+                  //  cilLabel = it.param.libelle
                     if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+                        mActivityViewModel.validatedParams.clear()
+                        mActivityViewModel.recievedParams.clear()
+                        mActivityViewModel.demoParams.clear()
+                        mDataBinding.inputLayoutPhoneNumber.visibility=View.GONE
+                        mDataBinding.inputPhoneNumberHint.visibility=View.GONE
+                        mDataBinding.mFieldsRecycler.visibility=View.VISIBLE
+                        for(i in it.params.indices){
+                             var validatedParams = ValidatedParam("",it.params[i].nomChamp)
+                            mActivityViewModel.validatedParams.add(validatedParams)
+                            mActivityViewModel.recievedParams.add(RecievededParam(it.params[i].libelle,it.params[i].nomChamp,it.params[i].typeChamp,"",
+                                false,View.VISIBLE,""))
+                            //using for lable value restoring after error of invalid input
+                            mActivityViewModel.demoParams.add(RecievededParam(it.params[i].libelle,it.params[i].nomChamp,it.params[i].typeChamp,"",
+                                false,View.VISIBLE,""))
+                        }
+                        mFatoratiParamsItemAdapter = FatoratiParamsItemAdapter(mActivityViewModel.recievedParams,object :FatoratiParamsItemAdapter.ParamTextChangedListner{
+                            override fun onParamTextChangedClick(valChamp: String, position: Int) {
+                                if(it.params[position].libelle.equals("CIL",false)){
+                                    applyValidation = true
+                                } else {
+                                    applyValidation = false
+                                }
 
-                        mDataBinding.inputLayoutPhoneNumber.hint = cilLabel
-                        mDataBinding.inputPhoneNumberHint.text =
-                            cilLabel
+                                val editedText=valChamp
+                                val oldText= mActivityViewModel.validatedParams[position].valChamp
+                                if(editedText.contains(oldText)) {
+                                    var typeChamp=mActivityViewModel.recievedParams[position].typeChamp
+                                    var nomChamp=mActivityViewModel.recievedParams[position].nomChamp
+
+                                    //using different list value to restore correct value after invalid input error
+                                    var lablei=mActivityViewModel.demoParams[position].libelle
+
+                                    mActivityViewModel.recievedParams.add(RecievededParam(lablei,nomChamp,typeChamp,"",
+                                        false,View.VISIBLE,valChamp))
+
+
+                                    mActivityViewModel.validatedParams.set(
+                                        position,
+                                        ValidatedParam(
+                                            valChamp,
+                                            mActivityViewModel.recievedParams[position].nomChamp
+                                        )
+                                    )
+                                }
+                            }
+                        })
+                        mDataBinding.mFieldsRecycler.apply {
+                                adapter = mFatoratiParamsItemAdapter
+                            layoutManager = LinearLayoutManager(activity)
+                        }
                     }
-                    if (it.param.libelle.equals("CIL", false)) {
-                        applyValidation = true
-                    } else {
-                        applyValidation = false
-                    }
+
                 } else {
                     DialogUtils.showErrorDialoge(activity, it.description)
                 }
@@ -395,16 +441,64 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                     mDataBinding.inputPhoneNumber.isEnabled=true
                  //   mDataBinding.acountTypeSpinner.visibility=View.GONE
                  //   mDataBinding.selectAcountTitile.visibility=View.GONE
-                    cilLabel = it.param.libelle
+                 //   cilLabel = it.param.libelle
                     if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-                        mDataBinding.inputLayoutPhoneNumber.hint = cilLabel
-                        mDataBinding.inputPhoneNumberHint.text =
-                            cilLabel
-                    }
-                    if (it.param.libelle.equals("CIL", false)) {
-                        applyValidation = true
-                    } else {
-                        applyValidation = false
+                        if(it.params!=null)
+                        {
+                        mActivityViewModel.validatedParams.clear()
+                        mActivityViewModel.recievedParams.clear()
+                        mActivityViewModel.demoParams.clear()
+                        mDataBinding.inputLayoutPhoneNumber.visibility=View.GONE
+                        mDataBinding.inputPhoneNumberHint.visibility=View.GONE
+                        mDataBinding.mFieldsRecycler.visibility=View.VISIBLE
+                        for(i in it.params.indices){
+                            var validatedParams = ValidatedParam("",it.params[i].nomChamp)
+                            mActivityViewModel.validatedParams.add(validatedParams)
+                            mActivityViewModel.recievedParams.add(RecievededParam(it.params[i].libelle,it.params[i].nomChamp,it.params[i].typeChamp,"",
+                            false,View.VISIBLE,""))
+
+                            //using for lable value restoring after error of invalid input
+                            mActivityViewModel.demoParams.add(RecievededParam(it.params[i].libelle,it.params[i].nomChamp,it.params[i].typeChamp,"",
+                                false,View.VISIBLE,""))
+                        }
+
+                        mFatoratiParamsItemAdapter = FatoratiParamsItemAdapter(mActivityViewModel.recievedParams,object :FatoratiParamsItemAdapter.ParamTextChangedListner{
+                            override fun onParamTextChangedClick(valChamp: String, position: Int) {
+                                if(it.params[position].libelle.equals("CIL",false)){
+                                    applyValidation = true
+                                } else {
+                                    applyValidation = false
+                                }
+
+
+                                val editedText=valChamp
+                                val oldText= mActivityViewModel.validatedParams[position].valChamp
+                                if(editedText.contains(oldText)) {
+                                    var typeChamp=mActivityViewModel.recievedParams[position].typeChamp
+                                    var nomChamp=mActivityViewModel.recievedParams[position].nomChamp
+
+                                    //using different list value to restore correct value after invalid input error
+                                    var lablei=mActivityViewModel.demoParams[position].libelle
+
+                                    mActivityViewModel.recievedParams.set(position,RecievededParam(lablei,nomChamp,typeChamp,"",
+                                        false,View.VISIBLE,valChamp))
+
+                                    mActivityViewModel.validatedParams.set(
+                                        position,
+                                        ValidatedParam(
+                                            valChamp,
+                                            mActivityViewModel.recievedParams[position].nomChamp
+                                        )
+                                    )
+
+                                }
+                            }
+                        })
+                        mDataBinding.mFieldsRecycler.apply {
+                            adapter = mFatoratiParamsItemAdapter
+                            layoutManager = LinearLayoutManager(activity)
+                        }
+                      }
                     }
                 } else {
                     DialogUtils.showErrorDialoge(activity, it.description)
@@ -484,13 +578,13 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
                 if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
 
-                    Logger.debugLog("billPayment","${mActivityViewModel?.fatoratiTypeSelected?.get()?.codeCreance}," +
-                            "${mActivityViewModel?.fatoratiTypeSelected?.get()?.codeCreancier}," +
-                            "${mActivityViewModel?.fatoratiStepThreeObserver?.get()?.param?.nomChamp}," +
-                            "${mActivityViewModel. fatoratiStepThreeObserver?.get()?.param?.nomChamp},${Constants.OPERATION_TYPE_IMPAYES}," +
-                            "${Constants.getFatoratiAlias(mActivityViewModel?.transferdAmountTo)}," +
-                            "${mActivityViewModel?.fatoratiStepThreeObserver?.get()?.refTxFatourati},${Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN)}")
-                   mActivityViewModel.transferdAmountTo = msisdnEntered
+//                    Logger.debugLog("billPayment","${mActivityViewModel?.fatoratiTypeSelected?.get()?.codeCreance}," +
+//                            "${mActivityViewModel?.fatoratiTypeSelected?.get()?.codeCreancier}," +
+//                            "${mActivityViewModel?.fatoratiStepThreeObserver?.get()?.param?.nomChamp}," +
+//                            "${mActivityViewModel. fatoratiStepThreeObserver?.get()?.param?.nomChamp},${Constants.OPERATION_TYPE_IMPAYES}," +
+//                            "${Constants.getFatoratiAlias(mActivityViewModel?.transferdAmountTo)}," +
+//                            "${mActivityViewModel?.fatoratiStepThreeObserver?.get()?.refTxFatourati},${Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN)}")
+                    mActivityViewModel.transferdAmountTo = msisdnEntered
                     mActivityViewModel.requestForFatoratiStepFourApi(activity)
                 }
             }
@@ -603,45 +697,116 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 }
             }
         }
+
         if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-            if (mDataBinding.inputPhoneNumber.text.isNullOrEmpty() /*|| mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_CIL_LENGTH.toInt()*/) {
-                isValidForAll = false
-                mDataBinding.inputLayoutPhoneNumber.error =
-                    LanguageData.getStringValue("invalid") + " " + cilLabel
-                mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
-                mDataBinding.inputLayoutPhoneNumber.hint =
-                    LanguageData.getStringValue("invalid") + " " + cilLabel
-                mDataBinding.inputPhoneNumberHint.visibility = View.GONE
-            } else {
-                mDataBinding.inputLayoutPhoneNumber.error = ""
-                mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+            for(i in mActivityViewModel.validatedParams.indices){
+                var typeChamp=mActivityViewModel.recievedParams[i].typeChamp
+                var nomChamp=mActivityViewModel.recievedParams[i].nomChamp
+                var valChamp=mActivityViewModel.recievedParams[i].inputValue
 
+               //using different list value to restore correct value after invalid input error
+                var lablei=mActivityViewModel.demoParams[i].libelle
+
+                Logger.debugLog("billpayment"," applyValidation = ${applyValidation}")
                 if (applyValidation) {
-                    if (isNumberRegexMatches) {
-                        mDataBinding.inputLayoutPhoneNumber.error = ""
-                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+                    var msisdn = mActivityViewModel.validatedParams[i].valChamp.toString().trim()
+                    var msisdnLenght = msisdn.length
 
-                        msisdnEntered = mDataBinding.inputPhoneNumber.text.toString().trim()
+                        isNumberRegexMatches =
+                            !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_CIL_REGEX, msisdn))
+
+                    if (isNumberRegexMatches) {
+                        mActivityViewModel.recievedParams.set(i,
+                            RecievededParam(lablei,nomChamp,typeChamp,"",false,View.VISIBLE,valChamp))
+                        mFatoratiParamsItemAdapter.notifyItemChanged(i)
+                        msisdnEntered = mActivityViewModel.validatedParams[0].valChamp.toString().trim()
 
                         checkNumberExistInFavoritesForFatorati(msisdnEntered)
                     } else {
                         isValidForAll = false
-                        mDataBinding.inputLayoutPhoneNumber.error =
-                            LanguageData.getStringValue("invalid") + " " + cilLabel
-                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
-                        mDataBinding.inputLayoutPhoneNumber.hint =
-                            LanguageData.getStringValue("invalid") + " " + cilLabel
-                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+//                        mDataBinding.inputLayoutPhoneNumber.error =
+//                            LanguageData.getStringValue("invalid") + " " + cilLabel
+//                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+//                        mDataBinding.inputLayoutPhoneNumber.hint =
+//                            LanguageData.getStringValue("invalid") + " " + cilLabel
+//                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+                        mActivityViewModel.recievedParams.set(i,
+                            RecievededParam(LanguageData.getStringValue("invalid")+ " " + lablei ,nomChamp,typeChamp,LanguageData.getStringValue("invalid") + " " + lablei,true,View.GONE,valChamp))
+                        mFatoratiParamsItemAdapter.notifyItemChanged(i)
                     }
                 } else {
-                    mDataBinding.inputLayoutPhoneNumber.error = ""
-                    mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+//                    mDataBinding.inputLayoutPhoneNumber.error = ""
+//                    mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+//
+//                    msisdnEntered = mDataBinding.inputPhoneNumber.text.toString().trim()
 
-                    msisdnEntered = mDataBinding.inputPhoneNumber.text.toString().trim()
 
-                    checkNumberExistInFavoritesForFatorati(msisdnEntered)
+    Logger.debugLog("billpayment","size 1 = ${mActivityViewModel.validatedParams.size}   size 2 = ${mActivityViewModel.recievedParams.size}")
+                   if(!mActivityViewModel.validatedParams[i].valChamp.equals("")) {
+                       Logger.debugLog("billpayment","value entered = ${mActivityViewModel.validatedParams[i].valChamp}")
+                       mActivityViewModel.recievedParams.set(i,RecievededParam(lablei, nomChamp, typeChamp, "", false, View.VISIBLE,valChamp))
+                       mFatoratiParamsItemAdapter.notifyItemChanged(i)
+                       msisdnEntered =
+                           mActivityViewModel.validatedParams[0].valChamp.toString().trim()
+                       checkNumberExistInFavoritesForFatorati(msisdnEntered)
+                   }
+                    else{
+                       isValidForAll = false
+                       mActivityViewModel.recievedParams
+                           .set(i,RecievededParam(LanguageData.getStringValue("invalid")+ " " + lablei ,nomChamp,typeChamp,LanguageData.getStringValue("invalid") + " " + lablei,true,View.GONE,valChamp))
+                       mFatoratiParamsItemAdapter.notifyItemChanged(i)
+                    }
                 }
             }
+
+
+
+
+
+
+
+
+//Previous flow of single input Field
+//            if (mDataBinding.inputPhoneNumber.text.isNullOrEmpty() /*|| mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_CIL_LENGTH.toInt()*/) {
+//                isValidForAll = false
+//                mDataBinding.inputLayoutPhoneNumber.error =
+//                    LanguageData.getStringValue("invalid") + " " + cilLabel
+//                mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+//                mDataBinding.inputLayoutPhoneNumber.hint =
+//                    LanguageData.getStringValue("invalid") + " " + cilLabel
+//                mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+//            } else {
+//                mDataBinding.inputLayoutPhoneNumber.error = ""
+//                mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+//
+//                if (applyValidation) {
+//                    if (isNumberRegexMatches) {
+//                        mDataBinding.inputLayoutPhoneNumber.error = ""
+//                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+//
+//                        msisdnEntered = mDataBinding.inputPhoneNumber.text.toString().trim()
+//
+//                        checkNumberExistInFavoritesForFatorati(msisdnEntered)
+//                    } else {
+//                        isValidForAll = false
+//                        mDataBinding.inputLayoutPhoneNumber.error =
+//                            LanguageData.getStringValue("invalid") + " " + cilLabel
+//                        mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
+//                        mDataBinding.inputLayoutPhoneNumber.hint =
+//                            LanguageData.getStringValue("invalid") + " " + cilLabel
+//                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+//                    }
+//                } else {
+//                    mDataBinding.inputLayoutPhoneNumber.error = ""
+//                    mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
+//
+//                    msisdnEntered = mDataBinding.inputPhoneNumber.text.toString().trim()
+//
+//                    checkNumberExistInFavoritesForFatorati(msisdnEntered)
+//                }
+//            }
+
+            Logger.debugLog("billpayment","isValidForAll = ${isValidForAll}")
         }
 
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {

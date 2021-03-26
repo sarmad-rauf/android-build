@@ -229,7 +229,6 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
 //        tvOwnerNameVal == ReceiverName
 //        tvReceiptCodeVal = bill
 //        tvDHVal == Fee
-//
 //        tvAmountVal == AmountTotal
 
         mDataBinding.tvSenderNameVal.text =

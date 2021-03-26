@@ -54,9 +54,14 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
                         /*Storing Fatorai bill Fav as
                         Util_Redal@MyNickName,codeCreance,creancierID,nomChamp,refTxFatourati
 */
+//                        var fatoratiNickName = "Util_${mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier}@$nickName" +
+//                                ",${mActivityViewModel.fatoratiTypeSelected.get()!!.codeCreance}," +
+//                                mActivityViewModel.fatoratiTypeSelected.get()!!.codeCreancier+","+mActivityViewModel.fatoratiStepThreeObserver.get()!!.param.nomChamp+","+
+//                                mActivityViewModel.fatoratiStepThreeObserver.get()!!.refTxFatourati
+
                         var fatoratiNickName = "Util_${mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier}@$nickName" +
                                 ",${mActivityViewModel.fatoratiTypeSelected.get()!!.codeCreance}," +
-                                mActivityViewModel.fatoratiTypeSelected.get()!!.codeCreancier+","+mActivityViewModel.fatoratiStepThreeObserver.get()!!.param.nomChamp+","+
+                                mActivityViewModel.fatoratiTypeSelected.get()!!.codeCreancier+","+mActivityViewModel.validatedParams+","+
                                 mActivityViewModel.fatoratiStepThreeObserver.get()!!.refTxFatourati
 
                         mActivityViewModel.requestForAddFavoritesApi(activity,fatoratiNickName,Constants.getFatoratiAlias(mActivityViewModel.transferdAmountTo))
