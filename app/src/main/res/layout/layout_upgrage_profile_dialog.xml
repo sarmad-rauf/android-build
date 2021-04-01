@@ -50,41 +50,144 @@
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_marginTop="@dimen/_20sdp"
+           android:layout_marginStart="@dimen/_36sdp"
            app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintEnd_toEndOf="parent"
            app:layout_constraintTop_toBottomOf="@id/upgradeProfile_dialog_description"
            android:orientation="vertical">
            <RadioButton
-               android:id="@+id/level2_radioButton"
+               android:id="@+id/uploadImage_radioButton"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="Level 2">
+               android:text="upload image"
+               android:layout_marginBottom="@dimen/_5sdp"
+               android:textSize="@dimen/_13ssp">
            </RadioButton>
            <RadioButton
-               android:id="@+id/level3_radioButton"
+               android:id="@+id/uploadPDF_radioButton"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="Level 3">
+               android:text="upload file"
+               android:layout_marginTop="@dimen/_5sdp"
+               android:textSize="@dimen/_13ssp">
            </RadioButton>
        </RadioGroup>
 
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/uploadFileCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/upgradeProfile_dialog_no_btn"
+            app:layout_constraintTop_toBottomOf="@+id/upGradeProfile_radioGroup"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardElevation="@dimen/_1sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:paddingStart="@dimen/_32sdp"
+            android:paddingEnd="@dimen/_32sdp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_70sdp">
+                <RadioButton
+                    android:id="@+id/dummyRadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:textColorHighlight="@color/colorBtnEnable"
+                    android:outlineSpotShadowColor="@color/colorBtnEnable"
+                    android:checked="true"
+                    android:clickable="false"
+                    android:text="Upload File"
+                    android:textSize="@dimen/_13ssp">
+                </RadioButton>
+
+                <com.es.marocapp.widgets.MarocButton
+                    android:id="@+id/uploadFile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:paddingStart="@dimen/_32sdp"
+                    android:paddingEnd="@dimen/_32sdp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/button_enable"
+                    android:textSize="@dimen/_14ssp"
+                    android:textColor="@color/colorWhite"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="Upload"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/selectedFileLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_16sdp"
+            app:layout_constraintStart_toEndOf="@id/upgradeProfile_dialog_no_btn"
+            app:layout_constraintTop_toBottomOf="@+id/uploadFileCard"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/fileSelected_icon"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <com.es.marocapp.widgets.MarocRegularTextView
+                android:id="@+id/fileSelected_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:text="file.PDF"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:textColor="@color/colorGreyDark"
+                android:textSize="@dimen/_14ssp"
+                android:ellipsize="end"
+                app:layout_constraintEnd_toStartOf="@+id/removeSelectedFile"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/fileSelected_icon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="@dimen/_16sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:srcCompat="@drawable/cross_blue_icons"
+                android:id="@+id/removeSelectedFile"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.es.marocapp.widgets.MarocButton
             android:id="@+id/upgradeProfile_dialog_yes_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_16sdp"
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_16sdp"
             android:paddingStart="@dimen/_32sdp"
             android:paddingEnd="@dimen/_32sdp"
+            android:gravity="center_vertical"
             android:background="@drawable/button_enable"
             android:textSize="@dimen/_14ssp"
             android:textColor="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/upgradeProfile_dialog_no_btn"
-            app:layout_constraintTop_toBottomOf="@+id/upGradeProfile_radioGroup" />
+            app:layout_constraintTop_toBottomOf="@+id/selectedFileLayout" />
 
         <com.es.marocapp.widgets.MarocButton
             android:id="@+id/upgradeProfile_dialog_no_btn"
@@ -100,7 +203,8 @@
             android:textColor="@color/colorWhite"
             app:layout_constraintEnd_toStartOf="@id/upgradeProfile_dialog_yes_btn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/upGradeProfile_radioGroup" />
+            app:layout_constraintTop_toBottomOf="@+id/upGradeProfile_radioGroup"
+            android:visibility="gone"/>
 
      
 

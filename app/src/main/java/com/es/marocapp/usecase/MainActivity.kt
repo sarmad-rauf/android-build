@@ -260,7 +260,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         {
             currentProfile=Constants.UserProfileName
         }
-        if(Constants.IS_AGENT_USER||currentProfile.contains("3"))
+        if(Constants.IS_AGENT_USER||currentProfile.contains("3")||currentProfile.contains("2"))
         {
         mDataBinding.navigationItem.rootView.upgradeProfileGroup.visibility=View.GONE
         }

@@ -335,8 +335,6 @@ object DialogUtils {
         mContext: Context?,
         isFromDefaultAccount: Boolean,
         listner: OnOTPDialogClickListner
-
-
     ) {
         var isOTPRegexMatches = false
         val addDialog = Dialog(mContext!!)
@@ -727,6 +725,7 @@ object DialogUtils {
         val addDialog = Dialog(mContext!!)
         addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         addDialog.setContentView(R.layout.layout_upgrage_profile_dialog)
+        addDialog.setCancelable(true)
         var currentProfile=Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
         if(currentProfile.equals("")||currentProfile.equals(null))
         {
@@ -746,10 +745,16 @@ object DialogUtils {
         var tvDialogTitle = addDialog.findViewById<TextView>(R.id.upgradeProfile_dialog_title)
         var btnYes = addDialog.findViewById<Button>(R.id.upgradeProfile_dialog_yes_btn)
         var btnNo= addDialog.findViewById<Button>(R.id.upgradeProfile_dialog_no_btn)
-        var rbLevel2 = addDialog.findViewById<RadioButton>(R.id.level2_radioButton)
-        var rbLevel3 = addDialog.findViewById<RadioButton>(R.id.level3_radioButton)
+        var uploadImage = addDialog.findViewById<RadioButton>(R.id.uploadImage_radioButton)
+        var dummyRadioButton = addDialog.findViewById<RadioButton>(R.id.dummyRadioButton)
+        var uploadPDF = addDialog.findViewById<RadioButton>(R.id.uploadPDF_radioButton)
+        var uploadFileBTN = addDialog.findViewById<RadioButton>(R.id.uploadFile)
         var radioGrp = addDialog.findViewById<RadioGroup>(R.id.upGradeProfile_radioGroup)
-        var selectedLevel = ""
+        var selectedFileLayout = addDialog.findViewById<RadioGroup>(R.id.selectedFileLayout)
+        var fileSelected_icon = addDialog.findViewById<RadioGroup>(R.id.fileSelected_icon)
+        var fileSelected_title = addDialog.findViewById<RadioGroup>(R.id.fileSelected_title)
+        var removeSelectedFileBTN = addDialog.findViewById<RadioGroup>(R.id.removeSelectedFile)
+        var reason = ""
         var profile=""
 
         radioGrp.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
@@ -758,62 +763,49 @@ object DialogUtils {
             val isChecked = checkedRadioButton.isChecked
             if (isChecked) {
                 val checkedLevel =  checkedRadioButton.text.toString()
-                if(checkedLevel.contains("2")) {
-                    selectedLevel = Constants.reasonUpgradeToLevelTwo
+
+                if(checkedId==R.id.uploadImage_radioButton) {
+
                 }
                 else{
-                    selectedLevel = Constants.reasonUpgradeToLevelThree
+
                 }
 
-                if(currentProfile.contains("2"))
+                reason = Constants.reasonUpgradeToLevelTwo
+              //  reason = Constants.reasonUpgradeToLevelThree
+                Logger.debugLog("upgradeProfile","reason 1  ${Constants.reasonUpgradeToLevelTwo}  reason 2 ${Constants.reasonUpgradeToLevelThree}")
+
+                 if(currentProfile.contains("1"))
                 {
-                    profile=currentProfile.replace("Profile","").trim()+" to Level 3 Profile KYC"
-                    rbLevel2.visibility=View.GONE
-                }
-                else if(currentProfile.contains("3")){
-                    rbLevel2.visibility=View.GONE
-                    rbLevel3.visibility=View.GONE
-                    btnYes.visibility=View.GONE
-                }
-                else if(currentProfile.contains("1"))
-                {
-                    if(checkedLevel.contains("2")) {
                         profile=currentProfile.replace("Profile","").trim()+" to Level 2 Profile KYC"
-
-                    }
-                    else if(checkedLevel.contains("3")){
-                        profile=currentProfile.replace("Profile","").trim()+" to Level 3 Profile KYC"
-                    }
-
+                }
+                else{
+                    uploadImage.visibility=View.GONE
+                    uploadPDF.visibility=View.GONE
+                    btnYes.visibility=View.GONE
                 }
             }
             else{
-                selectedLevel=""
+                reason=""
             }
         })
 
-        if(currentProfile.contains("2"))
-        {
-            rbLevel2.visibility=View.GONE
-        }else if(currentProfile.contains("3")){
-            rbLevel2.visibility=View.GONE
-            rbLevel3.visibility=View.GONE
-            btnYes.visibility=View.GONE
-        }
 
 
         btnYes.text = LanguageData.getStringValue("BtnTitle_OK")
         btnNo.text = LanguageData.getStringValue("BtnTitle_Cancel")
-        rbLevel3.text = LanguageData.getStringValue("Level3Profile")
-        rbLevel2.text = LanguageData.getStringValue("Level2Profile")
-        tvDialogTitle.text = LanguageData.getStringValue("UpgradeProfile")
+        uploadPDF.text = LanguageData.getStringValue("UploadPdf")
+        uploadImage.text = LanguageData.getStringValue("UploadImage")
+        tvDialogTitle.text = LanguageData.getStringValue("DearCustomer")
         tvMsg.text = LanguageData.getStringValue("ChooseProfileToUpgrade")
+        dummyRadioButton.text = LanguageData.getStringValue("UploadFile")
+        uploadFileBTN.text = LanguageData.getStringValue("Upload")
 
 
 
         addDialog.findViewById<View>(R.id.upgradeProfile_dialog_yes_btn).setOnClickListener {
-            if(!selectedLevel.equals("")) {
-                listner.onUpgradeProfileDialogYesClickListner(selectedLevel,profile)
+            if(!reason.equals("")) {
+                listner.onUpgradeProfileDialogYesClickListner(reason,profile)
             }
                 addDialog.dismiss()
         }

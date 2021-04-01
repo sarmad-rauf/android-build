@@ -159,7 +159,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             (activity as MainActivity).isHomeFragmentShowing = true
             (activity as MainActivity).isTransacitonFragmentShowing = false
         }
-        homeViewModel.requestForGetBalanceApi(activity)
+        //homeViewModel.requestForGetBalanceApi(activity)
         if (LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_AR)) {
             mDataBinding.quickRechargeSpinner.setBackgroundResource(R.drawable.spinner_icon_background_white_left)
         }

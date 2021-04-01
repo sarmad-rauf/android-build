@@ -63,7 +63,7 @@ object EndPoints {
     const val getaccounts = "getaccounts"
 
     //updateEmail
-    const val updateEmail = "setemail"
+    const val updateEmail = "setaccountholderdefaultnotificationemail"
 
     //updateAdress city and adress
     const val updateAdress = "updateaccountholderaddress"

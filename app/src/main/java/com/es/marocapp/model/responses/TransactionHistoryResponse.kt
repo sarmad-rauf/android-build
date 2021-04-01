@@ -45,5 +45,6 @@ data class History(
     val tototalbalance: String,
     val transactionid: String,
     val transactionstatus: String,
-    val transfertype: String
+    val transfertype: String,
+    val transferTypeEwp: String
 )

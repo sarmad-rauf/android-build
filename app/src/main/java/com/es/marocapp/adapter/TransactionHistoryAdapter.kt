@@ -81,15 +81,18 @@ class TransactionHistoryAdapter(
             }
         }
 
-            when(models!![position].transfertype){
-                "PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.transaction_circle_merchant_payment)
-                "EXTERNAL_PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.transaction_circle_merchant_payment)
-                "CASH_IN"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_withdraw_transaction)
-                "WITHDRAW"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_withdraw_transaction)
-                "DEPOSIT"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_deposit_transaction)
+            when(models!![position].transferTypeEwp){
+                "TRANSFER"-> holder.transferTypeIcon?.setImageResource(R.drawable.transaction_circle_merchant_payment)
+                "INTEROP_TRANSFER"-> holder.transferTypeIcon?.setImageResource(R.drawable.transaction_circle_merchant_payment)
+                "ADJUSTMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_withdraw_transaction)
+                "CUSTOM_CASHIN_VIA_CARD"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_withdraw_transaction)
+                "CASH_IN"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_deposit_transaction)
                 "CASH_OUT"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_deposit_transaction)
-                "TRANSFER"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_transfer_transaction)
-                "FLOAT_TRANSFER"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_transfer_transaction)
+                "WITHDRAWAL"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_transfer_transaction)
+                "DEPOSIT"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_transfer_transaction)
+                "INTEROP_PAYMENT_SEND"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_transfer_transaction)
+                "PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_transfer_transaction)
+                "EXTERNAL_PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_transfer_transaction)
                 else-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_generic_transaction)
             }
 

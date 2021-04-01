@@ -645,8 +645,8 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
                             when(result?.responseCode) {
                                 ApiConstant.API_SUCCESS -> {
-//                                    fatoratiStepThreeObserver.set(result)
-//                                    getFatoratiStepTwothreeResponseListner.postValue(result)
+                                    fatoratiStepThreeObserver.set(result)
+                                    getFatoratiStepTwothreeResponseListner.postValue(result)
                                 }
                                 ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
@@ -709,8 +709,8 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                         {
                             when(result?.responseCode) {
                                 ApiConstant.API_SUCCESS -> {
-//                                    fatoratiStepThreeObserver.set(result)
-//                                    getFatoratiStepThreeResponseListner.postValue(result)
+                                    fatoratiStepThreeObserver.set(result)
+                                    getFatoratiStepThreeResponseListner.postValue(result)
                                 }
                                 ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
