@@ -89,7 +89,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_70sdp">
-                <RadioButton
+                <com.es.marocapp.widgets.MarocLightTextView
                     android:id="@+id/dummyRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -98,12 +98,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="@dimen/_20sdp"
                     android:textColorHighlight="@color/colorBtnEnable"
-                    android:outlineSpotShadowColor="@color/colorBtnEnable"
                     android:checked="true"
                     android:clickable="false"
-                    android:text="Upload File"
+                    android:text="Attach File"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"
                     android:textSize="@dimen/_13ssp">
-                </RadioButton>
+                </com.es.marocapp.widgets.MarocLightTextView>
 
                 <com.es.marocapp.widgets.MarocButton
                     android:id="@+id/uploadFile"
