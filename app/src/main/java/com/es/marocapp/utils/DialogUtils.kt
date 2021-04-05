@@ -8,6 +8,7 @@ import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.*
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import com.chaos.view.PinView
 import com.es.marocapp.R
@@ -746,14 +747,14 @@ object DialogUtils {
         var btnYes = addDialog.findViewById<Button>(R.id.upgradeProfile_dialog_yes_btn)
         var btnNo= addDialog.findViewById<Button>(R.id.upgradeProfile_dialog_no_btn)
         var uploadImage = addDialog.findViewById<RadioButton>(R.id.uploadImage_radioButton)
-        var dummyRadioButton = addDialog.findViewById<RadioButton>(R.id.dummyRadioButton)
+        var dummyRadioButton = addDialog.findViewById<TextView>(R.id.dummyRadioButton)
         var uploadPDF = addDialog.findViewById<RadioButton>(R.id.uploadPDF_radioButton)
-        var uploadFileBTN = addDialog.findViewById<RadioButton>(R.id.uploadFile)
+        var uploadFileBTN = addDialog.findViewById<Button>(R.id.uploadFile)
         var radioGrp = addDialog.findViewById<RadioGroup>(R.id.upGradeProfile_radioGroup)
-        var selectedFileLayout = addDialog.findViewById<RadioGroup>(R.id.selectedFileLayout)
-        var fileSelected_icon = addDialog.findViewById<RadioGroup>(R.id.fileSelected_icon)
-        var fileSelected_title = addDialog.findViewById<RadioGroup>(R.id.fileSelected_title)
-        var removeSelectedFileBTN = addDialog.findViewById<RadioGroup>(R.id.removeSelectedFile)
+        var selectedFileLayout = addDialog.findViewById<ConstraintLayout>(R.id.selectedFileLayout)
+        var fileSelected_icon = addDialog.findViewById<ImageView>(R.id.fileSelected_icon)
+        var fileSelected_title = addDialog.findViewById<TextView>(R.id.fileSelected_title)
+        var removeSelectedFileBTN = addDialog.findViewById<ImageView>(R.id.removeSelectedFile)
         var reason = ""
         var profile=""
 
