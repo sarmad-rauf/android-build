@@ -160,6 +160,60 @@ object DialogUtils {
         }
     }
 
+    fun showIAMPasswordDialoge(
+        mContext: Context?,
+        listner: OnPasswordDialogClickListner
+    ) {
+        val addDialog = Dialog(mContext!!)
+        addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        addDialog.setContentView(R.layout.layout_password_dialog)
+
+        val dialogWindow = addDialog.window
+        val layoutParams = dialogWindow!!.attributes
+        layoutParams.x = Gravity.CENTER_HORIZONTAL
+        layoutParams.y = Gravity.CENTER_VERTICAL
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+        dialogWindow.attributes = layoutParams
+
+        addDialog.show()
+
+        var btnNO = addDialog.findViewById<Button>(R.id.password_dialog_no_btn)
+        var btnYes = addDialog.findViewById<Button>(R.id.password_dialog_yes_btn)
+
+
+        btnNO.text = LanguageData.getStringValue("BtnTitle_Cancel")
+        btnYes.text = LanguageData.getStringValue("BtnTitle_Validate")
+
+        btnNO.setOnClickListener {
+            addDialog.dismiss()
+        }
+
+        var tvDescription = addDialog.findViewById<TextView>(R.id.password_dialog_description)
+        var tvTitle = addDialog.findViewById<TextView>(R.id.password_dialog_title)
+
+        tvDescription.text = LanguageData.getStringValue("iam-pass-popup-text")
+        tvTitle.text = LanguageData.getStringValue("DearCustomer")
+
+        var passwordField =
+            addDialog.findViewById<EditText>(R.id.password_dialog_input_enter_password)
+        var passwordFieldInput =
+            addDialog.findViewById<TextInputLayout>(R.id.password_dialog_layout_enter_password)
+        passwordFieldInput.hint = LanguageData.getStringValue("EnterPassword")
+        btnYes.setOnClickListener {
+            var password = passwordField.text.toString().trim()
+            if (password.equals("")) {
+                passwordFieldInput.error = LanguageData.getStringValue("PleaseEnterValidPassword")
+                passwordFieldInput.isErrorEnabled = true
+            } else {
+                passwordFieldInput.error = ""
+                passwordFieldInput.isErrorEnabled = false
+                listner.onDialogYesClickListner(password)
+                addDialog.dismiss()
+            }
+        }
+    }
+
     fun showAddToFavoriteDialoge(
         mContext: Context?,
         listner: OnAddToFavoritesDialogClickListner
@@ -444,8 +498,6 @@ object DialogUtils {
     fun showDefaultAccountOTPDialogue(
         mContext: Context?,
         listner: OnOTPDialogClickListner
-
-
     ) {
         var isOTPRegexMatches = false
         val addDialog = Dialog(mContext!!)
@@ -766,13 +818,13 @@ object DialogUtils {
                 val checkedLevel =  checkedRadioButton.text.toString()
 
                 if(checkedId==R.id.uploadImage_radioButton) {
-
+                    reason = Constants.reasonUpgradeToLevelTwo
                 }
                 else{
 
                 }
 
-                reason = Constants.reasonUpgradeToLevelTwo
+
               //  reason = Constants.reasonUpgradeToLevelThree
                 Logger.debugLog("upgradeProfile","reason 1  ${Constants.reasonUpgradeToLevelTwo}  reason 2 ${Constants.reasonUpgradeToLevelThree}")
 
@@ -796,7 +848,7 @@ object DialogUtils {
         btnYes.text = LanguageData.getStringValue("BtnTitle_OK")
         btnNo.text = LanguageData.getStringValue("BtnTitle_Cancel")
         uploadPDF.text = LanguageData.getStringValue("UploadPdf")
-        uploadImage.text = LanguageData.getStringValue("UploadImage")
+      //  uploadImage.text = LanguageData.getStringValue("UploadImage")
         tvDialogTitle.text = LanguageData.getStringValue("DearCustomer")
         tvMsg.text = LanguageData.getStringValue("ChooseProfileToUpgrade")
         dummyRadioButton.text = LanguageData.getStringValue("UploadFile")

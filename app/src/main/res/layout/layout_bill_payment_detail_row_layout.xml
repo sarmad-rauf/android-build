@@ -42,6 +42,23 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
+            <com.es.marocapp.widgets.MarocLightTextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_12ssp"
+                tools:text="Descriptijdfhkdjksajdbjksdbvjkjksdbfkdjfbaksjkfbsdkon"
+                android:textColor="@color/colorConfirmationTitle"
+                android:layout_marginStart="@dimen/_48sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:maxLines="3"
+                android:layout_marginEnd="@dimen/_16sdp"
+                app:layout_constraintStart_toEndOf="@+id/isBillSelectedCheckBox"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/customerNameTitle"
+                android:visibility="gone"
+                />
 
             <com.es.marocapp.widgets.MarocLightTextView
                 android:id="@+id/customerNameTitle"
@@ -53,7 +70,7 @@
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_16sdp"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/description"
                 app:layout_constraintStart_toEndOf="@+id/isBillSelectedCheckBox"
                 app:layout_constraintEnd_toStartOf="@+id/customerNameVal"
                 />

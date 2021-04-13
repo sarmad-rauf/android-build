@@ -33,6 +33,7 @@ import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.PrefUtils
 import com.es.marocapp.utils.PrefUtils.PreKeywords.PREF_KEY_USER_MSISDN
 import kotlinx.android.synthetic.main.fragment_login_number_password.*
@@ -241,12 +242,14 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                 }
                 //setting cookie for use in header
                 if (it.setCookie.isNotEmpty()) {
+                    Logger.debugLog("login","setting Login Cookie")
                     var cookie = it.setCookie
                     Constants.setBase64EncodedString(cookie)
                     Constants.LOGGED_IN_USER_COOKIE= EncryptionUtils.encryptString(Constants.LOGGED_IN_USER_COOKIE)
                     Constants.LOGGED_IN_USER = mActivityViewModel.mUserMsisdn
                 }
                 Constants.HEADERS_AFTER_LOGINS = true
+                Constants.HEADERS_FOR_PAYEMNTS=false
                 if(!LocaleManager.languageToBeChangedAfterAPI.isNullOrEmpty()){
                     LocaleManager.selectedLanguage=LocaleManager.languageToBeChangedAfterAPI
                     LocaleManager.languageToBeChangedAfterAPI=""
@@ -300,6 +303,10 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                     if(!it.profileName.isNullOrEmpty()){
                         mActivityViewModel.accountHolderInfoUserProfile = it.profileName
                         Constants.UserProfileName=it.profileName
+                        if(it.userType.contains("agent"))
+                        {
+                            Constants.IS_AGENT_USER=true
+                        }
                     }
                     mActivityViewModel.requestForGetBalanceAndGenerateOtpApi(activity as LoginActivity,mActivityViewModel.accountHolderInfoUserProfile.toString(),
                         mActivityViewModel.mUserMsisdn)

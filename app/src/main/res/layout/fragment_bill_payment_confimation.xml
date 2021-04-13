@@ -106,6 +106,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/tvCompanyNameTitle"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
+                        android:maxLines="2"
                         app:layout_constraintStart_toEndOf="@+id/tvCompanyNameTitle" />
 
                     <ImageView
@@ -457,9 +458,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/_16sdp"
-                    >
-
+                    android:paddingBottom="@dimen/_16sdp">
                     <com.es.marocapp.widgets.MarocLightTextView
                         android:id="@+id/tvAmountTitle"
                         android:layout_width="wrap_content"

@@ -18,6 +18,9 @@ object LanguageData{
             else if (LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_AR)) {
                 value = stringsHashMap?.get(key)?.arabic!!
             }
+            else{
+                value = stringsHashMap?.get(key)?.english!!
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }

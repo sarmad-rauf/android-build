@@ -23,6 +23,8 @@ import com.es.marocapp.usecase.billpayment.BillPaymentViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.bill_payment_detail_row_layout.view.*
 import java.text.SimpleDateFormat
 
 class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsBinding>(),
@@ -78,9 +80,25 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
         listOfFatoratiCustomInvoice.clear()
         listOfFatoratiCustomDateInvoice.clear()
         if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
-            for(i in mActivityViewModel.fatoratiStepFourObserver.get()!!.params.indices){
+            Logger.debugLog("billPayment","${mActivityViewModel.selectedCreancer.get()}  =  Autoroutes du Maroc")
+            if(mActivityViewModel.selectedCreancer.get().equals("Autoroutes du Maroc")) {
+               // mActivityViewModel.fatoratiStepFourObserver.get()?.globalParams?.size!!>0
+                Logger.debugLog("billPayment","AutoDeMoroc global params Size ${mActivityViewModel.fatoratiStepFourObserver.get()?.globalParams?.size} ")
+                mActivityViewModel.showAutoDuMorocViews=true
+                mDataBinding.autoDML.rootView.labelle.text =
+                    mActivityViewModel?.userSelectedCreancer
+                mDataBinding.autoDML.rootView.billerName.text=
+                    mActivityViewModel?.fatoratiStepFourObserver.get()?.globalParams!![0].valeurChamp
+             val nDeFatcure= mActivityViewModel?.fatoratiStepFourObserver.get()?.globalParams!![1].nomChamp+" "+mActivityViewModel?.fatoratiStepFourObserver.get()?.globalParams!![1].valeurChamp
+                mDataBinding.autoDML.rootView.tv_sub_company_name.text=nDeFatcure
+                Picasso.get().load(mActivityViewModel?.userSelectedCreancerLogo)
+                    .into(mDataBinding.autoDML.rootView.img_sub_company_icon)
+            } else{
+                mDataBinding.autoDML.visibility=View.GONE
+            }
+                for(i in mActivityViewModel.fatoratiStepFourObserver.get()!!.params.indices){
                 var item = mActivityViewModel.fatoratiStepFourObserver.get()!!.params[i]
-                listOfFatoratiCustomInvoice.add(FatoratiCustomParamModel(false,item.description,item.idArticle,item.prixTTC,item.typeArticle))
+                listOfFatoratiCustomInvoice.add(FatoratiCustomParamModel(false,item.description,item.idArticle,item.prixTTC,item.typeArticle,mActivityViewModel.showAutoDuMorocViews))
                 listOfFatoratiCustomDateInvoice.add(FatoratiCustomDateParamModel(false,item.description,item.idArticle,item.prixTTC,item.typeArticle,getDateFromString(item.description)))
             }
 
@@ -233,7 +251,14 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
     private fun setStrings() {
         mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Validate")
         mDataBinding.noDataTv.text = LanguageData.getStringValue("NoDataFound")
-        mDataBinding.selectInvocieLabel.text = LanguageData.getStringValue("BillPaymentSelectInvoicesToPay")
+        if(mActivityViewModel.showAutoDuMorocViews)
+        {
+            mDataBinding.selectInvocieLabel.text = LanguageData.getStringValue("BillPaymentSelectInvoicesToPayAutoDM")
+        }
+        else{
+            mDataBinding.selectInvocieLabel.text = LanguageData.getStringValue("BillPaymentSelectInvoicesToPay")
+        }
+
     }
 
     override fun onSubmitClickListner(view: View) {

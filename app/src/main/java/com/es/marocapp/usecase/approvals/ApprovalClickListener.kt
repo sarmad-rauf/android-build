@@ -7,4 +7,5 @@ interface ApprovalClickListener {
     fun onApproveButtonClick(view: View)
 
     fun onCancelButtonClick(view: View)
+    fun onBackButtonClick(view: View)
 }

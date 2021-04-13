@@ -23,6 +23,11 @@
     android:background="@color/colorWhite"
     >
 
+    <include
+        android:id="@+id/autoDML"
+        layout="@layout/bill_payment_detail_row_layout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/selectAllCheckBox"
@@ -32,7 +37,7 @@
         android:foregroundTint="@color/colorCerulean"
         android:theme="@style/checkBoxStyleBillPayment"
         android:layout_margin="@dimen/_16sdp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/autoDML"
         app:layout_constraintStart_toStartOf="parent"
         />
 

@@ -26,7 +26,24 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
     }
 
     override fun onBindViewHolder(holder: BillPaymentItemViewHolder, position: Int) {
+
 //        holder.billDueDateTitle.text = LanguageData.getStringValue("Description")
+        if(bills[position].showDescription)
+        {
+            //Show Auto Du Moroc Views
+            holder.billingDescription.visibility=View.VISIBLE
+            holder.customerNameTitle.visibility = View.GONE
+            holder.customerNameVal.visibility = View.GONE
+            holder.billDueDateTitle.visibility = View.GONE
+            holder.billingAmountTitle.visibility =View.GONE
+            holder.billingAmountVal.visibility =View.GONE
+            holder.billStatusTitle.visibility = View.GONE
+            holder.billStatusVal.visibility = View.GONE
+            holder.billDueDateTitle.visibility = View.GONE
+            holder.billDueDateVal.visibility = View.GONE
+            holder.billStatusVal.visibility = View.GONE
+            holder.billStatusVal.visibility = View.GONE
+        }
         holder.customerNameTitle.text = LanguageData.getStringValue("CustomerName")//-------------------------> Changed From Description TO Reference Number
         holder.billDueDateTitle.text = LanguageData.getStringValue("ReferenceNumber")//-------------------------> Changed From Description TO Reference Number
         holder.billingMonthTitle.text = LanguageData.getStringValue("Amount")
@@ -34,6 +51,7 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
         holder.billStatusTitle.text = LanguageData.getStringValue("Status")
 //        holder.billingAmountTitle.text = LanguageData.getStringValue("Amount")
         holder.billStatusVal.text = LanguageData.getStringValue("Unpaid")
+        holder.billingDescription.text = bills[position].description
 
         holder.isBillSelected.isChecked = bills[position].isItemSelected
 //        var date = Constants.parseDateFromString(bills[position].month)
@@ -60,11 +78,15 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
         /*holder.billingAmountTitle.visibility = View.GONE
         holder.billingAmountVal.visibility = View.GONE*/
 
-
-        holder.billingAmountVal.text = getAddressFromString(bills[position].description)
-        holder.customerNameVal.text = getNameFromString(bills[position].description)
+        var address = getAddressFromString(bills[position].description)
+        address=address.replace("<br/>","\n")
+        var custommeerName = getNameFromString(bills[position].description)
+        custommeerName=custommeerName.replace("<br/>","\n")
+        holder.billingAmountVal.text = address
+        holder.customerNameVal.text =custommeerName
         getDateFromString(bills[position].description)
     }
+
 
 
     fun getAddressFromString(description: String): String{
@@ -119,6 +141,7 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
         var billStatusVal : TextView = view.findViewById(R.id.billStatusVal)
         var billingAmountTitle : TextView = view.findViewById(R.id.billingAmountTitle)
         var billingAmountVal : TextView = view.findViewById(R.id.billingAmountVal)
+        var billingDescription : TextView = view.findViewById(R.id.description)
 
         var customerNameTitle : TextView = view.findViewById(R.id.customerNameTitle)
         var customerNameVal : TextView = view.findViewById(R.id.customerNameVal)

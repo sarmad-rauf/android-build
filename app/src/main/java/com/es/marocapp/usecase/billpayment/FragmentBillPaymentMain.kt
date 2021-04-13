@@ -334,7 +334,13 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
 
                 var currentSelectedBill = listDataChild?.get(listDataHeader[groupPosition].companyTilte)?.get(
                     childPosition)?.subCompanyTitle
+                var currentSelectedBilLogo = listDataChild?.get(listDataHeader[groupPosition].companyTilte)?.get(
+                    childPosition)?.subCompanyIcon
 
+                if (currentSelectedBilLogo != null) {
+                    mActivityViewModel.userSelectedCreancerLogo =
+                        currentSelectedBilLogo
+                }
                 if (currentSelectedBill != null) {
                     mActivityViewModel.userSelectedCreancer =
                         currentSelectedBill
@@ -614,14 +620,34 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                     }
                     Logger.debugLog("billPayment","telecom Constant ${Constants.KEY_FOR_POST_PAID_TELECOM_BILL} ")
                     for(i in it.bills.indices){
-                        Logger.debugLog("billPayment","telecom Constant ${it.bills[i].name} ")
+                        Logger.debugLog("billPayment","telecom Constant ${it.bills[i].name}")
                         if(it.bills[i].name.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)){
 
                             if(isTelecomBillEnabled){
-                            listDataHeader.add(BillPaymentMenuModel(LanguageData.getStringValue("BillPaymentTelecomBill").toString(),R.drawable.telecom_bill_updated_icon))
+                                var telecomCompanyTypeLogo = it.bills[i].logo
+                                if(telecomCompanyTypeLogo.isNullOrEmpty()){
+                                    telecomCompanyTypeLogo = ""
+                                    listDataHeader.add(BillPaymentMenuModel(LanguageData.getStringValue("BillPaymentTelecomBill").toString(),telecomCompanyTypeLogo))
+                                }else{
+                                    listDataHeader.add(BillPaymentMenuModel(LanguageData.getStringValue("BillPaymentTelecomBill").toString(),telecomCompanyTypeLogo))
+                                    Logger.debugLog("billPayment", "logo ${telecomCompanyTypeLogo}")
+                                }
+
+                                var IAMLogo=""
+                                for(company in it.bills[i].companies.indices)
+                                {
+                                    var companyLogoToPick = LanguageData.getStringValue("PostpaidMobile")
+                                    Logger.debugLog("billPayment","IAMSubCompany  ${it.bills[i].companies[company].nomCreancier}    =  ${companyLogoToPick}")
+                                    if(it.bills[i].companies[company].nomCreancier.equals("PostpaidMobile"))
+                                    {
+                                        IAMLogo=it.bills[i].companies[company].logo
+                                        Logger.debugLog("billPayment","IAMSubCompanyLogo  ${IAMLogo}   ")
+                                    }
+                                }
+
                             //Adding SubMenu
                             var arrayListOfSubMenu : ArrayList<BillPaymentSubMenuModel> = arrayListOf()
-                            arrayListOfSubMenu.add(BillPaymentSubMenuModel(it.bills[i].name,""))
+                            arrayListOfSubMenu.add(BillPaymentSubMenuModel(it.bills[i].name,IAMLogo))
 
                             listDataChild?.put(LanguageData.getStringValue("BillPaymentTelecomBill").toString(),arrayListOfSubMenu)
 
@@ -632,7 +658,16 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                             }
                         }else{
                             if(isFatouratiBillEnabled){
-                            listDataHeader.add(BillPaymentMenuModel(it.bills[i].name,R.drawable.water_electricity_update_icon))
+                                var companyTypeLogo = it.bills[i].logo
+
+                                if(companyTypeLogo.isNullOrEmpty()){
+                                    companyTypeLogo = ""
+                                    listDataHeader.add(BillPaymentMenuModel(it.bills[i].name,companyTypeLogo))
+                                }else{
+                                    listDataHeader.add(BillPaymentMenuModel(it.bills[i].name,companyTypeLogo))
+                                    Logger.debugLog("billPayment","logo ${companyTypeLogo}")
+                                }
+
                             Logger.debugLog("bill"," ${it.bills[i].name}")
                             //Addding Sub Menu's
                             var arrayListOfSubMenu : ArrayList<BillPaymentSubMenuModel> = arrayListOf()

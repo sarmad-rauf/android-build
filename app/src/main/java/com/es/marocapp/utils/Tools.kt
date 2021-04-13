@@ -427,9 +427,19 @@ object Tools {
     }
 
     fun openDialerWithNumber(context: Context) {
+
         val intent = Intent(Intent.ACTION_DIAL)
-        intent.data = Uri.parse("tel:" + Constants.HELPLINE_NUMBER)
+
+        if(Constants.IS_AGENT_USER)
+        {
+            Logger.debugLog("call","number ${Constants.HELPLINENUMBERAGENT}")
+            intent.data = Uri.parse("tel:" + Constants.HELPLINENUMBERAGENT)
+        }
+        else{
+            intent.data = Uri.parse("tel:" + Constants.HELPLINE_NUMBER)
+        }
         context.startActivity(intent)
+        Logger.debugLog("call","number ${Constants.HELPLINENUMBERAGENT}")
     }
 
     fun isFirstTime(context: Context): Boolean {

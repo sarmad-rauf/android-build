@@ -8,7 +8,8 @@ data class BillPaymentCompaniesResponse(
 
 data class Bill(
     val companies: List<Company>,
-    val name: String
+    val name: String,
+    val logo:String
 )
 
 data class Company(

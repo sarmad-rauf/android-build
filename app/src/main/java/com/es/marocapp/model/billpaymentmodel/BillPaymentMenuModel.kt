@@ -5,5 +5,5 @@ import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
 
 data class BillPaymentMenuModel(
     val companyTilte : String,
-    val companyIcon : Int
+    val companyIcon : String
 )

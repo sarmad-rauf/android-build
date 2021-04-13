@@ -64,7 +64,7 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
         mDataBinding.tvTransactionFeeTitle.text = LanguageData.getStringValue("TransactionFee")
         mDataBinding.tvTotalTitle.text = LanguageData.getStringValue("Total")
         mDataBinding.tvAmountTitle.text = LanguageData.getStringValue("Amount")
-        mDataBinding.btnConfirmationCancel.text = LanguageData.getStringValue("BtnTitle_Cancel")
+        mDataBinding.btnConfirmationCancel.text = LanguageData.getStringValue("Reject")
         mDataBinding.btnConfirmationPay.text = LanguageData.getStringValue("Approve")
 
     }
@@ -82,14 +82,25 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
     private fun subscribeFoUserApprovalsResponse() {
         approvalViewModel.getUsersApprovalResponseListner.observe(this, Observer {
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                val bundle = Bundle()
-                bundle.putParcelable(USER_APPROVAL_KEY, it as UserApprovalResponse)
-              //  (activity as ApprovalActivity).navController.navigate(R.id.action_approvalDetailFragment2_to_approvalSuccessFragment2,bundle)
-                DialogUtils.successFailureDialogue(activity as ApprovalActivity,it.description,0,object :DialogUtils.OnYesClickListner{
-                    override fun onDialogYesClickListner() {
-                        (activity as ApprovalActivity).finish()
-                    }
-                })
+                if(approvalViewModel.isApproved) {
+                    approvalViewModel.isApproved=false
+                    val bundle = Bundle()
+                    bundle.putParcelable(USER_APPROVAL_KEY, it as UserApprovalResponse)
+                    //  (activity as ApprovalActivity).navController.navigate(R.id.action_approvalDetailFragment2_to_approvalSuccessFragment2,bundle)
+                    DialogUtils.successFailureDialogue(
+                        activity as ApprovalActivity,
+                        it.description,
+                        0,
+                        object : DialogUtils.OnYesClickListner {
+                            override fun onDialogYesClickListner() {
+                                (activity as ApprovalActivity).finish()
+                            }
+                        })
+                }
+                else{
+                    (activity as ApprovalActivity).navController.navigateUp()
+                }
+
             }else{
                 DialogUtils.showErrorDialoge(activity,it.description)
             }
@@ -97,10 +108,16 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
     }
 
     override fun onApproveButtonClick(view: View) {
+        approvalViewModel.isApproved=true
         approvalViewModel.requestForUserApprovalsApi(activity,selectedApprovalData?.approvalid.toString(),"true")
     }
 
     override fun onCancelButtonClick(view: View) {
+        approvalViewModel.isApproved=false
+        approvalViewModel.requestForUserApprovalsApi(activity,selectedApprovalData?.approvalid.toString(),"false")
+    }
+
+    override fun onBackButtonClick(view: View) {
         (activity as ApprovalActivity).navController.navigateUp()
     }
 

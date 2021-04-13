@@ -12,5 +12,6 @@ data class UpgradeProfileResponse(
 data class GetProfileResponse(
     val responseCode: String?,
     val description: String?,
-    val profileName: String?
+    val profileName: String?,
+    val userType: String
 )

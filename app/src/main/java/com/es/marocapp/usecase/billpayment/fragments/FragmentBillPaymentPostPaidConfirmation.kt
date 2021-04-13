@@ -20,6 +20,7 @@ import com.es.marocapp.usecase.billpayment.BillPaymentClickListner
 import com.es.marocapp.usecase.billpayment.BillPaymentViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.Logger
 
 class FragmentBillPaymentPostPaidConfirmation :
     BaseFragment<FragmentBillPaymentConfimationBinding>(),
@@ -145,9 +146,7 @@ class FragmentBillPaymentPostPaidConfirmation :
                      DialogUtils.showErrorDialoge(activity,LanguageData.getStringValue("SomethingWentWrong"))
                  }*/
 
-                if (it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
-                    DialogUtils.showErrorDialoge(activity, it.description)
-                } else {
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     DialogUtils.successFailureDialogue(activity as  BillPaymentActivity,it.description,0,object :DialogUtils.OnYesClickListner{
                         override fun onDialogYesClickListner() {
                             mActivityViewModel.isPostPaidMobileSelected.set(false)
@@ -162,6 +161,10 @@ class FragmentBillPaymentPostPaidConfirmation :
                             )
                         }
                     })
+
+                }
+                else {
+                    DialogUtils.showErrorDialoge(activity, it.description)
                 //  (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentPostPaidConfirmation_to_fragmentPostPaidBillPaymentSuccess)
                 }
             }
@@ -193,12 +196,18 @@ class FragmentBillPaymentPostPaidConfirmation :
 //        tvAmountVal == AmountTotal
 
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
+
             if(Constants.IS_AGENT_USER)
             {
                 mDataBinding.divider.visibility=View.GONE
                 mDataBinding.tvDHTitle.visibility=View.GONE
                 mDataBinding.tvDHVal.visibility=View.GONE
             }
+            Logger.debugLog("billPayment","IAM bills selected hiding montant total")
+            mDataBinding.tvDHTitle.visibility = View.GONE
+            mDataBinding.tvDHVal.visibility = View.GONE
+            mDataBinding.divider4.visibility = View.GONE
+            mDataBinding.divider.visibility = View.GONE
             mDataBinding.tvFatoratiFeeTitle.visibility = View.GONE
             mDataBinding.tvFatoratiFeeVal.visibility = View.GONE
         } else if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
@@ -210,7 +219,6 @@ class FragmentBillPaymentPostPaidConfirmation :
             }
             mDataBinding.tvFatoratiFeeTitle.visibility = View.VISIBLE
             mDataBinding.tvFatoratiFeeVal.visibility = View.VISIBLE
-
             mDataBinding.tvFatoratiFeeVal.text =
                 Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.fatoratiFeeAmountCalculated
         }
@@ -316,6 +324,7 @@ class FragmentBillPaymentPostPaidConfirmation :
         mDataBinding.tvOwnerNameTitle.text = LanguageData.getStringValue("ReceiverName")
         mDataBinding.tvReceiptCodeTitle.text = LanguageData.getStringValue("Bill")
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
+
             mDataBinding.tvDHTitle.text = LanguageData.getStringValue("TotalFee")
         } else if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
             mDataBinding.tvDHTitle.text = LanguageData.getStringValue("BillPaymentMTCashFee")
@@ -337,22 +346,37 @@ class FragmentBillPaymentPostPaidConfirmation :
     }
 
     override fun onSubmitClickListner(view: View) {
-        DialogUtils.showPasswordDialoge(activity,
-            object : DialogUtils.OnPasswordDialogClickListner {
-                override fun onDialogYesClickListner(password: String) {
-                    Constants.HEADERS_FOR_PAYEMNTS = true
-                    Constants.CURRENT_USER_CREDENTIAL = password
 
-                    if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
+        if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
+           Logger.debugLog("billPayment","bill selected IAM")
+            DialogUtils.showIAMPasswordDialoge(activity,
+                object : DialogUtils.OnPasswordDialogClickListner {
+                    override fun onDialogYesClickListner(password: String) {
+                        Constants.HEADERS_FOR_PAYEMNTS = true
+                        Constants.CURRENT_USER_CREDENTIAL = password
                         payPostPaidBills()
                     }
 
-                    if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+                })
+        }
+
+        if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+
+            DialogUtils.showPasswordDialoge(activity,
+                object : DialogUtils.OnPasswordDialogClickListner {
+                    override fun onDialogYesClickListner(password: String) {
+                        Constants.HEADERS_FOR_PAYEMNTS = true
+                        Constants.CURRENT_USER_CREDENTIAL = password
+
                         payFatoratiBills()
                     }
-                }
 
-            })
+                })
+        }
+
+
+
+
     }
 
     private fun payFatoratiBills() {

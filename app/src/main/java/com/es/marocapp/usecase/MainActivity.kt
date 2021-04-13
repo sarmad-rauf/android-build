@@ -76,6 +76,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         mDataBinding.apply {
             listener = this@MainActivity
         }
+        Constants.HEADERS_FOR_PAYEMNTS=false
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
@@ -346,14 +347,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
             val btnTxt = LanguageData.getStringValue("BtnTitle_Call")
             val titleTxt = LanguageData.getStringValue("BlockAccount")
-            val descriptionTxt = LanguageData.getStringValue("CallToBlockAccount")?.replace("00000",
-                Constants.HELPLINE_NUMBER)
+
+            var descriptionTxt =""
+            if(Constants.IS_AGENT_USER)
+            {
+                descriptionTxt = LanguageData.getStringValue("CallToBlockAccount")?.replace("00000",
+                Constants.HELPLINENUMBERAGENT).toString()
+            }else{
+                descriptionTxt = LanguageData.getStringValue("CallToBlockAccount")?.replace("00000",
+                    Constants.HELPLINE_NUMBER).toString()
+            }
+
             DialogUtils.showCustomDialogue(this,btnTxt,descriptionTxt,titleTxt,object : DialogUtils.OnCustomDialogListner{
                 override fun onCustomDialogOkClickListner() {
                     Tools.openDialerWithNumber(this@MainActivity)
                 }
-
-
             })
         }
 

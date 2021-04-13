@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/child_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/companyHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    <com.es.marocapp.widgets.MarocRegularTextView
+        android:id="@+id/labelle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="@dimen/_14ssp"
+        android:textColor="@color/colorGreyDark"
+        tools:text= "Redal"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        app:layout_constraintBottom_toTopOf="@id/tv_sub_company_name"
+        app:layout_constraintStart_toEndOf="@+id/img_sub_company_icon"
+        app:layout_constraintEnd_toStartOf="@+id/img_list_state"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_1sdp"
+        />
+    <com.es.marocapp.widgets.MarocRegularTextView
+        android:id="@+id/tv_sub_company_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/labelle"
+        android:textSize="@dimen/_11sdp"
+        android:textColor="@color/colorGreyDark"
+        tools:text= "Redal"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_sub_company_icon"
+        app:layout_constraintEnd_toStartOf="@+id/img_list_state"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        />
+
+    <ImageView
+        android:id="@+id/img_sub_company_icon"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/_16sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/redal_company_icon"
+        />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.es.marocapp.widgets.MarocRegularTextView
+        android:id="@+id/billerName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/companyHeader"
+        android:textSize="@dimen/_16ssp"
+        android:textColor="@color/colorBtnBlue"
+        tools:text= "Redal"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

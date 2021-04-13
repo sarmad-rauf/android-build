@@ -13,6 +13,7 @@ import com.es.marocapp.model.billpaymentmodel.BillPaymentMenuModel
 import com.es.marocapp.model.billpaymentmodel.BillPaymentSubMenuModel
 import com.es.marocapp.utils.Logger
 import com.squareup.picasso.Picasso
+import java.lang.Exception
 
 
 class BillPaymentExpandableAdapter(
@@ -54,10 +55,16 @@ class BillPaymentExpandableAdapter(
         if (childText.subCompanyIcon.isEmpty()) {
             childCompanyIcon.setImageResource(R.drawable.default_no_company_icon)
         } else {
-            Picasso.with(_context).load(childText.subCompanyIcon)
-                .placeholder(_context.resources.getDrawable(R.drawable.default_no_company_icon))
-                .error(_context.resources.getDrawable(R.drawable.default_no_company_icon))
-                .into(childCompanyIcon)
+            Picasso.get().load(childText.subCompanyIcon).into(childCompanyIcon, object: com.squareup.picasso.Callback {
+                override fun onSuccess() {
+                    //set animations here
+
+                }
+
+                override fun onError(e: Exception?) {
+                    childCompanyIcon.setImageResource(R.drawable.default_no_company_icon)
+                }
+            })
         }
 //        childCompanyIcon.setImageResource(childText.subCompanyIcon)
         return convertView
@@ -101,7 +108,23 @@ class BillPaymentExpandableAdapter(
         }
 
         parentCompanyName.text = headerTitle.companyTilte
-        parentCompanyIcon.setImageResource(headerTitle.companyIcon)
+       Logger.debugLog("billPayment","logoURLInAdapter  ${headerTitle.companyIcon}")
+        if (headerTitle.companyIcon.isEmpty()) {
+            parentCompanyIcon.setImageResource(R.drawable.default_no_company_icon)
+        } else {
+            Picasso.get().load(headerTitle.companyIcon).into(parentCompanyIcon, object: com.squareup.picasso.Callback {
+                override fun onSuccess() {
+                    //set animations here
+
+                }
+
+                override fun onError(e: Exception?) {
+                    Logger.debugLog("billPayment","logoError ${e.toString()}")
+                    parentCompanyIcon.setImageResource(R.drawable.default_no_company_icon)
+                }
+            })
+        }
+      //  parentCompanyIcon.setImageResource(headerTitle.companyIcon)
 
         return convertView
     }

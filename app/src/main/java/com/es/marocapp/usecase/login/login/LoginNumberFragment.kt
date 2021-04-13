@@ -191,7 +191,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                     if (isNumberRegexMatches) {
                         mDataBinding.inputLayoutPhoneNumber.error = ""
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = false
-
+                        mActivityViewModel.currentUserMSISDN=userMSISDNwithPrefix
                         mActivityViewModel.requestForGetAccountDetailApi(
                             context,
                             userMSISDNwithPrefix

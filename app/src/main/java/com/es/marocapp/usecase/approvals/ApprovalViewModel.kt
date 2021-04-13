@@ -25,6 +25,7 @@ import retrofit2.HttpException
 
 class ApprovalViewModel(application: Application) : AndroidViewModel(application) {
 
+    var isApproved: Boolean = false
     lateinit var disposable: Disposable
     var isLoading = ObservableField<Boolean>()
     var errorText = SingleLiveEvent<String>()
@@ -48,6 +49,7 @@ class ApprovalViewModel(application: Application) : AndroidViewModel(application
                 .subscribe(
                     { result ->
                         isLoading.set(false)
+
 
                         if(result?.responseCode != null){
                             when(result?.responseCode) {

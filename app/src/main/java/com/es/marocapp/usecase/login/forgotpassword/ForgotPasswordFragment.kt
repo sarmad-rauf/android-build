@@ -20,6 +20,7 @@ import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.Logger
 import kotlinx.android.synthetic.main.layout_login_header.view.*
 import java.util.regex.Pattern
 
@@ -63,14 +64,29 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
         }
 
         if(mActivityViewModel.isForgotPasswordDialogToShow){
-            DialogUtils.showCustomDialogue(activity,LanguageData.getStringValue("BtnTitle_OK"),LanguageData.getStringValue("PleaseCallCallcenterForGeneratingOTP"),
-                LanguageData.getStringValue("OTP"),object : DialogUtils.OnCustomDialogListner{
-                    override fun onCustomDialogOkClickListner() {
-
+          //  mActivityViewModel.requestForGetProfileApi(activity,mActivityViewModel.currentUserMSISDN)
+            Logger.debugLog("userType"," dddddddd ${Constants.IS_AGENT_USER}")
+            if(Constants.IS_AGENT_USER)
+            {
+                Logger.debugLog("userType"," isAgentUserType ${Constants.IS_AGENT_USER}")
+                DialogUtils.showCustomDialogue(activity,LanguageData.getStringValue("BtnTitle_OK"),LanguageData.getStringValue("PleaseCallCallcenterForGeneratingOTPAgent"),
+                    LanguageData.getStringValue("OTP"),object : DialogUtils.OnCustomDialogListner{
+                        override fun onCustomDialogOkClickListner() {
+                        }
                     }
+                )
+            }
+            else{
+                Logger.debugLog("userType"," isConsumerUserType ${Constants.IS_AGENT_USER}")
+                DialogUtils.showCustomDialogue(activity,LanguageData.getStringValue("BtnTitle_OK"),LanguageData.getStringValue("PleaseCallCallcenterForGeneratingOTP"),
+                    LanguageData.getStringValue("OTP"),object : DialogUtils.OnCustomDialogListner{
+                        override fun onCustomDialogOkClickListner() {
+                        }
+                    }
+                )
+            }
 
-                }
-            )
+
         }
 
         mDataBinding.inputForgotOtp.filters =

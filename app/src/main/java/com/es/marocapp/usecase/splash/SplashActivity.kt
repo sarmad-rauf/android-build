@@ -212,6 +212,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.CURRENT_CURRENCY_TYPE_TO_SHOW = it.currencyToShow
                 Constants.AMOUNT_CONVERSION_VALUE = it.amountConversionValue
                 Constants.HELPLINE_NUMBER = it.helpLineNumber
+                Constants.HELPLINENUMBERAGENT = it.helpLineNumberAgent
                 Constants.URL_FOR_FAQ = it.faqs
                 Constants.URL_FOR_TERMSANDCONDITIONS = it.termsAndConditions
                 Constants.APP_VERSION = it.version

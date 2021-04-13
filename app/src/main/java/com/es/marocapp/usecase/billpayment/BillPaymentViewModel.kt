@@ -30,7 +30,7 @@ import kotlin.collections.HashMap
 class BillPaymentViewModel(application: Application) : AndroidViewModel(application){
 
 
-
+    var showAutoDuMorocViews: Boolean=false
 
     //fatorati special type bil slection
     var specialMenuBillSelected: Boolean = false
@@ -88,6 +88,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     //Fatorati Observer
     val selectedCreancer = ObservableField<String>()
     var userSelectedCreancer =""
+    var userSelectedCreancerLogo =""
     var creancesList = ObservableField<ArrayList<creances>>()
     var fatoratiStepOneObserver = ObservableField<BillPaymentFatoratiStepOneResponse>()
     var fatoratiTypeSelected = ObservableField<Creancier>()
@@ -774,7 +775,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                             {
                                 when(result?.responseCode) {
                                     ApiConstant.API_SUCCESS -> {
-                                        fatoratiStepFourObserver.set(result)
+                                     fatoratiStepFourObserver.set(result)
                                         getFatoratiStepFourResponseListner.postValue(result)
                                     }
                                     ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
@@ -786,7 +787,6 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                                         getFatoratiStepFourResponseListner.postValue(result)
                                     }
                                 }
-
                             } else {
                                 getFatoratiStepFourResponseListner.postValue(result)
                             }

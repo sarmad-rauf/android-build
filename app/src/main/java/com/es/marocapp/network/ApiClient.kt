@@ -80,8 +80,15 @@ public class ApiClient() : Dependencies() {
         headerParams["Accept"] = "application/json"
         headerParams["X-Forwarded-For"] = Constants.APPLICATION_IP_ADDRESS
         headerParams["token"] = Constants.createUserToken()
+        var lang=Constants.getSelectedLanguage()
+        when(lang){
+            "en"->{}
+            "fr"->{}
+            "ar"->{}
+            else->lang="en"
+        }
         //headerParams["lang"] = "en"
-       headerParams["lang"] = Constants.getSelectedLanguage()
+        headerParams["lang"] = lang
 
         if(Constants.HEADERS_AFTER_LOGINS){
             if(Constants.HEADERS_FOR_PAYEMNTS){

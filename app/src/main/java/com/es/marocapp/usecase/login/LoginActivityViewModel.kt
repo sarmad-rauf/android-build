@@ -24,6 +24,7 @@ import retrofit2.HttpException
 
 class LoginActivityViewModel(application: Application) : AndroidViewModel(application) {
 
+    var currentUserMSISDN: String=""
     private val SPLASH_DISPLAY_LENGTH = 1000
     val mHandler = MutableLiveData<Boolean>()
     var isSignUpFlow : ObservableField<Boolean> = ObservableField(false)
@@ -150,11 +151,22 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                 .compose(applyIOSchedulers())
                 .subscribe(
                     { result ->
-                        Logger.debugLog("Abro","results ${result.toString()}")
+
                         isLoading.set(false)
 
                         if (result?.responseCode != null )
                          {
+                             Logger.debugLog("Abro"," userTypeResults ${result.userType}")
+                             if(result.responseCode.equals(ApiConstant.API_SUCCESS))
+                             {
+                                 if(result.userType.contains("agent"))
+                                 {
+
+                                     Constants.IS_AGENT_USER=true
+                                     Logger.debugLog("userType"," isAgentUser ${Constants.IS_AGENT_USER}")
+                                 }
+                             }
+
                              getProfileResponseListner.postValue(result)
                         }else {
                             errorText.postValue(context!!.getString(R.string.error_msg_generic))
@@ -767,6 +779,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                 .compose(applyIOSchedulers())
                 .subscribe(
                     { result ->
+                        Logger.debugLog("userType","cert  ${result.toString()}")
                         isLoading.set(false)
                         if(result?.responseCode != null){
                             when(result?.responseCode) {

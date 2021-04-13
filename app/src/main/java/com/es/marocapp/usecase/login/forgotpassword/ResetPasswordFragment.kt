@@ -53,9 +53,18 @@ class ResetPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), For
         }
 
         if(mActivityViewModel.isForgotPasswordDialogToShow){
+            mActivityViewModel.requestForGetProfileApi(activity,mActivityViewModel.currentUserMSISDN)
+           var helpLineNumberMessage=""
+            if(Constants.IS_AGENT_USER)
+            {
+                helpLineNumberMessage=LanguageData.getStringValue("PleaseCallCallcenterForGeneratingOTPAgent").toString()
+            }
+            else{
+                helpLineNumberMessage=LanguageData.getStringValue("PleaseCallCallcenterForGeneratingOTP").toString()
+            }
             DialogUtils.showCustomDialogue(activity,
                 LanguageData.getStringValue("BtnTitle_OK"),
-                LanguageData.getStringValue("PleaseCallCallcenterForGeneratingOTP"),
+                helpLineNumberMessage,
                 LanguageData.getStringValue("OTP"),object : DialogUtils.OnCustomDialogListner{
                     override fun onCustomDialogOkClickListner() {
 

@@ -31,6 +31,9 @@ import kotlin.properties.Delegates
 object Constants {
 
 
+
+    lateinit var HELPLINENUMBERAGENT: String
+
     //Iam bills list for which fatourati flow will be triggered
     lateinit var iamBillsTriggerFatouratiFlow: Array<String>
 

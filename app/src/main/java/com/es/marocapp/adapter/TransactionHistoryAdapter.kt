@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.es.marocapp.R
 import com.es.marocapp.model.responses.History
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.Logger
 import kotlin.collections.ArrayList
 
 class TransactionHistoryAdapter(
@@ -82,20 +83,21 @@ class TransactionHistoryAdapter(
         }
 
             when(models!![position].transferTypeEwp){
-                "TRANSFER"-> holder.transferTypeIcon?.setImageResource(R.drawable.transaction_circle_merchant_payment)
-                "INTEROP_TRANSFER"-> holder.transferTypeIcon?.setImageResource(R.drawable.transaction_circle_merchant_payment)
-                "ADJUSTMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_withdraw_transaction)
-                "CUSTOM_CASHIN_VIA_CARD"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_withdraw_transaction)
-                "CASH_IN"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_deposit_transaction)
-                "CASH_OUT"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_deposit_transaction)
-                "WITHDRAWAL"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_transfer_transaction)
-                "DEPOSIT"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_transfer_transaction)
-                "INTEROP_PAYMENT_SEND"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_transfer_transaction)
-                "PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_transfer_transaction)
-                "EXTERNAL_PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_transfer_transaction)
+                "TRANSFER"-> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
+                "INTEROP_TRANSFER"-> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
+                "ADJUSTMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
+                "CUSTOM_CASHIN_VIA_CARD"-> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
+                "CASH_IN"-> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
+                "CASH_OUT"-> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
+                "WITHDRAWAL"-> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
+                "DEPOSIT"-> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
+                "INTEROP_PAYMENT_SEND"-> holder.transferTypeIcon?.setImageResource(R.drawable.paement_marchand)
+                "PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.paement_marchand)
+                "EXTERNAL_PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.paement_facture)
                 else-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_generic_transaction)
             }
 
+        Logger.debugLog("transactionHistory","transation type ${models!![position].transferTypeEwp}")
         when(models!![position].transactionstatus){
             "SUCCESSFUL"-> holder.statusImg?.setImageResource(R.drawable.approvals_active)
             "PENDING"-> holder.statusImg?.setImageResource(R.drawable.ic_pending_svg)

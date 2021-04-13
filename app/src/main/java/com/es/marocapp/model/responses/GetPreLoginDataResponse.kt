@@ -76,5 +76,6 @@ data class GetPreLoginDataResponse(
     val iamBillsTriggerFatouratiFlow: Array<String>,
     val reasonUpgradeToLevelTwo:String,
     val reasonUpgradeToLevelThree:String,
-    val cityNameRegex:String
+    val cityNameRegex:String,
+    val helpLineNumberAgent: String
 )

@@ -58,7 +58,7 @@
                android:id="@+id/uploadImage_radioButton"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:text="upload image"
+               android:text="Level 2"
                android:layout_marginBottom="@dimen/_5sdp"
                android:textSize="@dimen/_13ssp">
            </RadioButton>
@@ -68,6 +68,7 @@
                android:layout_height="wrap_content"
                android:text="upload file"
                android:layout_marginTop="@dimen/_5sdp"
+               android:visibility="gone"
                android:textSize="@dimen/_13ssp">
            </RadioButton>
        </RadioGroup>
@@ -85,7 +86,8 @@
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_16sdp"
             android:paddingStart="@dimen/_32sdp"
-            android:paddingEnd="@dimen/_32sdp">
+            android:paddingEnd="@dimen/_32sdp"
+            android:visibility="gone">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_70sdp">
@@ -182,11 +184,12 @@
             android:layout_marginTop="@dimen/_16sdp"
             android:paddingStart="@dimen/_32sdp"
             android:paddingEnd="@dimen/_32sdp"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:background="@drawable/button_enable"
             android:textSize="@dimen/_14ssp"
             android:textColor="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
+
             app:layout_constraintStart_toEndOf="@id/upgradeProfile_dialog_no_btn"
             app:layout_constraintTop_toBottomOf="@+id/selectedFileLayout" />
 
