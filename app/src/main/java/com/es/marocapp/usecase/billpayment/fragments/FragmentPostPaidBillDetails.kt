@@ -65,6 +65,7 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
             mActivityViewModel.popBackStackTo = R.id.fragmentBillPaymentMsisdn
         }
 
+        mActivityViewModel.showAutoDuMorocViews=false
         listOfCustomInvoice.clear()
         if(mActivityViewModel.isBillUseCaseSelected.get()!!){
             for(i in mActivityViewModel.PostPaidFinancialResourceInfoObserver.get()!!.invoices.indices){
