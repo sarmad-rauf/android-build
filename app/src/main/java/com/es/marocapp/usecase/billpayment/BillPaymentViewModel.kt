@@ -30,6 +30,7 @@ import kotlin.collections.HashMap
 class BillPaymentViewModel(application: Application) : AndroidViewModel(application){
 
 
+    var totalTax: Double=0.0
     var showAutoDuMorocViews: Boolean=false
 
     //fatorati special type bil slection

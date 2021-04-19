@@ -107,17 +107,25 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         }
 
         //Fee
+        var fromTax=mItemDetailsToShow.fromTax
+        if(fromTax.isNullOrEmpty())
+        {
+            fromTax="0"
+        }
+
         if(mItemDetailsToShow.fromfee.isNullOrEmpty()){
             fee = "0.00"
             mDataBinding.feeVal.text = "DH 0.00"
         }else{
+
+            var feeWithTax = Constants.converValueToTwoDecimalPlace(mItemDetailsToShow.fromfee.toDouble()+fromTax.toDouble())
             fee = mItemDetailsToShow.fromfee
-            mDataBinding.feeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mItemDetailsToShow.fromfee
+            mDataBinding.feeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+feeWithTax
         }
 
         //TotalAmount
         var totalAmount = Constants.addAmountAndFee(amount.toDouble(),fee.toDouble())
-        totalAmount = Constants.converValueToTwoDecimalPlace(totalAmount.toDouble())
+        totalAmount = Constants.converValueToTwoDecimalPlace(totalAmount.toDouble()+fromTax.toDouble())
         mDataBinding.totalAmountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+totalAmount
 
 

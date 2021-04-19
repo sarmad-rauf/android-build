@@ -7,7 +7,8 @@ data class FloatTransferQuoteResponse(
     val description: String,
     val employeeId: Any,
     val quoteList: List<FloatTransfeQuote>,
-    val responseCode: String
+    val responseCode: String,
+    val taxList :List<DetailsList>
 )
 
 data class FloatTransfeQuote(

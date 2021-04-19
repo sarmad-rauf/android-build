@@ -21,6 +21,7 @@ import com.es.marocapp.usecase.sendmoney.SendMoneyViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DecimalDigitsInputFilter
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.Logger
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.floor
@@ -153,6 +154,11 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
             this@FundsTransferAmountFragment,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    mActivityViewModel.totalTax=0.0
+                    for(taxes in it.taxList.indices)
+                    {
+                        mActivityViewModel.totalTax=mActivityViewModel.totalTax+it.taxList[taxes].amount.amount.toString().toDouble()
+                    }
                     if (it.quoteList.isNotEmpty()) {
                         mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
                         mActivityViewModel.qouteId = it.quoteList[0].quoteid
@@ -167,6 +173,13 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
             this@FundsTransferAmountFragment,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+
+                    mActivityViewModel.totalTax=0.0
+                    for(taxes in it.taxList.indices)
+                    {
+                        mActivityViewModel.totalTax=mActivityViewModel.totalTax+it.taxList[taxes].amount.amount.toString().toDouble()
+                    }
+                    Logger.debugLog("quoteChange","taxList ${mActivityViewModel.totalTax}")
                     if (it.quoteList.isNotEmpty()) {
                         mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
                         mActivityViewModel.qouteId = it.quoteList[0].quoteid
@@ -180,6 +193,11 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
         mActivityViewModel.getMerchantQouteResponseListner.observe(this@FundsTransferAmountFragment,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    mActivityViewModel.totalTax=0.0
+                    for(taxes in it.taxList.indices)
+                    {
+                        mActivityViewModel.totalTax=mActivityViewModel.totalTax+it.taxList[taxes].amount.amount.toString().toDouble()
+                    }
                     if (it.quoteList.isNotEmpty()) {
                         mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
                         mActivityViewModel.qouteId = it.quoteList[0].quoteid
@@ -193,6 +211,11 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
         mActivityViewModel.getPaymentQouteResponseListner.observe(this@FundsTransferAmountFragment,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    mActivityViewModel.totalTax=0.0
+                    for(taxes in it.taxList.indices)
+                    {
+                        mActivityViewModel.totalTax=mActivityViewModel.totalTax+it.taxList[taxes].amount.amount.toString().toDouble()
+                    }
                     if (it.quoteList.isNotEmpty()) {
                         mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
                         mActivityViewModel.qouteId = it.quoteList[0].quoteid

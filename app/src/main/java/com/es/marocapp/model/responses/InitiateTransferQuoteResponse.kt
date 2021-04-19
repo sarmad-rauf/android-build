@@ -7,7 +7,8 @@ data class InitiateTransferQuoteResponse(
     val description: String,
     val employeeId: Any,
     val quoteList: List<InitiateTransferQuote>,
-    val responseCode: String
+    val responseCode: String,
+    val taxList :List<DetailsList>
 )
 
 data class InitiateTransferQuote(
@@ -21,6 +22,16 @@ data class InitiateTransferQuote(
     val offeridentities: Any,
     val promotion: Any,
     val quoteid: String
+)
+
+data class DetailsList(
+    val name:String,
+    val amount :Ammount
+)
+
+data class Ammount(
+    val amount:Any,
+    val currency:String
 )
 
 data class InitiateTransferQuoteFee(

@@ -469,6 +469,11 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     if (it.quoteList.isNotEmpty()) {
+                        mActivityViewModel.totalTax=0.0
+                        for(taxes in it.taxList.indices)
+                        {
+                            mActivityViewModel.totalTax=mActivityViewModel.totalTax+it.taxList[taxes].amount.amount.toString().toDouble()
+                        }
                         mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
                         mActivityViewModel.qouteId = it.quoteList[0].quoteid
                     }

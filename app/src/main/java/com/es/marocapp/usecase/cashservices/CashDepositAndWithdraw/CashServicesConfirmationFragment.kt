@@ -25,7 +25,7 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
 
     private lateinit var mActivityViewModel : CashServicesViewModel
 
-    private var amountToTransfer = ""
+    private var amountToTransfer = "0"
 
     override fun setLayout(): Int {
         return R.layout.fragment_cash_service_confirmation
@@ -195,10 +195,14 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
 
         mDataBinding.tvCompanyNameVal.text = mActivityViewModel.transferdAmountTo
         mDataBinding.tvReceiptCodeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.amountToTransfer
-        mDataBinding.tvDHVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.feeAmount
+        var fee=mActivityViewModel.feeAmount.toDouble()+mActivityViewModel.totalTax
+        fee= String.format("%.2f", fee).toDouble()
+        mDataBinding.tvDHVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+fee
 
         amountToTransfer = Constants.addAmountAndFee(mActivityViewModel.amountToTransfer.toDouble(),mActivityViewModel.feeAmount.toDouble())
-        mDataBinding.tvAmountVal.text =Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+amountToTransfer
+        var totalCost=amountToTransfer.toDouble()+mActivityViewModel.totalTax
+        totalCost= String.format("%.2f", totalCost).toDouble()
+        mDataBinding.tvAmountVal.text =Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+totalCost
 
         mDataBinding.receiverNameGroup.visibility = View.GONE
         if(Constants.IS_AGENT_USER)

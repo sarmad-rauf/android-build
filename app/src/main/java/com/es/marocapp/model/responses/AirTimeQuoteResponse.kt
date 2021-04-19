@@ -7,7 +7,8 @@ data class AirTimeQuoteResponse(
     val employeeId: Any,
     val quoteList: List<Quote>,
     val description: String,
-    val responseCode: String
+    val responseCode: String,
+    val taxList :List<DetailsList>
 )
 
 data class AirTimeQuote(

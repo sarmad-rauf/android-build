@@ -40,7 +40,6 @@
                 android:ellipsize="end"
                 android:focusableInTouchMode="true"
                 android:hint="@string/enter_receiver_s_mobile_number_caps"
-                android:inputType="phone"
                 android:maxLength="30"
                 android:textSize="@dimen/_14ssp"
                 android:theme="@style/myTextInputLabel" />

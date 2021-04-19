@@ -30,7 +30,7 @@ class FragmentBillPaymentPostPaidConfirmation :
     private var selectedListOfInvoice = arrayListOf<InvoiceCustomModel>()
     private var selectedFatoratiListOfInvoice = arrayListOf<FatoratiCustomParamModel>()
 
-    private var amountToTransfer = ""
+    private var amountToTransfer = "0"
 
     override fun setLayout(): Int {
         return R.layout.fragment_bill_payment_confimation
@@ -248,6 +248,11 @@ class FragmentBillPaymentPostPaidConfirmation :
         var totalFee = "0.00"
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
             for (i in mActivityViewModel.listOfPostPaidBillPaymentQuote.indices) {
+                mActivityViewModel.totalTax=0.0
+                for(taxes in mActivityViewModel.listOfPostPaidBillPaymentQuote[i].taxList.indices)
+                {
+                    mActivityViewModel.totalTax=mActivityViewModel.totalTax+mActivityViewModel.listOfPostPaidBillPaymentQuote[i].taxList[taxes].amount.amount.toString().toDouble()
+                }
                 var item = mActivityViewModel.listOfPostPaidBillPaymentQuote[i]
                 if (item.quoteList != null && item.quoteList.isNotEmpty()) {
                     mActivityViewModel.listOfSelectedBillFee.add(item.quoteList[0].fee.amount.toString())
@@ -272,9 +277,13 @@ class FragmentBillPaymentPostPaidConfirmation :
             Constants.converValueToTwoDecimalPlace(mActivityViewModel.totalSelectedBillAmount.toDouble())
         mDataBinding.tvReceiptCodeVal.text =
             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + totalAmount
+        var fee=mActivityViewModel.feeAmount.toDouble()+mActivityViewModel.totalTax
+        fee= String.format("%.2f", fee).toDouble()
+
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
+
             mDataBinding.tvDHVal.text =
-                Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel?.feeAmount
+                Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + fee
         } else if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
             if (mActivityViewModel.feeAmount.equals("0.00") || mActivityViewModel.feeAmount.equals("0")) {
                 mDataBinding.tvDHTitle.visibility = View.GONE
@@ -285,7 +294,7 @@ class FragmentBillPaymentPostPaidConfirmation :
             }
 
             mDataBinding.tvDHVal.text =
-                Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.feeAmount
+                Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + fee
         }
 
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
@@ -304,8 +313,11 @@ class FragmentBillPaymentPostPaidConfirmation :
                 mActivityViewModel.fatoratiFeeAmountCalculated.toDouble()
             )
         }
-
-        var totalCost = Constants.converValueToTwoDecimalPlace(amountToTransfer.toDouble())
+        if(amountToTransfer.isEmpty())
+        {
+            amountToTransfer="0"
+        }
+        var totalCost = Constants.converValueToTwoDecimalPlace(amountToTransfer.toDouble()+mActivityViewModel.totalTax)
         mDataBinding.tvAmountVal.text =
             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + totalCost
 

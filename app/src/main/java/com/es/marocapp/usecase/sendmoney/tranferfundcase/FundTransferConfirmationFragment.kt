@@ -14,13 +14,14 @@ import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import kotlin.math.round
 
 class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfirmationBinding>(),
     FundsTrasnferClickLisntener {
 
     private lateinit var mActivityViewModel: SendMoneyViewModel
 
-    private var amountToTransfer = ""
+    private var amountToTransfer = "0"
 
     override fun setLayout(): Int {
         return R.layout.fragment_funds_transfer_confirmation
@@ -242,15 +243,23 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
         mDataBinding.tvOwnerNameVal.text = ReceiverName
         mDataBinding.tvReceiptCodeVal.text =
             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.amountToTransfer
+       var fee=mActivityViewModel.feeAmount.toDouble()+mActivityViewModel.totalTax
+          fee= String.format("%.2f", fee).toDouble()
         mDataBinding.tvDHVal.text =
-            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.feeAmount
+            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + fee
 
         amountToTransfer = Constants.addAmountAndFee(
             mActivityViewModel.amountToTransfer.toDouble(),
             mActivityViewModel.feeAmount.toDouble()
         )
+        if(amountToTransfer.isNullOrEmpty())
+        {
+            amountToTransfer="0"
+        }
+        var totalCost=amountToTransfer.toDouble()+mActivityViewModel.totalTax
+        totalCost= String.format("%.2f", totalCost).toDouble()
         mDataBinding.tvAmountVal.text =
-            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + amountToTransfer
+            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + totalCost
 
         if (mActivityViewModel.isUserRegistered!=null && mActivityViewModel.isUserRegistered.get()!=null && mActivityViewModel.isUserRegistered.get()!!) {
             mDataBinding.tvOwnerNameTitle.visibility = View.VISIBLE

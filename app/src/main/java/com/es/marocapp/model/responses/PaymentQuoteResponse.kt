@@ -7,7 +7,8 @@ data class PaymentQuoteResponse(
     val description: String,
     val employeeId: Any,
     val quoteList: List<Quote>,
-    val responseCode: String
+    val responseCode: String,
+    val taxList :List<DetailsList>
 )
 
 data class PaymentQuote(

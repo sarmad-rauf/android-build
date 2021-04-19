@@ -76,16 +76,16 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
                mActivityViewModel.PostPaidFinancialResourceInfoObserver.get()!!.invoices.size>0){
                mDataBinding.noDataTv.visibility=View.INVISIBLE
            }
+            mDataBinding.autoDML.visibility=View.GONE
         }
 
         listOfFatoratiCustomInvoice.clear()
         listOfFatoratiCustomDateInvoice.clear()
         if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
-            Logger.debugLog("billPayment","${mActivityViewModel.selectedCreancer.get()}  =  Autoroutes du Maroc")
-            if(mActivityViewModel.selectedCreancer.get().equals("Autoroutes du Maroc")) {
-               // mActivityViewModel.fatoratiStepFourObserver.get()?.globalParams?.size!!>0
-                Logger.debugLog("billPayment","AutoDeMoroc global params Size ${mActivityViewModel.fatoratiStepFourObserver.get()?.globalParams?.size} ")
-                mActivityViewModel.showAutoDuMorocViews=true
+
+            //below check is to show diffrent view of Items in Bills List when specific companies are selected
+            if(mActivityViewModel.selectedCreancer.get().equals("Autoroutes du Maroc")|| mActivityViewModel.selectedCreancer.get()?.contains("TGR")!!) {
+               mActivityViewModel.showAutoDuMorocViews=true
                 mDataBinding.autoDML.rootView.labelle.text =
                     mActivityViewModel?.userSelectedCreancer
                 mDataBinding.autoDML.rootView.billerName.text=
@@ -213,6 +213,11 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                     if(it.quoteList.isNotEmpty()){
+                        mActivityViewModel.totalTax=0.0
+                        for(taxes in it.taxList.indices)
+                        {
+                            mActivityViewModel.totalTax=mActivityViewModel.totalTax+it.taxList[taxes].amount.amount.toString().toDouble()
+                        }
                         mActivityViewModel.selectedIvoicesQuoteList.set(arrayListOf(it.quoteList[0].quoteid))
                         mActivityViewModel.fatoratiFee = it.quoteList[0].fee.amount.toString()
                     }

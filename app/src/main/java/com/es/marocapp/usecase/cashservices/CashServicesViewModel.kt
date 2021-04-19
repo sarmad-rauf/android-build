@@ -20,6 +20,7 @@ import retrofit2.HttpException
 
 class CashServicesViewModel(application: Application) : AndroidViewModel(application){
 
+    var totalTax: Double=0.0
     lateinit var disposable: Disposable
     var isLoading = ObservableField<Boolean>()
     var errorText = SingleLiveEvent<String>()

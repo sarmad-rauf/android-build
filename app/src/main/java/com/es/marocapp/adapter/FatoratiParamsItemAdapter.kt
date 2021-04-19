@@ -1,6 +1,7 @@
 package com.es.marocapp.adapter
 
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -24,12 +25,19 @@ class FatoratiParamsItemAdapter (private val paramItems : List<RecievededParam>,
 
     override fun onBindViewHolder(holder: FavoritesItemViewHolder, position: Int) {
         holder.inputLayout.hint = ""
-        holder.inputTextHint.text=paramItems[position].libelle
-        holder.inputText.text=paramItems[position].inputValue
+        holder.inputTextHint.text = paramItems[position].libelle
+        holder.inputText.text = paramItems[position].inputValue
         //holder.inputText.hint=paramItems[position].nomChamp
-        holder.inputLayout.error=paramItems[position].errorText
-        holder.inputLayout.isErrorEnabled=paramItems[position].errorEnabled
-        holder.inputTextHint.visibility=paramItems[position].hintVisibility
+        holder.inputLayout.error = paramItems[position].errorText
+        holder.inputLayout.isErrorEnabled = paramItems[position].errorEnabled
+        holder.inputTextHint.visibility = paramItems[position].hintVisibility
+
+        if (paramItems[position].typeChamp.contains("text")){
+            holder.inputText.inputType=InputType.TYPE_CLASS_TEXT
+        }
+        else{
+            holder.inputText.inputType=InputType.TYPE_CLASS_PHONE
+        }
 
         holder.inputText.addTextChangedListener(object :TextWatcher{
 

@@ -7,7 +7,8 @@ data class CashInWithOtpQuoteResponse(
     val description: String,
     val employeeId: Any,
     val quoteList: List<CashInWithOtpQuote>,
-    val responseCode: String
+    val responseCode: String,
+    val taxList :List<DetailsList>
 )
 
 data class CashInWithOtpQuote(

@@ -8,7 +8,8 @@ data class BillPaymentFatoratiQuoteResponse(
     val description: String,
     val employeeId: Any,
     val quoteList: List<FatoratiQuoteQuote>,
-    val responseCode: String
+    val responseCode: String,
+    val taxList :List<DetailsList>
 )
 
 data class FatoratiQuoteQuote(

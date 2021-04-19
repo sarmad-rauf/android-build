@@ -16,13 +16,14 @@ import com.es.marocapp.usecase.airtime.AirTimeViewModel
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.Logger
 
 class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayoutBinding>(),
     AirTimeClickListner {
 
     private lateinit var mActivityViewModel: AirTimeViewModel
 
-    private var amountToTransfer = ""
+    private var amountToTransfer = "0"
 
     override fun setLayout(): Int {
         return R.layout.fragment_air_time_confirmation_layout
@@ -92,6 +93,11 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     if (it.quoteList.isNotEmpty()) {
+                        mActivityViewModel.totalTax=0.0
+                        for(taxes in it.taxList.indices)
+                        {
+                            mActivityViewModel.totalTax=mActivityViewModel.totalTax+it.taxList[taxes].amount.amount.toString().toDouble()
+                        }
                         mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
                         mActivityViewModel.qouteId = it.quoteList[0].quoteid
                     }
@@ -153,17 +159,36 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
 //        var ReceiverName = mActivityViewModel.mAccountHolderInfoResponseObserver.get()?.firstName +" " +mActivityViewModel.mAccountHolderInfoResponseObserver.get()?.sureName
 //        mActivityViewModel.ReceiverName = ReceiverName
 //        mDataBinding.tvOwnerNameVal.text = ReceiverName
-        mDataBinding.tvReceiptCodeVal.text =
-            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.amountToTransfer
-        mDataBinding.tvDHVal.text =
-            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.feeAmount
+
+
+
 
         amountToTransfer = Constants.addAmountAndFee(
             mActivityViewModel.amountToTransfer.toDouble(),
             mActivityViewModel.feeAmount.toDouble()
         )
+
+        var fee=mActivityViewModel.feeAmount.toDouble()+mActivityViewModel.totalTax
+        fee= String.format("%.2f", fee).toDouble()
+      //  var totalCost=0.0
+//        if(!amountToTransfer.isEmpty())
+//        {
+      //      totalCost=amountToTransfer.toDouble()+mActivityViewModel.totalTax
+        //    totalCost= String.format("%.2f", totalCost).toDouble()
+      //  }
+      //  else{
+         //   totalCost=mActivityViewModel?.totalTax
+         //   totalCost= String.format("%.2f", totalCost).toDouble()
+        //}
+       var totalCost=amountToTransfer.toDouble()+mActivityViewModel?.totalTax
+        Logger.debugLog("okquoteCahange","amount ${amountToTransfer}  total tax  ${mActivityViewModel?.totalTax}  total Cost ${totalCost}")
+
+        mDataBinding.tvReceiptCodeVal.text =
+            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.amountToTransfer
+        mDataBinding.tvDHVal.text =
+            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + fee
         mDataBinding.tvAmountVal.text =
-            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + amountToTransfer
+            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + totalCost
         mDataBinding.receiverNameGroup.visibility = View.GONE
 
         if(Constants.IS_AGENT_USER)

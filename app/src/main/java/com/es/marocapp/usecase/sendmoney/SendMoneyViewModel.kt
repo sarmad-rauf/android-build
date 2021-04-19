@@ -23,6 +23,7 @@ import retrofit2.HttpException
 
 class SendMoneyViewModel(application: Application) : AndroidViewModel(application) {
 
+    var totalTax: Double=0.0
     lateinit var disposable: Disposable
     var isLoading = ObservableField<Boolean>()
     var errorText = SingleLiveEvent<String>()
@@ -299,9 +300,11 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                         isLoading.set(false)
 
                         if (result?.responseCode != null) {
+                            Logger.debugLog("quoteChange","taxList ${result.taxList}")
                             when (result?.responseCode) {
                                 ApiConstant.API_SUCCESS -> {
                                     getTransferQouteResponseListner.postValue(result)
+
                                 }
                                 ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(
                                     context as SendMoneyActivity, LoginActivity::class.java,
