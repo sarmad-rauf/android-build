@@ -161,27 +161,24 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
 //        mDataBinding.tvOwnerNameVal.text = ReceiverName
 
 
-
-
+        if(amountToTransfer.isNullOrEmpty())
+        {
+            amountToTransfer="0"
+        }
         amountToTransfer = Constants.addAmountAndFee(
             mActivityViewModel.amountToTransfer.toDouble(),
             mActivityViewModel.feeAmount.toDouble()
         )
 
-        var fee=mActivityViewModel.feeAmount.toDouble()+mActivityViewModel.totalTax
-        fee= String.format("%.2f", fee).toDouble()
-      //  var totalCost=0.0
-//        if(!amountToTransfer.isEmpty())
-//        {
-      //      totalCost=amountToTransfer.toDouble()+mActivityViewModel.totalTax
-        //    totalCost= String.format("%.2f", totalCost).toDouble()
-      //  }
-      //  else{
-         //   totalCost=mActivityViewModel?.totalTax
-         //   totalCost= String.format("%.2f", totalCost).toDouble()
-        //}
-       var totalCost=amountToTransfer.toDouble()+mActivityViewModel?.totalTax
-        Logger.debugLog("okquoteCahange","amount ${amountToTransfer}  total tax  ${mActivityViewModel?.totalTax}  total Cost ${totalCost}")
+        if(mActivityViewModel.feeAmount.isNullOrEmpty())
+        {
+            mActivityViewModel.feeAmount="0"
+        }
+        val feeD=mActivityViewModel.feeAmount.toDouble()+mActivityViewModel.totalTax
+        val fee= Constants.converValueToTwoDecimalPlace(feeD)
+
+       val totalCostD=amountToTransfer.toDouble()+mActivityViewModel?.totalTax
+       val totalCost = Constants.converValueToTwoDecimalPlace(totalCostD)
 
         mDataBinding.tvReceiptCodeVal.text =
             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.amountToTransfer

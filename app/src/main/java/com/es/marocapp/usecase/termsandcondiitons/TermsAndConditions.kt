@@ -51,7 +51,7 @@ class TermsAndConditions : BaseActivity<ActivityTermsAndConditionsBinding>() {
 
         PRDownloader.initialize(applicationContext)
 
-        headerText = intent.getStringExtra("title")
+        headerText = intent.getStringExtra("title").toString()
         mDataBinding.tvTermConditionTitle.text = headerText
 
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_termandcondition_host_fragment) as NavHostFragment

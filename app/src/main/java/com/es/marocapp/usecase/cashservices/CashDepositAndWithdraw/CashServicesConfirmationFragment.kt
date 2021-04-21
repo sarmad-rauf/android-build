@@ -195,13 +195,13 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
 
         mDataBinding.tvCompanyNameVal.text = mActivityViewModel.transferdAmountTo
         mDataBinding.tvReceiptCodeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.amountToTransfer
-        var fee=mActivityViewModel.feeAmount.toDouble()+mActivityViewModel.totalTax
-        fee= String.format("%.2f", fee).toDouble()
+        val feeD=mActivityViewModel.feeAmount.toDouble()+mActivityViewModel.totalTax
+        val fee= Constants.converValueToTwoDecimalPlace(feeD)
         mDataBinding.tvDHVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+fee
 
         amountToTransfer = Constants.addAmountAndFee(mActivityViewModel.amountToTransfer.toDouble(),mActivityViewModel.feeAmount.toDouble())
-        var totalCost=amountToTransfer.toDouble()+mActivityViewModel.totalTax
-        totalCost= String.format("%.2f", totalCost).toDouble()
+        val totalCostD=amountToTransfer.toDouble()+mActivityViewModel.totalTax
+        val totalCost= Constants.converValueToTwoDecimalPlace(totalCostD)
         mDataBinding.tvAmountVal.text =Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+totalCost
 
         mDataBinding.receiverNameGroup.visibility = View.GONE

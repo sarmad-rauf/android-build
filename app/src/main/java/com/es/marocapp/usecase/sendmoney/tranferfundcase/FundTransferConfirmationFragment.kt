@@ -21,7 +21,7 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
 
     private lateinit var mActivityViewModel: SendMoneyViewModel
 
-    private var amountToTransfer = "0"
+    private var amountToTransfer = ""
 
     override fun setLayout(): Int {
         return R.layout.fragment_funds_transfer_confirmation
@@ -243,21 +243,24 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
         mDataBinding.tvOwnerNameVal.text = ReceiverName
         mDataBinding.tvReceiptCodeVal.text =
             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.amountToTransfer
-       var fee=mActivityViewModel.feeAmount.toDouble()+mActivityViewModel.totalTax
-          fee= String.format("%.2f", fee).toDouble()
-        mDataBinding.tvDHVal.text =
-            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + fee
-
+        if(mActivityViewModel.feeAmount.isEmpty())
+        {
+            mActivityViewModel.feeAmount="0"
+        }
+       val fee=mActivityViewModel.feeAmount.toDouble()+mActivityViewModel.totalTax
+        val  stingFee= Constants.converValueToTwoDecimalPlace(fee)
+        mDataBinding.tvDHVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + stingFee
+        if(amountToTransfer.isEmpty())
+        {
+            amountToTransfer="0"
+        }
         amountToTransfer = Constants.addAmountAndFee(
             mActivityViewModel.amountToTransfer.toDouble(),
             mActivityViewModel.feeAmount.toDouble()
         )
-        if(amountToTransfer.isNullOrEmpty())
-        {
-            amountToTransfer="0"
-        }
-        var totalCost=amountToTransfer.toDouble()+mActivityViewModel.totalTax
-        totalCost= String.format("%.2f", totalCost).toDouble()
+
+        val totalCostD=amountToTransfer.toDouble()+mActivityViewModel.totalTax
+        val totalCost= Constants.converValueToTwoDecimalPlace(totalCostD)
         mDataBinding.tvAmountVal.text =
             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + totalCost
 

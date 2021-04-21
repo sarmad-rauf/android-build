@@ -31,6 +31,12 @@ data class Contact(
     val fri: String
 )
 
+data class AccountHolderEmailResponse(
+    val responseCode: String,
+    val description: String,
+    val email: String
+)
+
 data class Profile(
     val agentUser: Boolean,
     val consumerUser: Boolean,

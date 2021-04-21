@@ -12,13 +12,13 @@ apply plugin: 'com.google.firebase.crashlytics'
 def baseUrlType = 2  //1:Production,2:Staging,3:Development
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion "29.0.2"
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.es.marocapp"
         minSdkVersion 19
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

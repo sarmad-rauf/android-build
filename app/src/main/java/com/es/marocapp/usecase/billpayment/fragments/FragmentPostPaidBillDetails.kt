@@ -99,9 +99,13 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
             }
                 for(i in mActivityViewModel.fatoratiStepFourObserver.get()!!.params.indices){
                 var item = mActivityViewModel.fatoratiStepFourObserver.get()!!.params[i]
+
+                    //we dont show the extra bill whose idArtical value is FRAIS
+                    if(!item.idArticle.contains("FRAIS")){
                 listOfFatoratiCustomInvoice.add(FatoratiCustomParamModel(false,item.description,item.idArticle,item.prixTTC,item.typeArticle,mActivityViewModel.showAutoDuMorocViews))
                 listOfFatoratiCustomDateInvoice.add(FatoratiCustomDateParamModel(false,item.description,item.idArticle,item.prixTTC,item.typeArticle,getDateFromString(item.description)))
             }
+                }
 
             if(mActivityViewModel.fatoratiStepFourObserver.get()!!.params!=null &&
                 mActivityViewModel.fatoratiStepFourObserver.get()!!.params.size>0){

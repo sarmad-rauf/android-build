@@ -56,6 +56,9 @@ object EndPoints {
     //loginwithcert
     const val loginwithcert = "loginwithcert"
 
+    //getaccountholderdefaultnotificationemail
+    const val getAccountHoldelEmail = "getaccountholderdefaultnotificationemail"
+
     //getbalanceinfoandlimits
     const val getbalanceinfoandlimits = "getbalanceinfoandlimits"
 

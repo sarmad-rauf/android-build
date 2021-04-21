@@ -70,6 +70,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     var getForgotPasswordResponseListner = SingleLiveEvent<ForgotPasswordResponse>()
     var getCreateCredentialsResponseListner = SingleLiveEvent<CreateCredentialResponse>()
     var getLoginWithCertResponseListner = SingleLiveEvent<LoginWithCertResponse>()
+    var getAccountHolderEmailResponseListner = SingleLiveEvent<AccountHolderEmailResponse>()
     var getBalanceInforAndLimitResponseListner = SingleLiveEvent<BalanceInfoAndLimitResponse>()
     var getAccountsResponseListner = SingleLiveEvent<GetAccountsResponse>()
     var getBalanceAndGenerateOtpResponseListner = SingleLiveEvent<GetBalanceAndGenerateOtpResponse>()
@@ -791,6 +792,59 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                         }
                         else{
                             getLoginWithCertResponseListner.postValue(result)
+                        }
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    // API For getting Email
+    fun requestForAccountholderDefaultNotificationEmailAPI(
+        context: Context?
+    ) {
+
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAccountHolderEmailCall(
+                AccountHolderEmailequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(mUserMsisdn))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        Logger.debugLog("email","email  ${result.toString()}")
+                        isLoading.set(false)
+                        if(result?.responseCode != null){
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS ->  getAccountHolderEmailResponseListner.postValue(result)
+                             //   ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as LoginActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                             //   ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as LoginActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  getAccountHolderEmailResponseListner.postValue(result)
+                            }
+                        }
+                        else{
+                            getAccountHolderEmailResponseListner.postValue(result)
                         }
 
                     },

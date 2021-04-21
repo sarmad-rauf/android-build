@@ -265,9 +265,10 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                     }
 
                     if(!it.getAccountHolderInformationResponse.email.isNullOrEmpty()){
-                        Constants.CURRENT_USER_EMAIL=it.getAccountHolderInformationResponse.email
-                        Constants.CURRENT_USER_EMAIL=Constants.CURRENT_USER_EMAIL.replace("ID:","")
-                        Constants.CURRENT_USER_EMAIL=Constants.CURRENT_USER_EMAIL.replace("/EMAIL","")
+                        mActivityViewModel.requestForAccountholderDefaultNotificationEmailAPI(activity)
+//                        Constants.CURRENT_USER_EMAIL=it.getAccountHolderInformationResponse.email
+//                        Constants.CURRENT_USER_EMAIL=Constants.CURRENT_USER_EMAIL.replace("ID:","")
+//                        Constants.CURRENT_USER_EMAIL=Constants.CURRENT_USER_EMAIL.replace("/EMAIL","")
                     }
                 }
                 mActivityViewModel.requestForBalanceInfoAndLimtsAPI(activity)
@@ -323,6 +324,18 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
             }else{
                 mActivityViewModel.isForgotPasswordDialogToShow = true
                 (activity as LoginActivity).navController.navigate(R.id.action_signUpNumberFragment_to_forgotPasswordFragment)
+            }
+        })
+        mActivityViewModel.getAccountHolderEmailResponseListner.observe(this@LoginNumberPasswordFragment, Observer {
+            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                if(!it.email.isNullOrEmpty()) {
+                    Constants.CURRENT_USER_EMAIL = it.email
+                    Constants.CURRENT_USER_EMAIL = Constants.CURRENT_USER_EMAIL.replace("ID:", "")
+                    Constants.CURRENT_USER_EMAIL =
+                        Constants.CURRENT_USER_EMAIL.replace("/EMAIL", "")
+                }else  Constants.CURRENT_USER_EMAIL = ""
+            }else{
+                Constants.CURRENT_USER_EMAIL = ""
             }
         })
         mActivityViewModel.getBalanceInforAndLimitResponseListner.observe(

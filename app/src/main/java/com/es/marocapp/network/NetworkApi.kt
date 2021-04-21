@@ -79,6 +79,10 @@ interface NetworkApi {
     @POST(EndPoints.loginwithcert)
     fun getLoginWithCertCall(@Body request : LoginWithCertRequest) : Observable<LoginWithCertResponse>
 
+    //Request for getting Email
+    @POST(EndPoints.getAccountHoldelEmail)
+    fun getAccountHolderEmailCall(@Body request : AccountHolderEmailequest) : Observable<AccountHolderEmailResponse>
+
     //Request for GetBalanceInfoAndLimits
     @POST(EndPoints.getbalanceinfoandlimits)
     fun getBalancesInfoAndLimtCall(@Body request : BalanceInfoAndLimtRequest) : Observable<BalanceInfoAndLimitResponse>

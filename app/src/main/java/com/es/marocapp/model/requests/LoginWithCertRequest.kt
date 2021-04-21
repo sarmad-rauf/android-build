@@ -10,3 +10,9 @@ data class LoginWithCertRequest(
     val type: String,
     val view: String
 )
+
+data class AccountHolderEmailequest(
+    val context: String,
+    val identity: String
+
+)

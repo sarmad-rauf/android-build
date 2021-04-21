@@ -50,7 +50,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     var totalamount = ""
     var custId = ""
     var custname = ""
-    var feeAmount = ""
+    var feeAmount = "0"
     var fatoratiFeeAmountCalculated = "0.00"
     var fatoratiFeeAmountCaseImplemented = false
     var senderBalanceAfter ="0.00"

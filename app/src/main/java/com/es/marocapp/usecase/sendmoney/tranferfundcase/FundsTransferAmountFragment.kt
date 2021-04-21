@@ -157,11 +157,21 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
                     mActivityViewModel.totalTax=0.0
                     for(taxes in it.taxList.indices)
                     {
-                        mActivityViewModel.totalTax=mActivityViewModel.totalTax+it.taxList[taxes].amount.amount.toString().toDouble()
+                        val tax=it.taxList[taxes].amount.amount.toString()
+                        if(!tax.isNullOrEmpty())
+                        {
+                            mActivityViewModel.totalTax=mActivityViewModel.totalTax+tax.toDouble()
+                        }
                     }
                     if (it.quoteList.isNotEmpty()) {
-                        mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
-                        mActivityViewModel.qouteId = it.quoteList[0].quoteid
+                        val fee =it.quoteList[0].fee.amount.toString()
+                        val quoteID =it.quoteList[0].quoteid
+                        if(!fee.isNullOrEmpty()){
+                            mActivityViewModel.feeAmount = fee
+                        }
+                        if(!quoteID.isNullOrEmpty()){
+                            mActivityViewModel.qouteId = it.quoteList[0].quoteid
+                        }
                     }
                     (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferAmountFragment_to_fundTransferConfirmationFragment)
                 } else {
@@ -177,12 +187,23 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
                     mActivityViewModel.totalTax=0.0
                     for(taxes in it.taxList.indices)
                     {
-                        mActivityViewModel.totalTax=mActivityViewModel.totalTax+it.taxList[taxes].amount.amount.toString().toDouble()
+                        val tax=it.taxList[taxes].amount.amount.toString()
+                        if(!tax.isNullOrEmpty())
+                        {
+                            mActivityViewModel.totalTax=mActivityViewModel.totalTax+tax.toDouble()
+                        }
+
                     }
-                    Logger.debugLog("quoteChange","taxList ${mActivityViewModel.totalTax}")
+                   // Logger.debugLog("quoteChange","taxList ${mActivityViewModel.totalTax}")
                     if (it.quoteList.isNotEmpty()) {
-                        mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
+                        val fee =it.quoteList[0].fee.amount.toString()
+                        val quoteID =it.quoteList[0].quoteid
+                        if(!fee.isNullOrEmpty()){
+                        mActivityViewModel.feeAmount = fee
+                        }
+                        if(!quoteID.isNullOrEmpty()){
                         mActivityViewModel.qouteId = it.quoteList[0].quoteid
+                        }
                     }
                     (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferAmountFragment_to_fundTransferConfirmationFragment)
                 } else {
@@ -196,11 +217,21 @@ class FundsTransferAmountFragment : BaseFragment<FragmentFundsAmountSelectionBin
                     mActivityViewModel.totalTax=0.0
                     for(taxes in it.taxList.indices)
                     {
-                        mActivityViewModel.totalTax=mActivityViewModel.totalTax+it.taxList[taxes].amount.amount.toString().toDouble()
+                        val tax=it.taxList[taxes].amount.amount.toString()
+                        if(!tax.isNullOrEmpty())
+                        {
+                            mActivityViewModel.totalTax=mActivityViewModel.totalTax+tax.toDouble()
+                        }
                     }
                     if (it.quoteList.isNotEmpty()) {
-                        mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
-                        mActivityViewModel.qouteId = it.quoteList[0].quoteid
+                        val fee =it.quoteList[0].fee.amount.toString()
+                        val quoteID =it.quoteList[0].quoteid
+                        if(!fee.isNullOrEmpty()){
+                            mActivityViewModel.feeAmount = fee
+                        }
+                        if(!quoteID.isNullOrEmpty()){
+                            mActivityViewModel.qouteId = it.quoteList[0].quoteid
+                        }
                     }
                     (activity as SendMoneyActivity).navController.navigate(R.id.action_fundsTransferAmountFragment_to_fundTransferConfirmationFragment)
                 } else {

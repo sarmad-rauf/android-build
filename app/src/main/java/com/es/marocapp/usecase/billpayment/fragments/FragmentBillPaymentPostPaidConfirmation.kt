@@ -277,8 +277,12 @@ class FragmentBillPaymentPostPaidConfirmation :
             Constants.converValueToTwoDecimalPlace(mActivityViewModel.totalSelectedBillAmount.toDouble())
         mDataBinding.tvReceiptCodeVal.text =
             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + totalAmount
-        var fee=mActivityViewModel.feeAmount.toDouble()+mActivityViewModel.totalTax
-        fee= String.format("%.2f", fee).toDouble()
+        if(mActivityViewModel.feeAmount.isNullOrEmpty())
+        {
+            mActivityViewModel.feeAmount="0"
+        }
+        val feeD=mActivityViewModel.feeAmount.toDouble()+mActivityViewModel.totalTax
+        val fee= Constants.converValueToTwoDecimalPlace(feeD)
 
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
 
@@ -307,13 +311,16 @@ class FragmentBillPaymentPostPaidConfirmation :
                 mActivityViewModel.totalSelectedBillAmount.toDouble(),
                 totalFee.toDouble()
             )
-
+            if(amountToTransfer.isNullOrEmpty())
+            {
+                amountToTransfer="0"
+            }
             amountToTransfer = Constants.addAmountAndFee(
                 amountToTransfer.toDouble(),
                 mActivityViewModel.fatoratiFeeAmountCalculated.toDouble()
             )
         }
-        if(amountToTransfer.isEmpty())
+        if(amountToTransfer.isNullOrEmpty())
         {
             amountToTransfer="0"
         }

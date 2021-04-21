@@ -68,7 +68,7 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
 
         isQuickRechargeUseCase = intent.getBooleanExtra("isQuickRechargeCase",false)
         if(isQuickRechargeUseCase){
-            quickRechargeAmount = intent.getStringExtra("quickRechargeAmount")
+            quickRechargeAmount = intent.getStringExtra("quickRechargeAmount").toString()
         }
 
         navHostFragment =

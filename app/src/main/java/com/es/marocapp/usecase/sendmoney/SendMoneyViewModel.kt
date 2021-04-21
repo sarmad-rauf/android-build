@@ -60,7 +60,7 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
     var transferdAcountFri = "0"
     var amountToTransfer = ""
     var amountScannedFromQR = "0"
-    var feeAmount = ""
+    var feeAmount = "0"
     var qouteId = ""
     var transactionID = ""
     var qrType = ""
@@ -123,7 +123,6 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                         }
                     })
         } else {
-
             errorText.postValue(Constants.SHOW_INTERNET_ERROR)
         }
 

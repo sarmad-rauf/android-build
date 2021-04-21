@@ -36,7 +36,7 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
 
     var amountToTransfer = ""
     var transferdAmountTo = ""
-    var feeAmount = ""
+    var feeAmount = "0"
     var qouteId = ""
     var transactionID = ""
     var senderBalanceAfter ="0.00"
