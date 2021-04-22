@@ -12,9 +12,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/_20sdp"
         android:background="@android:color/transparent"
-        >
+        android:paddingBottom="@dimen/_20sdp">
 
         <com.es.marocapp.widgets.MarocRegularTextView
             android:id="@+id/upgradeProfile_dialog_title"
@@ -23,7 +22,6 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:textColor="@color/colorTextGreyMedium"
             android:textSize="@dimen/_18ssp"
-            android:text="daslkaslasm"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -73,57 +71,56 @@
            </RadioButton>
        </RadioGroup>
 
-
         <androidx.cardview.widget.CardView
             android:id="@+id/uploadFileCard"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/upgradeProfile_dialog_no_btn"
-            app:layout_constraintTop_toBottomOf="@+id/upGradeProfile_radioGroup"
-            app:cardCornerRadius="@dimen/_10sdp"
-            app:cardElevation="@dimen/_1sdp"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:layout_marginStart="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginTop="24dp"
             android:paddingStart="@dimen/_32sdp"
             android:paddingEnd="@dimen/_32sdp"
-            android:visibility="gone">
+            android:visibility="gone"
+            app:cardCornerRadius="@dimen/_10sdp"
+            app:cardElevation="@dimen/_1sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/upGradeProfile_radioGroup">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_70sdp">
+
                 <com.es.marocapp.widgets.MarocLightTextView
                     android:id="@+id/dummyRadioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="@dimen/_20sdp"
-                    android:textColorHighlight="@color/colorBtnEnable"
                     android:checked="true"
                     android:clickable="false"
                     android:text="Attach File"
                     android:textColor="@color/colorBlack"
+                    android:textColorHighlight="@color/colorBtnEnable"
+                    android:textSize="@dimen/_13ssp"
                     android:textStyle="bold"
-                    android:textSize="@dimen/_13ssp">
-                </com.es.marocapp.widgets.MarocLightTextView>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.es.marocapp.widgets.MarocButton
                     android:id="@+id/uploadFile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_16sdp"
                     android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:background="@drawable/button_enable"
+                    android:gravity="center_vertical"
                     android:paddingStart="@dimen/_32sdp"
                     android:paddingEnd="@dimen/_32sdp"
-                    android:gravity="center_vertical"
-                    android:background="@drawable/button_enable"
-                    android:textSize="@dimen/_14ssp"
+                    android:text="Upload"
                     android:textColor="@color/colorWhite"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:textSize="@dimen/_14ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:text="Upload"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -131,53 +128,56 @@
             android:id="@+id/selectedFileLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
             android:paddingTop="@dimen/_16sdp"
             android:paddingBottom="@dimen/_16sdp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/upgradeProfile_dialog_no_btn"
-            app:layout_constraintTop_toBottomOf="@+id/uploadFileCard"
-            android:visibility="gone">
+            app:layout_constraintTop_toBottomOf="@+id/uploadFileCard">
 
             <ImageView
                 android:id="@+id/fileSelected_icon"
                 android:layout_width="@dimen/_32sdp"
                 android:layout_height="@dimen/_32sdp"
                 android:layout_marginStart="@dimen/_16sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:srcCompat="@drawable/ic_pdf" />
 
             <com.es.marocapp.widgets.MarocRegularTextView
                 android:id="@+id/fileSelected_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_8sdp"
-                android:text="file.PDF"
                 android:layout_marginEnd="@dimen/_16sdp"
+                android:ellipsize="end"
                 android:textColor="@color/colorGreyDark"
                 android:textSize="@dimen/_14ssp"
-                android:ellipsize="end"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/removeSelectedFile"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/fileSelected_icon"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:id="@+id/removeSelectedFile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginEnd="@dimen/_16sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:srcCompat="@drawable/cross_blue_icons"
-                android:id="@+id/removeSelectedFile"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/cross_blue_icons" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.es.marocapp.widgets.MarocButton
             android:id="@+id/upgradeProfile_dialog_yes_btn"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_16sdp"
             android:layout_marginStart="@dimen/_16sdp"
@@ -186,8 +186,10 @@
             android:paddingEnd="@dimen/_32sdp"
             android:gravity="center"
             android:background="@drawable/button_enable"
-            android:textSize="@dimen/_14ssp"
+            android:onClick="@{listner::onNextClickListner}"
+            android:padding="@dimen/_8sdp"
             android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_16ssp"
             app:layout_constraintEnd_toEndOf="parent"
 
             app:layout_constraintStart_toEndOf="@id/upgradeProfile_dialog_no_btn"
@@ -197,20 +199,19 @@
             android:id="@+id/upgradeProfile_dialog_no_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_16sdp"
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:background="@drawable/button_enable"
             android:paddingStart="@dimen/_32sdp"
             android:paddingEnd="@dimen/_32sdp"
-            android:background="@drawable/button_enable"
-            android:textSize="@dimen/_14ssp"
             android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_14ssp"
+            android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@id/upgradeProfile_dialog_yes_btn"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/upGradeProfile_radioGroup"
-            android:visibility="gone"/>
+            app:layout_constraintTop_toBottomOf="@+id/upGradeProfile_radioGroup" />
 
-     
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

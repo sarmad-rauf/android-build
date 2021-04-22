@@ -177,5 +177,7 @@
     <string name="update">Update</string>
     <string name="language_arabic">Arabic</string>
     <string name="enter_city">Enter City</string>
+    <string name="upgrade_profile">ترقية الملف الشخصي</string>
+    <string name="select_document_type">الرجاء تحديد الصورة أولاً.</string>
 
 </resources>

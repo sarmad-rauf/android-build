@@ -17,6 +17,7 @@ import java.util.*
 abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
 {
     lateinit var mDataBinding:T
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

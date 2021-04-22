@@ -311,6 +311,14 @@ interface NetworkApi {
     @POST(EndPoints.upgradeProfile)
     fun upgradeProfile(@Body request : UpgradeUserProfileRequest) : Observable<UpgradeProfileResponse>
 
+    //Request for Upgrade profile File Upload PDF
+    @POST(EndPoints.upgradeProfileFileUploadPDF)
+    fun upgradeProfileFileUploadPDF(@Body request : UploadFileRequest) : Observable<UploadFileResponse>
+
+    //Request for Upgrade profile File Upload Image
+    @POST(EndPoints.upgradeProfileFileUploadImage)
+    fun upgradeProfileFileUploadImage(@Body request : UploadFileRequest) : Observable<UploadFileResponse>
+
     //getfaq
     @GET(EndPoints.getfaq)
     fun getFaqs() : Observable<GetFaqsResponse>

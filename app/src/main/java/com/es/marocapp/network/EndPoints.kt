@@ -221,6 +221,8 @@ object EndPoints {
 
     //Upgrde profile
     const val upgradeProfile = "setprofile"
+    const val upgradeProfileFileUploadPDF = "uploadfile/pdf"
+    const val upgradeProfileFileUploadImage = "uploadfile/jpg"
 
     //getfaq
     const val getfaq = "getfaq"

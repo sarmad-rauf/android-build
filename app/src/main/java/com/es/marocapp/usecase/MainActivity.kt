@@ -1,12 +1,15 @@
 package com.es.marocapp.usecase
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.get
 import androidx.lifecycle.Observer
@@ -28,9 +31,12 @@ import com.es.marocapp.usecase.favorites.FavoritesActivity
 import com.es.marocapp.usecase.home.HomeFragment
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.qrcode.GenerateQrActivity
+import com.es.marocapp.usecase.qrcode.ScanQRActivity
+import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.usecase.settings.SettingsActivity
 import com.es.marocapp.usecase.termsandcondiitons.TermsAndConditions
 import com.es.marocapp.usecase.updateprofle.UpdateProfileActivity
+import com.es.marocapp.usecase.upgradeprofile.UpgradeProfileActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
@@ -39,6 +45,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.layout_side_menu_navigation.view.*
+import java.io.File
+import java.net.URI
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListeners {
@@ -102,23 +110,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         mDataBinding.fab.setOnClickListener {
-            if(Constants.isTutorialShowing){
-               /* Constants.displayTutorial(this@MainActivity,mDataBinding.fab,LanguageData.getStringValue("TransactionHistoryTutorial").toString())*/
-            }else{
-                if(!isTransacitonFragmentShowing){
+            if (Constants.isTutorialShowing) {
+                /* Constants.displayTutorial(this@MainActivity,mDataBinding.fab,LanguageData.getStringValue("TransactionHistoryTutorial").toString())*/
+            } else {
+                if (!isTransacitonFragmentShowing) {
                     onStatementClickLisnter(false)
-                }else{
-                    navController.popBackStack(R.id.navigation_home,false)
+                } else {
+                    navController.popBackStack(R.id.navigation_home, false)
                     onStatementClickLisnter(false)
                 }
             }
         }
 
         mDataBinding.dashboardCashInViaCard.setOnClickListener {
-            if(Constants.isTutorialShowing){
+            if (Constants.isTutorialShowing) {
                 /*Constants.displayTutorial(this@MainActivity,mDataBinding.dashboardCashInViaCard,LanguageData.getStringValue("CashInViaCardTutorial").toString(),
                 R.drawable.ic_tutorial_home_cash_in_wallet)*/
-            }else{
+            } else {
                 startActivity(
                     Intent(
                         this@MainActivity,
@@ -128,16 +136,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             }
         }
         mDataBinding.callIconHomeScreen.setOnClickListener {
-            if(Constants.isTutorialShowing){
+            if (Constants.isTutorialShowing) {
                 /*Constants.displayTutorial(this@MainActivity,mDataBinding.callIconHomeScreen,LanguageData.getStringValue("CallTutorial").toString())*/
-            }else{
+            } else {
                 Tools.openDialerWithNumber(this)
             }
         }
 
         mDataBinding.navView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navigation_home-> {
+                R.id.navigation_home -> {
                     //----------for handling Backpress of activity----------
                     isGenerateQRFragmentShowing = false
                     isFaqsFragmentShowing = false
@@ -157,39 +165,39 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
                 }
 
 
-                R.id.navigation_transaction-> {
-                    navController.popBackStack(R.id.navigation_home,false)
+                R.id.navigation_transaction -> {
+                    navController.popBackStack(R.id.navigation_home, false)
                     navController.navigate(R.id.navigation_transaction)
                 }
-                R.id.FAQsFragment2-> {
-                    navController.popBackStack(R.id.navigation_home,false)
+                R.id.FAQsFragment2 -> {
+                    navController.popBackStack(R.id.navigation_home, false)
                     navController.navigate(R.id.FAQsFragment2)
                 }
 
-                R.id.navigation_approval ->{
+                R.id.navigation_approval -> {
                     showTransactionsDetailsIndirectly = false
                     homeFragment.setTransacitonScreenVisisble(
                         isTransactionDetailsVisible = false,
                         directCallForTransaction = false,
                         transactionFragmentNotVisible = false
                     )
-                    navController.popBackStack(R.id.navigation_home,false)
+                    navController.popBackStack(R.id.navigation_home, false)
                     mDataBinding.drawerLayout.openDrawer(GravityCompat.START)
                 }
             }
             false
         }
 
-        val toggle =object: ActionBarDrawerToggle(
+        val toggle = object : ActionBarDrawerToggle(
             this, mDataBinding.drawerLayout, mDataBinding.toolbarContainer, R.string.open,
-            R.string.close){
+            R.string.close
+        ) {
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
-                if(Constants.shouldUpdate)
-                {
-                    Logger.debugLog("updatePrfile","on DrawerOpened")
-                    Constants.shouldUpdate=false
-                     reflectUpdateProfileChanges()
+                if (Constants.shouldUpdate) {
+                    Logger.debugLog("updatePrfile", "on DrawerOpened")
+                    Constants.shouldUpdate = false
+                    reflectUpdateProfileChanges()
                 }
             }
         }
@@ -213,69 +221,69 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         Constants.tutorialDashboardCashInViaCard = mDataBinding.dashboardCashInViaCard
     }
 
-    fun startTutorialsTrail(){
-        if(Constants.isTutorialShowing){
-            Constants.displayTutorial(this@MainActivity,mDataBinding.fab,LanguageData.getStringValue("TransactionHistoryTutorial").toString())
+    fun startTutorialsTrail() {
+        if (Constants.isTutorialShowing) {
+            Constants.displayTutorial(
+                this@MainActivity,
+                mDataBinding.fab,
+                LanguageData.getStringValue("TransactionHistoryTutorial").toString()
+            )
         }
     }
-     fun setViewsVisibility() {
 
-        if(Constants.IS_CONSUMER_USER || Constants.IS_MERCHANT_USER){
+    fun setViewsVisibility() {
+
+        if (Constants.IS_CONSUMER_USER || Constants.IS_MERCHANT_USER) {
 //            if(Constants.IS_DEFAULT_ACCOUNT_SET)
 //            {
 //                mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility=View.GONE
 //            }else{
-                mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility=View.VISIBLE
-           // }
+            mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility = View.VISIBLE
+            // }
 
-        }
-        else {
+        } else {
 
 
-                var currentProfilee =
-                    Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
-                if (currentProfilee.equals("") || currentProfilee.equals(null)) {
-                    currentProfilee = Constants.UserProfileName
-                }
-                var isProfileNameMatchedwithMerchantAgent: Boolean = false
-                for (i in Constants.MERCHENTAGENTPROFILEARRAY.indices) {
+            var currentProfilee =
+                Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
+            if (currentProfilee.equals("") || currentProfilee.equals(null)) {
+                currentProfilee = Constants.UserProfileName
+            }
+            var isProfileNameMatchedwithMerchantAgent: Boolean = false
+            for (i in Constants.MERCHENTAGENTPROFILEARRAY.indices) {
 
-                    isProfileNameMatchedwithMerchantAgent =
-                        currentProfilee.equals(Constants.MERCHENTAGENTPROFILEARRAY[i])
-                    if (isProfileNameMatchedwithMerchantAgent) {
-                        break
-                    }
-                }
-
+                isProfileNameMatchedwithMerchantAgent =
+                    currentProfilee.equals(Constants.MERCHENTAGENTPROFILEARRAY[i])
                 if (isProfileNameMatchedwithMerchantAgent) {
-                    mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility = View.VISIBLE
-                } else {
-                    mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility = View.GONE
-
+                    break
                 }
+            }
+
+            if (isProfileNameMatchedwithMerchantAgent) {
+                mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility = View.VISIBLE
+            } else {
+                mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility = View.GONE
+
+            }
 
         }
 
-        var currentProfile=Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
-        if(currentProfile.equals("")||currentProfile.equals(null))
-        {
-            currentProfile=Constants.UserProfileName
+        var currentProfile =
+            Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
+        if (currentProfile.equals("") || currentProfile.equals(null)) {
+            currentProfile = Constants.UserProfileName
         }
-        if(Constants.IS_AGENT_USER||currentProfile.contains("3")||currentProfile.contains("2"))
-        {
-        mDataBinding.navigationItem.rootView.upgradeProfileGroup.visibility=View.GONE
-        }
-        else{
-            mDataBinding.navigationItem.rootView.upgradeProfileGroup.visibility=View.VISIBLE
+        if (Constants.IS_AGENT_USER || currentProfile.contains("3") || currentProfile.contains("2")) {
+            mDataBinding.navigationItem.rootView.upgradeProfileGroup.visibility = View.GONE
+        } else {
+            mDataBinding.navigationItem.rootView.upgradeProfileGroup.visibility = View.VISIBLE
         }
 
-         if(Constants.IS_CONSUMER_USER)
-         {
-             mDataBinding.navigationItem.rootView.updateProfile.visibility=View.VISIBLE
-         }
-         else{
-             mDataBinding.navigationItem.rootView.updateProfile.visibility=View.GONE
-         }
+        if (Constants.IS_CONSUMER_USER) {
+            mDataBinding.navigationItem.rootView.updateProfile.visibility = View.VISIBLE
+        } else {
+            mDataBinding.navigationItem.rootView.updateProfile.visibility = View.GONE
+        }
     }
 
     private fun setSideMenuListner() {
@@ -283,7 +291,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             mDataBinding.drawerLayout.closeDrawers()
         }
 
-        mDataBinding.navigationItem.rootView.statementsGroup.setOnClickListener{
+        mDataBinding.navigationItem.rootView.statementsGroup.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
             onStatementClickLisnter(true)
         }
@@ -303,14 +311,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             )
         }
         mDataBinding.navigationItem.rootView.upgradeProfileGroup.setOnClickListener {
-            DialogUtils.showUpgradeProfileDialog(this,object : DialogUtils.OnChangeProfileClickListner{
-                override fun onUpgradeProfileDialogYesClickListner(
-                    reason: String,
-                    currentProfile: String
-                ) {
-                  mActivityViewModel.requestForUpgradeUserProfile(this@MainActivity,reason,currentProfile)
-                }
-            })
+            startNewActivity(this, UpgradeProfileActivity::class.java)
         }
 
         mDataBinding.navigationItem.rootView.changePasswordGroup.setOnClickListener {
@@ -325,14 +326,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         mDataBinding.navigationItem.rootView.mtCashDefaulGroup.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
-            if(Constants.IS_DEFAULT_ACCOUNT_SET)
-            {
-                DialogUtils.showUpdateAPPDailog(this@MainActivity,LanguageData.getStringValue("defaultAccountEnabledMsg"),object : DialogUtils.OnCustomDialogListner{
-                    override fun onCustomDialogOkClickListner() {
-                    }
-                },R.drawable.update_blue)
-            }
-            else {
+            if (Constants.IS_DEFAULT_ACCOUNT_SET) {
+                DialogUtils.showUpdateAPPDailog(
+                    this@MainActivity,
+                    LanguageData.getStringValue("defaultAccountEnabledMsg"),
+                    object : DialogUtils.OnCustomDialogListner {
+                        override fun onCustomDialogOkClickListner() {
+                        }
+                    },
+                    R.drawable.update_blue
+                )
+            } else {
                 startNewActivity(this@MainActivity, SettingsActivity::class.java)
             }
         }
@@ -368,30 +372,28 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         mDataBinding.navigationItem.rootView.changeLanguageGroup.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
 
-            DialogUtils.showChangeLanguageDialogue(this,object : DialogUtils.OnChangeLanguageClickListner{
+            DialogUtils.showChangeLanguageDialogue(this,
+                object : DialogUtils.OnChangeLanguageClickListner {
 
-                override fun onChangeLanguageDialogYesClickListner(selectedLanguage: String) {
-                    //Toast.makeText(this@SettingsActivity,selectedLanguage,Toast.LENGTH_LONG).show()
+                    override fun onChangeLanguageDialogYesClickListner(selectedLanguage: String) {
+                        //Toast.makeText(this@SettingsActivity,selectedLanguage,Toast.LENGTH_LONG).show()
 //                    mDataBinding.root.tvLanguage.text=selectedLanguage
-                    LocaleManager.languageToBeChangedAfterAPI=selectedLanguage
+                        LocaleManager.languageToBeChangedAfterAPI = selectedLanguage
 
-                    var langParam=""
-                    if(selectedLanguage.equals(LanguageData.getStringValue("DropDown_English"))){
-                        langParam= LocaleManager.KEY_LANGUAGE_EN
+                        var langParam = ""
+                        if (selectedLanguage.equals(LanguageData.getStringValue("DropDown_English"))) {
+                            langParam = LocaleManager.KEY_LANGUAGE_EN
+                        } else if (selectedLanguage.equals(LanguageData.getStringValue("DropDown_French"))) {
+                            langParam = LocaleManager.KEY_LANGUAGE_FR
+                        } else if (selectedLanguage.equals(LanguageData.getStringValue("DropDown_Arabic"))) {
+                            langParam = LocaleManager.KEY_LANGUAGE_AR
+                        }
+
+                        mActivityViewModel.requestForChangeLanguage(this@MainActivity, langParam)
+
                     }
-                    else  if(selectedLanguage.equals(LanguageData.getStringValue("DropDown_French"))){
-                        langParam= LocaleManager.KEY_LANGUAGE_FR
-                    }
 
-                    else  if(selectedLanguage.equals(LanguageData.getStringValue("DropDown_Arabic"))){
-                        langParam= LocaleManager.KEY_LANGUAGE_AR
-                    }
-
-                    mActivityViewModel.requestForChangeLanguage(this@MainActivity,langParam)
-
-                }
-
-            })
+                })
         }
 
         mDataBinding.navigationItem.rootView.logOutGroup.setOnClickListener {
@@ -415,8 +417,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         }
     }
 
-    fun onStatementClickLisnter(showTransactionFragment : Boolean){
-        if(showTransactionFragment){
+    fun onStatementClickLisnter(showTransactionFragment: Boolean) {
+        if (showTransactionFragment) {
             isTransactionDetailsShowing = false
             if (isTransactionFragmentNotVisible) {
                 if (isDirectCallForTransaction) {
@@ -435,14 +437,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             isHomeFragmentShowing = true
             isTransacitonFragmentShowing = false
 
-        }else{
+        } else {
             isTransactionDetailsShowing = true
-            if(isDirectCallForTransaction){
-                homeFragment.setTransacitonScreenVisisble(true,isDirectCallForTransaction,isTransactionFragmentNotVisible)
-            }else{
+            if (isDirectCallForTransaction) {
+                homeFragment.setTransacitonScreenVisisble(
+                    true,
+                    isDirectCallForTransaction,
+                    isTransactionFragmentNotVisible
+                )
+            } else {
 
-                navController.popBackStack(R.id.navigation_home,false)
-                homeFragment.setTransacitonScreenVisisble(true,isDirectCallForTransaction,isTransactionFragmentNotVisible)
+                navController.popBackStack(R.id.navigation_home, false)
+                homeFragment.setTransacitonScreenVisisble(
+                    true,
+                    isDirectCallForTransaction,
+                    isTransactionFragmentNotVisible
+                )
             }
 
             //----------for handling Backpress of activity----------
@@ -456,60 +466,78 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     }
 
     private fun setSideMenuStrings() {
-        mDataBinding.navigationItem.rootView.nav_title_name.text = LanguageData.getStringValue("MySpace")
-        mDataBinding.navigationItem.rootView.personal_information_title.text = LanguageData.getStringValue("PersonalInformation")
+        mDataBinding.navigationItem.rootView.nav_title_name.text =
+            LanguageData.getStringValue("MySpace")
+        mDataBinding.navigationItem.rootView.personal_information_title.text =
+            LanguageData.getStringValue("PersonalInformation")
         //mDataBinding.navigationItem.rootView.nav_logged_in_user_name.text = Constants.balanceInfoAndResponse?.firstname+" "+Constants.balanceInfoAndResponse?.surname
-        mDataBinding.navigationItem.rootView.nav_logged_in_user_name.text = Constants.CURRENT_USER_FIRST_NAME+" "+Constants.CURRENT_USER_LAST_NAME
-        mDataBinding.navigationItem.rootView.nav_logged_in_user_detials.text = Constants.balanceInfoAndResponse?.profilename
+        mDataBinding.navigationItem.rootView.nav_logged_in_user_name.text =
+            Constants.CURRENT_USER_FIRST_NAME + " " + Constants.CURRENT_USER_LAST_NAME
+        mDataBinding.navigationItem.rootView.nav_logged_in_user_detials.text =
+            Constants.balanceInfoAndResponse?.profilename
         mDataBinding.navigationItem.rootView.nav_logged_in_user_email.text = getUserEmailAddress()
-        mDataBinding.navigationItem.rootView.complete_mt_title.text = LanguageData.getStringValue("MTCashAccount")
-        mDataBinding.navigationItem.rootView.cashInViaCardTitle.text = LanguageData.getStringValue("CashInViaCard")
-        mDataBinding.navigationItem.rootView.balanceAndAccountTitle.text = LanguageData.getStringValue("BalanceAndAccounts")
-        mDataBinding.navigationItem.rootView.statementsTitle.text = LanguageData.getStringValue("Statements")
-        mDataBinding.navigationItem.rootView.nav_third_container_title.text = LanguageData.getStringValue("ManageAccount")
-        mDataBinding.navigationItem.rootView.changePasswordTitle.text = LanguageData.getStringValue("ChangePassword")
-        mDataBinding.navigationItem.rootView.beneficaryManagementTitle.text = LanguageData.getStringValue("BeneficiaryManagement")
-        mDataBinding.navigationItem.rootView.levelUpTitle.text = LanguageData.getStringValue("GoToLevel2")
-        mDataBinding.navigationItem.rootView.mtCashDefaultTitle.text = LanguageData.getStringValue("MTCashWalletByDefault")
-        mDataBinding.navigationItem.rootView.oppositionMTCashTitle.text = LanguageData.getStringValue("OppositionOnMyMWallet")
-        mDataBinding.navigationItem.rootView.changeLanguageTitle.text = LanguageData.getStringValue("ChangeLanguage")
-        mDataBinding.navigationItem.rootView.upgradeProfileTitle.text = LanguageData.getStringValue("UpgradeProfile")
-        mDataBinding.navigationItem.rootView.logOutTitle.text = LanguageData.getStringValue("LogOut")
+        mDataBinding.navigationItem.rootView.complete_mt_title.text =
+            LanguageData.getStringValue("MTCashAccount")
+        mDataBinding.navigationItem.rootView.cashInViaCardTitle.text =
+            LanguageData.getStringValue("CashInViaCard")
+        mDataBinding.navigationItem.rootView.balanceAndAccountTitle.text =
+            LanguageData.getStringValue("BalanceAndAccounts")
+        mDataBinding.navigationItem.rootView.statementsTitle.text =
+            LanguageData.getStringValue("Statements")
+        mDataBinding.navigationItem.rootView.nav_third_container_title.text =
+            LanguageData.getStringValue("ManageAccount")
+        mDataBinding.navigationItem.rootView.changePasswordTitle.text =
+            LanguageData.getStringValue("ChangePassword")
+        mDataBinding.navigationItem.rootView.beneficaryManagementTitle.text =
+            LanguageData.getStringValue("BeneficiaryManagement")
+        mDataBinding.navigationItem.rootView.levelUpTitle.text =
+            LanguageData.getStringValue("GoToLevel2")
+        mDataBinding.navigationItem.rootView.mtCashDefaultTitle.text =
+            LanguageData.getStringValue("MTCashWalletByDefault")
+        mDataBinding.navigationItem.rootView.oppositionMTCashTitle.text =
+            LanguageData.getStringValue("OppositionOnMyMWallet")
+        mDataBinding.navigationItem.rootView.changeLanguageTitle.text =
+            LanguageData.getStringValue("ChangeLanguage")
+        mDataBinding.navigationItem.rootView.upgradeProfileTitle.text =
+            LanguageData.getStringValue("UpgradeProfile")
+        mDataBinding.navigationItem.rootView.logOutTitle.text =
+            LanguageData.getStringValue("LogOut")
     }
 
-     fun reflectUpdateProfileChanges(){
-         mDataBinding.navigationItem.rootView.nav_logged_in_user_name.text = Constants.CURRENT_USER_FIRST_NAME+" "+Constants.CURRENT_USER_LAST_NAME
-         mDataBinding.navigationItem.rootView.nav_logged_in_user_email.text = getUserEmailAddress()
-     }
+    fun reflectUpdateProfileChanges() {
+        mDataBinding.navigationItem.rootView.nav_logged_in_user_name.text =
+            Constants.CURRENT_USER_FIRST_NAME + " " + Constants.CURRENT_USER_LAST_NAME
+        mDataBinding.navigationItem.rootView.nav_logged_in_user_email.text = getUserEmailAddress()
+    }
 
-    fun getUserEmailAddress() : String{
+    fun getUserEmailAddress(): String {
         var email = ""
-    //Constants.CURRENT_USER_EMAIL
-        if(!Constants.CURRENT_USER_EMAIL.isNullOrEmpty()){
+        //Constants.CURRENT_USER_EMAIL
+        if (!Constants.CURRENT_USER_EMAIL.isNullOrEmpty()) {
             email = Constants?.CURRENT_USER_EMAIL
             email = email.removePrefix("ID:")
             email = email.substringAfter(":")
             email = email.substringBefore("/")
         }
-        return  email
+        return email
     }
 
     private fun setStrings() {
         mDataBinding.toolbarName.text =
             "${LanguageData.getStringValue("Hi")} ${Constants.balanceInfoAndResponse?.firstname}"
 
-       /* mDataBinding.navigationHeader.drawer_header_name.text =
-            "${LanguageData.getStringValue("Hi")} ${Constants.balanceInfoAndResponse.firstname} ${Constants.balanceInfoAndResponse.surname}"
-        mDataBinding.navigationHeader.drawer_header_number.text = Constants.CURRENT_USER_MSISDN
+        /* mDataBinding.navigationHeader.drawer_header_name.text =
+             "${LanguageData.getStringValue("Hi")} ${Constants.balanceInfoAndResponse.firstname} ${Constants.balanceInfoAndResponse.surname}"
+         mDataBinding.navigationHeader.drawer_header_number.text = Constants.CURRENT_USER_MSISDN
 
-        mDataBinding.textDrawerNotifications.text
+         mDataBinding.textDrawerNotifications.text
 
-        mDataBinding.textDrawerNotifications.text = LanguageData.getStringValue("Notifications")
-        mDataBinding.textFAQs.text = LanguageData.getStringValue("Faqs")
-        mDataBinding.textTermsandConditions.text = LanguageData.getStringValue("TermsAndConditions")
-        mDataBinding.textClickToCall.text = LanguageData.getStringValue("ClickToCall")
-        mDataBinding.textDrawerSettings.text = LanguageData.getStringValue("Settings")
-        mDataBinding.textDrawerLogOut.text = LanguageData.getStringValue("LogOut")*/
+         mDataBinding.textDrawerNotifications.text = LanguageData.getStringValue("Notifications")
+         mDataBinding.textFAQs.text = LanguageData.getStringValue("Faqs")
+         mDataBinding.textTermsandConditions.text = LanguageData.getStringValue("TermsAndConditions")
+         mDataBinding.textClickToCall.text = LanguageData.getStringValue("ClickToCall")
+         mDataBinding.textDrawerSettings.text = LanguageData.getStringValue("Settings")
+         mDataBinding.textDrawerLogOut.text = LanguageData.getStringValue("LogOut")*/
 
         mDataBinding.toolbarWelcomeBack.text = LanguageData.getStringValue("WelcomeBack")
 
@@ -606,7 +634,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         if (Constants.loginWithCertResponse.allowedMenu.CashInViaCard != null) {
             mDataBinding.dashboardCashInViaCard.visibility = View.VISIBLE
             mDataBinding.navigationItem.rootView.cashInViaCardGroup.visibility = View.VISIBLE
-        }else{
+        } else {
             mDataBinding.dashboardCashInViaCard.visibility = View.GONE
             mDataBinding.navigationItem.rootView.cashInViaCardGroup.visibility = View.GONE
         }
@@ -616,38 +644,63 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         mActivityViewModel.updateLanguageResponseListener.observe(this,
             Observer {
-                if(it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                    if(LocaleManager.languageToBeChangedAfterAPI.equals(LanguageData.getStringValue("DropDown_English"))){
-                        LocaleManager.setLanguageAndUpdate(this@MainActivity,
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    if (LocaleManager.languageToBeChangedAfterAPI.equals(
+                            LanguageData.getStringValue(
+                                "DropDown_English"
+                            )
+                        )
+                    ) {
+                        LocaleManager.setLanguageAndUpdate(
+                            this@MainActivity,
                             LocaleManager.KEY_LANGUAGE_EN,
-                            MainActivity::class.java)
-                    }
-                    else if(LocaleManager.languageToBeChangedAfterAPI.equals(LanguageData.getStringValue("DropDown_French"))) {
-                        LocaleManager.setLanguageAndUpdate(this@MainActivity,
+                            MainActivity::class.java
+                        )
+                    } else if (LocaleManager.languageToBeChangedAfterAPI.equals(
+                            LanguageData.getStringValue(
+                                "DropDown_French"
+                            )
+                        )
+                    ) {
+                        LocaleManager.setLanguageAndUpdate(
+                            this@MainActivity,
                             LocaleManager.KEY_LANGUAGE_FR,
-                            MainActivity::class.java)
-                    }
-                    else if(LocaleManager.languageToBeChangedAfterAPI.equals(LanguageData.getStringValue("DropDown_Arabic"))) {
-                        Logger.debugLog("ABRAR", "setting arabic value ${LanguageData.getStringValue("DropDown_Arabic")}")
-                        Logger.debugLog("ABRAR", "old arabic value ${LocaleManager.KEY_LANGUAGE_AR}")
-                        LocaleManager.setLanguageAndUpdate(this@MainActivity,
+                            MainActivity::class.java
+                        )
+                    } else if (LocaleManager.languageToBeChangedAfterAPI.equals(
+                            LanguageData.getStringValue(
+                                "DropDown_Arabic"
+                            )
+                        )
+                    ) {
+                        Logger.debugLog(
+                            "ABRAR",
+                            "setting arabic value ${LanguageData.getStringValue("DropDown_Arabic")}"
+                        )
+                        Logger.debugLog(
+                            "ABRAR",
+                            "old arabic value ${LocaleManager.KEY_LANGUAGE_AR}"
+                        )
+                        LocaleManager.setLanguageAndUpdate(
+                            this@MainActivity,
                             LocaleManager.KEY_LANGUAGE_AR,
-                            MainActivity::class.java)
+                            MainActivity::class.java
+                        )
                     }
                     mActivityViewModel.requestForBalanceInfoAndLimtsAPI(this@MainActivity)
                     // DialogUtils.successFailureDialogue(this@SettingsActivity,it.description,0)
-                }else{
-                    DialogUtils.successFailureDialogue(this@MainActivity,it.description,1)
+                } else {
+                    DialogUtils.successFailureDialogue(this@MainActivity, it.description, 1)
                 }
             }
         )
 
         mActivityViewModel.upgradeProfileResponseListener.observe(this,
             Observer {
-                if(it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                    DialogUtils.successFailureDialogue(this@MainActivity,it.description,0)
-                }else{
-                    DialogUtils.successFailureDialogue(this@MainActivity,it.description,1)
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    DialogUtils.successFailureDialogue(this@MainActivity, it.description, 0)
+                } else {
+                    DialogUtils.successFailureDialogue(this@MainActivity, it.description, 1)
                 }
             }
         )
@@ -676,7 +729,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
                         Constants.balanceInfoAndResponse = Constants.balanceInfoAndResponse?.copy(it)
                     }*/
                 } else {
-                    DialogUtils.showErrorDialoge(this@MainActivity,it.description)
+                    DialogUtils.showErrorDialoge(this@MainActivity, it.description)
                 }
             })
     }
@@ -702,9 +755,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         isHomeFragmentShowing
         isTransacitonFragmentShowing*/
         showTransactionsDetailsIndirectly = false
-        if(mDataBinding.drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (mDataBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDataBinding.drawerLayout.closeDrawers()
-        }else if(isTranactionDetailsFragmentShowing){
+        } else if (isTranactionDetailsFragmentShowing) {
             showTransactionsDetailsIndirectly = false
             homeFragment.setTransacitonScreenVisisble(
                 isTransactionDetailsVisible = false,
@@ -718,9 +771,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             isHomeFragmentShowing = true
             isTransacitonFragmentShowing = false
 
-        }else if(isHomeFragmentShowing){
+        } else if (isHomeFragmentShowing) {
             this@MainActivity.finish()
-        }else if(isFaqsFragmentShowing || isGenerateQRFragmentShowing || isHomeFragmentShowing || isTransacitonFragmentShowing){
+        } else if (isFaqsFragmentShowing || isGenerateQRFragmentShowing || isHomeFragmentShowing || isTransacitonFragmentShowing) {
             super.onBackPressed()
         }
     }

@@ -6,6 +6,8 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.Uri
+import android.provider.OpenableColumns
+import android.util.Base64
 import android.util.Log
 import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.utils.PrefUtils.PreKeywords.PREF_KEY_IS_FIRSTTIME
@@ -13,7 +15,9 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
 import com.google.zxing.qrcode.QRCodeWriter
+import java.io.File
 import java.text.DecimalFormat
+
 
 object Tools {
 
@@ -82,6 +86,28 @@ object Tools {
         }
     }
 
+    fun getFileName(context: Context, uri: Uri): String? {
+        var result: String? = null
+        if (uri.scheme == "content") {
+            val cursor = context.getContentResolver().query(uri, null, null, null, null)
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+                }
+            } finally {
+                cursor?.close()
+            }
+        }
+        if (result == null) {
+            result = uri.path
+            val cut = result!!.lastIndexOf('/')
+            if (cut != -1) {
+                result = result.substring(cut + 1)
+            }
+        }
+        return result
+    }
+
     fun generateEMVcoString(number: String, enteredAmount: String): String {
         var amount = enteredAmount
         var amountLength = ""
@@ -144,7 +170,8 @@ object Tools {
         var num = ""
         try {
             if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
-                num = text.split(Constants.EMVco.Paid_Entity_Reference_ID + Constants.EMVco.Paid_Entity_Reference_SIZE)[1]
+                num =
+                    text.split(Constants.EMVco.Paid_Entity_Reference_ID + Constants.EMVco.Paid_Entity_Reference_SIZE)[1]
                 /*if (text.contains(Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE_12)) {
                     num =
                         num.split(Constants.EMVco.Masked_Paid_Entity_Reference_ID + Constants.EMVco.Masked_Paid_Entity_Reference_SIZE_12)[0]
@@ -201,7 +228,11 @@ object Tools {
                     )
 
                 if (pointOfInitiation == "11") {
-                    val amountLength = text.split(Constants.EMVco.Currency_Transaction_ID + Constants.EMVco.Currency_Transaction_SIZE + Constants.EMVco.Currency_Transaction_VALUE)[1].substring(2, 4)
+                    val amountLength =
+                        text.split(Constants.EMVco.Currency_Transaction_ID + Constants.EMVco.Currency_Transaction_SIZE + Constants.EMVco.Currency_Transaction_VALUE)[1].substring(
+                            2,
+                            4
+                        )
                     return if (text.contains(Constants.EMVco.Amount_Transaction_ID + amountLength)) {
                         "estatic"
                     } else {
@@ -414,8 +445,11 @@ object Tools {
 //        return merchantName.isNotEmpty()
 
         try {
-            Logger.debugLog("Abro"," checking value ${Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE}")
-            Logger.debugLog("Abro","orignal value ${text}")
+            Logger.debugLog(
+                "Abro",
+                " checking value ${Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE}"
+            )
+            Logger.debugLog("Abro", "orignal value ${text}")
             if (text.contains(Constants.EMVco.Payload_Format_Indicator_ID + Constants.EMVco.Payload_Format_Indicator_SIZE + Constants.EMVco.Payload_Format_Indicator_VALUE)) {
                 return text.contains("01011")
             }
@@ -455,5 +489,9 @@ object Tools {
         } else {
             return false
         }
+    }
+
+    fun fileToBase64String(file: File): String? {
+        return "data:image/jpeg;base64," + Base64.encodeToString(file.readBytes(), Base64.DEFAULT)
     }
 }

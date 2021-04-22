@@ -422,7 +422,10 @@ object DialogUtils {
         btnYes.text = LanguageData.getStringValue("BtnTitle_Yes")
         otpDialogFieldTitle.text = LanguageData.getStringValue("DearCustomer")
         otpDialogFieldDescriotion.text =
-            LanguageData.getStringValue("PleaseEnterOtpToProceedFurther")?.replace(Constants.OTP_LENGTH_PLACEHOLDER_TO_BE_REPLACED,Constants.APP_OTP_LENGTH.toString())
+            LanguageData.getStringValue("PleaseEnterOtpToProceedFurther")?.replace(
+                Constants.OTP_LENGTH_PLACEHOLDER_TO_BE_REPLACED,
+                Constants.APP_OTP_LENGTH.toString()
+            )
 
         var otpField = addDialog.findViewById<EditText>(R.id.otp_dialog_input_enter_otp)
         var otpFieldInput =
@@ -529,16 +532,19 @@ object DialogUtils {
         btnNO.text = LanguageData.getStringValue("BtnTitle_No")
         btnYes.text = LanguageData.getStringValue("BtnTitle_Yes")
         otpDialogFieldTitle.text = LanguageData.getStringValue("DearCustomer")
-        val otpLengthToShowInDescription=Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH-1
+        val otpLengthToShowInDescription = Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH - 1
         otpDialogFieldDescriotion.text =
-            LanguageData.getStringValue("PleaseEnterOtpToProceedFurther")?.replace(Constants.OTP_LENGTH_PLACEHOLDER_TO_BE_REPLACED,otpLengthToShowInDescription.toString())
+            LanguageData.getStringValue("PleaseEnterOtpToProceedFurther")?.replace(
+                Constants.OTP_LENGTH_PLACEHOLDER_TO_BE_REPLACED,
+                otpLengthToShowInDescription.toString()
+            )
 
         var otpField = addDialog.findViewById<PinView>(R.id.otp_dialog_input_enter_otp)
 
         otpField.itemCount = Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH!!
 
         var hint = ""
-        for(i in 0 until Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH!!){
+        for (i in 0 until Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH!!) {
             hint = "$hint-"
         }
 
@@ -550,7 +556,7 @@ object DialogUtils {
                 var otpLenght = otp.length
                 isOTPRegexMatches =
                     (otpLenght > 0 && Pattern.matches(Constants.APP_DEFAULT_ACCOUNT_OTP_REGEX, otp))
-                Logger.debugLog("PinViewValidations","Regex Boolean $isOTPRegexMatches")
+                Logger.debugLog("PinViewValidations", "Regex Boolean $isOTPRegexMatches")
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -559,8 +565,8 @@ object DialogUtils {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 var otp = otpField.text.toString().toString()
                 var otpLenght = otp.length
-                if(otpLenght == 3){
-                    otpField.setText(otp+"-")
+                if (otpLenght == 3) {
+                    otpField.setText(otp + "-")
                 }
             }
 
@@ -573,7 +579,7 @@ object DialogUtils {
                 /*otpFieldInput.error = LanguageData.getStringValue("PleaseEnterValidOTP")
                 otpFieldInput.isErrorEnabled = true*/
                 otpField.error = LanguageData.getStringValue("PleaseEnterValidOTP")
-                Logger.debugLog("PinViewValidations","OTP Empty")
+                Logger.debugLog("PinViewValidations", "OTP Empty")
             } else {
                 /*otpFieldInput.error = ""
                 otpFieldInput.isErrorEnabled = false
@@ -587,15 +593,15 @@ object DialogUtils {
                     otpFieldInput.error = LanguageData.getStringValue("PleaseEnterValidOTP")
                     otpFieldInput.isErrorEnabled = true
                 }*/
-                if(isOTPRegexMatches){
+                if (isOTPRegexMatches) {
                     otpField.error = ""
                     listner.onOTPDialogYesClickListner(otp)
                     addDialog.dismiss()
-                    Logger.debugLog("PinViewValidations","Regex Matches")
-                    Logger.debugLog("PinViewValidations","Regex $otp")
-                }else{
+                    Logger.debugLog("PinViewValidations", "Regex Matches")
+                    Logger.debugLog("PinViewValidations", "Regex $otp")
+                } else {
                     otpField.error = LanguageData.getStringValue("PleaseEnterValidOTP")
-                    Logger.debugLog("PinViewValidations","Regex Not Matches")
+                    Logger.debugLog("PinViewValidations", "Regex Not Matches")
                 }
             }
         }
@@ -657,7 +663,7 @@ object DialogUtils {
     fun successFailureDialogue(
         mContext: Context?,
         description: String?, dialogueType: Int,
-        listner:OnYesClickListner
+        listner: OnYesClickListner
     ) {
         val addDialog = Dialog(mContext!!)
         addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -771,20 +777,21 @@ object DialogUtils {
     interface OnChangeLanguageClickListner {
         fun onChangeLanguageDialogYesClickListner(selectedLanguage: String)
     }
+
     fun showUpgradeProfileDialog(
         mContext: Context?,
-        listner: OnChangeProfileClickListner
+        listener: OnUpgradeProfileClickListener
     ) {
         val addDialog = Dialog(mContext!!)
         addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         addDialog.setContentView(R.layout.layout_upgrage_profile_dialog)
-        addDialog.setCancelable(true)
-        var currentProfile=Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
-        if(currentProfile.equals("")||currentProfile.equals(null))
-        {
-            currentProfile=Constants.UserProfileName
+        addDialog.setCancelable(false)
+        var currentProfile =
+            Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
+        if (currentProfile.equals("") || currentProfile.equals(null)) {
+            currentProfile = Constants.UserProfileName
         }
-        Logger.debugLog("upgradeProfile","current Profile ${currentProfile}")
+        Logger.debugLog("upgradeProfile", "current Profile ${currentProfile}")
         val dialogWindow = addDialog.window
         val layoutParams = dialogWindow!!.attributes
         layoutParams.x = Gravity.CENTER_HORIZONTAL
@@ -794,28 +801,40 @@ object DialogUtils {
         dialogWindow.attributes = layoutParams
 
         addDialog.show()
-        var tvMsg = addDialog.findViewById<TextView>(R.id.upgradeProfile_dialog_description)
-        var tvDialogTitle = addDialog.findViewById<TextView>(R.id.upgradeProfile_dialog_title)
-        var btnYes = addDialog.findViewById<Button>(R.id.upgradeProfile_dialog_yes_btn)
-        var btnNo= addDialog.findViewById<Button>(R.id.upgradeProfile_dialog_no_btn)
-        var uploadImage = addDialog.findViewById<RadioButton>(R.id.uploadImage_radioButton)
-        var dummyRadioButton = addDialog.findViewById<TextView>(R.id.dummyRadioButton)
-        var uploadPDF = addDialog.findViewById<RadioButton>(R.id.uploadPDF_radioButton)
-        var uploadFileBTN = addDialog.findViewById<Button>(R.id.uploadFile)
-        var radioGrp = addDialog.findViewById<RadioGroup>(R.id.upGradeProfile_radioGroup)
+        val tvMsg = addDialog.findViewById<TextView>(R.id.upgradeProfile_dialog_description)
+        val tvDialogTitle = addDialog.findViewById<TextView>(R.id.upgradeProfile_dialog_title)
+        val btnYes = addDialog.findViewById<Button>(R.id.upgradeProfile_dialog_yes_btn)
+        val btnNo = addDialog.findViewById<Button>(R.id.upgradeProfile_dialog_no_btn)
+        val uploadImage = addDialog.findViewById<RadioButton>(R.id.uploadImage_radioButton)
+        val dummyRadioButton = addDialog.findViewById<TextView>(R.id.dummyRadioButton)
+        val uploadPDF = addDialog.findViewById<RadioButton>(R.id.uploadPDF_radioButton)
+        val uploadFileBTN = addDialog.findViewById<Button>(R.id.uploadFile)
+        val radioGrp = addDialog.findViewById<RadioGroup>(R.id.upGradeProfile_radioGroup)
         var selectedFileLayout = addDialog.findViewById<ConstraintLayout>(R.id.selectedFileLayout)
         var fileSelected_icon = addDialog.findViewById<ImageView>(R.id.fileSelected_icon)
         var fileSelected_title = addDialog.findViewById<TextView>(R.id.fileSelected_title)
         var removeSelectedFileBTN = addDialog.findViewById<ImageView>(R.id.removeSelectedFile)
         var reason = ""
-        var profile=""
+        var profile = ""
 
-        radioGrp.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
+        uploadFileBTN.setOnClickListener {
+            if (uploadImage.isChecked or uploadPDF.isChecked) {
+                if (uploadImage.isChecked) {
+                    listener.onUpgradeProfileDialogAttachFileClickListener(true)
+                } else {
+                    listener.onUpgradeProfileDialogAttachFileClickListener(false)
+                }
+            } else {
+                Logger.debugLog("UpgradeProfile", "Please select document type.")
+            }
+        }
+
+        /*radioGrp.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
             val checkedRadioButton =
                 group.findViewById<View>(checkedId) as RadioButton
             val isChecked = checkedRadioButton.isChecked
             if (isChecked) {
-                val checkedLevel =  checkedRadioButton.text.toString()
+                val checkedLevel = checkedRadioButton.text.toString()
 
                 if(checkedId==R.id.uploadImage_radioButton) {
                     reason = Constants.reasonUpgradeToLevelTwo
@@ -828,18 +847,16 @@ object DialogUtils {
               //  reason = Constants.reasonUpgradeToLevelThree
                 Logger.debugLog("upgradeProfile","reason 1  ${Constants.reasonUpgradeToLevelTwo}  reason 2 ${Constants.reasonUpgradeToLevelThree}")
 
-                 if(currentProfile.contains("1"))
-                {
-                        profile=currentProfile.replace("Profile","").trim()+" to Level 2 Profile KYC"
+                if (currentProfile.contains("1")) {
+                    profile =
+                        currentProfile.replace("Profile", "").trim() + " to Level 2 Profile KYC"
+                } else {
+                    uploadImage.visibility = View.GONE
+                    uploadPDF.visibility = View.GONE
+                    btnYes.visibility = View.GONE
                 }
-                else{
-                    uploadImage.visibility=View.GONE
-                    uploadPDF.visibility=View.GONE
-                    btnYes.visibility=View.GONE
-                }
-            }
-            else{
-                reason=""
+            } else {
+                reason = ""
             }
         })
 
@@ -857,18 +874,21 @@ object DialogUtils {
 
 
         addDialog.findViewById<View>(R.id.upgradeProfile_dialog_yes_btn).setOnClickListener {
-            if(!reason.equals("")) {
-                listner.onUpgradeProfileDialogYesClickListner(reason,profile)
+            if (!reason.equals("")) {
+                listner.onUpgradeProfileDialogYesClickListner(reason, profile)
             }
-                addDialog.dismiss()
+            addDialog.dismiss()
         }
         addDialog.findViewById<View>(R.id.upgradeProfile_dialog_no_btn).setOnClickListener {
             addDialog.dismiss()
-        }
+        }*/
     }
-    interface OnChangeProfileClickListner {
-        fun onUpgradeProfileDialogYesClickListner(reason: String, currentProfile: String)
+
+    interface OnUpgradeProfileClickListener {
+        fun onUpgradeProfileDialogAttachFileClickListener(isImage: Boolean)
+        fun onUpgradeProfileDialogYesClickListener(reason: String, currentProfile: String)
     }
+
     fun showCustomDialogue(
         mContext: Context?,
         btnTxt: String?,
@@ -951,6 +971,56 @@ object DialogUtils {
 
     interface OnCustomDialogListner {
         fun onCustomDialogOkClickListner()
+    }
+
+    fun showPickerDialog(
+        mContext: Context?,
+        listener: OnPickerDialogListener
+    ) {
+        val addDialog = Dialog(mContext!!)
+        addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        addDialog.setContentView(R.layout.dialog_picker_layout)
+
+        val dialogWindow = addDialog.window
+        val layoutParams = dialogWindow!!.attributes
+        layoutParams.x = Gravity.CENTER_HORIZONTAL
+        layoutParams.y = Gravity.CENTER_VERTICAL
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+        dialogWindow.attributes = layoutParams
+
+        addDialog.show()
+
+        val tvDialogDescription = addDialog.findViewById<TextView>(R.id.picker_dialog_description)
+        val tvDialogTitle = addDialog.findViewById<TextView>(R.id.picker_dialog_title)
+        val tvDialogCancel = addDialog.findViewById<TextView>(R.id.picker_dialog_tv_cancel)
+        val btnCamera = addDialog.findViewById<Button>(R.id.picker_dialog_btn_camera)
+        val btnGallery = addDialog.findViewById<Button>(R.id.picker_dialog_btn_gallery)
+
+        btnCamera.text = "Open Camera"
+        btnGallery.text = "Open From Gallery"
+        tvDialogTitle.text = LanguageData.getStringValue("DearCustomer")
+        tvDialogCancel.text = LanguageData.getStringValue("BtnTitle_Cancel")
+        tvDialogDescription.text = "Choose to upload from Camera or Gallery"
+
+        btnCamera.setOnClickListener {
+            listener.onCameraClickListener()
+            addDialog.dismiss()
+        }
+
+        btnGallery.setOnClickListener {
+            listener.onGalleryClickListener()
+            addDialog.dismiss()
+        }
+
+        tvDialogCancel.setOnClickListener {
+            addDialog.dismiss()
+        }
+    }
+
+    interface OnPickerDialogListener {
+        fun onCameraClickListener()
+        fun onGalleryClickListener()
     }
 
     fun customToast(context: Activity) {

@@ -182,5 +182,7 @@
     <string name="law" translatable="false">Add the words “in accordance with Law 09-08, you have the right to access,                  rectify and oppose the processing of your personal data.                  This processing was the subject of an authorization request to the CNDP</string>
     <string name="close" translatable="false">close</string>
     <string name="open" translatable="false">open</string>
+    <string name="upgrade_profile">Upgrade Profile</string>
+    <string name="select_document_type">Please select image first.</string>
 
 </resources>
