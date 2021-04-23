@@ -8,9 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import android.net.Uri
-import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -213,6 +211,9 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.AMOUNT_CONVERSION_VALUE = it.amountConversionValue
                 Constants.HELPLINE_NUMBER = it.helpLineNumber
                 Constants.HELPLINENUMBERAGENT = it.helpLineNumberAgent
+                if(it.billTypeInwi!=null){
+                Constants.BILLTYPEINWI = it.billTypeInwi
+                }
                 Constants.URL_FOR_FAQ = it.faqs
                 Constants.URL_FOR_TERMSANDCONDITIONS = it.termsAndConditions
                 Constants.APP_VERSION = it.version

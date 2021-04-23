@@ -50,7 +50,7 @@ class BillPaymentExpandableAdapter(
         val childCompanyIcon = convertView?.findViewById(R.id.img_sub_company_icon) as ImageView
 
         childCompanyName.text = childText.subCompanyTitle
-        Logger.debugLog("abro", "icon ${childText.subCompanyIcon}")
+        Logger.debugLog("inwi", "title ${childText.subCompanyTitle}")
         //todo need to Set Image From URL
         if (childText.subCompanyIcon.isEmpty()) {
             childCompanyIcon.setImageResource(R.drawable.default_no_company_icon)

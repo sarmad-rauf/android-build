@@ -1,7 +1,6 @@
 package com.es.marocapp.usecase.billpayment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ExpandableListAdapter
 import android.widget.ExpandableListView
@@ -35,6 +34,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
     private var mFavoritesList: ArrayList<Contact> = arrayListOf()
 
     private var mTelecomBillSubMenusData: ArrayList<String> = arrayListOf()
+    private var mTelecomBillSubMenusInwiData: ArrayList<String> = arrayListOf()
     private lateinit var mTelecomBillSubMenusAdapter: AirTimeDataAdpater
     private lateinit var sheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
@@ -346,6 +346,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                         currentSelectedBill
                 }
 
+                //checking if selected bill is Telecom bill for which we have to run flow of fatourati
                 for(b in Constants.iamBillsTriggerFatouratiFlow.indices)
                 {
                     Logger.debugLog("billPayment","iamBillFatoratiList ${Constants.iamBillsTriggerFatouratiFlow[b]}")
@@ -359,22 +360,33 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                 Logger.debugLog("billPayment","isamBillFatorati ${mActivityViewModel.isIamFatouratiSelected}")
 
 
-                if(listDataChild?.get(listDataHeader[groupPosition].companyTilte)?.get(
-                        childPosition)?.subCompanyTitle.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)){
-                    val state =
-                        if (sheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED)
-                            BottomSheetBehavior.STATE_COLLAPSED
-                        else
-                            BottomSheetBehavior.STATE_EXPANDED
-                    sheetBehavior.state = state
-                    Logger.debugLog("BillPaymentTesting","expand sheet")
-                    mActivityViewModel.isBillUseCaseSelected.set(true)
-                    mActivityViewModel.isFatoratiUseCaseSelected.set(false)
-                    mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(false)
-                }else{
+                 val selectedSubCompany= listDataChild?.get(listDataHeader[groupPosition].companyTilte)?.get(
+                childPosition)?.subCompanyTitle
+                if (selectedSubCompany != null) {
+                    if(selectedSubCompany.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)||selectedSubCompany.toLowerCase().equals(Constants.BILLTYPEINWI.toLowerCase())){
+                        val state =
+                            if (sheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED)
+                                BottomSheetBehavior.STATE_COLLAPSED
+                            else
+                                BottomSheetBehavior.STATE_EXPANDED
+                        sheetBehavior.state = state
+                        if(selectedSubCompany.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL))
+                        {
+
+                            populateTelecomBillsSubMenusList(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)
+                        }
+                        else{
+                            populateTelecomBillsSubMenusList(Constants.BILLTYPEINWI.toLowerCase())
+                        }
+                        Logger.debugLog("BillPaymentTesting","expand sheet")
+                        mActivityViewModel.isBillUseCaseSelected.set(true)
+                        mActivityViewModel.isFatoratiUseCaseSelected.set(false)
+                        mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(false)
+                    } else{
 
 
-                 startFatouratiFlow()
+                        startFatouratiFlow()
+                    }
                 }
                 return false
             }
@@ -417,15 +429,25 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
         }
     }
 
-    private fun populateTelecomBillsSubMenusList() {
+    private fun populateTelecomBillsSubMenusList(companyType:String) {
         /*mTelecomBillSubMenusData.apply {
             add(LanguageData.getStringValue("PostpaidMobile").toString())
             add(LanguageData.getStringValue("PostpaidFix").toString())
             add(LanguageData.getStringValue("Internet").toString())
         }*/
+
+         var telecomBillSubMenusData: ArrayList<String> = arrayListOf()
+        if(companyType.toLowerCase().equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL.toLowerCase()))
+        {
+            telecomBillSubMenusData=mTelecomBillSubMenusData
+        }
+        else{
+            telecomBillSubMenusData=mTelecomBillSubMenusInwiData
+        }
+
         mTelecomBillSubMenusAdapter =
             AirTimeDataAdpater(
-                mTelecomBillSubMenusData,
+                telecomBillSubMenusData,
                 object : AirTimeDataAdpater.AirTimeDataClickLisnter {
                     override fun onSelectedAirTimeData(selectedTelecomBillSubMenu: String) {
 
@@ -619,43 +641,67 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                         }
                     }
                     Logger.debugLog("billPayment","telecom Constant ${Constants.KEY_FOR_POST_PAID_TELECOM_BILL} ")
+                    mTelecomBillSubMenusData.clear()
+                    mTelecomBillSubMenusInwiData.clear()
                     for(i in it.bills.indices){
-                        Logger.debugLog("billPayment","telecom Constant ${it.bills[i].name}")
-                        if(it.bills[i].name.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)){
-
-                            if(isTelecomBillEnabled){
+                        if(it.bills[i].name.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)||it.bills[i].name.toLowerCase().equals(Constants.BILLTYPEINWI.toLowerCase())){
+                            Logger.debugLog("inwi","inwi ${it.bills[i].name}")
+                            if(isTelecomBillEnabled)
+                            {
                                 var telecomCompanyTypeLogo = it.bills[i].logo
-                                if(telecomCompanyTypeLogo.isNullOrEmpty()){
+                                if(telecomCompanyTypeLogo.isNullOrEmpty()&&it.bills[i].name.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)){
                                     telecomCompanyTypeLogo = ""
+                                    //listDataHeader should be populated by Telecom Company once and we have only one hardcoded Telecom
+                                    // company type so list should be empty before adding one
+                                        listDataHeader.add(
+                                            BillPaymentMenuModel(
+                                                LanguageData.getStringValue(
+                                                    "BillPaymentTelecomBill"
+                                                ).toString(), telecomCompanyTypeLogo
+                                            )
+                                        )
+
+                                }
+                                else if(it.bills[i].name.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)){
+                                    //listDataHeader should be populated by Telecom Company once and we have only one hardcoded Telecom
+                                    // company type so list should be empty before adding one
                                     listDataHeader.add(BillPaymentMenuModel(LanguageData.getStringValue("BillPaymentTelecomBill").toString(),telecomCompanyTypeLogo))
-                                }else{
-                                    listDataHeader.add(BillPaymentMenuModel(LanguageData.getStringValue("BillPaymentTelecomBill").toString(),telecomCompanyTypeLogo))
+
                                     Logger.debugLog("billPayment", "logo ${telecomCompanyTypeLogo}")
                                 }
 
-                                var IAMLogo=""
-                                for(company in it.bills[i].companies.indices)
-                                {
-                                    var companyLogoToPick = LanguageData.getStringValue("PostpaidMobile")
-                                    Logger.debugLog("billPayment","IAMSubCompany  ${it.bills[i].companies[company].nomCreancier}    =  ${companyLogoToPick}")
-                                    if(it.bills[i].companies[company].nomCreancier.equals("PostpaidMobile"))
-                                    {
-                                        IAMLogo=it.bills[i].companies[company].logo
-                                        Logger.debugLog("billPayment","IAMSubCompanyLogo  ${IAMLogo}   ")
-                                    }
-                                }
+
 
                             //Adding SubMenu
-                            var arrayListOfSubMenu : ArrayList<BillPaymentSubMenuModel> = arrayListOf()
-                            arrayListOfSubMenu.add(BillPaymentSubMenuModel(it.bills[i].name,IAMLogo))
+                                var arrayListOfSubMenu : ArrayList<BillPaymentSubMenuModel> = arrayListOf()
+                                for(everyCompany in it.bills.indices)
+                                {
+                                    if(it.bills[everyCompany].name.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)||it.bills[everyCompany].name.toLowerCase().equals(Constants.BILLTYPEINWI.toLowerCase())){
 
+                                        //picking Logo for IAM Company from one of the IAM companies
+                                        var Logo=""
+                                                Logo=it.bills[everyCompany].companies[0].logo
+                                        if(Logo.isNullOrEmpty())
+                                        {
+                                            Logo=""
+                                        }
+                                        arrayListOfSubMenu.add(BillPaymentSubMenuModel(it.bills[everyCompany].name,Logo))
+                                    }
+                                }
                             listDataChild?.put(LanguageData.getStringValue("BillPaymentTelecomBill").toString(),arrayListOfSubMenu)
 
-                            mTelecomBillSubMenusData.clear()
+
                             for(companyIndex in it.bills[i].companies.indices){
-                                mTelecomBillSubMenusData.add(LanguageData.getStringValue(it.bills[i].companies[companyIndex].nomCreancier)
-                                    .toString())}
+                                if(it.bills[i].name.equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)){
+                                        mTelecomBillSubMenusData.add(LanguageData.getStringValue(it.bills[i].companies[companyIndex].nomCreancier).toString())
+                                }else{
+                                    mTelecomBillSubMenusInwiData.add(LanguageData.getStringValue(it.bills[i].companies[companyIndex].nomCreancier).toString())
+                                }
+
+
+}
                             }
+                            Logger.debugLog("inwi","mTelecomBillSubMenusData ${mTelecomBillSubMenusData.toString()}")
                         }else{
                             if(isFatouratiBillEnabled){
                                 var companyTypeLogo = it.bills[i].logo
@@ -684,8 +730,9 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                             }
                         }
                     }
+                    Logger.debugLog("inwi","inwi ${listDataChild.toString()}")
                     prepareDataForBillPayment()
-                    populateTelecomBillsSubMenusList()
+                    populateTelecomBillsSubMenusList(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)
                 }
 
 //                listDataChild?.put(listDataHeader?.get(0)?.companyTilte!!, myTelecomBillSubMenus)

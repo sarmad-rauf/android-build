@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.BuildConfig
 import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityUpgradeProfileBinding
+import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.utils.*
@@ -47,7 +48,7 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        setStrings()
+
 
         mActivityViewModel = ViewModelProvider(this).get(UpgradeProfileViewModel::class.java)
 
@@ -105,7 +106,7 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
                 backImageBase64!!
             )
         }
-
+        setStrings()
         subscribeObserver()
     }
 
@@ -183,7 +184,13 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
     }
 
     private fun setStrings() {
-
+        mDataBinding.tvUpgradeProfileTitle.text=LanguageData.getStringValue("UpgradeProfile")
+        mDataBinding.upgradeProfileDescription.text=LanguageData.getStringValue("UpgradeProfileDescription")
+        val attachFrontImageTitle=LanguageData.getStringValue("ClickToAttach")+"\n"+LanguageData.getStringValue("FrontSide")
+        val attachBackImageTitle=LanguageData.getStringValue("ClickToAttach")+"\n"+LanguageData.getStringValue("BackSide")
+        mDataBinding.frontImagetitle.text=attachFrontImageTitle
+        mDataBinding.backImageTitle.text=attachBackImageTitle
+        mDataBinding.upgradeProfileBtnSubmit.text=LanguageData.getStringValue("BtnTitle_Submit")
     }
 
     private fun requestPermission() {

@@ -51,7 +51,9 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
         holder.billStatusTitle.text = LanguageData.getStringValue("Status")
 //        holder.billingAmountTitle.text = LanguageData.getStringValue("Amount")
         holder.billStatusVal.text = LanguageData.getStringValue("Unpaid")
-        holder.billingDescription.text = bills[position].description
+        var description = (bills[position].description)
+        description=description.replace("<br/>","\n")
+        holder.billingDescription.text = description
 
         holder.isBillSelected.isChecked = bills[position].isItemSelected
 //        var date = Constants.parseDateFromString(bills[position].month)

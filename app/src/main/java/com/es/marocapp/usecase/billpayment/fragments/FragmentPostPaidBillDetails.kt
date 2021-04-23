@@ -261,6 +261,7 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
     private fun setStrings() {
         mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Validate")
         mDataBinding.noDataTv.text = LanguageData.getStringValue("NoDataFound")
+        mDataBinding.selectAllTitle.text=LanguageData.getStringValue("SelectAll")
         if(mActivityViewModel.showAutoDuMorocViews)
         {
             mDataBinding.selectInvocieLabel.text = LanguageData.getStringValue("BillPaymentSelectInvoicesToPayAutoDM")

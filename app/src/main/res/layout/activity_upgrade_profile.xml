@@ -68,7 +68,7 @@
             android:layout_margin="@dimen/_16sdp"
             app:cardBackgroundColor="@color/colorTextOrange"
             app:cardCornerRadius="@dimen/_16sdp"
-            app:cardElevation="0dp"
+            app:cardElevation="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/upgradeProfile_description">
@@ -78,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:id="@+id/frontImagetitle"
                 android:text="Click Here to Attach ID Card Front Side"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_18ssp" />
@@ -90,7 +91,7 @@
             android:layout_height="@dimen/_120sdp"
             android:layout_margin="@dimen/_16sdp"
             app:cardCornerRadius="@dimen/_16sdp"
-            app:cardElevation="0dp"
+            app:cardElevation="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/upgrade_profile_card_view_front_side">
@@ -100,6 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:id="@+id/backImageTitle"
                 android:text="Click Here to Attach ID Card Back Side"
                 android:textColor="@color/colorTextOrange"
                 android:textSize="@dimen/_18ssp" />
@@ -194,10 +196,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-                <include
-                    android:id="@+id/Gif_Loader"
-                    layout="@layout/layout_dialog"
-                    android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}" />
+<!--                <include-->
+<!--                    android:id="@+id/Gif_Loader"-->
+<!--                    layout="@layout/layout_dialog"-->
+<!--                    -->
+<!--                    android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

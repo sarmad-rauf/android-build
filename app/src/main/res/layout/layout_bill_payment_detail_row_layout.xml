@@ -52,7 +52,7 @@
                 android:layout_marginStart="@dimen/_48sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 app:layout_constraintTop_toTopOf="parent"
-                android:maxLines="3"
+                android:maxLines="7"
                 android:layout_marginEnd="@dimen/_16sdp"
                 app:layout_constraintStart_toEndOf="@+id/isBillSelectedCheckBox"
                 app:layout_constraintEnd_toEndOf="parent"

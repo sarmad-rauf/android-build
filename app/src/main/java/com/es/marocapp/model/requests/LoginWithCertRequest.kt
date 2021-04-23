@@ -14,5 +14,4 @@ data class LoginWithCertRequest(
 data class AccountHolderEmailequest(
     val context: String,
     val identity: String
-
 )

@@ -997,11 +997,11 @@ object DialogUtils {
         val btnCamera = addDialog.findViewById<Button>(R.id.picker_dialog_btn_camera)
         val btnGallery = addDialog.findViewById<Button>(R.id.picker_dialog_btn_gallery)
 
-        btnCamera.text = "Open Camera"
-        btnGallery.text = "Open From Gallery"
+        btnCamera.text = LanguageData.getStringValue("OpenCamera")
+        btnGallery.text = LanguageData.getStringValue("OpenGallary")
         tvDialogTitle.text = LanguageData.getStringValue("DearCustomer")
         tvDialogCancel.text = LanguageData.getStringValue("BtnTitle_Cancel")
-        tvDialogDescription.text = "Choose to upload from Camera or Gallery"
+        tvDialogDescription.text = LanguageData.getStringValue("ChooseToUpload")
 
         btnCamera.setOnClickListener {
             listener.onCameraClickListener()

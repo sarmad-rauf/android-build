@@ -232,7 +232,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     }
 
     fun setViewsVisibility() {
-
+        var currentProfile =
+            Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
+        if (currentProfile.equals("") || currentProfile.equals(null)) {
+            currentProfile = Constants.UserProfileName
+        }
         if (Constants.IS_CONSUMER_USER || Constants.IS_MERCHANT_USER) {
 //            if(Constants.IS_DEFAULT_ACCOUNT_SET)
 //            {
@@ -242,18 +246,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             // }
 
         } else {
-
-
-            var currentProfilee =
-                Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
-            if (currentProfilee.equals("") || currentProfilee.equals(null)) {
-                currentProfilee = Constants.UserProfileName
-            }
             var isProfileNameMatchedwithMerchantAgent: Boolean = false
             for (i in Constants.MERCHENTAGENTPROFILEARRAY.indices) {
 
                 isProfileNameMatchedwithMerchantAgent =
-                    currentProfilee.equals(Constants.MERCHENTAGENTPROFILEARRAY[i])
+                    currentProfile.equals(Constants.MERCHENTAGENTPROFILEARRAY[i])
                 if (isProfileNameMatchedwithMerchantAgent) {
                     break
                 }
@@ -268,12 +265,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         }
 
-        var currentProfile =
-            Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
-        if (currentProfile.equals("") || currentProfile.equals(null)) {
-            currentProfile = Constants.UserProfileName
+
+        var isProfileMatchedwithUpgradeAbleprofiles: Boolean = false
+        for (i in Constants.upgradeSupportedProfiles.indices) {
+
+            isProfileMatchedwithUpgradeAbleprofiles =
+                currentProfile.equals(Constants.upgradeSupportedProfiles[i])
+            if (isProfileMatchedwithUpgradeAbleprofiles) {
+                break
+            }
         }
-        if (Constants.IS_AGENT_USER || currentProfile.contains("3") || currentProfile.contains("2")) {
+
+
+
+        if (isProfileMatchedwithUpgradeAbleprofiles) {
             mDataBinding.navigationItem.rootView.upgradeProfileGroup.visibility = View.GONE
         } else {
             mDataBinding.navigationItem.rootView.upgradeProfileGroup.visibility = View.VISIBLE

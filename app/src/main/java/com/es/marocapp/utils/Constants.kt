@@ -31,7 +31,7 @@ import kotlin.properties.Delegates
 object Constants {
 
 
-
+    lateinit var BILLTYPEINWI: String
     lateinit var HELPLINENUMBERAGENT: String
 
     //Iam bills list for which fatourati flow will be triggered
@@ -48,7 +48,7 @@ object Constants {
     lateinit var reasonUpgradeToLevelThree: String
     lateinit var reasonUpgradeToLevelTwo: String
 
-    //profiles list  geting in preLoginData api
+    //profiles list  getting in preLoginData api to show Upgrade profile buton
     lateinit var upgradeSupportedProfiles: Array<String>
 
     //profile geting from forgot psw flow in getProfile api
