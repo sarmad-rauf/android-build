@@ -271,17 +271,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
             isProfileMatchedwithUpgradeAbleprofiles =
                 currentProfile.equals(Constants.upgradeSupportedProfiles[i])
+            Logger.debugLog("upgradeProfile","${currentProfile}   =  ${Constants.upgradeSupportedProfiles[i]}")
             if (isProfileMatchedwithUpgradeAbleprofiles) {
                 break
             }
         }
-
+        Logger.debugLog("upgradeProfile","${"currentProfilematched"}   =  ${isProfileMatchedwithUpgradeAbleprofiles}")
 
 
         if (isProfileMatchedwithUpgradeAbleprofiles) {
-            mDataBinding.navigationItem.rootView.upgradeProfileGroup.visibility = View.GONE
-        } else {
             mDataBinding.navigationItem.rootView.upgradeProfileGroup.visibility = View.VISIBLE
+        } else {
+            mDataBinding.navigationItem.rootView.upgradeProfileGroup.visibility = View.GONE
         }
 
         if (Constants.IS_CONSUMER_USER) {

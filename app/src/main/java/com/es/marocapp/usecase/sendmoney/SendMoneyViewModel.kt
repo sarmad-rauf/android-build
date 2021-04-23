@@ -360,7 +360,6 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                 TransferRequest(
                     amountToTransfer,
                     ApiConstant.CONTEXT_AFTER_LOGIN,
-                    qouteID,
                     Constants.getNumberMsisdn(transferdAmountTo)
                 )
             )
@@ -514,7 +513,6 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                 MerchantPaymentRequest(
                     amountToTransfer,
                     ApiConstant.CONTEXT_AFTER_LOGIN,
-                    qouteID,
                     Constants.getNumberMsisdn(sender),
                     transferingTO
                 )
@@ -712,7 +710,6 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                 PaymentRequest(
                     amountToTransfer,
                     ApiConstant.CONTEXT_AFTER_LOGIN,
-                    qouteID,
                     receiver,
                     Constants.getNumberMsisdn(sender),
                     transferType,
@@ -922,7 +919,6 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                 SimplePaymentRequest(
                     amountToTransfer,
                     ApiConstant.CONTEXT_AFTER_LOGIN,
-                    qouteID,
                     receiver,
                     Constants.getNumberMsisdn(sender),
                     transferType,
@@ -1072,7 +1068,6 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                 FloatTransferRequest(
                     amountToTransfer,
                     ApiConstant.CONTEXT_AFTER_LOGIN,
-                    qouteID,
                     Constants.getNumberMsisdn(transferdAmountTo)
                 )
             )

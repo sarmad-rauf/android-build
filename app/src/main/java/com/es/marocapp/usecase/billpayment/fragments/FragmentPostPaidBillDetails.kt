@@ -264,7 +264,13 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
         mDataBinding.selectAllTitle.text=LanguageData.getStringValue("SelectAll")
         if(mActivityViewModel.showAutoDuMorocViews)
         {
+            if(mActivityViewModel.selectedCreancer.get()?.contains("TGR") == true)
+            {
+                mDataBinding.selectInvocieLabel.text = LanguageData.getStringValue("BillPaymentSelectInvoicesToPayTGR")
+            }
+            else{
             mDataBinding.selectInvocieLabel.text = LanguageData.getStringValue("BillPaymentSelectInvoicesToPayAutoDM")
+            }
         }
         else{
             mDataBinding.selectInvocieLabel.text = LanguageData.getStringValue("BillPaymentSelectInvoicesToPay")

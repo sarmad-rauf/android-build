@@ -131,7 +131,7 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getInitiateTransferCall(
                 InitiateTransferRequest(amountToTransfer,
                     ApiConstant.CONTEXT_AFTER_LOGIN,
-                    Constants.getNumberMsisdn(transferdAmountTo),qouteID,message)
+                    Constants.getNumberMsisdn(transferdAmountTo),message)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -251,7 +251,7 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getCashInCall(
                 CashInRequest(amountToTransfer,
                     ApiConstant.CONTEXT_AFTER_LOGIN,
-                    Constants.getNumberMsisdn(transferdAmountTo),qouteID,noteToSend)
+                    Constants.getNumberMsisdn(transferdAmountTo),noteToSend)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(

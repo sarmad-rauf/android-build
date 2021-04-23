@@ -368,7 +368,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getPostPaidBillPayment(
                 PostPaidBillPaymentRequest(
-                    convertedAmountValue,mCodeEntered,ApiConstant.CONTEXT_AFTER_LOGIN,custId,custname,"1",mQuoteId,transferdAmountTo,
+                    convertedAmountValue,mCodeEntered,ApiConstant.CONTEXT_AFTER_LOGIN,custId,custname,"1",transferdAmountTo,
                     Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),selectBillAmount,Constants.TYPE_PAYMENT,domain,invoiceMonth,ohrefnum,ohxact,convertedOpenAmount,isMultipleBillSelected
                 )
             )
@@ -902,7 +902,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatorati(
                 BillPaymentFatoratiRequest(Constants.converValueToTwoDecimalPlace(amount.toDouble()),fatoratiTypeSelected.get()!!.codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
-                    "true", quoteId,Constants.getFatoratiAlias(transferdAmountTo),
+                    "true",Constants.getFatoratiAlias(transferdAmountTo),
                     Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_BILL_PAYMENT,isMultipleBillSelected,fatoratiStepFourObserver.get()?.refTxFatourati.toString(),
                     fatoratiStepFourObserver.get()?.totalAmount.toString(),paramsForFatoratiPayment,fatoratiTypeSelected.get()!!.nomCreancier
                 )

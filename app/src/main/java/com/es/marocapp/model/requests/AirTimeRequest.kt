@@ -5,7 +5,6 @@ data class AirTimeRequest(
     val context: String,
     val maxNumberOfRetries: String,
     val plan: String,
-    val quoteid: String,
     val receiver: String,
     val sender: String,
     val transferType: String

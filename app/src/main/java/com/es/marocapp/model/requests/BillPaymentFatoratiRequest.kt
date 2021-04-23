@@ -6,7 +6,6 @@ data class BillPaymentFatoratiRequest(
     val context: String,
     val creancierID: String,
     val paiementTotal: String,
-    val quoteid: String,
     val receiver: String,
     val sender: String,
     val transferType: String,

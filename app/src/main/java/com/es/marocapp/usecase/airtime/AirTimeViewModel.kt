@@ -243,7 +243,7 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
             tranferAmountToWithAlias = userMsisdn
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAirTimeCall(
-                AirTimeRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,"1",airTimeSelectedPlanCode,qouteId,userMsisdn,
+                AirTimeRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,"1",airTimeSelectedPlanCode,userMsisdn,
                     Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_PAYMENT)
             )
                 .compose(applyIOSchedulers())

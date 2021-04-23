@@ -95,7 +95,10 @@
 
                     <com.es.marocapp.widgets.MarocRegularTextView
                         android:id="@+id/tvCompanyNameVal"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/_150sdp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:paddingStart="@dimen/_8sdp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_16sdp"
                         android:text="Company A"
@@ -130,7 +133,10 @@
 
                     <com.es.marocapp.widgets.MarocRegularTextView
                         android:id="@+id/tvSenderNameVal"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/_150sdp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:paddingStart="@dimen/_8sdp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:text="+212 88716 9918"

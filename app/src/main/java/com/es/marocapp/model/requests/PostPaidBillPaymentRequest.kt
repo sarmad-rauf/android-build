@@ -7,7 +7,6 @@ data class PostPaidBillPaymentRequest(
     val custId: String,
     val customerName: String,
     val maxNumberOfRetries: String,
-    val quoteid: String,
     val `receiver`: String,
     val sender: String,
     val totalAmount: String,
