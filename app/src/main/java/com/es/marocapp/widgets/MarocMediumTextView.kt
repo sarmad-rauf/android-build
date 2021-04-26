@@ -19,8 +19,8 @@ class MarocMediumTextView : androidx.appcompat.widget.AppCompatTextView {
     }
 
     private fun init() {
-        if (RootValues.getInstance().fontRubikMedium != null) {
-            setTypeface(RootValues.getInstance().fontRubikMedium)
+        if (RootValues.getInstance().fontSofiaProRegular != null) {
+            setTypeface(RootValues.getInstance().fontSofiaProRegular)
         }
     }
 

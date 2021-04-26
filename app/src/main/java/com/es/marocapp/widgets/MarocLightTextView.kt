@@ -19,8 +19,8 @@ class MarocLightTextView : androidx.appcompat.widget.AppCompatTextView {
     }
 
     private fun init() {
-        if (RootValues.getInstance().fontRubikLight != null) {
-            setTypeface(RootValues.getInstance().fontRubikLight)
+        if (RootValues.getInstance().fontSofiaProRegular != null) {
+            setTypeface(RootValues.getInstance().fontSofiaProRegular)
         }
     }
 
