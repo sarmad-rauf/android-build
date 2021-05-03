@@ -8,6 +8,7 @@ import com.es.marocapp.R
 import com.es.marocapp.model.requests.BalanceInfoAndLimtRequest
 import com.es.marocapp.model.requests.GetApprovalRequest
 import com.es.marocapp.model.requests.UserApprovalRequest
+import com.es.marocapp.model.responses.Approvaldetail
 import com.es.marocapp.model.responses.GetApprovalsResponse
 import com.es.marocapp.model.responses.GetBalanceResponse
 import com.es.marocapp.model.responses.UserApprovalResponse
@@ -24,6 +25,9 @@ import io.reactivex.disposables.Disposable
 import retrofit2.HttpException
 
 class ApprovalViewModel(application: Application) : AndroidViewModel(application) {
+
+    //used on ApprovalDetailFragment to add tax with fee
+    var selectedTaxDetail: String? = "0"
 
     var isApproved: Boolean = false
     lateinit var disposable: Disposable
@@ -53,7 +57,10 @@ class ApprovalViewModel(application: Application) : AndroidViewModel(application
 
                         if(result?.responseCode != null){
                             when(result?.responseCode) {
-                                ApiConstant.API_SUCCESS ->  getApprovalResponseListner.postValue(result)
+                                ApiConstant.API_SUCCESS ->  {
+//                                    val list :List<Approvaldetail>=
+//                                    var testData= GetApprovalsResponse()
+                                    getApprovalResponseListner.postValue(result)}
                                 ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
                                 ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,LoginActivity.KEY_REDIRECT_USER_INVALID)
                                 else ->  getApprovalResponseListner.postValue(result)

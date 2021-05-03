@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
@@ -116,7 +115,7 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
             AirTimeDataAdpater(
                 mAirTimeRechargeData,
                 object : AirTimeDataAdpater.AirTimeDataClickLisnter {
-                    override fun onSelectedAirTimeData(airTimeData: String) {
+                    override fun onSelectedAirTimeData(airTimeData: String, position1: Int) {
                         airTimeResponse = mActivityViewModel.mAirTimeUseCaseResponse.get()!!
 //                    if (valueSelectedFromType) {
                         sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
@@ -194,7 +193,7 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
 
         mAirTimePlanDataAdapter = AirTimeDataAdpater(mAirTimePlanData,
             object : AirTimeDataAdpater.AirTimeDataClickLisnter {
-                override fun onSelectedAirTimeData(airTimePlan: String) {
+                override fun onSelectedAirTimeData(airTimePlan: String, position1: Int) {
                     mAirTimeAmountData.clear()
                     mAirTimeAmountDataAdapter.notifyDataSetChanged()
                     mDataBinding.inputRechargeAmount.setText("")
@@ -238,7 +237,7 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
 
         mAirTimeAmountDataAdapter = AirTimeDataAdpater(mAirTimeAmountData,
             object : AirTimeDataAdpater.AirTimeDataClickLisnter {
-                override fun onSelectedAirTimeData(airTimeAmount: String) {
+                override fun onSelectedAirTimeData(airTimeAmount: String, position1: Int) {
                     airTimeResponse = mActivityViewModel.mAirTimeUseCaseResponse.get()!!
                     sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                     mActivityViewModel.airTimeAmountSelected.set(airTimeAmount.removeSuffix("DH").trim())

@@ -211,9 +211,8 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.AMOUNT_CONVERSION_VALUE = it.amountConversionValue
                 Constants.HELPLINE_NUMBER = it.helpLineNumber
                 Constants.HELPLINENUMBERAGENT = it.helpLineNumberAgent
-                if(it.billTypeInwi!=null){
                 Constants.BILLTYPEINWI = it.billTypeInwi
-                }
+                Constants.REASON_FOR_UPDATE_PROFILE = it.reasonForUpdateEmail
                 Constants.URL_FOR_FAQ = it.faqs
                 Constants.URL_FOR_TERMSANDCONDITIONS = it.termsAndConditions
                 Constants.APP_VERSION = it.version

@@ -10,7 +10,8 @@ data class UpdateProfileRequest(
 data class UpdateEmailRequest(
     val context: String,
     val identity: String,
-    val email: String
+    val email: String,
+    val reason: String
 )
 
 data class UpdateCINRequest(

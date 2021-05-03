@@ -74,6 +74,7 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                // approvalViewModel.requestForUserApprovalsApi(activity,"01","true")
                 if(it.approvaldetails.isNullOrEmpty()){
+
                     mDataBinding.tvNoDataFound.visibility = View.VISIBLE
                     mApprovalsList.clear()
                     mApprovalsItemAdapter.notifyDataSetChanged()

@@ -10,11 +10,9 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
-import com.es.marocapp.usecase.billpayment.BillPaymentActivity
 import com.es.marocapp.usecase.cashservices.CashServicesActivity
 import com.es.marocapp.usecase.cashservices.CashServicesClickListner
 import com.es.marocapp.usecase.cashservices.CashServicesViewModel
-import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
@@ -221,14 +219,21 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
                 Constants.CURRENT_USER_CREDENTIAL = password
 
                 if(mActivityViewModel.isWithdrawUseCase.get()!!){
-                    mActivityViewModel.requestForInitiateTransferApi(activity,mActivityViewModel.qouteId,mActivityViewModel.noteToSend)
+                    var message=""
+                    if(mActivityViewModel.totalTax>0)
+                    {
+                        message = mActivityViewModel.noteToSend+Constants.TAX_DETALS+mActivityViewModel.totalTax
+                    }
+                    else{
+                        message = mActivityViewModel.noteToSend+Constants.TAX_DETALS+"0"
+                    }
+                    mActivityViewModel.requestForInitiateTransferApi(activity,mActivityViewModel.qouteId,message)
                 }
 
                 if(mActivityViewModel.isDepositUseCase.get()!!){
                     mActivityViewModel.requestForCashInApi(activity,mActivityViewModel.qouteId)
                 }
             }
-
         })
     }
 

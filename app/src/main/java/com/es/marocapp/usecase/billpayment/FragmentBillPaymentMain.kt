@@ -2,9 +2,7 @@ package com.es.marocapp.usecase.billpayment
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ExpandableListAdapter
 import android.widget.ExpandableListView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,7 +18,6 @@ import com.es.marocapp.model.billpaymentmodel.BillPaymentSubMenuModel
 import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
-import com.es.marocapp.usecase.airtime.AirTimeActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
@@ -357,6 +354,22 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                     }
                 }
 
+
+                //checking for LYDEC selection for change flow
+                var isSelectedBillMatchedwithfatouratiSeperateMenuBillNames: Boolean = false
+                for (i in Constants.fatouratiSeperateMenuBillNames.indices) {
+
+                    isSelectedBillMatchedwithfatouratiSeperateMenuBillNames =
+                        currentSelectedBill?.toLowerCase().equals(Constants.fatouratiSeperateMenuBillNames[i]?.trim()?.toLowerCase())
+                    Logger.debugLog("billpaymeny","lydec  ${currentSelectedBill?.toLowerCase()} == ${Constants.fatouratiSeperateMenuBillNames[i]?.trim()?.toLowerCase()}")
+                    if(isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
+                    {
+                        mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames=true
+                        break
+                    }
+                }
+
+
                 Logger.debugLog("billPayment","isamBillFatorati ${mActivityViewModel.isIamFatouratiSelected}")
 
 
@@ -382,9 +395,20 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                         mActivityViewModel.isBillUseCaseSelected.set(true)
                         mActivityViewModel.isFatoratiUseCaseSelected.set(false)
                         mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(false)
-                    } else{
-
-
+                    }
+                    //fatourati Seperate flow for LYDEC
+                   else if(isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
+                    {
+                        var billCompaniesList = mActivityViewModel.getBillPaymentCompaniesResponseObserver.get()?.bills?.get(groupPosition)?.companies
+                        mActivityViewModel.fatoratiTypeSelected.set(Creancier(
+                            billCompaniesList!![childPosition].codeCreance,billCompaniesList[childPosition].codeCreancier,
+                            billCompaniesList[childPosition].nomCreance,billCompaniesList[childPosition].nomCreancier))
+                        mActivityViewModel.requestForFatoratiStepTwoApi(
+                            activity,
+                            Constants.CURRENT_USER_MSISDN
+                        )
+                    }
+                    else{
                         startFatouratiFlow()
                     }
                 }
@@ -422,6 +446,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
 
         mDataBinding.btnCancel.setOnClickListener {
             sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames=false
         }
 
         mDataBinding.bottomSheetAirTime.setOnClickListener {
@@ -439,9 +464,16 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
          var telecomBillSubMenusData: ArrayList<String> = arrayListOf()
         if(companyType.toLowerCase().equals(Constants.KEY_FOR_POST_PAID_TELECOM_BILL.toLowerCase()))
         {
+            //showing IAM companies
             telecomBillSubMenusData=mTelecomBillSubMenusData
         }
+        else if(mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
+        {
+            //showing LYDEC company NOM CREANCES
+            telecomBillSubMenusData=mActivityViewModel.nomCreancierList
+        }
         else{
+            //showing INWI companies
             telecomBillSubMenusData=mTelecomBillSubMenusInwiData
         }
 
@@ -449,13 +481,18 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
             AirTimeDataAdpater(
                 telecomBillSubMenusData,
                 object : AirTimeDataAdpater.AirTimeDataClickLisnter {
-                    override fun onSelectedAirTimeData(selectedTelecomBillSubMenu: String) {
+                    override fun onSelectedAirTimeData(
+                        selectedTelecomBillSubMenu: String,
+                        position1: Int
+                    ) {
 
                         sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                         for(b in Constants.iamBillsTriggerFatouratiFlow.indices)
                         {
                             Logger.debugLog("billPayment","iamBillFatoratiList ${Constants.iamBillsTriggerFatouratiFlow[b]}")
-                            if(Constants.iamBillsTriggerFatouratiFlow[b].equals(selectedTelecomBillSubMenu))
+                            if(Constants.iamBillsTriggerFatouratiFlow[b].equals(
+                                    selectedTelecomBillSubMenu
+                                ))
                             {
                                 mActivityViewModel.isIamFatouratiSelected=true
                                 break
@@ -528,9 +565,19 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                         }else if (mActivityViewModel.isIamFatouratiSelected)
                          {
                             //IAM fatourati selected ....flow of fatourati shuld be call for this IAM bill
+
                              Logger.debugLog("billPayment","isamBillFatorati ${mActivityViewModel.isIamFatouratiSelected}")
-                           startFatouratiFlow()
+
+                             startFatouratiFlow()
+                        }else if (mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
+                        {
+                            //LYDEC now Creance Selected
+                            Logger.debugLog("billPayment","lydec ${mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames}")
+                            mActivityViewModel.selectedCodeCreance=
+                                mActivityViewModel.creancesList.get()!![position1].codeCreance
+                            startLydecFlow()
                         }
+
                     }
                 })
 
@@ -541,6 +588,29 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
     }
 
     private fun subscribeObserver() {
+        mActivityViewModel.getFatoratiStepTwoResponseListner.observe(this@FragmentBillPaymentMain,
+            Observer {
+
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                        mActivityViewModel.setCreancesList(it.creances as ArrayList<creances>)
+                        var nomCreancierList:ArrayList<String> = ArrayList()
+                        for (i in it.creances .indices)
+                        {
+                            nomCreancierList.add(it.creances.get(i).nomCreance)
+                        }
+                        mActivityViewModel.nomCreancierList=nomCreancierList
+                    val state =
+                        if (sheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED)
+                            BottomSheetBehavior.STATE_COLLAPSED
+                        else
+                            BottomSheetBehavior.STATE_EXPANDED
+                    sheetBehavior.state = state
+                    populateTelecomBillsSubMenusList("LYDEC")
+                } else {
+                    DialogUtils.showErrorDialoge(activity, it.description)
+                }
+            }
+        )
         mActivityViewModel.getFatoratiStepFourResponseListner.observe(this@FragmentBillPaymentMain,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
@@ -770,6 +840,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
 //                                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn)
                             (activity as BillPaymentActivity).navController?.navigateUp()
                             (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn)
+                        break
                         }
                     }
                 }
@@ -789,11 +860,30 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
 //                                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn)
                                 (activity as BillPaymentActivity).navController?.navigateUp()
                                 (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn)
+                                break
                             }
                         }
                     }
                 }
             }
+        }
+    }
+    private fun startLydecFlow() {
+        mActivityViewModel.isBillUseCaseSelected.set(false)
+        mActivityViewModel.isFatoratiUseCaseSelected.set(true)
+        mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(false)
+        Logger.debugLog("BillPaymentTesting","else expand sheet")
+        var selectedCreancer = mActivityViewModel?.userSelectedCreancer
+        mActivityViewModel.selectedCreancer.set(selectedCreancer)
+        if(!mActivityViewModel.getBillPaymentCompaniesResponseObserver.get()?.bills.isNullOrEmpty()){
+            var billList = mActivityViewModel.getBillPaymentCompaniesResponseObserver.get()?.bills
+            Logger.debugLog("BillPaymentTesting","else expand sheet1")
+
+
+//                                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn)
+                (activity as BillPaymentActivity).navController?.navigateUp()
+                (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn)
+
         }
     }
 }

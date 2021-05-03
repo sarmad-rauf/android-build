@@ -1,6 +1,5 @@
 package com.es.marocapp.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,6 @@ import com.es.marocapp.R
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.InvoiceCustomModel
 import com.es.marocapp.utils.Constants
-import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.util.*
 
 

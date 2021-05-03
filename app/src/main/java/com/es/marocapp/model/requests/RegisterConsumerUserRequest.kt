@@ -6,5 +6,6 @@ data class RegisterConsumerUserRequest(
     val deviceId: String,
     val email: String,
     val identity: String,
-    val otp: String
+    val otp: String,
+    val reason: String
 )

@@ -14,7 +14,6 @@ import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
-import kotlin.math.round
 
 class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfirmationBinding>(),
     FundsTrasnferClickLisntener {

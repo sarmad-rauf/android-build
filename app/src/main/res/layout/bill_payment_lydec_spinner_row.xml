@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <EditText
+        android:id="@+id/dummy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:clickable="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone">
+    </EditText>
+    <com.es.marocapp.widgets.MarocMediumTextView
+        android:id="@+id/spinnerFieldTitile"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_3sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="normal"
+        android:focusable="true"
+        android:clickable="false"
+        android:textSize="14sp"
+        android:text="jdkldflkgsdklglsd"
+        android:textColor="@color/colorBtnDisable"
+        android:lineSpacingExtra="8sp" />
+
+    <Spinner
+        android:id="@+id/spinnerField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/QuickAcountTypeSpinner"
+        android:popupBackground="@color/colorWhite"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerFieldTitile"
+        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="start"
+        android:focusable="true"
+        android:clickable="true"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_46sdp">
+    </Spinner>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

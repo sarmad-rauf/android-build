@@ -22,7 +22,8 @@ data class BillPaymentFatoratiStepThreeResponse(
 data class Param(
     val libelle: String,
     val nomChamp: String,
-    val typeChamp: String
+    val typeChamp: String,
+    val listVals: List<String>
 )
 
 data class ValidatedParam(
@@ -37,5 +38,6 @@ data class RecievededParam(
     val errorText:String,
     val errorEnabled:Boolean,
     val hintVisibility:Int,
-    val inputValue:String
+    val inputValue:String,
+    val listVals: List<String>
 )

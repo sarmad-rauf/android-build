@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
-import com.es.marocapp.adapter.BillDetailFatoratiItemAdapter
 import com.es.marocapp.adapter.FatoratiParamsItemAdapter
 import com.es.marocapp.adapter.LanguageCustomSpinnerAdapter
 import com.es.marocapp.databinding.FragmentBillPaymentMsisdnBinding
@@ -21,7 +20,6 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
-import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentClickListner
 import com.es.marocapp.usecase.billpayment.BillPaymentViewModel
@@ -223,28 +221,30 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             }
         }
         if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-
-            var isSelectedBillMatchedwithfatouratiSeperateMenuBillNames: Boolean = false
-            for (i in Constants.fatouratiSeperateMenuBillNames.indices) {
-
-                isSelectedBillMatchedwithfatouratiSeperateMenuBillNames =
-                    mActivityViewModel.selectedCreancer.get()?.trim()?.toLowerCase().equals(Constants.fatouratiSeperateMenuBillNames[i]?.trim()?.toLowerCase())
-                Logger.debugLog("Abro","${mActivityViewModel.selectedCreancer.get()?.trim()?.toLowerCase()} == ${Constants.fatouratiSeperateMenuBillNames[i]?.trim()?.toLowerCase()}")
-                if(isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
-                {
-                    break
-                }
-            }
-
+//commented LYDEC flow
+//            var isSelectedBillMatchedwithfatouratiSeperateMenuBillNames: Boolean = false
+//            for (i in Constants.fatouratiSeperateMenuBillNames.indices) {
+//
+//                isSelectedBillMatchedwithfatouratiSeperateMenuBillNames =
+//                    mActivityViewModel.selectedCreancer.get()?.trim()?.toLowerCase().equals(Constants.fatouratiSeperateMenuBillNames[i]?.trim()?.toLowerCase())
+//                Logger.debugLog("Abro","${mActivityViewModel.selectedCreancer.get()?.trim()?.toLowerCase()} == ${Constants.fatouratiSeperateMenuBillNames[i]?.trim()?.toLowerCase()}")
+//                if(isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
+//                {
+//                    break
+//                }
+//            }
+//
             //fatouratiSeperateMenuBillNames
-            if(isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
+            if(mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
             {
-                mActivityViewModel.requestForFatoratiStepTwoApi(
-                    activity,
-                    Constants.CURRENT_USER_MSISDN
+                mActivityViewModel.stepFourLydecSelected=true
+                mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames=false
+                mActivityViewModel.requestForFatoratiStepThreeApi(   activity,
+                    Constants.CURRENT_USER_MSISDN,mActivityViewModel.selectedCodeCreance
                 )
             }
             else{
+                mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames=false
                 mActivityViewModel.requestForFatoratiStepTwoThreeApi(
                     activity,
                     Constants.CURRENT_USER_MSISDN
@@ -386,30 +386,41 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                              var validatedParams = ValidatedParam("",it.params[i].nomChamp)
                             mActivityViewModel.validatedParams.add(validatedParams)
                             mActivityViewModel.recievedParams.add(RecievededParam(it.params[i].libelle,it.params[i].nomChamp,it.params[i].typeChamp,"",
-                                false,View.VISIBLE,""))
+                                false,View.VISIBLE,"",it.params[i].listVals))
                             //using for lable value restoring after error of invalid input
                             mActivityViewModel.demoParams.add(RecievededParam(it.params[i].libelle,it.params[i].nomChamp,it.params[i].typeChamp,"",
-                                false,View.VISIBLE,""))
+                                false,View.VISIBLE,"",it.params[i].listVals))
                         }
-                        mFatoratiParamsItemAdapter = FatoratiParamsItemAdapter(mActivityViewModel.recievedParams,object :FatoratiParamsItemAdapter.ParamTextChangedListner{
+                        mFatoratiParamsItemAdapter = FatoratiParamsItemAdapter(activity ,mActivityViewModel.recievedParams,object :FatoratiParamsItemAdapter.ParamTextChangedListner{
                             override fun onParamTextChangedClick(valChamp: String, position: Int) {
-                                if(it.params[position].libelle.equals("CIL",false)){
-                                    applyValidation = true
-                                } else {
-                                    applyValidation = false
-                                }
+                                if (position <= it.params.size - 1) {
+                                    if (it.params[position].libelle.equals("CIL", false)) {
+                                        applyValidation = true
+                                    } else {
+                                        applyValidation = false
+                                    }
 
-                                val editedText=valChamp
-                                val oldText= mActivityViewModel.validatedParams[position].valChamp
-                                if(editedText.contains(oldText)) {
-                                    var typeChamp=mActivityViewModel.recievedParams[position].typeChamp
-                                    var nomChamp=mActivityViewModel.recievedParams[position].nomChamp
+
+                                val editedText = valChamp
+                                val oldText = mActivityViewModel.validatedParams[position].valChamp
+                                if (editedText.contains(oldText)) {
+                                    var typeChamp =
+                                        mActivityViewModel.recievedParams[position].typeChamp
+                                    var nomChamp =
+                                        mActivityViewModel.recievedParams[position].nomChamp
+                                    var listVals =
+                                        mActivityViewModel.recievedParams[position].listVals
 
                                     //using different list value to restore correct value after invalid input error
-                                    var lablei=mActivityViewModel.demoParams[position].libelle
+                                    var lablei = mActivityViewModel.demoParams[position].libelle
 
-                                    mActivityViewModel.recievedParams.add(RecievededParam(lablei,nomChamp,typeChamp,"",
-                                        false,View.VISIBLE,valChamp))
+                                    mActivityViewModel.recievedParams.set(
+                                        position,
+                                        RecievededParam(
+                                            lablei, nomChamp, typeChamp, "",
+                                            false, View.VISIBLE, valChamp, listVals
+                                        )
+                                    )
 
 
                                     mActivityViewModel.validatedParams.set(
@@ -420,6 +431,42 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                                         )
                                     )
                                 }
+                            }
+                            }
+                            override fun onSpinnerTextChangedClick(valChamp: String, position: Int) {
+                             if(position<=it.params.size-1){
+                                    if(it.params[position].libelle.equals("CIL",false)){
+                                        applyValidation = true
+                                    } else {
+                                        applyValidation = false
+                                    }
+
+                                 Logger.debugLog("lydec","position  ${position} == ${mActivityViewModel.validatedParams.toString()}==${valChamp}")
+
+                                 val editedText=valChamp
+                                val oldText= mActivityViewModel.validatedParams[position].valChamp
+                              //  if(editedText.contains(oldText)) {
+                                    var typeChamp=mActivityViewModel.recievedParams[position].typeChamp
+                                    var nomChamp=mActivityViewModel.recievedParams[position].nomChamp
+                                    var listVals=mActivityViewModel.recievedParams[position].listVals
+
+                                    //using different list value to restore correct value after invalid input error
+                                    var lablei=mActivityViewModel.demoParams[position].libelle
+
+                                    mActivityViewModel.recievedParams.set(
+                                        position,RecievededParam(lablei,nomChamp,typeChamp,"",
+                                        false,View.VISIBLE,valChamp,listVals))
+
+
+                                    mActivityViewModel.validatedParams.set(
+                                        position,
+                                        ValidatedParam(
+                                            valChamp,
+                                            mActivityViewModel.recievedParams[position].nomChamp
+                                        )
+                                    )
+                           //     }
+                             }
                             }
                         })
                         mDataBinding.mFieldsRecycler.apply {
@@ -451,49 +498,104 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                         mDataBinding.inputLayoutPhoneNumber.visibility=View.GONE
                         mDataBinding.inputPhoneNumberHint.visibility=View.GONE
                         mDataBinding.mFieldsRecycler.visibility=View.VISIBLE
+
                         for(i in it.params.indices){
+                            var listVals:List<String> = ArrayList()
+                            if(!it.params[i].listVals.isNullOrEmpty())
+                            {
+                                listVals=it.params[i].listVals
+                            }
                             var validatedParams = ValidatedParam("",it.params[i].nomChamp)
                             mActivityViewModel.validatedParams.add(validatedParams)
                             mActivityViewModel.recievedParams.add(RecievededParam(it.params[i].libelle,it.params[i].nomChamp,it.params[i].typeChamp,"",
-                            false,View.VISIBLE,""))
+                            false,View.VISIBLE,"",listVals))
 
                             //using for lable value restoring after error of invalid input
                             mActivityViewModel.demoParams.add(RecievededParam(it.params[i].libelle,it.params[i].nomChamp,it.params[i].typeChamp,"",
-                                false,View.VISIBLE,""))
+                                false,View.VISIBLE,"",listVals))
                         }
 
-                        mFatoratiParamsItemAdapter = FatoratiParamsItemAdapter(mActivityViewModel.recievedParams,object :FatoratiParamsItemAdapter.ParamTextChangedListner{
-                            override fun onParamTextChangedClick(valChamp: String, position: Int) {
-                                if(it.params[position].libelle.equals("CIL",false)){
-                                    applyValidation = true
-                                } else {
-                                    applyValidation = false
-                                }
+                        mFatoratiParamsItemAdapter = FatoratiParamsItemAdapter(
+                            activity,
+                            mActivityViewModel.recievedParams,
+                            object :FatoratiParamsItemAdapter.ParamTextChangedListner{
+                                override fun onParamTextChangedClick(valChamp: String, position: Int) {
+                                    if(position<=it.params.size-1){
+                                        if(it.params[position].libelle.equals("CIL",false)){
+                                            applyValidation = true
+                                        } else {
+                                            applyValidation = false
+                                        }
 
 
-                                val editedText=valChamp
-                                val oldText= mActivityViewModel.validatedParams[position].valChamp
-                                if(editedText.contains(oldText)) {
-                                    var typeChamp=mActivityViewModel.recievedParams[position].typeChamp
-                                    var nomChamp=mActivityViewModel.recievedParams[position].nomChamp
 
-                                    //using different list value to restore correct value after invalid input error
-                                    var lablei=mActivityViewModel.demoParams[position].libelle
+                                    val editedText=valChamp
+                                    val oldText= mActivityViewModel.validatedParams[position].valChamp
+                                    if(editedText.contains(oldText)) {
+                                        var typeChamp=mActivityViewModel.recievedParams[position].typeChamp
+                                        var nomChamp=mActivityViewModel.recievedParams[position].nomChamp
+                                        var listVals=mActivityViewModel.recievedParams[position].listVals
 
-                                    mActivityViewModel.recievedParams.set(position,RecievededParam(lablei,nomChamp,typeChamp,"",
-                                        false,View.VISIBLE,valChamp))
+                                        //using different list value to restore correct value after invalid input error
+                                        var lablei=mActivityViewModel.demoParams[position].libelle
 
-                                    mActivityViewModel.validatedParams.set(
-                                        position,
-                                        ValidatedParam(
-                                            valChamp,
-                                            mActivityViewModel.recievedParams[position].nomChamp
+                                        mActivityViewModel.recievedParams.set(position,RecievededParam(lablei,nomChamp,typeChamp,"",
+                                            false,View.VISIBLE,valChamp,listVals))
+
+                                        mActivityViewModel.validatedParams.set(
+                                            position,
+                                            ValidatedParam(
+                                                valChamp,
+                                                mActivityViewModel.recievedParams[position].nomChamp
+                                            )
                                         )
-                                    )
 
+                                    }}
+                                }
+                                override fun onSpinnerTextChangedClick(valChamp: String, position: Int) {
+                                    if (position <= it.params.size - 1) {
+                                        if (it.params[position].libelle.equals("CIL", false)) {
+                                            applyValidation = true
+                                        } else {
+                                            applyValidation = false
+                                        }
+
+
+                                    val editedText = valChamp
+                                    val oldText =
+                                        mActivityViewModel.validatedParams[position].valChamp
+                                  //  if (editedText.contains(oldText)) {
+                                        var typeChamp =
+                                            mActivityViewModel.recievedParams[position].typeChamp
+                                        var nomChamp =
+                                            mActivityViewModel.recievedParams[position].nomChamp
+                                        var listVals =
+                                            mActivityViewModel.recievedParams[position].listVals
+
+                                        //using different list value to restore correct value after invalid input error
+                                        var lablei = mActivityViewModel.demoParams[position].libelle
+
+                                        mActivityViewModel.recievedParams.set(
+                                            position,
+                                            RecievededParam(
+                                                lablei, nomChamp, typeChamp, "",
+                                                false, View.VISIBLE, valChamp, listVals
+                                            )
+                                        )
+
+
+                                        mActivityViewModel.validatedParams.set(
+                                            position,
+                                            ValidatedParam(
+                                                valChamp,
+                                                mActivityViewModel.recievedParams[position].nomChamp
+                                            )
+                                        )
+                                  //  }
+                                }
                                 }
                             }
-                        })
+                        )
                         mDataBinding.mFieldsRecycler.apply {
                             adapter = mFatoratiParamsItemAdapter
                             layoutManager = LinearLayoutManager(activity)
@@ -703,6 +805,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 var typeChamp=mActivityViewModel.recievedParams[i].typeChamp
                 var nomChamp=mActivityViewModel.recievedParams[i].nomChamp
                 var valChamp=mActivityViewModel.recievedParams[i].inputValue
+                var listVals=mActivityViewModel.recievedParams[i].listVals
 
                //using different list value to restore correct value after invalid input error
                 var lablei=mActivityViewModel.demoParams[i].libelle
@@ -717,7 +820,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
                     if (isNumberRegexMatches) {
                         mActivityViewModel.recievedParams.set(i,
-                            RecievededParam(lablei,nomChamp,typeChamp,"",false,View.VISIBLE,valChamp))
+                            RecievededParam(lablei,nomChamp,typeChamp,"",false,View.VISIBLE,valChamp,listVals))
                         mFatoratiParamsItemAdapter.notifyItemChanged(i)
                         msisdnEntered = mActivityViewModel.validatedParams[0].valChamp.toString().trim()
 
@@ -731,7 +834,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 //                            LanguageData.getStringValue("invalid") + " " + cilLabel
 //                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
                         mActivityViewModel.recievedParams.set(i,
-                            RecievededParam(LanguageData.getStringValue("invalid")+ " " + lablei ,nomChamp,typeChamp,LanguageData.getStringValue("invalid") + " " + lablei,true,View.GONE,valChamp))
+                            RecievededParam(LanguageData.getStringValue("invalid")+ " " + lablei ,nomChamp,typeChamp,LanguageData.getStringValue("invalid") + " " + lablei,true,View.GONE,valChamp,listVals))
                         mFatoratiParamsItemAdapter.notifyItemChanged(i)
                     }
                 } else {
@@ -744,7 +847,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
     Logger.debugLog("billpayment","size 1 = ${mActivityViewModel.validatedParams.size}   size 2 = ${mActivityViewModel.recievedParams.size}")
                    if(!mActivityViewModel.validatedParams[i].valChamp.equals("")) {
                        Logger.debugLog("billpayment","value entered = ${mActivityViewModel.validatedParams[i].valChamp}")
-                       mActivityViewModel.recievedParams.set(i,RecievededParam(lablei, nomChamp, typeChamp, "", false, View.VISIBLE,valChamp))
+                       mActivityViewModel.recievedParams.set(i,RecievededParam(lablei, nomChamp, typeChamp, "", false, View.VISIBLE,valChamp,listVals))
                        mFatoratiParamsItemAdapter.notifyItemChanged(i)
                        msisdnEntered =
                            mActivityViewModel.validatedParams[0].valChamp.toString().trim()
@@ -753,7 +856,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                     else{
                        isValidForAll = false
                        mActivityViewModel.recievedParams
-                           .set(i,RecievededParam(LanguageData.getStringValue("invalid")+ " " + lablei ,nomChamp,typeChamp,LanguageData.getStringValue("invalid") + " " + lablei,true,View.GONE,valChamp))
+                           .set(i,RecievededParam(LanguageData.getStringValue("invalid")+ " " + lablei ,nomChamp,typeChamp,LanguageData.getStringValue("invalid") + " " + lablei,true,View.GONE,valChamp,listVals))
                        mFatoratiParamsItemAdapter.notifyItemChanged(i)
                     }
                 }

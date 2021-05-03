@@ -1,6 +1,5 @@
 package com.es.marocapp.usecase.billpayment.fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -25,7 +24,6 @@ import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.bill_payment_detail_row_layout.view.*
-import java.text.SimpleDateFormat
 
 class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsBinding>(),
     BillPaymentClickListner {

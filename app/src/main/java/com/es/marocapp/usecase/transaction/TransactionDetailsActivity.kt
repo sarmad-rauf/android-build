@@ -5,7 +5,6 @@ import android.view.View
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentTransactionDetailsBinding
 import com.es.marocapp.locale.LanguageData
-import com.es.marocapp.model.CustomModelHistoryItem
 import com.es.marocapp.model.responses.History
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.utils.Constants

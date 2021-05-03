@@ -78,5 +78,6 @@ data class GetPreLoginDataResponse(
     val reasonUpgradeToLevelThree:String,
     val cityNameRegex:String,
     val helpLineNumberAgent: String,
-    val billTypeInwi: String
+    val billTypeInwi: String,
+    val reasonForUpdateEmail: String
 )

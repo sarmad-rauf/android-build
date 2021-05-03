@@ -1,8 +1,6 @@
 package com.es.marocapp.usecase.approvals
 
-import android.content.Intent.getIntent
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,11 +11,8 @@ import com.es.marocapp.model.responses.Approvaldetail
 import com.es.marocapp.model.responses.UserApprovalResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
-import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.approvals.ApprovalFragment.Companion.SELECTED_APPROVAL_KEY
 import com.es.marocapp.usecase.approvals.ApprovalFragment.Companion.USER_APPROVAL_KEY
-import com.es.marocapp.usecase.cashservices.CashServicesActivity
-import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import kotlinx.android.synthetic.main.fragment_approval_details.*
@@ -45,7 +40,7 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
         //To get your arraylist
        // val extras = getIntent().extras
         selectedApprovalData = arguments?.getParcelable<Approvaldetail>(SELECTED_APPROVAL_KEY)!!
-
+        approvalViewModel.selectedTaxDetail= selectedApprovalData.message?.substringAfter(Constants.TAX_DETALS,"0")
         setUIData()
         setStrings()
 
@@ -73,10 +68,28 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
         tvRequestIndicatorVal.text=selectedApprovalData?.initiatingaccountholderid!!
         tvApprovalTypeVal.text=selectedApprovalData?.approvaltype
         tvApprovalIDVal.text=selectedApprovalData?.approvalid.toString()
-        tvTransactionFeeVal.text=selectedApprovalData?.fee?.currency.plus(" ").plus(selectedApprovalData?.fee?.amount)
+       if(approvalViewModel?.selectedTaxDetail.isNullOrEmpty())
+       {
+           approvalViewModel?.selectedTaxDetail="0"
+       }
+        val transactionFee =
+            selectedApprovalData?.fee?.amount?.let { approvalViewModel?.selectedTaxDetail?.toDouble()?.let { it1 ->
+                Constants.addAmountAndFee(it,
+                    it1
+                )
+            } }
+
+        tvTransactionFeeVal.text=selectedApprovalData?.fee?.currency.plus(" ").plus(transactionFee?.toDouble()?.let {
+            Constants.converValueToTwoDecimalPlace(it)
+        })
         tvAmountVal.text=selectedApprovalData?.amount?.currency.plus(" ").plus(selectedApprovalData?.amount?.amount)
         tvExourtVal.text=Constants.getZoneFormattedDateAndTime(selectedApprovalData?.approvalexpirytime.toString())
-        mDataBinding.tvTotalVal.text=selectedApprovalData?.amount?.currency.plus(" ").plus(Constants.addAmountAndFee(selectedApprovalData?.amount?.amount!!.toDouble() , selectedApprovalData?.fee?.amount!!.toDouble()))
+        mDataBinding.tvTotalVal.text=selectedApprovalData?.amount?.currency.plus(" ").plus(
+            transactionFee?.toDouble()?.let {
+                Constants.addAmountAndFee(selectedApprovalData?.amount?.amount!!.toDouble() ,
+                    it
+                )
+            })
     }
 
     private fun subscribeFoUserApprovalsResponse() {

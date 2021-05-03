@@ -95,7 +95,10 @@
 
                     <com.es.marocapp.widgets.MarocRegularTextView
                         android:id="@+id/tvCompanyNameVal"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/_135sdp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:gravity="end"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_16sdp"
                         android:text="Company A"
@@ -167,17 +170,24 @@
                         android:text="Sender Name"
                         android:textColor="@color/colorConfirmationTitle"
                         android:textSize="@dimen/_12sdp"
+                        app:layout_constraintEnd_toStartOf="@+id/tvSenderNameVal"
                         app:layout_constraintStart_toStartOf="@+id/tvCompanyNameTitle"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
                         app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
                     <com.es.marocapp.widgets.MarocRegularTextView
                         android:id="@+id/tvSenderNameVal"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/_135sdp"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:gravity="end"
+                        android:paddingStart="@dimen/_8sdp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:text="+212 88716 9918"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_14sdp"
+                        app:layout_constraintStart_toEndOf="@+id/tvSendNameTitle"
                         app:layout_constraintBottom_toBottomOf="@+id/tvSendNameTitle"
                         app:layout_constraintEnd_toEndOf="@+id/tvOwnerNameVal" />
 

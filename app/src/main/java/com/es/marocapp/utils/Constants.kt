@@ -31,6 +31,8 @@ import kotlin.properties.Delegates
 object Constants {
 
 
+     var TAX_DETALS: String=":TaxDetails="
+    lateinit var REASON_FOR_UPDATE_PROFILE: String
     lateinit var BILLTYPEINWI: String
     lateinit var HELPLINENUMBERAGENT: String
 

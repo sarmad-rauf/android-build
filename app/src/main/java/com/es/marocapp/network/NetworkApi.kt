@@ -190,8 +190,8 @@ interface NetworkApi {
     @GET(EndPoints.getTranslations)
     fun getTranslations() : Observable<TranslationApiResponse>
 
-    //Request for InitiateTransferQuote
-    @POST(EndPoints.initiatetransfer_quote)
+    //Request for InitiateTransferQuote changed to cashout_quote
+    @POST(EndPoints.cashout_quote)
     fun getInitiateTransferQuoteCall(@Body request : InitiateTransferQuoteRequest) : Observable<InitiateTransferQuoteResponse>
 
     //Request for InitiateTransfer

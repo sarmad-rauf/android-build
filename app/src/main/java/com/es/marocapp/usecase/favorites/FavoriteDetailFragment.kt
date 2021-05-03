@@ -13,12 +13,10 @@ import com.es.marocapp.adapter.LanguageCustomSpinnerAdapter
 import com.es.marocapp.databinding.FragmentFavoriteDetailsBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.Creancier
-import com.es.marocapp.model.responses.RecievededParam
 import com.es.marocapp.model.responses.ValidatedParam
 import com.es.marocapp.model.responses.creances
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
-import com.es.marocapp.usecase.billpayment.BillPaymentActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
@@ -137,25 +135,30 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
                 for(i in it.params.indices){
                     var validatedParams = ValidatedParam("",it.params[i].nomChamp)
                     mActivitViewModel.validatedParams.add(validatedParams)
-                    mActivitViewModel.recievedParams.add(
-                        RecievededParam(it.params[i].libelle,it.params[i].nomChamp,it.params[i].typeChamp,"",
-                        false,View.VISIBLE,"")
-                    )
+//                    mActivitViewModel.recievedParams.add(
+//                        RecievededParam(it.params[i].libelle,it.params[i].nomChamp,it.params[i].typeChamp,"",
+//                        false,View.VISIBLE,"")
+//                    )
                 }
 
-                mFatoratiParamsItemAdapter = FatoratiParamsItemAdapter(mActivitViewModel.recievedParams,object :
-                    FatoratiParamsItemAdapter.ParamTextChangedListner{
-                    override fun onParamTextChangedClick(valChamp: String, position: Int) {
-                        if(it.params[position].libelle.equals("CIL",false)){
-                            applyValidation = true
-                        } else {
-                            applyValidation = false
+                mFatoratiParamsItemAdapter = FatoratiParamsItemAdapter(
+                    activity,
+                    mActivitViewModel.recievedParams,
+                    object :
+                        FatoratiParamsItemAdapter.ParamTextChangedListner{
+                        override fun onParamTextChangedClick(valChamp: String, position: Int) {
+                            if(it.params[position].libelle.equals("CIL",false)){
+                                applyValidation = true
+                            } else {
+                                applyValidation = false
+                            }
+                            mActivitViewModel.validatedParams.add(position,
+                                ValidatedParam(valChamp,mActivitViewModel.recievedParams[position].nomChamp)
+                            )
                         }
-                        mActivitViewModel.validatedParams.add(position,
-                            ValidatedParam(valChamp,mActivitViewModel.recievedParams[position].nomChamp)
-                        )
+                        override fun onSpinnerTextChangedClick(valChamp: String, position: Int) {}
                     }
-                })
+                )
                 mDataBinding.mFieldsRecycler.apply {
                     adapter = mFatoratiParamsItemAdapter
                     layoutManager = LinearLayoutManager(activity)

@@ -2,7 +2,6 @@ package com.es.marocapp.usecase.billpayment
 
 import android.app.Application
 import android.content.Context
-import android.text.Editable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import com.es.marocapp.R
@@ -29,6 +28,15 @@ import kotlin.collections.HashMap
 
 class BillPaymentViewModel(application: Application) : AndroidViewModel(application){
 
+
+    var stepFourLydecSelected: Boolean=false
+    var selectedCodeCreance: String=""
+
+    //Step 2 creances List
+    var nomCreancierList: ArrayList<String> = ArrayList()
+
+    //check for LYDEC flow
+    var isSelectedBillMatchedwithfatouratiSeperateMenuBillNames: Boolean=false
 
     var TelecomeAddedOnce: Boolean=false
     var totalTax: Double=0.0
@@ -567,7 +575,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                 .compose(applyIOSchedulers())
                 .subscribe(
                     { result ->
-                        //isLoading.set(false)
+                        isLoading.set(false)
 
                         if (result?.responseCode != null)
                         {
@@ -759,11 +767,20 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
-
+            Logger.debugLog("lydec","creanse ${stepFourLydecSelected}")
+            var codeCreance = ""
+            if(stepFourLydecSelected)
+            {
+                stepFourLydecSelected=false
+                codeCreance= selectedCodeCreance
+            }
+            else{
+                codeCreance=fatoratiTypeSelected.get()!!.codeCreance
+            }
             isLoading.set(true)
 
                 disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiStepFour(
-                    BillPaymentFatoratiStepFourRequest(fatoratiTypeSelected.get()!!.codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
+                    BillPaymentFatoratiStepFourRequest(codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
                         validatedParams,Constants.OPERATION_TYPE_IMPAYES,Constants.getFatoratiAlias(transferdAmountTo),
                         fatoratiStepThreeObserver.get()!!.refTxFatourati,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
                 )

@@ -5,7 +5,8 @@ data class RegisterUserRequest(
     val context: String,
     val deviceId: String,
     val email: String,
-    val identity: String
+    val identity: String,
+    val reason: String
 )
 
 data class Accountholder(

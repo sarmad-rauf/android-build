@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.es.marocapp.R
-import com.es.marocapp.model.responses.Approvaldetail
 
 class AirTimeDataAdpater (private val airTimeData: ArrayList<String>,
                           var listner: AirTimeDataClickLisnter) : RecyclerView.Adapter<AirTimeDataAdpater.AirTimeDataItemViewHolder>() {
@@ -23,7 +22,7 @@ class AirTimeDataAdpater (private val airTimeData: ArrayList<String>,
         holder.airTimeItemName.text = airTimeData[position]
 
         holder.mAirTimeItemLayout.setOnClickListener {
-            listner.onSelectedAirTimeData(airTimeData[position])
+            listner.onSelectedAirTimeData(airTimeData[position],position)
         }
     }
 
@@ -34,6 +33,6 @@ class AirTimeDataAdpater (private val airTimeData: ArrayList<String>,
 
 
     interface AirTimeDataClickLisnter{
-        fun onSelectedAirTimeData(position: String)
+        fun onSelectedAirTimeData(position: String, position1: Int)
     }
 }

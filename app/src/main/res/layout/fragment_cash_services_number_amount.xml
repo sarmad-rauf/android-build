@@ -110,6 +110,7 @@
             android:gravity="top"
             android:backgroundTint="@color/colorWhite"
             android:hint="@string/note"
+            android:maxLength="100"
             android:maxLines="5"
             android:lines="5"
             />

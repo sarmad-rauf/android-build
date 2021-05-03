@@ -68,7 +68,7 @@
         android:id="@+id/progress_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/_20sdp"
+        android:textSize="@dimen/_22sdp"
         android:textColor="@color/colorWhite"
         tools:text="DH 2000000000"
         android:paddingStart="@dimen/_20sdp"

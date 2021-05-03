@@ -44,18 +44,19 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_recharge"
             android:scaleType="centerCrop"
-            android:tint="@color/colorTextGreyMedium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
+<!--        android:tint="@color/colorTextGreyMedium"-->
+
 
         <com.es.marocapp.widgets.MarocRegularTextView
             android:id="@+id/useCaseTitle"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_35sdp"
             android:textSize="@dimen/_10ssp"
-            android:textColor="@color/colorEditTextGreyMedium"
+            android:textColor="@color/colorBlack"
             tools:text="@string/recharge"
             android:gravity="center"
             android:maxLines="3"

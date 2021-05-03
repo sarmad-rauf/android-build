@@ -186,7 +186,7 @@ class ConsumerRegistrationViewModel(application: Application) : AndroidViewModel
                 RegisterConsumerUserRequest(
                     Accountholder(DOB,identificationNumber,firstName,gender,postalAddress,lastName,city),
                     ApiConstant.CONTEXT_BEFORE_LOGIN,deviceID_UserMsisdn,email,Constants.getNumberMsisdn(mUserMsisdn),
-                    EncryptionUtils.encryptString(otp))
+                    EncryptionUtils.encryptString(otp),Constants.REASON_FOR_UPDATE_PROFILE)
 
             )
                 .compose(applyIOSchedulers())
