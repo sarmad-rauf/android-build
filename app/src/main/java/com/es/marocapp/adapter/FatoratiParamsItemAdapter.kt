@@ -100,8 +100,6 @@ class FatoratiParamsItemAdapter(
     }
         else{
             val spinnerHolder: SpinnerItemViewHolder = holder as SpinnerItemViewHolder
-            spinnerHolder.spinnerField.focusable
-            spinnerHolder.spinnerField.isClickable
             spinnerHolder.spinnerFieldTitile.isEnabled =false
             spinnerHolder.spinnerFieldTitile.text=paramItems[position].libelle
             spinnerHolder.spinnerField.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{

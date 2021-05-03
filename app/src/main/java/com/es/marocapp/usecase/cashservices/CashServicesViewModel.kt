@@ -67,7 +67,7 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
             noteToSend = message
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getInitiateTransferQuoteCall(
-                InitiateTransferQuoteRequest(amount, ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.getNumberMsisdn(transferdAmountTo))
+                InitiateTransferQuoteRequest(amount, ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(transferdAmountTo),Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
