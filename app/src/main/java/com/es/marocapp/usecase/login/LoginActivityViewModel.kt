@@ -780,7 +780,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                 .subscribe(
                     { result ->
                         Logger.debugLog("userType","cert  ${result.toString()}")
-                        isLoading.set(false)
+
                         if(result?.responseCode != null){
                             when(result?.responseCode) {
                                 ApiConstant.API_SUCCESS ->  getLoginWithCertResponseListner.postValue(result)
@@ -833,7 +833,6 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                 .subscribe(
                     { result ->
                         Logger.debugLog("email","email  ${result.toString()}")
-                        isLoading.set(false)
                         if(result?.responseCode != null){
                             when(result?.responseCode) {
                                 ApiConstant.API_SUCCESS ->  getAccountHolderEmailResponseListner.postValue(result)
@@ -885,7 +884,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                 .compose(applyIOSchedulers())
                 .subscribe(
                     { result ->
-                        isLoading.set(false)
+
 
                         if (result?.responseCode != null )
                         {

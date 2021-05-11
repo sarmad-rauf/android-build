@@ -56,13 +56,7 @@
 <!--        android:background="@color/colorActivityHeaderBlue"-->
 <!--        app:layout_constraintTop_toTopOf="@+id/headerContainerTop"-->
 <!--        app:layout_constraintBottom_toBottomOf="@+id/guideline3"/>-->
-    <ImageView
-        android:id="@+id/backgroundImg"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/colorWhite"
-        app:layout_constraintTop_toTopOf="@+id/guideline3"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+
 
 
 

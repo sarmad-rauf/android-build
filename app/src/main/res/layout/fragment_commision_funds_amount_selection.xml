@@ -5,7 +5,7 @@
 
         <variable
             name="viewmodel"
-            type="com.es.marocapp.usecase.sendmoney.SendMoneyViewModel"/>
+            type="com.es.marocapp.usecase.transfercommision.TransferCommisionViewModel"/>
 
         <variable
             name="listner"

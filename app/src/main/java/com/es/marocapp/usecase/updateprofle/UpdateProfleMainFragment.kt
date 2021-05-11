@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.format.DateFormat
-import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
@@ -16,7 +15,6 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
-import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
@@ -40,7 +38,7 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        updateProfileViewModel= ViewModelProvider(activity as UpdateProfileActivity).get(UpdateProfileViewModel::class.java)
+        updateProfileViewModel= ViewModelProvider(activity as TransferCommisionActivity).get(UpdateProfileViewModel::class.java)
         mDataBinding.apply {
             viewModel =updateProfileViewModel }
 
@@ -91,7 +89,7 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
 
     private fun setObservers() {
         updateProfileViewModel.errorText.observe(this@UpdateProfleMainFragment , Observer {
-            DialogUtils.showErrorDialoge(activity as UpdateProfileActivity,it)
+            DialogUtils.showErrorDialoge(activity as TransferCommisionActivity,it)
         })
 
         updateProfileViewModel.UpdateEmailResponseListner.observe(this@UpdateProfleMainFragment , Observer {
@@ -100,14 +98,14 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
               Constants.CURRENT_USER_EMAIL=mDataBinding.inputEmail.text.toString()
                Constants.shouldUpdate=true
               Logger.debugLog("updatePrfile","reflacting changess")
-              DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description,0,object :DialogUtils.OnYesClickListner{
+              DialogUtils.successFailureDialogue(activity as TransferCommisionActivity, it.description,0,object :DialogUtils.OnYesClickListner{
                   override fun onDialogYesClickListner() {
-                      (activity as UpdateProfileActivity).startNewActivityAndClear(activity as UpdateProfileActivity,MainActivity::class.java)
+                      (activity as TransferCommisionActivity).startNewActivityAndClear(activity as TransferCommisionActivity,MainActivity::class.java)
                   }
               })
           }
           else{
-              DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description,1)
+              DialogUtils.successFailureDialogue(activity as TransferCommisionActivity, it.description,1)
           }
         })
 
@@ -122,16 +120,16 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
                 }
                 else{
                     updateProfileViewModel.isLoading.set(false)
-                    DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description,0,object :DialogUtils.OnYesClickListner{
+                    DialogUtils.successFailureDialogue(activity as TransferCommisionActivity, it.description,0,object :DialogUtils.OnYesClickListner{
                         override fun onDialogYesClickListner() {
-                            (activity as UpdateProfileActivity).startNewActivityAndClear(activity as UpdateProfileActivity,MainActivity::class.java)
+                            (activity as TransferCommisionActivity).startNewActivityAndClear(activity as TransferCommisionActivity,MainActivity::class.java)
                         }
                     })
                 }
             }
             else{
                 updateProfileViewModel.isLoading.set(false)
-                DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description,1)
+                DialogUtils.successFailureDialogue(activity as TransferCommisionActivity, it.description,1)
             }
         })
 
@@ -148,15 +146,15 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
                     updateProfileViewModel.requestForUpdateEmailAPI(requireContext(),mDataBinding.inputEmail.text.toString())
                 }else {
                     updateProfileViewModel.isLoading.set(false)
-                    DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description, 0,object :DialogUtils.OnYesClickListner{
+                    DialogUtils.successFailureDialogue(activity as TransferCommisionActivity, it.description, 0,object :DialogUtils.OnYesClickListner{
                         override fun onDialogYesClickListner() {
-                            (activity as UpdateProfileActivity).startNewActivityAndClear(activity as UpdateProfileActivity,MainActivity::class.java)
+                            (activity as TransferCommisionActivity).startNewActivityAndClear(activity as TransferCommisionActivity,MainActivity::class.java)
                         }
                     })
                 }
             }else{
                 updateProfileViewModel.isLoading.set(false)
-                DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description,1)
+                DialogUtils.successFailureDialogue(activity as TransferCommisionActivity, it.description,1)
             }
         })
 
@@ -181,15 +179,15 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
                 }
                 else {
                    updateProfileViewModel.isLoading.set(false)
-                   DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description, 0,object :DialogUtils.OnYesClickListner{
+                   DialogUtils.successFailureDialogue(activity as TransferCommisionActivity, it.description, 0,object :DialogUtils.OnYesClickListner{
                        override fun onDialogYesClickListner() {
-                           (activity as UpdateProfileActivity).startNewActivityAndClear(activity as UpdateProfileActivity,MainActivity::class.java)
+                           (activity as TransferCommisionActivity).startNewActivityAndClear(activity as TransferCommisionActivity,MainActivity::class.java)
                        }
                    })
                }
             }else{
                 updateProfileViewModel.isLoading.set(false)
-                DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, it.description,1)
+                DialogUtils.successFailureDialogue(activity as TransferCommisionActivity, it.description,1)
             }
         })
     }
@@ -304,7 +302,7 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
                 {
                     updateProfileViewModel.requestForUpdateEmailAPI(requireContext(),mDataBinding.inputEmail.text.toString())
                 }else{
-                    DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, LanguageData.getStringValue("UpdateProfile"),1)
+                    DialogUtils.successFailureDialogue(activity as TransferCommisionActivity, LanguageData.getStringValue("UpdateProfile"),1)
                 }
             }
             else if(updateProfileViewModel.currentProfile.contains("2"))
@@ -317,7 +315,7 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
                 {
                     updateProfileViewModel.requestForUpdateEmailAPI(requireContext(),mDataBinding.inputEmail.text.toString())
                 }else{
-                    DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, LanguageData.getStringValue("UpdateProfile"),1)
+                    DialogUtils.successFailureDialogue(activity as TransferCommisionActivity, LanguageData.getStringValue("UpdateProfile"),1)
                 }
             }
             else{
@@ -339,7 +337,7 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
                     updateProfileViewModel.requestForUpdateEmailAPI(requireContext(),mDataBinding.inputEmail.text.toString())
                 }
                 else{
-                    DialogUtils.successFailureDialogue(activity as UpdateProfileActivity, LanguageData.getStringValue("UpdateProfile"),1)
+                    DialogUtils.successFailureDialogue(activity as TransferCommisionActivity, LanguageData.getStringValue("UpdateProfile"),1)
                 }
             }
         }
@@ -484,7 +482,7 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
         val year = dateParts[0].toInt()
 
         val datePickerDialog = DatePickerDialog(
-            activity as UpdateProfileActivity,
+            activity as TransferCommisionActivity,
             DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
                 var monthVal = (month).toString()
                 var selectedDate = "$year-$monthVal-$day"

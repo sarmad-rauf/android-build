@@ -1,6 +1,7 @@
 package com.es.marocapp.usecase.login.login
 
 
+import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.graphics.Paint
 import android.os.Bundle
@@ -358,7 +359,8 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
 
             //For Testing For without API Calling moving to Next Fragment uncomment below LineE
 //            (activity as LoginActivity).startNewActivityAndClear(activity as LoginActivity, MainActivity::class.java)
-
+            val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(requireView().getWindowToken(), 0)
             mActivityViewModel.requestForLogigWithCertAPI(
                 activity,
                 mDataBinding.inputPin.text.toString().trim(),

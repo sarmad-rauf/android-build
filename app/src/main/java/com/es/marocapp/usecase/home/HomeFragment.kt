@@ -34,6 +34,7 @@ import com.es.marocapp.usecase.consumerregistration.ConsumerRegistrationActivity
 import com.es.marocapp.usecase.payments.PaymentsActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.usecase.transaction.TransactionDetailsActivity
+import com.es.marocapp.usecase.updateprofle.TransferCommisionActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
@@ -273,16 +274,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             adapter = mLanguageSpinnerAdapter
         }
 
-
+        Constants.acountTypeList.clear()
 
         if (Constants.IS_AGENT_USER) {
-          if(Constants.acountTypeList.isEmpty()) {
+
+            if(Constants.acountTypeList.isEmpty()) {
               LanguageData.getStringValue("Wallet")?.let { Constants.acountTypeList.add(it) }
               for (i in Constants.getAccountsResponseArray.indices) {
-                  if (Constants.getAccountsResponseArray[i].profileName.equals(Constants.MERCHANT_AGENT_PROFILE_NAME)) {
+                  if(Constants.getAccountsResponseArray.get(i).profileName.equals(Constants.MERCHANT_AGENT_PROFILE_NAME)&&
+                      Constants.getAccountsResponseArray.get(i).accountStatus.equals(Constants.ACTIVE)) {
                       LanguageData.getStringValue("Merchant")
                           ?.let { Constants.acountTypeList.add(it) }
-                      break
+                  }
+                  if (Constants.getAccountsResponseArray[i].accountType.equals("COMMISSIONING")) {
+                      LanguageData.getStringValue("Commissioning")
+                          ?.let { Constants.acountTypeList.add(it) }
                   }
               }
 
@@ -457,6 +463,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     )
                 )
             }
+            if(Constants.loginWithCertResponse.allowedMenu.TransferCommission != null){
+                this.add(
+                    HomeUseCasesModel(
+                        LanguageData.getStringValue("TransferCommission").toString(),
+                        R.drawable.icons_tc
+                    )
+                )
+            }
 
             if (Constants.loginWithCertResponse.allowedMenu.SendMoney != null) {
                 this.add(
@@ -548,6 +562,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                                 LanguageData.getStringValue("InitiatePurchaseToMerchant")
                             )
 
+                            startActivity(intent)
+                        }
+                        LanguageData.getStringValue("TransferCommission").toString() -> {
+                            val intent = Intent(
+                                activity as MainActivity,
+                                TransferCommisionActivity::class.java
+                            )
                             startActivity(intent)
                         }
 
@@ -694,6 +715,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     ), -1
                 )
             )
+            Constants.WALLETACCOUNTBALANCE= mbalanceInfoAndResonse.balance!!
         }
         else{
             listOfFragment.add(
@@ -707,6 +729,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     ), -1
                 )
             )
+            Constants.WALLETACCOUNTBALANCE=amount
         }
         addAgentBalanceCard(listOfFragment)
         populateBanners(listOfFragment)
@@ -747,10 +770,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     listOfFragment.add(HomeBalanceFragment(
                         0, CardModel(
                             R.drawable.ic_wallet_balance,
-                            Constants.getAccountsResponse!!.accountType,
+                            LanguageData.getStringValue("Commission").toString(),
                             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + Constants.getAccountsResponse!!.balance,"0","0"
                         ),-1)
                     )
+                    Constants.COMMISIONACCOUNTBALANCE=Constants.getAccountsResponse!!.balance
+                    val fri = Constants.getAccountsResponse!!.accountFri.replace("FRI:","").trim()
+                    Constants.COMMISIONACCOUNTFRI=fri
                 }
 
                 if (Constants.getAccountsResponseArray[i].profileName.equals(
@@ -768,8 +794,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                         ),-1)
                     )
 
+
                 }
             }
+            if(Constants.COMMISIONACCOUNTBALANCE.isNullOrEmpty())
+            {
+                Constants.COMMISIONACCOUNTBALANCE="0"
+            }
+            if(Constants.WALLETACCOUNTBALANCE.isNullOrEmpty())
+            {
+                Constants.WALLETACCOUNTBALANCE="0"
+            }
+            val totalBalance = Constants.converValueToTwoDecimalPlace(Constants.addTwoValues(Constants.COMMISIONACCOUNTBALANCE.toDouble(),Constants.WALLETACCOUNTBALANCE.toDouble()))
+            listOfFragment.add(0,HomeBalanceFragment(
+                0, CardModel(
+                    R.drawable.ic_wallet_balance,
+                    LanguageData.getStringValue("TotalBalance").toString(),
+                    Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + totalBalance,"0","0"
+                ),-1)
+            )
         }
     }
 
@@ -897,7 +940,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     {
                         for(i in Constants.getAccountsResponseArray.indices)
                         {
-                            if(Constants.getAccountsResponseArray.get(i).profileName.equals(Constants.MERCHANT_AGENT_PROFILE_NAME))
+                            if(Constants.getAccountsResponseArray.get(i).profileName.equals(Constants.MERCHANT_AGENT_PROFILE_NAME)&&
+                                Constants.getAccountsResponseArray.get(i).accountStatus.equals(Constants.ACTIVE))
+                            {
+                                homeViewModel.passNewFri(Constants.getAccountsResponseArray.get(i).accountFri)
+                            }
+                        }
+                    }
+                    else if(currentSelection.equals(LanguageData.getStringValue("Commissioning")))
+                    {
+                        for(i in Constants.getAccountsResponseArray.indices)
+                        {
+                            if(Constants.getAccountsResponseArray.get(i).accountType.equals("COMMISSIONING"))
                             {
                                 homeViewModel.passNewFri(Constants.getAccountsResponseArray.get(i).accountFri)
                             }

@@ -23,13 +23,13 @@ class UpdateProfileActivity : BaseActivity<ActivityUpdateProfileBinding>() {
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        updateProfileViewModel = ViewModelProvider(this@UpdateProfileActivity).get(UpdateProfileViewModel::class.java)
+        updateProfileViewModel = ViewModelProvider(this).get(UpdateProfileViewModel::class.java)
         mDataBinding.apply { viewmodel=updateProfileViewModel }
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_update_profile_host_fragment) as NavHostFragment
         navConroller=navHostFragment.navController
         mDataBinding.root.activityHeaderBack.setOnClickListener {
             if (updateProfileViewModel.popBackStackTo == -1) {
-                this@UpdateProfileActivity.finish()
+                this.finish()
             } else {
                 navConroller.popBackStack(updateProfileViewModel.popBackStackTo, false)
             }
@@ -40,7 +40,7 @@ class UpdateProfileActivity : BaseActivity<ActivityUpdateProfileBinding>() {
 
 
     private fun setHeaderChangeObserver() {
-        updateProfileViewModel.headerTitle.observe(this@UpdateProfileActivity,Observer {
+        updateProfileViewModel.headerTitle.observe(this,Observer {
             headerUpdateProfle.rootView.activityHeaderTitle.text=it
         })
     }

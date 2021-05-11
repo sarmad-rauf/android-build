@@ -1,15 +1,11 @@
 package com.es.marocapp.usecase
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.get
 import androidx.lifecycle.Observer
@@ -31,11 +27,9 @@ import com.es.marocapp.usecase.favorites.FavoritesActivity
 import com.es.marocapp.usecase.home.HomeFragment
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.qrcode.GenerateQrActivity
-import com.es.marocapp.usecase.qrcode.ScanQRActivity
-import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.usecase.settings.SettingsActivity
 import com.es.marocapp.usecase.termsandcondiitons.TermsAndConditions
-import com.es.marocapp.usecase.updateprofle.UpdateProfileActivity
+import com.es.marocapp.usecase.updateprofle.TransferCommisionActivity
 import com.es.marocapp.usecase.upgradeprofile.UpgradeProfileActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
@@ -45,8 +39,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.layout_side_menu_navigation.view.*
-import java.io.File
-import java.net.URI
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListeners {
@@ -349,7 +341,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         mDataBinding.navigationItem.rootView.updateProfile.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
-            startNewActivity(this@MainActivity, UpdateProfileActivity::class.java)
+            startNewActivity(this@MainActivity, TransferCommisionActivity::class.java)
         }
 
         mDataBinding.navigationItem.rootView.oppositionMTCashGroup.setOnClickListener {

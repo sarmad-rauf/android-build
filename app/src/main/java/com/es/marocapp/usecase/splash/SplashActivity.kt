@@ -197,7 +197,10 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.reasonUpgradeToLevelTwo=it.reasonUpgradeToLevelTwo
                 Constants.reasonUpgradeToLevelThree=it.reasonUpgradeToLevelThree
                 Constants.fatouratiSeperateMenuBillNames=it.fatouratiSeperateMenuBillNames
-                Constants.iamBillsTriggerFatouratiFlow=it.iamBillsTriggerFatouratiFlow
+                if (it.iamBillsTriggerFatouratiFlow != null) {
+                    Constants.iamBillsTriggerFatouratiFlow=it.iamBillsTriggerFatouratiFlow
+                }
+
                Constants.CityNameRegex=it.cityNameRegex
                 if (it.defaultAccountOtpLength != null) {
                     Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH = it?.defaultAccountOtpLength?.toInt()!!

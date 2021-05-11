@@ -79,15 +79,20 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
         mDataBinding.tvTransactionHistoryTitle.text = LanguageData.getStringValue("TransactionHistory")
         mDataBinding.tvNoDataFound.text = LanguageData.getStringValue("NoDataFound")
         mDataBinding.selectAcountTitile.text=LanguageData.getStringValue("SelectAccountType")
-
+        Constants.acountTypeList.clear()
         if (Constants.IS_AGENT_USER) {
             if(Constants.acountTypeList.isEmpty()) {
             LanguageData.getStringValue("Wallet")?.let { Constants.acountTypeList.add(it) }
             for( i in Constants.getAccountsResponseArray.indices)
             {
-                if(Constants.getAccountsResponseArray[i].profileName.equals(Constants.MERCHANT_AGENT_PROFILE_NAME))
+                if(Constants.getAccountsResponseArray.get(i).profileName.equals(Constants.MERCHANT_AGENT_PROFILE_NAME)&&
+                    Constants.getAccountsResponseArray.get(i).accountStatus.equals("ACTIVE"))
                 {
                     LanguageData.getStringValue("Merchant")?.let { Constants.acountTypeList.add(it) }
+                }
+                if (Constants.getAccountsResponseArray[i].accountType.equals("COMMISSIONING")) {
+                    LanguageData.getStringValue("Commissioning")
+                        ?.let { Constants.acountTypeList.add(it) }
                 }
             }
             }
@@ -184,12 +189,23 @@ class TransactionFragment : BaseFragment<FragmentTransactionBinding>(), Transact
                     {
                         for(i in Constants.getAccountsResponseArray.indices)
                         {
-                            if(Constants.getAccountsResponseArray.get(i).profileName.equals(Constants.MERCHANT_AGENT_PROFILE_NAME))
+                            if(Constants.getAccountsResponseArray.get(i).profileName.equals(Constants.MERCHANT_AGENT_PROFILE_NAME)&&
+                                Constants.getAccountsResponseArray.get(i).accountStatus.equals("ACTIVE"))
                             {
                                 transactionViewModel.passNewFri(Constants.getAccountsResponseArray.get(i).accountFri)
                             }
                         }
 
+                    }
+                    else if(currentSelection.equals(LanguageData.getStringValue("Commissioning")))
+                    {
+                        for(i in Constants.getAccountsResponseArray.indices)
+                        {
+                            if(Constants.getAccountsResponseArray.get(i).accountType.equals("COMMISSIONING"))
+                            {
+                                transactionViewModel.passNewFri(Constants.getAccountsResponseArray.get(i).accountFri)
+                            }
+                        }
                     }
                     else{
                         transactionViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN,false)

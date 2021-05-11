@@ -53,10 +53,10 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
     var getBalanceResponseListner = SingleLiveEvent<GetBalanceResponse>()
 
     //Request For InitiateTrasnferQoute
-    fun requestForInitiateTransferQouteApi(context: Context?,
+    fun requestForCashoutQouteApi(context: Context?,
                                   amount : String,
                                   userMsisdn : String,
-                                           message: String
+                                  message: String
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
@@ -66,8 +66,8 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
             transferdAmountTo = userMsisdn
             noteToSend = message
 
-            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getInitiateTransferQuoteCall(
-                InitiateTransferQuoteRequest(amount, ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(transferdAmountTo),Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getCashoutQuoteCall(
+                InitiateTransferQuoteRequest(amount, ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.getNumberMsisdn(transferdAmountTo))
             )
                 .compose(applyIOSchedulers())
                 .subscribe(

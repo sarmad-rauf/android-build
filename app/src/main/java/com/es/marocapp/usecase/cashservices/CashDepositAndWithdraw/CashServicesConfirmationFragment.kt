@@ -227,7 +227,7 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
                     else{
                         message = mActivityViewModel.noteToSend+Constants.TAX_DETALS+"0"
                     }
-                    mActivityViewModel.requestForInitiateTransferApi(activity,mActivityViewModel.qouteId,message)
+                    mActivityViewModel.requestForInitiateTransferApi(activity,mActivityViewModel.qouteId,mActivityViewModel.noteToSend)
                 }
 
                 if(mActivityViewModel.isDepositUseCase.get()!!){

@@ -77,7 +77,8 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                     }
                 }
             }
-
+            mActivityViewModel.stepFourLydecSelected=false
+            mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames=false
             if (mFavoritesList.isEmpty()) {
                 mDataBinding.billPaymentMangeFavGroup.visibility = View.GONE
             } else {

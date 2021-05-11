@@ -12,6 +12,7 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.Approvaldetail
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
+import com.es.marocapp.usecase.cashservices.CashServicesActivity
 import com.es.marocapp.utils.DialogUtils
 
 class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
@@ -44,8 +45,9 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
             override fun onApprovalItemTypeClick(position: Int) {
               //  val bundle= bundleOf("data",mApprovalsList.get(0) as ArrayList<Approvaldetail>)
                 val b = Bundle()
-                b.putParcelable(SELECTED_APPROVAL_KEY, mApprovalsList.get(position) as Approvaldetail)
+                approvalViewModel.selectedapproval=mApprovalsList.get(position)
                 (activity as ApprovalActivity).navController.navigate(R.id.action_approvalFragment_to_approvalDetailFragment2,b)
+
             }
 
         })
@@ -85,10 +87,34 @@ class ApprovalFragment : BaseFragment<FragmentApprovalBinding>() {
                         addAll(it.approvaldetails as ArrayList<Approvaldetail>)
                         mApprovalsItemAdapter.notifyDataSetChanged()
                     }
+
+
+
+
+
                 }
             }else{
               DialogUtils.showErrorDialoge(activity,it.description)
             }
         })
+
+        approvalViewModel.getCashOutQuoteResponseListner.observe(this@ApprovalFragment,
+            Observer {
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    approvalViewModel.totalTax=0.0
+                    if (it.quoteList.isNotEmpty()) {
+                        for(taxes in it.taxList.indices)
+                        {
+                            approvalViewModel.totalTax=approvalViewModel.totalTax+it.taxList[taxes].amount.amount.toString().toDouble()
+                        }
+//                        approvalViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
+//                        approvalViewModel.qouteId = it.quoteList[0].quoteid
+                        approvalViewModel.selectedTaxDetail=approvalViewModel.totalTax.toString()
+                    }
+                    (activity as ApprovalActivity).navController.navigate(R.id.action_approvalFragment_to_approvalDetailFragment2,approvalViewModel.bundle)
+                } else {
+                    DialogUtils.showErrorDialoge(activity, it.description)
+                }
+            })
     }
 }

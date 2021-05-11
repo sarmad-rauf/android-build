@@ -562,6 +562,7 @@ class FragmentBillPaymentPostPaidConfirmation :
         mActivityViewModel.isPostPaidMobileSelected.set(false)
         mActivityViewModel.isPostPaidFixSelected.set(false)
         mActivityViewModel.isInternetSelected.set(false)
+        mActivityViewModel.stepFourLydecSelected=false
 
         mActivityViewModel.isFatoratiUseCaseSelected.set(false)
         mActivityViewModel.isBillUseCaseSelected.set(false)

@@ -39,8 +39,17 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
 
         //To get your arraylist
        // val extras = getIntent().extras
-        selectedApprovalData = arguments?.getParcelable<Approvaldetail>(SELECTED_APPROVAL_KEY)!!
-        approvalViewModel.selectedTaxDetail= selectedApprovalData.message?.substringAfter(Constants.TAX_DETALS,"0")
+        selectedApprovalData = approvalViewModel.selectedapproval
+        approvalViewModel.totalTax=0.0
+        if (selectedApprovalData.taxList.isNotEmpty()) {
+            for(taxes in selectedApprovalData.taxList.indices)
+            {
+                approvalViewModel.totalTax=approvalViewModel.totalTax+selectedApprovalData.taxList[taxes].amount.amount.toString().toDouble()
+            }
+//                        approvalViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
+//                        approvalViewModel.qouteId = it.quoteList[0].quoteid
+            approvalViewModel.selectedTaxDetail=approvalViewModel.totalTax.toString()
+        }        //approvalViewModel.selectedTaxDetail= selectedApprovalData.message?.substringAfter(Constants.TAX_DETALS,"0")
         setUIData()
         setStrings()
 

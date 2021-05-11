@@ -19,7 +19,7 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:background="@color/colorWhite"
-        tools:context=".usecase.updateprofle.UpdateProfileActivity">
+        tools:context=".usecase.updateprofle.TransferCommisionActivity">
 
 
         <androidx.core.widget.NestedScrollView

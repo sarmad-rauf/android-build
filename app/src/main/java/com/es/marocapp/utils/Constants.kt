@@ -31,7 +31,10 @@ import kotlin.properties.Delegates
 object Constants {
 
 
-     var TAX_DETALS: String=":TaxDetails="
+    var COMMISIONACCOUNTFRI: String = ""
+    var COMMISIONACCOUNTBALANCE: String = "0"
+    var WALLETACCOUNTBALANCE: String="0"
+    var TAX_DETALS: String=":TaxDetails="
     lateinit var REASON_FOR_UPDATE_PROFILE: String
     lateinit var BILLTYPEINWI: String
     lateinit var HELPLINENUMBERAGENT: String
@@ -366,6 +369,10 @@ object Constants {
 
     fun addAmountAndFee(amount: Double, fee: Double): String {
         return (amount + fee).toString()
+    }
+
+    fun addTwoValues(amount: Double, fee: Double): Double {
+        return (amount + fee)
     }
 
     fun parseDateFromString(dateString: String): String {

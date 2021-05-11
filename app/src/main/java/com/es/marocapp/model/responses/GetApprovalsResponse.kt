@@ -7,34 +7,35 @@ data class GetApprovalsResponse(
     val approvaldetails: List<Approvaldetail>?,
     val description: String?,
     val responseCode: String?
-):Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.createTypedArrayList(Approvaldetail),
-        parcel.readString(),
-        parcel.readString()
-    ) {
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeTypedList(approvaldetails)
-        parcel.writeString(description)
-        parcel.writeString(responseCode)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<GetApprovalsResponse> {
-        override fun createFromParcel(parcel: Parcel): GetApprovalsResponse {
-            return GetApprovalsResponse(parcel)
-        }
-
-        override fun newArray(size: Int): Array<GetApprovalsResponse?> {
-            return arrayOfNulls(size)
-        }
-    }
-}
+)
+//    :Parcelable {
+//    constructor(parcel: Parcel) : this(
+//        parcel.createTypedArrayList(Approvaldetail),
+//        parcel.readString(),
+//        parcel.readString()
+//    ) {
+//    }
+//
+//    override fun writeToParcel(parcel: Parcel, flags: Int) {
+//        parcel.writeTypedList(approvaldetails)
+//        parcel.writeString(description)
+//        parcel.writeString(responseCode)
+//    }
+//
+//    override fun describeContents(): Int {
+//        return 0
+//    }
+//
+//    companion object CREATOR : Parcelable.Creator<GetApprovalsResponse> {
+//        override fun createFromParcel(parcel: Parcel): GetApprovalsResponse {
+//            return GetApprovalsResponse(parcel)
+//        }
+//
+//        override fun newArray(size: Int): Array<GetApprovalsResponse?> {
+//            return arrayOfNulls(size)
+//        }
+//    }
+//}
 
 data class Approvaldetail(
     val amount: Amount?,
@@ -46,47 +47,9 @@ data class Approvaldetail(
     val initiatingaccountholderid: String?,
     val message: String?,
     val offeridentities: Any,
-    val status: String?
-):Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readParcelable(Amount::class.java.classLoader),
-        parcel.readString(),
-        parcel.readInt(),
-        parcel.readString(),
-        TODO("discount"),
-        parcel.readParcelable(FeeAprroval::class.java.classLoader),
-        parcel.readString(),
-        parcel.readString(),
-        TODO("offeridentities"),
-        parcel.readString()
-    ) {
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeParcelable(amount, flags)
-        parcel.writeString(approvalexpirytime)
-        parcel.writeInt(approvalid)
-        parcel.writeString(approvaltype)
-        parcel.writeParcelable(fee, flags)
-        parcel.writeString(initiatingaccountholderid)
-        parcel.writeString(message)
-        parcel.writeString(status)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<Approvaldetail> {
-        override fun createFromParcel(parcel: Parcel): Approvaldetail {
-            return Approvaldetail(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Approvaldetail?> {
-            return arrayOfNulls(size)
-        }
-    }
-}
+    val status: String?,
+    val taxList :List<DetailsList>
+)
 
 
 data class Amount(

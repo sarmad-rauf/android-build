@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bill_payment_navigation_graph"
+    app:startDestination="@id/tranfer_commision_amount">
+
+
+    <fragment
+        android:id="@+id/tranfer_commision_amount"
+        android:name="com.es.marocapp.usecase.transfercommision.TransferCommisionAmountFragment"
+        android:label="tranferCommisionAmount"
+        tools:layout="@layout/fragment_funds_amount_selection"
+        >
+        <action
+            android:id="@+id/action_fragmentBillPaymentMain_to_fragmentPostPaidBillDetails"
+            app:destination="@id/fragmentPostPaidBillDetails" />
+        <action
+            android:id="@+id/action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn"
+            app:destination="@id/fragmentBillPaymentMsisdn" />
+    </fragment>
+
+</navigation>

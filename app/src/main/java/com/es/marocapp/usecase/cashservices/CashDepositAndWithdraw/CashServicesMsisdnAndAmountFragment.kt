@@ -179,7 +179,7 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
             }
 
             if (mActivityViewModel.isWithdrawUseCase.get()!!) {
-                mActivityViewModel.requestForInitiateTransferQouteApi(
+                mActivityViewModel.requestForCashoutQouteApi(
                     activity, mDataBinding.inputAmount.text.toString().trim(),
                     msisdnEntered,
                     mDataBinding.inputNote.text.toString().trim()

@@ -5,3 +5,10 @@ data class TransferRequest(
     val context: String,
     val receivingFri: String
 )
+
+data class TransferCommisionRequest(
+    val amount: String,
+    val context: String,
+    val receivingFri: String,
+    val sendingFri: String
+)

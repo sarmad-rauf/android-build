@@ -132,6 +132,10 @@ interface NetworkApi {
     @POST(EndPoints.transfer)
     fun getTransferCall(@Body request : TransferRequest) : Observable<TransferResponse>
 
+    //Request for transfer to pull commision fund
+    @POST(EndPoints.transfercommision)
+    fun getTransferCommisionCall(@Body request : TransferCommisionRequest) : Observable<TransferResponse>
+
     //Request for transferQoute
     @POST(EndPoints.transfer_quote)
     fun getTransferQouteCall(@Body request : TransferQouteRequest) : Observable<TransferQouteResponse>
@@ -192,7 +196,7 @@ interface NetworkApi {
 
     //Request for InitiateTransferQuote changed to cashout_quote
     @POST(EndPoints.cashout_quote)
-    fun getInitiateTransferQuoteCall(@Body request : InitiateTransferQuoteRequest) : Observable<InitiateTransferQuoteResponse>
+    fun getCashoutQuoteCall(@Body request : InitiateTransferQuoteRequest) : Observable<InitiateTransferQuoteResponse>
 
     //Request for InitiateTransfer
     @POST(EndPoints.initiatetransfer)

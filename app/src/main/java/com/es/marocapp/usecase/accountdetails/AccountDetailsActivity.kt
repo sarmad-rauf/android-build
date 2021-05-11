@@ -12,6 +12,8 @@ import com.es.marocapp.model.responses.Limits
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class AccountDetailsActivity : BaseActivity<LayoutAccountDetailsBinding>(){
 
@@ -25,7 +27,23 @@ class AccountDetailsActivity : BaseActivity<LayoutAccountDetailsBinding>(){
         }
 
         var respone = Constants.balanceInfoAndResponse
+        if(Constants.IS_AGENT_USER){
+        for (i in Constants.getAccountsResponseArray.indices) {
 
+            if (Constants.getAccountsResponseArray[i].accountType.equals(
+                    Constants.TYPE_COMMISSIONING,
+                    true
+                )
+            ){
+               mDataBinding.commisioningBalanceCardContainer.visibility=android.view.View.VISIBLE
+                mDataBinding.accountDetailCommisinningBalance.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+Constants.getAccountsResponseArray[i].balance
+            }
+        }
+
+        }
+        else{
+            mDataBinding.commisioningBalanceCardContainer.visibility=android.view.View.GONE
+        }
         mDataBinding.accountDetailName.text = respone?.firstname+" "+respone?.surname+"!"
         mDataBinding.accountDetailAccountNum.text = Constants.CURRENT_USER_MSISDN
         mDataBinding.accountDetailCurrentBalance.text = respone?.currnecy+" "+respone?.balance
@@ -62,6 +80,7 @@ class AccountDetailsActivity : BaseActivity<LayoutAccountDetailsBinding>(){
         mDataBinding.accountDetailCurrentBalanceTitle.text = LanguageData.getStringValue("CurrentBalance")
         mDataBinding.profileTitleSenRevContainer.text = LanguageData.getStringValue("Profile")
         mDataBinding.accountDetailHi.text = LanguageData.getStringValue("Hi")
+        mDataBinding.accountDetailCommisinningBalanceTitle.text = LanguageData.getStringValue("Commission")
     }
 
     override fun setLayout(): Int {
