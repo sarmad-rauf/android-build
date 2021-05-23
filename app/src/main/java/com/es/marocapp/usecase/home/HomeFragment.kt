@@ -34,7 +34,7 @@ import com.es.marocapp.usecase.consumerregistration.ConsumerRegistrationActivity
 import com.es.marocapp.usecase.payments.PaymentsActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.usecase.transaction.TransactionDetailsActivity
-import com.es.marocapp.usecase.updateprofle.TransferCommisionActivity
+import com.es.marocapp.usecase.transfercommision.TransferCommisionActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger

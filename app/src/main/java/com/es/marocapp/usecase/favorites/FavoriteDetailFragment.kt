@@ -156,7 +156,25 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
                                 ValidatedParam(valChamp,mActivitViewModel.recievedParams[position].nomChamp)
                             )
                         }
+
+                        override fun onTsavTextChangedClick(
+                            firstVal: String,
+                            secondVal: String,
+                            spinnerVal: String,
+                            position: Int
+                        ) {
+                            TODO("Not yet implemented")
+                        }
+
                         override fun onSpinnerTextChangedClick(valChamp: String, position: Int) {}
+                        override fun onTsavSpinnerTextChangedClick(
+                            firstVal: String,
+                            secondVal: String,
+                            spinnerVal: String,
+                            position: Int
+                        ) {
+                            TODO("Not yet implemented")
+                        }
                     }
                 )
                 mDataBinding.mFieldsRecycler.apply {

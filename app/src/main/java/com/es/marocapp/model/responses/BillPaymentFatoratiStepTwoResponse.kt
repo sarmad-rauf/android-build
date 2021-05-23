@@ -23,6 +23,8 @@ data class Param(
     val libelle: String,
     val nomChamp: String,
     val typeChamp: String,
+    val tailleMax: String,
+    val tailleMin: String,
     val listVals: List<String>
 )
 
@@ -39,5 +41,8 @@ data class RecievededParam(
     val errorEnabled:Boolean,
     val hintVisibility:Int,
     val inputValue:String,
-    val listVals: List<String>
+    val listVals: List<String>,
+    val firstValue:String,
+    val secondValue:String
+
 )

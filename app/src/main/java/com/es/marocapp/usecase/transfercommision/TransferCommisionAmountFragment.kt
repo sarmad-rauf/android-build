@@ -20,7 +20,7 @@ import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.usecase.sendmoney.tranferfundcase.FundsTrasnferClickLisntener
-import com.es.marocapp.usecase.updateprofle.TransferCommisionActivity
+import com.es.marocapp.usecase.transfercommision.TransferCommisionActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DecimalDigitsInputFilter
 import com.es.marocapp.utils.DialogUtils

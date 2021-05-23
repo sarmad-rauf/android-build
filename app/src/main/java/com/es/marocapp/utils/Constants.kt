@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.es.marocapp.R
@@ -31,6 +32,9 @@ import kotlin.properties.Delegates
 object Constants {
 
 
+    var selectedTSAVSpinnerPosition: Int=0
+    var STEP2_3RESPONSE: BillPaymentFatoratiStepThreeResponse? = null
+    lateinit var fatouratiTsavMatriculeDdVals: Array<String>
     var COMMISIONACCOUNTFRI: String = ""
     var COMMISIONACCOUNTBALANCE: String = "0"
     var WALLETACCOUNTBALANCE: String="0"
@@ -367,6 +371,12 @@ object Constants {
         return "$number$FATOURATI_ALIAS"
     }
 
+    fun getFatoratiNewAlias(number: String,selectedCompany:String): String {
+//        return "$number@fatouratiCompany name/SP"
+        var alias = FATOURATI_ALIAS.replace("fatourati.sp",selectedCompany)
+        return "$number$alias"
+    }
+
     fun addAmountAndFee(amount: Double, fee: Double): String {
         return (amount + fee).toString()
     }
@@ -401,6 +411,7 @@ object Constants {
         return result
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     fun getZoneFormattedDateAndTime(dateToFormat: String): String {
         val input = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
         val output = SimpleDateFormat("yyyy-MM-dd hh:mm a")
@@ -648,6 +659,17 @@ object Constants {
                 }
             }
         }
+    }
+
+    fun convertSpinnerArabicValue(spinnerVal: String): String {
+       when(spinnerVal){
+           "أ" ->{return "A"}
+           "ب" ->{return "B"}
+           "د" ->{return "D"}
+           "ه" ->{return "H"}
+           "و" ->{return "E"}
+           else ->{return spinnerVal}
+       }
     }
 
     object EMVco {

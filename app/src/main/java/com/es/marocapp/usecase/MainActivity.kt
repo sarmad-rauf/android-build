@@ -29,7 +29,7 @@ import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.qrcode.GenerateQrActivity
 import com.es.marocapp.usecase.settings.SettingsActivity
 import com.es.marocapp.usecase.termsandcondiitons.TermsAndConditions
-import com.es.marocapp.usecase.updateprofle.TransferCommisionActivity
+import com.es.marocapp.usecase.updateprofle.UpdateProfileActivity
 import com.es.marocapp.usecase.upgradeprofile.UpgradeProfileActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
@@ -341,7 +341,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         mDataBinding.navigationItem.rootView.updateProfile.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
-            startNewActivity(this@MainActivity, TransferCommisionActivity::class.java)
+            startNewActivity(this@MainActivity, UpdateProfileActivity::class.java)
         }
 
         mDataBinding.navigationItem.rootView.oppositionMTCashGroup.setOnClickListener {

@@ -197,6 +197,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.reasonUpgradeToLevelTwo=it.reasonUpgradeToLevelTwo
                 Constants.reasonUpgradeToLevelThree=it.reasonUpgradeToLevelThree
                 Constants.fatouratiSeperateMenuBillNames=it.fatouratiSeperateMenuBillNames
+                Constants.fatouratiTsavMatriculeDdVals=it.fatouratiTsavMatriculeDdVals
                 if (it.iamBillsTriggerFatouratiFlow != null) {
                     Constants.iamBillsTriggerFatouratiFlow=it.iamBillsTriggerFatouratiFlow
                 }

@@ -29,7 +29,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".usecase.upgradeprofile.UpgradeProfileActivity" />
-        <activity android:name=".usecase.updateprofle.TransferCommisionActivity" />
+        <activity android:name=".usecase.transfercommision.TransferCommisionActivity" />
+        <activity android:name=".usecase.updateprofle.UpdateProfileActivity" />
         <activity android:name=".usecase.approvals.ApprovalActivity" />
         <activity android:name=".usecase.changepassword.ChangePasswordActivity" />
         <activity android:name=".usecase.cashinviacard.ActivityCashInViaCard" />

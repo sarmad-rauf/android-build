@@ -29,6 +29,7 @@ import kotlin.collections.HashMap
 class BillPaymentViewModel(application: Application) : AndroidViewModel(application){
 
 
+    var selectedTSAVSpinnerPosition: Int=0
     var stepFourLydecSelected: Boolean=false
     var selectedCodeCreance: String=""
 
@@ -776,11 +777,12 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
             else{
                 codeCreance=fatoratiTypeSelected.get()!!.codeCreance
             }
+            transferdAmountTo=validatedParams[0].valChamp
             isLoading.set(true)
 
                 disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiStepFour(
                     BillPaymentFatoratiStepFourRequest(codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
-                        validatedParams,Constants.OPERATION_TYPE_IMPAYES,Constants.getFatoratiAlias(transferdAmountTo),
+                        validatedParams,Constants.OPERATION_TYPE_IMPAYES,Constants.getFatoratiNewAlias(transferdAmountTo,selectedCreancer.get().toString()),
                         fatoratiStepThreeObserver.get()!!.refTxFatourati,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
                 )
 

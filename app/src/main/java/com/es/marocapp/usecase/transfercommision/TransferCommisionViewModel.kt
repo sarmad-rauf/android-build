@@ -13,7 +13,7 @@ import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.login.LoginActivity
-import com.es.marocapp.usecase.updateprofle.TransferCommisionActivity
+import com.es.marocapp.usecase.transfercommision.TransferCommisionActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.SingleLiveEvent
 import com.es.marocapp.utils.Tools
