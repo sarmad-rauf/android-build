@@ -27,6 +27,7 @@ class FavoriteTypesFragment : BaseFragment<FragmentFavoritesTypeBinding>(){
             viewmodel = mActivityViewModel
         }
 
+        mActivityViewModel.isLoading.set(false)
         mActivityViewModel.popBackStackTo = -1
 
         (activity as FavoritesActivity).setHeader(LanguageData.getStringValue("Favorites").toString())

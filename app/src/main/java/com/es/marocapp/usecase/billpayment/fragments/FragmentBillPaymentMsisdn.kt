@@ -440,7 +440,26 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                                 spinnerVal: String,
                                 position: Int
                             ) {
-                                TODO("Not yet implemented")
+                                Logger.debugLog("textChengeLListner","Value = ${firstVal+secondVal}  == position = ${position}")
+                                val typeChamp=mActivityViewModel.recievedParams[position].typeChamp
+                                val nomChamp=mActivityViewModel.recievedParams[position].nomChamp
+                                val listVals=mActivityViewModel.recievedParams[position].listVals
+                                var convertesSpinnerValue= Constants.convertSpinnerArabicValue(spinnerVal)
+                                val valChamp=firstVal.plus(convertesSpinnerValue.plus(secondVal))
+
+                                //using different list value to restore correct value after invalid input error
+                                val lablei=mActivityViewModel.demoParams[position].libelle
+
+                                mActivityViewModel.recievedParams.set(position,RecievededParam(lablei,nomChamp,typeChamp,"",
+                                    false,View.VISIBLE,"",listVals,firstVal,secondVal))
+
+                                mActivityViewModel.validatedParams.set(
+                                    position,
+                                    ValidatedParam(
+                                        valChamp,
+                                        mActivityViewModel.recievedParams[position].nomChamp
+                                    )
+                                )
                             }
 
                             override fun onSpinnerTextChangedClick(valChamp: String, position: Int) {
@@ -481,7 +500,27 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                                 spinnerVal: String,
                                 position: Int
                             ) {
-                                TODO("Not yet implemented")
+                                Logger.debugLog("textChengeLListner","Value = ${firstVal+spinnerVal+secondVal}  == position = ${position}")
+
+                                val typeChamp=mActivityViewModel.recievedParams[position].typeChamp
+                                val nomChamp=mActivityViewModel.recievedParams[position].nomChamp
+                                val listVals=mActivityViewModel.recievedParams[position].listVals
+                                var convertedSpinnerValue= Constants.convertSpinnerArabicValue(spinnerVal)
+                                val valChamp=firstVal.plus(convertedSpinnerValue.plus(secondVal))
+                                //  Constants.selectedTSAVSpinnerPosition=position
+                                //using different list value to restore correct value after invalid input error
+                                val lablei=mActivityViewModel.demoParams[position].libelle
+
+                                mActivityViewModel.recievedParams.set(position,RecievededParam(lablei,nomChamp,typeChamp,"",
+                                    false,View.VISIBLE,"",listVals,firstVal,secondVal))
+
+                                mActivityViewModel.validatedParams.set(
+                                    position,
+                                    ValidatedParam(
+                                        valChamp,
+                                        mActivityViewModel.recievedParams[position].nomChamp
+                                    )
+                                )
                             }
                         })
                         mDataBinding.mFieldsRecycler.apply {

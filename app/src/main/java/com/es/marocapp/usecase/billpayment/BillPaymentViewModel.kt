@@ -568,28 +568,48 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
             isLoading.set(true)
             transferdAmountTo = receiver
-
+            var reciever:Any
+            if(selectedCreancer.get()?.contains("TSAV")!!)
+            {
+                reciever=Constants.getFatoratiNewAlias(transferdAmountTo,"Paiement_de_vignette_TSA")
+            }
+            else{
+                reciever=Constants.getFatoratiAlias(transferdAmountTo)
+            }
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiStepTwo(
                 BillPaymentFatoratiStepTwoRequest(ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,Constants.OPERATION_TYPE_CREANCE,
-                    Constants.getFatoratiAlias(receiver),Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
+                    reciever,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
                     { result ->
-                        isLoading.set(false)
+
 
                         if (result?.responseCode != null)
                         {
                             when(result?.responseCode) {
                                 ApiConstant.API_SUCCESS -> {
+                                  if(result.creances.size>1)
+                                  {
+                                      isLoading.set(false)
+                                  }
+
                                     fatoratiStepTwoObserver.set(result)
                                     getFatoratiStepTwoResponseListner.postValue(result)
                                 }
-                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                ApiConstant.API_SESSION_OUT ->
+                                {
+                                    isLoading.set(false)
+                                    (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
-                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                }
+                                ApiConstant.API_INVALID ->{
+                                    isLoading.set(false)
+                                    (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
                                     LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                }
                                 else ->  {
+                                    isLoading.set(false)
                                     fatoratiStepTwoObserver.set(result)
                                     getFatoratiStepTwoResponseListner.postValue(result)
                                 }
@@ -629,13 +649,21 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
-
-            isLoading.set(true)
             transferdAmountTo = receiver
+            var reciever:Any
+            if(selectedCreancer.get()?.contains("TSAV")!!)
+            {
+                reciever=Constants.getFatoratiNewAlias(transferdAmountTo,"Paiement_de_vignette_TSA")
+            }
+            else{
+                reciever=Constants.getFatoratiAlias(transferdAmountTo)
+            }
+            isLoading.set(true)
+
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getFatoratiStepTwoThree(
                 BillPaymentFatoratiStepTwoRequest(ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,Constants.OPERATION_TYPE_CREANCE,
-                    Constants.getFatoratiAlias(receiver),Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
+                    reciever,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -704,13 +732,21 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
-
-            isLoading.set(true)
             transferdAmountTo = receiver
+            var reciever:Any
+            if(selectedCreancer.get()?.contains("TSAV")!!)
+            {
+                reciever=Constants.getFatoratiNewAlias(transferdAmountTo,"Paiement_de_vignette_TSA")
+            }
+            else{
+                reciever=Constants.getFatoratiAlias(transferdAmountTo)
+            }
+            isLoading.set(true)
+
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiStepThree(
                 BillPaymentFatoratiStepThreeRequest(ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,"forms",
-                    Constants.getFatoratiAlias(receiver),Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),codeCreance)
+                    reciever,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),codeCreance)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -778,11 +814,20 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                 codeCreance=fatoratiTypeSelected.get()!!.codeCreance
             }
             transferdAmountTo=validatedParams[0].valChamp
+            var reciever:Any
+            if(selectedCreancer.get()?.contains("TSAV")!!)
+            {
+                reciever=Constants.getFatoratiNewAlias(transferdAmountTo,"Paiement_de_vignette_TSA")
+            }
+            else{
+                reciever=Constants.getFatoratiAlias(transferdAmountTo)
+            }
+
             isLoading.set(true)
 
                 disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiStepFour(
                     BillPaymentFatoratiStepFourRequest(codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
-                        validatedParams,Constants.OPERATION_TYPE_IMPAYES,Constants.getFatoratiNewAlias(transferdAmountTo,selectedCreancer.get().toString()),
+                        validatedParams,Constants.OPERATION_TYPE_IMPAYES,reciever,
                         fatoratiStepThreeObserver.get()!!.refTxFatourati,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
                 )
 
@@ -855,10 +900,18 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
             else{
                 codeCreance=fatoratiTypeSelected.get()!!.codeCreance
             }
+            var reciever:Any
+            if(selectedCreancer.get()?.contains("TSAV")!!)
+            {
+                reciever=Constants.getFatoratiNewAlias(transferdAmountTo,"Paiement_de_vignette_TSA")
+            }
+            else{
+                reciever=Constants.getFatoratiAlias(transferdAmountTo)
+            }
             Logger.debugLog("lydec","value ${stepFourLydecSelected}=== ${codeCreance}")
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatoratiQuote(
                 BillPaymentFatoratiQuoteRequest(Constants.converValueToTwoDecimalPlace(amount.toDouble()),codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
-                    "true",Constants.getFatoratiAlias(transferdAmountTo),
+                    "true",reciever,
                     Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_BILL_PAYMENT,refTxFatourati,totalAmount,paramsForFatoratiPayment,fatoratiTypeSelected.get()!!.nomCreancier
                 )
             )
@@ -935,10 +988,18 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
             else{
                 codeCreance=fatoratiTypeSelected.get()!!.codeCreance
             }
+            var reciever:Any
+            if(selectedCreancer.get()?.contains("TSAV")!!)
+            {
+                reciever=Constants.getFatoratiNewAlias(transferdAmountTo,"Paiement_de_vignette_TSA")
+            }
+            else{
+                reciever=Constants.getFatoratiAlias(transferdAmountTo)
+            }
             Logger.debugLog("lydec","value ${stepFourLydecSelected}=== ${codeCreance}")
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getBillPaymentFatorati(
                 BillPaymentFatoratiRequest(Constants.converValueToTwoDecimalPlace(amount.toDouble()),codeCreance,ApiConstant.CONTEXT_AFTER_LOGIN,fatoratiTypeSelected.get()!!.codeCreancier,
-                    "true",Constants.getFatoratiAlias(transferdAmountTo),
+                    "true",reciever,
                     Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_BILL_PAYMENT,isMultipleBillSelected,fatoratiStepFourObserver.get()?.refTxFatourati.toString(),
                     fatoratiStepFourObserver.get()?.totalAmount.toString(),paramsForFatoratiPayment,fatoratiTypeSelected.get()!!.nomCreancier
                 )

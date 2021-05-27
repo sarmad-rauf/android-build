@@ -199,7 +199,7 @@ object EndPoints {
 
     ///getfinancialresourceinformation/bill/fatourati/step3
     const val getfinancialresourceinformation_bill_fatourati_step3 =
-        "getfinancialresourceinformation/bill/fatourati/step3/lydec"
+        "getfinancialresourceinformation/bill/fatourati/step3"
 
     ///getfinancialresourceinformation/bill/fatourati/step2-3
     const val getfinancialresourceinformation_bill_fatourati_step2_3 =
