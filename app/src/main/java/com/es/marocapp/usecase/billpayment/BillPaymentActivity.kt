@@ -18,6 +18,7 @@ class BillPaymentActivity : BaseActivity<ActivityBillPaymentBinding>() {
     lateinit var navController: NavController
 
     lateinit var navHostFragment: NavHostFragment
+    var dummy="dummy"
 
     override fun init(savedInstanceState: Bundle?) {
         mActivityViewModel =
