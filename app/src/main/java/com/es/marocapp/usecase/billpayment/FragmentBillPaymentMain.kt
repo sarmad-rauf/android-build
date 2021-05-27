@@ -342,6 +342,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                 if (currentSelectedBill != null) {
                     mActivityViewModel.userSelectedCreancer =
                         currentSelectedBill
+                    mActivityViewModel.selectedCreancer.set(currentSelectedBill)
                 }
 
                 //checking if selected bill is Telecom bill for which we have to run flow of fatourati
@@ -356,19 +357,8 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                 }
 
 
-                //checking for LYDEC selection for change flow
-                var isSelectedBillMatchedwithfatouratiSeperateMenuBillNames: Boolean = false
-                for (i in Constants.fatouratiSeperateMenuBillNames.indices) {
-
-                    isSelectedBillMatchedwithfatouratiSeperateMenuBillNames =
-                        currentSelectedBill?.toLowerCase().equals(Constants.fatouratiSeperateMenuBillNames[i]?.trim()?.toLowerCase())
-                    Logger.debugLog("billpaymeny","lydec  ${currentSelectedBill?.toLowerCase()} == ${Constants.fatouratiSeperateMenuBillNames[i]?.trim()?.toLowerCase()}")
-                    if(isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
-                    {
-                        mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames=true
-                        break
-                    }
-                }
+                //checking for LYDEC selection for change flow but changed flow for all companies now it will always be true
+                mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames=true
 
 
                 Logger.debugLog("billPayment","isamBillFatorati ${mActivityViewModel.isIamFatouratiSelected}")
@@ -397,8 +387,8 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                         mActivityViewModel.isFatoratiUseCaseSelected.set(false)
                         mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(false)
                     }
-                    //fatourati Seperate flow for LYDEC
-                   else if(isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
+                    //fatourati Seperate flow for LYDEC now it will call for all companies 5/25/2021
+                   else if( mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
                     {
                         var billCompaniesList = mActivityViewModel.getBillPaymentCompaniesResponseObserver.get()?.bills?.get(groupPosition)?.companies
                         mActivityViewModel.fatoratiTypeSelected.set(Creancier(
@@ -593,13 +583,17 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
             Observer {
 
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                        mActivityViewModel.setCreancesList(it.creances as ArrayList<creances>)
-                        var nomCreancierList:ArrayList<String> = ArrayList()
-                        for (i in it.creances .indices)
-                        {
-                            nomCreancierList.add(it.creances.get(i).nomCreance)
-                        }
-                        mActivityViewModel.nomCreancierList=nomCreancierList
+                    mActivityViewModel.setCreancesList(it.creances as ArrayList<creances>)
+                    var nomCreancierList:ArrayList<String> = ArrayList()
+                    for (i in it.creances .indices)
+                    {
+                        nomCreancierList.add(it.creances.get(i).nomCreance)
+                    }
+                    mActivityViewModel.nomCreancierList=nomCreancierList
+                    if(it.creances.size>1)
+                    {
+                        //Show Popup for list of creances
+
                     val state =
                         if (sheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED)
                             BottomSheetBehavior.STATE_COLLAPSED
@@ -607,6 +601,14 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                             BottomSheetBehavior.STATE_EXPANDED
                     sheetBehavior.state = state
                     populateTelecomBillsSubMenusList("LYDEC")
+                    }
+                    else{
+                        // call step 3 directly on next screen
+                        mActivityViewModel.selectedCodeCreance=
+                            it.creances[0].codeCreance
+                        startLydecFlow()
+
+                    }
                 } else {
                     DialogUtils.showErrorDialoge(activity, it.description)
                 }

@@ -62,7 +62,8 @@
 
     <include
         android:id="@+id/Gif_Loader"
-        layout="@layout/layout_dialog" />
+        layout="@layout/layout_dialog"
+        android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"/>
 
 
 
