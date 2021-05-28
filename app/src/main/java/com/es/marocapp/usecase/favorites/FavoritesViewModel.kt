@@ -21,6 +21,9 @@ import io.reactivex.disposables.Disposable
 import retrofit2.HttpException
 
 class FavoritesViewModel(application: Application): AndroidViewModel(application){
+    var  demoParams: ArrayList<RecievededParam> =ArrayList()
+    var nomCreancierList: ArrayList<String> = ArrayList()
+    lateinit var selectedCodeCreance: String
     lateinit var disposable: Disposable
     var isLoading = ObservableField<Boolean>()
     var errorText = SingleLiveEvent<String>()
@@ -35,8 +38,8 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
     //fatorati special type bil slection
     var specialMenuBillSelected: Boolean = false
 
-    lateinit var  validatedParams: ArrayList<ValidatedParam>
-    lateinit var recievedParams: ArrayList<RecievededParam>
+     var  validatedParams: ArrayList<ValidatedParam> = ArrayList()
+     var recievedParams: ArrayList<RecievededParam> =ArrayList()
 
     //Observerable Fileds
     var isPaymentSelected = ObservableField<Boolean>()
@@ -78,7 +81,7 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
                 .compose(applyIOSchedulers())
                 .subscribe(
                     { result ->
-                        isLoading.set(false)
+
 
                         if (result?.responseCode != null)
                         {
@@ -87,11 +90,16 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
                                     fatoratiStepOneObserver.set(result)
                                     getFatoratiStepOneResponseListner.postValue(result)
                                 }
-                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
-                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
-                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
-                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                ApiConstant.API_SESSION_OUT ->{
+                                    isLoading.set(false)
+                                    (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)}
+                                ApiConstant.API_INVALID ->{
+                                    isLoading.set(false)
+                                    (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)}
                                 else ->  {
+                                    isLoading.set(false)
                                     fatoratiStepOneObserver.set(result)
                                     getFatoratiStepOneResponseListner.postValue(result)
                                 }

@@ -237,7 +237,6 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
         setStrings()
         initListner()
         subscribeObserver()
-        //todo need to set these value
 /*      mActivityViewModel.isBillUseCaseSelected.set(false)
         mActivityViewModel.isFatoratiUseCaseSelected.set(true)
         mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(false)*/

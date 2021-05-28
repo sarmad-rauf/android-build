@@ -91,7 +91,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bottom_sheet_air_time"
             android:layout_width="match_parent"

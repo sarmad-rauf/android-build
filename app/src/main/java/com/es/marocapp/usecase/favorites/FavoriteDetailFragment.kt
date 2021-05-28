@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.es.marocapp.R
+import com.es.marocapp.adapter.AirTimeDataAdpater
 import com.es.marocapp.adapter.FatoratiParamsItemAdapter
 import com.es.marocapp.adapter.LanguageCustomSpinnerAdapter
 import com.es.marocapp.databinding.FragmentFavoriteDetailsBinding
@@ -20,6 +22,7 @@ import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 
 class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
@@ -31,6 +34,9 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
     private var list_of_billType: ArrayList<String> = arrayListOf()
     private var list_of_FatouratieType : ArrayList<Creancier> = arrayListOf()
     var applyValidation = false
+    private lateinit var mCreancesListAdapter: AirTimeDataAdpater
+
+    private lateinit var sheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
     lateinit var acountTypeSpinnerAdapter: LanguageCustomSpinnerAdapter
 
@@ -46,7 +52,10 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
             viewmodel = mActivitViewModel
             listener = this@FavoriteDetailFragment
         }
-
+        sheetBehavior = BottomSheetBehavior.from(mDataBinding.bottomSheetAirTime)
+        mDataBinding.btnCancel.setOnClickListener {
+            sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
         list_of_billType.clear()
         list_of_billType.apply {
             var fatoratiType = mActivitViewModel.fatoratiStepOneObserver.get()!!.creanciers
@@ -92,31 +101,55 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
         mActivitViewModel.getFatoratiStepTwoResponseListner.observe(this@FavoriteDetailFragment, Observer {
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                     mDataBinding.acountTypeSpinner.visibility=View.VISIBLE
-                   hideViews()
+                   //hideViews()
                     mActivitViewModel.setCreancesList(it.creances as ArrayList<creances>)
                     var nomCreancierList:ArrayList<String> = ArrayList()
                     for (i in it.creances .indices)
                     {
                         nomCreancierList.add(it.creances.get(i).nomCreance)
                     }
-                    val acountTypeArray: Array<String> =
-                        nomCreancierList.toArray(arrayOfNulls<String>(nomCreancierList.size))
-                    acountTypeSpinnerAdapter =
-                        LanguageCustomSpinnerAdapter(
-                            activity as FavoritesActivity,
-                            acountTypeArray,
-                            (activity as FavoritesActivity).resources.getColor(R.color.colorBlack),true
-                        )
-                    //  mDataBinding.acountTypeSpinner
-                    mDataBinding.acountTypeSpinner.apply {
-                        adapter = acountTypeSpinnerAdapter
-                    }
+                mActivitViewModel.nomCreancierList=nomCreancierList
 
-                    mDataBinding.inputPhoneNumber.isEnabled=false
-                    mDataBinding.inputLayoutPhoneNumber.hint = mActivitViewModel.creancesList.get()
-                        ?.get(0)?.nomCreance
-                    mDataBinding.inputPhoneNumber.setText( mActivitViewModel.creancesList.get()
-                        ?.get(0)?.codeCreance.toString())
+//                    val acountTypeArray: Array<String> =
+//                        nomCreancierList.toArray(arrayOfNulls<String>(nomCreancierList.size))
+//                    acountTypeSpinnerAdapter =
+//                        LanguageCustomSpinnerAdapter(
+//                            activity as FavoritesActivity,
+//                            acountTypeArray,
+//                            (activity as FavoritesActivity).resources.getColor(R.color.colorBlack),true
+//                        )
+//                    //  mDataBinding.acountTypeSpinner
+//                    mDataBinding.acountTypeSpinner.apply {
+//                        adapter = acountTypeSpinnerAdapter
+             //       }
+
+//
+//                    mDataBinding.inputPhoneNumber.isEnabled=false
+//                    mDataBinding.inputLayoutPhoneNumber.hint = mActivitViewModel.creancesList.get()
+//                        ?.get(0)?.nomCreance
+//                    mDataBinding.inputPhoneNumber.setText( mActivitViewModel.creancesList.get()
+//                        ?.get(0)?.codeCreance.toString())
+
+
+                if(it.creances.size>1)
+                {
+                    //Show Popup for list of creances
+
+                    val state =
+                        if (sheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED)
+                            BottomSheetBehavior.STATE_COLLAPSED
+                        else
+                            BottomSheetBehavior.STATE_EXPANDED
+                    sheetBehavior.state = state
+                    populatesCreancesLIst()
+                }
+                else{
+                    // call step 3 directly on next screen
+                    mActivitViewModel.selectedCodeCreance=
+                        it.creances[0].codeCreance
+                    //mActivitViewModel.requestForFatoratiStepThreeApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID, mActivitViewModel.selectedCodeCreance)
+
+                }
 
 
             }else{
@@ -128,64 +161,9 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                 showViews()
                 mActivitViewModel.specialMenuBillSelected=false
-                mActivitViewModel.refTxFatourati = it.refTxFatourati
-                //mActivitViewModel.nomChamp = it.param.nomChamp
-                mActivitViewModel.validatedParams.clear()
-                mActivitViewModel.recievedParams.clear()
-                for(i in it.params.indices){
-                    var validatedParams = ValidatedParam("",it.params[i].nomChamp)
-                    mActivitViewModel.validatedParams.add(validatedParams)
-//                    mActivitViewModel.recievedParams.add(
-//                        RecievededParam(it.params[i].libelle,it.params[i].nomChamp,it.params[i].typeChamp,"",
-//                        false,View.VISIBLE,"")
-//                    )
-                }
-
-                mFatoratiParamsItemAdapter = FatoratiParamsItemAdapter(
-                    activity,
-                    mActivitViewModel.recievedParams,
-                    object :
-                        FatoratiParamsItemAdapter.ParamTextChangedListner{
-                        override fun onParamTextChangedClick(valChamp: String, position: Int) {
-                            if(it.params[position].libelle.equals("CIL",false)){
-                                applyValidation = true
-                            } else {
-                                applyValidation = false
-                            }
-                            mActivitViewModel.validatedParams.add(position,
-                                ValidatedParam(valChamp,mActivitViewModel.recievedParams[position].nomChamp)
-                            )
-                        }
-
-                        override fun onTsavTextChangedClick(
-                            firstVal: String,
-                            secondVal: String,
-                            spinnerVal: String,
-                            position: Int
-                        ) {
-                            TODO("Not yet implemented")
-                        }
-
-                        override fun onSpinnerTextChangedClick(valChamp: String, position: Int) {}
-                        override fun onTsavSpinnerTextChangedClick(
-                            firstVal: String,
-                            secondVal: String,
-                            spinnerVal: String,
-                            position: Int
-                        ) {
-                            TODO("Not yet implemented")
-                        }
-                    }
-                )
-                mDataBinding.mFieldsRecycler.apply {
-                    adapter = mFatoratiParamsItemAdapter
-                    layoutManager = LinearLayoutManager(activity)
-                }
-
-                Logger.debugLog("selectedFatouratiRefTx", mActivitViewModel.refTxFatourati)
-                Logger.debugLog("selectedFatouratiNonCham", mActivitViewModel.nomChamp)
                 (activity as FavoritesActivity).navController.navigate(R.id.action_favoriteDetailFragment_to_favoriteEnterContactFragment)
-            }else{
+            }
+            else{
                 DialogUtils.showErrorDialoge(activity,it.description)
             }
         })
@@ -207,6 +185,44 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
         mActivitViewModel.errorText.observe(this@FavoriteDetailFragment, Observer {
             DialogUtils.showErrorDialoge(requireActivity(),it)
         })
+    }
+
+    private fun populatesCreancesLIst() {
+        /*mTelecomBillSubMenusData.apply {
+            add(LanguageData.getStringValue("PostpaidMobile").toString())
+            add(LanguageData.getStringValue("PostpaidFix").toString())
+            add(LanguageData.getStringValue("Internet").toString())
+        }*/
+
+        var telecomBillSubMenusData: ArrayList<String> = arrayListOf()
+
+       //showing selected fatourati company NOM CREANCES
+            telecomBillSubMenusData=mActivitViewModel.nomCreancierList
+
+
+        mCreancesListAdapter =
+            AirTimeDataAdpater(
+                telecomBillSubMenusData,
+                object : AirTimeDataAdpater.AirTimeDataClickLisnter {
+                    override fun onSelectedAirTimeData(
+                        selectedTelecomBillSubMenu: String,
+                        position1: Int
+                    ) {
+
+                        sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+
+                        mActivitViewModel.selectedCodeCreance=
+                                mActivitViewModel.creancesList.get()!![position1].codeCreance
+                        mActivitViewModel.requestForFatoratiStepThreeApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID, mActivitViewModel.selectedCodeCreance)
+
+
+                    }
+                })
+
+        mDataBinding.billPaymentSubUseCaseRecycler.apply {
+            adapter = mCreancesListAdapter
+            layoutManager = LinearLayoutManager(activity as FavoritesActivity)
+        }
     }
 
     private fun subscribeForSpinnerListner() {
@@ -250,6 +266,7 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
     }
 
     private fun setStrings() {
+        mDataBinding.btnCancel.text = LanguageData.getStringValue("BtnTitle_Cancel")
         mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Next")
         mDataBinding.selectPaymentTypeTitle.text = LanguageData.getStringValue("SelectPaymentType")
         mDataBinding.selectBillTypeTitle.text = LanguageData.getStringValue("SelectBillType")
@@ -258,10 +275,17 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
     override fun onNextButtonClick(view: View) {
         if(mActivitViewModel.specialMenuBillSelected)
         {
-            mActivitViewModel.requestForFatoratiStepThreeApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID, mDataBinding.inputPhoneNumber.text.toString())
+            mActivitViewModel.requestForFatoratiStepThreeApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID, mActivitViewModel.selectedCodeCreance)
         }
         else{
-            (activity as FavoritesActivity).navController.navigate(R.id.action_favoriteDetailFragment_to_favoriteEnterContactFragment)
+            if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!)
+            {
+                mActivitViewModel.requestForFatoratiStepThreeApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID, mActivitViewModel.selectedCodeCreance)
+
+            }else {
+                (activity as FavoritesActivity).navController.navigate(R.id.action_favoriteDetailFragment_to_favoriteEnterContactFragment)
+            }
+
         }
 
     }
@@ -284,29 +308,7 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
                 if(mActivitViewModel.fatoratiTypeSelected.equals(list_of_FatouratieType[index].nomCreancier)){
                     mActivitViewModel.codeCreance = list_of_FatouratieType[index].codeCreance
                     mActivitViewModel.creancierID = list_of_FatouratieType[index].codeCreancier
-
-                    var isSelectedBillMatchedwithfatouratiSeperateMenuBillNames: Boolean = false
-                    for (i in Constants.fatouratiSeperateMenuBillNames.indices) {
-
-                        isSelectedBillMatchedwithfatouratiSeperateMenuBillNames =
-                            mActivitViewModel.fatoratiTypeSelected.trim().toLowerCase().equals(Constants.fatouratiSeperateMenuBillNames[i].trim().toLowerCase())
-                        if(isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
-                        {
-                            break
-                        }
-                    }
-
-                    //fatouratiSeperateMenuBillNames
-                    if(isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
-                    {
                         mActivitViewModel.requestForFatoratiStepTwoApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID)
-                    }
-                    else{
-                        mActivitViewModel.requestForFatoratiStepTwoThreeApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID)
-                    }
-
-
-
                 }
             }
         }

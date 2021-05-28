@@ -102,11 +102,23 @@
                 android:maxLength="12" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mFieldsRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_phone_number"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+            />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_layout_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/input_layout_phone_number"
+            app:layout_constraintTop_toBottomOf="@+id/mFieldsRecycler"
             android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginEnd="@dimen/_16sdp"
