@@ -55,6 +55,7 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
         sheetBehavior = BottomSheetBehavior.from(mDataBinding.bottomSheetAirTime)
         mDataBinding.btnCancel.setOnClickListener {
             sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            mActivitViewModel.selectedCodeCreance=""
         }
         list_of_billType.clear()
         list_of_billType.apply {
@@ -239,10 +240,6 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
                 mDataBinding.inputPhoneNumber.setText( mActivitViewModel.creancesList.get()
                     ?.get(position)?.codeCreance.toString())
                 mActivitViewModel.specialMenuBillSelected=true
-
-                Logger.debugLog("Abro","${mActivitViewModel.creancesList.get()
-                    ?.get(position)?.nomCreance}  and  ${mActivitViewModel.creancesList.get()
-                    ?.get(position)?.codeCreance}  selection ${mActivitViewModel.specialMenuBillSelected}  ")
             }
         }
     }
@@ -273,20 +270,26 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
     }
 
     override fun onNextButtonClick(view: View) {
-        if(mActivitViewModel.specialMenuBillSelected)
-        {
-            mActivitViewModel.requestForFatoratiStepThreeApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID, mActivitViewModel.selectedCodeCreance)
-        }
-        else{
-            if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!)
-            {
-                mActivitViewModel.requestForFatoratiStepThreeApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID, mActivitViewModel.selectedCodeCreance)
 
-            }else {
+            if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!) {
+                if (!mActivitViewModel.selectedCodeCreance.isNullOrEmpty()){
+                    mActivitViewModel.requestForFatoratiStepThreeApi(
+                        activity,
+                        Constants.CURRENT_USER_MSISDN,
+                        mActivitViewModel.creancierID,
+                        mActivitViewModel.selectedCodeCreance
+                    )
+                }else{
+                    mActivitViewModel.requestForFatoratiStepTwoApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID)
+                }
+
+
+            }
+        else {
                 (activity as FavoritesActivity).navController.navigate(R.id.action_favoriteDetailFragment_to_favoriteEnterContactFragment)
             }
 
-        }
+
 
     }
 
@@ -308,6 +311,7 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
                 if(mActivitViewModel.fatoratiTypeSelected.equals(list_of_FatouratieType[index].nomCreancier)){
                     mActivitViewModel.codeCreance = list_of_FatouratieType[index].codeCreance
                     mActivitViewModel.creancierID = list_of_FatouratieType[index].codeCreancier
+                    mActivitViewModel.selectedCompanyLogo = list_of_FatouratieType[index].logoPath
                         mActivitViewModel.requestForFatoratiStepTwoApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID)
                 }
             }

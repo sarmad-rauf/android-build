@@ -21,6 +21,7 @@ import io.reactivex.disposables.Disposable
 import retrofit2.HttpException
 
 class FavoritesViewModel(application: Application): AndroidViewModel(application){
+    var selectedCompanyLogo: String=""
     var  demoParams: ArrayList<RecievededParam> =ArrayList()
     var nomCreancierList: ArrayList<String> = ArrayList()
     lateinit var selectedCodeCreance: String

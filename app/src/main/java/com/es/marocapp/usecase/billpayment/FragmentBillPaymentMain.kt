@@ -1,6 +1,7 @@
 package com.es.marocapp.usecase.billpayment
 
 import android.os.Bundle
+import android.text.PrecomputedText
 import android.view.View
 import android.widget.ExpandableListView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -103,14 +104,21 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                 /*for(value in result){
                                     Log.d("dataFromString",value)
                                 }*/
-                                var creancier = Creancier(result[0], result[1], "", companyName)
+                                var creancier = Creancier(result[0], result[1], "", companyName,result[4])
                                 mActivityViewModel.fatoratiTypeSelected.set(creancier)
-
-//                                var stepTwoResponseDummy = BillPaymentFatoratiStepThreeResponse(
-//                                    "",
-//                                    Param("", result[2], ""), result[3], ""
-//                                )
-                         //       mActivityViewModel.fatoratiStepThreeObserver.set(stepTwoResponseDummy)
+                                mActivityViewModel.validatedParams.clear()
+                                mActivityViewModel.validatedParams=Constants.convertStringToListOfValidatedParams(result[2])
+                                var paramsList:ArrayList<Param> = ArrayList()
+                                var dummyListVals:List<String> = ArrayList()
+                                for (id in mActivityViewModel.validatedParams.indices)
+                                 {
+                                     paramsList.add(Param("",mActivityViewModel.validatedParams[id].nomChamp,"","","",dummyListVals))
+                                 }
+                                var stepTwoResponseDummy = BillPaymentFatoratiStepThreeResponse(
+                                    "",
+                                    paramsList, result[3], ""
+                                )
+                                mActivityViewModel.fatoratiStepThreeObserver.set(stepTwoResponseDummy)
 
                                 var number = selectedContact.fri
                                 number = number.substringBefore("@")
@@ -338,6 +346,9 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                     mActivityViewModel.userSelectedCreancerLogo =
                         currentSelectedBilLogo
                 }
+                else{
+                    currentSelectedBilLogo=""
+                }
                 if (currentSelectedBill != null) {
                     mActivityViewModel.userSelectedCreancer =
                         currentSelectedBill
@@ -390,9 +401,13 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                    else if( mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
                     {
                         var billCompaniesList = mActivityViewModel.getBillPaymentCompaniesResponseObserver.get()?.bills?.get(groupPosition)?.companies
-                        mActivityViewModel.fatoratiTypeSelected.set(Creancier(
-                            billCompaniesList!![childPosition].codeCreance,billCompaniesList[childPosition].codeCreancier,
-                            billCompaniesList[childPosition].nomCreance,billCompaniesList[childPosition].nomCreancier))
+                        mActivityViewModel.fatoratiTypeSelected.set(currentSelectedBilLogo?.let {
+                            Creancier(
+                                billCompaniesList!![childPosition].codeCreance,billCompaniesList[childPosition].codeCreancier,
+                                billCompaniesList[childPosition].nomCreance,billCompaniesList[childPosition].nomCreancier,
+                                it
+                            )
+                        })
                         mActivityViewModel.requestForFatoratiStepTwoApi(
                             activity,
                             Constants.CURRENT_USER_MSISDN
@@ -837,7 +852,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                         if(selectedCreancer?.equals(billCompaniesList[j].nomCreancier)!!){
                             Logger.debugLog("BillPaymentTesting","else expand sheet2")
                             mActivityViewModel.fatoratiTypeSelected.set(Creancier(billCompaniesList[j].codeCreance,billCompaniesList[j].codeCreancier,
-                                billCompaniesList[j].nomCreance,billCompaniesList[j].nomCreancier))
+                                billCompaniesList[j].nomCreance,billCompaniesList[j].nomCreancier,mActivityViewModel.userSelectedCreancerLogo))
                             Logger.debugLog("BillPaymentTesting",mActivityViewModel.fatoratiTypeSelected.get().toString())
 //                                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn)
                             (activity as BillPaymentActivity).navController?.navigateUp()
@@ -857,7 +872,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                             if(selectedCreancer?.equals(billCompaniesList[j].nomCreancier)!!){
 
                                 mActivityViewModel.fatoratiTypeSelected.set(Creancier(billCompaniesList[j].codeCreance,billCompaniesList[j].codeCreancier,
-                                    billCompaniesList[j].nomCreance,billCompaniesList[j].nomCreancier))
+                                    billCompaniesList[j].nomCreance,billCompaniesList[j].nomCreancier,mActivityViewModel.userSelectedCreancerLogo))
                                 Logger.debugLog("BillPaymentTesting",mActivityViewModel.fatoratiTypeSelected.get().toString())
 //                                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentBillPaymentMain_to_fragmentBillPaymentMsisdn)
                                 (activity as BillPaymentActivity).navController?.navigateUp()

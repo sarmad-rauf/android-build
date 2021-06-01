@@ -18,6 +18,8 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.*
 import com.github.florent37.tutoshowcase.TutoShowcase
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import org.apache.http.conn.util.InetAddressUtils
 import java.net.InetAddress
 import java.net.NetworkInterface
@@ -671,6 +673,21 @@ object Constants {
            else ->{return spinnerVal}
        }
     }
+
+    fun convertListToJson(validatedParams: ArrayList<ValidatedParam>): String {
+        return Gson().toJson(validatedParams).toString()
+    }
+    fun convertStringToListOfValidatedParams(stringValidatedParams: String): ArrayList<ValidatedParam> {
+        val token: TypeToken<ArrayList<ValidatedParam?>?> =
+            object : TypeToken<ArrayList<ValidatedParam?>?>() {}
+        return Gson().fromJson(stringValidatedParams,token.type)
+    }
+
+//    fun getItems(stringValidatedParams: String): List<ValidatedParam>? {
+//        if (stringValidatedParams.isEmpty(json)) return Collections.emptyList()
+//        val type: Type = object : TypeToken<List<ExpenseItem?>?>() {}.type
+//        return Gson().fromJson<List<ExpenseItem>>(json, type)
+//    }
 
     object EMVco {
         const val Payload_Format_Indicator_ID = "00"

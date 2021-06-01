@@ -11,5 +11,6 @@ data class Creancier(
     val codeCreance: String,
     val codeCreancier: String,
     val nomCreance: String,
-    val nomCreancier: String
+    val nomCreancier: String,
+    val logoPath: String
 )

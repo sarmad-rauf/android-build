@@ -23,6 +23,7 @@ import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
+import com.google.gson.Gson
 import java.util.regex.Pattern
 
 class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBinding>(),
@@ -418,10 +419,13 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
             var nickName = mDataBinding.inputName.text.toString().trim()
             if(mActivitViewModel.isPaymentSelected.get()!!){
                 if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!){
-                    //Util_Redal@MyNickName,codeCreance,creancierID,nomChamp,refTxFatourati
-                    var fatoratiNickName = "Util_${mActivitViewModel.fatoratiTypeSelected}@$nickName,${mActivitViewModel.codeCreance},${mActivitViewModel.creancierID}," +
-                            "${mActivitViewModel.nomChamp},${mActivitViewModel.refTxFatourati}"
-                    mActivitViewModel.requestForAddFavoritesApi(activity,fatoratiNickName,Constants.getFatoratiAlias(msisdnEntered))
+                    //Util_Redal@MyNickName,codeCreance,creancierID,params,refTxFatourati,logo
+
+                        var stringParams = Constants.convertListToJson(mActivitViewModel.validatedParams)
+
+                    var fatoratiNickName = "Util_${mActivitViewModel.fatoratiTypeSelected}@$nickName,${mActivitViewModel.selectedCodeCreance},${mActivitViewModel.creancierID}," +
+                            "${stringParams},${mActivitViewModel.refTxFatourati},${mActivitViewModel.selectedCompanyLogo}"
+                    mActivitViewModel.requestForAddFavoritesApi(activity,fatoratiNickName,Constants.getFatoratiAlias(mActivitViewModel.validatedParams[0].valChamp))
                 }else{
                     if(isInternetTypeSelected){
                         nickName = "Telec_Internet@$nickName"

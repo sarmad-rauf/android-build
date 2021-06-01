@@ -806,13 +806,13 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
         if (Tools.checkNetworkStatus(getApplication())) {
             Logger.debugLog("lydec","creanse ${stepFourLydecSelected}")
             var codeCreance = ""
-            if(stepFourLydecSelected)
-            {
+//            if(stepFourLydecSelected)
+//            {
                 codeCreance= selectedCodeCreance
-            }
-            else{
-                codeCreance=fatoratiTypeSelected.get()!!.codeCreance
-            }
+//            }
+//            else{
+//                codeCreance=fatoratiTypeSelected.get()!!.codeCreance
+//            }
             transferdAmountTo=validatedParams[0].valChamp
             var reciever:Any
             if(selectedCreancer.get()?.contains("TSAV")!!)
