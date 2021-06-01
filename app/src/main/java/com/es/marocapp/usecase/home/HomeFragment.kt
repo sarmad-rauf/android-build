@@ -404,14 +404,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     Constants.IS_DEFAULT_ACCOUNT_SET = true
                     DialogUtils.successFailureDialogue(
                         context,
-                        LanguageData.getStringValue("OperationPerformedSuccessfullyDot"),
+                        it.description,
                         0
                     )
                     (activity as MainActivity).startTutorialsTrail()
                 } else {
                     DialogUtils.successFailureDialogue(
                         context,
-                        LanguageData.getStringValue("FailedToPerformOperationDot"),
+                       it.description,
                         1
                     )
                     (activity as MainActivity).startTutorialsTrail()
