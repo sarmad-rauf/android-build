@@ -241,7 +241,7 @@ object Constants {
     fun createUserToken(): String {
         var token = SimpleDateFormat("yyyyMMddHHmmssSS", Locale.ENGLISH)
             .format(Date()) + Random()
-            .nextInt(999998) + "($LOGGED_IN_USER)"
+            .nextInt(999998) + "($CURRENT_USER_MSISDN)"
         return token
     }
 
