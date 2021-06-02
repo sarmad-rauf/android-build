@@ -89,7 +89,7 @@ class FragmentPostPaidPaymentTypes : BaseFragment<LayoutBillPaymentTypeQuickRech
                             /*for(value in result){
                                 Log.d("dataFromString",value)
                             }*/
-                            var creancier = Creancier(result[0],result[1],"","")
+                            var creancier = Creancier(result[0],result[1],"","","")
                             mActivityViewModel.fatoratiTypeSelected.set(creancier)
 
 //                            var stepTwoResponseDummy = BillPaymentFatoratiStepThreeResponse("",

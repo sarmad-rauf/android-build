@@ -448,7 +448,6 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
             }else{
                 mActivitViewModel.requestForAddFavoritesApi(activity,nickName,Constants.getNumberMsisdn(msisdnEntered))
             }
-
         }
     }
 

@@ -162,6 +162,7 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                 showViews()
                 mActivitViewModel.specialMenuBillSelected=false
+                mActivitViewModel.refTxFatourati=it.refTxFatourati
                 (activity as FavoritesActivity).navController.navigate(R.id.action_favoriteDetailFragment_to_favoriteEnterContactFragment)
             }
             else{
