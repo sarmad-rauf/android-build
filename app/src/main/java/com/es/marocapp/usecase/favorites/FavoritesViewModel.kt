@@ -88,6 +88,7 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
                         {
                             when(result?.responseCode) {
                                 ApiConstant.API_SUCCESS -> {
+                                    isLoading.set(false)
                                     fatoratiStepOneObserver.set(result)
                                     getFatoratiStepOneResponseListner.postValue(result)
                                 }
@@ -157,14 +158,23 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
                         {
                             when(result?.responseCode) {
                                 ApiConstant.API_SUCCESS -> {
+                                    if(result.creances.size>1)
+                                    {
+                                        isLoading.set(false)
+                                    }
                                     fatoratiStepTwoObserver.set(result)
                                     getFatoratiStepTwoResponseListner.postValue(result)
                                 }
-                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
-                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
-                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
-                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                ApiConstant.API_SESSION_OUT ->{
+                                    isLoading.set(false)
+                                    (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)}
+                                ApiConstant.API_INVALID -> {
+                                    isLoading.set(false)
+                                    (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)}
                                 else ->  {
+                                    isLoading.set(false)
                                     fatoratiStepTwoObserver.set(result)
                                     getFatoratiStepTwoResponseListner.postValue(result)
                                 }
@@ -338,7 +348,7 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
             isLoading.set(true)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAddContact(
-                AddContactRequest(contactNumber,contactName,ApiConstant.CONTEXT_AFTER_LOGIN)
+                AddContactRequest(Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),contactName,ApiConstant.CONTEXT_AFTER_LOGIN,contactNumber,contactNumber)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -387,6 +397,8 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
         }
 
     }
+
+
 
     //Request For DeleteFavorite
     fun requestForDeleteFavoriteApi(context: Context?,

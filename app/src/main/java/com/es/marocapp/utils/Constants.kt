@@ -34,6 +34,7 @@ import kotlin.properties.Delegates
 object Constants {
 
 
+    var marocFatouratiLogoPath: String=""
     var selectedTSAVSpinnerPosition: Int=0
     var STEP2_3RESPONSE: BillPaymentFatoratiStepThreeResponse? = null
     lateinit var fatouratiTsavMatriculeDdVals: Array<String>
@@ -675,7 +676,15 @@ object Constants {
     }
 
     fun convertListToJson(validatedParams: ArrayList<ValidatedParam>): String {
-        return Gson().toJson(validatedParams).toString()
+        var jsonArrayStringFormat = "("
+        for(index in validatedParams.indices)
+        {
+           jsonArrayStringFormat= jsonArrayStringFormat.plus(validatedParams[index].nomChamp.plus(":").plus(validatedParams[index].valChamp)).plus(",")
+        }
+
+        jsonArrayStringFormat= jsonArrayStringFormat.removeSuffix(",")
+        jsonArrayStringFormat= jsonArrayStringFormat.plus(")")
+        return jsonArrayStringFormat
     }
     fun convertStringToListOfValidatedParams(stringValidatedParams: String): ArrayList<ValidatedParam> {
         val token: TypeToken<ArrayList<ValidatedParam?>?> =

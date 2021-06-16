@@ -250,9 +250,13 @@ interface NetworkApi {
     @POST(EndPoints.getusertypeprofiles)
     fun getUserSimpleProfile(@Body request : GetUserSimpleProfileRequest) : Observable<GetUserSimpleProfileResponse>
 
-    //Request for addcontact
-    @POST(EndPoints.addcontact)
+    //Request for addBillProvideriContact
+    @POST(EndPoints.addBillProvideriContact)
     fun getAddContact(@Body request : AddContactRequest) : Observable<AddContactResponse>
+
+    //Request for getBillProvideriContact
+    @POST(EndPoints.getBillProvideriContactList)
+    fun getContact(@Body request : GetContactRequest) : Observable<AddContactResponse>
 
     //Request for deletecontact
     @POST(EndPoints.deletecontact)

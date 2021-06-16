@@ -97,7 +97,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     var selectedIvoicesBillPaymentResponseValue = ObservableField<ArrayList<PostPaidBillPaymentResponse>>()
 
     //Fatorati Observer
-    val selectedCreancer = ObservableField<String>()
+    var selectedCreancer = ObservableField<String>()
     var userSelectedCreancer =""
     var userSelectedCreancerLogo =""
     var creancesList = ObservableField<ArrayList<creances>>()
@@ -131,6 +131,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     //BillPaymentCompnies API Response Listner
     var getBillPaymentCompaniesResponseListner = SingleLiveEvent<BillPaymentCompaniesResponse>()
     var getBillPaymentCompaniesResponseObserver = ObservableField<BillPaymentCompaniesResponse>()
+    var getContactResponseListner = SingleLiveEvent<AddContactResponse>()
 
     //Fatorati API Listner
     var getFatoratiStepOneResponseListner = SingleLiveEvent<BillPaymentFatoratiStepOneResponse>()
@@ -447,7 +448,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
             isLoading.set(true)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAddContact(
-                AddContactRequest(tranferAmountToWithoutAlias,contactName,ApiConstant.CONTEXT_AFTER_LOGIN)
+                AddContactRequest(tranferAmountToWithoutAlias,contactName,ApiConstant.CONTEXT_AFTER_LOGIN,"","")
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -1157,6 +1158,67 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                         } else {
                             getBillPaymentCompaniesResponseListner.postValue(result)
                             getBillPaymentCompaniesResponseObserver.set(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For BillPaymentCompanies
+    fun requestForGetFavouriteApi(context: Context?
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+            Logger.debugLog("billPayment","isLoading ${isLoading}")
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getContact(
+                GetContactRequest(
+                    ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN)
+                )
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        Logger.debugLog("billPayment","isLoading ${isLoading}")
+                        if (result?.responseCode != null) {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+
+                                    getContactResponseListner.postValue(result)
+
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getContactResponseListner.postValue(result)
+
+                                }
+                            }
+                        } else {
+                            getContactResponseListner.postValue(result)
                         }
 
 

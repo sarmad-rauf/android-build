@@ -1127,7 +1127,6 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
         contactName: String
     ) {
         if (Tools.checkNetworkStatus(getApplication())) {
-
             isLoading.set(true)
 
 
@@ -1135,7 +1134,7 @@ class SendMoneyViewModel(application: Application) : AndroidViewModel(applicatio
                 AddContactRequest(
                     tranferAmountToWithAlias,
                     contactName,
-                    ApiConstant.CONTEXT_AFTER_LOGIN
+                    ApiConstant.CONTEXT_AFTER_LOGIN,"",""
                 )
             )
                 .compose(applyIOSchedulers())

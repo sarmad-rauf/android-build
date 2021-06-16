@@ -65,7 +65,9 @@
                 android:layout_height="wrap_content"
                 android:theme="@style/myTextInputLabel"
                 android:hint="@string/enter_name"
+                android:digits="0123456789qwertzuiopasdfghjklyxcvbnm "
                 android:inputType="textPersonName"
+                android:maxLength="20"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 

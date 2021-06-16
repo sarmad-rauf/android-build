@@ -308,7 +308,7 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
 
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAddContact(
-                AddContactRequest(tranferAmountToWithAlias,contactName,ApiConstant.CONTEXT_AFTER_LOGIN)
+                AddContactRequest(tranferAmountToWithAlias,contactName,ApiConstant.CONTEXT_AFTER_LOGIN,"","")
             )
                 .compose(applyIOSchedulers())
                 .subscribe(

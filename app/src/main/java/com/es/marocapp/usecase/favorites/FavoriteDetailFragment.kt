@@ -145,10 +145,10 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
                     populatesCreancesLIst()
                 }
                 else{
-                    // call step 3 directly on next screen
+                    // call step 3 directly for next screen
                     mActivitViewModel.selectedCodeCreance=
                         it.creances[0].codeCreance
-                    //mActivitViewModel.requestForFatoratiStepThreeApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID, mActivitViewModel.selectedCodeCreance)
+                    mActivitViewModel.requestForFatoratiStepThreeApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID, mActivitViewModel.selectedCodeCreance)
 
                 }
 
@@ -273,16 +273,17 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
     override fun onNextButtonClick(view: View) {
 
             if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!) {
-                if (!mActivitViewModel.selectedCodeCreance.isNullOrEmpty()){
-                    mActivitViewModel.requestForFatoratiStepThreeApi(
-                        activity,
-                        Constants.CURRENT_USER_MSISDN,
-                        mActivitViewModel.creancierID,
-                        mActivitViewModel.selectedCodeCreance
-                    )
-                }else{
-                    mActivitViewModel.requestForFatoratiStepTwoApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID)
-                }
+//                if (!mActivitViewModel.selectedCodeCreance.isNullOrEmpty()){
+//                    mActivitViewModel.requestForFatoratiStepThreeApi(
+//                        activity,
+//                        Constants.CURRENT_USER_MSISDN,
+//                        mActivitViewModel.creancierID,
+//                        mActivitViewModel.selectedCodeCreance
+//                    )
+//                }else{
+//                    mActivitViewModel.requestForFatoratiStepTwoApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID)
+//                }
+                mActivitViewModel.requestForFatoratiStepTwoApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID)
 
 
             }
@@ -313,7 +314,7 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
                     mActivitViewModel.codeCreance = list_of_FatouratieType[index].codeCreance
                     mActivitViewModel.creancierID = list_of_FatouratieType[index].codeCreancier
                     mActivitViewModel.selectedCompanyLogo = list_of_FatouratieType[index].logoPath
-                        mActivitViewModel.requestForFatoratiStepTwoApi(activity,Constants.CURRENT_USER_MSISDN,mActivitViewModel.creancierID)
+
                 }
             }
         }

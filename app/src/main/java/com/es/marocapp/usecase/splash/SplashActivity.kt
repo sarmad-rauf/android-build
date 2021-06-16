@@ -198,6 +198,8 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.reasonUpgradeToLevelThree=it.reasonUpgradeToLevelThree
                 Constants.fatouratiSeperateMenuBillNames=it.fatouratiSeperateMenuBillNames
                 Constants.fatouratiTsavMatriculeDdVals=it.fatouratiTsavMatriculeDdVals
+                if (it.marocFatouratiLogoPath != null) {
+                Constants.marocFatouratiLogoPath=it.marocFatouratiLogoPath}
                 if (it.iamBillsTriggerFatouratiFlow != null) {
                     Constants.iamBillsTriggerFatouratiFlow=it.iamBillsTriggerFatouratiFlow
                 }

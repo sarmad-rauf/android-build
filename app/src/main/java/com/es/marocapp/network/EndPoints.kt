@@ -173,6 +173,12 @@ object EndPoints {
     //addcontact
     const val addcontact = "addcontact"
 
+    //addcontactNew
+    const val addBillProvideriContact = "addbillprovidercontact"
+
+    //getcontactNew
+    const val getBillProvideriContactList = "getbillprovidercontactlist"
+
     //deletecontact
     const val deletecontact = "deletecontact"
 

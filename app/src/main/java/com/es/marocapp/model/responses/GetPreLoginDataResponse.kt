@@ -80,5 +80,6 @@ data class GetPreLoginDataResponse(
     val cityNameRegex:String,
     val helpLineNumberAgent: String,
     val billTypeInwi: String,
-    val reasonForUpdateEmail: String
+    val reasonForUpdateEmail: String,
+    val marocFatouratiLogoPath: String
 )

@@ -1,7 +1,6 @@
 package com.es.marocapp.usecase.billpayment
 
 import android.os.Bundle
-import android.text.PrecomputedText
 import android.view.View
 import android.widget.ExpandableListView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -57,189 +56,15 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
         (activity as BillPaymentActivity).setHeaderTitle(
             LanguageData.getStringValue("BillPayment").toString()
         )
-
-        mDataBinding.tvManageFavorites.text = LanguageData.getStringValue("ManageFavorites")
-        if (Constants.mContactListArray.isEmpty()) {
-            mDataBinding.billPaymentMangeFavGroup.visibility = View.GONE
-        } else {
-            mDataBinding.billPaymentMangeFavGroup.visibility = View.VISIBLE
-            mFavoritesList.clear()
-            for (contacts in Constants.mContactListArray) {
-                var contactName = contacts.contactName
-                if (contactName.contains("Telec_Internet@") || contactName.contains("Telec_PostpaidMobile@") ||
-                    contactName.contains("Telec_PostpaidFix@") || contactName.contains("Util_")
-                ) {
-                    if (contactName.contains("Util_")) {
-                        if (contactName.contains(",")) {
-                            mFavoritesList.add(contacts)
-                        }
-                    } else {
-                        mFavoritesList.add(contacts)
-                    }
-                }
-            }
-            mActivityViewModel.stepFourLydecSelected=false
-            mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames=false
-            if (mFavoritesList.isEmpty()) {
-                mDataBinding.billPaymentMangeFavGroup.visibility = View.GONE
-            } else {
-                mDataBinding.billPaymentMangeFavGroup.visibility = View.VISIBLE
-                mBillPaymentFavouritesAdapter = BillPaymentFavoritesAdapter(mFavoritesList,
-                    object : BillPaymentFavoritesAdapter.BillPaymentFavoriteClickListner {
-                        override fun onFavoriteItemTypeClick(selectedContact: Contact) {
-                            if (selectedContact.contactName.contains("Util_")) {
-                                mActivityViewModel.isBillUseCaseSelected.set(false)
-                                mActivityViewModel.isFatoratiUseCaseSelected.set(true)
-
-                                //TelecomBillPayment Fatourati Use Case
-                                var contactName = selectedContact.contactName
-                                var companyNameUtilString  = contactName.substringBefore("@")
-                                var companyName = companyNameUtilString.substringAfter("_").trim()
-                                Logger.debugLog("CompanyNameFatorati",companyName)
-                                contactName = contactName.substringAfter("@")
-                                var name = contactName.substringBefore(",")
-                                var withoutNameCommaSepratedString = contactName.substringAfter(",")
-                                var result: List<String> =
-                                    withoutNameCommaSepratedString.split(",").map { it.trim() }
-                                /*for(value in result){
-                                    Log.d("dataFromString",value)
-                                }*/
-                                var creancier = Creancier(result[0], result[1], "", companyName,result[4])
-                                mActivityViewModel.fatoratiTypeSelected.set(creancier)
-                                mActivityViewModel.validatedParams.clear()
-                                mActivityViewModel.validatedParams=Constants.convertStringToListOfValidatedParams(result[2])
-                                var paramsList:ArrayList<Param> = ArrayList()
-                                var dummyListVals:List<String> = ArrayList()
-                                for (id in mActivityViewModel.validatedParams.indices)
-                                 {
-                                     paramsList.add(Param("",mActivityViewModel.validatedParams[id].nomChamp,"","","",dummyListVals))
-                                 }
-                                var stepTwoResponseDummy = BillPaymentFatoratiStepThreeResponse(
-                                    "",
-                                    paramsList, result[3], ""
-                                )
-                                mActivityViewModel.fatoratiStepThreeObserver.set(stepTwoResponseDummy)
-
-                                var number = selectedContact.fri
-                                number = number.substringBefore("@")
-                                number = number.substringBefore("/")
-
-                                mActivityViewModel.isUserSelectedFromFavorites.set(true)
-                                mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(true)
-
-                                mActivityViewModel.transferdAmountTo = number
-                                mActivityViewModel.requestForFatoratiStepFourApi(activity)
-
-                            } else if (selectedContact.contactName.contains("Telec_Internet@")) {
-                                mActivityViewModel.isBillUseCaseSelected.set(true)
-                                mActivityViewModel.isFatoratiUseCaseSelected.set(false)
-                                mActivityViewModel.isPostPaidMobileSelected.set(false)
-                                mActivityViewModel.isPostPaidFixSelected.set(false)
-                                mActivityViewModel.isInternetSelected.set(true)
-
-                                mActivityViewModel.isUserSelectedFromFavorites.set(true)
-                                mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(true)
-
-                                var number = selectedContact.fri
-                                number = number.substringBefore("@")
-                                number = number.substringBefore("/")
-
-                                var msisdnEntered = number
-                                var code = ""
-                                Logger.debugLog("abro","case selectes: ${selectedContact.toString()}")
-                                mActivityViewModel.requestForPostPaidFinancialResourceInfoApi(
-                                    activity,
-                                    code,
-                                    msisdnEntered
-                                )
-
-                                //TelecomBillPayment Internet Use Case
-                            } else if (selectedContact.contactName.contains("Telec_PostpaidMobile@")) {
-                                mActivityViewModel.isBillUseCaseSelected.set(true)
-                                mActivityViewModel.isFatoratiUseCaseSelected.set(false)
-                                mActivityViewModel.isPostPaidMobileSelected.set(true)
-                                mActivityViewModel.isPostPaidFixSelected.set(false)
-                                mActivityViewModel.isInternetSelected.set(false)
-
-                                mActivityViewModel.isUserSelectedFromFavorites.set(true)
-                                mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(true)
-
-                                var contactName = selectedContact.contactName
-                                contactName = contactName.substringAfter("@")
-                                contactName = contactName.substringAfter(",")
-
-                                var number = selectedContact.fri
-                                number = number.substringBefore("@")
-                                number = number.substringBefore("/")
-
-                                var msisdnEntered = number
-                                var code = contactName
-
-                                mActivityViewModel.requestForPostPaidFinancialResourceInfoApi(
-                                    activity,
-                                    code,
-                                    msisdnEntered
-                                )
-
-                                //TelecomBillPayment PostPaidMobile Use Case
-                            } else if (selectedContact.contactName.contains("Telec_PostpaidFix@")) {
-                                mActivityViewModel.isBillUseCaseSelected.set(true)
-                                mActivityViewModel.isFatoratiUseCaseSelected.set(false)
-                                mActivityViewModel.isPostPaidMobileSelected.set(false)
-                                mActivityViewModel.isPostPaidFixSelected.set(true)
-                                mActivityViewModel.isInternetSelected.set(false)
-
-                                mActivityViewModel.isUserSelectedFromFavorites.set(true)
-                                mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(true)
-
-                                var contactName = selectedContact.contactName
-                                contactName = contactName.substringAfter("@")
-                                contactName = contactName.substringAfter(",")
-
-                                var number = selectedContact.fri
-                                number = number.substringBefore("@")
-                                number = number.substringBefore("/")
-
-                                var msisdnEntered = number
-                                var code = contactName
-
-                                mActivityViewModel.requestForPostPaidFinancialResourceInfoApi(
-                                    activity,
-                                    code,
-                                    msisdnEntered
-                                )
-
-                                //TelecomBillPayment PostPaidFix Use Case
-                            }
-                        }
-
-                        override fun onDeleteFavoriteItemTypeClick(selectedContact: Contact) {
-                            mActivityViewModel.requestForDeleteFavoriteApi(
-                                activity,
-                                selectedContact.fri
-                            )
-                        }
-
-                    })
-
-                mDataBinding.manageFavRecycler.apply {
-                    adapter = mBillPaymentFavouritesAdapter
-                    layoutManager = LinearLayoutManager(
-                        activity as BillPaymentActivity,
-                        LinearLayoutManager.HORIZONTAL,
-                        false
-                    )
-                }
-            }
-        }
-
+        mActivityViewModel.stepFourLydecSelected=false
+        mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames=false
 
         (activity as BillPaymentActivity).setHeaderVisibility(true)
         (activity as BillPaymentActivity).setCompanyIconToolbarVisibility(false)
 
         mActivityViewModel.popBackStackTo = -1
 
-        mActivityViewModel.requestForBillPaymentCompaniesApi(activity)
+        mActivityViewModel.requestForGetFavouriteApi(activity)
 //        populateTelecomBillsSubMenusList()
 //        prepareDataForBillPayment()
         setStrings()
@@ -675,6 +500,17 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
             DialogUtils.showErrorDialoge(activity, it)
         }
         )
+        mActivityViewModel.getContactResponseListner.observe(this@FragmentBillPaymentMain, Observer {
+          if( it.responseCode.equals(ApiConstant.API_SUCCESS)){
+              if(!it.contactList.isNullOrEmpty()) {
+                  Constants.mContactListArray.clear()
+                  Constants.mContactListArray.addAll(it.contactList)
+              }
+          }
+            showFavourites()
+            mActivityViewModel.requestForBillPaymentCompaniesApi(activity)
+        })
+
 
         mActivityViewModel.getDeleteFavoritesResponseListner.observe(this@FragmentBillPaymentMain,
             Observer {
@@ -833,6 +669,186 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
             }
         })
     }
+
+    private fun showFavourites() {
+        mDataBinding.tvManageFavorites.text = LanguageData.getStringValue("ManageFavorites")
+        if (Constants.mContactListArray.isEmpty()) {
+            mDataBinding.billPaymentMangeFavGroup.visibility = View.GONE
+        }
+        else {
+            mDataBinding.billPaymentMangeFavGroup.visibility = View.VISIBLE
+            mFavoritesList.clear()
+            for (contacts in Constants.mContactListArray) {
+                var contactName = contacts.contactName
+                if (contactName.contains("Telec_Internet@") || contactName.contains("Telec_PostpaidMobile@") ||
+                    contactName.contains("Telec_PostpaidFix@") || contactName.contains("Util_")
+                ) {
+                    if (contactName.contains("Util_")) {
+                        if (contactName.contains(",")) {
+                            mFavoritesList.add(contacts)
+                        }
+                    } else {
+                        mFavoritesList.add(contacts)
+                    }
+                }
+            }
+
+            if (mFavoritesList.isEmpty()) {
+                mDataBinding.billPaymentMangeFavGroup.visibility = View.GONE
+            } else {
+                mDataBinding.billPaymentMangeFavGroup.visibility = View.VISIBLE
+                mBillPaymentFavouritesAdapter = BillPaymentFavoritesAdapter(mFavoritesList,
+                    object : BillPaymentFavoritesAdapter.BillPaymentFavoriteClickListner {
+                        override fun onFavoriteItemTypeClick(selectedContact: Contact) {
+                            if (selectedContact.contactName.contains("Util_")) {
+                                mActivityViewModel.isBillUseCaseSelected.set(false)
+                                mActivityViewModel.isFatoratiUseCaseSelected.set(true)
+
+                                //TelecomBillPayment Fatourati Use Case
+                                var contactName = selectedContact.contactName
+                                val companyNameUtilString  = contactName.substringBefore("@")
+                                val companyName = companyNameUtilString.substringAfter("_").trim()
+                                mActivityViewModel.selectedCreancer.set(companyName)
+                                Logger.debugLog("CompanyNameFatorati",companyName)
+                                contactName = contactName.substringAfter("@")
+                                var name = contactName.substringBefore(",")
+                                val withoutNameCommaSepratedString = contactName.substringAfter(",")
+                                val result: List<String> =
+                                    withoutNameCommaSepratedString.split(",").map { it.trim() }
+                                /*for(value in result){
+                                    Log.d("dataFromString",value)
+                                }*/
+                                val creancier = Creancier(result[1], result[2], "", companyName,result[3])
+                                mActivityViewModel.selectedCodeCreance=result[1]
+                                mActivityViewModel.fatoratiTypeSelected.set(creancier)
+                                mActivityViewModel.validatedParams.clear()
+                                mActivityViewModel.validatedParams=Constants.convertStringToListOfValidatedParams(result[4])
+                                val paramsList:ArrayList<Param> = ArrayList()
+                                val dummyListVals:List<String> = ArrayList()
+                                for (id in mActivityViewModel.validatedParams.indices)
+                                {
+                                    paramsList.add(Param("",mActivityViewModel.validatedParams[id].nomChamp,"","","",dummyListVals))
+                                }
+                                var stepTwoResponseDummy = BillPaymentFatoratiStepThreeResponse(
+                                    "",
+                                    paramsList, result[3], ""
+                                )
+                                mActivityViewModel.fatoratiStepThreeObserver.set(stepTwoResponseDummy)
+
+                                var number = selectedContact.fri
+                                number = number.substringBefore("@")
+                                number = number.substringBefore("/")
+
+                                mActivityViewModel.isUserSelectedFromFavorites.set(true)
+                                mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(true)
+
+                                mActivityViewModel.transferdAmountTo = number
+                                mActivityViewModel.requestForFatoratiStepFourApi(activity)
+
+                            } else if (selectedContact.contactName.contains("Telec_Internet@")) {
+                                mActivityViewModel.isBillUseCaseSelected.set(true)
+                                mActivityViewModel.isFatoratiUseCaseSelected.set(false)
+                                mActivityViewModel.isPostPaidMobileSelected.set(false)
+                                mActivityViewModel.isPostPaidFixSelected.set(false)
+                                mActivityViewModel.isInternetSelected.set(true)
+
+                                mActivityViewModel.isUserSelectedFromFavorites.set(true)
+                                mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(true)
+
+                                var number = selectedContact.fri
+                                number = number.substringBefore("@")
+                                number = number.substringBefore("/")
+
+                                var msisdnEntered = number
+                                var code = ""
+                                Logger.debugLog("abro","case selectes: ${selectedContact.toString()}")
+                                mActivityViewModel.requestForPostPaidFinancialResourceInfoApi(
+                                    activity,
+                                    code,
+                                    msisdnEntered
+                                )
+
+                                //TelecomBillPayment Internet Use Case
+                            } else if (selectedContact.contactName.contains("Telec_PostpaidMobile@")) {
+                                mActivityViewModel.isBillUseCaseSelected.set(true)
+                                mActivityViewModel.isFatoratiUseCaseSelected.set(false)
+                                mActivityViewModel.isPostPaidMobileSelected.set(true)
+                                mActivityViewModel.isPostPaidFixSelected.set(false)
+                                mActivityViewModel.isInternetSelected.set(false)
+
+                                mActivityViewModel.isUserSelectedFromFavorites.set(true)
+                                mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(true)
+
+                                var contactName = selectedContact.contactName
+                                contactName = contactName.substringAfter("@")
+                                contactName = contactName.substringAfter(",")
+
+                                var number = selectedContact.fri
+                                number = number.substringBefore("@")
+                                number = number.substringBefore("/")
+
+                                var msisdnEntered = number
+                                var code = contactName
+
+                                mActivityViewModel.requestForPostPaidFinancialResourceInfoApi(
+                                    activity,
+                                    code,
+                                    msisdnEntered
+                                )
+
+                                //TelecomBillPayment PostPaidMobile Use Case
+                            } else if (selectedContact.contactName.contains("Telec_PostpaidFix@")) {
+                                mActivityViewModel.isBillUseCaseSelected.set(true)
+                                mActivityViewModel.isFatoratiUseCaseSelected.set(false)
+                                mActivityViewModel.isPostPaidMobileSelected.set(false)
+                                mActivityViewModel.isPostPaidFixSelected.set(true)
+                                mActivityViewModel.isInternetSelected.set(false)
+
+                                mActivityViewModel.isUserSelectedFromFavorites.set(true)
+                                mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(true)
+
+                                var contactName = selectedContact.contactName
+                                contactName = contactName.substringAfter("@")
+                                contactName = contactName.substringAfter(",")
+
+                                var number = selectedContact.fri
+                                number = number.substringBefore("@")
+                                number = number.substringBefore("/")
+
+                                var msisdnEntered = number
+                                var code = contactName
+
+                                mActivityViewModel.requestForPostPaidFinancialResourceInfoApi(
+                                    activity,
+                                    code,
+                                    msisdnEntered
+                                )
+
+                                //TelecomBillPayment PostPaidFix Use Case
+                            }
+                        }
+
+                        override fun onDeleteFavoriteItemTypeClick(selectedContact: Contact) {
+                            mActivityViewModel.requestForDeleteFavoriteApi(
+                                activity,
+                                selectedContact.fri
+                            )
+                        }
+
+                    })
+
+                mDataBinding.manageFavRecycler.apply {
+                    adapter = mBillPaymentFavouritesAdapter
+                    layoutManager = LinearLayoutManager(
+                        activity as BillPaymentActivity,
+                        LinearLayoutManager.HORIZONTAL,
+                        false
+                    )
+                }
+            }
+        }
+    }
+
     private fun startFatouratiFlow() {
         mActivityViewModel.isBillUseCaseSelected.set(false)
         mActivityViewModel.isFatoratiUseCaseSelected.set(true)

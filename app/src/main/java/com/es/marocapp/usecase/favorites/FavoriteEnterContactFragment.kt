@@ -351,9 +351,9 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
         mActivitViewModel.getAddFavoritesResponseListner.observe(this@FavoriteEnterContactFragment,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                    if(!it.contactList.isNullOrEmpty()){
-                        Constants.mContactListArray.clear()
-                        Constants.mContactListArray.addAll(it.contactList)
+                      //  if(!it.contactList.isNullOrEmpty()){
+//                        Constants.mContactListArray.clear()
+//                        Constants.mContactListArray.addAll(it.contactList)
                         DialogUtils.showSuccessDialog(activity,it.description,object : DialogUtils.OnConfirmationDialogClickListner{
                             override fun onDialogYesClickListner() {
                                 (activity as FavoritesActivity).navController.popBackStack(R.id.favoriteTypesFragment,false)
@@ -363,7 +363,7 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
 
                             }
                         })
-                    }
+                  //  }
                 }else{
                     DialogUtils.showErrorDialoge(activity,it.description)
                 }
@@ -419,13 +419,22 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
             var nickName = mDataBinding.inputName.text.toString().trim()
             if(mActivitViewModel.isPaymentSelected.get()!!){
                 if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!){
-                    //Util_Redal@MyNickName,codeCreance,creancierID,params,refTxFatourati,logo
+                    //Util_<billTypeName>@<Favorite nickName>,<logo>,<codeCreance>,<codeCreancier>,<refTxFatourati>,[{<nomChamp>,<valueChamp>}]
 
-                        var stringParams = Constants.convertListToJson(mActivitViewModel.validatedParams)
+                        val stringParams = Constants.convertListToJson(mActivitViewModel.validatedParams)
+                    val logoPath=mActivitViewModel.selectedCompanyLogo.replace(Constants.marocFatouratiLogoPath,"").trim()
 
-                    var fatoratiNickName = "Util_${mActivitViewModel.fatoratiTypeSelected}@$nickName,${mActivitViewModel.selectedCodeCreance},${mActivitViewModel.creancierID}," +
-                            "${stringParams},${mActivitViewModel.refTxFatourati},${mActivitViewModel.selectedCompanyLogo}"
-                    mActivitViewModel.requestForAddFavoritesApi(activity,fatoratiNickName,Constants.getFatoratiAlias(mActivitViewModel.validatedParams[0].valChamp))
+                    val fatoratiNickName = "Util_${mActivitViewModel.fatoratiTypeSelected}@$nickName,${logoPath},${mActivitViewModel.selectedCodeCreance},${mActivitViewModel.creancierID}," +
+                            "${mActivitViewModel.refTxFatourati},${stringParams}"
+                    var reciever:Any
+                    if(mActivitViewModel.fatoratiTypeSelected.contains("TSAV")!!)
+                    {
+                        reciever=Constants.getFatoratiNewAlias(mActivitViewModel.validatedParams[0].valChamp,"Paiement_de_vignette_TSA")
+                    }
+                    else{
+                        reciever=Constants.getFatoratiAlias(mActivitViewModel.validatedParams[0].valChamp)
+                    }
+                    mActivitViewModel.requestForAddFavoritesApi(activity,fatoratiNickName,reciever)
                 }else{
                     if(isInternetTypeSelected){
                         nickName = "Telec_Internet@$nickName"
@@ -664,7 +673,7 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
             }else{
 
                 if (isMobileUseCaseSelected || isFixeUseCaseSelected) {
-                    if (mDataBinding.inputPhoneNumber.text.isNotEmpty() && mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_MSISDN_LENGTH.toInt() - 2) {
+                    if (!mDataBinding.inputPhoneNumber.text.isNotEmpty() && mDataBinding.inputPhoneNumber.text.toString().length > Constants.APP_MSISDN_LENGTH.toInt() - 2) {
                         mDataBinding.inputLayoutPhoneNumber.error =
                             LanguageData.getStringValue("EnterValidPhoneNumber")
                         mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
@@ -693,7 +702,7 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
                         }
                     }
 
-                    if(Constants.IS_AGENT_USER) {
+                    if(!Constants.IS_AGENT_USER) {
                         if (mDataBinding.inputCode.text.isNullOrEmpty() || mDataBinding.inputCode.text.toString()
                                 .isEmpty()
                         ) {
@@ -792,7 +801,7 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
             }
         }else{
             
-            if (mDataBinding.inputPhoneNumber.text.isNullOrEmpty() || mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_MSISDN_LENGTH.toInt() - 2) {
+            if (!mDataBinding.inputPhoneNumber.text.isNullOrEmpty() || mDataBinding.inputPhoneNumber.text.toString().length > Constants.APP_MSISDN_LENGTH.toInt() - 2) {
                 isValidForAll = false
                 mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidContactNumber")
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true
