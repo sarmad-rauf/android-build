@@ -150,7 +150,7 @@ class UpgradeProfileFragment : BaseFragment<FragmentUpgradeProfileBinding>(),
         })
         mActivityViewModel.getRegisterUserResponseListner.observe(this@UpgradeProfileFragment, Observer {
             if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_setYourPinFragment)
+                (activity as LoginActivity).navController.navigate(R.id.action_upgradeProfileFragment_to_setYourPinFragment)
 
             } else {
                 DialogUtils.showErrorDialoge(activity as LoginActivity, it.description)

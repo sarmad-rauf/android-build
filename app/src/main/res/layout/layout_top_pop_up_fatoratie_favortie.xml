@@ -85,6 +85,9 @@
                 android:paddingEnd="@dimen/_8sdp"
                 android:paddingStart="@dimen/_8sdp"
                 android:layout_marginBottom="@dimen/_8sdp"
+                android:maxLines="2"
+
+                android:ellipsize="end"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dummyImageView"

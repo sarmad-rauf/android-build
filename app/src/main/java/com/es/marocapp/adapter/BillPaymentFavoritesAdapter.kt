@@ -93,7 +93,7 @@ class BillPaymentFavoritesAdapter(private val favContacts: ArrayList<Contact>,
             holder.fav_name.text = nickName
         }
 
-        holder.img_delete_favorite.setOnClickListener {
+        holder.img_delete_favorite_layout.setOnClickListener {
             listner.onDeleteFavoriteItemTypeClick(favContacts[position])
         }
 
@@ -104,6 +104,7 @@ class BillPaymentFavoritesAdapter(private val favContacts: ArrayList<Contact>,
 
     class BillPaymentFirstLetterItemViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var img_delete_favorite : ImageView = view.findViewById(R.id.img_delete_favorite)
+        var img_delete_favorite_layout : ConstraintLayout = view.findViewById(R.id.img_delete_favorite_layout)
         var fav_main_image : ImageView = view.findViewById(R.id.fav_main_image)
         var fav_telecom_bill_img : TextView = view.findViewById(R.id.fav_telecom_bill_img)
         var fav_name : TextView = view.findViewById(R.id.fav_name)

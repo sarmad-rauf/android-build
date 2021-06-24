@@ -98,9 +98,10 @@ class ViewFavoritesFragment : BaseFragment<FragmentFavoritesViewBinding>(),
         if(mActivitViewModel.isPaymentSelected.get()!!){
             if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!){
                 for(contact in mContact){
-                    if(contact.billproviderfri.replace("USER","SP").trim().contains(Constants.getFavouriteAlias(""))){
-                        mList.add(contact)
-                    }
+//                    if(contact.billproviderfri.replace("USER","SP").trim().contains(Constants.getFavouriteAlias(""))){
+//                        mList.add(contact)
+//                    }
+                    mList.add(contact)
                 }
             }else{
                 for(contact in mContact){
