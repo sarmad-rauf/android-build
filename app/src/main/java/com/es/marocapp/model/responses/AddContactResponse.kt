@@ -5,3 +5,9 @@ data class AddContactResponse(
     val description: String,
     val responseCode: String
 )
+
+data class AddBillProviderContactResponse(
+    val contactsList: List<Contact>,
+    val description: String,
+    val responseCode: String
+)

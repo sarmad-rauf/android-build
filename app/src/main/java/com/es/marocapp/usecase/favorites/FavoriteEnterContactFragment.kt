@@ -419,21 +419,15 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
             var nickName = mDataBinding.inputName.text.toString().trim()
             if(mActivitViewModel.isPaymentSelected.get()!!){
                 if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!){
-                    //Util_<billTypeName>@<Favorite nickName>,<logo>,<codeCreance>,<codeCreancier>,<refTxFatourati>,[{<nomChamp>,<valueChamp>}]
+                   // Util_<billTypeName>@<Favorite nickName>,<logo>,<codeCreance>,<codeCreancier>,(<nomChamp>:<valueChamp>),<refTxFatourati>
 
                         val stringParams = Constants.convertListToJson(mActivitViewModel.validatedParams)
                     val logoPath=mActivitViewModel.selectedCompanyLogo.replace(Constants.marocFatouratiLogoPath,"").trim()
 
                     val fatoratiNickName = "Util_${mActivitViewModel.fatoratiTypeSelected}@$nickName,${logoPath},${mActivitViewModel.selectedCodeCreance},${mActivitViewModel.creancierID}," +
-                            "${mActivitViewModel.refTxFatourati},${stringParams}"
-                    var reciever:Any
-                    if(mActivitViewModel.fatoratiTypeSelected.contains("TSAV")!!)
-                    {
-                        reciever=Constants.getFatoratiNewAlias(mActivitViewModel.validatedParams[0].valChamp,"Paiement_de_vignette_TSA")
-                    }
-                    else{
-                        reciever=Constants.getFatoratiAlias(mActivitViewModel.validatedParams[0].valChamp)
-                    }
+                            "${stringParams},${mActivitViewModel.refTxFatourati}"
+                    val reciever:String=Constants.getFavouriteAlias(mActivitViewModel.validatedParams[0].valChamp)
+
                     mActivitViewModel.requestForAddFavoritesApi(activity,fatoratiNickName,reciever)
                 }else{
                     if(isInternetTypeSelected){

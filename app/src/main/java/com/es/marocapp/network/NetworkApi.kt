@@ -256,7 +256,7 @@ interface NetworkApi {
 
     //Request for getBillProvideriContact
     @POST(EndPoints.getBillProvideriContactList)
-    fun getContact(@Body request : GetContactRequest) : Observable<AddContactResponse>
+    fun getContact(@Body request : GetContactRequest) : Observable<AddBillProviderContactResponse>
 
     //Request for deletecontact
     @POST(EndPoints.deletecontact)
@@ -326,6 +326,10 @@ interface NetworkApi {
     //Request for Upgrade profile File Upload Image
     @POST(EndPoints.upgradeProfileFileUploadImage)
     fun upgradeProfileFileUploadImage(@Body request : UploadFileRequest) : Observable<UploadFileResponse>
+
+    //Request for Level 2 registration
+    @POST(EndPoints.levelTwoRegisterUser)
+    fun LevelTwoRegistration(@Body request : LevelTwoRegistrationRequest) : Observable<RegisterUserResponse>
 
     //getfaq
     @GET(EndPoints.getfaq)

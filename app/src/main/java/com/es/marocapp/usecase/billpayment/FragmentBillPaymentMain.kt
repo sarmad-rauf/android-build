@@ -502,9 +502,9 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
         )
         mActivityViewModel.getContactResponseListner.observe(this@FragmentBillPaymentMain, Observer {
           if( it.responseCode.equals(ApiConstant.API_SUCCESS)){
-              if(!it.contactList.isNullOrEmpty()) {
+              if(!it.contactsList.isNullOrEmpty()) {
                   Constants.mContactListArray.clear()
-                  Constants.mContactListArray.addAll(it.contactList)
+                  Constants.mContactListArray.addAll(it.contactsList)
               }
           }
             showFavourites()
@@ -515,30 +515,25 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
         mActivityViewModel.getDeleteFavoritesResponseListner.observe(this@FragmentBillPaymentMain,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                    if(!it.contactList.isNullOrEmpty()){
-                        Constants.mContactListArray.clear()
-                        Constants.mContactListArray.addAll(it.contactList)
-                        mDataBinding.billPaymentMangeFavGroup.visibility = View.VISIBLE
-
-                        mFavoritesList.clear()
-                        for(contacts in Constants.mContactListArray){
-                            var contactName = contacts.contactName
-                            if(contactName.contains("Telec_Internet@") || contactName.contains("Telec_PostpaidMobile@") ||
-                                contactName.contains("Telec_PostpaidFix@") || contactName.contains("Util_")){
-                                mFavoritesList.add(contacts)
-                            }
-                        }
-
-                        if(mFavoritesList.isEmpty()){
-                            mDataBinding.billPaymentMangeFavGroup.visibility = View.GONE
-                        }else{
-                            mDataBinding.billPaymentMangeFavGroup.visibility = View.VISIBLE
-                            mBillPaymentFavouritesAdapter.notifyDataSetChanged()
-                        }
-                    }else{
-                        Constants.mContactListArray.clear()
-                        mDataBinding.billPaymentMangeFavGroup.visibility = View.GONE
-                    }
+//                    if(!it.contactList.isNullOrEmpty()){
+//                        Constants.mContactListArray.clear()
+//                        Constants.mContactListArray.addAll(it.contactList)
+//                        mDataBinding.billPaymentMangeFavGroup.visibility = View.VISIBLE
+//
+//
+//
+//                        if(mFavoritesList.isEmpty()){
+//                            mDataBinding.billPaymentMangeFavGroup.visibility = View.GONE
+//                        }else{
+//                            mDataBinding.billPaymentMangeFavGroup.visibility = View.VISIBLE
+//                            mBillPaymentFavouritesAdapter.notifyDataSetChanged()
+//                        }
+//                    }else{
+//                        Constants.mContactListArray.clear()
+//                        mDataBinding.billPaymentMangeFavGroup.visibility = View.GONE
+//                    }
+                    mFavoritesList.clear()
+                    mActivityViewModel.requestForGetFavouriteApi(activity)
                 }else{
                     DialogUtils.showErrorDialoge(activity,it.description)
                 }
@@ -679,7 +674,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
             mDataBinding.billPaymentMangeFavGroup.visibility = View.VISIBLE
             mFavoritesList.clear()
             for (contacts in Constants.mContactListArray) {
-                var contactName = contacts.contactName
+                var contactName = contacts.contactname
                 if (contactName.contains("Telec_Internet@") || contactName.contains("Telec_PostpaidMobile@") ||
                     contactName.contains("Telec_PostpaidFix@") || contactName.contains("Util_")
                 ) {
@@ -700,12 +695,12 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                 mBillPaymentFavouritesAdapter = BillPaymentFavoritesAdapter(mFavoritesList,
                     object : BillPaymentFavoritesAdapter.BillPaymentFavoriteClickListner {
                         override fun onFavoriteItemTypeClick(selectedContact: Contact) {
-                            if (selectedContact.contactName.contains("Util_")) {
+                            if (selectedContact.contactname.contains("Util_")) {
                                 mActivityViewModel.isBillUseCaseSelected.set(false)
                                 mActivityViewModel.isFatoratiUseCaseSelected.set(true)
 
                                 //TelecomBillPayment Fatourati Use Case
-                                var contactName = selectedContact.contactName
+                                var contactName = selectedContact.contactname
                                 val companyNameUtilString  = contactName.substringBefore("@")
                                 val companyName = companyNameUtilString.substringAfter("_").trim()
                                 mActivityViewModel.selectedCreancer.set(companyName)
@@ -722,7 +717,8 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                 mActivityViewModel.selectedCodeCreance=result[1]
                                 mActivityViewModel.fatoratiTypeSelected.set(creancier)
                                 mActivityViewModel.validatedParams.clear()
-                                mActivityViewModel.validatedParams=Constants.convertStringToListOfValidatedParams(result[4])
+                                mActivityViewModel.userSelectedCreancerLogo=Constants.marocFatouratiLogoPath.trim().plus(result[0].trim())
+                                mActivityViewModel.validatedParams=Constants.convertStringToListOfValidatedParams(result[3])
                                 val paramsList:ArrayList<Param> = ArrayList()
                                 val dummyListVals:List<String> = ArrayList()
                                 for (id in mActivityViewModel.validatedParams.indices)
@@ -731,11 +727,11 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                 }
                                 var stepTwoResponseDummy = BillPaymentFatoratiStepThreeResponse(
                                     "",
-                                    paramsList, result[3], ""
+                                    paramsList, result[4], ""
                                 )
                                 mActivityViewModel.fatoratiStepThreeObserver.set(stepTwoResponseDummy)
 
-                                var number = selectedContact.fri
+                                var number = selectedContact.customerreference
                                 number = number.substringBefore("@")
                                 number = number.substringBefore("/")
 
@@ -745,7 +741,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                 mActivityViewModel.transferdAmountTo = number
                                 mActivityViewModel.requestForFatoratiStepFourApi(activity)
 
-                            } else if (selectedContact.contactName.contains("Telec_Internet@")) {
+                            } else if (selectedContact.contactname.contains("Telec_Internet@")) {
                                 mActivityViewModel.isBillUseCaseSelected.set(true)
                                 mActivityViewModel.isFatoratiUseCaseSelected.set(false)
                                 mActivityViewModel.isPostPaidMobileSelected.set(false)
@@ -755,7 +751,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                 mActivityViewModel.isUserSelectedFromFavorites.set(true)
                                 mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(true)
 
-                                var number = selectedContact.fri
+                                var number = selectedContact.customerreference
                                 number = number.substringBefore("@")
                                 number = number.substringBefore("/")
 
@@ -769,7 +765,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                 )
 
                                 //TelecomBillPayment Internet Use Case
-                            } else if (selectedContact.contactName.contains("Telec_PostpaidMobile@")) {
+                            } else if (selectedContact.contactname.contains("Telec_PostpaidMobile@")) {
                                 mActivityViewModel.isBillUseCaseSelected.set(true)
                                 mActivityViewModel.isFatoratiUseCaseSelected.set(false)
                                 mActivityViewModel.isPostPaidMobileSelected.set(true)
@@ -779,11 +775,11 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                 mActivityViewModel.isUserSelectedFromFavorites.set(true)
                                 mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(true)
 
-                                var contactName = selectedContact.contactName
+                                var contactName = selectedContact.contactname
                                 contactName = contactName.substringAfter("@")
                                 contactName = contactName.substringAfter(",")
 
-                                var number = selectedContact.fri
+                                var number = selectedContact.customerreference
                                 number = number.substringBefore("@")
                                 number = number.substringBefore("/")
 
@@ -797,7 +793,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                 )
 
                                 //TelecomBillPayment PostPaidMobile Use Case
-                            } else if (selectedContact.contactName.contains("Telec_PostpaidFix@")) {
+                            } else if (selectedContact.contactname.contains("Telec_PostpaidFix@")) {
                                 mActivityViewModel.isBillUseCaseSelected.set(true)
                                 mActivityViewModel.isFatoratiUseCaseSelected.set(false)
                                 mActivityViewModel.isPostPaidMobileSelected.set(false)
@@ -807,11 +803,11 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                 mActivityViewModel.isUserSelectedFromFavorites.set(true)
                                 mActivityViewModel.isQuickRechargeCallForBillOrFatouratie.set(true)
 
-                                var contactName = selectedContact.contactName
+                                var contactName = selectedContact.contactname
                                 contactName = contactName.substringAfter("@")
                                 contactName = contactName.substringAfter(",")
 
-                                var number = selectedContact.fri
+                                var number = selectedContact.customerreference
                                 number = number.substringBefore("@")
                                 number = number.substringBefore("/")
 
@@ -829,9 +825,12 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                         }
 
                         override fun onDeleteFavoriteItemTypeClick(selectedContact: Contact) {
+                            var alias = selectedContact.billproviderfri.trim().replace("/USER","/SP")
+                            alias=selectedContact.billproviderfri.replace("FRI:","").trim()
                             mActivityViewModel.requestForDeleteFavoriteApi(
                                 activity,
-                                selectedContact.fri
+                                Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),
+                                selectedContact.billprovidercontactid
                             )
                         }
 

@@ -46,6 +46,19 @@
         <action
             android:id="@+id/action_signUpDetailFragment_to_setYourPinFragment"
             app:destination="@id/setYourPinFragment" />
+        <action
+            android:id="@+id/action_signUpDetailFragment_to_UpgradeProfile"
+            app:destination="@id/upgradeProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/upgradeProfileFragment"
+        android:name="com.es.marocapp.usecase.login.signup.UpgradeProfileFragment"
+        android:label="upgradeProfileFragment"
+        tools:layout="@layout/fragment_upgrade_profile"
+        >
+        <action
+            android:id="@+id/action_upgradeProfileFragment_to_setYourPinFragment"
+            app:destination="@id/setYourPinFragment" />
     </fragment>
     <fragment
         android:id="@+id/verifyNumberFragment"

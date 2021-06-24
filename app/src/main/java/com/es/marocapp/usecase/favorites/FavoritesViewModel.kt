@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import com.es.marocapp.R
 import com.es.marocapp.model.requests.*
 import com.es.marocapp.model.responses.*
@@ -15,6 +14,7 @@ import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.billpayment.BillPaymentActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.SingleLiveEvent
 import com.es.marocapp.utils.Tools
 import io.reactivex.disposables.Disposable
@@ -22,6 +22,7 @@ import retrofit2.HttpException
 
 class FavoritesViewModel(application: Application): AndroidViewModel(application){
     var selectedCompanyLogo: String=""
+    var getContactResponseListner = SingleLiveEvent<AddBillProviderContactResponse>()
     var  demoParams: ArrayList<RecievededParam> =ArrayList()
     var nomCreancierList: ArrayList<String> = ArrayList()
     lateinit var selectedCodeCreance: String
@@ -345,10 +346,11 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
     {
         if (Tools.checkNetworkStatus(getApplication())) {
 
+            var userFri = contactNumber.replace("/SP","/USER")
             isLoading.set(true)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAddContact(
-                AddContactRequest(Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),contactName,ApiConstant.CONTEXT_AFTER_LOGIN,contactNumber,contactNumber)
+                AddContactRequest(Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),contactName,ApiConstant.CONTEXT_AFTER_LOGIN,userFri.substringAfter("@"),userFri.substringBefore("@"))
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -401,8 +403,10 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
 
 
     //Request For DeleteFavorite
-    fun requestForDeleteFavoriteApi(context: Context?,
-                                  contactIdentity : String
+    fun requestForDeleteFavoriteApi(
+        context: Context?,
+        contactIdentity: String,
+        billprovidercontactid: Int
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
@@ -410,7 +414,7 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
             isLoading.set(true)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getDeleteContact(
-                DeleteContactRequest(contactIdentity,ApiConstant.CONTEXT_AFTER_LOGIN)
+                DeleteContactRequest(contactIdentity,ApiConstant.CONTEXT_AFTER_LOGIN,billprovidercontactid.toString())
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
@@ -434,6 +438,68 @@ class FavoritesViewModel(application: Application): AndroidViewModel(application
 
                         } else {
                             getDeleteFavoritesResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For BillCompaniesFavourites
+    fun requestForGetFavouriteApi(context: Context?
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+            Logger.debugLog("billPayment","isLoading ${isLoading}")
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getContact(
+                GetContactRequest(
+                    ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN)
+                )
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+                        Logger.debugLog("billPayment","isLoading ${isLoading}")
+                        if (result?.responseCode != null) {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+
+                                    getContactResponseListner.postValue(result)
+
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getContactResponseListner.postValue(result)
+
+                                }
+                            }
+                        } else {
+                            getContactResponseListner.postValue(result)
                         }
 
 

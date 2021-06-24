@@ -1,7 +1,6 @@
 package com.es.marocapp.usecase.favorites
 
 import android.os.Bundle
-import android.text.InputFilter
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -38,11 +37,21 @@ class ViewFavoritesFragment : BaseFragment<FragmentFavoritesViewBinding>(),
         mActivitViewModel.popBackStackTo = R.id.favoritesAddOrViewFragment
         (activity as FavoritesActivity).setHeader(LanguageData.getStringValue("View").toString())
         setStrings()
-        populateFavoritesList(getContactList())
         subscribeObserver()
+        mActivitViewModel.requestForGetFavouriteApi(activity)
     }
 
     private fun subscribeObserver() {
+        mActivitViewModel.getContactResponseListner.observe(this@ViewFavoritesFragment, Observer {
+            if( it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                if(!it.contactsList.isNullOrEmpty()) {
+                    Constants.mContactListArray.clear()
+                    Constants.mContactListArray.addAll(it.contactsList)
+                }
+            }
+            populateFavoritesList(getContactList())
+
+        })
         mActivitViewModel.errorText.observe(this@ViewFavoritesFragment, Observer {
             DialogUtils.showErrorDialoge(activity,it)
         })
@@ -50,28 +59,32 @@ class ViewFavoritesFragment : BaseFragment<FragmentFavoritesViewBinding>(),
         mActivitViewModel.getDeleteFavoritesResponseListner.observe(this@ViewFavoritesFragment,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                    if(!it.contactList.isNullOrEmpty()){
-                        Constants.mContactListArray.clear()
-                        Constants.mContactListArray.addAll(it.contactList)
-                        mContactList.clear()
-                        mContactList.addAll(getContactList())
-                        mFavoriteAdapter.notifyDataSetChanged()
-                        if(mContactList.isEmpty()){
-                            mDataBinding.cvViewFavorites.visibility = View.GONE
-                        }else{
-                            mDataBinding.cvViewFavorites.visibility = View.VISIBLE
+//                    if(!it.contactList.isNullOrEmpty()){
+//                        Constants.mContactListArray.clear()
+//                        Constants.mContactListArray.addAll(it.contactList)
+//                        mContactList.clear()
+//                        mContactList.addAll(getContactList())
+//                        mFavoriteAdapter.notifyDataSetChanged()
+//                        if(mContactList.isEmpty()){
+//                            mDataBinding.cvViewFavorites.visibility = View.GONE
+//                        }else{
+//                            mDataBinding.cvViewFavorites.visibility = View.VISIBLE
+//
+//                        }
+////                        DialogUtils.showSuccessDialog(activity,it.description,object : DialogUtils.OnConfirmationDialogClickListner{
+////                            override fun onDialogYesClickListner() {
+//////                                (activity as FavoritesActivity).navController.popBackStack(R.id.favoriteTypesFragment,false)
+////                            }
+////                        })
+//                    }
+//
+//                    else{
+//                        Constants.mContactListArray.clear()
+//                        mContactList.clear()
+//                        mFavoriteAdapter.notifyDataSetChanged()
+//                    }
 
-                        }
-//                        DialogUtils.showSuccessDialog(activity,it.description,object : DialogUtils.OnConfirmationDialogClickListner{
-//                            override fun onDialogYesClickListner() {
-////                                (activity as FavoritesActivity).navController.popBackStack(R.id.favoriteTypesFragment,false)
-//                            }
-//                        })
-                    }else{
-                        Constants.mContactListArray.clear()
-                        mContactList.clear()
-                        mFavoriteAdapter.notifyDataSetChanged()
-                    }
+                    mActivitViewModel.requestForGetFavouriteApi(activity)
                 }else{
                     DialogUtils.showErrorDialoge(activity,it.description)
                 }
@@ -85,28 +98,29 @@ class ViewFavoritesFragment : BaseFragment<FragmentFavoritesViewBinding>(),
         if(mActivitViewModel.isPaymentSelected.get()!!){
             if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!){
                 for(contact in mContact){
-                    if(contact.fri.contains(Constants.getFatoratiAlias(""))){
+                    if(contact.billproviderfri.replace("USER","SP").trim().contains(Constants.getFavouriteAlias(""))){
                         mList.add(contact)
                     }
                 }
             }else{
                 for(contact in mContact){
-                    if(contact.fri.contains(Constants.getPostPaidInternetDomainAlias(""))){
-                        mList.add(contact)
-                    }
-
-                    if(contact.fri.contains(Constants.getPostPaidFixedDomainAlias(""))){
-                        mList.add(contact)
-                    }
-
-                    if(contact.fri.contains(Constants.getPostPaidMobileDomainAlias(""))){
-                        mList.add(contact)
-                    }
+//                    if(contact.billproviderfri.replace("USER","SP").trim().contains(Constants.getPostPaidInternetDomainAlias(""))){
+//                        mList.add(contact)
+//                    }
+//
+//                    if(contact.billproviderfri.replace("USER","SP").trim().contains(Constants.getPostPaidFixedDomainAlias(""))){
+//                        mList.add(contact)
+//                    }
+//
+//                    if(contact.billproviderfri.replace("USER","SP").trim().contains(Constants.getPostPaidMobileDomainAlias(""))){
+//                        mList.add(contact)
+//                    }
+                    mList.add(contact)
                 }
             }
         }else{
             for(contact in mContact){
-                if(!contact.fri.contains(Constants.getFatoratiAlias(""))){
+                if(!contact.billproviderfri.replace("USER","SP").trim().contains(Constants.getFatoratiAlias(""))){
                     mList.add(contact)
                 }
             }
@@ -127,7 +141,11 @@ class ViewFavoritesFragment : BaseFragment<FragmentFavoritesViewBinding>(),
 
         mFavoriteAdapter = ViewFavoritesAdapter(mContactList,object : ViewFavoritesAdapter.ViewFavoritesClickListner{
             override fun onFavoritesItemClickListner(contact: Contact) {
-                mActivitViewModel.requestForDeleteFavoriteApi(activity,contact.fri)
+                mActivitViewModel.requestForDeleteFavoriteApi(
+                    activity,
+                    Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),
+                    contact.billprovidercontactid
+                )
             }
         })
 

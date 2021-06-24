@@ -25,12 +25,12 @@ class BillPaymentFavoritesAdapter(private val favContacts: ArrayList<Contact>,
         /*holder.paymentItem.text = paymentItems[position].nomCreancier
         var name = paymentItems[position].nomCreancier
         holder.paymentItemIcon.text = name[0].toString()*/
-        if(favContacts[position].contactName.contains("Telec_Internet@")){
+        if(favContacts[position].contactname.contains("Telec_Internet@")){
             holder.fav_main_image.visibility = View.GONE
             holder.fav_main_image.setImageResource(R.drawable.internet_blue)
 
             holder.fav_telecom_bill_img.visibility = View.VISIBLE
-            var name = favContacts[position].contactName
+            var name = favContacts[position].contactname
             name = name.substringBefore("@")
             name = name.substringAfter("_")
             holder.fav_telecom_bill_img.text = name[0].toString()
@@ -38,16 +38,16 @@ class BillPaymentFavoritesAdapter(private val favContacts: ArrayList<Contact>,
             /*var number = favContacts[position].fri
             number = number.substringBefore("@")
             number = number.substringBefore("/")*/
-            var nickName = favContacts[position].contactName
+            var nickName = favContacts[position].contactname
             nickName = nickName.substringAfter("@")
             nickName = nickName.substringBefore(",")
             holder.fav_name.text = nickName
-        }else if(favContacts[position].contactName.contains("Telec_PostpaidMobile@")){
+        }else if(favContacts[position].contactname.contains("Telec_PostpaidMobile@")){
             holder.fav_main_image.visibility = View.GONE
             holder.fav_main_image.setImageResource(R.drawable.postpaid_blue)
 
             holder.fav_telecom_bill_img.visibility = View.VISIBLE
-            var name = favContacts[position].contactName
+            var name = favContacts[position].contactname
             name = name.substringBefore("@")
             name = name.substringAfter("_")
             holder.fav_telecom_bill_img.text = name[0].toString()
@@ -55,16 +55,16 @@ class BillPaymentFavoritesAdapter(private val favContacts: ArrayList<Contact>,
             /*var number = favContacts[position].fri
             number = number.substringBefore("@")
             number = number.substringBefore("/")*/
-            var nickName = favContacts[position].contactName
+            var nickName = favContacts[position].contactname
             nickName = nickName.substringAfter("@")
             nickName = nickName.substringBefore(",")
             holder.fav_name.text = nickName
-        }else if(favContacts[position].contactName.contains("Telec_PostpaidFix@")){
+        }else if(favContacts[position].contactname.contains("Telec_PostpaidFix@")){
             holder.fav_main_image.visibility = View.GONE
             holder.fav_main_image.setImageResource(R.drawable.postpaid_fix_blue)
 
             holder.fav_telecom_bill_img.visibility = View.VISIBLE
-            var name = favContacts[position].contactName
+            var name = favContacts[position].contactname
             name = name.substringBefore("@")
             name = name.substringAfter("_")
             holder.fav_telecom_bill_img.text = name[0].toString()
@@ -72,22 +72,22 @@ class BillPaymentFavoritesAdapter(private val favContacts: ArrayList<Contact>,
             /*var number = favContacts[position].fri
             number = number.substringBefore("@")
             number = number.substringBefore("/")*/
-            var nickName = favContacts[position].contactName
+            var nickName = favContacts[position].contactname
             nickName = nickName.substringAfter("@")
             nickName = nickName.substringBefore(",")
             holder.fav_name.text = nickName
-        }else if(favContacts[position].contactName.contains("Util_")){
+        }else if(favContacts[position].contactname.contains("Util_")){
             holder.fav_main_image.visibility = View.GONE
             holder.fav_telecom_bill_img.visibility = View.VISIBLE
 
-            var name = favContacts[position].contactName
+            var name = favContacts[position].contactname
             name = name.substringBefore("@")
             name = name.substringAfter("_")
             holder.fav_telecom_bill_img.text = name[0].toString()
 
             /*var number = favContacts[position].fri
             number = number.substringBefore("@")*/
-            var nickName = favContacts[position].contactName
+            var nickName = favContacts[position].contactname
             nickName = nickName.substringAfter("@")
             nickName = nickName.substringBefore(",")
             holder.fav_name.text = nickName

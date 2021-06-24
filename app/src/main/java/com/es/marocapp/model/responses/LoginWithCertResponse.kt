@@ -28,8 +28,23 @@ data class AllowedMenu(
 )
 
 data class Contact(
+    val contactname: String,
+    val billproviderfri: String,
+    val billproviderusername: String,
+    val billproviderdescriptivename: String,
+    val customerreference: String,
+    val billreference: String,
+    val billprovidercontactid: Int
+)
+
+data class Contacts(
     val contactName: String,
-    val fri: String
+    val billproviderfri: String,
+    val billproviderusername: String,
+    val billproviderdescriptivename: String,
+    val customerreference: String,
+    val billreference: String,
+    val billprovidercontactid: Int
 )
 
 data class AccountHolderEmailResponse(

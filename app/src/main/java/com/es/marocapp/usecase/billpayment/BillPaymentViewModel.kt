@@ -131,7 +131,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     //BillPaymentCompnies API Response Listner
     var getBillPaymentCompaniesResponseListner = SingleLiveEvent<BillPaymentCompaniesResponse>()
     var getBillPaymentCompaniesResponseObserver = ObservableField<BillPaymentCompaniesResponse>()
-    var getContactResponseListner = SingleLiveEvent<AddContactResponse>()
+    var getContactResponseListner = SingleLiveEvent<AddBillProviderContactResponse>()
 
     //Fatorati API Listner
     var getFatoratiStepOneResponseListner = SingleLiveEvent<BillPaymentFatoratiStepOneResponse>()
@@ -1062,8 +1062,10 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     //Request For DeleteFavorite
-    fun requestForDeleteFavoriteApi(context: Context?,
-                                    contactIdentity : String
+    fun requestForDeleteFavoriteApi(
+        context: Context?,
+        contactIdentity: String,
+        billprovidercontactid: Int
     )
     {
         if (Tools.checkNetworkStatus(getApplication())) {
@@ -1071,12 +1073,12 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
             isLoading.set(true)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getDeleteContact(
-                DeleteContactRequest(contactIdentity,ApiConstant.CONTEXT_AFTER_LOGIN)
+                DeleteContactRequest(Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),ApiConstant.CONTEXT_AFTER_LOGIN,billprovidercontactid.toString())
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
                     { result ->
-                        isLoading.set(false)
+
 
                         if (result?.responseCode != null)
                         {
@@ -1084,16 +1086,22 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                                 ApiConstant.API_SUCCESS -> {
                                     getDeleteFavoritesResponseListner.postValue(result)
                                 }
-                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
-                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
-                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
-                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                ApiConstant.API_SESSION_OUT -> {
+                                    isLoading.set(false)
+                                    (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)}
+                                ApiConstant.API_INVALID -> {
+                                    isLoading.set(false)
+                                    (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as FavoritesActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)}
                                 else ->  {
+                                    isLoading.set(false)
                                     getDeleteFavoritesResponseListner.postValue(result)
                                 }
                             }
 
                         } else {
+                            isLoading.set(false)
                             getDeleteFavoritesResponseListner.postValue(result)
                         }
 
@@ -1184,7 +1192,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
     }
 
-    //Request For BillPaymentCompanies
+    //Request For BillCompaniesFavourites
     fun requestForGetFavouriteApi(context: Context?
     )
     {

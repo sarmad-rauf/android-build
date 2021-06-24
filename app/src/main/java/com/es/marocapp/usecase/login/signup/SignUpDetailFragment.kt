@@ -11,16 +11,20 @@ import android.text.InputFilter
 import android.text.TextWatcher
 import android.text.format.DateFormat
 import android.view.View
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
+import com.es.marocapp.adapter.LanguageCustomSpinnerAdapter
 import com.es.marocapp.databinding.FragmentSignUpDetailBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.model.requests.Accountholder
 import com.es.marocapp.model.responses.GetInitialAuthDetailsReponse
 import com.es.marocapp.model.responses.GetOtpForRegistrationResponse
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
+import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
@@ -40,6 +44,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
     lateinit var mActivityViewModel: LoginActivityViewModel
     var emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex()
     var isCnicMatches = false
+    lateinit var mProfileTypeSpinnerAdapter: LanguageCustomSpinnerAdapter
 
     override fun setLayout(): Int {
         return R.layout.fragment_sign_up_detail
@@ -71,7 +76,10 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
         mActivityViewModel.isSimplePopUp = true
         subscribeObserver()
+        subscribeForProfileTypeSpinnerListner()
         setStrings()
+
+
 
     }
 
@@ -88,6 +96,34 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
         mDataBinding.btnNextDetailFragment.text = LanguageData.getStringValue("BtnTitle_Next")
         mDataBinding.lawText.setText(LanguageData.getStringValue("SignUpDescrption"))
         mDataBinding.inputLayoutCity.hint=(LanguageData.getStringValue("EnterCity"))
+        mDataBinding.selectProfileTitile.hint=(LanguageData.getStringValue("SelectProfileLevel"))
+
+
+        val acountTypeArray: Array<String> = Constants.registrationProfiles
+        mProfileTypeSpinnerAdapter =
+            LanguageCustomSpinnerAdapter(
+                activity as LoginActivity,
+                acountTypeArray,
+                (activity as LoginActivity).resources.getColor(R.color.colorBlack),true
+            )
+        //  mDataBinding.acountTypeSpinner
+        mDataBinding.profileTypeSpinner.apply {
+            adapter = mProfileTypeSpinnerAdapter
+        }
+
+    }
+
+    private fun subscribeForProfileTypeSpinnerListner() {
+
+        // homeViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN)
+        mDataBinding.profileTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+              mActivityViewModel.profileSelected=Constants.registrationProfiles[position]
+            }
+        }
 
     }
 
@@ -98,7 +134,8 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
         mActivityViewModel.getRegisterUserResponseListner.observe(this@SignUpDetailFragment, Observer {
             if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_setYourPinFragment)
+                   (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_setYourPinFragment)
+
             } else {
                 DialogUtils.showErrorDialoge(activity as LoginActivity, it.description)
             }
@@ -188,11 +225,17 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
 //            mActivityViewModel.requestForeGetInitialAuthDetailsApi(activity)
 
-            //todo Registration Flow Changed Reigstration Call Instead of OTP Call
-            mActivityViewModel.requestForRegisterUserApi(
-                activity,
-                Constants.CURRENT_NUMBER_DEVICE_ID
-            )
+            //if level 1 selected call registration API else if level 2 selected show images picking screen
+            if(mActivityViewModel.profileSelected.contains("1")) {
+
+                mActivityViewModel.requestForRegisterUserApi(
+                    activity,
+                    Constants.CURRENT_NUMBER_DEVICE_ID
+                )
+            }else if(mActivityViewModel.profileSelected.contains("2")){
+                (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_UpgradeProfile)
+            }
+
 
             /*mActivityViewModel.requestForGetOTPForRegistrationApi(activity,mDataBinding.inputFirstName.text.toString().trim(),mDataBinding.inputLastName.text.toString().trim()
                 ,mDataBinding.inputNationalID.text.toString().trim())*/

@@ -21,10 +21,10 @@ class ViewFavoritesAdapter(private val contacts: ArrayList<Contact>,var listner 
     }
 
     override fun onBindViewHolder(holder: ViewFavoritesViewHolder, position: Int) {
-        var contactName = contacts[position].contactName
+        var contactName = contacts[position].contactname
         contactName = contactName.substringAfter("@")
         holder.favortiesName.text = contactName
-        var contactNimber = contacts[position].fri
+        var contactNimber = contacts[position].customerreference
         contactNimber = contactNimber.substringBefore("/")
         contactNimber = contactNimber.substringBefore("@")
         holder.favoriteNumber.text = contactNimber

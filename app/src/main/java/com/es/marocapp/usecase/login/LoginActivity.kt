@@ -58,7 +58,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
 
         if(!userData.isNullOrEmpty()){
             mActivityViewModel.isUserToShowProfile = true
-            navController.navigate(R.id.action_loginFragment_to_signUpNumberFragment)
+            if(navController!=null){
+            navController.navigate(R.id.action_loginFragment_to_signUpNumberFragment)}
             Constants.CURRENT_USER_MSISDN=userData
             Constants.CURRENT_USER_NAME=userName!!
             mActivityViewModel.mUserMsisdn=Constants.CURRENT_USER_MSISDN

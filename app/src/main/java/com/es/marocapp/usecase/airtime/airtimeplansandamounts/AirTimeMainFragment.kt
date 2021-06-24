@@ -274,8 +274,8 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
 
         list_of_favorites.clear()
         for (contacts in Constants.mContactListArray) {
-            var contactNumber = contacts.fri
-            var contactName = contacts.contactName
+            var contactNumber = contacts.customerreference
+            var contactName = contacts.contactname
             contactNumber = contactNumber.substringBefore("@")
             contactNumber = contactNumber.substringBefore("/")
             contactNumber = contactNumber.removePrefix(Constants.APP_MSISDN_PREFIX)

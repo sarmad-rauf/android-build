@@ -1,6 +1,7 @@
 package com.es.marocapp.model.requests
 
 data class DeleteContactRequest(
-    val contactIdentity : String,
-    val context: String
+    val identity : String,
+    val context: String,
+    val billprovidercontactid: String
 )

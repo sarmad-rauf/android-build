@@ -34,6 +34,7 @@ import kotlin.properties.Delegates
 object Constants {
 
 
+    lateinit var registrationProfiles: Array<String>
     var marocFatouratiLogoPath: String=""
     var selectedTSAVSpinnerPosition: Int=0
     var STEP2_3RESPONSE: BillPaymentFatoratiStepThreeResponse? = null
@@ -328,6 +329,8 @@ object Constants {
     var POST_PAID_FIXED_ALIAS = ""
     var POST_PAID_INTERNET_ALIAS = ""
     var FATOURATI_ALIAS = ""
+    //HardCoded to add BillProviderContact in adding favourite
+    var FAVOURITE_ALIAS = "@fatourati.sp/USER"
 
     fun getNumberMsisdn(number: String): String {
 //        return "$number/MSISDN"
@@ -372,6 +375,11 @@ object Constants {
     fun getFatoratiAlias(number: String): String {
 //        return "$number@fatourati.sp/SP"
         return "$number$FATOURATI_ALIAS"
+    }
+
+    fun getFavouriteAlias(number: String): String {
+//        return "$number@fatourati.sp/SP"
+        return "$number$FAVOURITE_ALIAS"
     }
 
     fun getFatoratiNewAlias(number: String,selectedCompany:String): String {
@@ -687,9 +695,18 @@ object Constants {
         return jsonArrayStringFormat
     }
     fun convertStringToListOfValidatedParams(stringValidatedParams: String): ArrayList<ValidatedParam> {
-        val token: TypeToken<ArrayList<ValidatedParam?>?> =
-            object : TypeToken<ArrayList<ValidatedParam?>?>() {}
-        return Gson().fromJson(stringValidatedParams,token.type)
+        var listOfParams :ArrayList<ValidatedParam> = ArrayList()
+        var stringWithoutBrackets =  stringValidatedParams.substringAfter("(")
+        stringWithoutBrackets =stringWithoutBrackets.substringBefore(")")
+        val result: List<String> =
+            stringWithoutBrackets.split(",").map { it.trim() }
+        for(index in result.indices){
+            val params: List<String> =
+                result[index].split(":").map { it.trim() }
+            listOfParams.add(ValidatedParam(params[1],params[0]))
+
+        }
+        return listOfParams
     }
 
 //    fun getItems(stringValidatedParams: String): List<ValidatedParam>? {

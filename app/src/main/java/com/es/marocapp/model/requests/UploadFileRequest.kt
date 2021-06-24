@@ -9,6 +9,16 @@ data class UploadFileRequest(
     val backImage: FileData
 )
 
+data class LevelTwoRegistrationRequest(
+    val accountholder: Accountholder,
+    val context: String,
+    val deviceId: String,
+    val email: String,
+    val identity: String,
+    val frontImage: FileData,
+    val backImage: FileData
+)
+
 data class FileData(
     val fileData: String,
     val providerUploadDocumentRequest: ProviderUploadDocumentRequest

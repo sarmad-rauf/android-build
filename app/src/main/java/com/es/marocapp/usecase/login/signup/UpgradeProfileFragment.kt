@@ -1,5 +1,6 @@
-package com.es.marocapp.usecase.upgradeprofile
+package com.es.marocapp.usecase.login.signup
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -16,16 +17,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.BuildConfig
 import com.es.marocapp.R
-import com.es.marocapp.databinding.ActivityUpgradeProfileBinding
+import com.es.marocapp.databinding.FragmentUpgradeProfileBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
-import com.es.marocapp.usecase.BaseActivity
+import com.es.marocapp.usecase.BaseFragment
+import com.es.marocapp.usecase.login.LoginActivity
+import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.*
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
+class UpgradeProfileFragment : BaseFragment<FragmentUpgradeProfileBinding>(),
     DialogUtils.OnPickerDialogListener {
 
     private val STORAGE_PERMISSION_REQUEST_CODE = 114
@@ -33,7 +36,7 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
     private val ATTACH_FILE_REQUEST_CODE = 1211
     private val CAMERA_IMAGE_REQUEST_CODE = 1212
 
-    private lateinit var mActivityViewModel: UpgradeProfileViewModel
+    private lateinit var mActivityViewModel: LoginActivityViewModel
 
     private var selectedFileFrontPath: String = ""
     private var selectedFileBackPath: String = ""
@@ -44,13 +47,13 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
     private var isFrontImage: Boolean = false
 
     override fun setLayout(): Int {
-        return R.layout.activity_upgrade_profile
+        return R.layout.fragment_upgrade_profile
     }
 
     override fun init(savedInstanceState: Bundle?) {
 
 
-        mActivityViewModel = ViewModelProvider(this).get(UpgradeProfileViewModel::class.java)
+        mActivityViewModel = ViewModelProvider(activity as LoginActivity).get(LoginActivityViewModel::class.java)
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel
@@ -58,12 +61,12 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
 
         mDataBinding.upgradeProfileCardViewFrontSide.setOnClickListener {
             isFrontImage = true
-            DialogUtils.showPickerDialog(this, this)
+            DialogUtils.showPickerDialog(requireActivity(), this)
         }
 
         mDataBinding.upgradeProfileCardViewBackSide.setOnClickListener {
             isFrontImage = false
-            DialogUtils.showPickerDialog(this, this)
+            DialogUtils.showPickerDialog(requireActivity(), this)
         }
 
         mDataBinding.upgradeProfileIvRemoveFileFront.setOnClickListener {
@@ -79,13 +82,13 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
         }
 
         mDataBinding.imgBackButton.setOnClickListener {
-            onBackPressed()
+            (activity as LoginActivity) .navController.navigateUp()
         }
 
         mDataBinding.upgradeProfileBtnSubmit.setOnClickListener {
             if (selectedFileFrontPath.isEmpty() or selectedFileBackPath.isEmpty()) {
-                Toast.makeText(this, getString(R.string.select_document_type), Toast.LENGTH_SHORT)
-                    .show()
+//               Toast.makeText(this, getString(R.string.select_document_type), Toast.LENGTH_SHORT)
+//                    .show()
                 return@setOnClickListener
             }
             val frontImageFile = File(selectedFileFrontPath)
@@ -94,34 +97,15 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
             val backImageFile = File(selectedFileBackPath)
             val backImageBase64 = Tools.fileToBase64String(backImageFile)
 
-            mActivityViewModel.requestForUpgradeUserProfileFileUploadImage(
-                this,
-                ApiConstant.CONTEXT_AFTER_LOGIN,
-                Constants.getNumberMsisdn(
-                    Constants.CURRENT_USER_MSISDN
-                ),
-                getUserProfile(),
-                Constants.reasonUpgradeToLevelTwo,
+            mActivityViewModel.requestForLevelTwoProfileRegistration(
+                requireActivity(),
+                Constants.CURRENT_NUMBER_DEVICE_ID,
                 frontImageBase64!!,
                 backImageBase64!!
             )
         }
         setStrings()
         subscribeObserver()
-    }
-
-    private fun getUserProfile(): String {
-        var currentProfile =
-            Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
-        if (currentProfile.equals("") || currentProfile.equals(null)) {
-            currentProfile = Constants.UserProfileName
-        }
-
-        if (currentProfile.contains("1")) {
-            return currentProfile.replace("Profile", "").trim() + " to Level 2 Profile KYC"
-        }
-
-        return ""
     }
 
     private fun openGallery() {
@@ -133,11 +117,11 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
     private fun openCamera() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         currentPhotoFile = createImageFile()
-        if (cameraIntent.resolveActivity(packageManager) != null) {
+        if (activity?.packageManager!=null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 if (currentPhotoFile != null) {
                     val photoURI = FileProvider.getUriForFile(
-                        this,
+                        requireActivity(),
                         BuildConfig.APPLICATION_ID + ".fileprovider",
                         currentPhotoFile!!
                     )
@@ -162,29 +146,20 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
 
     private fun subscribeObserver() {
         mActivityViewModel.errorText.observe(this, Observer {
-            DialogUtils.showErrorDialoge(this, it)
+            DialogUtils.showErrorDialoge(requireActivity(), it)
         })
-        mActivityViewModel.upgradeProfileFileUploadResponseListener.observe(this,
-            Observer {
-                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                    DialogUtils.successFailureDialogue(
-                        this,
-                        it.description,
-                        0,
-                        object : DialogUtils.OnYesClickListner {
-                            override fun onDialogYesClickListner() {
-                                finish()
-                            }
-                        })
-                } else {
-                    DialogUtils.showErrorDialoge(this, it.description)
-                }
+        mActivityViewModel.getRegisterUserResponseListner.observe(this@UpgradeProfileFragment, Observer {
+            if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_setYourPinFragment)
+
+            } else {
+                DialogUtils.showErrorDialoge(activity as LoginActivity, it.description)
             }
-        )
+        })
     }
 
     private fun setStrings() {
-        mDataBinding.tvUpgradeProfileTitle.text=LanguageData.getStringValue("UpgradeProfile")
+        mDataBinding.tvUpgradeProfileTitle.text=LanguageData.getStringValue("CreateYourAccount")
         mDataBinding.upgradeProfileDescription.text=LanguageData.getStringValue("UpgradeProfileDescription")
         val attachFrontImageTitle=LanguageData.getStringValue("ClickToAttach")+"\n"+LanguageData.getStringValue("FrontSide")
         val attachBackImageTitle=LanguageData.getStringValue("ClickToAttach")+"\n"+LanguageData.getStringValue("BackSide")
@@ -195,7 +170,7 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
 
     private fun requestPermission() {
         ActivityCompat.requestPermissions(
-            this,
+            requireActivity(),
             arrayOf(
                 android.Manifest.permission.READ_EXTERNAL_STORAGE,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -206,7 +181,7 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
 
     private fun requestCameraPermission() {
         ActivityCompat.requestPermissions(
-            this,
+            requireActivity(),
             arrayOf(
                 android.Manifest.permission.CAMERA
             ),
@@ -217,7 +192,7 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
     private fun createImageFile(): File {
         // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val storageDir: File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
             "JPEG_${timeStamp}_", /* prefix */
             ".jpg", /* suffix */
@@ -256,10 +231,10 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
             if (data != null) {
                 val uri = data.data as Uri
                 if (isFrontImage) {
-                    selectedFileFrontPath = FileUtils.getPath(this, uri)
+                    selectedFileFrontPath = FileUtils.getPath(requireActivity(), uri)
                     showFrontFile(uri)
                 } else {
-                    selectedFileBackPath = FileUtils.getPath(this, uri)
+                    selectedFileBackPath = FileUtils.getPath(requireActivity(), uri)
                     showBackFile(uri)
                 }
             }
@@ -267,10 +242,10 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
             if (resultCode == RESULT_OK) {
                 val uri = Uri.fromFile(currentPhotoFile)
                 if (isFrontImage) {
-                    selectedFileFrontPath = FileUtils.getPath(this, uri)
+                    selectedFileFrontPath = FileUtils.getPath(requireActivity(), uri)
                     showFrontFile(uri)
                 } else {
-                    selectedFileBackPath = FileUtils.getPath(this, uri)
+                    selectedFileBackPath = FileUtils.getPath(requireActivity(), uri)
                     showBackFile(uri)
                 }
             }
@@ -281,19 +256,23 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
 
     private fun showFrontFile(uri: Uri) {
         mDataBinding.upgradeProfileSelectedFileFront.visibility = View.VISIBLE
-        mDataBinding.upgradeProfileTvFileTitleFront.text = FileUtils.getFileName(this, uri)
+        mDataBinding.upgradeProfileTvFileTitleFront.text =
+            activity?.let { FileUtils.getFileName(it, uri) }
     }
 
     private fun showBackFile(uri: Uri) {
         mDataBinding.upgradeProfileSelectedFileBack.visibility = View.VISIBLE
-        mDataBinding.upgradeProfileTvFileTitleBack.text = FileUtils.getFileName(this, uri)
+        mDataBinding.upgradeProfileTvFileTitleBack.text =
+            activity?.let { FileUtils.getFileName(it, uri) }
     }
 
     override fun onCameraClickListener() {
-        val permission = ContextCompat.checkSelfPermission(
-            this,
-            android.Manifest.permission.CAMERA
-        )
+        val permission = activity?.let {
+            ContextCompat.checkSelfPermission(
+                it,
+                android.Manifest.permission.CAMERA
+            )
+        }
 
         if (permission != PackageManager.PERMISSION_GRANTED) {
             requestCameraPermission()
@@ -303,10 +282,12 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
     }
 
     override fun onGalleryClickListener() {
-        val permission = ContextCompat.checkSelfPermission(
-            this,
-            android.Manifest.permission.READ_EXTERNAL_STORAGE
-        )
+        val permission = activity?.let {
+            ContextCompat.checkSelfPermission(
+                it,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        }
 
         if (permission != PackageManager.PERMISSION_GRANTED) {
             requestPermission()

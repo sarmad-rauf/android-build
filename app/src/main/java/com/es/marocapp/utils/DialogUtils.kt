@@ -997,7 +997,7 @@ object DialogUtils {
         val btnCamera = addDialog.findViewById<Button>(R.id.picker_dialog_btn_camera)
         val btnGallery = addDialog.findViewById<Button>(R.id.picker_dialog_btn_gallery)
 
-        btnCamera.text = LanguageData.getStringValue("OpenCamera")
+        btnCamera.text = LanguageData.getStringValue("OpenCamera")!!.trim()
         btnGallery.text = LanguageData.getStringValue("OpenGallary")
         tvDialogTitle.text = LanguageData.getStringValue("DearCustomer")
         tvDialogCancel.text = LanguageData.getStringValue("BtnTitle_Cancel")

@@ -273,6 +273,7 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                     }
                 }
                 mActivityViewModel.requestForBalanceInfoAndLimtsAPI(activity)
+                mActivityViewModel.requestForGetFavouriteApi(activity)
             }else if(it.responseCode == ApiConstant.API_ACCOUNT_BLOCKED){
                 val btnTxt = LanguageData.getStringValue("BtnTitle_OK")
                 val titleTxt = LanguageData.getStringValue("AccountBlocked")

@@ -75,6 +75,7 @@ data class GetPreLoginDataResponse(
     val upgradeSupportedProfiles: Array<String>,
     val iamBillsTriggerFatouratiFlow: Array<String>,
     val fatouratiTsavMatriculeDdVals: Array<String>,
+    val registrationProfiles: Array<String>,
     val reasonUpgradeToLevelTwo:String,
     val reasonUpgradeToLevelThree:String,
     val cityNameRegex:String,

@@ -72,7 +72,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             val selectedFatorati =
                 "Util_${mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier}"
             for (contacts in Constants.mContactListArray) {
-                var contactName = contacts.contactName
+                var contactName = contacts.contactname
                 if (contactName.contains(selectedFatorati)) {
                     contactName = contactName.substringAfter("@")
                     contactName = contactName.substringBefore(",")
@@ -93,11 +93,11 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 selectedBillType = "Telec_PostpaidFix@"
             }
             for (contacts in Constants.mContactListArray) {
-                val contactName = contacts.contactName
+                val contactName = contacts.contactname
                 val contactNameWithoutPrefix = contactName.substringAfter("@")
                 val contactNameWithoutPostfix = contactNameWithoutPrefix.substringBefore(",")
 
-                var contactNumber = contacts.fri
+                var contactNumber = contacts.customerreference
                 if (contactName.contains(selectedBillType)) {
                     contactNumber = contactNumber.substringBefore("@")
                     contactNumber = contactNumber.substringBefore("/")
@@ -1144,12 +1144,12 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                         selectedBillType = "Telec_PostpaidFix@"
                     }
                     for (contacts in Constants.mContactListArray) {
-                        val contactName = contacts.contactName
+                        val contactName = contacts.contactname
                         val contactNameWithoutPrefix = contactName.substringAfter("@")
                         val contactNumberCode =
                             contactNameWithoutPrefix.substringAfter(",")
                         if (contactName.contains(selectedBillType)) {
-                            val contactNumber = contacts.fri
+                            val contactNumber = contacts.customerreference.trim().plus(contacts.billproviderfri)
                             if(contactNumber.equals(selectedFavorites)){
                                 if(!contactNumberCode.isNullOrEmpty()){
                                    // mDataBinding.inputCode.visibility=View.GONE
@@ -1164,11 +1164,11 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
             if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
                 for (contacts in Constants.mContactListArray) {
-                    var contactName = contacts.contactName
+                    var contactName = contacts.contactname
                     contactName = contactName.substringAfter("@")
                     contactName = contactName.substringBefore(",")
                     if (selectedFavorites.equals(contactName)) {
-                        val selectedFri = contacts.fri.substringBefore("@")
+                        val selectedFri = contacts.customerreference.substringBefore("@")
                         mDataBinding.inputPhoneNumber.setText(selectedFri)
                         mActivityViewModel.isUserSelectedFromFavorites.set(true)
                         break
@@ -1209,7 +1209,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
     private fun checkNumberExistInFavoritesForFatorati(msisdnEntered: String) {
         for (contacts in Constants.mContactListArray) {
-            var contactNumber = contacts.fri
+            var contactNumber = contacts.customerreference
             contactNumber = contactNumber.substringBefore("@")
             if (msisdnEntered.equals(contactNumber)) {
                 mActivityViewModel.isUserSelectedFromFavorites.set(true)

@@ -15,6 +15,7 @@ import com.es.marocapp.network.applyIOSchedulers
 import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.billpayment.BillPaymentActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.SingleLiveEvent
@@ -24,6 +25,9 @@ import retrofit2.HttpException
 
 class LoginActivityViewModel(application: Application) : AndroidViewModel(application) {
 
+    var accountHolderEnterdData = ObservableField<Accountholder>()
+    var profileSelected: String = ""
+    var getContactResponseListner = SingleLiveEvent<AddBillProviderContactResponse>()
     var currentUserMSISDN: String=""
     private val SPLASH_DISPLAY_LENGTH = 1000
     val mHandler = MutableLiveData<Boolean>()
@@ -74,6 +78,65 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
     var getBalanceInforAndLimitResponseListner = SingleLiveEvent<BalanceInfoAndLimitResponse>()
     var getAccountsResponseListner = SingleLiveEvent<GetAccountsResponse>()
     var getBalanceAndGenerateOtpResponseListner = SingleLiveEvent<GetBalanceAndGenerateOtpResponse>()
+    var upgradeProfileFileUploadResponseListener = SingleLiveEvent<UploadFileResponse>()
+    var upgradeProfileResponseListener = SingleLiveEvent<UpgradeProfileResponse>()
+
+    fun requestForLevelTwoProfileRegistration(
+        appContext: Context,
+        deviceID_UserMsisdn : String,
+        frontImage: String,
+        backImage: String
+    ) {
+        if (Tools.checkNetworkStatus(getApplication())) {
+            isLoading.set(true)
+            disposable =
+                ApiClient.newApiClientInstance?.getServerAPI()?.LevelTwoRegistration(
+                    LevelTwoRegistrationRequest(
+                        Accountholder(DOB,identificationNumber,firstName,gender,postalAddress,lastName,city),
+                        ApiConstant.CONTEXT_BEFORE_LOGIN,deviceID_UserMsisdn,email,Constants.getNumberMsisdn(mUserMsisdn),
+                        FileData(
+                            frontImage,
+                            ProviderUploadDocumentRequest(
+                                "front image",
+                                "1111",
+                                Constants.CURRENT_USER_MSISDN + "-front-" + System.currentTimeMillis() + ".jpg"
+                            )
+                        ),
+                        FileData(
+                            backImage,
+                            ProviderUploadDocumentRequest(
+                                "back image",
+                                "1111",
+                                Constants.CURRENT_USER_MSISDN + "-back-" + System.currentTimeMillis() + ".jpg"
+                            )
+                        )
+                    )
+                ).compose(applyIOSchedulers())
+                    .subscribe(
+                        { result ->
+                            isLoading.set(false)
+                            if (result?.responseCode != null) {
+                                getRegisterUserResponseListner.postValue(result)
+
+                            } else {
+                                errorText.postValue(appContext!!.getString(R.string.error_msg_generic))
+                            }
+                        },
+                        { error ->
+                            isLoading.set(false)
+                            //Display Error Result Code with with Configure Message
+                            try {
+                                if (appContext  != null && error != null) {
+                                    errorText.postValue(appContext.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                                }
+                            } catch (e: Exception) {
+                                errorText.postValue(appContext!!.getString(R.string.error_msg_generic))
+                            }
+                        })
+        } else {
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+    }
 
     private fun postDelay() {
 
@@ -952,6 +1015,71 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
                         } else {
                             errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For BillCompaniesFavourites
+    fun requestForGetFavouriteApi(context: Context?
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+
+            Logger.debugLog("billPayment","isLoading ${isLoading}")
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getContact(
+                GetContactRequest(
+                    ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN)
+                )
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        Logger.debugLog("billPayment","isLoading ${isLoading}")
+                        if (result?.responseCode != null) {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+
+                                    getContactResponseListner.postValue(result)
+                                    if(result.contactsList!=null) {
+                                        Constants.mContactListArray.clear()
+                                        Constants.mContactListArray.addAll(result.contactsList)
+                                    }
+
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                else ->  {
+                                    getContactResponseListner.postValue(result)
+
+                                }
+                            }
+                        } else {
+                            getContactResponseListner.postValue(result)
                         }
 
 

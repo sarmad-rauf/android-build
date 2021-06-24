@@ -32,6 +32,9 @@ object EndPoints {
     //RegisterUser
     const val registeruser = "registeruser"
 
+    // Level 2 registration
+    const val levelTwoRegisterUser = "registeruser/level2"
+
     //RegisterConsumerUser
     const val registerconsumer_viaagent = "registerconsumer/viaagent"
 
@@ -180,7 +183,7 @@ object EndPoints {
     const val getBillProvideriContactList = "getbillprovidercontactlist"
 
     //deletecontact
-    const val deletecontact = "deletecontact"
+    const val deletecontact = "deletebillprovidercontact"
 
     //getfinancialresourceinformation/bill/postpaid
     const val getfinancialresourceinformation_bill_postpaid =
