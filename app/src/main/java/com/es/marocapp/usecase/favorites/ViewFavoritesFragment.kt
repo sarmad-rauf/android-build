@@ -98,25 +98,30 @@ class ViewFavoritesFragment : BaseFragment<FragmentFavoritesViewBinding>(),
         if(mActivitViewModel.isPaymentSelected.get()!!){
             if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!){
                 for(contact in mContact){
-//                    if(contact.billproviderfri.replace("USER","SP").trim().contains(Constants.getFavouriteAlias(""))){
-//                        mList.add(contact)
-//                    }
-                    mList.add(contact)
+                    var fatouratiAlias=Constants.getFavouriteAlias("").replace("@","").trim()
+                    fatouratiAlias=fatouratiAlias.replace("/USER","").trim()
+                    if(contact.billproviderfri.trim().contains(fatouratiAlias)){
+                        mList.add(contact)
+                    }
                 }
             }else{
                 for(contact in mContact){
-//                    if(contact.billproviderfri.replace("USER","SP").trim().contains(Constants.getPostPaidInternetDomainAlias(""))){
-//                        mList.add(contact)
-//                    }
-//
-//                    if(contact.billproviderfri.replace("USER","SP").trim().contains(Constants.getPostPaidFixedDomainAlias(""))){
-//                        mList.add(contact)
-//                    }
-//
-//                    if(contact.billproviderfri.replace("USER","SP").trim().contains(Constants.getPostPaidMobileDomainAlias(""))){
-//                        mList.add(contact)
-//                    }
-                    mList.add(contact)
+
+                    var internetAlias=Constants.getPostPaidInternetDomainAlias("").replace("@","").trim()
+                    internetAlias=internetAlias.replace("/SP","").trim()
+                    if(contact.billproviderfri.trim().contains(internetAlias)){
+                        mList.add(contact)
+                    }
+                    var postPaidFixeAlias=Constants.getPostPaidFixedDomainAlias("").replace("@","").trim()
+                    postPaidFixeAlias=postPaidFixeAlias.replace("/SP","").trim()
+                    if(contact.billproviderfri.trim().contains(postPaidFixeAlias)){
+                        mList.add(contact)
+                    }
+                    var postPaidMobileAlias=Constants.getPostPaidMobileDomainAlias("").replace("@","").trim()
+                    postPaidMobileAlias=postPaidMobileAlias.replace("/SP","").trim()
+                    if(contact.billproviderfri.trim().contains(postPaidMobileAlias)){
+                        mList.add(contact)
+                    }
                 }
             }
         }else{

@@ -707,7 +707,10 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                 Logger.debugLog("CompanyNameFatorati",companyName)
                                 contactName = contactName.substringAfter("@")
                                 var name = contactName.substringBefore(",")
-                                val withoutNameCommaSepratedString = contactName.substringAfter(",")
+                                var withoutNameCommaSepratedString = contactName.substringAfter(",")
+                                var stringForValidateParams = withoutNameCommaSepratedString.substringAfter("(")
+                                stringForValidateParams= stringForValidateParams.substringBefore(")")
+                                withoutNameCommaSepratedString=withoutNameCommaSepratedString.replace(stringForValidateParams,"")
                                 val result: List<String> =
                                     withoutNameCommaSepratedString.split(",").map { it.trim() }
                                 /*for(value in result){
@@ -718,7 +721,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                 mActivityViewModel.fatoratiTypeSelected.set(creancier)
                                 mActivityViewModel.validatedParams.clear()
                                 mActivityViewModel.userSelectedCreancerLogo=Constants.marocFatouratiLogoPath.trim().plus(result[0].trim())
-                                mActivityViewModel.validatedParams=Constants.convertStringToListOfValidatedParams(result[3])
+                                mActivityViewModel.validatedParams=Constants.convertStringToListOfValidatedParams(stringForValidateParams)
                                 val paramsList:ArrayList<Param> = ArrayList()
                                 val dummyListVals:List<String> = ArrayList()
                                 for (id in mActivityViewModel.validatedParams.indices)

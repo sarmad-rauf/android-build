@@ -51,9 +51,12 @@ class FragmentPostPaidBillPaymentSuccess : BaseFragment<FragmentBillPaymentSucce
 
                     if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
 
+
                         /*Storing Fatorai bill Fav as
                         Util_Redal@MyNickName,codeCreance,creancierID,nomChamp,refTxFatourati
 */
+    //below code need to be updated from old to new format of nickname ....refrence to favouriteEnterContactFragment
+
 //                        var fatoratiNickName = "Util_${mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier}@$nickName" +
 //                                ",${mActivityViewModel.fatoratiTypeSelected.get()!!.codeCreance}," +
 //                                mActivityViewModel.fatoratiTypeSelected.get()!!.codeCreancier+","+mActivityViewModel.fatoratiStepThreeObserver.get()!!.param.nomChamp+","+
