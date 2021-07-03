@@ -11,6 +11,8 @@
     <string name="don_t_have_an_account">DON’T HAVE AN ACCOUNT?</string>
     <string name="sign_up">Sign Up</string>
     <string name="next">Next</string>
+    <string name="levelone" translatable="false">Level 1</string>
+    <string name="leveltwo" translatable="false">Level 2</string>
     <string name="enter_otp">ENTER OTP</string>
     <string name="resend">Resend</string>
     <string name="otp_not_recieved">OTP NOT RECIEVED?</string>

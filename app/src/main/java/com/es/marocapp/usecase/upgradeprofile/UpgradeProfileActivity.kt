@@ -21,6 +21,7 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.utils.*
+import com.squareup.picasso.Picasso
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -282,11 +283,13 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
     private fun showFrontFile(uri: Uri) {
         mDataBinding.upgradeProfileSelectedFileFront.visibility = View.VISIBLE
         mDataBinding.upgradeProfileTvFileTitleFront.text = FileUtils.getFileName(this, uri)
+        Picasso.get().load(uri).into(mDataBinding.frontThumbnail)
     }
 
     private fun showBackFile(uri: Uri) {
         mDataBinding.upgradeProfileSelectedFileBack.visibility = View.VISIBLE
         mDataBinding.upgradeProfileTvFileTitleBack.text = FileUtils.getFileName(this, uri)
+        Picasso.get().load(uri).into(mDataBinding.backThumbnail)
     }
 
     override fun onCameraClickListener() {

@@ -12,6 +12,7 @@ import android.text.TextWatcher
 import android.text.format.DateFormat
 import android.view.View
 import android.widget.AdapterView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -30,7 +31,9 @@ import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
+import com.es.marocapp.utils.Tools
 import kotlinx.android.synthetic.main.layout_login_header.view.*
+import java.io.File
 import java.util.*
 import java.util.regex.Pattern
 
@@ -76,7 +79,6 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
         mActivityViewModel.isSimplePopUp = true
         subscribeObserver()
-        subscribeForProfileTypeSpinnerListner()
         setStrings()
 
 
@@ -96,34 +98,33 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
         mDataBinding.btnNextDetailFragment.text = LanguageData.getStringValue("BtnTitle_Next")
         mDataBinding.lawText.setText(LanguageData.getStringValue("SignUpDescrption"))
         mDataBinding.inputLayoutCity.hint=(LanguageData.getStringValue("EnterCity"))
-        mDataBinding.selectProfileTitile.hint=(LanguageData.getStringValue("SelectProfileLevel"))
-
-
-        val acountTypeArray: Array<String> = Constants.registrationProfiles
-        mProfileTypeSpinnerAdapter =
-            LanguageCustomSpinnerAdapter(
-                activity as LoginActivity,
-                acountTypeArray,
-                (activity as LoginActivity).resources.getColor(R.color.colorBlack),true
-            )
-        //  mDataBinding.acountTypeSpinner
-        mDataBinding.profileTypeSpinner.apply {
-            adapter = mProfileTypeSpinnerAdapter
+        mDataBinding.levelOneButton.text=LanguageData.getStringValue("LevelOne")
+        mDataBinding.levelTwoButton.text=LanguageData.getStringValue("LevelTwo")
+        mDataBinding.levelTwoLable.hint=LanguageData.getStringValue("UpgradeProfileDescription")
+        mDataBinding.levelLables.hint=("${LanguageData.getStringValue("LevelOneLimit")}\n${LanguageData.getStringValue("LevelTwoLimit")}")
+        if(!mActivityViewModel.selectedFileFrontPath.isNullOrEmpty()&&!mActivityViewModel.selectedFileBackPath.isNullOrEmpty())
+        {
+           mDataBinding.attachFileButton.setBackgroundResource(R.drawable.attachmentnotify)
+        }else{
+            mDataBinding.attachFileButton.setBackgroundResource(R.drawable.attachmentplus)
         }
 
-    }
-
-    private fun subscribeForProfileTypeSpinnerListner() {
-
-        // homeViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN)
-        mDataBinding.profileTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-              mActivityViewModel.profileSelected=Constants.registrationProfiles[position]
-            }
+        if(mActivityViewModel.profileSelected.contains("1"))
+        {
+            mDataBinding.levelOneButton.setBackgroundResource(R.drawable.level_enabled)
+            mDataBinding.levelOneButton.setTextColor( ContextCompat.getColor(requireActivity(), android.R.color.white))
+            mDataBinding.levelTwoButton.setBackgroundResource(R.drawable.level_disabled)
+            mDataBinding.levelTwoButton.setTextColor( ContextCompat.getColor(requireActivity(), android.R.color.black))
+            mDataBinding.atachFileLayout.visibility=View.GONE
+        }else{
+            mDataBinding.levelOneButton.setBackgroundResource(R.drawable.level_disabled)
+            mDataBinding.levelOneButton.setTextColor( ContextCompat.getColor(requireActivity(), android.R.color.black))
+            mDataBinding.levelTwoButton.setBackgroundResource(R.drawable.level_enabled)
+            mDataBinding.levelTwoButton.setTextColor( ContextCompat.getColor(requireActivity(), android.R.color.white))
+            mDataBinding.atachFileLayout.visibility=View.VISIBLE
         }
+
+
 
     }
 
@@ -233,7 +234,21 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
                     Constants.CURRENT_NUMBER_DEVICE_ID
                 )
             }else if(mActivityViewModel.profileSelected.contains("2")){
-                (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_UpgradeProfile)
+                if(!mActivityViewModel.selectedFileFrontPath.isNullOrEmpty()&&!mActivityViewModel.selectedFileBackPath.isNullOrEmpty())
+                {
+                val frontImageFile = File(mActivityViewModel.selectedFileFrontPath)
+                val frontImageBase64 = Tools.fileToBase64String(frontImageFile)
+
+                val backImageFile = File(mActivityViewModel.selectedFileBackPath)
+                val backImageBase64 = Tools.fileToBase64String(backImageFile)
+
+                mActivityViewModel.requestForLevelTwoProfileRegistration(
+                    requireActivity(),
+                    Constants.CURRENT_NUMBER_DEVICE_ID,
+                    frontImageBase64!!,
+                    backImageBase64!!
+                )
+                }
             }
 
 
@@ -248,6 +263,26 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
     }
 
+    override fun onLevelOneButtonClick(view: View) {
+        mDataBinding.levelOneButton.setBackgroundResource(R.drawable.level_enabled)
+        mDataBinding.levelOneButton.setTextColor( ContextCompat.getColor(requireActivity(), android.R.color.white))
+        mDataBinding.levelTwoButton.setBackgroundResource(R.drawable.level_disabled)
+        mDataBinding.levelTwoButton.setTextColor( ContextCompat.getColor(requireActivity(), android.R.color.black))
+        mActivityViewModel.profileSelected="Level 1"
+        mDataBinding.atachFileLayout.visibility=View.GONE
+        mActivityViewModel.selectedFileFrontPath=""
+        mActivityViewModel.selectedFileBackPath=""
+    }
+
+    override fun onLevelTwoButtonClick(view: View) {
+        mDataBinding.levelOneButton.setBackgroundResource(R.drawable.level_disabled)
+        mDataBinding.levelOneButton.setTextColor( ContextCompat.getColor(requireActivity(), android.R.color.black))
+        mDataBinding.levelTwoButton.setBackgroundResource(R.drawable.level_enabled)
+        mDataBinding.levelTwoButton.setTextColor( ContextCompat.getColor(requireActivity(), android.R.color.white))
+        mActivityViewModel.profileSelected="Level 2"
+        mDataBinding.atachFileLayout.visibility=View.VISIBLE
+    }
+
     override fun onCalenderCalenderClick(view: View) {
         showDatePickerDialog()
     }
@@ -255,6 +290,10 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
     override fun onGenderSelectionClick(view: View) {
         mDataBinding.inputGender.setText(LanguageData.getStringValue("Male"))
         showGenderDialog()
+    }
+
+    override fun onAtachFileClick(view: View) {
+        (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_UpgradeProfile)
     }
 
     override fun afterTextChanged(p0: Editable?) {

@@ -2,7 +2,9 @@ package com.es.marocapp.usecase.login
 
 import android.app.Application
 import android.content.Context
+import android.net.Uri
 import android.util.Log
+import androidx.core.net.toUri
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -25,8 +27,10 @@ import retrofit2.HttpException
 
 class LoginActivityViewModel(application: Application) : AndroidViewModel(application) {
 
+    var selectedFileBackPath:String = ""
+    var selectedFileFrontPath:String = ""
     var accountHolderEnterdData = ObservableField<Accountholder>()
-    var profileSelected: String = ""
+    var profileSelected: String = "Level 1"
     var getContactResponseListner = SingleLiveEvent<AddBillProviderContactResponse>()
     var currentUserMSISDN: String=""
     private val SPLASH_DISPLAY_LENGTH = 1000

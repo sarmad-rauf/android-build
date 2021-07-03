@@ -3,6 +3,8 @@ package com.es.marocapp.usecase.login.signup
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -24,6 +26,7 @@ import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.*
+import com.squareup.picasso.Picasso
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -40,7 +43,6 @@ class UpgradeProfileFragment : BaseFragment<FragmentUpgradeProfileBinding>(),
 
     private var selectedFileFrontPath: String = ""
     private var selectedFileBackPath: String = ""
-
     private var currentPhotoFile: File? = null
     private var currentPhotoFilePath: String? = null
 
@@ -72,17 +74,23 @@ class UpgradeProfileFragment : BaseFragment<FragmentUpgradeProfileBinding>(),
         mDataBinding.upgradeProfileIvRemoveFileFront.setOnClickListener {
             mDataBinding.upgradeProfileSelectedFileFront.visibility = View.GONE
             mDataBinding.upgradeProfileTvFileTitleFront.text = ""
+            mActivityViewModel.selectedFileFrontPath = ""
             selectedFileFrontPath = ""
         }
 
         mDataBinding.upgradeProfileIvRemoveFileBack.setOnClickListener {
             mDataBinding.upgradeProfileSelectedFileBack.visibility = View.GONE
             mDataBinding.upgradeProfileTvFileTitleBack.text = ""
+            mActivityViewModel.selectedFileBackPath = ""
             selectedFileBackPath = ""
         }
 
         mDataBinding.imgBackButton.setOnClickListener {
-            (activity as LoginActivity) .navController.navigateUp()
+          //  (activity as LoginActivity) .navController.navigateUp()
+            (activity as LoginActivity).navController.popBackStack(
+                R.id.signUpDetailFragment,
+                false
+            )
         }
 
         mDataBinding.upgradeProfileBtnSubmit.setOnClickListener {
@@ -90,19 +98,15 @@ class UpgradeProfileFragment : BaseFragment<FragmentUpgradeProfileBinding>(),
 //               Toast.makeText(this, getString(R.string.select_document_type), Toast.LENGTH_SHORT)
 //                    .show()
                 return@setOnClickListener
+            }else{
+                    mActivityViewModel.selectedFileFrontPath=selectedFileFrontPath
+                    mActivityViewModel.selectedFileBackPath=selectedFileBackPath
+                (activity as LoginActivity).navController.popBackStack(
+                    R.id.signUpDetailFragment,
+                    false
+                )
             }
-            val frontImageFile = File(selectedFileFrontPath)
-            val frontImageBase64 = Tools.fileToBase64String(frontImageFile)
 
-            val backImageFile = File(selectedFileBackPath)
-            val backImageBase64 = Tools.fileToBase64String(backImageFile)
-
-            mActivityViewModel.requestForLevelTwoProfileRegistration(
-                requireActivity(),
-                Constants.CURRENT_NUMBER_DEVICE_ID,
-                frontImageBase64!!,
-                backImageBase64!!
-            )
         }
         setStrings()
         subscribeObserver()
@@ -165,7 +169,17 @@ class UpgradeProfileFragment : BaseFragment<FragmentUpgradeProfileBinding>(),
         val attachBackImageTitle=LanguageData.getStringValue("ClickToAttach")+"\n"+LanguageData.getStringValue("BackSide")
         mDataBinding.frontImagetitle.text=attachFrontImageTitle
         mDataBinding.backImageTitle.text=attachBackImageTitle
-        mDataBinding.upgradeProfileBtnSubmit.text=LanguageData.getStringValue("BtnTitle_Submit")
+        mDataBinding.upgradeProfileBtnSubmit.text=LanguageData.getStringValue("Upload")
+        if (!mActivityViewModel.selectedFileFrontPath.isEmpty() ) {
+            showFrontFile(Uri.fromFile(File(mActivityViewModel.selectedFileFrontPath)))
+        }
+
+        if (!mActivityViewModel.selectedFileBackPath.isEmpty()) {
+//               Toast.makeText(this, getString(R.string.select_document_type), Toast.LENGTH_SHORT)
+//                    .show()
+
+            showBackFile(Uri.fromFile(File(mActivityViewModel.selectedFileBackPath)))}
+
     }
 
     private fun requestPermission() {
@@ -231,10 +245,10 @@ class UpgradeProfileFragment : BaseFragment<FragmentUpgradeProfileBinding>(),
             if (data != null) {
                 val uri = data.data as Uri
                 if (isFrontImage) {
-                    selectedFileFrontPath = FileUtils.getPath(requireActivity(), uri)
+                   selectedFileFrontPath = FileUtils.getPath(requireActivity(), uri)
                     showFrontFile(uri)
                 } else {
-                    selectedFileBackPath = FileUtils.getPath(requireActivity(), uri)
+                   selectedFileBackPath = FileUtils.getPath(requireActivity(), uri)
                     showBackFile(uri)
                 }
             }
@@ -258,12 +272,16 @@ class UpgradeProfileFragment : BaseFragment<FragmentUpgradeProfileBinding>(),
         mDataBinding.upgradeProfileSelectedFileFront.visibility = View.VISIBLE
         mDataBinding.upgradeProfileTvFileTitleFront.text =
             activity?.let { FileUtils.getFileName(it, uri) }
+        Picasso.get().load(uri).into(mDataBinding.frontThumbnail)
+
+
     }
 
     private fun showBackFile(uri: Uri) {
         mDataBinding.upgradeProfileSelectedFileBack.visibility = View.VISIBLE
         mDataBinding.upgradeProfileTvFileTitleBack.text =
             activity?.let { FileUtils.getFileName(it, uri) }
+        Picasso.get().load(uri).into(mDataBinding.backThumbnail)
     }
 
     override fun onCameraClickListener() {

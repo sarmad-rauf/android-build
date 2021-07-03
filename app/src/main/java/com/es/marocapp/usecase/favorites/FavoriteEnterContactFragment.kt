@@ -933,9 +933,8 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
             mDataBinding.inputCode.setText("")
             setStrings()
         }else if(selectedPaymentType.equals(LanguageData.getStringValue("PostpaidFix").toString())){
-          //  mDataBinding.inputLayoutCode.visibility = View.VISIBLE
-          //  mDataBinding.inputLayoutCode.visibility = View.GONE
-           // mDataBinding.inputCode.setText("")
+            mDataBinding.inputLayoutCode.visibility = View.VISIBLE
+           mDataBinding.inputCode.setText("")
             isInternetTypeSelected = false
             isMobileUseCaseSelected = false
             isFixeUseCaseSelected = true
@@ -944,9 +943,8 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
             mDataBinding.inputCode.setText("")
             setStrings()
         }else if(selectedPaymentType.equals(LanguageData.getStringValue("PostpaidMobile").toString())){
-           // mDataBinding.inputLayoutCode.visibility = View.VISIBLE
-        //    mDataBinding.inputLayoutCode.visibility = View.GONE
-          //  mDataBinding.inputCode.setText("")
+            mDataBinding.inputLayoutCode.visibility = View.VISIBLE
+            mDataBinding.inputCode.setText("")
             isInternetTypeSelected = false
             isMobileUseCaseSelected = true
             isFixeUseCaseSelected = false

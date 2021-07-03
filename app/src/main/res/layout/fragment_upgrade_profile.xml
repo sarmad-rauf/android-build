@@ -14,6 +14,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:descendantFocusability="blocksDescendants"
         android:layout_height="match_parent">
 
         <ImageView
@@ -49,6 +50,19 @@
             app:layout_constraintTop_toBottomOf="@+id/tvUpgradeProfileTitle"
             app:srcCompat="@drawable/ic_back_black_svg" />
 
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/topHeaderContainer"
+            app:layout_constraintBottom_toTopOf="@+id/upgrade_profile_btn_submit">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
         <com.es.marocapp.widgets.MarocBoldTextView
             android:id="@+id/upgradeProfile_description"
             android:layout_width="0dp"
@@ -61,7 +75,7 @@
             android:textSize="@dimen/_14ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/topHeaderContainer" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/upgrade_profile_card_view_front_side"
@@ -124,6 +138,7 @@
             app:layout_constraintTop_toBottomOf="@+id/upgrade_profile_card_view_back_side">
 
             <ImageView
+                android:id="@+id/frontThumbnail"
                 android:layout_width="@dimen/_24sdp"
                 android:layout_height="@dimen/_24sdp"
                 android:scaleType="centerCrop"
@@ -160,10 +175,11 @@
             app:layout_constraintTop_toBottomOf="@+id/upgrade_profile_selected_file_front">
 
             <ImageView
+                android:id="@+id/backThumbnail"
                 android:layout_width="@dimen/_24sdp"
                 android:layout_height="@dimen/_24sdp"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_image" />
+                app:srcCompat="@drawable/ic_image"/>
 
             <com.es.marocapp.widgets.MarocRegularTextView
                 android:id="@+id/upgrade_profile_tv_file_title_back"
@@ -181,7 +197,8 @@
                 android:layout_height="@dimen/_11sdp"
                 android:src="@drawable/cross_blue_icons" />
         </LinearLayout>
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
         <com.es.marocapp.widgets.MarocButton
             android:id="@+id/upgrade_profile_btn_submit"
             android:layout_width="0dp"

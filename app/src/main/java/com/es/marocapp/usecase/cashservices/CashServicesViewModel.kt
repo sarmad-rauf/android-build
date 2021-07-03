@@ -130,7 +130,7 @@ class CashServicesViewModel(application: Application) : AndroidViewModel(applica
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getInitiateTransferCall(
                 InitiateTransferRequest(amountToTransfer,
-                    ApiConstant.CONTEXT_AFTER_LOGIN,
+                    ApiConstant.CONTEXT_BEFORE_LOGIN,
                     Constants.getNumberMsisdn(transferdAmountTo),message)
             )
                 .compose(applyIOSchedulers())

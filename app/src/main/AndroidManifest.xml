@@ -34,7 +34,8 @@
         <activity android:name=".usecase.approvals.ApprovalActivity" />
         <activity android:name=".usecase.changepassword.ChangePasswordActivity" />
         <activity android:name=".usecase.cashinviacard.ActivityCashInViaCard" />
-        <activity android:name=".usecase.consumerregistration.ConsumerRegistrationActivity" />
+        <activity android:name=".usecase.consumerregistration.ConsumerRegistrationActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".usecase.transaction.TransactionDetailsActivity" />
         <activity
             android:name=".usecase.billpayment.BillPaymentActivity"
@@ -53,7 +54,9 @@
             android:name=".usecase.MainActivity"
             android:label="@string/title_activity_main"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".usecase.login.LoginActivity" />
+        <activity android:name=".usecase.login.LoginActivity"
+            android:windowSoftInputMode="adjustResize"
+            />
         <activity android:name=".usecase.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

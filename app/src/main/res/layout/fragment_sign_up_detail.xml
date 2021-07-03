@@ -38,45 +38,53 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="@dimen/_16sdp"
-                >
-                <com.es.marocapp.widgets.MarocBoldTextView
-                    android:id="@+id/selectProfileTitile"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_32sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                android:paddingBottom="@dimen/_16sdp">
+
+                <com.es.marocapp.widgets.MarocButton
+                    android:id="@+id/levelOneButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textStyle="normal"
-                    android:textSize="14sp"
-                    android:textColor="@color/colorBtnDisable"
-                    android:lineSpacingExtra="8sp" />
-
-                <Spinner
-                    android:id="@+id/profileTypeSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
-                    style="@style/QuickAcountTypeSpinner"
-                    android:popupBackground="@color/colorWhite"
-                    app:layout_constraintTop_toBottomOf="@id/selectProfileTitile"
+                    android:text="@string/levelone"
+                    android:textSize="@dimen/_16ssp"
+                    android:textAllCaps="false"
+                    android:onClick="@{listener::onLevelOneButtonClick}"
+                    android:background="@drawable/level_enabled"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:textColor="@color/colorWhite"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/levelTwoButton"
                     android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_16sdp">
-                </Spinner>
+                    android:elevation="@dimen/_1sdp"
+                    />
+                <com.es.marocapp.widgets.MarocButton
+                    android:id="@+id/levelTwoButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/leveltwo"
+                    android:textSize="@dimen/_16ssp"
+                    android:textAllCaps="false"
+                    android:onClick="@{listener::onLevelTwoButtonClick}"
+                   android:background="@color/colorWhite"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/levelOneButton"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:elevation="@dimen/_1sdp"
+                    />
 
-                <View
-                    android:id="@+id/spinnerView"
-                    android:layout_width="match_parent"
-                    android:layout_height=".7dp"
+                <com.es.marocapp.widgets.MarocBoldTextView
+                    android:id="@+id/levelLables"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginEnd="@dimen/_16sdp"
-                    android:background="#CECECE"
-                    app:layout_constraintTop_toBottomOf="@+id/profileTypeSpinner">
-                </View>
-
+                    app:layout_constraintTop_toBottomOf="@+id/levelTwoButton"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="@dimen/_8sdp">
+                </com.es.marocapp.widgets.MarocBoldTextView>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_layout_first_name"
@@ -86,7 +94,7 @@
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_16sdp"
                     android:layout_marginEnd="@dimen/_16sdp"
-                    app:layout_constraintTop_toBottomOf="@+id/profileTypeSpinner">
+                    app:layout_constraintTop_toBottomOf="@+id/levelLables">
 
                     <com.es.marocapp.widgets.MarocEditText
                         android:id="@+id/input_first_name"
@@ -262,10 +270,48 @@
                     android:background="@drawable/button_enable"
                     android:layout_marginTop="@dimen/_16sdp"
                     android:textColor="@color/colorWhite"
-                    app:layout_constraintTop_toBottomOf="@+id/input_layout_city"
                     app:layout_constraintEnd_toEndOf="@+id/input_layout_address"
                     app:layout_constraintStart_toStartOf="@+id/input_layout_address"
+                    app:layout_constraintTop_toBottomOf="@id/lawText"
                     />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/atachFileLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/input_layout_city"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="gone">
+
+
+                <com.es.marocapp.widgets.MarocBoldTextView
+                    android:id="@+id/levelTwoLable"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:gravity="start"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    app:layout_constraintEnd_toStartOf="@+id/attachFileButton">
+                </com.es.marocapp.widgets.MarocBoldTextView>
+                <ImageButton
+                    android:id="@+id/attachFileButton"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:background="@drawable/attachmentplus"
+                    android:onClick="@{listener::onAtachFileClick}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    >
+                </ImageButton>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
                 <com.es.marocapp.widgets.MarocEditText
                     android:id="@+id/lawText"
                     android:layout_width="match_parent"
@@ -275,13 +321,14 @@
                     android:textColor="@color/colorTextGreyDark"
                     android:text="@string/law"
                     android:gravity="center"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginEnd="@dimen/_16sdp"
                     android:editable="false"
+                    app:layout_constraintTop_toBottomOf="@+id/atachFileLayout"
                     app:layout_constraintEnd_toEndOf="@+id/input_layout_address"
                     app:layout_constraintStart_toStartOf="@+id/input_layout_address"
-                    app:layout_constraintTop_toBottomOf="@id/btnNextDetailFragment"/>
+                    />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
