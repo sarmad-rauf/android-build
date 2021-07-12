@@ -22,14 +22,15 @@ class ViewFavoritesAdapter(private val contacts: ArrayList<Contact>,var listner 
 
     override fun onBindViewHolder(holder: ViewFavoritesViewHolder, position: Int) {
         var contactName = contacts[position].contactname
-        if (contactName.contains("Util_"))
-        {
+//        if (contactName.contains("Util_"))
+//        {
             contactName = contactName.substringAfter("@")
             contactName = contactName.substringBefore(",")
-        }
-        else{
-            contactName = contactName.substringAfter("@")
-        }
+//        }
+//        else{
+//            contactName = contactName.substringAfter("@")
+//            contactName = contactName.substringAfter("@")
+//        }
         holder.favortiesName.text = contactName
         var contactNimber = contacts[position].customerreference
         contactNimber = contactNimber.substringBefore("/")

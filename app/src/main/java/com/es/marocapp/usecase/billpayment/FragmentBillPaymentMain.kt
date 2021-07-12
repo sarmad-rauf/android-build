@@ -674,16 +674,18 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
             mDataBinding.billPaymentMangeFavGroup.visibility = View.VISIBLE
             mFavoritesList.clear()
             for (contacts in Constants.mContactListArray) {
-                var contactName = contacts.contactname
-                if (contactName.contains("Telec_Internet@") || contactName.contains("Telec_PostpaidMobile@") ||
-                    contactName.contains("Telec_PostpaidFix@") || contactName.contains("Util_")
-                ) {
-                    if (contactName.contains("Util_")) {
-                        if (contactName.contains(",")) {
+                var contactName = if (contacts != null) contacts.contactname else null
+                if (contactName != null) {
+                    if (contactName.contains("Telec_Internet@") || contactName.contains("Telec_PostpaidMobile@") ||
+                        contactName.contains("Telec_PostpaidFix@") || contactName.contains("Util_")
+                    ) {
+                        if (contactName.contains("Util_")) {
+                            if (contactName.contains(",")) {
+                                mFavoritesList.add(contacts)
+                            }
+                        } else {
                             mFavoritesList.add(contacts)
                         }
-                    } else {
-                        mFavoritesList.add(contacts)
                     }
                 }
             }
