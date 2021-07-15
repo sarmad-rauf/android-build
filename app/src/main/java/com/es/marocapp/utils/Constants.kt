@@ -382,9 +382,9 @@ object Constants {
         return "$number$FAVOURITE_ALIAS"
     }
 
-    fun getFatoratiNewAlias(number: String,selectedCompany:String): String {
+    fun getFatoratiServiceProviderAlias(number: String, selectedCompanyServiceProvider:String): String {
 //        return "$number@fatouratiCompany name/SP"
-        var alias = FATOURATI_ALIAS.replace("fatourati.sp",selectedCompany)
+        var alias = FATOURATI_ALIAS.replace("fatourati.sp",selectedCompanyServiceProvider)
         return "$number$alias"
     }
 

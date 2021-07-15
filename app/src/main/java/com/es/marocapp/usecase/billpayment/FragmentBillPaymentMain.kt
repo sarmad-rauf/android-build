@@ -167,6 +167,9 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                 var currentSelectedBilLogo = listDataChild?.get(listDataHeader[groupPosition].companyTilte)?.get(
                     childPosition)?.subCompanyIcon
 
+                    // Storing service provider value
+                mActivityViewModel.selectedCompanyServiceProvider = mActivityViewModel.getBillPaymentCompaniesResponseObserver.get()?.bills?.get(groupPosition)?.companies?.get(childPosition)?.serviceProvider ?: "SP empty or null from api"
+
                 if (currentSelectedBilLogo != null) {
                     mActivityViewModel.userSelectedCreancerLogo =
                         currentSelectedBilLogo

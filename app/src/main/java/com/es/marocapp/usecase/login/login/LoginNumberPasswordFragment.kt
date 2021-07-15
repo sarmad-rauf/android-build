@@ -265,12 +265,8 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                         }
                     }
 
-                    if(!it.getAccountHolderInformationResponse.email.isNullOrEmpty()){
+                    //new default notification Email getting
                         mActivityViewModel.requestForAccountholderDefaultNotificationEmailAPI(activity)
-//                        Constants.CURRENT_USER_EMAIL=it.getAccountHolderInformationResponse.email
-//                        Constants.CURRENT_USER_EMAIL=Constants.CURRENT_USER_EMAIL.replace("ID:","")
-//                        Constants.CURRENT_USER_EMAIL=Constants.CURRENT_USER_EMAIL.replace("/EMAIL","")
-                    }
                 }
                 mActivityViewModel.requestForBalanceInfoAndLimtsAPI(activity)
                 mActivityViewModel.requestForGetFavouriteApi(activity)

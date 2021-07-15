@@ -17,5 +17,6 @@ data class Company(
     val codeCreancier: String,
     val logo: String,
     val nomCreance: String,
-    val nomCreancier: String
+    val nomCreancier: String,
+    val serviceProvider: String
 )
