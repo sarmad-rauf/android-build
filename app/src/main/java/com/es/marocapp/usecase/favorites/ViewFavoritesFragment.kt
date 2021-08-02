@@ -95,30 +95,31 @@ class ViewFavoritesFragment : BaseFragment<FragmentFavoritesViewBinding>(),
     private fun getContactList(): ArrayList<Contact> {
         var mList : ArrayList<Contact> = arrayListOf()
         var mContact = Constants.mContactListArray
+        var internetAlias=Constants.getPostPaidInternetDomainAlias("").replace("@","").trim()
+        internetAlias=internetAlias.replace("/SP","").trim()
+        var postPaidFixeAlias=Constants.getPostPaidFixedDomainAlias("").replace("@","").trim()
+        postPaidFixeAlias=postPaidFixeAlias.replace("/SP","").trim()
+        var postPaidMobileAlias=Constants.getPostPaidMobileDomainAlias("").replace("@","").trim()
+        postPaidMobileAlias=postPaidMobileAlias.replace("/SP","").trim()
+        var fatouratiAlias=Constants.getFavouriteAlias("").replace("@","").trim()
+        fatouratiAlias=fatouratiAlias.replace("/USER","").trim()
         if(mActivitViewModel.isPaymentSelected.get()!!){
             if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!){
                 for(contact in mContact){
-                    var fatouratiAlias=Constants.getFavouriteAlias("").replace("@","").trim()
-                    fatouratiAlias=fatouratiAlias.replace("/USER","").trim()
-                    if(contact.billproviderfri.trim().contains(fatouratiAlias)){
+                    if(!contact.billproviderfri.trim().contains(internetAlias)&&!contact.billproviderfri.trim().contains(postPaidFixeAlias)
+                        && !contact.billproviderfri.trim().contains(postPaidMobileAlias)){
                         mList.add(contact)
                     }
                 }
             }else{
                 for(contact in mContact){
-
-                    var internetAlias=Constants.getPostPaidInternetDomainAlias("").replace("@","").trim()
-                    internetAlias=internetAlias.replace("/SP","").trim()
                     if(contact.billproviderfri.trim().contains(internetAlias)){
                         mList.add(contact)
                     }
-                    var postPaidFixeAlias=Constants.getPostPaidFixedDomainAlias("").replace("@","").trim()
-                    postPaidFixeAlias=postPaidFixeAlias.replace("/SP","").trim()
+
                     if(contact.billproviderfri.trim().contains(postPaidFixeAlias)){
                         mList.add(contact)
                     }
-                    var postPaidMobileAlias=Constants.getPostPaidMobileDomainAlias("").replace("@","").trim()
-                    postPaidMobileAlias=postPaidMobileAlias.replace("/SP","").trim()
                     if(contact.billproviderfri.trim().contains(postPaidMobileAlias)){
                         mList.add(contact)
                     }

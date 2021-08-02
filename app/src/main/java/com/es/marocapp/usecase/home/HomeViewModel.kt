@@ -36,12 +36,64 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     var verifyOTPForDefaultAccountResponseListener = SingleLiveEvent<VerifyOTPForDefaultAccountResponse>()
     var getBalanceResponseListner = SingleLiveEvent<GetBalanceResponse>()
     var getTransactionsResponseListner = SingleLiveEvent<TransactionHistoryResponse>()
+    var getAccountsResponseListner = SingleLiveEvent<GetAccountsResponse>()
     lateinit var disposable: Disposable
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"
     }
     val text: LiveData<String> = _text
+
+
+    // API For GETACCOUNTS API
+    fun requestForGetAccountsAPI(
+        context: Context?
+    ) {
+
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAccountsCall(
+                GetAccountsRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null )
+                        {
+                            getAccountsResponseListner.postValue(result)
+
+                        } else {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
 
 
     // API For CheckDefaultAccountStatus API

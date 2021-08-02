@@ -2,7 +2,6 @@ package com.es.marocapp.usecase.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -22,6 +21,7 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.CardModel
 import com.es.marocapp.model.HomeUseCasesModel
+import com.es.marocapp.model.responses.Account
 import com.es.marocapp.model.responses.History
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
@@ -38,7 +38,6 @@ import com.es.marocapp.usecase.transfercommision.TransferCommisionActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
-import kotlin.reflect.jvm.internal.impl.load.java.Constant
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChangeListener,
@@ -134,7 +133,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         setStrings()
         setQuickAmountListner()
         subscribeForSpinnerListner()
-        subscribeForGetBalanceResponse()
+        subscribeForGetBalanceAndGetAccountsResponse()
         subsribeForTransactionHistoryResponse()
         if((activity as MainActivity).showTransactionsDetailsIndirectly){
             setTransacitonScreenVisisble(true,(activity as MainActivity).isDirectCallForTransaction,
@@ -149,7 +148,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             (activity as MainActivity).isHomeFragmentShowing = false
             (activity as MainActivity).isTransacitonFragmentShowing = false
         }else{
-            homeViewModel.requestForGetBalanceApi(activity)
+            if(Constants.IS_AGENT_USER)
+            {
+                homeViewModel.requestForGetAccountsAPI(activity)
+            }else{
+            homeViewModel.requestForGetBalanceApi(activity)}
             (activity as MainActivity).isTransactionDetailsShowing = false
 
             //----------for handling Backpress of activity----------
@@ -758,6 +761,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     }
 
     private fun addAgentBalanceCard(listOfFragment: ArrayList<HomeBalanceFragment>) {
+
         if (Constants.IS_AGENT_USER && Constants.getAccountsResponseArray != null) {
             for (i in Constants.getAccountsResponseArray.indices) {
 
@@ -866,7 +870,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         mDataBinding.viewpager.currentItem = nPosition - 1
     }
 
-    private fun subscribeForGetBalanceResponse() {
+    private fun subscribeForGetBalanceAndGetAccountsResponse() {
         homeViewModel.getBalanceResponseListner.observe(this, Observer {
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
                  populateHomeCardView(true,it?.amount)
@@ -874,6 +878,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 DialogUtils.showErrorDialoge(activity,it.description)
             }
         })
+
+        homeViewModel.getAccountsResponseListner.observe(this@HomeFragment,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    for(i in it.accounts.indices){
+                        Constants.getAccountsResponseArray=it.accounts as ArrayList<Account>
+                        homeViewModel.requestForGetBalanceApi(activity)
+                    }
+                }else{
+                    DialogUtils.showErrorDialoge(activity,it.description)
+                }
+            }
+        )
     }
 
 

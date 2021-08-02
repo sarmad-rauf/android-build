@@ -201,7 +201,6 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
             if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                 var userName = it?.firstname + " " + it?.surname
                 Constants.CURRENT_USER_NAME = userName
-
                 if(Constants.IS_AGENT_USER){
                     Constants.balanceInfoAndResponse = it
                     mActivityViewModel.requestForGetAccountsAPI(activity)

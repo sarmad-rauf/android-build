@@ -309,10 +309,10 @@ class FavoriteDetailFragment : BaseFragment<FragmentFavoriteDetailsBinding>(),
         if(list_of_FatouratieType.isNotEmpty()){
 
             for(index in list_of_FatouratieType.indices){
-                Logger.debugLog("abro", list_of_FatouratieType[index].nomCreancier)
                 if(mActivitViewModel.fatoratiTypeSelected.equals(list_of_FatouratieType[index].nomCreancier)){
                     mActivitViewModel.codeCreance = list_of_FatouratieType[index].codeCreance
                     mActivitViewModel.creancierID = list_of_FatouratieType[index].codeCreancier
+                    mActivitViewModel.selectedCompanySPName = list_of_FatouratieType[index] ?.serviceProvider ?: "null"
                     mActivitViewModel.selectedCompanyLogo = list_of_FatouratieType[index].logoPath
 
                 }

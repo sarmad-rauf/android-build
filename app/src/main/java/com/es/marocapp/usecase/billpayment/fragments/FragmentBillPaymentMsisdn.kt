@@ -370,6 +370,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         mActivityViewModel.getFatoratiStepThreeResponseListner.observe(this@FragmentBillPaymentMsisdn,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    Constants.STEP2_3RESPONSE=it
                     mActivityViewModel.specialMenuBillSelected=false
                //   mDataBinding.acountTypeSpinner.visibility=View.GONE
                //     mDataBinding.selectAcountTitile.visibility=View.GONE

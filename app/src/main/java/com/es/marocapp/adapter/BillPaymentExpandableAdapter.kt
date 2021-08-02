@@ -120,6 +120,7 @@ class BillPaymentExpandableAdapter(
 
                 override fun onError(e: Exception?) {
                     Logger.debugLog("billPayment","logoError ${e.toString()}")
+                    Logger.debugLog("billPayment","logoErrorUrl ${headerTitle.companyIcon}")
                     parentCompanyIcon.setImageResource(R.drawable.default_no_company_icon)
                 }
             })
