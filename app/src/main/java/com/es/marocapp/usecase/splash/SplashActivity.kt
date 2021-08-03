@@ -281,7 +281,8 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                     }
                 }
                 mActivityViewModel.requestForTranslationsApi(this)
-            } else if (it.responseCode.equals(ApiConstant.API_INVALID_VERSION)) {
+            }
+            else if (it.responseCode.equals(ApiConstant.API_INVALID_VERSION)) {
                 DialogUtils.showUpdateAPPDailog(
                     this@SplashActivity,
                     it.description,

@@ -199,14 +199,14 @@ class TransferCommisionAmountFragment : BaseFragment<FragmentCommisionFundsAmoun
 
 
         if (Constants.IS_AGENT_USER) {
-//            DialogUtils.showPasswordDialoge(activity as TransferCommisionActivity,
-//                object : DialogUtils.OnPasswordDialogClickListner {
-//                    override fun onDialogYesClickListner(password: String) {
-//                        Constants.HEADERS_FOR_PAYEMNTS = true
-//                        Constants.CURRENT_USER_CREDENTIAL = password
-//                mActivityViewModel.requestForTransferCommisionApi(activity, sAmount)
-//                    }})
-            mActivityViewModel.requestForTransferCommisionApi(activity, sAmount)
+            DialogUtils.showPasswordDialoge(activity as TransferCommisionActivity,
+                object : DialogUtils.OnPasswordDialogClickListner {
+                    override fun onDialogYesClickListner(password: String) {
+                        Constants.HEADERS_FOR_PAYEMNTS = true
+                        Constants.CURRENT_USER_CREDENTIAL = password
+                mActivityViewModel.requestForTransferCommisionApi(activity, sAmount)
+                    }})
+          //  mActivityViewModel.requestForTransferCommisionApi(activity, sAmount)
         }
 
     }

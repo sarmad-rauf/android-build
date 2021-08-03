@@ -77,14 +77,12 @@
 
                 <com.es.marocapp.widgets.MarocBoldTextView
                     android:id="@+id/levelLables"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="12dp"
                     android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    app:layout_constraintTop_toBottomOf="@+id/levelTwoButton"
+                    android:layout_marginTop="@dimen/_8sdp"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="@dimen/_8sdp">
-                </com.es.marocapp.widgets.MarocBoldTextView>
+                    app:layout_constraintTop_toBottomOf="@+id/levelTwoButton"></com.es.marocapp.widgets.MarocBoldTextView>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_layout_first_name"

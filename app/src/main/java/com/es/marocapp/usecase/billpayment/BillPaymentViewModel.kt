@@ -1380,8 +1380,7 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                             if (context != null && error != null) {
                                 errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
                             }
-                        } catch (e: Exception) {
-                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        } catch (e: Exception) { errorText.postValue(context!!.getString(R.string.error_msg_generic))
                         }
 
                     })
