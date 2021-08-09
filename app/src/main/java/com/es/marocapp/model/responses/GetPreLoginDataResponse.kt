@@ -82,5 +82,6 @@ data class GetPreLoginDataResponse(
     val helpLineNumberAgent: String,
     val billTypeInwi: String,
     val reasonForUpdateEmail: String,
-    val marocFatouratiLogoPath: String
+    val marocFatouratiLogoPath: String,
+    val maxFileSizeUploadLimitInMBs: String
 )

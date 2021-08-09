@@ -3,8 +3,6 @@ package com.es.marocapp.usecase.login.signup
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -55,7 +53,8 @@ class UpgradeProfileFragment : BaseFragment<FragmentUpgradeProfileBinding>(),
     override fun init(savedInstanceState: Bundle?) {
 
 
-        mActivityViewModel = ViewModelProvider(activity as LoginActivity).get(LoginActivityViewModel::class.java)
+        mActivityViewModel =
+            ViewModelProvider(activity as LoginActivity).get(LoginActivityViewModel::class.java)
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel
@@ -86,7 +85,7 @@ class UpgradeProfileFragment : BaseFragment<FragmentUpgradeProfileBinding>(),
         }
 
         mDataBinding.imgBackButton.setOnClickListener {
-          //  (activity as LoginActivity) .navController.navigateUp()
+            //  (activity as LoginActivity) .navController.navigateUp()
             (activity as LoginActivity).navController.popBackStack(
                 R.id.signUpDetailFragment,
                 false
@@ -98,9 +97,9 @@ class UpgradeProfileFragment : BaseFragment<FragmentUpgradeProfileBinding>(),
 //               Toast.makeText(this, getString(R.string.select_document_type), Toast.LENGTH_SHORT)
 //                    .show()
                 return@setOnClickListener
-            }else{
-                    mActivityViewModel.selectedFileFrontPath=selectedFileFrontPath
-                    mActivityViewModel.selectedFileBackPath=selectedFileBackPath
+            } else {
+                mActivityViewModel.selectedFileFrontPath = selectedFileFrontPath
+                mActivityViewModel.selectedFileBackPath = selectedFileBackPath
                 (activity as LoginActivity).navController.popBackStack(
                     R.id.signUpDetailFragment,
                     false
@@ -121,7 +120,7 @@ class UpgradeProfileFragment : BaseFragment<FragmentUpgradeProfileBinding>(),
     private fun openCamera() {
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         currentPhotoFile = createImageFile()
-        if (activity?.packageManager!=null) {
+        if (activity?.packageManager != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 if (currentPhotoFile != null) {
                     val photoURI = FileProvider.getUriForFile(
@@ -152,25 +151,30 @@ class UpgradeProfileFragment : BaseFragment<FragmentUpgradeProfileBinding>(),
         mActivityViewModel.errorText.observe(this, Observer {
             DialogUtils.showErrorDialoge(requireActivity(), it)
         })
-        mActivityViewModel.getRegisterUserResponseListner.observe(this@UpgradeProfileFragment, Observer {
-            if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                (activity as LoginActivity).navController.navigate(R.id.action_upgradeProfileFragment_to_setYourPinFragment)
+        mActivityViewModel.getRegisterUserResponseListner.observe(
+            this@UpgradeProfileFragment,
+            Observer {
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    (activity as LoginActivity).navController.navigate(R.id.action_upgradeProfileFragment_to_setYourPinFragment)
 
-            } else {
-                DialogUtils.showErrorDialoge(activity as LoginActivity, it.description)
-            }
-        })
+                } else {
+                    DialogUtils.showErrorDialoge(activity as LoginActivity, it.description)
+                }
+            })
     }
 
     private fun setStrings() {
-        mDataBinding.tvUpgradeProfileTitle.text=LanguageData.getStringValue("CreateYourAccount")
-        mDataBinding.upgradeProfileDescription.text=LanguageData.getStringValue("UpgradeProfileDescription")
-        val attachFrontImageTitle=LanguageData.getStringValue("ClickToAttach")+"\n"+LanguageData.getStringValue("FrontSide")
-        val attachBackImageTitle=LanguageData.getStringValue("ClickToAttach")+"\n"+LanguageData.getStringValue("BackSide")
-        mDataBinding.frontImagetitle.text=attachFrontImageTitle
-        mDataBinding.backImageTitle.text=attachBackImageTitle
-        mDataBinding.upgradeProfileBtnSubmit.text=LanguageData.getStringValue("Upload")
-        if (!mActivityViewModel.selectedFileFrontPath.isEmpty() ) {
+        mDataBinding.tvUpgradeProfileTitle.text = LanguageData.getStringValue("CreateYourAccount")
+        mDataBinding.upgradeProfileDescription.text =
+            LanguageData.getStringValue("UpgradeProfileDescription")
+        val attachFrontImageTitle =
+            LanguageData.getStringValue("ClickToAttach") + "\n" + LanguageData.getStringValue("FrontSide")
+        val attachBackImageTitle =
+            LanguageData.getStringValue("ClickToAttach") + "\n" + LanguageData.getStringValue("BackSide")
+        mDataBinding.frontImagetitle.text = attachFrontImageTitle
+        mDataBinding.backImageTitle.text = attachBackImageTitle
+        mDataBinding.upgradeProfileBtnSubmit.text = LanguageData.getStringValue("Upload")
+        if (!mActivityViewModel.selectedFileFrontPath.isEmpty()) {
             showFrontFile(Uri.fromFile(File(mActivityViewModel.selectedFileFrontPath)))
         }
 
@@ -178,7 +182,8 @@ class UpgradeProfileFragment : BaseFragment<FragmentUpgradeProfileBinding>(),
 //               Toast.makeText(this, getString(R.string.select_document_type), Toast.LENGTH_SHORT)
 //                    .show()
 
-            showBackFile(Uri.fromFile(File(mActivityViewModel.selectedFileBackPath)))}
+            showBackFile(Uri.fromFile(File(mActivityViewModel.selectedFileBackPath)))
+        }
 
     }
 
@@ -244,23 +249,35 @@ class UpgradeProfileFragment : BaseFragment<FragmentUpgradeProfileBinding>(),
         if (requestCode == ATTACH_FILE_REQUEST_CODE) {
             if (data != null) {
                 val uri = data.data as Uri
-                if (isFrontImage) {
-                   selectedFileFrontPath = FileUtils.getPath(requireActivity(), uri)
-                    showFrontFile(uri)
-                } else {
-                   selectedFileBackPath = FileUtils.getPath(requireActivity(), uri)
-                    showBackFile(uri)
-                }
-            }
-        } else if (requestCode == CAMERA_IMAGE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                val uri = Uri.fromFile(currentPhotoFile)
+                if( Constants.isFileSizeVerified(uri,requireContext(),false)){
                 if (isFrontImage) {
                     selectedFileFrontPath = FileUtils.getPath(requireActivity(), uri)
                     showFrontFile(uri)
                 } else {
                     selectedFileBackPath = FileUtils.getPath(requireActivity(), uri)
                     showBackFile(uri)
+                }
+                }else{
+                    var description = LanguageData.getStringValue("FileSizeLimitErrorMessage")
+                    description= description?.replace("<file-size>",Constants.maxFileSizeUploadLimitInMBs.toString())
+                    DialogUtils.showErrorDialoge(activity,description)
+                }
+            }
+        } else if (requestCode == CAMERA_IMAGE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                val uri = Uri.fromFile(currentPhotoFile)
+                if(Constants.isFileSizeVerified(uri, requireContext(),true)){
+                if (isFrontImage) {
+                    selectedFileFrontPath = FileUtils.getPath(requireActivity(), uri)
+                    showFrontFile(uri)
+                } else {
+                    selectedFileBackPath = FileUtils.getPath(requireActivity(), uri)
+                    showBackFile(uri)
+                }
+                }else{
+                    var description = LanguageData.getStringValue("FileSizeLimitErrorMessage")
+                    description= description?.replace("<file-size>",Constants.maxFileSizeUploadLimitInMBs.toString())
+                    DialogUtils.showErrorDialoge(activity,description)
                 }
             }
         } else {

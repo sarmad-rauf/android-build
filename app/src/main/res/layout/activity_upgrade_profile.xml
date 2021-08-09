@@ -14,8 +14,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:descendantFocusability="blocksDescendants">
+        android:descendantFocusability="blocksDescendants"
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/topHeaderContainer"
@@ -51,7 +51,7 @@
             app:srcCompat="@drawable/ic_back_black_svg" />
 
         <androidx.core.widget.NestedScrollView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -199,7 +199,6 @@
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
-
         <com.es.marocapp.widgets.MarocButton
             android:id="@+id/upgrade_profile_btn_submit"
             android:layout_width="0dp"
@@ -215,7 +214,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
                 <include
                     android:id="@+id/Gif_Loader"
                     layout="@layout/layout_dialog"

@@ -16,13 +16,13 @@ import com.es.marocapp.usecase.billpayment.BillPaymentViewModel
 
 class FragmentPostPaidBillType : BaseFragment<FragmentBillPaymentTypeBinding>() {
 
-    private lateinit var mActivityViewModel : BillPaymentViewModel
+    private lateinit var mActivityViewModel: BillPaymentViewModel
 
     private lateinit var mBillPaymentItemTypeAdapter: PaymentItemsAdapter
     private lateinit var mFatoratiItemTypeAdapter: FatoratiFirstLetterIconItemAdapter
     private var mBillPaymentTypes: ArrayList<String> = ArrayList()
-    private var mBillPaymentTypesIcon: ArrayList<Int>  = ArrayList()
-    private var mFatoratiTypesList: ArrayList<Creancier>  = arrayListOf()
+    private var mBillPaymentTypesIcon: ArrayList<Int> = ArrayList()
+    private var mFatoratiTypesList: ArrayList<Creancier> = arrayListOf()
 
     override fun setLayout(): Int {
         return R.layout.fragment_bill_payment_type
@@ -47,7 +47,7 @@ class FragmentPostPaidBillType : BaseFragment<FragmentBillPaymentTypeBinding>() 
 
         mBillPaymentTypes.clear()
         mBillPaymentTypes.apply {
-            if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+            if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
                 add(LanguageData.getStringValue("PostpaidMobile").toString())
                 add(LanguageData.getStringValue("PostpaidFix").toString())
                 add(LanguageData.getStringValue("Internet").toString())
@@ -63,10 +63,10 @@ class FragmentPostPaidBillType : BaseFragment<FragmentBillPaymentTypeBinding>() 
 
         mFatoratiTypesList.clear()
         mFatoratiTypesList.apply {
-            if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+            if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
                 var fatoratiType = mActivityViewModel.fatoratiStepOneObserver.get()!!.creanciers
-                if(fatoratiType.isNotEmpty()){
-                    for(i in fatoratiType.indices){
+                if (fatoratiType.isNotEmpty()) {
+                    for (i in fatoratiType.indices) {
                         add(fatoratiType[i])
                     }
                 }
@@ -74,53 +74,61 @@ class FragmentPostPaidBillType : BaseFragment<FragmentBillPaymentTypeBinding>() 
         }
 
 
-        mFatoratiItemTypeAdapter = FatoratiFirstLetterIconItemAdapter(mFatoratiTypesList,object : FatoratiFirstLetterIconItemAdapter.AdapterItemTypeClickListner{
-            override fun onPaymentItemTypeClick(paymentItems: Creancier) {
-                mActivityViewModel.fatoratiTypeSelected.set(paymentItems)
-                (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidBillType_to_fragmentBillPaymentMsisdn)
-            }
-
-        })
-
-        mBillPaymentItemTypeAdapter = PaymentItemsAdapter(mBillPaymentTypes, mBillPaymentTypesIcon,object : PaymentItemsAdapter.PaymentItemTypeClickListner{
-            override fun onPaymentItemTypeClick(paymentItems: String) {
-                when(paymentItems){
-                    LanguageData.getStringValue("PostpaidMobile") -> {
-                        mActivityViewModel.billTypeSelected.set(LanguageData.getStringValue("PostpaidMobile"))
-                        mActivityViewModel.billTypeSelectedIcon = R.drawable.postpaid_blue
-                        mActivityViewModel.isPostPaidMobileSelected.set(true)
-                        mActivityViewModel.isPostPaidFixSelected.set(false)
-                        mActivityViewModel.isInternetSelected.set(false)
-                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidBillType_to_fragmentBillPaymentMsisdn)
-                    }
-                    LanguageData.getStringValue("PostpaidFix") -> {
-                        mActivityViewModel.billTypeSelected.set(LanguageData.getStringValue("PostpaidFix"))
-                        mActivityViewModel.billTypeSelectedIcon = R.drawable.postpaid_fix_blue
-                        mActivityViewModel.isPostPaidMobileSelected.set(false)
-                        mActivityViewModel.isPostPaidFixSelected.set(true)
-                        mActivityViewModel.isInternetSelected.set(false)
-                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidBillType_to_fragmentBillPaymentMsisdn)
-                    }
-                    LanguageData.getStringValue("Internet") -> {
-                        mActivityViewModel.billTypeSelected.set(LanguageData.getStringValue("Internet"))
-                        mActivityViewModel.billTypeSelectedIcon = R.drawable.internet_blue
-                        mActivityViewModel.isPostPaidMobileSelected.set(false)
-                        mActivityViewModel.isPostPaidFixSelected.set(false)
-                        mActivityViewModel.isInternetSelected.set(true)
-                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidBillType_to_fragmentBillPaymentMsisdn)
-                    }
-                    else -> Toast.makeText(activity,"Nothing Clicked Clicked", Toast.LENGTH_SHORT).show()
-
+        mFatoratiItemTypeAdapter = FatoratiFirstLetterIconItemAdapter(mFatoratiTypesList,
+            object : FatoratiFirstLetterIconItemAdapter.AdapterItemTypeClickListner {
+                override fun onPaymentItemTypeClick(paymentItems: Creancier) {
+                    mActivityViewModel.fatoratiTypeSelected.set(paymentItems)
+                    (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidBillType_to_fragmentBillPaymentMsisdn)
                 }
-            }
 
-        })
+            })
+
+        mBillPaymentItemTypeAdapter = PaymentItemsAdapter(
+            mBillPaymentTypes,
+            mBillPaymentTypesIcon,
+            object : PaymentItemsAdapter.PaymentItemTypeClickListner {
+                override fun onPaymentItemTypeClick(paymentItems: String) {
+                    when (paymentItems) {
+                        LanguageData.getStringValue("PostpaidMobile") -> {
+                            mActivityViewModel.billTypeSelected.set(LanguageData.getStringValue("PostpaidMobile"))
+                            mActivityViewModel.billTypeSelectedIcon = R.drawable.postpaid_blue
+                            mActivityViewModel.isPostPaidMobileSelected.set(true)
+                            mActivityViewModel.isPostPaidFixSelected.set(false)
+                            mActivityViewModel.isInternetSelected.set(false)
+                            (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidBillType_to_fragmentBillPaymentMsisdn)
+                        }
+                        LanguageData.getStringValue("PostpaidFix") -> {
+                            mActivityViewModel.billTypeSelected.set(LanguageData.getStringValue("PostpaidFix"))
+                            mActivityViewModel.billTypeSelectedIcon = R.drawable.postpaid_fix_blue
+                            mActivityViewModel.isPostPaidMobileSelected.set(false)
+                            mActivityViewModel.isPostPaidFixSelected.set(true)
+                            mActivityViewModel.isInternetSelected.set(false)
+                            (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidBillType_to_fragmentBillPaymentMsisdn)
+                        }
+                        LanguageData.getStringValue("Internet") -> {
+                            mActivityViewModel.billTypeSelected.set(LanguageData.getStringValue("Internet"))
+                            mActivityViewModel.billTypeSelectedIcon = R.drawable.internet_blue
+                            mActivityViewModel.isPostPaidMobileSelected.set(false)
+                            mActivityViewModel.isPostPaidFixSelected.set(false)
+                            mActivityViewModel.isInternetSelected.set(true)
+                            (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidBillType_to_fragmentBillPaymentMsisdn)
+                        }
+                        else -> Toast.makeText(
+                            activity,
+                            "Nothing Clicked Clicked",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+                }
+
+            })
         mDataBinding.paymentTypeRecycler.apply {
-            if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+            if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
                 adapter = mBillPaymentItemTypeAdapter
             }
 
-            if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+            if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
                 adapter = mFatoratiItemTypeAdapter
             }
             layoutManager = LinearLayoutManager(activity as BillPaymentActivity)

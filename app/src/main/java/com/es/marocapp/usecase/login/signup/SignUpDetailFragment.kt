@@ -54,7 +54,8 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        mActivityViewModel = ViewModelProvider(activity as LoginActivity).get(LoginActivityViewModel::class.java)
+        mActivityViewModel =
+            ViewModelProvider(activity as LoginActivity).get(LoginActivityViewModel::class.java)
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel
@@ -82,73 +83,97 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
         setStrings()
 
 
-
     }
 
     private fun setStrings() {
 //        mDataBinding.root.txtBack.text= LanguageData.getStringValue("BtnTitle_Back")
-        mDataBinding.root.txtHeaderTitle.text= LanguageData.getStringValue("CreateYourAccount")
+        mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("CreateYourAccount")
         mDataBinding.inputLayoutFirstName.hint = LanguageData.getStringValue("EnterFirstName")
         mDataBinding.inputLayoutLastName.hint = LanguageData.getStringValue("EnterLastName")
         mDataBinding.inputLayoutDateOfBirth.hint = LanguageData.getStringValue("EnterDateOfBirth")
-        mDataBinding.inputLayoutNationalID.hint = LanguageData.getStringValue("EnterNationalIdentityNumber")
+        mDataBinding.inputLayoutNationalID.hint =
+            LanguageData.getStringValue("EnterNationalIdentityNumber")
         mDataBinding.inputLayoutGender.hint = LanguageData.getStringValue("SelectGender")
         mDataBinding.inputLayoutEmail.hint = LanguageData.getStringValue("EnterEmail")
         mDataBinding.inputLayoutAddress.hint = LanguageData.getStringValue("EnterAddress")
         mDataBinding.btnNextDetailFragment.text = LanguageData.getStringValue("BtnTitle_Next")
         mDataBinding.lawText.setText(LanguageData.getStringValue("SignUpDescrption"))
-        mDataBinding.inputLayoutCity.hint=(LanguageData.getStringValue("EnterCity"))
-        mDataBinding.levelOneButton.text=LanguageData.getStringValue("LevelOne")
-        mDataBinding.levelTwoButton.text=LanguageData.getStringValue("LevelTwo")
-        mDataBinding.levelTwoLable.hint=LanguageData.getStringValue("UpgradeProfileDescription")
-        mDataBinding.levelLables.hint=("${LanguageData.getStringValue("LevelOneLimit")}\n${LanguageData.getStringValue("LevelTwoLimit")}")
-        if(!mActivityViewModel.selectedFileFrontPath.isNullOrEmpty()&&!mActivityViewModel.selectedFileBackPath.isNullOrEmpty())
-        {
-           mDataBinding.attachFileButton.setBackgroundResource(R.drawable.attachmentnotify)
-        }else{
+        mDataBinding.inputLayoutCity.hint = (LanguageData.getStringValue("EnterCity"))
+        mDataBinding.levelOneButton.text = LanguageData.getStringValue("LevelOne")
+        mDataBinding.levelTwoButton.text = LanguageData.getStringValue("LevelTwo")
+        mDataBinding.levelTwoLable.hint = LanguageData.getStringValue("UpgradeProfileDescription")
+        mDataBinding.levelLables.hint =
+            ("${LanguageData.getStringValue("LevelOneLimit")}\n${LanguageData.getStringValue("LevelTwoLimit")}")
+        if (!mActivityViewModel.selectedFileFrontPath.isNullOrEmpty() && !mActivityViewModel.selectedFileBackPath.isNullOrEmpty()) {
+            mDataBinding.attachFileButton.setBackgroundResource(R.drawable.attachmentnotify)
+        } else {
             mDataBinding.attachFileButton.setBackgroundResource(R.drawable.attachmentplus)
         }
 
-        if(mActivityViewModel.profileSelected.contains("1"))
-        {
+        if (mActivityViewModel.profileSelected.contains("1")) {
             mDataBinding.levelOneButton.setBackgroundResource(R.drawable.level_enabled)
-            mDataBinding.levelOneButton.setTextColor( ContextCompat.getColor(requireActivity(), android.R.color.white))
+            mDataBinding.levelOneButton.setTextColor(
+                ContextCompat.getColor(
+                    requireActivity(),
+                    android.R.color.white
+                )
+            )
             mDataBinding.levelTwoButton.setBackgroundResource(R.drawable.level_disabled)
-            mDataBinding.levelTwoButton.setTextColor( ContextCompat.getColor(requireActivity(), android.R.color.black))
-            mDataBinding.atachFileLayout.visibility=View.GONE
-        }else{
+            mDataBinding.levelTwoButton.setTextColor(
+                ContextCompat.getColor(
+                    requireActivity(),
+                    android.R.color.black
+                )
+            )
+            mDataBinding.atachFileLayout.visibility = View.GONE
+        } else {
             mDataBinding.levelOneButton.setBackgroundResource(R.drawable.level_disabled)
-            mDataBinding.levelOneButton.setTextColor( ContextCompat.getColor(requireActivity(), android.R.color.black))
+            mDataBinding.levelOneButton.setTextColor(
+                ContextCompat.getColor(
+                    requireActivity(),
+                    android.R.color.black
+                )
+            )
             mDataBinding.levelTwoButton.setBackgroundResource(R.drawable.level_enabled)
-            mDataBinding.levelTwoButton.setTextColor( ContextCompat.getColor(requireActivity(), android.R.color.white))
-            mDataBinding.atachFileLayout.visibility=View.VISIBLE
+            mDataBinding.levelTwoButton.setTextColor(
+                ContextCompat.getColor(
+                    requireActivity(),
+                    android.R.color.white
+                )
+            )
+            mDataBinding.atachFileLayout.visibility = View.VISIBLE
         }
-
 
 
     }
 
     private fun subscribeObserver() {
         mActivityViewModel.errorText.observe(this@SignUpDetailFragment, Observer {
-            DialogUtils.showErrorDialoge(activity as LoginActivity,it)
+            DialogUtils.showErrorDialoge(activity as LoginActivity, it)
         })
 
-        mActivityViewModel.getRegisterUserResponseListner.observe(this@SignUpDetailFragment, Observer {
-            if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                   (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_setYourPinFragment)
+        mActivityViewModel.getRegisterUserResponseListner.observe(
+            this@SignUpDetailFragment,
+            Observer {
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    (activity as LoginActivity).navController.navigate(R.id.action_signUpDetailFragment_to_setYourPinFragment)
 
+                } else {
+                    DialogUtils.showErrorDialoge(activity as LoginActivity, it.description)
+                }
+            })
+
+        val mInitialAuthDetailsResonseObserver = Observer<GetInitialAuthDetailsReponse> {
+            if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+
+                mActivityViewModel.requestForGetOTPForRegistrationApi(
+                    activity,
+                    mDataBinding.inputFirstName.text.toString().trim(),
+                    mDataBinding.inputLastName.text.toString().trim(),
+                    mDataBinding.inputNationalID.text.toString().trim()
+                )
             } else {
                 DialogUtils.showErrorDialoge(activity as LoginActivity, it.description)
-            }
-        })
-
-        val mInitialAuthDetailsResonseObserver = Observer<GetInitialAuthDetailsReponse>{
-            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-
-                mActivityViewModel.requestForGetOTPForRegistrationApi(activity,mDataBinding.inputFirstName.text.toString().trim(),mDataBinding.inputLastName.text.toString().trim()
-                    ,mDataBinding.inputNationalID.text.toString().trim())
-            }else{
-                DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)
             }
         }
 
@@ -160,7 +185,10 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
             }
         }*/
 
-        mActivityViewModel.getInitialAuthDetailsResponseListner.observe(this,mInitialAuthDetailsResonseObserver)
+        mActivityViewModel.getInitialAuthDetailsResponseListner.observe(
+            this,
+            mInitialAuthDetailsResonseObserver
+        )
     }
 
     private fun showDatePickerDialog() {
@@ -172,26 +200,26 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
         val datePickerDialog = DatePickerDialog(
             activity as LoginActivity,
             OnDateSetListener { datePicker, year, month, day ->
-                var monthVal = (month+1).toString()
+                var monthVal = (month + 1).toString()
                 var selectedDate = "$year-$monthVal-$day"
                 val c = Calendar.getInstance()
-                c.set(Calendar.YEAR,year)
-                c.set(Calendar.MONTH,month)
-                c.set(Calendar.DAY_OF_MONTH,day)
+                c.set(Calendar.YEAR, year)
+                c.set(Calendar.MONTH, month)
+                c.set(Calendar.DAY_OF_MONTH, day)
 
-                selectedDate= DateFormat.format("yyyy-MM-dd", c.time).toString()
+                selectedDate = DateFormat.format("yyyy-MM-dd", c.time).toString()
                 mDataBinding.inputDateOfBirth.setText(selectedDate)
             }, year, month, dayOfMonth
         )
         datePickerDialog.show()
     }
 
-    private fun showGenderDialog(){
+    private fun showGenderDialog() {
         val singleChoiceItems: ArrayList<String> = arrayListOf()
         singleChoiceItems.apply {
             add(LanguageData.getStringValue("Male").toString())
             add(LanguageData.getStringValue("Female").toString())
-          //  add(LanguageData.getStringValue("Other").toString())
+            //  add(LanguageData.getStringValue("Other").toString())
         }
 
         var list = singleChoiceItems.toTypedArray()
@@ -202,10 +230,10 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
                 list,
                 itemSelected,
                 DialogInterface.OnClickListener { dialogInterface, selectedIndex ->
-                    when(selectedIndex){
-                        0-> mDataBinding.inputGender.setText(LanguageData.getStringValue("Male"))
-                        1-> mDataBinding.inputGender.setText(LanguageData.getStringValue("Female"))
-                        2-> mDataBinding.inputGender.setText(LanguageData.getStringValue("Other"))
+                    when (selectedIndex) {
+                        0 -> mDataBinding.inputGender.setText(LanguageData.getStringValue("Male"))
+                        1 -> mDataBinding.inputGender.setText(LanguageData.getStringValue("Female"))
+                        2 -> mDataBinding.inputGender.setText(LanguageData.getStringValue("Other"))
                     }
                 })
             .setPositiveButton(LanguageData.getStringValue("BtnTitle_OK"), null)
@@ -214,9 +242,10 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
     override fun onNextButtonClick(view: View) {
 
-        if(isValidForAll()){
+        if (isValidForAll()) {
             mActivityViewModel.DOB = mDataBinding.inputDateOfBirth.text.toString().trim()
-            mActivityViewModel.identificationNumber = mDataBinding.inputNationalID.text.toString().trim()
+            mActivityViewModel.identificationNumber =
+                mDataBinding.inputNationalID.text.toString().trim()
             mActivityViewModel.firstName = mDataBinding.inputFirstName.text.toString().trim()
             mActivityViewModel.gender = mDataBinding.inputGender.text.toString().trim()
             mActivityViewModel.postalAddress = mDataBinding.inputAddress.text.toString().trim()
@@ -227,27 +256,26 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 //            mActivityViewModel.requestForeGetInitialAuthDetailsApi(activity)
 
             //if level 1 selected call registration API else if level 2 selected show images picking screen
-            if(mActivityViewModel.profileSelected.contains("1")) {
+            if (mActivityViewModel.profileSelected.contains("1")) {
 
                 mActivityViewModel.requestForRegisterUserApi(
                     activity,
                     Constants.CURRENT_NUMBER_DEVICE_ID
                 )
-            }else if(mActivityViewModel.profileSelected.contains("2")){
-                if(!mActivityViewModel.selectedFileFrontPath.isNullOrEmpty()&&!mActivityViewModel.selectedFileBackPath.isNullOrEmpty())
-                {
-                val frontImageFile = File(mActivityViewModel.selectedFileFrontPath)
-                val frontImageBase64 = Tools.fileToBase64String(frontImageFile)
+            } else if (mActivityViewModel.profileSelected.contains("2")) {
+                if (!mActivityViewModel.selectedFileFrontPath.isNullOrEmpty() && !mActivityViewModel.selectedFileBackPath.isNullOrEmpty()) {
+                    val frontImageFile = File(mActivityViewModel.selectedFileFrontPath)
+                    val frontImageBase64 = Tools.fileToBase64String(frontImageFile)
 
-                val backImageFile = File(mActivityViewModel.selectedFileBackPath)
-                val backImageBase64 = Tools.fileToBase64String(backImageFile)
+                    val backImageFile = File(mActivityViewModel.selectedFileBackPath)
+                    val backImageBase64 = Tools.fileToBase64String(backImageFile)
 
-                mActivityViewModel.requestForLevelTwoProfileRegistration(
-                    requireActivity(),
-                    Constants.CURRENT_NUMBER_DEVICE_ID,
-                    frontImageBase64!!,
-                    backImageBase64!!
-                )
+                    mActivityViewModel.requestForLevelTwoProfileRegistration(
+                        requireActivity(),
+                        Constants.CURRENT_NUMBER_DEVICE_ID,
+                        frontImageBase64!!,
+                        backImageBase64!!
+                    )
                 }
             }
 
@@ -265,22 +293,42 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
     override fun onLevelOneButtonClick(view: View) {
         mDataBinding.levelOneButton.setBackgroundResource(R.drawable.level_enabled)
-        mDataBinding.levelOneButton.setTextColor( ContextCompat.getColor(requireActivity(), android.R.color.white))
+        mDataBinding.levelOneButton.setTextColor(
+            ContextCompat.getColor(
+                requireActivity(),
+                android.R.color.white
+            )
+        )
         mDataBinding.levelTwoButton.setBackgroundResource(R.drawable.level_disabled)
-        mDataBinding.levelTwoButton.setTextColor( ContextCompat.getColor(requireActivity(), android.R.color.black))
-        mActivityViewModel.profileSelected="Level 1"
-        mDataBinding.atachFileLayout.visibility=View.GONE
-        mActivityViewModel.selectedFileFrontPath=""
-        mActivityViewModel.selectedFileBackPath=""
+        mDataBinding.levelTwoButton.setTextColor(
+            ContextCompat.getColor(
+                requireActivity(),
+                android.R.color.black
+            )
+        )
+        mActivityViewModel.profileSelected = "Level 1"
+        mDataBinding.atachFileLayout.visibility = View.GONE
+        mActivityViewModel.selectedFileFrontPath = ""
+        mActivityViewModel.selectedFileBackPath = ""
     }
 
     override fun onLevelTwoButtonClick(view: View) {
         mDataBinding.levelOneButton.setBackgroundResource(R.drawable.level_disabled)
-        mDataBinding.levelOneButton.setTextColor( ContextCompat.getColor(requireActivity(), android.R.color.black))
+        mDataBinding.levelOneButton.setTextColor(
+            ContextCompat.getColor(
+                requireActivity(),
+                android.R.color.black
+            )
+        )
         mDataBinding.levelTwoButton.setBackgroundResource(R.drawable.level_enabled)
-        mDataBinding.levelTwoButton.setTextColor( ContextCompat.getColor(requireActivity(), android.R.color.white))
-        mActivityViewModel.profileSelected="Level 2"
-        mDataBinding.atachFileLayout.visibility=View.VISIBLE
+        mDataBinding.levelTwoButton.setTextColor(
+            ContextCompat.getColor(
+                requireActivity(),
+                android.R.color.white
+            )
+        )
+        mActivityViewModel.profileSelected = "Level 2"
+        mDataBinding.atachFileLayout.visibility = View.VISIBLE
     }
 
     override fun onCalenderCalenderClick(view: View) {
@@ -312,100 +360,106 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
         var isValidForAll = true
 
-        if(mDataBinding.inputFirstName.text.isNullOrEmpty()){
+        if (mDataBinding.inputFirstName.text.isNullOrEmpty()) {
             isValidForAll = false
-            mDataBinding.inputLayoutFirstName.error = LanguageData.getStringValue("PleaseEnterFirstName")
+            mDataBinding.inputLayoutFirstName.error =
+                LanguageData.getStringValue("PleaseEnterFirstName")
             mDataBinding.inputLayoutFirstName.isErrorEnabled = true
-        }else{
+        } else {
             mDataBinding.inputLayoutFirstName.error = ""
             mDataBinding.inputLayoutFirstName.isErrorEnabled = false
         }
 
 
 
-        if(mDataBinding.inputLastName.text.isNullOrEmpty()){
+        if (mDataBinding.inputLastName.text.isNullOrEmpty()) {
             isValidForAll = false
-            mDataBinding.inputLayoutLastName.error = LanguageData.getStringValue("PleaseEnterLastName")
+            mDataBinding.inputLayoutLastName.error =
+                LanguageData.getStringValue("PleaseEnterLastName")
             mDataBinding.inputLayoutLastName.isErrorEnabled = true
-        }else{
+        } else {
             mDataBinding.inputLayoutLastName.error = ""
             mDataBinding.inputLayoutLastName.isErrorEnabled = false
         }
 
-        if(mDataBinding.inputDateOfBirth.text.isNullOrEmpty()){
+        if (mDataBinding.inputDateOfBirth.text.isNullOrEmpty()) {
             isValidForAll = false
-            mDataBinding.inputLayoutDateOfBirth.error = LanguageData.getStringValue("PleaseSelectDate")
+            mDataBinding.inputLayoutDateOfBirth.error =
+                LanguageData.getStringValue("PleaseSelectDate")
             mDataBinding.inputLayoutDateOfBirth.isErrorEnabled = true
-        }else{
+        } else {
             mDataBinding.inputLayoutDateOfBirth.error = ""
             mDataBinding.inputLayoutDateOfBirth.isErrorEnabled = false
         }
 
-        if(mDataBinding.inputNationalID.text.isNullOrEmpty()){
+        if (mDataBinding.inputNationalID.text.isNullOrEmpty()) {
             isValidForAll = false
-            mDataBinding.inputLayoutNationalID.error = LanguageData.getStringValue("PleaseEnterIdentityNumber")
+            mDataBinding.inputLayoutNationalID.error =
+                LanguageData.getStringValue("PleaseEnterIdentityNumber")
             mDataBinding.inputLayoutNationalID.isErrorEnabled = true
-        }else{
+        } else {
             mDataBinding.inputLayoutNationalID.error = ""
             mDataBinding.inputLayoutNationalID.isErrorEnabled = false
 
-            if(isCnicMatches){
+            if (isCnicMatches) {
                 mDataBinding.inputLayoutNationalID.error = ""
                 mDataBinding.inputLayoutNationalID.isErrorEnabled = false
-            }else{
+            } else {
                 isValidForAll = false
-                mDataBinding.inputLayoutNationalID.error = LanguageData.getStringValue("PleaseEnterValidIdentityNumber")
+                mDataBinding.inputLayoutNationalID.error =
+                    LanguageData.getStringValue("PleaseEnterValidIdentityNumber")
                 mDataBinding.inputLayoutNationalID.isErrorEnabled = true
             }
         }
 
-        if(mDataBinding.inputGender.text.isNullOrEmpty()){
+        if (mDataBinding.inputGender.text.isNullOrEmpty()) {
             isValidForAll = false
             mDataBinding.inputLayoutGender.error = LanguageData.getStringValue("PleaseSelectGender")
             mDataBinding.inputLayoutGender.isErrorEnabled = true
-        }else{
+        } else {
             mDataBinding.inputLayoutGender.error = ""
             mDataBinding.inputLayoutGender.isErrorEnabled = false
         }
 
-        if(!mDataBinding.inputEmail.text.isNullOrEmpty()){
-            if(!mDataBinding.inputEmail.text.trim().matches(emailPattern)) {
+        if (!mDataBinding.inputEmail.text.isNullOrEmpty()) {
+            if (!mDataBinding.inputEmail.text.trim().matches(emailPattern)) {
                 isValidForAll = false
                 mDataBinding.inputLayoutEmail.error =
                     LanguageData.getStringValue("PleaseEnterEmailAddress")
 
                 mDataBinding.inputLayoutEmail.isErrorEnabled = true
-            }else{
+            } else {
                 mDataBinding.inputLayoutEmail.error = ""
                 mDataBinding.inputLayoutEmail.isErrorEnabled = false
             }
-        }else{
+        } else {
             mDataBinding.inputLayoutEmail.error = ""
             mDataBinding.inputLayoutEmail.isErrorEnabled = false
         }
 
-        if(mDataBinding.inputAddress.text.isNullOrEmpty()){
+        if (mDataBinding.inputAddress.text.isNullOrEmpty()) {
             isValidForAll = false
-            mDataBinding.inputLayoutAddress.error = LanguageData.getStringValue("PleaseEnterAddress")
+            mDataBinding.inputLayoutAddress.error =
+                LanguageData.getStringValue("PleaseEnterAddress")
             mDataBinding.inputLayoutAddress.isErrorEnabled = true
-        }else{
+        } else {
             mDataBinding.inputLayoutAddress.error = ""
             mDataBinding.inputLayoutAddress.isErrorEnabled = false
         }
 
-        if(mDataBinding.inputCity.text.isNullOrEmpty()){
+        if (mDataBinding.inputCity.text.isNullOrEmpty()) {
             isValidForAll = false
             mDataBinding.inputLayoutCity.error = LanguageData.getStringValue("PleaseEnterCity")
             mDataBinding.inputLayoutCity.isErrorEnabled = true
-            Logger.debugLog("Signup","nullCity")
-        }else{
-            if(!Pattern.matches(Constants.CityNameRegex, mDataBinding.inputCity.text.trim())) {
+            Logger.debugLog("Signup", "nullCity")
+        } else {
+            if (!Pattern.matches(Constants.CityNameRegex, mDataBinding.inputCity.text.trim())) {
                 isValidForAll = false
                 mDataBinding.inputLayoutCity.error =
                     LanguageData.getStringValue("PleaseEnterCity")
-                Logger.debugLog("Signup","regex not matched  ${Constants.CityNameRegex}")
+                Logger.debugLog("Signup", "regex not matched  ${Constants.CityNameRegex}")
                 mDataBinding.inputLayoutCity.isErrorEnabled = true
-            }else{
+            } else {
                 mDataBinding.inputLayoutCity.error = ""
                 mDataBinding.inputLayoutCity.isErrorEnabled = false
             }

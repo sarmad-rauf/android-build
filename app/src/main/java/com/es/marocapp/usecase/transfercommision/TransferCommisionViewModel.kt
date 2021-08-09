@@ -20,9 +20,9 @@ import com.es.marocapp.utils.Tools
 import io.reactivex.disposables.Disposable
 import retrofit2.HttpException
 
-class TransferCommisionViewModel(application:Application):AndroidViewModel(application) {
+class TransferCommisionViewModel(application: Application) : AndroidViewModel(application) {
 
-    var totalTax: Double=0.0
+    var totalTax: Double = 0.0
     lateinit var disposable: Disposable
     var isLoading = ObservableField<Boolean>()
     var errorText = SingleLiveEvent<String>()
@@ -68,7 +68,6 @@ class TransferCommisionViewModel(application:Application):AndroidViewModel(appli
     var tranferAmountToWithAlias = ""
 
 
-
     //Request For Trasnfer
     fun requestForTransferCommisionApi(
         context: Context?,
@@ -78,9 +77,8 @@ class TransferCommisionViewModel(application:Application):AndroidViewModel(appli
             isLoading.set(true)
             tranferAmountToWithAlias = Constants.getNumberMsisdn(transferdAmountTo)
 
-            if(Constants.COMMISIONACCOUNTFRI.isNullOrEmpty())
-            {
-                Constants.COMMISIONACCOUNTFRI=""
+            if (Constants.COMMISIONACCOUNTFRI.isNullOrEmpty()) {
+                Constants.COMMISIONACCOUNTFRI = ""
             }
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getTransferCommisionCall(
                 TransferCommisionRequest(
@@ -141,8 +139,7 @@ class TransferCommisionViewModel(application:Application):AndroidViewModel(appli
 
     }
 
-    fun setHeaderText(title:String)
-    {
+    fun setHeaderText(title: String) {
         headerTitle.postValue(title)
     }
 

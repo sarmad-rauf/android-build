@@ -321,14 +321,12 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
         ) {
             //showing IAM companies
             telecomBillSubMenusData = mTelecomBillSubMenusData
-        }
-        else if(companyType.toLowerCase()
+        } else if (companyType.toLowerCase()
                 .equals(Constants.BILLTYPEINWI.toLowerCase())
-        ){
+        ) {
             //showing INWI companies
             telecomBillSubMenusData = mTelecomBillSubMenusInwiData
-        }
-        else if (mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames) {
+        } else if (mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames) {
             //showing LYDEC company NOM CREANCES
             telecomBillSubMenusData = mActivityViewModel.nomCreancierList
         }
@@ -429,8 +427,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                             )
 
                             startFatouratiFlow()
-                        }
-                        else if (mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames) {
+                        } else if (mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames) {
                             //LYDEC now Creance Selected
                             Logger.debugLog(
                                 "billPayment",
@@ -808,7 +805,8 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                                     Creancier(result[1], result[2], "", companyName, result[3], "")
                                 mActivityViewModel.selectedCodeCreance = result[1]
                                 mActivityViewModel.fatoratiTypeSelected.set(creancier)
-                                mActivityViewModel.selectedCompanyServiceProvider= selectedContact?.billproviderusername ?: "null"
+                                mActivityViewModel.selectedCompanyServiceProvider =
+                                    selectedContact?.billproviderusername ?: "null"
                                 mActivityViewModel.validatedParams.clear()
                                 mActivityViewModel.userSelectedCreancerLogo =
                                     Constants.marocFatouratiLogoPath.trim().plus(result[0].trim())
@@ -980,7 +978,8 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
 
                         if (selectedCreancer?.equals(billCompaniesList[j].nomCreancier)!!) {
                             Logger.debugLog("BillPaymentTesting", "else expand sheet2")
-                            mActivityViewModel.selectedCodeCreance=billCompaniesList[j].codeCreance
+                            mActivityViewModel.selectedCodeCreance =
+                                billCompaniesList[j].codeCreance
                             mActivityViewModel.fatoratiTypeSelected.set(
                                 Creancier(
                                     billCompaniesList[j].codeCreance,

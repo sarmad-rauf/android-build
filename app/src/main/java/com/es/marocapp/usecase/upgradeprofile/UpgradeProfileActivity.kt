@@ -256,6 +256,7 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
         if (requestCode == ATTACH_FILE_REQUEST_CODE) {
             if (data != null) {
                 val uri = data.data as Uri
+                if( Constants.isFileSizeVerified(uri, this,false)){
                 if (isFrontImage) {
                     selectedFileFrontPath = FileUtils.getPath(this, uri)
                     showFrontFile(uri)
@@ -263,16 +264,27 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
                     selectedFileBackPath = FileUtils.getPath(this, uri)
                     showBackFile(uri)
                 }
+                }else{
+                    var description = LanguageData.getStringValue("FileSizeLimitErrorMessage")
+                    description= description?.replace("<file-size>",Constants.maxFileSizeUploadLimitInMBs.toString())
+                    DialogUtils.showErrorDialoge(this,description)
+                }
             }
         } else if (requestCode == CAMERA_IMAGE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 val uri = Uri.fromFile(currentPhotoFile)
+                if( Constants.isFileSizeVerified(uri, this,true)){
                 if (isFrontImage) {
                     selectedFileFrontPath = FileUtils.getPath(this, uri)
                     showFrontFile(uri)
                 } else {
                     selectedFileBackPath = FileUtils.getPath(this, uri)
                     showBackFile(uri)
+                }
+                }else{
+                    var description = LanguageData.getStringValue("FileSizeLimitErrorMessage")
+                    description= description?.replace("<file-size>",Constants.maxFileSizeUploadLimitInMBs.toString())
+                    DialogUtils.showErrorDialoge(this,description)
                 }
             }
         } else {

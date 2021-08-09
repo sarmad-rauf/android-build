@@ -29,7 +29,8 @@ import kotlin.collections.ArrayList
 import kotlin.math.floor
 import kotlin.math.roundToInt
 
-class TransferCommisionAmountFragment : BaseFragment<FragmentCommisionFundsAmountSelectionBinding>(),
+class TransferCommisionAmountFragment :
+    BaseFragment<FragmentCommisionFundsAmountSelectionBinding>(),
     FundsTrasnferClickLisntener, SeekBar.OnSeekBarChangeListener, TextWatcher {
 
     private lateinit var mActivityViewModel: TransferCommisionViewModel
@@ -55,9 +56,8 @@ class TransferCommisionAmountFragment : BaseFragment<FragmentCommisionFundsAmoun
         }
 
 
-        if(Constants.WALLETACCOUNTBALANCE.isNullOrEmpty())
-        {
-            Constants.WALLETACCOUNTBALANCE="0"
+        if (Constants.WALLETACCOUNTBALANCE.isNullOrEmpty()) {
+            Constants.WALLETACCOUNTBALANCE = "0"
         }
         var userBalance =
             Constants.WALLETACCOUNTBALANCE.toFloat()
@@ -104,7 +104,9 @@ class TransferCommisionAmountFragment : BaseFragment<FragmentCommisionFundsAmoun
         }
 
         mQuickAmountAdapter =
-            QuickAmountAdapter(activity as TransferCommisionActivity, userBalanceInt, mQuickAmountList,
+            QuickAmountAdapter(activity as TransferCommisionActivity,
+                userBalanceInt,
+                mQuickAmountList,
                 object : QuickAmountAdapter.QuickAmountAdpterListner {
                     override fun onAmountItemTypeClick(amount: String) {
                         mDataBinding.etAmountEntered.setText(amount)
@@ -158,25 +160,28 @@ class TransferCommisionAmountFragment : BaseFragment<FragmentCommisionFundsAmoun
                     mActivityViewModel.senderBalanceAfter = it.senderBalanceAfter
                     mActivityViewModel.transactionID = it.financialTransactionId
                     // (activity as TransferCommisionActivity).navController.navigate(R.id.action_fundTransferConfirmationFragment_to_fundsTrasnferSuccessFragment)
-                    DialogUtils.successFailureDialogue(activity as TransferCommisionActivity,it.description,0,object :DialogUtils.OnYesClickListner{
-                        override fun onDialogYesClickListner() {
-                            mActivityViewModel.isUserRegistered.set(false)
-                            mActivityViewModel.isFundTransferUseCase.set(false)
-                            mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set(false)
-                            Constants.HEADERS_FOR_PAYEMNTS = false
-                            (activity as TransferCommisionActivity).startNewActivityAndClear(activity as TransferCommisionActivity,
-                                MainActivity::class.java)
-                        }
-                    })
-                }else if (it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
-                    DialogUtils.showErrorDialoge(activity,it.description)
+                    DialogUtils.successFailureDialogue(
+                        activity as TransferCommisionActivity,
+                        it.description,
+                        0,
+                        object : DialogUtils.OnYesClickListner {
+                            override fun onDialogYesClickListner() {
+                                mActivityViewModel.isUserRegistered.set(false)
+                                mActivityViewModel.isFundTransferUseCase.set(false)
+                                mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set(false)
+                                Constants.HEADERS_FOR_PAYEMNTS = false
+                                (activity as TransferCommisionActivity).startNewActivityAndClear(
+                                    activity as TransferCommisionActivity,
+                                    MainActivity::class.java
+                                )
+                            }
+                        })
+                } else if (it.responseCode.equals(ApiConstant.API_WRONG_PASSWORD)) {
+                    DialogUtils.showErrorDialoge(activity, it.description)
                 } else {
-                    DialogUtils.showErrorDialoge(activity,it.description)
+                    DialogUtils.showErrorDialoge(activity, it.description)
                 }
             })
-
-
-
 
 
     }
@@ -204,9 +209,10 @@ class TransferCommisionAmountFragment : BaseFragment<FragmentCommisionFundsAmoun
                     override fun onDialogYesClickListner(password: String) {
                         Constants.HEADERS_FOR_PAYEMNTS = true
                         Constants.CURRENT_USER_CREDENTIAL = password
-                mActivityViewModel.requestForTransferCommisionApi(activity, sAmount)
-                    }})
-          //  mActivityViewModel.requestForTransferCommisionApi(activity, sAmount)
+                        mActivityViewModel.requestForTransferCommisionApi(activity, sAmount)
+                    }
+                })
+            //  mActivityViewModel.requestForTransferCommisionApi(activity, sAmount)
         }
 
     }

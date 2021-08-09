@@ -17,11 +17,11 @@ import com.es.marocapp.utils.DialogUtils
 
 class FragmentPostPaidServiceProvider : BaseFragment<FragmentBillPaymentTypeBinding>() {
 
-    private lateinit var mActivityViewModel : BillPaymentViewModel
+    private lateinit var mActivityViewModel: BillPaymentViewModel
 
     private lateinit var mBillPaymentItemTypeAdapter: PaymentItemsAdapter
     private var mBillPaymentTypes: ArrayList<String> = ArrayList()
-    private var mBillPaymentTypesIcon: ArrayList<Int>  = ArrayList()
+    private var mBillPaymentTypesIcon: ArrayList<Int> = ArrayList()
 
     override fun setLayout(): Int {
         return R.layout.fragment_bill_payment_type
@@ -46,41 +46,48 @@ class FragmentPostPaidServiceProvider : BaseFragment<FragmentBillPaymentTypeBind
 
         mBillPaymentTypes.clear()
         mBillPaymentTypes.apply {
-            if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+            if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
                 add(LanguageData.getStringValue("IAM").toString())
             }
-            if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+            if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
                 add(LanguageData.getStringValue("Fatourati").toString())
             }
         }
 
         mBillPaymentTypesIcon.clear()
         mBillPaymentTypesIcon.apply {
-            if(mActivityViewModel.isBillUseCaseSelected.get()!!){
+            if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
                 add(R.drawable.iam)
             }
-            if(mActivityViewModel.isFatoratiUseCaseSelected.get()!!){
+            if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
                 add(R.drawable.fatourati)
             }
         }
 
-        mBillPaymentItemTypeAdapter = PaymentItemsAdapter(mBillPaymentTypes, mBillPaymentTypesIcon,object : PaymentItemsAdapter.PaymentItemTypeClickListner{
-            override fun onPaymentItemTypeClick(paymentItems: String) {
-                when(paymentItems){
-                    LanguageData.getStringValue("IAM") -> {
-                        (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidServiceProvider_to_fragmentPostPaidBillType)
+        mBillPaymentItemTypeAdapter = PaymentItemsAdapter(
+            mBillPaymentTypes,
+            mBillPaymentTypesIcon,
+            object : PaymentItemsAdapter.PaymentItemTypeClickListner {
+                override fun onPaymentItemTypeClick(paymentItems: String) {
+                    when (paymentItems) {
+                        LanguageData.getStringValue("IAM") -> {
+                            (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidServiceProvider_to_fragmentPostPaidBillType)
+                        }
+
+                        LanguageData.getStringValue("Fatourati") -> {
+                            mActivityViewModel.requestForFatoratiStepOneApi(activity)
+                        }
+
+                        else -> Toast.makeText(
+                            activity,
+                            "Nothing Clicked Clicked",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
                     }
-
-                    LanguageData.getStringValue("Fatourati") -> {
-                        mActivityViewModel.requestForFatoratiStepOneApi(activity)
-                    }
-
-                    else -> Toast.makeText(activity,"Nothing Clicked Clicked", Toast.LENGTH_SHORT).show()
-
                 }
-            }
 
-        })
+            })
         mDataBinding.paymentTypeRecycler.apply {
             adapter = mBillPaymentItemTypeAdapter
             layoutManager = LinearLayoutManager(activity as BillPaymentActivity)
@@ -92,15 +99,15 @@ class FragmentPostPaidServiceProvider : BaseFragment<FragmentBillPaymentTypeBind
 
     private fun subscribeObserver() {
         mActivityViewModel.errorText.observe(this@FragmentPostPaidServiceProvider, Observer {
-            DialogUtils.showErrorDialoge(activity,it)
+            DialogUtils.showErrorDialoge(activity, it)
         })
 
         mActivityViewModel.getFatoratiStepOneResponseListner.observe(this@FragmentPostPaidServiceProvider,
             Observer {
-                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     (activity as BillPaymentActivity).navController.navigate(R.id.action_fragmentPostPaidServiceProvider_to_fragmentPostPaidBillType)
-                }else{
-                    DialogUtils.showErrorDialoge(activity,it.description)
+                } else {
+                    DialogUtils.showErrorDialoge(activity, it.description)
                 }
             })
     }

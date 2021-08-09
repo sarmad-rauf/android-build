@@ -84,12 +84,12 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
             mDataBinding.inputPhoneNumber.setInputType(InputType.TYPE_CLASS_NUMBER)
             var selectedBillType = ""
-            if(mActivityViewModel.isInternetSelected.get()!!){
+            if (mActivityViewModel.isInternetSelected.get()!!) {
                 selectedBillType = "Telec_Internet@"
 
-            }else if(mActivityViewModel.isPostPaidMobileSelected.get()!!){
+            } else if (mActivityViewModel.isPostPaidMobileSelected.get()!!) {
                 selectedBillType = "Telec_PostpaidMobile@"
-            }else if(mActivityViewModel.isPostPaidFixSelected.get()!!){
+            } else if (mActivityViewModel.isPostPaidFixSelected.get()!!) {
                 selectedBillType = "Telec_PostpaidFix@"
             }
             for (contacts in Constants.mContactListArray) {
@@ -101,19 +101,19 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                 if (contactName.contains(selectedBillType)) {
                     contactNumber = contactNumber.substringBefore("@")
                     contactNumber = contactNumber.substringBefore("/")
-                    if(contactName.contains(Constants.APP_MSISDN_PREFIX)){
+                    if (contactName.contains(Constants.APP_MSISDN_PREFIX)) {
                         contactNumber = contactNumber.removePrefix(Constants.APP_MSISDN_PREFIX)
                         contactNumber = "0$contactNumber"
                     }
                     //todo also here remove lenght-2 check in max line
 //                    if (contactNumber.length.equals(Constants.APP_MSISDN_LENGTH.toInt() - 2)) {
-                        val name_number_favorite = "$contactNameWithoutPostfix-$contactNumber"
-                        list_of_favorites.add(name_number_favorite)
+                    val name_number_favorite = "$contactNameWithoutPostfix-$contactNumber"
+                    list_of_favorites.add(name_number_favorite)
 //                    }
-                }else{
+                } else {
                     contactNumber = contactNumber.substringBefore("@")
                     contactNumber = contactNumber.substringBefore("/")
-                    if(contactNumber.length.equals(Constants.APP_MSISDN_LENGTH.toInt() - 2)){
+                    if (contactNumber.length.equals(Constants.APP_MSISDN_LENGTH.toInt() - 2)) {
                         val name_number_favorite = "$contactNameWithoutPostfix-$contactNumber"
                         list_of_favorites.add(name_number_favorite)
                     }
@@ -143,10 +143,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
             if (mActivityViewModel.isInternetSelected.get()!!) {
                 mDataBinding.inputLayoutCode.visibility = View.GONE
-            } else if(Constants.IS_AGENT_USER){
+            } else if (Constants.IS_AGENT_USER) {
                 mDataBinding.inputLayoutCode.visibility = View.GONE
-            }
-            else {
+            } else {
                 mDataBinding.inputLayoutCode.visibility = View.VISIBLE
             }
 
@@ -182,9 +181,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
         mActivityViewModel.popBackStackTo = R.id.fragmentBillPaymentMain
         mDataBinding.inputPhoneNumber.addTextChangedListener(this)
-      //  mDataBinding.inputCode.setText("")
-     // mDataBinding.inputCode.visibility=View.GONE
-          mDataBinding.inputCode.addTextChangedListener(this)
+        //  mDataBinding.inputCode.setText("")
+        // mDataBinding.inputCode.visibility=View.GONE
+        mDataBinding.inputCode.addTextChangedListener(this)
 
         mDataBinding.inputPhoneNumber.setOnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
@@ -234,16 +233,15 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 //            }
 //
             //fatouratiSeperateMenuBillNames
-            if(mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames)
-            {
-                mActivityViewModel.stepFourLydecSelected=true
-                mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames=false
-                mActivityViewModel.requestForFatoratiStepThreeApi(   activity,
-                    Constants.CURRENT_USER_MSISDN,mActivityViewModel.selectedCodeCreance
+            if (mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames) {
+                mActivityViewModel.stepFourLydecSelected = true
+                mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames = false
+                mActivityViewModel.requestForFatoratiStepThreeApi(
+                    activity,
+                    Constants.CURRENT_USER_MSISDN, mActivityViewModel.selectedCodeCreance
                 )
-            }
-            else{
-                mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames=false
+            } else {
+                mActivityViewModel.isSelectedBillMatchedwithfatouratiSeperateMenuBillNames = false
                 mActivityViewModel.requestForFatoratiStepTwoThreeApi(
                     activity,
                     Constants.CURRENT_USER_MSISDN
@@ -327,11 +325,10 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-                       mDataBinding.acountTypeSpinner.visibility=View.VISIBLE
+                        mDataBinding.acountTypeSpinner.visibility = View.VISIBLE
                         mActivityViewModel.setCreancesList(it.creances as ArrayList<creances>)
-                        val nomCreancierList:ArrayList<String> = ArrayList()
-                        for (i in it.creances .indices)
-                        {
+                        val nomCreancierList: ArrayList<String> = ArrayList()
+                        for (i in it.creances.indices) {
                             nomCreancierList.add(it.creances.get(i).nomCreance)
                         }
                         val acountTypeArray: Array<String> =
@@ -340,25 +337,33 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                             LanguageCustomSpinnerAdapter(
                                 activity as BillPaymentActivity,
                                 acountTypeArray,
-                                (activity as BillPaymentActivity).resources.getColor(R.color.colorBlack),true
+                                (activity as BillPaymentActivity).resources.getColor(R.color.colorBlack),
+                                true
                             )
                         //  mDataBinding.acountTypeSpinner
                         mDataBinding.acountTypeSpinner.apply {
                             adapter = acountTypeSpinnerAdapter
                         }
 
-                        Log.d("paiment" ,"${mActivityViewModel.creancesList.get()
-                            ?.get(0)?.nomCreance}")
-                        var hintLable= mActivityViewModel.creancesList.get()
-                            ?.get(0)?.nomCreance?.toLowerCase()?.trim()?.replace("paiement par","")?.trim()
-                        hintLable=hintLable?.replace("de","")
-                        mDataBinding.billTypeInputLayout.visibility=View.VISIBLE
-                        mDataBinding.billTypeInput.isEnabled=false
+                        Log.d(
+                            "paiment", "${
+                                mActivityViewModel.creancesList.get()
+                                    ?.get(0)?.nomCreance
+                            }"
+                        )
+                        var hintLable = mActivityViewModel.creancesList.get()
+                            ?.get(0)?.nomCreance?.toLowerCase()?.trim()?.replace("paiement par", "")
+                            ?.trim()
+                        hintLable = hintLable?.replace("de", "")
+                        mDataBinding.billTypeInputLayout.visibility = View.VISIBLE
+                        mDataBinding.billTypeInput.isEnabled = false
                         mDataBinding.billTypeInputLayout.hint = hintLable
-                        mDataBinding.billTypeInput.setText( mActivityViewModel.creancesList.get()
-                            ?.get(0)?.codeCreance.toString())
+                        mDataBinding.billTypeInput.setText(
+                            mActivityViewModel.creancesList.get()
+                                ?.get(0)?.codeCreance.toString()
+                        )
                         mDataBinding.selectAcountTitile.setText(LanguageData.getStringValue("BillType"))
-                        mDataBinding.selectAcountTitile.visibility=View.VISIBLE
+                        mDataBinding.selectAcountTitile.visibility = View.VISIBLE
                     }
 
                 } else {
@@ -370,276 +375,63 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         mActivityViewModel.getFatoratiStepThreeResponseListner.observe(this@FragmentBillPaymentMsisdn,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                    Constants.STEP2_3RESPONSE=it
-                    mActivityViewModel.specialMenuBillSelected=false
-               //   mDataBinding.acountTypeSpinner.visibility=View.GONE
-               //     mDataBinding.selectAcountTitile.visibility=View.GONE
-                  //  cilLabel = it.param.libelle
+                    Constants.STEP2_3RESPONSE = it
+                    mActivityViewModel.specialMenuBillSelected = false
+                    //   mDataBinding.acountTypeSpinner.visibility=View.GONE
+                    //     mDataBinding.selectAcountTitile.visibility=View.GONE
+                    //  cilLabel = it.param.libelle
                     if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
                         mActivityViewModel.validatedParams.clear()
                         mActivityViewModel.recievedParams.clear()
                         mActivityViewModel.demoParams.clear()
-                        mDataBinding.inputLayoutPhoneNumber.visibility=View.GONE
-                        mDataBinding.inputPhoneNumberHint.visibility=View.GONE
-                        mDataBinding.mFieldsRecycler.visibility=View.VISIBLE
-                        for(i in it.params.indices){
-                             val validatedParams = ValidatedParam("",it.params[i].nomChamp)
+                        mDataBinding.inputLayoutPhoneNumber.visibility = View.GONE
+                        mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+                        mDataBinding.mFieldsRecycler.visibility = View.VISIBLE
+                        for (i in it.params.indices) {
+                            val validatedParams = ValidatedParam("", it.params[i].nomChamp)
                             mActivityViewModel.validatedParams.add(validatedParams)
-                            mActivityViewModel.recievedParams.add(RecievededParam(it.params[i].libelle,it.params[i].nomChamp,it.params[i].typeChamp,"",
-                                false,View.VISIBLE,"",it.params[i].listVals,"",""))
-                            //using for lable value restoring after error of invalid input
-                            mActivityViewModel.demoParams.add(RecievededParam(it.params[i].libelle,it.params[i].nomChamp,it.params[i].typeChamp,"",
-                                false,View.VISIBLE,"",it.params[i].listVals,"",""))
-                        }
-                        mFatoratiParamsItemAdapter = FatoratiParamsItemAdapter(activity ,mActivityViewModel.recievedParams,object :FatoratiParamsItemAdapter.ParamTextChangedListner{
-                            override fun onParamTextChangedClick(valChamp: String, position: Int) {
-                                Logger.debugLog("textChengeLListner","Value = ${valChamp}  == position = ${position}")
-                                if (position <= it.params.size - 1) {
-                                    if (it.params[position].libelle.equals("CIL", false)) {
-                                        applyValidation = true
-                                    } else {
-                                        applyValidation = false
-                                    }
-
-
-//                                val editedText = valChamp
-//                                val oldText = mActivityViewModel.validatedParams[position].valChamp
-//                                if (editedText.contains(oldText)) {
-                                    val typeChamp =
-                                        mActivityViewModel.recievedParams[position].typeChamp
-                                    val nomChamp =
-                                        mActivityViewModel.recievedParams[position].nomChamp
-                                    val listVals =
-                                        mActivityViewModel.recievedParams[position].listVals
-
-                                    //using different list value to restore correct value after invalid input error
-                                    val lablei = mActivityViewModel.demoParams[position].libelle
-
-                                    mActivityViewModel.recievedParams.set(
-                                        position,
-                                        RecievededParam(
-                                            lablei, nomChamp, typeChamp, "",
-                                            false, View.VISIBLE, valChamp, listVals,"",""
-                                        )
-                                    )
-
-
-                                    mActivityViewModel.validatedParams.set(
-                                        position,
-                                        ValidatedParam(
-                                            valChamp,
-                                            mActivityViewModel.recievedParams[position].nomChamp
-                                        )
-                                    )
-                            //    }
-                            }
-                            }
-
-                            override fun onTsavTextChangedClick(
-                                firstVal: String,
-                                secondVal: String,
-                                spinnerVal: String,
-                                position: Int
-                            ) {
-                                Logger.debugLog("textChengeLListner","Value = ${firstVal+secondVal}  == position = ${position}")
-                                val typeChamp=mActivityViewModel.recievedParams[position].typeChamp
-                                val nomChamp=mActivityViewModel.recievedParams[position].nomChamp
-                                val listVals=mActivityViewModel.recievedParams[position].listVals
-                                var convertesSpinnerValue= Constants.convertSpinnerArabicValue(spinnerVal)
-                                val valChamp=firstVal.plus(convertesSpinnerValue.plus(secondVal))
-
-                                //using different list value to restore correct value after invalid input error
-                                val lablei=mActivityViewModel.demoParams[position].libelle
-
-                                mActivityViewModel.recievedParams.set(position,RecievededParam(lablei,nomChamp,typeChamp,"",
-                                    false,View.VISIBLE,"",listVals,firstVal,secondVal))
-
-                                mActivityViewModel.validatedParams.set(
-                                    position,
-                                    ValidatedParam(
-                                        valChamp,
-                                        mActivityViewModel.recievedParams[position].nomChamp
-                                    )
+                            mActivityViewModel.recievedParams.add(
+                                RecievededParam(
+                                    it.params[i].libelle,
+                                    it.params[i].nomChamp,
+                                    it.params[i].typeChamp,
+                                    "",
+                                    false,
+                                    View.VISIBLE,
+                                    "",
+                                    it.params[i].listVals,
+                                    "",
+                                    ""
                                 )
-                            }
-
-                            override fun onSpinnerTextChangedClick(valChamp: String, position: Int) {
-                             if(position<=it.params.size-1){
-                                    if(it.params[position].libelle.equals("CIL",false)){
-                                        applyValidation = true
-                                    } else {
-                                        applyValidation = false
-                                    }
-
-                                 Logger.debugLog("lydec","position  ${position} == ${mActivityViewModel.validatedParams.toString()}==${valChamp}")
-
-                                    val typeChamp=mActivityViewModel.recievedParams[position].typeChamp
-                                    val nomChamp=mActivityViewModel.recievedParams[position].nomChamp
-                                    val listVals=mActivityViewModel.recievedParams[position].listVals
-
-                                    //using different list value to restore correct value after invalid input error
-                                    val lablei=mActivityViewModel.demoParams[position].libelle
-
-                                    mActivityViewModel.recievedParams.set(
-                                        position,RecievededParam(lablei,nomChamp,typeChamp,"",
-                                        false,View.VISIBLE,valChamp,listVals,"",""))
-
-
-                                    mActivityViewModel.validatedParams.set(
-                                        position,
-                                        ValidatedParam(
-                                            valChamp,
-                                            mActivityViewModel.recievedParams[position].nomChamp
-                                        )
-                                    )
-                             }
-                            }
-
-                            override fun onTsavSpinnerTextChangedClick(
-                                firstVal: String,
-                                secondVal: String,
-                                spinnerVal: String,
-                                position: Int
-                            ) {
-                                Logger.debugLog("textChengeLListner","Value = ${firstVal+spinnerVal+secondVal}  == position = ${position}")
-
-                                val typeChamp=mActivityViewModel.recievedParams[position].typeChamp
-                                val nomChamp=mActivityViewModel.recievedParams[position].nomChamp
-                                val listVals=mActivityViewModel.recievedParams[position].listVals
-                                var convertedSpinnerValue= Constants.convertSpinnerArabicValue(spinnerVal)
-                                val valChamp=firstVal.plus(convertedSpinnerValue.plus(secondVal))
-                                //  Constants.selectedTSAVSpinnerPosition=position
-                                //using different list value to restore correct value after invalid input error
-                                val lablei=mActivityViewModel.demoParams[position].libelle
-
-                                mActivityViewModel.recievedParams.set(position,RecievededParam(lablei,nomChamp,typeChamp,"",
-                                    false,View.VISIBLE,"",listVals,firstVal,secondVal))
-
-                                mActivityViewModel.validatedParams.set(
-                                    position,
-                                    ValidatedParam(
-                                        valChamp,
-                                        mActivityViewModel.recievedParams[position].nomChamp
-                                    )
-                                )
-                            }
-                        })
-                        mDataBinding.mFieldsRecycler.apply {
-                                adapter = mFatoratiParamsItemAdapter
-                            layoutManager = LinearLayoutManager(activity)
-                        }
-                    }
-
-                } else {
-                    DialogUtils.showErrorDialoge(activity, it.description)
-                }
-            }
-        )
-
-        mActivityViewModel.getFatoratiStepTwothreeResponseListner.observe(this@FragmentBillPaymentMsisdn,
-            Observer {
-                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                    mActivityViewModel.specialMenuBillSelected=false
-                    mDataBinding.inputPhoneNumber.isEnabled=true
-                 //   mDataBinding.acountTypeSpinner.visibility=View.GONE
-                 //   mDataBinding.selectAcountTitile.visibility=View.GONE
-                 //   cilLabel = it.param.libelle
-                    if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-                        if(it.params!=null)
-                        {
-                        mActivityViewModel.validatedParams.clear()
-                        mActivityViewModel.recievedParams.clear()
-                        mActivityViewModel.demoParams.clear()
-                        mDataBinding.inputLayoutPhoneNumber.visibility=View.GONE
-                        mDataBinding.inputPhoneNumberHint.visibility=View.GONE
-                        mDataBinding.mFieldsRecycler.visibility=View.VISIBLE
-
-                        for(i in it.params.indices){
-                            var listVals:List<String> = ArrayList()
-                            if(!it.params[i].listVals.isNullOrEmpty())
-                            {
-                                listVals=it.params[i].listVals
-                            }
-                            Constants.STEP2_3RESPONSE=it
-                            val validatedParams = ValidatedParam("",it.params[i].nomChamp)
-                            mActivityViewModel.validatedParams.add(validatedParams)
-                            mActivityViewModel.recievedParams.add(RecievededParam(it.params[i].libelle,it.params[i].nomChamp,it.params[i].typeChamp,"",
-                            false,View.VISIBLE,"",listVals,"",""))
-
+                            )
                             //using for lable value restoring after error of invalid input
-                            mActivityViewModel.demoParams.add(RecievededParam(it.params[i].libelle,it.params[i].nomChamp,it.params[i].typeChamp,"",
-                                false,View.VISIBLE,"",listVals,"",""))
+                            mActivityViewModel.demoParams.add(
+                                RecievededParam(
+                                    it.params[i].libelle,
+                                    it.params[i].nomChamp,
+                                    it.params[i].typeChamp,
+                                    "",
+                                    false,
+                                    View.VISIBLE,
+                                    "",
+                                    it.params[i].listVals,
+                                    "",
+                                    ""
+                                )
+                            )
                         }
-
                         mFatoratiParamsItemAdapter = FatoratiParamsItemAdapter(
                             activity,
                             mActivityViewModel.recievedParams,
-                            object :FatoratiParamsItemAdapter.ParamTextChangedListner{
-                                override fun onParamTextChangedClick(valChamp: String, position: Int) {
-                                   Logger.debugLog("textChengeLListner","Value = ${valChamp}  == position = ${position}")
-                                    if(position<=it.params.size-1){
-                                        if(it.params[position].libelle.equals("CIL",false)){
-                                            applyValidation = true
-                                        } else {
-                                            applyValidation = false
-                                        }
-
-
-
-//                                    val editedText=valChamp
-//                                    val oldText= mActivityViewModel.validatedParams[position].valChamp
-//                                    if(editedText.contains(oldText)) {
-                                        val typeChamp=mActivityViewModel.recievedParams[position].typeChamp
-                                        val nomChamp=mActivityViewModel.recievedParams[position].nomChamp
-                                        val listVals=mActivityViewModel.recievedParams[position].listVals
-
-                                        //using different list value to restore correct value after invalid input error
-                                        val lablei=mActivityViewModel.demoParams[position].libelle
-
-                                        mActivityViewModel.recievedParams.set(position,RecievededParam(lablei,nomChamp,typeChamp,"",
-                                            false,View.VISIBLE,valChamp,listVals,"",""))
-
-                                        mActivityViewModel.validatedParams.set(
-                                            position,
-                                            ValidatedParam(
-                                                valChamp,
-                                                mActivityViewModel.recievedParams[position].nomChamp
-                                            )
-                                        )
-
-                                //    }
-                                    }
-                                }
-
-                                override fun onTsavTextChangedClick(
-                                    firstVal: String,
-                                    secondVal: String,
-                                    spinnerVal: String,
+                            object : FatoratiParamsItemAdapter.ParamTextChangedListner {
+                                override fun onParamTextChangedClick(
+                                    valChamp: String,
                                     position: Int
                                 ) {
-                                    Logger.debugLog("textChengeLListner","Value = ${firstVal+secondVal}  == position = ${position}")
-                                    val typeChamp=mActivityViewModel.recievedParams[position].typeChamp
-                                    val nomChamp=mActivityViewModel.recievedParams[position].nomChamp
-                                    val listVals=mActivityViewModel.recievedParams[position].listVals
-                                    var convertesSpinnerValue= Constants.convertSpinnerArabicValue(spinnerVal)
-                                    val valChamp=firstVal.plus(convertesSpinnerValue.plus(secondVal))
-
-                                    //using different list value to restore correct value after invalid input error
-                                    val lablei=mActivityViewModel.demoParams[position].libelle
-
-                                    mActivityViewModel.recievedParams.set(position,RecievededParam(lablei,nomChamp,typeChamp,"",
-                                        false,View.VISIBLE,"",listVals,firstVal,secondVal))
-
-                                    mActivityViewModel.validatedParams.set(
-                                        position,
-                                        ValidatedParam(
-                                            valChamp,
-                                            mActivityViewModel.recievedParams[position].nomChamp
-                                        )
+                                    Logger.debugLog(
+                                        "textChengeLListner",
+                                        "Value = ${valChamp}  == position = ${position}"
                                     )
-                                }
-
-                                override fun onSpinnerTextChangedClick(valChamp: String, position: Int) {
                                     if (position <= it.params.size - 1) {
                                         if (it.params[position].libelle.equals("CIL", false)) {
                                             applyValidation = true
@@ -647,6 +439,10 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                                             applyValidation = false
                                         }
 
+
+//                                val editedText = valChamp
+//                                val oldText = mActivityViewModel.validatedParams[position].valChamp
+//                                if (editedText.contains(oldText)) {
                                         val typeChamp =
                                             mActivityViewModel.recievedParams[position].typeChamp
                                         val nomChamp =
@@ -661,7 +457,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                                             position,
                                             RecievededParam(
                                                 lablei, nomChamp, typeChamp, "",
-                                                false, View.VISIBLE, valChamp, listVals,"",""
+                                                false, View.VISIBLE, valChamp, listVals, "", ""
                                             )
                                         )
 
@@ -673,28 +469,40 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                                                 mActivityViewModel.recievedParams[position].nomChamp
                                             )
                                         )
-                                }
+                                        //    }
+                                    }
                                 }
 
-                                override fun onTsavSpinnerTextChangedClick(
+                                override fun onTsavTextChangedClick(
                                     firstVal: String,
                                     secondVal: String,
                                     spinnerVal: String,
                                     position: Int
                                 ) {
-                                    Logger.debugLog("textChengeLListner","Value = ${firstVal+spinnerVal+secondVal}  == position = ${position}")
+                                    Logger.debugLog(
+                                        "textChengeLListner",
+                                        "Value = ${firstVal + secondVal}  == position = ${position}"
+                                    )
+                                    val typeChamp =
+                                        mActivityViewModel.recievedParams[position].typeChamp
+                                    val nomChamp =
+                                        mActivityViewModel.recievedParams[position].nomChamp
+                                    val listVals =
+                                        mActivityViewModel.recievedParams[position].listVals
+                                    var convertesSpinnerValue =
+                                        Constants.convertSpinnerArabicValue(spinnerVal)
+                                    val valChamp =
+                                        firstVal.plus(convertesSpinnerValue.plus(secondVal))
 
-                                    val typeChamp=mActivityViewModel.recievedParams[position].typeChamp
-                                    val nomChamp=mActivityViewModel.recievedParams[position].nomChamp
-                                    val listVals=mActivityViewModel.recievedParams[position].listVals
-                                    var convertedSpinnerValue= Constants.convertSpinnerArabicValue(spinnerVal)
-                                    val valChamp=firstVal.plus(convertedSpinnerValue.plus(secondVal))
-                                  //  Constants.selectedTSAVSpinnerPosition=position
                                     //using different list value to restore correct value after invalid input error
-                                    val lablei=mActivityViewModel.demoParams[position].libelle
+                                    val lablei = mActivityViewModel.demoParams[position].libelle
 
-                                    mActivityViewModel.recievedParams.set(position,RecievededParam(lablei,nomChamp,typeChamp,"",
-                                        false,View.VISIBLE,"",listVals,firstVal,secondVal))
+                                    mActivityViewModel.recievedParams.set(
+                                        position, RecievededParam(
+                                            lablei, nomChamp, typeChamp, "",
+                                            false, View.VISIBLE, "", listVals, firstVal, secondVal
+                                        )
+                                    )
 
                                     mActivityViewModel.validatedParams.set(
                                         position,
@@ -704,13 +512,358 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                                         )
                                     )
                                 }
-                            }
-                        )
+
+                                override fun onSpinnerTextChangedClick(
+                                    valChamp: String,
+                                    position: Int
+                                ) {
+                                    if (position <= it.params.size - 1) {
+                                        if (it.params[position].libelle.equals("CIL", false)) {
+                                            applyValidation = true
+                                        } else {
+                                            applyValidation = false
+                                        }
+
+                                        Logger.debugLog(
+                                            "lydec",
+                                            "position  ${position} == ${mActivityViewModel.validatedParams.toString()}==${valChamp}"
+                                        )
+
+                                        val typeChamp =
+                                            mActivityViewModel.recievedParams[position].typeChamp
+                                        val nomChamp =
+                                            mActivityViewModel.recievedParams[position].nomChamp
+                                        val listVals =
+                                            mActivityViewModel.recievedParams[position].listVals
+
+                                        //using different list value to restore correct value after invalid input error
+                                        val lablei = mActivityViewModel.demoParams[position].libelle
+
+                                        mActivityViewModel.recievedParams.set(
+                                            position, RecievededParam(
+                                                lablei, nomChamp, typeChamp, "",
+                                                false, View.VISIBLE, valChamp, listVals, "", ""
+                                            )
+                                        )
+
+
+                                        mActivityViewModel.validatedParams.set(
+                                            position,
+                                            ValidatedParam(
+                                                valChamp,
+                                                mActivityViewModel.recievedParams[position].nomChamp
+                                            )
+                                        )
+                                    }
+                                }
+
+                                override fun onTsavSpinnerTextChangedClick(
+                                    firstVal: String,
+                                    secondVal: String,
+                                    spinnerVal: String,
+                                    position: Int
+                                ) {
+                                    Logger.debugLog(
+                                        "textChengeLListner",
+                                        "Value = ${firstVal + spinnerVal + secondVal}  == position = ${position}"
+                                    )
+
+                                    val typeChamp =
+                                        mActivityViewModel.recievedParams[position].typeChamp
+                                    val nomChamp =
+                                        mActivityViewModel.recievedParams[position].nomChamp
+                                    val listVals =
+                                        mActivityViewModel.recievedParams[position].listVals
+                                    var convertedSpinnerValue =
+                                        Constants.convertSpinnerArabicValue(spinnerVal)
+                                    val valChamp =
+                                        firstVal.plus(convertedSpinnerValue.plus(secondVal))
+                                    //  Constants.selectedTSAVSpinnerPosition=position
+                                    //using different list value to restore correct value after invalid input error
+                                    val lablei = mActivityViewModel.demoParams[position].libelle
+
+                                    mActivityViewModel.recievedParams.set(
+                                        position, RecievededParam(
+                                            lablei, nomChamp, typeChamp, "",
+                                            false, View.VISIBLE, "", listVals, firstVal, secondVal
+                                        )
+                                    )
+
+                                    mActivityViewModel.validatedParams.set(
+                                        position,
+                                        ValidatedParam(
+                                            valChamp,
+                                            mActivityViewModel.recievedParams[position].nomChamp
+                                        )
+                                    )
+                                }
+                            })
                         mDataBinding.mFieldsRecycler.apply {
                             adapter = mFatoratiParamsItemAdapter
                             layoutManager = LinearLayoutManager(activity)
                         }
-                      }
+                    }
+
+                } else {
+                    DialogUtils.showErrorDialoge(activity, it.description)
+                }
+            }
+        )
+
+        mActivityViewModel.getFatoratiStepTwothreeResponseListner.observe(this@FragmentBillPaymentMsisdn,
+            Observer {
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    mActivityViewModel.specialMenuBillSelected = false
+                    mDataBinding.inputPhoneNumber.isEnabled = true
+                    //   mDataBinding.acountTypeSpinner.visibility=View.GONE
+                    //   mDataBinding.selectAcountTitile.visibility=View.GONE
+                    //   cilLabel = it.param.libelle
+                    if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
+                        if (it.params != null) {
+                            mActivityViewModel.validatedParams.clear()
+                            mActivityViewModel.recievedParams.clear()
+                            mActivityViewModel.demoParams.clear()
+                            mDataBinding.inputLayoutPhoneNumber.visibility = View.GONE
+                            mDataBinding.inputPhoneNumberHint.visibility = View.GONE
+                            mDataBinding.mFieldsRecycler.visibility = View.VISIBLE
+
+                            for (i in it.params.indices) {
+                                var listVals: List<String> = ArrayList()
+                                if (!it.params[i].listVals.isNullOrEmpty()) {
+                                    listVals = it.params[i].listVals
+                                }
+                                Constants.STEP2_3RESPONSE = it
+                                val validatedParams = ValidatedParam("", it.params[i].nomChamp)
+                                mActivityViewModel.validatedParams.add(validatedParams)
+                                mActivityViewModel.recievedParams.add(
+                                    RecievededParam(
+                                        it.params[i].libelle,
+                                        it.params[i].nomChamp,
+                                        it.params[i].typeChamp,
+                                        "",
+                                        false,
+                                        View.VISIBLE,
+                                        "",
+                                        listVals,
+                                        "",
+                                        ""
+                                    )
+                                )
+
+                                //using for lable value restoring after error of invalid input
+                                mActivityViewModel.demoParams.add(
+                                    RecievededParam(
+                                        it.params[i].libelle,
+                                        it.params[i].nomChamp,
+                                        it.params[i].typeChamp,
+                                        "",
+                                        false,
+                                        View.VISIBLE,
+                                        "",
+                                        listVals,
+                                        "",
+                                        ""
+                                    )
+                                )
+                            }
+
+                            mFatoratiParamsItemAdapter = FatoratiParamsItemAdapter(
+                                activity,
+                                mActivityViewModel.recievedParams,
+                                object : FatoratiParamsItemAdapter.ParamTextChangedListner {
+                                    override fun onParamTextChangedClick(
+                                        valChamp: String,
+                                        position: Int
+                                    ) {
+                                        Logger.debugLog(
+                                            "textChengeLListner",
+                                            "Value = ${valChamp}  == position = ${position}"
+                                        )
+                                        if (position <= it.params.size - 1) {
+                                            if (it.params[position].libelle.equals("CIL", false)) {
+                                                applyValidation = true
+                                            } else {
+                                                applyValidation = false
+                                            }
+
+
+//                                    val editedText=valChamp
+//                                    val oldText= mActivityViewModel.validatedParams[position].valChamp
+//                                    if(editedText.contains(oldText)) {
+                                            val typeChamp =
+                                                mActivityViewModel.recievedParams[position].typeChamp
+                                            val nomChamp =
+                                                mActivityViewModel.recievedParams[position].nomChamp
+                                            val listVals =
+                                                mActivityViewModel.recievedParams[position].listVals
+
+                                            //using different list value to restore correct value after invalid input error
+                                            val lablei =
+                                                mActivityViewModel.demoParams[position].libelle
+
+                                            mActivityViewModel.recievedParams.set(
+                                                position, RecievededParam(
+                                                    lablei, nomChamp, typeChamp, "",
+                                                    false, View.VISIBLE, valChamp, listVals, "", ""
+                                                )
+                                            )
+
+                                            mActivityViewModel.validatedParams.set(
+                                                position,
+                                                ValidatedParam(
+                                                    valChamp,
+                                                    mActivityViewModel.recievedParams[position].nomChamp
+                                                )
+                                            )
+
+                                            //    }
+                                        }
+                                    }
+
+                                    override fun onTsavTextChangedClick(
+                                        firstVal: String,
+                                        secondVal: String,
+                                        spinnerVal: String,
+                                        position: Int
+                                    ) {
+                                        Logger.debugLog(
+                                            "textChengeLListner",
+                                            "Value = ${firstVal + secondVal}  == position = ${position}"
+                                        )
+                                        val typeChamp =
+                                            mActivityViewModel.recievedParams[position].typeChamp
+                                        val nomChamp =
+                                            mActivityViewModel.recievedParams[position].nomChamp
+                                        val listVals =
+                                            mActivityViewModel.recievedParams[position].listVals
+                                        var convertesSpinnerValue =
+                                            Constants.convertSpinnerArabicValue(spinnerVal)
+                                        val valChamp =
+                                            firstVal.plus(convertesSpinnerValue.plus(secondVal))
+
+                                        //using different list value to restore correct value after invalid input error
+                                        val lablei = mActivityViewModel.demoParams[position].libelle
+
+                                        mActivityViewModel.recievedParams.set(
+                                            position, RecievededParam(
+                                                lablei,
+                                                nomChamp,
+                                                typeChamp,
+                                                "",
+                                                false,
+                                                View.VISIBLE,
+                                                "",
+                                                listVals,
+                                                firstVal,
+                                                secondVal
+                                            )
+                                        )
+
+                                        mActivityViewModel.validatedParams.set(
+                                            position,
+                                            ValidatedParam(
+                                                valChamp,
+                                                mActivityViewModel.recievedParams[position].nomChamp
+                                            )
+                                        )
+                                    }
+
+                                    override fun onSpinnerTextChangedClick(
+                                        valChamp: String,
+                                        position: Int
+                                    ) {
+                                        if (position <= it.params.size - 1) {
+                                            if (it.params[position].libelle.equals("CIL", false)) {
+                                                applyValidation = true
+                                            } else {
+                                                applyValidation = false
+                                            }
+
+                                            val typeChamp =
+                                                mActivityViewModel.recievedParams[position].typeChamp
+                                            val nomChamp =
+                                                mActivityViewModel.recievedParams[position].nomChamp
+                                            val listVals =
+                                                mActivityViewModel.recievedParams[position].listVals
+
+                                            //using different list value to restore correct value after invalid input error
+                                            val lablei =
+                                                mActivityViewModel.demoParams[position].libelle
+
+                                            mActivityViewModel.recievedParams.set(
+                                                position,
+                                                RecievededParam(
+                                                    lablei, nomChamp, typeChamp, "",
+                                                    false, View.VISIBLE, valChamp, listVals, "", ""
+                                                )
+                                            )
+
+
+                                            mActivityViewModel.validatedParams.set(
+                                                position,
+                                                ValidatedParam(
+                                                    valChamp,
+                                                    mActivityViewModel.recievedParams[position].nomChamp
+                                                )
+                                            )
+                                        }
+                                    }
+
+                                    override fun onTsavSpinnerTextChangedClick(
+                                        firstVal: String,
+                                        secondVal: String,
+                                        spinnerVal: String,
+                                        position: Int
+                                    ) {
+                                        Logger.debugLog(
+                                            "textChengeLListner",
+                                            "Value = ${firstVal + spinnerVal + secondVal}  == position = ${position}"
+                                        )
+
+                                        val typeChamp =
+                                            mActivityViewModel.recievedParams[position].typeChamp
+                                        val nomChamp =
+                                            mActivityViewModel.recievedParams[position].nomChamp
+                                        val listVals =
+                                            mActivityViewModel.recievedParams[position].listVals
+                                        var convertedSpinnerValue =
+                                            Constants.convertSpinnerArabicValue(spinnerVal)
+                                        val valChamp =
+                                            firstVal.plus(convertedSpinnerValue.plus(secondVal))
+                                        //  Constants.selectedTSAVSpinnerPosition=position
+                                        //using different list value to restore correct value after invalid input error
+                                        val lablei = mActivityViewModel.demoParams[position].libelle
+
+                                        mActivityViewModel.recievedParams.set(
+                                            position, RecievededParam(
+                                                lablei,
+                                                nomChamp,
+                                                typeChamp,
+                                                "",
+                                                false,
+                                                View.VISIBLE,
+                                                "",
+                                                listVals,
+                                                firstVal,
+                                                secondVal
+                                            )
+                                        )
+
+                                        mActivityViewModel.validatedParams.set(
+                                            position,
+                                            ValidatedParam(
+                                                valChamp,
+                                                mActivityViewModel.recievedParams[position].nomChamp
+                                            )
+                                        )
+                                    }
+                                }
+                            )
+                            mDataBinding.mFieldsRecycler.apply {
+                                adapter = mFatoratiParamsItemAdapter
+                                layoutManager = LinearLayoutManager(activity)
+                            }
+                        }
                     }
                 } else {
                     DialogUtils.showErrorDialoge(activity, it.description)
@@ -748,34 +901,50 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
     private fun subscribeForSpinnerListner() {
 
         // homeViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN)
-        mDataBinding.acountTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {
+        mDataBinding.acountTypeSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    mDataBinding.billTypeInput.isEnabled = false
+                    mDataBinding.billTypeInputLayout.hint = mActivityViewModel.creancesList.get()
+                        ?.get(position)?.nomCreance
+                    mDataBinding.billTypeInput.setText(
+                        mActivityViewModel.creancesList.get()
+                            ?.get(position)?.codeCreance.toString()
+                    )
+                    mDataBinding.billTypeInputLayout.visibility = View.VISIBLE
+                    mActivityViewModel.specialMenuBillSelected = true
+                    mActivityViewModel.requestForFatoratiStepThreeApi(
+                        activity,
+                        Constants.CURRENT_USER_MSISDN, mDataBinding.billTypeInput.text.toString()
+
+                    )
+
+                    Logger.debugLog(
+                        "Abro", "${
+                            mActivityViewModel.creancesList.get()
+                                ?.get(position)?.nomCreance
+                        }  and  ${
+                            mActivityViewModel.creancesList.get()
+                                ?.get(position)?.codeCreance
+                        }  selection ${mActivityViewModel.specialMenuBillSelected}  "
+                    )
+                }
             }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                mDataBinding.billTypeInput.isEnabled=false
-               mDataBinding.billTypeInputLayout.hint = mActivityViewModel.creancesList.get()
-                    ?.get(position)?.nomCreance
-                mDataBinding.billTypeInput.setText( mActivityViewModel.creancesList.get()
-                    ?.get(position)?.codeCreance.toString())
-                mDataBinding.billTypeInputLayout.visibility=View.VISIBLE
-                mActivityViewModel.specialMenuBillSelected=true
-                mActivityViewModel.requestForFatoratiStepThreeApi(   activity,
-                    Constants.CURRENT_USER_MSISDN,mDataBinding.billTypeInput.text.toString()
-
-                )
-
-            Logger.debugLog("Abro","${mActivityViewModel.creancesList.get()
-                ?.get(position)?.nomCreance}  and  ${mActivityViewModel.creancesList.get()
-                ?.get(position)?.codeCreance}  selection ${mActivityViewModel.specialMenuBillSelected}  ")
-            }
-        }
     }
+
     override fun onSubmitClickListner(view: View) {
-        if(mActivityViewModel.specialMenuBillSelected)
-        {
-            mActivityViewModel.requestForFatoratiStepThreeApi(   activity,
-                Constants.CURRENT_USER_MSISDN,mDataBinding.inputPhoneNumber.text.toString()
+        if (mActivityViewModel.specialMenuBillSelected) {
+            mActivityViewModel.requestForFatoratiStepThreeApi(
+                activity,
+                Constants.CURRENT_USER_MSISDN, mDataBinding.inputPhoneNumber.text.toString()
 
             )
         } else {
@@ -911,66 +1080,110 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         }
 
         if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-            for(i in mActivityViewModel.validatedParams.indices){
-                val typeChamp=mActivityViewModel.recievedParams[i].typeChamp
-                val nomChamp=mActivityViewModel.recievedParams[i].nomChamp
-                val valChamp=mActivityViewModel.recievedParams[i].inputValue
-                val listVals=mActivityViewModel.recievedParams[i].listVals
-                val firstVal=mActivityViewModel.recievedParams[i].firstValue
-                val secondVal=mActivityViewModel.recievedParams[i].secondValue
-                val allowedLength= Constants.STEP2_3RESPONSE?.params?.get(i)?.tailleMax
-                val isTextValue =mActivityViewModel.recievedParams[i].typeChamp.equals("text")
+            for (i in mActivityViewModel.validatedParams.indices) {
+                val typeChamp = mActivityViewModel.recievedParams[i].typeChamp
+                val nomChamp = mActivityViewModel.recievedParams[i].nomChamp
+                val valChamp = mActivityViewModel.recievedParams[i].inputValue
+                val listVals = mActivityViewModel.recievedParams[i].listVals
+                val firstVal = mActivityViewModel.recievedParams[i].firstValue
+                val secondVal = mActivityViewModel.recievedParams[i].secondValue
+                val allowedLength = Constants.STEP2_3RESPONSE?.params?.get(i)?.tailleMax
+                val isTextValue = mActivityViewModel.recievedParams[i].typeChamp.equals("text")
 
-               //using different list value to restore correct value after invalid input error
-                val lablei=mActivityViewModel.demoParams[i].libelle
+                //using different list value to restore correct value after invalid input error
+                val lablei = mActivityViewModel.demoParams[i].libelle
 
-                Logger.debugLog("billpayment"," applyValidation = ${applyValidation}")
-                Logger.debugLog("billpayment"," labelie = ${lablei}")
+                Logger.debugLog("billpayment", " applyValidation = ${applyValidation}")
+                Logger.debugLog("billpayment", " labelie = ${lablei}")
                 if (applyValidation) {
                     val msisdn = mActivityViewModel.validatedParams[i].valChamp.toString().trim()
                     val msisdnLenght = msisdn.length
 
-                        isNumberRegexMatches =
-                            !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_CIL_REGEX, msisdn))
+                    isNumberRegexMatches =
+                        !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_CIL_REGEX, msisdn))
 
                     if (isNumberRegexMatches) {
-                        mActivityViewModel.recievedParams.set(i,
-                            RecievededParam(lablei,nomChamp,typeChamp,"",false,View.VISIBLE,valChamp,listVals,firstVal,secondVal))
+                        mActivityViewModel.recievedParams.set(
+                            i,
+                            RecievededParam(
+                                lablei,
+                                nomChamp,
+                                typeChamp,
+                                "",
+                                false,
+                                View.VISIBLE,
+                                valChamp,
+                                listVals,
+                                firstVal,
+                                secondVal
+                            )
+                        )
                         mFatoratiParamsItemAdapter.notifyItemChanged(i)
-                        msisdnEntered = mActivityViewModel.validatedParams[0].valChamp.toString().trim()
+                        msisdnEntered =
+                            mActivityViewModel.validatedParams[0].valChamp.toString().trim()
 
                         checkNumberExistInFavoritesForFatorati(msisdnEntered)
                     } else {
                         isValidForAll = false
-                        mActivityViewModel.recievedParams.set(i,
-                            RecievededParam(LanguageData.getStringValue("invalid")+ " " + lablei ,nomChamp,typeChamp,LanguageData.getStringValue("invalid") + " " + lablei,true,View.GONE,valChamp,listVals,firstVal,secondVal))
+                        mActivityViewModel.recievedParams.set(
+                            i,
+                            RecievededParam(
+                                LanguageData.getStringValue("invalid") + " " + lablei,
+                                nomChamp,
+                                typeChamp,
+                                LanguageData.getStringValue("invalid") + " " + lablei,
+                                true,
+                                View.GONE,
+                                valChamp,
+                                listVals,
+                                firstVal,
+                                secondVal
+                            )
+                        )
                         mFatoratiParamsItemAdapter.notifyItemChanged(i)
                     }
                 } else {
 
-    Logger.debugLog("billpayment","size 1 = ${mActivityViewModel.validatedParams.size}   size 2 = ${mActivityViewModel.recievedParams.size}")
+                    Logger.debugLog(
+                        "billpayment",
+                        "size 1 = ${mActivityViewModel.validatedParams.size}   size 2 = ${mActivityViewModel.recievedParams.size}"
+                    )
 
                     //TSAV flow checking
-                    if(lablei.equals("Immatriculation"))
-                    {
-                        Logger.debugLog("billpayment","Tsav8")
-                        if(!firstVal.isEmpty()&&!secondVal.isEmpty()) {
-                            Logger.debugLog("billpayment","immarticulateSelected = ${firstVal}   ${secondVal}")
-                            Logger.debugLog("billpayment","Tsav9")
+                    if (lablei.equals("Immatriculation")) {
+                        Logger.debugLog("billpayment", "Tsav8")
+                        if (!firstVal.isEmpty() && !secondVal.isEmpty()) {
+                            Logger.debugLog(
+                                "billpayment",
+                                "immarticulateSelected = ${firstVal}   ${secondVal}"
+                            )
+                            Logger.debugLog("billpayment", "Tsav9")
 
 
                             if (allowedLength != null) {
-                                Logger.debugLog("billpayment","Tsav31")
-                                if(mActivityViewModel.validatedParams[i].valChamp.length>allowedLength.toInt())
-                                {
-                                    Logger.debugLog("billpayment","Tsav41")
+                                Logger.debugLog("billpayment", "Tsav31")
+                                if (mActivityViewModel.validatedParams[i].valChamp.length > allowedLength.toInt()) {
+                                    Logger.debugLog("billpayment", "Tsav41")
                                     isValidForAll = false
                                     mActivityViewModel.recievedParams
-                                        .set(i,RecievededParam(LanguageData.getStringValue("invalid")+ " " + lablei ,nomChamp,typeChamp,LanguageData.getStringValue("invalid") + " " ,true,View.GONE,valChamp,listVals,firstVal,secondVal))
+                                        .set(
+                                            i,
+                                            RecievededParam(
+                                                LanguageData.getStringValue("invalid") + " " + lablei,
+                                                nomChamp,
+                                                typeChamp,
+                                                LanguageData.getStringValue("invalid") + " ",
+                                                true,
+                                                View.GONE,
+                                                valChamp,
+                                                listVals,
+                                                firstVal,
+                                                secondVal
+                                            )
+                                        )
                                     mFatoratiParamsItemAdapter.notifyItemChanged(i)
-                                }
-                                else{
-                                    Logger.debugLog("billpayment","Tsav51")
+                                } else {
+                                    Logger.debugLog("billpayment", "Tsav51")
 //                                    mActivityViewModel.recievedParams.set(i,RecievededParam(lablei, nomChamp, typeChamp, "", false, View.VISIBLE,valChamp,listVals,firstVal,secondVal))
 //                                    mFatoratiParamsItemAdapter.notifyItemChanged(i)
 //                                    msisdnEntered =
@@ -978,71 +1191,105 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 //                                    checkNumberExistInFavoritesForFatorati(msisdnEntered)
                                 }
                             }
-                        }
-                        else{
-                            Logger.debugLog("billpayment","Tsav10")
+                        } else {
+                            Logger.debugLog("billpayment", "Tsav10")
                             isValidForAll = false
                             mActivityViewModel.recievedParams
-                                .set(i,RecievededParam(lablei ,nomChamp,typeChamp,LanguageData.getStringValue("invalid") + " ",true,View.GONE,valChamp,listVals,firstVal,secondVal))
+                                .set(
+                                    i,
+                                    RecievededParam(
+                                        lablei,
+                                        nomChamp,
+                                        typeChamp,
+                                        LanguageData.getStringValue("invalid") + " ",
+                                        true,
+                                        View.GONE,
+                                        valChamp,
+                                        listVals,
+                                        firstVal,
+                                        secondVal
+                                    )
+                                )
                             mFatoratiParamsItemAdapter.notifyItemChanged(i)
                         }
-                    }
-                    else{
-                    //normal Flowchecking
-                    if(!mActivityViewModel.validatedParams[i].valChamp.equals("")) {
-                       Logger.debugLog("billpayment","value entered = ${mActivityViewModel.validatedParams[i].valChamp}")
+                    } else {
+                        //normal Flowchecking
+                        if (!mActivityViewModel.validatedParams[i].valChamp.equals("")) {
+                            Logger.debugLog(
+                                "billpayment",
+                                "value entered = ${mActivityViewModel.validatedParams[i].valChamp}"
+                            )
 //                       val isTsavSelected=mActivityViewModel.selectedCreancer.get()?.contains("TSAV")
 //                        if(isTsavSelected!!)
 //                        {
-                            Logger.debugLog("billpayment","Tsav1")
-                            if(isTextValue){
-                                Logger.debugLog("billpayment","Tsav2")
-                            if (allowedLength != null) {
-                                Logger.debugLog("billpayment","Tsav3")
-                                if(mActivityViewModel.validatedParams[i].valChamp.length>allowedLength.toInt())
-                                {
-                                    Logger.debugLog("billpayment","Tsav4")
-                                    isValidForAll = false
-                                    mActivityViewModel.recievedParams
-                                        .set(i,RecievededParam(LanguageData.getStringValue("invalid")+ " " + lablei ,nomChamp,typeChamp,LanguageData.getStringValue("invalid") + " " + lablei,true,View.GONE,valChamp,listVals,firstVal,secondVal))
-                                    mFatoratiParamsItemAdapter.notifyItemChanged(i)
-                                }
-                                else{
-                                    Logger.debugLog("billpayment","Tsav5")
+                            Logger.debugLog("billpayment", "Tsav1")
+                            if (isTextValue) {
+                                Logger.debugLog("billpayment", "Tsav2")
+                                if (allowedLength != null) {
+                                    Logger.debugLog("billpayment", "Tsav3")
+                                    if (mActivityViewModel.validatedParams[i].valChamp.length > allowedLength.toInt()) {
+                                        Logger.debugLog("billpayment", "Tsav4")
+                                        isValidForAll = false
+                                        mActivityViewModel.recievedParams
+                                            .set(
+                                                i,
+                                                RecievededParam(
+                                                    LanguageData.getStringValue("invalid") + " " + lablei,
+                                                    nomChamp,
+                                                    typeChamp,
+                                                    LanguageData.getStringValue("invalid") + " " + lablei,
+                                                    true,
+                                                    View.GONE,
+                                                    valChamp,
+                                                    listVals,
+                                                    firstVal,
+                                                    secondVal
+                                                )
+                                            )
+                                        mFatoratiParamsItemAdapter.notifyItemChanged(i)
+                                    } else {
+                                        Logger.debugLog("billpayment", "Tsav5")
 //                                    mActivityViewModel.recievedParams.set(i,RecievededParam(lablei, nomChamp, typeChamp, "", false, View.VISIBLE,valChamp,listVals,firstVal,secondVal))
 //                                    mFatoratiParamsItemAdapter.notifyItemChanged(i)
 //                                    msisdnEntered =
 //                                        mActivityViewModel.validatedParams[0].valChamp.toString().trim()
 //                                    checkNumberExistInFavoritesForFatorati(msisdnEntered)
+                                    }
                                 }
                             }
-                            }
-                      //  }
-                        else{
-                            Logger.debugLog("billpayment","Tsav6")
+                            //  }
+                            else {
+                                Logger.debugLog("billpayment", "Tsav6")
 //                            mActivityViewModel.recievedParams.set(i,RecievededParam(lablei, nomChamp, typeChamp, "", false, View.VISIBLE,valChamp,listVals,firstVal,secondVal))
 //                            mFatoratiParamsItemAdapter.notifyItemChanged(i)
 //                            msisdnEntered =
 //                                mActivityViewModel.validatedParams[0].valChamp.toString().trim()
-                            checkNumberExistInFavoritesForFatorati(msisdnEntered)
+                                checkNumberExistInFavoritesForFatorati(msisdnEntered)
+                            }
+                        } else {
+                            Logger.debugLog("billpayment", "Tsav7")
+                            isValidForAll = false
+                            mActivityViewModel.recievedParams
+                                .set(
+                                    i,
+                                    RecievededParam(
+                                        LanguageData.getStringValue("invalid") + " " + lablei,
+                                        nomChamp,
+                                        typeChamp,
+                                        LanguageData.getStringValue("invalid") + " " + lablei,
+                                        true,
+                                        View.GONE,
+                                        valChamp,
+                                        listVals,
+                                        firstVal,
+                                        secondVal
+                                    )
+                                )
+                            mFatoratiParamsItemAdapter.notifyItemChanged(i)
                         }
-                   }
-                    else{
-                        Logger.debugLog("billpayment","Tsav7")
-                       isValidForAll = false
-                       mActivityViewModel.recievedParams
-                           .set(i,RecievededParam(LanguageData.getStringValue("invalid")+ " " + lablei ,nomChamp,typeChamp,LanguageData.getStringValue("invalid") + " " + lablei,true,View.GONE,valChamp,listVals,firstVal,secondVal))
-                       mFatoratiParamsItemAdapter.notifyItemChanged(i)
-                    }
                     }
                 }
             }
-
-
-
-
-
-
 
 
 //Previous flow of single input Field
@@ -1085,33 +1332,32 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 //                }
 //            }
 
-            Logger.debugLog("billpayment","isValidForAll = ${isValidForAll}")
+            Logger.debugLog("billpayment", "isValidForAll = ${isValidForAll}")
         }
 
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
             if (mActivityViewModel.isPostPaidMobileSelected.get()!! || mActivityViewModel.isPostPaidFixSelected.get()!!) {
-              if(!Constants.IS_AGENT_USER)
-              {
-                if (mDataBinding.inputCode.text.isNullOrEmpty() || mDataBinding.inputCode.text.toString()
-                        .isEmpty()
-                ) {
-                    isValidForAll = false
-                    mDataBinding.inputLayoutCode.error =
-                        LanguageData.getStringValue("InvalidFidelioCode")
-                    mDataBinding.inputLayoutCode.isErrorEnabled = true
-                } else {
-                    if (isCodeRegexMatches) {
-                        mDataBinding.inputLayoutCode.error = ""
-                        mDataBinding.inputLayoutCode.isErrorEnabled = false
-                        code = mDataBinding.inputCode.text.toString().trim()
-                    } else {
+                if (!Constants.IS_AGENT_USER) {
+                    if (mDataBinding.inputCode.text.isNullOrEmpty() || mDataBinding.inputCode.text.toString()
+                            .isEmpty()
+                    ) {
                         isValidForAll = false
                         mDataBinding.inputLayoutCode.error =
                             LanguageData.getStringValue("InvalidFidelioCode")
                         mDataBinding.inputLayoutCode.isErrorEnabled = true
+                    } else {
+                        if (isCodeRegexMatches) {
+                            mDataBinding.inputLayoutCode.error = ""
+                            mDataBinding.inputLayoutCode.isErrorEnabled = false
+                            code = mDataBinding.inputCode.text.toString().trim()
+                        } else {
+                            isValidForAll = false
+                            mDataBinding.inputLayoutCode.error =
+                                LanguageData.getStringValue("InvalidFidelioCode")
+                            mDataBinding.inputLayoutCode.isErrorEnabled = true
+                        }
                     }
                 }
-               }
             }
         }
 
@@ -1139,9 +1385,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                     mActivityViewModel.isUserSelectedFromFavorites.set(true)
 
                     var selectedBillType = ""
-                    if(mActivityViewModel.isPostPaidMobileSelected.get()!!){
+                    if (mActivityViewModel.isPostPaidMobileSelected.get()!!) {
                         selectedBillType = "Telec_PostpaidMobile@"
-                    }else if(mActivityViewModel.isPostPaidFixSelected.get()!!){
+                    } else if (mActivityViewModel.isPostPaidFixSelected.get()!!) {
                         selectedBillType = "Telec_PostpaidFix@"
                     }
                     for (contacts in Constants.mContactListArray) {
@@ -1150,12 +1396,13 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                         val contactNumberCode =
                             contactNameWithoutPrefix.substringAfter(",")
                         if (contactName.contains(selectedBillType)) {
-                            val contactNumber = contacts.customerreference.trim().plus(contacts.billproviderfri)
-                            if(contactNumber.equals(selectedFavorites)){
-                                if(!contactNumberCode.isNullOrEmpty()){
-                                   // mDataBinding.inputCode.visibility=View.GONE
+                            val contactNumber =
+                                contacts.customerreference.trim().plus(contacts.billproviderfri)
+                            if (contactNumber.equals(selectedFavorites)) {
+                                if (!contactNumberCode.isNullOrEmpty()) {
+                                    // mDataBinding.inputCode.visibility=View.GONE
                                     mDataBinding.inputCode.setText(contactNumberCode)
-                                   // mDataBinding.inputCode.setText("")
+                                    // mDataBinding.inputCode.setText("")
                                 }
                             }
                         }
@@ -1286,7 +1533,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
             val codeLenght = code.length
             isCodeRegexMatches =
                 !(codeLenght > 0 && !Pattern.matches(Constants.APP_BILL_PAYMENT_CODE_REGEX, code))
-       }
+        }
 
     }
 

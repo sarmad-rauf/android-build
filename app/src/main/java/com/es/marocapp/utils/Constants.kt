@@ -2,25 +2,28 @@ package com.es.marocapp.utils
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.content.Context.WIFI_SERVICE
+import android.database.Cursor
+import android.net.Uri
 import android.net.wifi.WifiManager
 import android.os.Build
+import android.provider.OpenableColumns
 import android.text.format.Formatter.formatIpAddress
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.FragmentActivity
 import com.es.marocapp.R
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.*
 import com.github.florent37.tutoshowcase.TutoShowcase
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import org.apache.http.conn.util.InetAddressUtils
+import java.io.File
 import java.net.InetAddress
 import java.net.NetworkInterface
 import java.text.DateFormat
@@ -34,6 +37,7 @@ import kotlin.properties.Delegates
 object Constants {
 
 
+    var maxFileSizeUploadLimitInMBs: Int = 0
     lateinit var registrationProfiles: Array<String>
     var marocFatouratiLogoPath: String=""
     var selectedTSAVSpinnerPosition: Int=0
@@ -707,6 +711,43 @@ object Constants {
 
         }
         return listOfParams
+    }
+
+    fun isFileSizeVerified(uri: Uri, activity: Context?,isCamera: Boolean): Boolean {
+        var file = File(uri.path)
+        var sizeInMbs = 0
+            if(isCamera)
+            {
+                sizeInMbs = file.length().toInt().div((1024*1024).toString().substringBefore('.').toInt())
+            }else{
+         sizeInMbs = getSize(activity!!,uri)?.toInt()
+             ?.div((1024*1024).toString().substringBefore('.').toInt())!!
+            }
+        if (sizeInMbs != null) {
+            return sizeInMbs<=maxFileSizeUploadLimitInMBs
+        }else{
+            return true
+        }
+
+    }
+
+    fun getSize(context: Context, uri: Uri?): String? {
+        var fileSize: String? = null
+        val cursor: Cursor? = context.getContentResolver()
+            .query(uri!!, null, null, null, null, null)
+        try {
+            if (cursor != null && cursor.moveToFirst()) {
+
+                // get file size
+                val sizeIndex: Int = cursor.getColumnIndex(OpenableColumns.SIZE)
+                if (!cursor.isNull(sizeIndex)) {
+                    fileSize = cursor.getString(sizeIndex)
+                }
+            }
+        } finally {
+            cursor?.close()
+        }
+        return fileSize
     }
 
 //    fun getItems(stringValidatedParams: String): List<ValidatedParam>? {
