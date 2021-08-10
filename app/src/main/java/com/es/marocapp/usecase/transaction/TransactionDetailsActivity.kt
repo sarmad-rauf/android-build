@@ -31,7 +31,7 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
     private fun setStrings() {
         mDataBinding.statusTitle.text = LanguageData.getStringValue("TransactionStatus")
         mDataBinding.tvTransactionHistoryTitle.text = LanguageData.getStringValue("TransactionDetails")
-        mDataBinding.dateTitle.text = LanguageData.getStringValue("Time")
+        mDataBinding.dateTitle.text = LanguageData.getStringValue("Date")
         mDataBinding.transactionIDTitle.text = LanguageData.getStringValue("TransactionID")
         mDataBinding.ReceiverNameTitle.text = LanguageData.getStringValue("ReceiverIdentity")
         mDataBinding.ReceiverIdentityTitle.text = LanguageData.getStringValue("ReceiverNumber")

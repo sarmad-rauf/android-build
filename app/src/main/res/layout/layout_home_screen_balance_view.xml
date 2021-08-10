@@ -12,36 +12,20 @@
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/_160sdp"
+    android:layout_marginBottom="@dimen/_28sdp"
     android:background="@color/colorCerulean"
     >
 
-    <com.marcinmoskala.arcseekbar.ArcSeekBar
-        android:id="@+id/arcSeekBar"
-        android:layout_width="@dimen/_300sdp"
-        android:layout_height="@dimen/_150sdp"
-        android:layout_marginTop="@dimen/_12sdp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:progressWidth="6dp"
-        app:progressBackgroundWidth="5dp"
-        app:progressColor="@color/colorWhite"
-        app:progressBackgroundColor="@color/colorLightBlue"
-        app:thumb="@drawable/progress_thumb"
-        app:maxProgress="100"
-        app:progress="50"
-        app:roundEdges="false"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="@dimen/_8sdp"
-        />
+
 
     <ImageView
         android:id="@+id/inner_semi_circle"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="@dimen/_40sdp"
-        android:layout_marginTop="@dimen/_40sdp"
-        android:layout_marginEnd="@dimen/_40sdp"
+        android:layout_marginStart="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
         android:layout_marginBottom="@dimen/_8sdp"
         android:background="@drawable/oval_sem_circle"
         app:layout_constraintBottom_toBottomOf="@id/arcSeekBar"
@@ -82,7 +66,6 @@
     <androidx.constraintlayout.widget.Group
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:id="@+id/progress_group"
         app:constraint_referenced_ids="arcSeekBar,inner_semi_circle,progress_value,progress_value_title"/>
 
@@ -128,6 +111,27 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
+    <com.marcinmoskala.arcseekbar.ArcSeekBar
+        android:id="@+id/arcSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:progressWidth="6dp"
+        app:progressBackgroundWidth="5dp"
+        app:progressColor="@color/colorWhite"
+        app:progressBackgroundColor="@color/colorLightBlue"
+        app:thumb="@drawable/progress_thumb"
+        app:maxProgress="100"
+        app:progress="50"
+        app:roundEdges="false"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
