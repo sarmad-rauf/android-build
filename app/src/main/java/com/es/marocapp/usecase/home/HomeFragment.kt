@@ -900,6 +900,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         transactionFragmentNotVisible: Boolean
     ){
         if(isTransactionDetailsVisible){
+
             homeViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN,false)
             if(transactionFragmentNotVisible){
                 if (directCallForTransaction) {

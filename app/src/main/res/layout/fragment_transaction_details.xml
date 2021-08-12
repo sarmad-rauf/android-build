@@ -229,10 +229,12 @@
             android:id="@+id/ReceiverNameVal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth="@dimen/_90sdp"
             android:textSize="@dimen/_12ssp"
             android:textColor="@color/colorGreyDark"
             android:layout_marginEnd="@dimen/_16sdp"
             android:text="John Perucci"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ReceiverNameTitle"
             app:layout_constraintBottom_toBottomOf="@+id/ReceiverNameTitle"
