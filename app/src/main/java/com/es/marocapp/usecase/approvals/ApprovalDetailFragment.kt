@@ -15,7 +15,6 @@ import com.es.marocapp.usecase.approvals.ApprovalFragment.Companion.SELECTED_APP
 import com.es.marocapp.usecase.approvals.ApprovalFragment.Companion.USER_APPROVAL_KEY
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
-import kotlinx.android.synthetic.main.fragment_approval_details.*
 
 
 class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),ApprovalClickListener{
@@ -74,9 +73,9 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
     }
 
     private fun setUIData() {
-        tvRequestIndicatorVal.text=selectedApprovalData?.initiatingaccountholderid!!
-        tvApprovalTypeVal.text=selectedApprovalData?.approvaltype
-        tvApprovalIDVal.text=selectedApprovalData?.approvalid.toString()
+       mDataBinding.tvRequestIndicatorVal.text=selectedApprovalData?.initiatingaccountholderid!!
+        mDataBinding.tvApprovalTypeVal.text=selectedApprovalData?.approvaltype
+        mDataBinding.tvApprovalIDVal.text=selectedApprovalData?.approvalid.toString()
        if(approvalViewModel?.selectedTaxDetail.isNullOrEmpty())
        {
            approvalViewModel?.selectedTaxDetail="0"
@@ -88,11 +87,11 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
                 )
             } }
 
-        tvTransactionFeeVal.text=selectedApprovalData?.fee?.currency.plus(" ").plus(transactionFee?.toDouble()?.let {
+        mDataBinding. tvTransactionFeeVal.text=selectedApprovalData?.fee?.currency.plus(" ").plus(transactionFee?.toDouble()?.let {
             Constants.converValueToTwoDecimalPlace(it)
         })
-        tvAmountVal.text=selectedApprovalData?.amount?.currency.plus(" ").plus(selectedApprovalData?.amount?.amount)
-        tvExourtVal.text=Constants.getZoneFormattedDateAndTime(selectedApprovalData?.approvalexpirytime.toString())
+        mDataBinding. tvAmountVal.text=selectedApprovalData?.amount?.currency.plus(" ").plus(selectedApprovalData?.amount?.amount)
+        mDataBinding.tvExourtVal.text=Constants.getZoneFormattedDateAndTime(selectedApprovalData?.approvalexpirytime.toString())
         mDataBinding.tvTotalVal.text=selectedApprovalData?.amount?.currency.plus(" ").plus(
             transactionFee?.toDouble()?.let {
                 Constants.addAmountAndFee(selectedApprovalData?.amount?.amount!!.toDouble() ,

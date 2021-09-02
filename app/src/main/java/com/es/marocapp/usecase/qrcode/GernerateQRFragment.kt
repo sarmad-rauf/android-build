@@ -19,7 +19,6 @@ import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.Tools
-import kotlinx.android.synthetic.main.fragment_generate_qr.*
 
 class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>() {
 
@@ -61,7 +60,7 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>() {
         } else {
             var qrString = Tools.generateEMVcoString(Constants.CURRENT_USER_MSISDN, "")
             Logger.debugLog("QRString - Consumer", qrString)
-            imgResult.setImageBitmap(Tools.generateQR(qrString))
+            mDataBinding.imgResult.setImageBitmap(Tools.generateQR(qrString))
         }
 
         setStrings()
@@ -91,7 +90,7 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>() {
                         Tools.generateEMVcoString(Constants.CURRENT_USER_MSISDN, s.toString())
 
                 }
-                imgResult.setImageBitmap(Tools.generateQR(qrString))
+                mDataBinding.imgResult.setImageBitmap(Tools.generateQR(qrString))
             }
         })
     }
@@ -121,7 +120,7 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>() {
                             merchantName
                         )
                         Logger.debugLog("QRString - Merchant", qrString)
-                        imgResult.setImageBitmap(Tools.generateQR(qrString))
+                        mDataBinding.imgResult.setImageBitmap(Tools.generateQR(qrString))
                     }
                 } else {
                     DialogUtils.showErrorDialoge(activity as MainActivity, it.description)

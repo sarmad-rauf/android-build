@@ -37,10 +37,6 @@ import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.PrefUtils
 import com.es.marocapp.utils.PrefUtils.PreKeywords.PREF_KEY_USER_MSISDN
-import kotlinx.android.synthetic.main.fragment_login_number_password.*
-import kotlinx.android.synthetic.main.layout_logged_in_user_header.view.*
-import kotlinx.android.synthetic.main.layout_login_header.view.*
-import kotlinx.android.synthetic.main.layout_login_header.view.txtHeaderTitle
 
 /**
  * A simple [Fragment] subclass.
@@ -95,21 +91,21 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
             arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_MAX_PASSWORD_LENGTH))
 
         if(mActivityViewModel.isUserToShowProfile){
-            mDataBinding.loginHeader.rootView.currentLoggedInUserGroup.visibility = View.VISIBLE
-            mDataBinding.loginHeader.rootView.LoggedInHeaderTitle.visibility = View.GONE
+            mDataBinding.loginHeader.currentLoggedInUserGroup.visibility = View.VISIBLE
+            mDataBinding.loginHeader.LoggedInHeaderTitle.visibility = View.GONE
             mDataBinding.rememberMeToggle.visibility=View.GONE
             mDataBinding.rememberMeTv.visibility=View.GONE
 
             if(Constants.CURRENT_USER_NAME.isNullOrEmpty()){
-                mDataBinding.loginHeader.rootView.currentLoggedInUser.text = ""
+                mDataBinding.loginHeader.currentLoggedInUser.text = ""
             }else{
-                mDataBinding.loginHeader.rootView.currentLoggedInUser.text = Constants.CURRENT_USER_NAME
+                mDataBinding.loginHeader.currentLoggedInUser.text = Constants.CURRENT_USER_NAME
             }
 
             mDataBinding.phoneNumberFiedlGroup.visibility = View.GONE
         }else{
-            mDataBinding.loginHeader.rootView.currentLoggedInUserGroup.visibility = View.GONE
-            mDataBinding.loginHeader.rootView.LoggedInHeaderTitle.visibility = View.VISIBLE
+            mDataBinding.loginHeader.currentLoggedInUserGroup.visibility = View.GONE
+            mDataBinding.loginHeader.LoggedInHeaderTitle.visibility = View.VISIBLE
 
             mDataBinding.phoneNumberFiedlGroup.visibility = View.VISIBLE
             mDataBinding.rememberMeToggle.visibility=View.VISIBLE
@@ -154,7 +150,7 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
 
     private fun setStrings() {
         mDataBinding.userAnotherAccountTitle.text= LanguageData.getStringValue("UseAnotheMtcashAccount")
-        mDataBinding.loginHeader.rootView.LoggedInHeaderTitle.text= LanguageData.getStringValue("LoginIntoAccount")
+        mDataBinding.loginHeader.LoggedInHeaderTitle.text= LanguageData.getStringValue("LoginIntoAccount")
         mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")
         mDataBinding.inputLayoutPin.hint = LanguageData.getStringValue("Password")
         mDataBinding.txtForgotPin.paintFlags = mDataBinding.txtForgotPin.paintFlags or Paint.UNDERLINE_TEXT_FLAG

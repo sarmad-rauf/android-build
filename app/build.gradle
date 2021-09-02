@@ -1,16 +1,16 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 
-def baseUrlType = 1 //1:Production,2:Staging,3:Development,4: DR Disaster Recovery
+
+def baseUrlType = 2//1:Production,2:Staging,3:Development,4: DR Disaster Recovery
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "30.0.3"
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.es.marocapp"
@@ -53,7 +53,7 @@ android {
             } else if (baseUrlType == 3) {// Development
                 buildConfigField "String", "SERVER_URL", "\"http://124.109.32.135:8080/mobileapi/\""
             } else if (baseUrlType == 4) {// DR Disaster Recovery
-                buildConfigField "String", "SERVER_URL", "\"https://10.100.172.122/mobileapi/\""
+                buildConfigField "String", "SERVER_URL", "\"https://10.0.92.122/mobileapi/\""
             }
 
             buildConfigField "boolean", "SSL_ENABLED", "true"
@@ -82,12 +82,19 @@ android {
 
     }
 
+    //view Binding
+    buildFeatures {
+        viewBinding true
+    }
+
+
     // CPP
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
         }
     }
+
 
 
     // Databinding Set
@@ -116,22 +123,24 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "com.android.support:support-v4:$supportLibraryVersion"
     implementation 'com.android.support:support-annotations:24.2.0'
-    implementation 'com.google.firebase:firebase-core:17.4.0'
-    implementation 'com.google.firebase:firebase-messaging:20.1.6'
-    implementation 'com.google.firebase:firebase-crashlytics:17.0.0'
+    implementation 'com.google.firebase:firebase-core:19.0.1'
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'
+    implementation 'com.google.firebase:firebase-crashlytics:18.2.1'
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'
     implementation project(path: ':tutoshowcase')
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    kapt 'com.android.databinding:compiler:3.0.1'
+    kapt 'com.android.databinding:compiler:3.1.4'
     //-----------------------Navigation Architecture Component Library-------------------
 //    implementation "android.arch.navigation:navigation-fragment-ktx:$nav_version"
 //    implementation "android.arch.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
     //------------------------Density Pixel & Scalable pixel--------------------
     implementation 'com.intuit.ssp:ssp-android:1.0.6'
@@ -157,7 +166,7 @@ dependencies {
     api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     api 'com.squareup.moshi:moshi-kotlin:1.5.0'
     api 'com.squareup.retrofit2:converter-moshi:2.3.0'
-    api 'com.squareup.okhttp3:okhttp:3.10.0'
+    api 'com.squareup.okhttp3:okhttp:3.12.1'
     api 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     //---------------------------------QR code------------------------------------
     implementation 'org.apache.commons:commons-lang3:3.5'

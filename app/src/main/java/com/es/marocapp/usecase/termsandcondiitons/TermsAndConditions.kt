@@ -19,8 +19,6 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.utils.Constants
-import kotlinx.android.synthetic.main.fragment_approval.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import java.io.File
 
 class TermsAndConditions : BaseActivity<ActivityTermsAndConditionsBinding>() {

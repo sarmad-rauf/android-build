@@ -9,7 +9,7 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityBillPaymentBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseActivity
-import kotlinx.android.synthetic.main.layout_activity_header.view.*
+
 
 class BillPaymentActivity : BaseActivity<ActivityBillPaymentBinding>() {
 
@@ -33,7 +33,7 @@ class BillPaymentActivity : BaseActivity<ActivityBillPaymentBinding>() {
 
         setHeaderTitle(LanguageData.getStringValue("BillPayment").toString())
 
-        mDataBinding.root.activityHeaderBack.setOnClickListener {
+        mDataBinding.headerBillPayment.activityHeaderBack.setOnClickListener {
             if (mActivityViewModel.popBackStackTo == -1) {
                 this@BillPaymentActivity.finish()
             } else {
@@ -48,34 +48,34 @@ class BillPaymentActivity : BaseActivity<ActivityBillPaymentBinding>() {
     }
 
     fun setHeaderTitle(title: String) {
-        mDataBinding.headerBillPayment.rootView.activityHeaderTitle.text = title
+        mDataBinding.headerBillPayment.activityHeaderTitle.text = title
     }
 
     fun setCompanyIconToolbarVisibility(isVisible : Boolean){
         if(isVisible){
-            mDataBinding.headerBillPayment.rootView.headerCompanyIconContainer.visibility = View.VISIBLE
+            mDataBinding.headerBillPayment.headerCompanyIconContainer.visibility = View.VISIBLE
         }
         else{
-            mDataBinding.headerBillPayment.rootView.headerCompanyIconContainer.visibility = View.GONE
+            mDataBinding.headerBillPayment.headerCompanyIconContainer.visibility = View.GONE
         }
     }
 
     fun setHeaderVisibility(isVisible: Boolean) {
         if (isVisible) {
-            mDataBinding.headerBillPayment.visibility = View.VISIBLE
+            mDataBinding.headerBillPayment.root.visibility = View.VISIBLE
         } else {
-            mDataBinding.headerBillPayment.visibility = View.GONE
+            mDataBinding.headerBillPayment.root.visibility = View.GONE
         }
     }
 
     fun setLetterIconVisible(isVisible: Boolean,letter : String){
         if(isVisible){
-            mDataBinding.headerBillPayment.rootView.first_letter_icons.visibility = View.VISIBLE
-            mDataBinding.headerBillPayment.rootView.first_letter_icons.text = letter
-            mDataBinding.headerBillPayment.rootView.img_company_icons.visibility = View.GONE
+            mDataBinding.headerBillPayment.firstLetterIcons.visibility = View.VISIBLE
+            mDataBinding.headerBillPayment.firstLetterIcons.text = letter
+            mDataBinding.headerBillPayment.imgCompanyIcons.visibility = View.GONE
         }else{
-            mDataBinding.headerBillPayment.rootView.first_letter_icons.visibility = View.GONE
-            mDataBinding.headerBillPayment.rootView.img_company_icons.visibility = View.VISIBLE
+            mDataBinding.headerBillPayment.firstLetterIcons.visibility = View.GONE
+            mDataBinding.headerBillPayment.imgCompanyIcons.visibility = View.VISIBLE
         }
     }
 

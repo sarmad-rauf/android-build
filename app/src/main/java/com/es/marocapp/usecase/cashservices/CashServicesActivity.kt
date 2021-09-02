@@ -9,7 +9,6 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityCashServicesBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseActivity
-import kotlinx.android.synthetic.main.layout_simple_header.view.*
 
 class CashServicesActivity : BaseActivity<ActivityCashServicesBinding>() {
 
@@ -32,7 +31,7 @@ class CashServicesActivity : BaseActivity<ActivityCashServicesBinding>() {
 
         setHeaderTitle(LanguageData.getStringValue("CashService").toString())
 
-        mDataBinding.root.simpleHeaderBack.setOnClickListener {
+        mDataBinding.headerCashServices.simpleHeaderBack.setOnClickListener {
             if (mActivityViewModel.popBackStackTo == -1) {
                 this@CashServicesActivity.finish()
             } else {
@@ -46,14 +45,14 @@ class CashServicesActivity : BaseActivity<ActivityCashServicesBinding>() {
     }
 
     fun setHeaderTitle(title: String) {
-        mDataBinding.headerCashServices.rootView.simpleHeaderTitle.text = title
+        mDataBinding.headerCashServices.simpleHeaderTitle.text = title
     }
 
     fun setHeaderVisibility(isVisible: Boolean) {
         if (isVisible) {
-            mDataBinding.headerCashServices.visibility = View.VISIBLE
+            mDataBinding.headerCashServices.root.visibility = View.VISIBLE
         } else {
-            mDataBinding.headerCashServices.visibility = View.GONE
+            mDataBinding.headerCashServices.root.visibility = View.GONE
         }
     }
 }

@@ -22,7 +22,6 @@ import com.es.marocapp.usecase.consumerregistration.ConsumerRegistrationClickLis
 import com.es.marocapp.usecase.consumerregistration.ConsumerRegistrationViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
-import kotlinx.android.synthetic.main.layout_login_header.view.*
 import java.util.*
 import java.util.regex.Pattern
 

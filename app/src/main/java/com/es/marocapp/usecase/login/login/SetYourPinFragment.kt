@@ -18,7 +18,6 @@ import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.DialogUtils
-import kotlinx.android.synthetic.main.layout_login_header.view.*
 
 /**
  * A simple [Fragment] subclass.
@@ -40,13 +39,13 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
             listener = this@SetYourPinFragment
         }
 
-        mDataBinding.root.groupBack.visibility = View.VISIBLE
+        mDataBinding.setYourPinHeader.groupBack.visibility = View.VISIBLE
 
 //        mDataBinding.root.txtBack.setOnClickListener{
 //            (activity as LoginActivity).navController.navigateUp()
 //        }
 
-        mDataBinding.root.imgBackButton.setOnClickListener{
+        mDataBinding.setYourPinHeader.imgBackButton.setOnClickListener{
             (activity as LoginActivity).navController.navigateUp()
         }
 
@@ -67,7 +66,7 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
             }
         }
 
-        mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("CreateYourPassword")
+        mDataBinding.setYourPinHeader.txtHeaderTitle.text = LanguageData.getStringValue("CreateYourPassword")
 //        mDataBinding.setYourPinHeader.rootView.txtBack.text= LanguageData.getStringValue("BtnTitle_Back")
 
         mDataBinding.inputLayoutEnterPin.hint = LanguageData.getStringValue("EnterPassword")

@@ -21,7 +21,7 @@ import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
-import kotlinx.android.synthetic.main.layout_login_header.view.*
+
 import java.util.regex.Pattern
 
 class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), ForgotPasswordClickListner,
@@ -43,7 +43,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
             listener = this@ForgotPasswordFragment
         }
 
-        mDataBinding.root.groupBack.visibility = View.VISIBLE
+        mDataBinding.forgotPinHeader.groupBack.visibility = View.VISIBLE
 
 //        mDataBinding.root.txtBack.setOnClickListener {
 //            (activity as LoginActivity).navController.navigateUp()
@@ -59,7 +59,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
             arrayOf<InputFilter>(InputFilter.LengthFilter(Constants.APP_MAX_PASSWORD_LENGTH))
 
 
-        mDataBinding.root.imgBackButton.setOnClickListener {
+        mDataBinding.forgotPinHeader.imgBackButton.setOnClickListener {
             (activity as LoginActivity).navController.navigateUp()
         }
 
@@ -101,7 +101,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
     }
 
     private fun setStrings() {
-        mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("ForgotPassword")
+        mDataBinding.forgotPinHeader.txtHeaderTitle.text = LanguageData.getStringValue("ForgotPassword")
 //        mDataBinding.root.txtBack.text= LanguageData.getStringValue("BtnTitle_Back")
 
         mDataBinding.inputLayoutOtp.hint = LanguageData.getStringValue("EnterOTP")

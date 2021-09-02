@@ -23,7 +23,6 @@ import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.bill_payment_detail_row_layout.view.*
 
 class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsBinding>(),
     BillPaymentClickListner {
@@ -85,7 +84,7 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
             ) {
                 mDataBinding.noDataTv.visibility = View.INVISIBLE
             }
-            mDataBinding.autoDML.visibility = View.GONE
+            mDataBinding.autoDML.root.visibility = View.GONE
         }
 
         listOfFatoratiCustomInvoice.clear()
@@ -98,17 +97,17 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
                     ?.contains("TGR")!!
             ) {
                 mActivityViewModel.showAutoDuMorocViews = true
-                mDataBinding.autoDML.rootView.labelle.text =
+                mDataBinding.autoDML.labelle.text =
                     mActivityViewModel?.userSelectedCreancer
-                mDataBinding.autoDML.rootView.billerName.text =
+                mDataBinding.autoDML.billerName.text =
                     mActivityViewModel?.fatoratiStepFourObserver.get()?.globalParams!![0].valeurChamp
                 val nDeFatcure =
                     mActivityViewModel?.fatoratiStepFourObserver.get()?.globalParams!![1].nomChamp + " " + mActivityViewModel?.fatoratiStepFourObserver.get()?.globalParams!![1].valeurChamp
-                mDataBinding.autoDML.rootView.tv_sub_company_name.text = nDeFatcure
+                mDataBinding.autoDML.tvSubCompanyName.text = nDeFatcure
                 Picasso.get().load(mActivityViewModel?.userSelectedCreancerLogo)
-                    .into(mDataBinding.autoDML.rootView.img_sub_company_icon)
+                    .into(mDataBinding.autoDML.imgSubCompanyIcon)
             } else {
-                mDataBinding.autoDML.visibility = View.GONE
+                mDataBinding.autoDML.root.visibility = View.GONE
             }
             for (i in mActivityViewModel.fatoratiStepFourObserver.get()!!.params.indices) {
                 var item = mActivityViewModel.fatoratiStepFourObserver.get()!!.params[i]

@@ -10,7 +10,6 @@ import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.Tools
-import kotlinx.android.synthetic.main.fragment_generate_qr.*
 
 
 class GenerateQrActivity:BaseActivity<FragmentGenerateQrBinding>(){
@@ -23,7 +22,7 @@ class GenerateQrActivity:BaseActivity<FragmentGenerateQrBinding>(){
 
        var qrString= Tools.generateEMVcoString(Constants.CURRENT_USER_MSISDN, "")
         Logger.debugLog("QRString",qrString)
-        imgResult.setImageBitmap(Tools.generateQR(qrString))
+        mDataBinding.imgResult.setImageBitmap(Tools.generateQR(qrString))
         mDataBinding.imgBackButton.setOnClickListener {
             this@GenerateQrActivity.finish()
         }

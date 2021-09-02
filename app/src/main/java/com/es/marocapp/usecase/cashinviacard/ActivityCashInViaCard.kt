@@ -10,8 +10,6 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityCashInViaCardBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseActivity
-import com.es.marocapp.usecase.cashservices.CashServicesViewModel
-import kotlinx.android.synthetic.main.layout_simple_header.view.*
 
 class ActivityCashInViaCard : BaseActivity<ActivityCashInViaCardBinding>() {
 
@@ -38,7 +36,7 @@ class ActivityCashInViaCard : BaseActivity<ActivityCashInViaCardBinding>() {
 
         setHeaderTitle(LanguageData.getStringValue("CashInViaCard").toString())
 
-        mDataBinding.root.simpleHeaderBack.setOnClickListener {
+        mDataBinding.headerCashInViaCard.simpleHeaderBack.setOnClickListener {
             if (mActivityViewModel.popBackStackTo == -1) {
                 this@ActivityCashInViaCard.finish()
             } else {
@@ -48,7 +46,7 @@ class ActivityCashInViaCard : BaseActivity<ActivityCashInViaCardBinding>() {
     }
 
     fun setHeaderTitle(title: String) {
-        mDataBinding.headerCashInViaCard.rootView.simpleHeaderTitle.text = title
+        mDataBinding.headerCashInViaCard.simpleHeaderTitle.text = title
     }
 
 }

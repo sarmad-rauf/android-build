@@ -9,11 +9,6 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityTransferCommisionBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseActivity
-import com.es.marocapp.usecase.transfercommision.TransferCommisionViewModel
-import kotlinx.android.synthetic.main.activity_transfer_commision.*
-import kotlinx.android.synthetic.main.activity_update_profile.*
-import kotlinx.android.synthetic.main.activity_update_profile.headerUpdateProfle
-import kotlinx.android.synthetic.main.layout_activity_header.view.*
 
 class TransferCommisionActivity : BaseActivity<ActivityTransferCommisionBinding>() {
 
@@ -30,7 +25,7 @@ class TransferCommisionActivity : BaseActivity<ActivityTransferCommisionBinding>
         mDataBinding.apply { this.viewmodel=transferCommisionViewModel }
         navHostFragment = supportFragmentManager.findFragmentById(R.id.transfer_commision_host_fragment) as NavHostFragment
         navController=navHostFragment.navController
-        mDataBinding.root.activityHeaderBack.setOnClickListener {
+        mDataBinding.headerTransferCommision.activityHeaderBack.setOnClickListener {
             if (transferCommisionViewModel.popBackStackTo == -1) {
                 this@TransferCommisionActivity.finish()
             } else {
@@ -44,7 +39,7 @@ class TransferCommisionActivity : BaseActivity<ActivityTransferCommisionBinding>
 
     private fun setHeaderChangeObserver() {
         transferCommisionViewModel.headerTitle.observe(this@TransferCommisionActivity,Observer {
-            headerTransferCommision.rootView.activityHeaderTitle.text=it
+            mDataBinding.headerTransferCommision.activityHeaderTitle.text=it
         })
     }
 

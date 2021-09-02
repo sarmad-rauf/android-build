@@ -23,7 +23,6 @@ import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
 import com.google.zxing.integration.android.IntentIntegrator
-import kotlinx.android.synthetic.main.fragment_funds_transfer_enter_msisdn.*
 import java.util.regex.Pattern
 
 
@@ -374,7 +373,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
             } else {
                 var sResult = result.contents
                 sResult = StringBuilder(sResult!!).insert(2, "-").insert(6, "-").toString()
-                input_phone_number.setText(sResult)
+                mDataBinding.inputPhoneNumber.setText(sResult)
             }
         } else {
             // This is important, otherwise the result will not be passed to the fragment

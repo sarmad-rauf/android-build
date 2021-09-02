@@ -12,8 +12,7 @@ import com.es.marocapp.model.responses.Limits
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_home.view.*
+
 
 class AccountDetailsActivity : BaseActivity<LayoutAccountDetailsBinding>(){
 

@@ -13,7 +13,6 @@ import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.CardModel
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.utils.Logger
-import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
 
 

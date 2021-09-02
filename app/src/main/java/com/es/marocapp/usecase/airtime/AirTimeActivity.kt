@@ -31,8 +31,6 @@ import com.es.marocapp.utils.Tools
 import com.es.marocapp.widgets.MarocEditText
 import com.es.marocapp.widgets.MarocMediumTextView
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.layout_activity_header.view.*
-import kotlinx.android.synthetic.main.layout_simple_header.view.*
 import java.util.regex.Pattern
 
 class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
@@ -79,7 +77,7 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
 
         setHeaderTitle(LanguageData.getStringValue("AirTime").toString())
 
-        mDataBinding.root.activityHeaderBack.setOnClickListener {
+        mDataBinding.headerAirTime.activityHeaderBack.setOnClickListener {
             if (mActivityViewModel.popBackStackTo == -1) {
                 this@AirTimeActivity.finish()
             } else {
@@ -106,31 +104,31 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
     }
 
     fun setHeaderTitle(title: String) {
-        mDataBinding.headerAirTime.rootView.activityHeaderTitle.text = title
+        mDataBinding.headerAirTime .activityHeaderTitle.text = title
     }
 
     fun setCompanyIconToolbarVisibility(isVisible : Boolean){
         if(isVisible){
-            mDataBinding.headerAirTime.rootView.headerCompanyIconContainer.visibility = View.VISIBLE
+            mDataBinding.headerAirTime .headerCompanyIconContainer.visibility = View.VISIBLE
         }
         else{
-            mDataBinding.headerAirTime.rootView.headerCompanyIconContainer.visibility = View.GONE
+            mDataBinding.headerAirTime .headerCompanyIconContainer.visibility = View.GONE
         }
     }
 
     fun setHeaderVisibility(isVisible: Boolean) {
         if (isVisible) {
-            mDataBinding.headerAirTime.visibility = View.VISIBLE
+            mDataBinding.headerAirTime.root.visibility = View.VISIBLE
         } else {
-            mDataBinding.headerAirTime.visibility = View.GONE
+            mDataBinding.headerAirTime.root.visibility = View.GONE
         }
     }
 
     fun setVisibilityAndTextToImage(amount : String){
-        mDataBinding.headerAirTime.rootView.img_company_icons.visibility = View.GONE
-        mDataBinding.headerAirTime.rootView.first_letter_icons.visibility = View.VISIBLE
+        mDataBinding.headerAirTime.imgCompanyIcons.visibility = View.GONE
+        mDataBinding.headerAirTime.firstLetterIcons.visibility = View.VISIBLE
 
-        mDataBinding.headerAirTime.rootView.first_letter_icons.text = amount
+        mDataBinding.headerAirTime.firstLetterIcons.text = amount
     }
 
     fun startQRScan(

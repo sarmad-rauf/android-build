@@ -9,8 +9,6 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityUpdateProfileBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseActivity
-import kotlinx.android.synthetic.main.activity_update_profile.*
-import kotlinx.android.synthetic.main.layout_activity_header.view.*
 
 class UpdateProfileActivity : BaseActivity<ActivityUpdateProfileBinding>() {
 
@@ -28,7 +26,7 @@ class UpdateProfileActivity : BaseActivity<ActivityUpdateProfileBinding>() {
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_update_profile_host_fragment) as NavHostFragment
         navConroller = navHostFragment.navController
-        mDataBinding.root.activityHeaderBack.setOnClickListener {
+        mDataBinding.headerUpdateProfle.activityHeaderBack.setOnClickListener {
             if (updateProfileViewModel.popBackStackTo == -1) {
                 this.finish()
             } else {
@@ -43,7 +41,7 @@ class UpdateProfileActivity : BaseActivity<ActivityUpdateProfileBinding>() {
 
     private fun setHeaderChangeObserver() {
         updateProfileViewModel.headerTitle.observe(this, Observer {
-            headerUpdateProfle.rootView.activityHeaderTitle.text = it
+            mDataBinding.headerUpdateProfle.activityHeaderTitle.text = it
         })
     }
 

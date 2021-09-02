@@ -26,7 +26,6 @@ import com.es.marocapp.usecase.billpayment.BillPaymentViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
-import kotlinx.android.synthetic.main.layout_activity_header.view.*
 import java.util.regex.Pattern
 
 
@@ -135,9 +134,9 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
         (activity as BillPaymentActivity).setCompanyIconToolbarVisibility(true)
 
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
-            (activity as BillPaymentActivity).mDataBinding.headerBillPayment.rootView.tv_company_title.text =
+            (activity as BillPaymentActivity).mDataBinding.headerBillPayment.tvCompanyTitle.text =
                 mActivityViewModel.billTypeSelected.get()!!
-            (activity as BillPaymentActivity).mDataBinding.headerBillPayment.rootView.img_company_icons.setImageResource(
+            (activity as BillPaymentActivity).mDataBinding.headerBillPayment.imgCompanyIcons.setImageResource(
                 mActivityViewModel.billTypeSelectedIcon
             )
 
@@ -162,7 +161,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
 
         }
         if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
-            (activity as BillPaymentActivity).mDataBinding.headerBillPayment.rootView.tv_company_title.text =
+            (activity as BillPaymentActivity).mDataBinding.headerBillPayment.tvCompanyTitle.text =
                 mActivityViewModel.fatoratiTypeSelected.get()!!.nomCreancier
 
             mDataBinding.inputLayoutCode.visibility = View.GONE

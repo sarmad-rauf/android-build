@@ -37,8 +37,6 @@ import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.Tools
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.analytics.FirebaseAnalytics
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.layout_side_menu_navigation.view.*
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListeners {
@@ -234,7 +232,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 //            {
 //                mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility=View.GONE
 //            }else{
-            mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility = View.VISIBLE
+            mDataBinding.navigationItem.mtCashDefaulGroup.visibility = View.VISIBLE
             // }
 
         } else {
@@ -249,9 +247,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             }
 
             if (isProfileNameMatchedwithMerchantAgent) {
-                mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility = View.VISIBLE
+                mDataBinding.navigationItem.mtCashDefaulGroup.visibility = View.VISIBLE
             } else {
-                mDataBinding.navigationItem.rootView.mtCashDefaulGroup.visibility = View.GONE
+                mDataBinding.navigationItem.mtCashDefaulGroup.visibility = View.GONE
 
             }
 
@@ -272,34 +270,34 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
 
         if (isProfileMatchedwithUpgradeAbleprofiles) {
-            mDataBinding.navigationItem.rootView.upgradeProfileGroup.visibility = View.VISIBLE
+            mDataBinding.navigationItem.upgradeProfileGroup.visibility = View.VISIBLE
         } else {
-            mDataBinding.navigationItem.rootView.upgradeProfileGroup.visibility = View.GONE
+            mDataBinding.navigationItem.upgradeProfileGroup.visibility = View.GONE
         }
 
         if (Constants.IS_CONSUMER_USER) {
-            mDataBinding.navigationItem.rootView.updateProfile.visibility = View.VISIBLE
+            mDataBinding.navigationItem.updateProfile.visibility = View.VISIBLE
         } else {
-            mDataBinding.navigationItem.rootView.updateProfile.visibility = View.GONE
+            mDataBinding.navigationItem.updateProfile.visibility = View.GONE
         }
     }
 
     private fun setSideMenuListner() {
-        mDataBinding.navigationItem.nav_back_button.setOnClickListener {
+        mDataBinding.navigationItem.navBackButton.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
         }
 
-        mDataBinding.navigationItem.rootView.statementsGroup.setOnClickListener {
+        mDataBinding.navigationItem.statementsGroup.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
             onStatementClickLisnter(true)
         }
 
-        mDataBinding.navigationItem.rootView.balanceAndAccountGroup.setOnClickListener {
+        mDataBinding.navigationItem.balanceAndAccountGroup.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
             startNewActivity(this@MainActivity, AccountDetailsActivity::class.java)
         }
 
-        mDataBinding.navigationItem.rootView.cashInViaCardGroup.setOnClickListener {
+        mDataBinding.navigationItem.cashInViaCardGroup.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
             startActivity(
                 Intent(
@@ -308,21 +306,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
                 )
             )
         }
-        mDataBinding.navigationItem.rootView.upgradeProfileGroup.setOnClickListener {
+        mDataBinding.navigationItem.upgradeProfileGroup.setOnClickListener {
             startNewActivity(this, UpgradeProfileActivity::class.java)
         }
 
-        mDataBinding.navigationItem.rootView.changePasswordGroup.setOnClickListener {
+        mDataBinding.navigationItem.changePasswordGroup.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
             startNewActivity(this@MainActivity, ChangePasswordActivity::class.java)
         }
 
-        mDataBinding.navigationItem.rootView.beneficaryManagementGroup.setOnClickListener {
+        mDataBinding.navigationItem.beneficaryManagementGroup.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
             startActivity(Intent(this@MainActivity, FavoritesActivity::class.java))
         }
 
-        mDataBinding.navigationItem.rootView.mtCashDefaulGroup.setOnClickListener {
+        mDataBinding.navigationItem.mtCashDefaulGroup.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
             if (Constants.IS_DEFAULT_ACCOUNT_SET) {
                 DialogUtils.showUpdateAPPDailog(
@@ -339,12 +337,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             }
         }
 
-        mDataBinding.navigationItem.rootView.updateProfile.setOnClickListener {
+        mDataBinding.navigationItem.updateProfile.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
             startNewActivity(this@MainActivity, UpdateProfileActivity::class.java)
         }
 
-        mDataBinding.navigationItem.rootView.oppositionMTCashGroup.setOnClickListener {
+        mDataBinding.navigationItem.oppositionMTCashGroup.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
 
             val btnTxt = LanguageData.getStringValue("BtnTitle_Call")
@@ -367,7 +365,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             })
         }
 
-        mDataBinding.navigationItem.rootView.changeLanguageGroup.setOnClickListener {
+        mDataBinding.navigationItem.changeLanguageGroup.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
 
             DialogUtils.showChangeLanguageDialogue(this,
@@ -394,7 +392,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
                 })
         }
 
-        mDataBinding.navigationItem.rootView.logOutGroup.setOnClickListener {
+        mDataBinding.navigationItem.logOutGroup.setOnClickListener {
             val confirmationTxt =
                 LanguageData.getStringValue("Message_WantToLogout")
             mDataBinding.drawerLayout.closeDrawer(GravityCompat.START)
@@ -464,48 +462,48 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     }
 
     private fun setSideMenuStrings() {
-        mDataBinding.navigationItem.rootView.nav_title_name.text =
+        mDataBinding.navigationItem.navTitleName.text =
             LanguageData.getStringValue("MySpace")
-        mDataBinding.navigationItem.rootView.personal_information_title.text =
+        mDataBinding.navigationItem.personalInformationTitle.text =
             LanguageData.getStringValue("PersonalInformation")
         //mDataBinding.navigationItem.rootView.nav_logged_in_user_name.text = Constants.balanceInfoAndResponse?.firstname+" "+Constants.balanceInfoAndResponse?.surname
-        mDataBinding.navigationItem.rootView.nav_logged_in_user_name.text =
+        mDataBinding.navigationItem.navLoggedInUserName.text =
             Constants.CURRENT_USER_FIRST_NAME + " " + Constants.CURRENT_USER_LAST_NAME
-        mDataBinding.navigationItem.rootView.nav_logged_in_user_detials.text =
+        mDataBinding.navigationItem.navLoggedInUserDetials.text =
             Constants.balanceInfoAndResponse?.profilename
-        mDataBinding.navigationItem.rootView.nav_logged_in_user_email.text = getUserEmailAddress()
-        mDataBinding.navigationItem.rootView.complete_mt_title.text =
+        mDataBinding.navigationItem.navLoggedInUserEmail.text = getUserEmailAddress()
+        mDataBinding.navigationItem.completeMtTitle.text =
             LanguageData.getStringValue("MTCashAccount")
-        mDataBinding.navigationItem.rootView.cashInViaCardTitle.text =
+        mDataBinding.navigationItem.cashInViaCardTitle.text =
             LanguageData.getStringValue("CashInViaCard")
-        mDataBinding.navigationItem.rootView.balanceAndAccountTitle.text =
+        mDataBinding.navigationItem.balanceAndAccountTitle.text =
             LanguageData.getStringValue("BalanceAndAccounts")
-        mDataBinding.navigationItem.rootView.statementsTitle.text =
+        mDataBinding.navigationItem.statementsTitle.text =
             LanguageData.getStringValue("Statements")
-        mDataBinding.navigationItem.rootView.nav_third_container_title.text =
+        mDataBinding.navigationItem.navThirdContainerTitle.text =
             LanguageData.getStringValue("ManageAccount")
-        mDataBinding.navigationItem.rootView.changePasswordTitle.text =
+        mDataBinding.navigationItem.changePasswordTitle.text =
             LanguageData.getStringValue("ChangePassword")
-        mDataBinding.navigationItem.rootView.beneficaryManagementTitle.text =
+        mDataBinding.navigationItem.beneficaryManagementTitle.text =
             LanguageData.getStringValue("BeneficiaryManagement")
-        mDataBinding.navigationItem.rootView.levelUpTitle.text =
+        mDataBinding.navigationItem.levelUpTitle.text =
             LanguageData.getStringValue("GoToLevel2")
-        mDataBinding.navigationItem.rootView.mtCashDefaultTitle.text =
+        mDataBinding.navigationItem.mtCashDefaultTitle.text =
             LanguageData.getStringValue("MTCashWalletByDefault")
-        mDataBinding.navigationItem.rootView.oppositionMTCashTitle.text =
+        mDataBinding.navigationItem.oppositionMTCashTitle.text =
             LanguageData.getStringValue("OppositionOnMyMWallet")
-        mDataBinding.navigationItem.rootView.changeLanguageTitle.text =
+        mDataBinding.navigationItem.changeLanguageTitle.text =
             LanguageData.getStringValue("ChangeLanguage")
-        mDataBinding.navigationItem.rootView.upgradeProfileTitle.text =
+        mDataBinding.navigationItem.upgradeProfileTitle.text =
             LanguageData.getStringValue("UpgradeProfile")
-        mDataBinding.navigationItem.rootView.logOutTitle.text =
+        mDataBinding.navigationItem.logOutTitle.text =
             LanguageData.getStringValue("LogOut")
     }
 
     fun reflectUpdateProfileChanges() {
-        mDataBinding.navigationItem.rootView.nav_logged_in_user_name.text =
+        mDataBinding.navigationItem.navLoggedInUserName.text =
             Constants.CURRENT_USER_FIRST_NAME + " " + Constants.CURRENT_USER_LAST_NAME
-        mDataBinding.navigationItem.rootView.nav_logged_in_user_email.text = getUserEmailAddress()
+        mDataBinding.navigationItem.navLoggedInUserEmail.text = getUserEmailAddress()
     }
 
     fun getUserEmailAddress(): String {
@@ -539,7 +537,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         mDataBinding.toolbarWelcomeBack.text = LanguageData.getStringValue("WelcomeBack")
 
-        val menu: Menu = mDataBinding.root.nav_view.getMenu()
+        val menu: Menu = mDataBinding.navView.getMenu()
         menu.get(0).title = LanguageData.getStringValue("HOME")
         menu.get(1).title = LanguageData.getStringValue("Transactions")
         menu.get(2).title = LanguageData.getStringValue("Password")
@@ -631,10 +629,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     fun checkCashInViaCardFunctinalityAgainstUser() {
         if (Constants.loginWithCertResponse.allowedMenu.CashInViaCard != null) {
             mDataBinding.dashboardCashInViaCard.visibility = View.VISIBLE
-            mDataBinding.navigationItem.rootView.cashInViaCardGroup.visibility = View.VISIBLE
+            mDataBinding.navigationItem.cashInViaCardGroup.visibility = View.VISIBLE
         } else {
             mDataBinding.dashboardCashInViaCard.visibility = View.GONE
-            mDataBinding.navigationItem.rootView.cashInViaCardGroup.visibility = View.GONE
+            mDataBinding.navigationItem.cashInViaCardGroup.visibility = View.GONE
         }
     }
 

@@ -25,8 +25,6 @@ import com.es.marocapp.usecase.airtime.AirTimeViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.layout_air_tim_bottom_sheet.view.*
-import kotlinx.android.synthetic.main.layout_air_time_main_content.view.*
 import java.util.regex.Pattern
 
 

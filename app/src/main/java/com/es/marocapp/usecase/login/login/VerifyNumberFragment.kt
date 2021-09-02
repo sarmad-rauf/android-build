@@ -28,9 +28,6 @@ import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
-import kotlinx.android.synthetic.main.fragment_login.view.*
-import kotlinx.android.synthetic.main.layout_login_header.view.*
-import kotlinx.android.synthetic.main.toast_layout.view.*
 import java.util.regex.Pattern
 
 /**
@@ -58,13 +55,13 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
             listener = this@VerifyNumberFragment
         }
 
-        mDataBinding.root.groupBack.visibility = View.VISIBLE
+        mDataBinding.verifyNumberHeader.groupBack.visibility = View.VISIBLE
 
 //        mDataBinding.root.txtBack.setOnClickListener {
 //            (activity as LoginActivity).navController.navigateUp()
 //        }
 
-        mDataBinding.root.imgBackButton.setOnClickListener {
+        mDataBinding.verifyNumberHeader.imgBackButton.setOnClickListener {
             (activity as LoginActivity).navController.navigateUp()
         }
 
@@ -97,7 +94,7 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
     }
 
     private fun setStrings() {
-        mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("VerifyYourNumber")?.replace(Constants.OTP_LENGTH_PLACEHOLDER_TO_BE_REPLACED,Constants.APP_OTP_LENGTH.toString())
+        mDataBinding.verifyNumberHeader.txtHeaderTitle.text = LanguageData.getStringValue("VerifyYourNumber")?.replace(Constants.OTP_LENGTH_PLACEHOLDER_TO_BE_REPLACED,Constants.APP_OTP_LENGTH.toString())
         mDataBinding.tvEnterOTPTitile.text= LanguageData.getStringValue("EnterOTP")
 
         mDataBinding.txtOtpNotRecieved.text = LanguageData.getStringValue("OTPNotRecieved")+ " "

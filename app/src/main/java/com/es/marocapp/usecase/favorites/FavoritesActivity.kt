@@ -8,8 +8,6 @@ import androidx.navigation.fragment.NavHostFragment
 import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityFavoritesBinding
 import com.es.marocapp.usecase.BaseActivity
-import com.es.marocapp.usecase.payments.PaymentsViewModel
-import kotlinx.android.synthetic.main.layout_activity_header.view.*
 
 class FavoritesActivity : BaseActivity<ActivityFavoritesBinding>() {
 

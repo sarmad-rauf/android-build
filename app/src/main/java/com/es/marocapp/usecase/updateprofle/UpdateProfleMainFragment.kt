@@ -19,8 +19,6 @@ import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
-import kotlinx.android.synthetic.main.fragment_sign_up_detail.*
-import kotlinx.android.synthetic.main.fragment_update_profle_main.*
 import java.util.*
 import java.util.regex.Pattern
 

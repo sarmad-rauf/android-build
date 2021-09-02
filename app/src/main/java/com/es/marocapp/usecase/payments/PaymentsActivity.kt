@@ -10,8 +10,6 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityPaymentsBinding
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
-import kotlinx.android.synthetic.main.layout_activity_header.view.*
-import kotlinx.android.synthetic.main.layout_confirmation_bill_payment.view.*
 
 class PaymentsActivity :BaseActivity<ActivityPaymentsBinding>() {
 
@@ -41,19 +39,19 @@ class PaymentsActivity :BaseActivity<ActivityPaymentsBinding>() {
 
     fun setCompanyIconToolbarVisibility(isVisible : Boolean){
         if(isVisible){
-            mDataBinding.headerBillPayment.rootView.headerCompanyIconContainer.visibility = View.VISIBLE
+            mDataBinding.headerBillPayment.headerCompanyIconContainer.visibility = View.VISIBLE
         }
         else{
-            mDataBinding.headerBillPayment.rootView.headerCompanyIconContainer.visibility = View.GONE
+            mDataBinding.headerBillPayment.headerCompanyIconContainer.visibility = View.GONE
         }
     }
 
     fun setToolabarVisibility(isVisible : Boolean){
         if(isVisible){
-            mDataBinding.headerBillPayment.visibility = View.VISIBLE
+            mDataBinding.headerBillPayment.root.visibility = View.VISIBLE
         }
         else{
-            mDataBinding.headerBillPayment.visibility = View.GONE
+            mDataBinding.headerBillPayment.root.visibility = View.GONE
         }
     }
 }

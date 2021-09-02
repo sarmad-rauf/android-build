@@ -32,7 +32,6 @@ import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.Tools
-import kotlinx.android.synthetic.main.layout_login_header.view.*
 import java.io.File
 import java.util.*
 import java.util.regex.Pattern
@@ -62,13 +61,13 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
             listener = this@SignUpDetailFragment
         }
 
-        mDataBinding.root.groupBack.visibility = View.VISIBLE
+        mDataBinding.signUpDetailHeader.groupBack.visibility = View.VISIBLE
 
 //        mDataBinding.root.txtBack.setOnClickListener {
 //            (activity as LoginActivity).navController.navigateUp()
 //        }
 
-        mDataBinding.root.imgBackButton.setOnClickListener {
+        mDataBinding.signUpDetailHeader.imgBackButton.setOnClickListener {
             (activity as LoginActivity).navController.navigateUp()
         }
         mDataBinding.inputNationalID.filters = arrayOf<InputFilter>(
@@ -87,7 +86,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
 
     private fun setStrings() {
 //        mDataBinding.root.txtBack.text= LanguageData.getStringValue("BtnTitle_Back")
-        mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("CreateYourAccount")
+        mDataBinding.signUpDetailHeader.txtHeaderTitle.text = LanguageData.getStringValue("CreateYourAccount")
         mDataBinding.inputLayoutFirstName.hint = LanguageData.getStringValue("EnterFirstName")
         mDataBinding.inputLayoutLastName.hint = LanguageData.getStringValue("EnterLastName")
         mDataBinding.inputLayoutDateOfBirth.hint = LanguageData.getStringValue("EnterDateOfBirth")

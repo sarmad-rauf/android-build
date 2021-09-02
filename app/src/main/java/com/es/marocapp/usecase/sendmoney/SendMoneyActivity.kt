@@ -28,7 +28,6 @@ import com.es.marocapp.widgets.MarocEditText
 import com.es.marocapp.widgets.MarocMediumTextView
 import com.google.android.material.textfield.TextInputLayout
 import com.google.zxing.integration.android.IntentIntegrator
-import kotlinx.android.synthetic.main.layout_simple_header.view.*
 import org.apache.commons.lang3.StringUtils
 import java.util.regex.Pattern
 
@@ -63,7 +62,7 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
             supportFragmentManager.findFragmentById(R.id.nav_send_money_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        mDataBinding.root.simpleHeaderBack.setOnClickListener {
+        mDataBinding.headerBillPayment.simpleHeaderBack.setOnClickListener {
             if (mActivityViewModel.popBackStackTo == -1) {
                 this@SendMoneyActivity.finish()
             } else {
@@ -119,14 +118,14 @@ class SendMoneyActivity : BaseActivity<ActivitySendMoneyBinding>() {
     }
 
     fun setHeaderTitle(title: String) {
-        mDataBinding.headerBillPayment.rootView.simpleHeaderTitle.text = title
+        mDataBinding.headerBillPayment.simpleHeaderTitle.text = title
     }
 
     fun setHeaderVisibility(isVisible: Boolean) {
         if (isVisible) {
-            mDataBinding.headerBillPayment.visibility = View.VISIBLE
+            mDataBinding.headerBillPayment.root.visibility = View.VISIBLE
         } else {
-            mDataBinding.headerBillPayment.visibility = View.GONE
+            mDataBinding.headerBillPayment.root.visibility = View.GONE
         }
     }
 

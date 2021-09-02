@@ -368,12 +368,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                             showPopUp()
                             Constants.IS_DEFAULT_ACCOUNT_SET = false
                             (activity as MainActivity).setViewsVisibility()
-                            Logger.debugLog("Abro","show popup if false")
                         } else {
                             Constants.IS_DEFAULT_ACCOUNT_SET = true
                             (activity as MainActivity).setViewsVisibility()
                             (activity as MainActivity).startTutorialsTrail()
-                            Logger.debugLog("Abro","true default account acount status")
                         }
                     }
                 } else {

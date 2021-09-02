@@ -22,7 +22,6 @@ import com.es.marocapp.usecase.airtime.AirTimeViewModel
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
-import kotlinx.android.synthetic.main.layout_activity_header.view.*
 import java.util.regex.Pattern
 
 class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirTimeClickListner,
@@ -86,9 +85,9 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
         }
         mDataBinding.spinnerSelectFavorites.onItemSelectedListener = this@AirTimeMsisdnFragment
 
-        (activity as AirTimeActivity).mDataBinding.headerAirTime.rootView.tv_company_title.text =
+        (activity as AirTimeActivity).mDataBinding.headerAirTime.tvCompanyTitle.text =
             Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.airTimeAmountSelected.get()!!
-        (activity as AirTimeActivity).mDataBinding.headerAirTime.rootView.img_company_icons.setImageResource(
+        (activity as AirTimeActivity).mDataBinding.headerAirTime.imgCompanyIcons.setImageResource(
             R.drawable.others_blue
         )
 

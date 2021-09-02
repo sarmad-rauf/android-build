@@ -27,9 +27,6 @@ import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.usecase.termsandcondiitons.TermsAndConditions
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
-import kotlinx.android.synthetic.main.fragment_login.view.*
-import kotlinx.android.synthetic.main.layout_login_header.view.*
-import kotlinx.android.synthetic.main.toast_layout.view.*
 import java.util.regex.Pattern
 
 
@@ -57,7 +54,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
             listener = this@LoginNumberFragment
         }
 
-        mDataBinding.root.txtHeaderTitle.text = getString(R.string.enter_your_number)
+        mDataBinding.loginHeader.txtHeaderTitle.text = getString(R.string.enter_your_number)
 
         /*mDataBinding.root.languageSpinner.visibility = View.VISIBLE
         mDataBinding.root.languageSpinner.onItemSelectedListener = this
@@ -110,7 +107,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
     }
 
     private fun setStrings() {
-        mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("EnterMsisdnToProceed")
+        mDataBinding.loginHeader.txtHeaderTitle.text = LanguageData.getStringValue("EnterMsisdnToProceed")
         mDataBinding.btnLogin.text = LanguageData.getStringValue("BtnTitle_Login")
         if(mActivityViewModel.isResetPassowrdFlow){
             mActivityViewModel.isResetPassowrdFlow = false
@@ -146,8 +143,8 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
 
     override fun onLoginButtonClick(view: View) {
         if (isRegFlow) {
-            if (mDataBinding.root.cb_Terms.isChecked) {
-                mDataBinding.root.toast_layout_root.visibility = View.GONE
+            if (mDataBinding.cbTerms.isChecked) {
+               // mDataBinding.toast_layout_root.visibility = View.GONE
                 mActivityViewModel.isSignUpFlow.set(true)
                 //todo Registration Flow Changed Fragment Navigation
 //                (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_signUpDetailFragment)
@@ -360,22 +357,22 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
     private fun showTermsConditionsAndSignup() {
         // mDataBinding.root.toast_layout_root.visibility=View.VISIBLE
 
-        mDataBinding.root.txtHeaderTitle.text = LanguageData.getStringValue("CreateYourAccount")
+        mDataBinding.loginHeader.txtHeaderTitle.text = LanguageData.getStringValue("CreateYourAccount")
         mDataBinding.inputLayoutPhoneNumber.isEnabled = false
         mDataBinding.btnLogin.text = LanguageData.getStringValue("BtnTitle_Submit")
-        mDataBinding.root.tvMsg.text =
-            LanguageData.getStringValue("YouMustAgreeToTermsAndConditionsToProceedFurther")
-        mDataBinding.root.cb_Terms.visibility = View.VISIBLE
-        mDataBinding.root.agreeTv.visibility = View.VISIBLE
-        mDataBinding.root.termsTv.visibility = View.VISIBLE
+       // mDataBinding.tvMsg.text =
+         //   LanguageData.getStringValue("YouMustAgreeToTermsAndConditionsToProceedFurther")
+        mDataBinding.cbTerms.visibility = View.VISIBLE
+        mDataBinding.agreeTv.visibility = View.VISIBLE
+        mDataBinding.termsTv.visibility = View.VISIBLE
       /*  val text =
             LanguageData.getStringValue("AgreeTo") + LanguageData.getStringValue(
                 "TermsConditionsCaps"
             )*/
 
-        mDataBinding.root.termsTv.setPaintFlags(mDataBinding.root.termsTv.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
-        mDataBinding.root.agreeTv.text = LanguageData.getStringValue("AgreeTo")
-        mDataBinding.root.termsTv.text = LanguageData.getStringValue("TermsConditionsCaps")
+        mDataBinding.termsTv.setPaintFlags(mDataBinding.termsTv.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG)
+        mDataBinding.agreeTv.text = LanguageData.getStringValue("AgreeTo")
+        mDataBinding.termsTv.text = LanguageData.getStringValue("TermsConditionsCaps")
 
     /*    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             mDataBinding.root.cb_Terms.setText(
@@ -386,9 +383,9 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
             mDataBinding.root.cb_Terms.setText(Html.fromHtml(text), TextView.BufferType.SPANNABLE)
         }*/
 
-        mDataBinding.root.cross.setOnClickListener {
-            mDataBinding.root.toast_layout_root.visibility = View.GONE
-        }
+//        mDataBinding.root.cross.setOnClickListener {
+//            mDataBinding.root.toast_layout_root.visibility = View.GONE
+//        }
 
         mDataBinding.inputPhoneNumberHint.visibility = View.GONE
         mDataBinding.inputLayoutPhoneNumber.hint = LanguageData.getStringValue("EnterMobileNumber")

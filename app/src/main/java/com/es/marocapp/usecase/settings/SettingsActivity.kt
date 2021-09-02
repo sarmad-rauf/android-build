@@ -21,7 +21,6 @@ import com.es.marocapp.usecase.favorites.FavoritesActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Tools
-import kotlinx.android.synthetic.main.activity_settings.view.*
 
 
 class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
@@ -102,24 +101,24 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
     }
 
     private fun setStrings() {
-        mDataBinding.root.activityHeaderTitle.text = LanguageData.getStringValue("Settings")
-        mDataBinding.root.tvChangeLanguage.text = LanguageData.getStringValue("ChangeLanguage")
-        mDataBinding.root.tvManageFavorites.text = LanguageData.getStringValue("ManageFavorites")
-        mDataBinding.root.tvBlockAccount.text = LanguageData.getStringValue("BlockAccount")
-        mDataBinding.root.btnUpdate.text = LanguageData.getStringValue("BtnTitle_Update")
-        mDataBinding.root.tvDefaultAccount.text = LanguageData.getStringValue("SetAsDefault")
+        mDataBinding.activityHeaderTitle.text = LanguageData.getStringValue("Settings")
+        mDataBinding.tvChangeLanguage.text = LanguageData.getStringValue("ChangeLanguage")
+        mDataBinding.tvManageFavorites.text = LanguageData.getStringValue("ManageFavorites")
+        mDataBinding.tvBlockAccount.text = LanguageData.getStringValue("BlockAccount")
+        mDataBinding.btnUpdate.text = LanguageData.getStringValue("BtnTitle_Update")
+        mDataBinding.tvDefaultAccount.text = LanguageData.getStringValue("SetAsDefault")
 
 
 
 
         if(LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_EN)){
-            mDataBinding.root.tvLanguage.text= resources.getString(R.string.language_english)
+            mDataBinding.tvLanguage.text= resources.getString(R.string.language_english)
         }
         else if(LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_FR)){
-            mDataBinding.root.tvLanguage.text= resources.getString(R.string.language_french)
+            mDataBinding.tvLanguage.text= resources.getString(R.string.language_french)
         }
         else if(LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_AR)){
-            mDataBinding.root.tvLanguage.text= resources.getString(R.string.language_arabic)
+            mDataBinding.tvLanguage.text= resources.getString(R.string.language_arabic)
         }
     }
 
@@ -284,7 +283,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
 
             override fun onChangeLanguageDialogYesClickListner(selectedLanguage: String) {
                 //Toast.makeText(this@SettingsActivity,selectedLanguage,Toast.LENGTH_LONG).show()
-                mDataBinding.root.tvLanguage.text=selectedLanguage
+                mDataBinding.tvLanguage.text=selectedLanguage
                 LocaleManager.languageToBeChangedAfterAPI=selectedLanguage
 
                 var langParam=""

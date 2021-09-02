@@ -13,7 +13,7 @@ import com.es.marocapp.model.responses.GetAirTimeUseCasesResponse
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.airtime.AirTimeActivity
 import com.es.marocapp.usecase.airtime.AirTimeViewModel
-import kotlinx.android.synthetic.main.layout_activity_header.view.*
+
 
 class AirTimeAmountFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
 

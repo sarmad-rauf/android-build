@@ -10,8 +10,6 @@ import com.es.marocapp.R
 import com.es.marocapp.databinding.ActivityConsumerRegistrationBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.usecase.BaseActivity
-import com.es.marocapp.usecase.sendmoney.SendMoneyViewModel
-import kotlinx.android.synthetic.main.layout_simple_header.view.*
 
 class ConsumerRegistrationActivity : BaseActivity<ActivityConsumerRegistrationBinding>() {
     lateinit var mActivityViewModel: ConsumerRegistrationViewModel
@@ -29,7 +27,7 @@ class ConsumerRegistrationActivity : BaseActivity<ActivityConsumerRegistrationBi
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_consumer_registration_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        mDataBinding.root.simpleHeaderBack.setOnClickListener {
+        mDataBinding.headerConsumerRegistration.simpleHeaderBack.setOnClickListener {
             if (mActivityViewModel.popBackStackTo == -1) {
                 this@ConsumerRegistrationActivity.finish()
             } else {
@@ -46,14 +44,14 @@ class ConsumerRegistrationActivity : BaseActivity<ActivityConsumerRegistrationBi
     }
 
     fun setHeaderTitle(title : String){
-        mDataBinding.headerConsumerRegistration.rootView.simpleHeaderTitle.text = title
+        mDataBinding.headerConsumerRegistration.simpleHeaderTitle.text = title
     }
 
     fun setHeaderVisibility(isVisible: Boolean){
         if(isVisible){
-            mDataBinding.headerConsumerRegistration.visibility = View.VISIBLE
+            mDataBinding.headerConsumerRegistration.root.visibility = View.VISIBLE
         }else{
-            mDataBinding.headerConsumerRegistration.visibility = View.GONE
+            mDataBinding.headerConsumerRegistration.root.visibility = View.GONE
         }
     }
 }

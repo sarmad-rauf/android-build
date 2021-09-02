@@ -15,7 +15,6 @@ import com.es.marocapp.usecase.approvals.ApprovalFragment
 import com.es.marocapp.usecase.approvals.ApprovalViewModel
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
-import kotlinx.android.synthetic.main.fragment_approval_success.*
 
 class ApprovalSuccessFragment : BaseFragment<FragmentApprovalSuccessBinding>(),
     ApprovalSuccessClickListener {
@@ -67,7 +66,7 @@ class ApprovalSuccessFragment : BaseFragment<FragmentApprovalSuccessBinding>(),
     private fun subscribeForGetBalanceResponse() {
         approvalViewModel.getBalanceResponseListner.observe(this, Observer {
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                newBalanceVal.text=it.currnecy.plus(it.amount)
+               mDataBinding.newBalanceVal.text=it.currnecy.plus(it.amount)
 
             }else{
                 DialogUtils.showErrorDialoge(activity,it.description)
@@ -77,8 +76,8 @@ class ApprovalSuccessFragment : BaseFragment<FragmentApprovalSuccessBinding>(),
 
     private fun setUIData() {
 
-        tvCompanyNameVal.text=userApprovalData.approvaltype
-        tvOwnerNameVal.text=userApprovalData.approvalid
+        mDataBinding.tvCompanyNameVal.text=userApprovalData.approvaltype
+        mDataBinding.tvOwnerNameVal.text=userApprovalData.approvalid
 
         mDataBinding.feeValue.text=userApprovalData?.fee?.currency.plus(" ").plus(userApprovalData?.fee?.amount)
 

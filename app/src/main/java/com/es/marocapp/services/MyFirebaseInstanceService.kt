@@ -9,7 +9,6 @@ import com.es.marocapp.config.Config
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.NotificationUtils
-import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -20,12 +19,11 @@ import org.json.JSONObject
 class MyFirebaseInstanceService : FirebaseMessagingService() {
 
     override fun onNewToken(p0: String) {
-        val refreshedToken = FirebaseInstanceId.getInstance().token
         FirebaseMessaging.getInstance().subscribeToTopic("all")
-        Logger.debugLog(TAG, "Refreshed token: $refreshedToken")
+        Logger.debugLog(TAG, "Refreshed token: $p0")
 
 /* If you want to send messages to this application instance or manage this apps subscriptions on the server side, send the Instance ID token to your app server.*/sendRegistrationToServer(
-            refreshedToken
+            p0
         )
     }
 
