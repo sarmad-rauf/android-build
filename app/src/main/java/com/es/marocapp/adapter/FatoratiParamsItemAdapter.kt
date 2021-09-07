@@ -69,7 +69,7 @@ class FatoratiParamsItemAdapter(
 
     @SuppressLint("ResourceAsColor")
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         val viewType = getItemViewType(position)
         if(viewType==INPUT_FIELD){
             val fieldHolder: FavoritesItemViewHolder =

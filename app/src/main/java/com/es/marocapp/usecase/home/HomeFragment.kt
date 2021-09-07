@@ -104,7 +104,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 subscribeForSetDefaultAccountStatus()
                 subscribeForVerifyOTPForSetDefaultAccountStatus()
             }else{
-                var currentProfile = Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
+                val currentProfile = Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
 
                 var isProfileNameMatched: Boolean = false
                 for (i in Constants.MERCHENTAGENTPROFILEARRAY.indices) {
@@ -237,12 +237,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 /*Constants.displayTutorial(activity!!,mDataBinding.quickRechargeContainer,LanguageData.getStringValue("QuickRechargeTutorial").toString()
                     ,R.drawable.ic_tutorial_home_quick_recharge)*/
             }else{
-                var itemPos = mDataBinding.quickRechargeSpinner.selectedItemPosition
+                val itemPos = mDataBinding.quickRechargeSpinner.selectedItemPosition
                 var amount = Constants.quickRechargeAmountsList.get(itemPos)
                 amount = amount.removePrefix("DH")
                 amount = amount.substringBefore("DH")
                 quickRechargeSelectedAmount = amount.trim()
-                var intent = Intent(
+                val intent = Intent(
                     activity as MainActivity,
                     AirTimeActivity::class.java
                 )
@@ -333,7 +333,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
 
     private fun subscribeForDefaultAccountStatus() {
 
-       var currentProfile = Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
+       val currentProfile = Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
 
         var isProfileNameMatched: Boolean = false
         for (i in Constants.MERCHENTAGENTPROFILEARRAY.indices) {
@@ -443,8 +443,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     private fun showOTPdialogue() {
         DialogUtils.showDefaultAccountOTPDialogue(activity, object : DialogUtils.OnOTPDialogClickListner {
 
-            override fun onOTPDialogYesClickListner(otp: String) {
-                homeViewModel.requestForVerifyOTPForSetDefaultAccount(context, referenceNumber, otp)
+            override fun onOTPDialogYesClickListner(password: String) {
+                homeViewModel.requestForVerifyOTPForSetDefaultAccount(context, referenceNumber, password)
             }
 
             override fun onOTPDialogNoClickListner() {
@@ -574,7 +574,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                         }
 
                         LanguageData.getStringValue("AirTime").toString() -> {
-                            var intent = Intent(
+                            val intent = Intent(
                                 activity as MainActivity,
                                 AirTimeActivity::class.java
                             )

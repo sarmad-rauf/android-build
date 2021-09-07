@@ -1,9 +1,12 @@
 package com.es.marocapp.adapter
 
+import android.annotation.SuppressLint
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.es.marocapp.R
@@ -21,7 +24,8 @@ class ApprovalsItemAdapter(private val approvalsItems: ArrayList<Approvaldetail>
 
     override fun onBindViewHolder(holder: ApprovalsItemViewHolder, position: Int) {
         holder.approvalItemName.text = approvalsItems[position].approvaltype
-        holder.approvalItemType.text = approvalsItems[position]?.amount?.currency.plus(" ").plus(approvalsItems[position]?.amount?.amount)
+        holder.approvalItemType.text = approvalsItems[position].amount?.currency.plus(" ").plus(
+            approvalsItems[position].amount?.amount)
 
         holder.mApprovalsItemLayout.setOnClickListener {
             listner.onApprovalItemTypeClick(position)
