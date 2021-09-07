@@ -68,7 +68,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                             
 
                         } else {
-                            errorText.postValue(result?.description)
+                            errorText.postValue(result?.description!!)
                         }
 
 
@@ -256,7 +256,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                             }
 
                         } else {
-                            errorText.postValue(result?.description)
+                            errorText.postValue(result?.description!!)
                         }
 
 

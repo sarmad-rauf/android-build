@@ -111,7 +111,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
 
                         } else {
-                            errorText.postValue(result?.description)
+                            errorText.postValue(result?.description!!)
                         }
 
 
@@ -167,7 +167,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
 
                         } else {
-                            errorText.postValue(result?.description)
+                            errorText.postValue(result?.description!!)
                         }
 
 

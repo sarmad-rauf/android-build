@@ -137,7 +137,7 @@ class UpgradeProfileViewModel(application: Application) : AndroidViewModel(appli
                                 }
                             }
                         } else {
-                            errorText.postValue(result?.description)
+                            errorText.postValue(result?.description!!)
                         }
                     },
                     { error ->
