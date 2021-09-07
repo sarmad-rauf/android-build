@@ -47,7 +47,7 @@ class BillPaymentExpandableAdapter(
             convertView = infalInflater.inflate(R.layout.bill_payment_sub_menu_row_layout, null)
         }
         val childCompanyName = convertView?.findViewById(R.id.tv_sub_company_name) as TextView
-        val childCompanyIcon = convertView?.findViewById(R.id.img_sub_company_icon) as ImageView
+        val childCompanyIcon = convertView.findViewById(R.id.img_sub_company_icon) as ImageView
 
         childCompanyName.text = childText.subCompanyTitle
         Logger.debugLog("inwi", "title ${childText.subCompanyTitle}")
@@ -89,7 +89,7 @@ class BillPaymentExpandableAdapter(
     override fun getGroupView(
         groupPosition: Int, isExpanded: Boolean,
         convertView: View?, parent: ViewGroup?
-    ): View? {
+    ): View {
         var convertView: View? = convertView
         val headerTitle = getGroup(groupPosition) as BillPaymentMenuModel
         if (convertView == null) {
@@ -98,8 +98,8 @@ class BillPaymentExpandableAdapter(
             convertView = infalInflater.inflate(R.layout.bill_payment_menu_row_layout, null)
         }
         val parentCompanyName = convertView?.findViewById(R.id.tv_company_name) as TextView
-        val parentCompanyIcon = convertView?.findViewById(R.id.img_company_icon) as ImageView
-        val groupState = convertView?.findViewById(R.id.img_list_state) as ImageView
+        val parentCompanyIcon = convertView.findViewById(R.id.img_company_icon) as ImageView
+        val groupState = convertView.findViewById(R.id.img_list_state) as ImageView
 
         if (isExpanded) {
             groupState.setImageResource(R.drawable.list_open_icon)

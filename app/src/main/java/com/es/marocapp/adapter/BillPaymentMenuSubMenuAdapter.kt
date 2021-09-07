@@ -53,7 +53,7 @@ class BillPaymentMenuSubMenuAdapter(
         group: ExpandableGroup<*>,
         childIndex: Int
     ) {
-        val artist: BillPaymentSubMenuModel = group.items[childIndex] as BillPaymentSubMenuModel
+      //  val artist: BillPaymentSubMenuModel = group.items[childIndex] as BillPaymentSubMenuModel
 //        holder.setSubItemText(artist.subItemName)
         /*when (flatPosition) {
             2 -> holder.subItemLeftIcon.setImageDrawable(mContext.getDrawable(R.drawable.epi_add_credit_debit))
@@ -73,12 +73,12 @@ class BillPaymentMenuSubMenuAdapter(
         } else {
             holder.listState.setImageResource(R.drawable.list_closed_icon)
         }
-        when (flatPosition) {
-            /*0, 1 -> holder.leftIcon.setImageDrawable(mContext.getDrawable(R.drawable.epi_add_btn))
-            2 -> holder.leftIcon.setImageDrawable(mContext.getDrawable(R.drawable.epi_view_bank))
-            3 -> holder.leftIcon.setImageDrawable(mContext.getDrawable(R.drawable.epi_view_card))
-            else -> holder.leftIcon.setImageDrawable(mContext.getDrawable(R.drawable.epi_icon))*/
-        }
+//        when (flatPosition) {
+//            /*0, 1 -> holder.leftIcon.setImageDrawable(mContext.getDrawable(R.drawable.epi_add_btn))
+//            2 -> holder.leftIcon.setImageDrawable(mContext.getDrawable(R.drawable.epi_view_bank))
+//            3 -> holder.leftIcon.setImageDrawable(mContext.getDrawable(R.drawable.epi_view_card))
+//            else -> holder.leftIcon.setImageDrawable(mContext.getDrawable(R.drawable.epi_icon))*/
+//        }
     }
 
     inner class BillPaymentMenuItemViewHolder(itemView: View) :

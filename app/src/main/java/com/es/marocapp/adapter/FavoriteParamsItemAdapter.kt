@@ -67,7 +67,6 @@ class FavoriteParamsItemAdapter(
            return TsavItemViewHolder(view)
        }
     }
-
     @SuppressLint("ResourceAsColor")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, @SuppressLint("RecyclerView") position: Int) {
