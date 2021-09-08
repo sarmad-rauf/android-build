@@ -4,6 +4,7 @@ import android.os.Build;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Base64;
 import org.bouncycastle.crypto.DataLengthException;
@@ -59,7 +60,7 @@ public class AesGcm256 {
     public static String encrypt(String PlainText, byte[] key, byte[] iv) {
         String sR = "";
         try {
-            byte[] plainBytes = PlainText.getBytes("UTF-8");
+            byte[] plainBytes = PlainText.getBytes(StandardCharsets.UTF_8);
 
             GCMBlockCipher cipher = new GCMBlockCipher(new AESFastEngine());
             AEADParameters parameters =
@@ -76,7 +77,7 @@ public class AesGcm256 {
             else {
                 sR = android.util.Base64.encodeToString(encryptedBytes, android.util.Base64.NO_WRAP);
             }
-        } catch (UnsupportedEncodingException | IllegalArgumentException |
+        } catch (IllegalArgumentException |
                 IllegalStateException | DataLengthException | InvalidCipherTextException ex) {
             System.out.println(ex.getMessage());
         }
@@ -105,7 +106,7 @@ public class AesGcm256 {
                     (encryptedBytes, 0, encryptedBytes.length, plainBytes, 0);
             cipher.doFinal(plainBytes, retLen);
 
-            sR = new String(plainBytes, Charset.forName("UTF-8"));
+            sR = new String(plainBytes, StandardCharsets.UTF_8);
         } catch (IllegalArgumentException | IllegalStateException |
                 DataLengthException | InvalidCipherTextException ex) {
             System.out.println(ex.getMessage());
