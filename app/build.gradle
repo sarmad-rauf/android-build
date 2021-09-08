@@ -10,7 +10,6 @@ def baseUrlType = 2//1:Production,2:Staging,3:Development,4: DR Disaster Recover
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.3"
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.es.marocapp"
@@ -63,7 +62,7 @@ android {
             buildConfigField "boolean", "LOG_ENABLED", "true"
 
             debuggable true
-            minifyEnabled true
+            minifyEnabled false
         }
         release {
             if (baseUrlType == 1) {//Production
@@ -136,7 +135,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:19.0.1'
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
     implementation 'com.google.firebase:firebase-crashlytics:18.2.1'
-    implementation 'com.google.firebase:firebase-messaging:22.0.0'
     implementation project(path: ':tutoshowcase')
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
