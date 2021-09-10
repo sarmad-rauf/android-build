@@ -61,8 +61,8 @@ android {
             buildConfigField "boolean", "LOG_ENABLED", "true"
 
             debuggable true
-//            minifyEnabled true
-//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
         }
         release {
@@ -77,10 +77,10 @@ android {
             }
 
             debuggable false
-//            shrinkResources true
-//            minifyEnabled true
-//
-//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            shrinkResources false
+            minifyEnabled false
+
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             buildConfigField "boolean", "SSL_ENABLED", "false"
             buildConfigField "boolean", "LOG_ENABLED", "false"
