@@ -119,7 +119,7 @@ class FundsTransferPendingFragment : BaseFragment<FragmentFundsTransferPendingBi
 
     }
 
-    override fun onNextClickListner(view: View) {
+    override fun onNextBtnClickListner(view: View) {
         mActivityViewModel.isUserRegistered.set(false)
         mActivityViewModel.isFundTransferUseCase.set(false)
         mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set(false)

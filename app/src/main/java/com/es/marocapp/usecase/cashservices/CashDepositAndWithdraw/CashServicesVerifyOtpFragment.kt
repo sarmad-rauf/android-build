@@ -91,7 +91,7 @@ class CashServicesVerifyOtpFragment : BaseFragment<FragmentCashServicesVerifyOtp
             })
     }
 
-    override fun onNextClickListner(view: View) {
+    override fun onNextBtnClickListner(view: View) {
         if (mDataBinding.inputVerifyOtp.text.isNullOrEmpty()) {
             mDataBinding.inputLayoutVerifyOtp.error = "Please Enter Valid OTP"
             mDataBinding.inputLayoutVerifyOtp.isErrorEnabled = true

@@ -299,7 +299,7 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
             })
     }
 
-    override fun onNextClickListner(view: View) {
+    override fun onNextBtnClickListner(view: View) {
         //TODO MSISDN Lenght Check
         if (mDataBinding.inputPhoneNumber.text.isNotEmpty() && mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_MSISDN_LENGTH.toInt() - 2) {
             mDataBinding.inputLayoutPhoneNumber.error =

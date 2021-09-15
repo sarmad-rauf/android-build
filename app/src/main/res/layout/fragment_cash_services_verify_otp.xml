@@ -2,9 +2,6 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
-        <import type="android.view.View" />
-
         <variable
             name="viewmodel"
             type="com.es.marocapp.usecase.cashservices.CashServicesViewModel" />
@@ -76,7 +73,7 @@
             android:textAllCaps="false"
             android:background="@drawable/button_enable"
             android:layout_marginTop="@dimen/_16sdp"
-            android:onClick="@{listner::onNextClickListner}"
+            android:onClick="@{listner::onNextBtnClickListner}"
             android:textColor="@color/colorWhite"
             app:layout_constraintTop_toBottomOf="@+id/txtOtpNotRecieved"
             app:layout_constraintEnd_toEndOf="@+id/input_layout_verify_otp"

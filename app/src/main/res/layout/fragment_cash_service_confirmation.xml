@@ -596,7 +596,7 @@
                 android:layout_margin="@dimen/_16sdp"
                 android:background="@drawable/button_enable"
                 android:padding="@dimen/_8sdp"
-                android:onClick="@{listner::onNextClickListner}"
+                android:onClick="@{listner::onNextBtnClickListner}"
                 android:text="@{viewmodel.trasferTypeSelected}"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_16ssp"

@@ -168,7 +168,7 @@ class AirTimeMsisdnFragment : BaseFragment<FragmentAirTimeMsisdnBinding>(), AirT
             })
     }
 
-    override fun onNextClickListner(view: View) {
+    override fun onNextBtnClickListner(view: View) {
         if (isValidForAll()) {
             mActivityViewModel.requestForAirTimeQuoteApi(activity, msisdnEntered)
         }

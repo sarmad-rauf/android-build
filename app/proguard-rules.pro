@@ -22,4 +22,7 @@
 
 -keep class com.es.marocapp.model** { *; }
 -keep class com.es.marocapp.usecase.approvals.model** { *; }
+-keepclassmembers class * extends android.app.Activity {
+     public void *(android.view.View);
+ }
 

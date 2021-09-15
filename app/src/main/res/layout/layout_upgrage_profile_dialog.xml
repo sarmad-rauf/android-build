@@ -186,7 +186,6 @@
             android:paddingEnd="@dimen/_32sdp"
             android:gravity="center"
             android:background="@drawable/button_enable"
-            android:onClick="@{listner::onNextClickListner}"
             android:padding="@dimen/_8sdp"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/_16ssp"
@@ -194,7 +193,7 @@
 
             app:layout_constraintStart_toEndOf="@id/upgradeProfile_dialog_no_btn"
             app:layout_constraintTop_toBottomOf="@+id/selectedFileLayout" />
-
+<!--        upgradeProfile_dialog_yes_btn-->
         <com.es.marocapp.widgets.MarocButton
             android:id="@+id/upgradeProfile_dialog_no_btn"
             android:layout_width="wrap_content"

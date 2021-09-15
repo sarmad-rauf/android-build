@@ -147,7 +147,7 @@ class AirTimeSuccessFragment : BaseFragment<FragmentAirTimeSuccessLayoutBinding>
         mDataBinding.receiverNameGroup.visibility = View.GONE
     }
 
-    override fun onNextClickListner(view: View) {
+    override fun onNextBtnClickListner(view: View) {
         mActivityViewModel.isRechargeFixeUseCase.set(false)
         mActivityViewModel.isRechargeMobileUseCase.set(false)
         Constants.HEADERS_FOR_PAYEMNTS = false

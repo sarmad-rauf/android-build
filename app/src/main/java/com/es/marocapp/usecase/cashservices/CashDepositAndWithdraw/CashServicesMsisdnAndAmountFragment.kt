@@ -164,7 +164,7 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
             })
     }
 
-    override fun onNextClickListner(view: View) {
+    override fun onNextBtnClickListner(view: View) {
         if (isValidForAll()) {
             if (mActivityViewModel.isDepositUseCase.get()!!) {
 //                mActivityViewModel.requestForGenerateOtpApi(

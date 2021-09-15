@@ -9,10 +9,6 @@
             name="viewmodel"
             type="com.es.marocapp.usecase.cashinviacard.CashInViaCardViewModel" />
 
-        <variable
-            name="listner"
-            type="com.es.marocapp.usecase.cashinviacard.CashInViaCardClickListners" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -85,7 +85,7 @@ class CashServicesSuccessFragment : BaseFragment<FragmentCashServicesSuccessBind
 
     }
 
-    override fun onNextClickListner(view: View) {
+    override fun onNextBtnClickListner(view: View) {
         mActivityViewModel.isDepositUseCase.set(false)
         mActivityViewModel.isWithdrawUseCase.set(false)
         (activity as CashServicesActivity).startNewActivityAndClear(

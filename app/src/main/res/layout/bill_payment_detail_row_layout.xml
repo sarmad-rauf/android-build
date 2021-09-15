@@ -27,7 +27,6 @@
         android:layout_marginEnd="@dimen/_8sdp"
         app:layout_constraintBottom_toTopOf="@id/tv_sub_company_name"
         app:layout_constraintStart_toEndOf="@+id/img_sub_company_icon"
-        app:layout_constraintEnd_toStartOf="@+id/img_list_state"
         android:layout_marginTop="@dimen/_16sdp"
         android:layout_marginBottom="@dimen/_1sdp"
         />
@@ -43,7 +42,6 @@
         android:layout_marginEnd="@dimen/_8sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/img_sub_company_icon"
-        app:layout_constraintEnd_toStartOf="@+id/img_list_state"
         android:layout_marginTop="@dimen/_3sdp"
         android:layout_marginBottom="@dimen/_16sdp"
         />

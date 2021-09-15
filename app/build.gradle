@@ -61,7 +61,8 @@ android {
             buildConfigField "boolean", "LOG_ENABLED", "true"
 
             debuggable true
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
         }

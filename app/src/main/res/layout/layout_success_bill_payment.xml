@@ -4,9 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <import type="android.view.View" />
-
         <variable
             name="listener"
             type="com.es.marocapp.usecase.payments.billpayment.BillPaymentClickListener" />

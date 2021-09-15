@@ -287,7 +287,7 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
         }
     }
 
-    override fun onNextClickListner(view: View) {
+    override fun onNextBtnClickListner(view: View) {
         DialogUtils.showPasswordDialoge(activity as SendMoneyActivity,
             object : DialogUtils.OnPasswordDialogClickListner {
                 override fun onDialogYesClickListner(password: String) {

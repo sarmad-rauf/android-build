@@ -220,7 +220,7 @@
         android:layout_marginBottom="@dimen/_16sdp"
         android:background="@drawable/button_enable"
         android:text="@string/next"
-        android:onClick="@{listner::onNextClickListner}"
+        android:onClick="@{listner::onNextBtnClickListner}"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_16ssp"
         android:textStyle="bold"

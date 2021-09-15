@@ -212,7 +212,7 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
 
     }
 
-    override fun onNextClickListner(view: View) {
+    override fun onNextBtnClickListner(view: View) {
         DialogUtils.showPasswordDialoge(activity,object : DialogUtils.OnPasswordDialogClickListner{
             override fun onDialogYesClickListner(password: String) {
                 Constants.HEADERS_FOR_PAYEMNTS = true

@@ -186,7 +186,7 @@ class TransferCommisionAmountFragment :
 
     }
 
-    override fun onNextClickListner(view: View) {
+    override fun onNextBtnClickListner(view: View) {
         var sAmount: String = mDataBinding.etAmountEntered.text.toString().trim { it <= ' ' }
         sAmount = sAmount.replace(",", ".")
         if (sAmount == "" || SumAmountEditText(sAmount) == "0" || sAmount == ".") {

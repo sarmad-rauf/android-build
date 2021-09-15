@@ -146,7 +146,7 @@ class FundsTrasnferSuccessFragment : BaseFragment<FragmentFundsTransferSuccessBi
         mDataBinding.receiverNameGroup.visibility = View.GONE
     }
 
-    override fun onNextClickListner(view: View) {
+    override fun onNextBtnClickListner(view: View) {
         mActivityViewModel.isUserRegistered.set(false)
         mActivityViewModel.isFundTransferUseCase.set(false)
         mActivityViewModel.isInitiatePaymenetToMerchantUseCase.set(false)

@@ -193,7 +193,7 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
         }
     }
 
-    override fun onNextClickListner(view: View) {
+    override fun onNextBtnClickListner(view: View) {
         DialogUtils.showPasswordDialoge(activity as AirTimeActivity,
             object : DialogUtils.OnPasswordDialogClickListner {
                 override fun onDialogYesClickListner(password: String) {

@@ -3,8 +3,6 @@
 
     <data>
 
-        <import type="android.view.View" />
-
         <variable
             name="viewmodel"
             type="com.es.marocapp.usecase.consumerregistration.ConsumerRegistrationViewModel" />

@@ -66,7 +66,7 @@ class CashServicesPendingFragment : BaseFragment<FragmentCashServicesPendingBind
         mDataBinding.successTItleFailed.text = LanguageData.getStringValue("Failed")
     }
 
-    override fun onNextClickListner(view: View) {
+    override fun onNextBtnClickListner(view: View) {
         mActivityViewModel.isDepositUseCase.set(false)
         mActivityViewModel.isWithdrawUseCase.set(false)
         (activity as CashServicesActivity).startNewActivityAndClear(
