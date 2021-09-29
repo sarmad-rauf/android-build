@@ -85,7 +85,7 @@ import kotlin.collections.ArrayList
             "en"->{}
             "fr"->{}
             "ar"->{}
-            else->lang="en"
+            else->lang="fr"
         }
         //headerParams["lang"] = "en"
         headerParams["lang"] = lang

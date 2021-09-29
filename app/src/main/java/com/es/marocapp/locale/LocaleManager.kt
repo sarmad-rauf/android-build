@@ -29,17 +29,17 @@ object LocaleManager {
      */
     fun getSelectedLanguageFromPref(context: Context): String {
 
-        var selectedLocale = KEY_LANGUAGE_EN
+        var selectedLocale = KEY_LANGUAGE_FR
 
         try {
             if (context != null) {
-                val selectedLanguageFromCache = PrefUtils.getString(context, PrefUtils.PreKeywords.PREF_KEY_SELECTED_LANGUAGE_LOCALE, KEY_LANGUAGE_EN)
-
+                val selectedLanguageFromCache = PrefUtils.getString(context, PrefUtils.PreKeywords.PREF_KEY_SELECTED_LANGUAGE_LOCALE, KEY_LANGUAGE_FR   )
+                Logger.debugLog("ABRAR","seting lang from cache ${selectedLanguageFromCache}")
                 if (Tools.hasValue(selectedLanguageFromCache)) {
                     selectedLocale = selectedLanguageFromCache!!
+                }else{
+                    selectedLocale = "fr"
                 }
-                Logger.debugLog("ABRAR", "selected language  ${selectedLocale}")
-                Logger.debugLog("ABRAR", "selected language from cache ${selectedLanguageFromCache}")
             }
 
 
@@ -57,7 +57,7 @@ object LocaleManager {
      */
 
     fun setLanguageToPref(context: Context, selectedLanguageLocale: String?) {
-
+        Logger.debugLog("ABRAR","seting lang ${selectedLanguage}")
         try {
             if ( Tools.hasValue(selectedLanguageLocale)) {
                 if (Tools.hasValue(selectedLanguageLocale)) {

@@ -153,6 +153,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             READ_PHONE_STATE_REQUEST_CODE -> {
 
@@ -262,6 +263,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 if (Tools.isFirstTime(this)) {
                     if (!it.defaultLanguage.isNullOrEmpty()) {
                         LocaleManager.selectedLanguage = it.defaultLanguage
+                        LocaleManager.setAppLanguage(this,it.defaultLanguage)
                     }
                 }
                 if (it.quickAmounts.isNotEmpty()) {

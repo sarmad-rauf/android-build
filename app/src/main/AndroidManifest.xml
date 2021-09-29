@@ -27,7 +27,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
         <activity android:name=".usecase.upgradeprofile.UpgradeProfileActivity" />
         <activity android:name=".usecase.transfercommision.TransferCommisionActivity" />
         <activity android:name=".usecase.updateprofle.UpdateProfileActivity" />
