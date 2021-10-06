@@ -102,7 +102,7 @@ import kotlin.collections.ArrayList
     }
 
 
-    override fun setTimeOut(): Int = 30
+    override fun setTimeOut(): Int = 60
 
 
     override fun setContext(): Context {

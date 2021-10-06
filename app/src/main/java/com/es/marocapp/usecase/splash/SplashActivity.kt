@@ -357,7 +357,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 
     fun setDeviceIMEI() {
         var myuniqueID: String?
-        val myversion = Integer.valueOf(Build.VERSION.SDK)
+        val myversion = Integer.valueOf(Build.VERSION.SDK_INT)
         if (myversion < 23) {
             /*val manager =
                 applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager

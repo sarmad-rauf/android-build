@@ -54,7 +54,7 @@ class UpdateProfileViewModel(application:Application):AndroidViewModel(applicati
 
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.updateEmailCall(
-                UpdateEmailRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),email,Constants.REASON_FOR_UPDATE_PROFILE)
+                UpdateEmailRequest(ApiConstant.CONTEXT_AFTER_LOGIN,Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),email,Constants.REASON_FOR_UPDATE_PROFILE)
             )
                 .compose(applyIOSchedulers())
                 .subscribe(
