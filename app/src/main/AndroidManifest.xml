@@ -58,7 +58,8 @@
         <activity android:name=".usecase.login.LoginActivity"
             android:windowSoftInputMode="adjustResize"
             />
-        <activity android:name=".usecase.splash.SplashActivity">
+        <activity android:name=".usecase.splash.SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,7 +69,8 @@
         <activity android:name=".usecase.qrcode.GenerateQrActivity" />
         <activity android:name=".usecase.qrcode.ScanQRActivity" />
 
-        <service android:name=".services.MyFirebaseInstanceService">
+        <service android:name=".services.MyFirebaseInstanceService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
