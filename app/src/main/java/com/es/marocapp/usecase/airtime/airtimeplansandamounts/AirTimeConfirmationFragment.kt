@@ -102,6 +102,7 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
 
                     updateUI()
                 } else {
+                    updateUI()
                     DialogUtils.showErrorDialoge(activity, it.description)
                 }
             })

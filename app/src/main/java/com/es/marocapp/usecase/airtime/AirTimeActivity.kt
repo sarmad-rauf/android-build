@@ -95,6 +95,7 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
             mActivityViewModel.isRechargeMobileUseCase.set(false)
             mActivityViewModel.airTimeSelected.set(LanguageData.getStringValue("QuickRecharge"))
             mActivityViewModel.airTimeAmountSelected.set(quickRechargeAmount)
+            mActivityViewModel.amountToTransfer=(quickRechargeAmount)
             navGraph.startDestination = R.id.airTimeConfirmationFragment
         }else{
             navGraph.startDestination = R.id.airTimeMainFragment
@@ -298,6 +299,7 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             CAMERA_REQUEST_CODE -> {
 
