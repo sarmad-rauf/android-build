@@ -1,216 +1,228 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:background="@color/colorWhite"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
 
-    <androidx.cardview.widget.CardView
+        <variable
+            name="viewmodel"
+            type="com.es.marocapp.usecase.billpayment.BillPaymentViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/_12sdp"
-        app:cardElevation="@dimen/_12sdp"
-        app:cardPreventCornerOverlap="false"
-        app:cardBackgroundColor="@color/colorWhite"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginBottom="@dimen/_4sdp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        >
+        android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/_16sdp"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="@dimen/_12sdp"
+            app:cardPreventCornerOverlap="false"
+            app:cardBackgroundColor="@color/colorWhite"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             >
 
-            <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/isBillSelectedCheckBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/colorCerulean"
-                android:foregroundTint="@color/colorCerulean"
-                android:theme="@style/checkBoxStyleBillPayment"
-                android:layout_marginStart="@dimen/_16sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
-            <com.es.marocapp.widgets.MarocLightTextView
-                android:id="@+id/description"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/_12ssp"
-                tools:text="Descriptijdfhkdjksajdbjksdbvjkjksdbfkdjfbaksjkfbsdkon"
-                android:textColor="@color/colorConfirmationTitle"
-                android:layout_marginStart="@dimen/_48sdp"
-                android:layout_marginTop="@dimen/_16sdp"
-                app:layout_constraintTop_toTopOf="parent"
-                android:maxLines="7"
-                android:layout_marginEnd="@dimen/_16sdp"
-                app:layout_constraintStart_toEndOf="@+id/isBillSelectedCheckBox"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/customerNameTitle"
-                android:visibility="gone"
-                />
+                android:paddingBottom="@dimen/_16sdp"
+                >
 
-            <com.es.marocapp.widgets.MarocLightTextView
-                android:id="@+id/customerNameTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/_12ssp"
-                tools:text="Customer Name"
-                android:textColor="@color/colorConfirmationTitle"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_16sdp"
-                app:layout_constraintTop_toBottomOf="@+id/description"
-                app:layout_constraintStart_toEndOf="@+id/isBillSelectedCheckBox"
-                app:layout_constraintEnd_toStartOf="@+id/customerNameVal"
-                />
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/isBillSelectedCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorCerulean"
+                    android:foregroundTint="@color/colorCerulean"
+                    android:theme="@style/checkBoxStyleBillPayment"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="Descriptijdfhkdjksajdbjksdbvjkjksdbfkdjfbaksjkfbsdkon"
+                    android:textColor="@color/colorConfirmationTitle"
+                    android:layout_marginStart="@dimen/_48sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:maxLines="7"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    app:layout_constraintStart_toEndOf="@+id/isBillSelectedCheckBox"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/customerNameTitle"
+                    android:visibility="gone"
+                    />
 
-            <com.es.marocapp.widgets.MarocLightTextView
-                android:id="@+id/customerNameVal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/_11ssp"
-                tools:text="Usama Labib Bin Nasir"
-                android:gravity="end"
-                android:textColor="@color/colorBlack"
-                android:layout_marginEnd="@dimen/_16sdp"
-                android:layout_marginStart="@dimen/_8sdp"
-                app:layout_constraintTop_toTopOf="@+id/customerNameTitle"
-                app:layout_constraintBottom_toBottomOf="@+id/customerNameTitle"
-                app:layout_constraintStart_toEndOf="@+id/customerNameTitle"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/customerNameTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="Customer Name"
+                    android:textColor="@color/colorConfirmationTitle"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/description"
+                    app:layout_constraintStart_toEndOf="@+id/isBillSelectedCheckBox"
+                    app:layout_constraintEnd_toStartOf="@+id/customerNameVal"
+                    />
 
-
-            <com.es.marocapp.widgets.MarocLightTextView
-                android:id="@+id/dueDateTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/_12ssp"
-                android:text="Due Date"
-                android:textColor="@color/colorConfirmationTitle"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                app:layout_constraintTop_toBottomOf="@+id/customerNameVal"
-                app:layout_constraintStart_toEndOf="@+id/isBillSelectedCheckBox"
-                app:layout_constraintEnd_toStartOf="@+id/dueDateVal"
-                />
-
-            <com.es.marocapp.widgets.MarocLightTextView
-                android:id="@+id/dueDateVal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/_11ssp"
-                android:text="29/04/2020"
-                android:gravity="end"
-                android:textColor="@color/colorBlack"
-                android:layout_marginEnd="@dimen/_16sdp"
-                android:layout_marginStart="@dimen/_8sdp"
-                app:layout_constraintTop_toTopOf="@+id/dueDateTitle"
-                app:layout_constraintBottom_toBottomOf="@+id/dueDateTitle"
-                app:layout_constraintStart_toEndOf="@+id/dueDateTitle"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
-
-            <com.es.marocapp.widgets.MarocLightTextView
-                android:id="@+id/billingMonthTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/_12ssp"
-                android:text="Billing Month"
-                android:textColor="@color/colorConfirmationTitle"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                android:layout_marginTop="@dimen/_8sdp"
-                app:layout_constraintTop_toBottomOf="@+id/dueDateVal"
-                app:layout_constraintStart_toStartOf="@+id/dueDateTitle"
-                app:layout_constraintEnd_toStartOf="@+id/billingMonthVal"
-                />
-
-            <com.es.marocapp.widgets.MarocRegularTextView
-                android:id="@+id/billingMonthVal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/_12ssp"
-                android:text="April"
-                android:textColor="@color/colorBlack"
-                android:layout_marginEnd="@dimen/_16sdp"
-                app:layout_constraintBottom_toBottomOf="@+id/billingMonthTitle"
-                app:layout_constraintStart_toEndOf="@+id/billingMonthTitle"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
-
-            <com.es.marocapp.widgets.MarocLightTextView
-                android:id="@+id/billingAmountTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/_12ssp"
-                android:text="Amount"
-                android:textColor="@color/colorConfirmationTitle"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                android:layout_marginTop="@dimen/_8sdp"
-                app:layout_constraintTop_toBottomOf="@+id/billingMonthTitle"
-                app:layout_constraintStart_toStartOf="@+id/dueDateTitle"
-                app:layout_constraintEnd_toStartOf="@+id/billingAmountVal"
-                />
-
-            <com.es.marocapp.widgets.MarocRegularTextView
-                android:id="@+id/billingAmountVal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/_12ssp"
-                android:text="DH 20"
-                android:gravity="end"
-                android:textColor="@color/colorBlack"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
-                app:layout_constraintTop_toTopOf="@+id/billingAmountTitle"
-                app:layout_constraintBottom_toBottomOf="@+id/billingAmountTitle"
-                app:layout_constraintStart_toEndOf="@+id/billingAmountTitle"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
-
-            <com.es.marocapp.widgets.MarocLightTextView
-                android:id="@+id/billStatusTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/_12ssp"
-                android:text="Status"
-                android:textColor="@color/colorConfirmationTitle"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
-                android:layout_marginTop="@dimen/_8sdp"
-                app:layout_constraintTop_toBottomOf="@+id/billingAmountVal"
-                app:layout_constraintStart_toStartOf="@+id/billingMonthTitle"
-                app:layout_constraintEnd_toStartOf="@+id/billStatusVal"
-                />
-
-            <com.es.marocapp.widgets.MarocMediumTextView
-                android:id="@+id/billStatusVal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/_14ssp"
-                android:textStyle="bold"
-                android:text="Unpaid"
-                android:textColor="@color/colorFail"
-                android:layout_marginEnd="@dimen/_16sdp"
-                app:layout_constraintBottom_toBottomOf="@+id/billStatusTitle"
-                app:layout_constraintStart_toEndOf="@+id/billStatusTitle"
-                app:layout_constraintEnd_toEndOf="parent"
-                />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/customerNameVal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_11ssp"
+                    tools:text="Usama Labib Bin Nasir"
+                    android:gravity="@{viewmodel.isCurrentSelectedLanguageEng ? viewmodel.end : viewmodel.end}"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    app:layout_constraintTop_toTopOf="@+id/customerNameTitle"
+                    app:layout_constraintBottom_toBottomOf="@+id/customerNameTitle"
+                    app:layout_constraintStart_toEndOf="@+id/customerNameTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/dueDateTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_12ssp"
+                    android:text="Due Date"
+                    android:textColor="@color/colorConfirmationTitle"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/customerNameVal"
+                    app:layout_constraintStart_toEndOf="@+id/isBillSelectedCheckBox"
+                    app:layout_constraintEnd_toStartOf="@+id/dueDateVal"
+                    />
+
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/dueDateVal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_11ssp"
+                    android:text="29/04/2020"
+                    android:gravity="@{viewmodel.isCurrentSelectedLanguageEng ? viewmodel.end : viewmodel.end}"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    app:layout_constraintTop_toTopOf="@+id/dueDateTitle"
+                    app:layout_constraintBottom_toBottomOf="@+id/dueDateTitle"
+                    app:layout_constraintStart_toEndOf="@+id/dueDateTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/billingMonthTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_12ssp"
+                    android:text="Billing Month"
+                    android:textColor="@color/colorConfirmationTitle"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/dueDateVal"
+                    app:layout_constraintStart_toStartOf="@+id/dueDateTitle"
+                    app:layout_constraintEnd_toStartOf="@+id/billingMonthVal"
+                    />
+
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/billingMonthVal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_12ssp"
+                    android:text="April"
+                    android:gravity="@{viewmodel.isCurrentSelectedLanguageEng ? viewmodel.end : viewmodel.end}"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    app:layout_constraintBottom_toBottomOf="@+id/billingMonthTitle"
+                    app:layout_constraintStart_toEndOf="@+id/billingMonthTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/billingAmountTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_12ssp"
+                    android:text="Amount"
+                    android:textColor="@color/colorConfirmationTitle"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/billingMonthTitle"
+                    app:layout_constraintStart_toStartOf="@+id/dueDateTitle"
+                    app:layout_constraintEnd_toStartOf="@+id/billingAmountVal"
+                    />
+
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/billingAmountVal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_12ssp"
+                    android:text="DH 20"
+                    android:gravity="@{viewmodel.isCurrentSelectedLanguageEng ? viewmodel.end : viewmodel.start}"
+                    android:textColor="@color/colorBlack"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    app:layout_constraintTop_toTopOf="@+id/billingAmountTitle"
+                    app:layout_constraintBottom_toBottomOf="@+id/billingAmountTitle"
+                    app:layout_constraintStart_toEndOf="@+id/billingAmountTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/billStatusTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_12ssp"
+                    android:text="Status"
+                    android:textColor="@color/colorConfirmationTitle"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/billingAmountVal"
+                    app:layout_constraintStart_toStartOf="@+id/billingMonthTitle"
+                    app:layout_constraintEnd_toStartOf="@+id/billStatusVal"
+                    />
+
+                <com.es.marocapp.widgets.MarocMediumTextView
+                    android:id="@+id/billStatusVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
+                    android:text="Unpaid"
+                    android:textColor="@color/colorFail"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    app:layout_constraintBottom_toBottomOf="@+id/billStatusTitle"
+                    app:layout_constraintStart_toEndOf="@+id/billStatusTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
