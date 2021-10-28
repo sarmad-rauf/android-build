@@ -3,6 +3,7 @@ package com.es.marocapp.usecase.approvals
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
+import android.view.Gravity
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import com.es.marocapp.R
@@ -28,6 +29,9 @@ class ApprovalViewModel(application: Application) : AndroidViewModel(application
 
     lateinit var selectedapproval: Approvaldetail
     var totalTax: Double = 0.0
+    var isCurrentSelectedLanguageEng: Boolean=false
+    var start  = Gravity.START
+    var end = Gravity.END
     lateinit var bundle: Bundle
 
     //used on ApprovalDetailFragment to add tax with fee

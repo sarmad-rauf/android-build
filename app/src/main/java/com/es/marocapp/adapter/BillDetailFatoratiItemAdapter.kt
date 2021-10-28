@@ -1,6 +1,6 @@
 package com.es.marocapp.adapter
 
-import android.annotation.SuppressLint
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,21 +12,25 @@ import com.es.marocapp.R
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.model.responses.FatoratiCustomParamModel
 import com.es.marocapp.utils.Constants
-import com.es.marocapp.utils.Logger
-import java.text.SimpleDateFormat
 import java.util.ArrayList
 
-class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustomParamModel>) : RecyclerView.Adapter<BillDetailFatoratiItemAdapter.BillPaymentItemViewHolder>() {
+class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustomParamModel>, val isLanguageEngOrFr : Boolean) : RecyclerView.Adapter<BillDetailFatoratiItemAdapter.BillPaymentItemViewHolder>() {
 
     override fun getItemCount() = bills.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BillPaymentItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.layout_bill_payment_detail_row_layout, parent, false)
+//        val inflater = LayoutInflater.from(parent.context)
+//        val binding = .inflate(inflater)
         return BillPaymentItemViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: BillPaymentItemViewHolder, position: Int) {
-
+        val gravity = if(isLanguageEngOrFr) Gravity.START else Gravity.END
+        holder.customerNameVal.gravity=gravity
+        holder.billDueDateVal.gravity=gravity
+        holder.billingMonthVal.gravity=gravity
+        holder.billingAmountVal.gravity=gravity
 //        holder.billDueDateTitle.text = LanguageData.getStringValue("Description")
         if(bills[position].showDescription)
         {
@@ -111,8 +115,8 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
         return if(description.isNullOrEmpty()){
             "-"
         }else{
-            var withoutAdressAndDateString = description.substringBefore("-")
-            var withoutCollenName = withoutAdressAndDateString.substringAfter(":").trim()
+            val withoutAdressAndDateString = description.substringBefore("-")
+            val withoutCollenName = withoutAdressAndDateString.substringAfter(":").trim()
             return withoutCollenName
         }
     }
@@ -123,9 +127,9 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
         return if(description.isNullOrEmpty()){
             "-"
         }else{
-            var withoutNameString = description.substringAfter("-")
-            var withoutAddressNameString = withoutNameString.substringAfter("-")
-            var withoutCollenDate  = withoutAddressNameString.substringAfter(":").trim()
+            val withoutNameString = description.substringAfter("-")
+            val withoutAddressNameString = withoutNameString.substringAfter("-")
+            val withoutCollenDate  = withoutAddressNameString.substringAfter(":").trim()
 //            Logger.debugLog("TestingDateAdapter",withoutCollenDate)
             val date = Constants.parseDateFromString(withoutCollenDate)
 //            Logger.debugLog("TestingDateAdapterParsed",date.toString())

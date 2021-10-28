@@ -103,7 +103,7 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_14sdp"
                     android:maxLines="2"
-                    android:gravity="end"
+                    android:gravity="@{viewmodel.isCurrentSelectedLanguageEng ? viewmodel.end : viewmodel.start}"
                     app:layout_constraintBottom_toBottomOf="@+id/tvRequestIndicatorTitle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"

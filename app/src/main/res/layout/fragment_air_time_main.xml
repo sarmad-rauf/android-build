@@ -63,8 +63,10 @@
                             android:ellipsize="end"
                             android:focusable="true"
                             android:focusableInTouchMode="true"
+                            android:drawableEnd="@drawable/ic_selected_msisdn"
                             android:hint="@string/enter_receiver_s_mobile_number_caps"
                             android:inputType="phone"
+                            android:paddingEnd="@dimen/_4sdp"
                             android:maxLength="12"
                             android:textSize="@dimen/_14ssp"
                             android:theme="@style/myTextInputLabel" />
@@ -77,6 +79,7 @@
                         android:src="@drawable/ic_selected_msisdn"
                         android:layout_margin="@dimen/_2sdp"
                         android:id="@+id/phonebook"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="@+id/input_layout_phone_number"
                         app:layout_constraintBottom_toBottomOf="@+id/input_layout_phone_number"
                         app:layout_constraintTop_toTopOf="@+id/input_layout_phone_number"

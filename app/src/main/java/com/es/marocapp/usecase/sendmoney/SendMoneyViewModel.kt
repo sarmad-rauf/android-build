@@ -3,6 +3,7 @@ package com.es.marocapp.usecase.sendmoney
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import android.view.Gravity
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -24,6 +25,9 @@ import retrofit2.HttpException
 class SendMoneyViewModel(application: Application) : AndroidViewModel(application) {
 
     var totalTax: Double=0.0
+    var isCurrentSelectedLanguageEng: Boolean=false
+    var start  = Gravity.START
+    var end = Gravity.END
     lateinit var disposable: Disposable
     var isLoading = ObservableField<Boolean>()
     var errorText = SingleLiveEvent<String>()

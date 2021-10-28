@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentAirTimeConfirmationLayoutBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
@@ -28,13 +29,14 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
     }
 
     override fun init(savedInstanceState: Bundle?) {
+
         mActivityViewModel =
             ViewModelProvider(activity as AirTimeActivity).get(AirTimeViewModel::class.java)
         mDataBinding.apply {
             listner = this@AirTimeConfirmationFragment
             viewmodel = mActivityViewModel
         }
-
+        mActivityViewModel.isCurrentSelectedLanguageEng = !LocaleManager.selectedLanguage.equals("ar")
         (activity as AirTimeActivity).setHeaderVisibility(false)
         (activity as AirTimeActivity).setCompanyIconToolbarVisibility(false)
 
@@ -149,6 +151,8 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
 //        tvDHVal == Fee
 //
 //        tvAmountVal == AmountTotal
+
+
 
         mDataBinding.tvSenderNameVal.text =
             Constants.balanceInfoAndResponse?.firstname +" "+ Constants.balanceInfoAndResponse?.surname

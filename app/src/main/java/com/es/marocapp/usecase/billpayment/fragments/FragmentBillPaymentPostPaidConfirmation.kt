@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentBillPaymentConfimationBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.requests.Param
 import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiConstant
@@ -41,6 +42,8 @@ class FragmentBillPaymentPostPaidConfirmation :
             listner = this@FragmentBillPaymentPostPaidConfirmation
             viewmodel = mActivityViewModel
         }
+
+        mActivityViewModel.isCurrentSelectedLanguageEng = !LocaleManager.selectedLanguage.equals("ar")
 
         mActivityViewModel.popBackStackTo = -1
 

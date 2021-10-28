@@ -2,6 +2,7 @@ package com.es.marocapp.usecase.billpayment
 
 import android.app.Application
 import android.content.Context
+import android.view.Gravity
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import com.es.marocapp.R
@@ -30,6 +31,9 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
 
 
     var selectedCompanyServiceProvider: String = ""
+    var isCurrentSelectedLanguageEng: Boolean=false
+    var start  = Gravity.START
+    var end = Gravity.END
     var selectedTSAVSpinnerPosition: Int = 0
     var stepFourLydecSelected: Boolean = false
     var selectedCodeCreance: String = ""

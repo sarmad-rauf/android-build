@@ -2,6 +2,7 @@ package com.es.marocapp.usecase.airtime
 
 import android.app.Application
 import android.content.Context
+import android.view.Gravity
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import com.es.marocapp.R
@@ -28,6 +29,9 @@ import retrofit2.HttpException
 class AirTimeViewModel(application: Application) : AndroidViewModel(application){
 
     var totalTax: Double=0.0
+    var isCurrentSelectedLanguageEng: Boolean=false
+    var start  = Gravity.START
+    var end = Gravity.END
     lateinit var disposable: Disposable
     var isLoading = ObservableField<Boolean>()
     var errorText = SingleLiveEvent<String>()

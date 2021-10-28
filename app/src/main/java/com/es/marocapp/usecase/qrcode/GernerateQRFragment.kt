@@ -93,6 +93,7 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>() {
                 mDataBinding.imgResult.setImageBitmap(Tools.generateQR(qrString))
             }
         })
+        setStrings()
     }
 
     private fun subscribeToObservers() {
@@ -133,7 +134,7 @@ class GernerateQRFragment : BaseFragment<FragmentGenerateQrBinding>() {
         mDataBinding.tvGenerateQRTitle.text = LanguageData.getStringValue("GenerateQR")
         mDataBinding.tvDescription.text = LanguageData.getStringValue("GenerateQRDescription")
         mDataBinding.tvDescriptionGenerated.text = LanguageData.getStringValue("QRDescription")
-        mDataBinding.inputAmount.hint = LanguageData.getStringValue("Amount")
+        mDataBinding.inputLayoutAmount.hint = LanguageData.getStringValue("Amount")
     }
 
 }

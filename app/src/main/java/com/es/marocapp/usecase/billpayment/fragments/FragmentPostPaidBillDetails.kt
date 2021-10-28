@@ -154,7 +154,7 @@ class FragmentPostPaidBillDetails : BaseFragment<FragmentBillPaymentBillDetailsB
         }
 
         mBillDetailsAdapter = BillDetailItemAdapter(listOfCustomInvoice)
-        mFatoratiBillDetailsAdapter = BillDetailFatoratiItemAdapter(listOfFatoratiCustomInvoice)
+        mFatoratiBillDetailsAdapter = BillDetailFatoratiItemAdapter(listOfFatoratiCustomInvoice,mActivityViewModel.isCurrentSelectedLanguageEng)
         mDataBinding.mBillsRecycler.apply {
             if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
                 adapter = mBillDetailsAdapter

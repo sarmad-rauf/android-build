@@ -80,8 +80,8 @@ class TransferCommisionAmountFragment :
             if (currentBalance.isEmpty()) {
                 currentBalance = "0.00"
             }
-            var currentBalanceDouble = currentBalance.toDouble()
-            var currentBalanceInt = currentBalanceDouble.toInt()
+            val currentBalanceDouble = currentBalance.toDouble()
+            val currentBalanceInt = currentBalanceDouble.toInt()
             var newAmount = 0
             if (currentBalanceInt != 0) {
                 newAmount = currentBalanceInt - 1

@@ -99,7 +99,7 @@ object EndPoints {
     const val transfer = "transfer"
 
     //pull commision fund call
-    const val transfercommision = "transfer/sysuser "
+    const val transfercommision = "transfer"
 
     //transfer/quote
     const val transfer_quote = "transfer/quote"

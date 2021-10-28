@@ -135,19 +135,19 @@ object DialogUtils {
             addDialog.dismiss()
         }
 
-        var tvDescription = addDialog.findViewById<TextView>(R.id.password_dialog_description)
+        val tvDescription = addDialog.findViewById<TextView>(R.id.password_dialog_description)
         var tvTitle = addDialog.findViewById<TextView>(R.id.password_dialog_title)
 
         tvDescription.text = LanguageData.getStringValue("EnterPasswordToProceed")
         tvTitle.text = LanguageData.getStringValue("DearCustomer")
 
-        var passwordField =
+        val passwordField =
             addDialog.findViewById<EditText>(R.id.password_dialog_input_enter_password)
-        var passwordFieldInput =
+        val passwordFieldInput =
             addDialog.findViewById<TextInputLayout>(R.id.password_dialog_layout_enter_password)
         passwordFieldInput.hint = LanguageData.getStringValue("EnterPassword")
         btnYes.setOnClickListener {
-            var password = passwordField.text.toString().trim()
+            val password = passwordField.text.toString().trim()
             if (password.equals("")) {
                 passwordFieldInput.error = LanguageData.getStringValue("PleaseEnterValidPassword")
                 passwordFieldInput.isErrorEnabled = true

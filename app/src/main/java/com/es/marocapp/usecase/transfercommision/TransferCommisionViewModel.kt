@@ -83,7 +83,7 @@ class TransferCommisionViewModel(application: Application) : AndroidViewModel(ap
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getTransferCommisionCall(
                 TransferCommisionRequest(
                     amount,
-                    ApiConstant.CONTEXT_BEFORE_LOGIN,
+                    ApiConstant.CONTEXT_AFTER_LOGIN,
                     Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),
                     Constants.COMMISIONACCOUNTFRI
                 )

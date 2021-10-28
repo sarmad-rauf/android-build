@@ -642,7 +642,8 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
 
                                             //picking Logo for IAM Company from one of the IAM companies
                                             var Logo = ""
-                                            Logo = it.bills[everyCompany].companies[0].logo
+                                            if(it.bills[everyCompany].companies.size>0){
+                                            Logo = it.bills[everyCompany].companies[0]?.logo}
                                             if (Logo.isNullOrEmpty()) {
                                                 Logo = ""
                                             }

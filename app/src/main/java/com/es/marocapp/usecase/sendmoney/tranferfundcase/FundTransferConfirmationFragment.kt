@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentFundsTransferConfirmationBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
@@ -33,7 +34,7 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
             listner = this@FundTransferConfirmationFragment
             viewmodel = mActivityViewModel
         }
-
+        mActivityViewModel.isCurrentSelectedLanguageEng = !LocaleManager.selectedLanguage.equals("ar")
         (activity as SendMoneyActivity).setHeaderVisibility(false)
 
         mActivityViewModel.popBackStackTo = R.id.fundsTransferAmountFragment

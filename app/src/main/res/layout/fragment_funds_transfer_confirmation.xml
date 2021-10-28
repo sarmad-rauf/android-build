@@ -180,7 +180,7 @@
                         android:layout_width="@dimen/_135sdp"
                         android:maxLines="2"
                         android:ellipsize="end"
-                        android:gravity="end"
+                        android:gravity="@{viewmodel.isCurrentSelectedLanguageEng ? viewmodel.end : viewmodel.start}"
                         android:paddingStart="@dimen/_8sdp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"

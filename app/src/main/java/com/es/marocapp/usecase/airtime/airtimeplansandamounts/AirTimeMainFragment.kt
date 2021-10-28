@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -22,6 +23,7 @@ import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.airtime.AirTimeActivity
 import com.es.marocapp.usecase.airtime.AirTimeViewModel
+import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -80,7 +82,26 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
         )
 
         mDataBinding.inputPhoneNumber.addTextChangedListener(this)
-
+        mDataBinding.inputPhoneNumber.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                val DRAWABLE_LEFT = 0
+                val DRAWABLE_TOP = 1
+                val DRAWABLE_RIGHT = 2
+                val DRAWABLE_BOTTOM = 3
+                if (event.getAction() === MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >=  mDataBinding.inputPhoneNumber.getRight() -  mDataBinding.inputPhoneNumber.getCompoundDrawables()
+                            .get(DRAWABLE_RIGHT).getBounds().width()
+                    ) {
+                        // your action here
+                        (activity as AirTimeActivity).openPhoneBook(  mDataBinding.inputPhoneNumber,
+                            mDataBinding.inputLayoutPhoneNumber,
+                            mDataBinding.inputPhoneNumberHint)
+                        return true
+                    }
+                }
+                return false
+            }
+        })
 
         mDataBinding.inputPhoneNumber.setOnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
@@ -556,7 +577,7 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
         if (mDataBinding.inputRechargeType.text.toString().isEmpty()) {
             isValidForAll = false
             mDataBinding.inputLayoutRechargeType.error =
-                LanguageData.getStringValue("PleaseSelectPackage")
+                LanguageData.getStringValue("PleaseSelectPackageType")
             mDataBinding.inputLayoutRechargeType.isErrorEnabled = true
         } else {
             mDataBinding.inputLayoutRechargeType.error = ""

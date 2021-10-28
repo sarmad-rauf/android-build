@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -110,6 +111,24 @@ class FundsTransferMsisdnFragment : BaseFragment<FragmentFundsTransferEnterMsisd
         mActivityViewModel.popBackStackTo = -1
         mActivityViewModel.isUserSelectedFromFavorites.set(false)
         mDataBinding.inputPhoneNumber.addTextChangedListener(this)
+        mDataBinding.inputPhoneNumber.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                val DRAWABLE_LEFT = 0
+                val DRAWABLE_TOP = 1
+                val DRAWABLE_RIGHT = 2
+                val DRAWABLE_BOTTOM = 3
+                if (event.getAction() === MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >=  mDataBinding.inputPhoneNumber.getRight() -  mDataBinding.inputPhoneNumber.getCompoundDrawables()
+                            .get(DRAWABLE_RIGHT).getBounds().width()
+                    ) {
+                        // your action here
+                        (activity as SendMoneyActivity).openPhoneBook()
+                        return true
+                    }
+                }
+                return false
+            }
+        })
         (activity as SendMoneyActivity).mInputField = mDataBinding.inputPhoneNumber
         (activity as SendMoneyActivity).mInputFieldLayout = mDataBinding.inputLayoutPhoneNumber
         (activity as SendMoneyActivity).mInputHint = mDataBinding.inputPhoneNumberHint

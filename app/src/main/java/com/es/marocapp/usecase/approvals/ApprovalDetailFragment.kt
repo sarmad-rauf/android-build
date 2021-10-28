@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentApprovalDetailsBinding
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.Approvaldetail
 import com.es.marocapp.model.responses.UserApprovalResponse
 import com.es.marocapp.network.ApiConstant
@@ -33,7 +34,7 @@ class ApprovalDetailFragment : BaseFragment<FragmentApprovalDetailsBinding>(),Ap
             viewmodel = approvalViewModel
             listener = this@ApprovalDetailFragment
         }
-
+        approvalViewModel.isCurrentSelectedLanguageEng = !LocaleManager.selectedLanguage.equals("ar")
         //To get your arraylist
 
         //To get your arraylist

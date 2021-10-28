@@ -131,6 +131,8 @@
                             android:text="Your Payment is Pending"
                             android:textColor="@color/colorBtnDisable"
                             android:textSize="@dimen/_15ssp"
+                            android:paddingStart="@dimen/_16sdp"
+                            android:paddingEnd="@dimen/_16sdp"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"

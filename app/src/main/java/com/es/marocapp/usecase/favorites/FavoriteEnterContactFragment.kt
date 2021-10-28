@@ -406,7 +406,7 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
 
         mDataBinding.inputLayoutName.hint = LanguageData.getStringValue("EnterName")
         mDataBinding.selectBillTypeTypeTitle.hint = LanguageData.getStringValue("SelectBillType")
-        //mDataBinding.inputLayoutCode.hint = LanguageData.getStringValue("EnterCode")
+        mDataBinding.inputLayoutCode.hint = LanguageData.getStringValue("EnterCode")
 
         if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!)
         {

@@ -238,7 +238,9 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
                 }
                 val btnTxt = LanguageData.getStringValue("BtnTitle_OK")
                 val titleTxt = LanguageData.getStringValue("AccountBlocked")
-                val descriptionTxt = it.description
+                var descriptionTxt = it.description
+                val helpLineNumber = if(Constants.IS_AGENT_USER) Constants.HELPLINENUMBERAGENT else Constants.HELPLINE_NUMBER
+                descriptionTxt = descriptionTxt.replace("<HELPLINE>",helpLineNumber)
                 DialogUtils.showCustomDialogue(
                     activity,
                     btnTxt,
