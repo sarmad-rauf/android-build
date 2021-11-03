@@ -236,6 +236,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.TRANSFER_RECEIVER_ALIAS = it.getTransferReceiverAlias
                 Constants.MERCHANT_RECEIVER_ALIAS = it.getMerchantReceiverAlias
                 Constants.AIR_TIME_RECEIVER_ALIAS = it.getAirtimeReceiverAlias
+                Constants.AIR_TIME_Pass_Store_RECEIVER_ALIAS = it.getAirtimeReceiverAliasPassStore
                 Constants.AGNET_RECEIVER_ALIAS = it.getAgentReceiverAlias
                 Constants.POST_PAID_MOBILE_ALIAS = it.getPostPaidMobileDomainAlias
                 Constants.POST_PAID_FIXED_ALIAS = it.getPostPaidFixedDomainAlias

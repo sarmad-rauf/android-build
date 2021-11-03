@@ -28,6 +28,7 @@ data class GetPreLoginDataResponse(
     val genderList: List<String>,
     val getAgentReceiverAlias: String,
     val getAirtimeReceiverAlias: String,
+    val getAirtimeReceiverAliasPassStore: String,
     val getFatouratiAlias: String,
     val getMerchantReceiverAlias: String,
     val getPostPaidFixedDomainAlias: String,

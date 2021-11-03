@@ -162,7 +162,13 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
 //            if(Constants.IS_CONSUMER_USER){
 //                userMsisdn = Constants.getTransferReceiverAlias(transferdAmountTo)
 //            }
+            if(airTimeSelectedPlanCode.equals("99"))
+            {
+                userMsisdn = Constants.getAirTimePassStoreReceiverAlias(transferdAmountTo)
+            }
+            else{
             userMsisdn = Constants.getAirTimeReceiverAlias(transferdAmountTo)
+            }
 
             tranferAmountToWithAlias = userMsisdn
 
@@ -241,7 +247,13 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
 //            if(Constants.IS_CONSUMER_USER){
 //                userMsisdn = Constants.getTransferReceiverAlias(transferdAmountTo)
 //            }
-            userMsisdn = Constants.getAirTimeReceiverAlias(transferdAmountTo)
+            if(airTimeSelectedPlanCode.equals("99"))
+            {
+                userMsisdn = Constants.getAirTimePassStoreReceiverAlias(transferdAmountTo)
+            }
+            else{
+                userMsisdn = Constants.getAirTimeReceiverAlias(transferdAmountTo)
+            }
 
 
             tranferAmountToWithAlias = userMsisdn

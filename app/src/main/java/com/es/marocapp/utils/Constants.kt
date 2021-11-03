@@ -328,6 +328,7 @@ object Constants {
     var TRANSFER_RECEIVER_ALIAS = ""
     var MERCHANT_RECEIVER_ALIAS = ""
     var AIR_TIME_RECEIVER_ALIAS = ""
+    var AIR_TIME_Pass_Store_RECEIVER_ALIAS = ""
     var AGNET_RECEIVER_ALIAS = ""
     var POST_PAID_MOBILE_ALIAS = ""
     var POST_PAID_FIXED_ALIAS = ""
@@ -354,6 +355,11 @@ object Constants {
     fun getAirTimeReceiverAlias(number: String): String {
 //        return "$number@ocs.prepaid.sp/SP"
         return "$number$AIR_TIME_RECEIVER_ALIAS"
+    }
+
+    fun getAirTimePassStoreReceiverAlias(number: String): String {
+//        return "$number@ocs.prepaid.sp/SP"
+        return "$number$AIR_TIME_Pass_Store_RECEIVER_ALIAS"
     }
 
     fun getAgentReceiverAlias(number: String): String {

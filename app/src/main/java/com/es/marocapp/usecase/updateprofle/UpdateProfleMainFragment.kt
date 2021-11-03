@@ -573,9 +573,22 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
 
     private fun showDatePickerDialog(dateOfBirth: String) {
         val dateParts: List<String> = dateOfBirth.split("-")
-        val dayOfMonth = dateParts[2].toInt()
-        val month = dateParts[1].toInt()
-        val year = dateParts[0].toInt()
+        var  year =0
+        var month =0
+        var dayOfMonth=0
+            if(dateOfBirth.isNullOrEmpty())
+        {
+            val calendar: Calendar = Calendar.getInstance()
+            year = calendar.get(Calendar.YEAR)
+            month = calendar.get(Calendar.MONTH)
+            dayOfMonth= calendar.get(Calendar.DAY_OF_MONTH)
+
+        }else{
+         dayOfMonth = dateParts[2].toInt()
+         month = dateParts[1].toInt()
+         year = dateParts[0].toInt()}
+
+
 
         val datePickerDialog = DatePickerDialog(
             activity as UpdateProfileActivity,

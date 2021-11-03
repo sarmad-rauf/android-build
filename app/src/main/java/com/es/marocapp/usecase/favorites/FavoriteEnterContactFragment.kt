@@ -433,14 +433,17 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
                     if(isInternetTypeSelected){
                         nickName = "Telec_Internet@$nickName"
                         msisdnEntered = Constants.getPostPaidInternetDomainAlias(msisdnEntered)
+                        mActivitViewModel.selectedCompanySPName=Constants.getPostPaidInternetDomainAlias("")
                     }else if(isMobileUseCaseSelected){
                         nickName = "Telec_PostpaidMobile@$nickName,${code}"
                         msisdnEntered = Constants.getPostPaidMobileDomainAlias(msisdnEntered)
+                        mActivitViewModel.selectedCompanySPName=Constants.getPostPaidMobileDomainAlias("")
                         Logger.debugLog("BillPaymentCode",code)
 
                     }else if(isFixeUseCaseSelected){
                         nickName = "Telec_PostpaidFix@$nickName,${code}"
                         msisdnEntered = Constants.getPostPaidFixedDomainAlias(msisdnEntered)
+                        mActivitViewModel.selectedCompanySPName=Constants.getPostPaidFixedDomainAlias("")
                         Logger.debugLog("BillPaymentCode",code)
                     }
 

@@ -342,10 +342,13 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
         if (Tools.checkNetworkStatus(getApplication())) {
 
             var userFri = contactNumber.replace("/SP", "/USER")
+            var billProviderFri = selectedCompanySPName.replace("/SP", "").trim()
+            billProviderFri= billProviderFri.plus("/USER")
+            billProviderFri= billProviderFri.replace("@","").trim()
             isLoading.set(true)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAddContact(
-                    AddContactRequest(Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN), contactName, ApiConstant.CONTEXT_AFTER_LOGIN, selectedCompanySPName.plus("/USER"), userFri.substringBefore("@"))
+                    AddContactRequest(Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN), contactName, ApiConstant.CONTEXT_AFTER_LOGIN, billProviderFri, userFri.substringBefore("@"))
             )
                     .compose(applyIOSchedulers())
                     .subscribe(

@@ -140,12 +140,12 @@ abstract class Dependencies {
             if (serverCertsList != null) {
                 for (i in 0 until serverCertsList.size) {
                     if (serverCertsList[0].publicKey != null) {
-                        var md = MessageDigest.getInstance("SHA-256")
+                        val md = MessageDigest.getInstance("SHA-256")
                         md.update(serverCertsList[0].publicKey.getEncoded())
-                        var digest = md.digest();
-                        var certformatch = String(android.util.Base64.encode(digest, android.util.Base64.DEFAULT));
-                        var serverPublicKey = certformatch.trim()
-                        var localPublicKeys = setSslCertificate()
+                        val digest = md.digest();
+                        val certformatch = String(android.util.Base64.encode(digest, android.util.Base64.DEFAULT));
+                        val serverPublicKey = certformatch.trim()
+                        val localPublicKeys = setSslCertificate()
                         if (localPublicKeys != null) {
                             for (j in 0 until localPublicKeys.size) {
                                 if (localPublicKeys.get(j).equals(serverPublicKey, true)) {

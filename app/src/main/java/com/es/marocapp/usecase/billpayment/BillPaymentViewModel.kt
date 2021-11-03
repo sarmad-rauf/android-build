@@ -762,7 +762,6 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                         isLoading.set(false)
 
                         if (result?.responseCode != null) {
-                            Logger.debugLog("ok", "${result.toString()}")
 
                             //............below (639-644) test data for TGR multiple input flow..........
 

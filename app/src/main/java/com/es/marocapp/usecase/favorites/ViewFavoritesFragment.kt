@@ -96,33 +96,40 @@ class ViewFavoritesFragment : BaseFragment<FragmentFavoritesViewBinding>(),
         var mList : ArrayList<Contact> = arrayListOf()
         var mContact = Constants.mContactListArray
         var internetAlias=Constants.getPostPaidInternetDomainAlias("").replace("@","").trim()
-        internetAlias=internetAlias.replace("/SP","").trim()
+        internetAlias=internetAlias.replace("/USER","").trim()
         var postPaidFixeAlias=Constants.getPostPaidFixedDomainAlias("").replace("@","").trim()
-        postPaidFixeAlias=postPaidFixeAlias.replace("/SP","").trim()
+        postPaidFixeAlias=postPaidFixeAlias.replace("/USER","").trim()
         var postPaidMobileAlias=Constants.getPostPaidMobileDomainAlias("").replace("@","").trim()
-        postPaidMobileAlias=postPaidMobileAlias.replace("/SP","").trim()
+        postPaidMobileAlias=postPaidMobileAlias.replace("/USER","").trim()
         var fatouratiAlias=Constants.getFavouriteAlias("").replace("@","").trim()
         fatouratiAlias=fatouratiAlias.replace("/USER","").trim()
         if(mActivitViewModel.isPaymentSelected.get()!!){
             if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!){
                 for(contact in mContact){
-                    if(!contact.billproviderfri.trim().contains(internetAlias)&&!contact.billproviderfri.trim().contains(postPaidFixeAlias)
-                        && !contact.billproviderfri.trim().contains(postPaidMobileAlias)){
+//                    if(!contact.billproviderfri.trim().contains(internetAlias)&&!contact.billproviderfri.trim().contains(postPaidFixeAlias)
+//                        && !contact.billproviderfri.trim().contains(postPaidMobileAlias)){
+//                        mList.add(contact)
+//                    }
+                    if(contact.contactname.contains("Util_")){
                         mList.add(contact)
                     }
                 }
             }else{
                 for(contact in mContact){
-                    if(contact.billproviderfri.trim().contains(internetAlias)){
-                        mList.add(contact)
-                    }
 
-                    if(contact.billproviderfri.trim().contains(postPaidFixeAlias)){
+                    if(contact.contactname.contains("Telec_")){
                         mList.add(contact)
                     }
-                    if(contact.billproviderfri.trim().contains(postPaidMobileAlias)){
-                        mList.add(contact)
-                    }
+//                    if(contact.billproviderfri.trim().contains(internetAlias)){
+//                        mList.add(contact)
+//                    }
+
+//                    if(contact.billproviderfri.trim().contains(postPaidFixeAlias)){
+//                        mList.add(contact)
+//                    }
+//                    if(contact.billproviderfri.trim().contains(postPaidMobileAlias)){
+//                        mList.add(contact)
+//                    }
                 }
             }
         }else{
