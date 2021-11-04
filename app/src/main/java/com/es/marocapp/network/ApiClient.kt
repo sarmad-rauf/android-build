@@ -87,8 +87,8 @@ import kotlin.collections.ArrayList
             "ar"->{}
             else->lang="fr"
         }
-        headerParams["lang"] = "en"
-       // headerParams["lang"] = lang
+      //  headerParams["lang"] = "en"
+        headerParams["lang"] = lang
 
         if(Constants.HEADERS_AFTER_LOGINS){
             if(Constants.HEADERS_FOR_PAYEMNTS){
