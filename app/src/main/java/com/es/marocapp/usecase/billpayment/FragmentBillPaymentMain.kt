@@ -531,8 +531,8 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
             this@FragmentBillPaymentMain,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    Constants.mContactListArray.clear()
                     if (!it.contactsList.isNullOrEmpty()) {
-                        Constants.mContactListArray.clear()
                         Constants.mContactListArray.addAll(it.contactsList)
                     }
                 }
