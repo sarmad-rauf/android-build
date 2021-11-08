@@ -84,9 +84,8 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
         }
 
         mDataBinding.upgradeProfileBtnSubmit.setOnClickListener {
-            if (selectedFileFrontPath.isEmpty() or selectedFileBackPath.isEmpty()) {
-                Toast.makeText(this, getString(R.string.select_document_type), Toast.LENGTH_SHORT)
-                    .show()
+            if (selectedFileFrontPath.isNullOrEmpty() or selectedFileBackPath.isNullOrEmpty()) {
+                DialogUtils.showErrorDialoge(this, LanguageData.getStringValue("UpgradeProfileDescription"))
                 return@setOnClickListener
             }
             val frontImageFile = File(selectedFileFrontPath)
@@ -234,6 +233,7 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             STORAGE_PERMISSION_REQUEST_CODE -> {
                 if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {

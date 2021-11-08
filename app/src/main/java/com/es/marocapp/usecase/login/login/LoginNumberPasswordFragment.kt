@@ -30,6 +30,7 @@ import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.usecase.BaseFragment
 import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.airtime.AirTimeActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.usecase.login.LoginActivityViewModel
 import com.es.marocapp.utils.Constants
@@ -114,11 +115,11 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
         }
 
         mDataBinding.userAnotherAccountTitle.setOnClickListener {
-            (activity as LoginActivity).navController.navigateUp()
+            (activity as LoginActivity).navController.navigate(R.id.loginFragment)
         }
 
         mDataBinding.userAnotherAccountIcon.setOnClickListener {
-            (activity as LoginActivity).navController.navigateUp()
+            (activity as LoginActivity).navController.navigate(R.id.loginFragment)
         }
 
         mDataBinding.rememberMeToggle.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->

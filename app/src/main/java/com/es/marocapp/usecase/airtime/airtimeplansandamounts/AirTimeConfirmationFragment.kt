@@ -105,7 +105,13 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
                     updateUI()
                 } else {
                     updateUI()
-                    DialogUtils.showErrorDialoge(activity, it.description)
+                   // DialogUtils.showErrorDialoge(activity, it.description)
+                    DialogUtils.successFailureDialogue(activity as AirTimeActivity,it.description,1,object :DialogUtils.OnYesClickListner{
+                        override fun onDialogYesClickListner() {
+                            (activity as AirTimeActivity).startNewActivityAndClear(activity as AirTimeActivity,
+                                MainActivity::class.java)
+                        }
+                    })
                 }
             })
 

@@ -275,6 +275,8 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
                         frontImageBase64!!,
                         backImageBase64!!
                     )
+                }else{
+                    DialogUtils.showErrorDialoge(activity as LoginActivity, LanguageData.getStringValue("UpgradeProfileDescription"))
                 }
             }
 

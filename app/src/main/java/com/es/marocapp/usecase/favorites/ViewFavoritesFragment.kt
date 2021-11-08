@@ -96,14 +96,14 @@ class ViewFavoritesFragment : BaseFragment<FragmentFavoritesViewBinding>(),
     private fun getContactList(): ArrayList<Contact> {
         var mList : ArrayList<Contact> = arrayListOf()
         var mContact = Constants.mContactListArray
-        var internetAlias=Constants.getPostPaidInternetDomainAlias("").replace("@","").trim()
-        internetAlias=internetAlias.replace("/USER","").trim()
-        var postPaidFixeAlias=Constants.getPostPaidFixedDomainAlias("").replace("@","").trim()
-        postPaidFixeAlias=postPaidFixeAlias.replace("/USER","").trim()
-        var postPaidMobileAlias=Constants.getPostPaidMobileDomainAlias("").replace("@","").trim()
-        postPaidMobileAlias=postPaidMobileAlias.replace("/USER","").trim()
-        var fatouratiAlias=Constants.getFavouriteAlias("").replace("@","").trim()
-        fatouratiAlias=fatouratiAlias.replace("/USER","").trim()
+//        var internetAlias=Constants.getPostPaidInternetDomainAlias("").replace("@","").trim()
+//        internetAlias=internetAlias.replace("/USER","").trim()
+//        var postPaidFixeAlias=Constants.getPostPaidFixedDomainAlias("").replace("@","").trim()
+//        postPaidFixeAlias=postPaidFixeAlias.replace("/USER","").trim()
+//        var postPaidMobileAlias=Constants.getPostPaidMobileDomainAlias("").replace("@","").trim()
+//        postPaidMobileAlias=postPaidMobileAlias.replace("/USER","").trim()
+//        var fatouratiAlias=Constants.getFavouriteAlias("").replace("@","").trim()
+//        fatouratiAlias=fatouratiAlias.replace("/USER","").trim()
         if(mActivitViewModel.isPaymentSelected.get()!!){
             if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!){
                 for(contact in mContact){

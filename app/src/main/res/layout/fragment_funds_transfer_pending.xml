@@ -80,6 +80,7 @@
                 android:buttonTint="@color/colorCerulean"
                 android:foregroundTint="@color/colorCerulean"
                 android:theme="@style/checkBoxStyle"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@+id/imgBackButton"
                 app:layout_constraintTop_toTopOf="@+id/imgSuccess"
                 />
@@ -92,6 +93,7 @@
                 android:text="Add to Favorites"
                 android:textColor="@color/colorBlack"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@+id/addToFavoriteCheckBox"
                 app:layout_constraintTop_toTopOf="@+id/addToFavoriteCheckBox"
                 app:layout_constraintBottom_toBottomOf="@+id/addToFavoriteCheckBox"

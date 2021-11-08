@@ -936,6 +936,7 @@ object DialogUtils {
     ) {
         val addDialog = Dialog(mContext!!)
         addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         addDialog.setContentView(R.layout.dialog_blocked_account_layout)
 
         val dialogWindow = addDialog.window
