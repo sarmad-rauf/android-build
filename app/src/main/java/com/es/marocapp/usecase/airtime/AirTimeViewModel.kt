@@ -173,7 +173,7 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
             tranferAmountToWithAlias = userMsisdn
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAirTimeQuoteCall(
-                AirTimeQuoteRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,"1",airTimeSelectedPlanCode,userMsisdn,
+                AirTimeQuoteRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,Constants.airtimeMaxNumOfRetries,airTimeSelectedPlanCode,userMsisdn,
                     Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_PAYMENT)
             )
                 .compose(applyIOSchedulers())
@@ -259,7 +259,7 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
             tranferAmountToWithAlias = userMsisdn
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAirTimeCall(
-                AirTimeRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,"1",airTimeSelectedPlanCode,userMsisdn,
+                AirTimeRequest(amountToTransfer,ApiConstant.CONTEXT_AFTER_LOGIN,Constants.airtimeMaxNumOfRetries,airTimeSelectedPlanCode,userMsisdn,
                     Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN),Constants.TYPE_PAYMENT)
             )
                 .compose(applyIOSchedulers())

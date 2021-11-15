@@ -200,6 +200,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.fatouratiSeperateMenuBillNames=it.fatouratiSeperateMenuBillNames
                 Constants.fatouratiTsavMatriculeDdVals=it.fatouratiTsavMatriculeDdVals
                 Constants.registrationProfiles=it.registrationProfiles
+                Constants.airtimeMaxNumOfRetries=it.airtimeMaxNumOfRetries
                 Constants.maxFileSizeUploadLimitInMBs=it.maxFileSizeUploadLimitInMBs.toInt()
                 if (it.marocFatouratiLogoPath != null) {
                 Constants.marocFatouratiLogoPath=it.marocFatouratiLogoPath}

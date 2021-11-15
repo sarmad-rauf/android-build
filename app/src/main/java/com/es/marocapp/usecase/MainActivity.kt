@@ -202,6 +202,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         subscribeForUpdateLanguage()
         subscribeObserver()
         setStrings()
+        mActivityViewModel.requestForBalanceInfoAndLimtsAPI(this@MainActivity)
         setSideMenuStrings()
         setSideMenuListner()
         setViewsVisibility()
@@ -209,6 +210,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         Constants.tutorialCallIconHomeScreen = mDataBinding.callIconHomeScreen
         Constants.tutorialDashboardCashInViaCard = mDataBinding.dashboardCashInViaCard
+
     }
 
     fun startTutorialsTrail() {
@@ -222,8 +224,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
     }
 
     fun setViewsVisibility() {
-        var currentProfile =
-            Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
+        var currentProfile =""
+           if( Constants.UserProfileName.isNullOrEmpty()){
+               currentProfile=Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
+           }
+        else{
+            currentProfile=Constants.UserProfileName
+        }
         if (currentProfile.equals("") || currentProfile.equals(null)) {
             currentProfile = Constants.UserProfileName
         }
@@ -706,8 +713,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     var userName = it?.firstname + " " + it?.surname
                     Constants.CURRENT_USER_NAME = userName
-
+                    Constants.UserProfileName=it.profilename.toString()
                     Constants.balanceInfoAndResponse = Constants.balanceInfoAndResponse?.copy(it)
+                    mDataBinding.navigationItem.navLoggedInUserDetials.text =
+                        Constants.balanceInfoAndResponse?.profilename
+                    setViewsVisibility()
                     /*if(Constants.IS_AGENT_USER){
                         Constants.balanceInfoAndResponse = null
                         var mydata = it

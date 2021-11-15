@@ -37,6 +37,7 @@ import kotlin.properties.Delegates
 object Constants {
 
 
+    var airtimeMaxNumOfRetries: String="0"
     var maxFileSizeUploadLimitInMBs: Int = 0
     lateinit var registrationProfiles: Array<String>
     var marocFatouratiLogoPath: String=""
@@ -69,7 +70,7 @@ object Constants {
     lateinit var upgradeSupportedProfiles: Array<String>
 
     //profile geting from forgot psw flow in getProfile api
-    lateinit var UserProfileName: String
+      var UserProfileName: String=""
 
     //Error Msgs
     val SHOW_DEFAULT_ERROR = "SHOW_DEFAULT_ERROR"

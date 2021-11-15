@@ -20,6 +20,8 @@ import com.es.marocapp.databinding.ActivityUpgradeProfileBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.usecase.BaseActivity
+import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.utils.*
 import com.squareup.picasso.Picasso
 import java.io.File
@@ -174,6 +176,9 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
                         object : DialogUtils.OnYesClickListner {
                             override fun onDialogYesClickListner() {
                                 finish()
+                                startNewActivityAndClear(this@UpgradeProfileActivity,
+                                    MainActivity::class.java)
+
                             }
                         })
                 } else {
