@@ -660,6 +660,11 @@ object Constants {
                             it, LanguageData.getStringValue("SendMoneyTutorial").toString()
                         )
                     }
+                    PrefUtils.addBoolean(
+                        activityContext,
+                        PrefUtils.PreKeywords.PREF_KEY_IS_SHOW_TUTORIALS,
+                        false
+                    )
                 }
                 5 -> {
                     isFirstTimeTutorialShowing = -1
@@ -669,6 +674,7 @@ object Constants {
                         PrefUtils.PreKeywords.PREF_KEY_IS_SHOW_TUTORIALS,
                         false
                     )
+
                     Toast.makeText(activityContext, "Tutorials Ended", Toast.LENGTH_LONG).show()
                 }
                 else -> {
@@ -678,6 +684,7 @@ object Constants {
                         PrefUtils.PreKeywords.PREF_KEY_IS_SHOW_TUTORIALS,
                         false
                     )
+
                 }
             }
         }

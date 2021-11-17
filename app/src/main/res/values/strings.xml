@@ -82,6 +82,7 @@
     <string name="loyalty">Loyalty</string>
     <string name="pay">Validate</string>
     <string name="cancel">cancel</string>
+    <string name="downloadrecipt" translatable="false">Download Recipt</string>
     <string name="bill_payment">Bill Payment</string>
     <string name="your_new_balance_is">Your new balance is</string>
     <string name="ok">ok</string>

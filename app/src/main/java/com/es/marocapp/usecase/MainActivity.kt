@@ -101,11 +101,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
         mDataBinding.fab.setOnClickListener {
             if (Constants.isTutorialShowing) {
+                Logger.debugLog("trxH","1");
                 /* Constants.displayTutorial(this@MainActivity,mDataBinding.fab,LanguageData.getStringValue("TransactionHistoryTutorial").toString())*/
             } else {
                 if (!isTransacitonFragmentShowing) {
+                    Logger.debugLog("trxH","2");
                     onStatementClickLisnter(false)
                 } else {
+                    Logger.debugLog("trxH","3");
                     navController.popBackStack(R.id.navigation_home, false)
                     onStatementClickLisnter(false)
                 }
@@ -422,11 +425,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
 
     fun onStatementClickLisnter(showTransactionFragment: Boolean) {
         if (showTransactionFragment) {
+            Logger.debugLog("trxH","4");
             isTransactionDetailsShowing = false
             if (isTransactionFragmentNotVisible) {
+                Logger.debugLog("trxH","5");
                 if (isDirectCallForTransaction) {
+                    Logger.debugLog("trxH","6");
                     navController.navigate(R.id.action_navigation_home_to_navigation_transaction)
                 } else {
+                    Logger.debugLog("trxH","7");
                     navController.navigateUp()
                     navController.navigate(R.id.action_navigation_home_to_navigation_transaction)
                 }
@@ -441,15 +448,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             isTransacitonFragmentShowing = false
 
         } else {
+            Logger.debugLog("trxH","8");
             isTransactionDetailsShowing = true
             if (isDirectCallForTransaction) {
+                Logger.debugLog("trxH","9");
                 homeFragment.setTransacitonScreenVisisble(
                     true,
                     isDirectCallForTransaction,
                     isTransactionFragmentNotVisible
                 )
             } else {
-
+                Logger.debugLog("trxH","10");
                 navController.popBackStack(R.id.navigation_home, false)
                 homeFragment.setTransacitonScreenVisisble(
                     true,

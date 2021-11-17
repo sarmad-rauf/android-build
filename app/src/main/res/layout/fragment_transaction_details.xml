@@ -12,21 +12,20 @@
             android:id="@+id/topHeaderContainer"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            app:layout_constraintTop_toTopOf="parent"
             android:background="@color/colorWhite"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.es.marocapp.widgets.MarocBoldTextView
             android:id="@+id/tvTransactionHistoryTitle"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:textStyle="bold"
             android:ellipsize="end"
             android:gravity="center"
             android:text="@string/transaction_detials"
             android:textAlignment="center"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_18ssp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/topHeaderContainer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.18"
@@ -39,330 +38,330 @@
             android:layout_width="@dimen/_32sdp"
             android:layout_height="@dimen/_32sdp"
             android:layout_marginStart="@dimen/_12sdp"
-            app:srcCompat="@drawable/ic_back_black_svg"
+            app:layout_constraintBottom_toTopOf="@+id/tvTransactionHistoryTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTransactionHistoryTitle"
-            app:layout_constraintBottom_toTopOf="@+id/tvTransactionHistoryTitle"
-            />
+            app:srcCompat="@drawable/ic_back_black_svg" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/profile_sending_receiving_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:background="@color/colorWhite"
-        app:cardCornerRadius="@dimen/_12sdp"
-        app:cardElevation="@dimen/_12sdp"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintTop_toBottomOf="@+id/topHeaderContainer"
-        >
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/_38sdp">
-
-        <com.es.marocapp.widgets.MarocLightTextView
-            android:id="@+id/statusTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            tool:text="@string/status"
-            android:layout_margin="@dimen/_16sdp"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/statusVal"
-            app:layout_constraintStart_toStartOf="parent"
-            />
-
-        <com.es.marocapp.widgets.MarocRegularTextView
-            android:id="@+id/statusVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:layout_marginEnd="@dimen/_16sdp"
-            tool:text="Peding"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/statusTitle"
-            app:layout_constraintBottom_toBottomOf="@+id/statusTitle"
-            />
-
-        <com.es.marocapp.widgets.MarocLightTextView
-            android:id="@+id/dateTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:text="@string/date"
-            android:layout_margin="@dimen/_16sdp"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintTop_toBottomOf="@+id/statusTitle"
-            app:layout_constraintEnd_toStartOf="@+id/dateVal"
-            app:layout_constraintStart_toStartOf="parent"
-            />
-
-        <com.es.marocapp.widgets.MarocRegularTextView
-            android:id="@+id/dateVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:text="17/04/20"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/dateTitle"
-            app:layout_constraintBottom_toBottomOf="@+id/dateTitle"
-            />
-
-        <com.es.marocapp.widgets.MarocLightTextView
-            android:id="@+id/transactionIDTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:text="@string/transaction_id"
-            android:layout_marginTop="@dimen/_16sdp"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintTop_toBottomOf="@+id/dateTitle"
-            app:layout_constraintEnd_toStartOf="@+id/transactionIDVal"
-            app:layout_constraintStart_toStartOf="@+id/dateTitle"
-            />
-
-        <com.es.marocapp.widgets.MarocRegularTextView
-            android:id="@+id/transactionIDVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:text="77128373"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/transactionIDTitle"
-            app:layout_constraintBottom_toBottomOf="@+id/transactionIDTitle"
-            />
-
-        <com.es.marocapp.widgets.MarocLightTextView
-            android:id="@+id/SenderNameTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:text="@string/sender_name"
-            android:layout_marginTop="@dimen/_16sdp"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintTop_toBottomOf="@+id/transactionIDTitle"
-            app:layout_constraintEnd_toStartOf="@+id/SenderNameVal"
-            app:layout_constraintStart_toStartOf="@+id/dateTitle"
-            />
-
-        <com.es.marocapp.widgets.MarocRegularTextView
-            android:id="@+id/SenderNameVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:text="John Perucci"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/SenderNameTitle"
-            app:layout_constraintBottom_toBottomOf="@+id/SenderNameTitle"
-            />
-
-        <com.es.marocapp.widgets.MarocLightTextView
-            android:id="@+id/SenderIdentityTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:text="@string/sender_identity"
-            android:layout_marginTop="@dimen/_16sdp"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintTop_toBottomOf="@+id/SenderNameTitle"
-            app:layout_constraintEnd_toStartOf="@+id/SenderIdentityVal"
-            app:layout_constraintStart_toStartOf="@+id/dateTitle"
-            />
-
-        <com.es.marocapp.widgets.MarocRegularTextView
-            android:id="@+id/SenderIdentityVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:text="227182728272"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/SenderIdentityTitle"
-            app:layout_constraintBottom_toBottomOf="@+id/SenderIdentityTitle"
-            />
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/receiverNameGroup"
-            android:visibility="visible"
-            app:constraint_referenced_ids="ReceiverNameTitle,ReceiverNameVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <com.es.marocapp.widgets.MarocLightTextView
-            android:id="@+id/ReceiverNameTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:text="@string/receiver_s_name"
-            android:layout_marginTop="@dimen/_16sdp"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintTop_toBottomOf="@+id/SenderIdentityTitle"
-            app:layout_constraintEnd_toStartOf="@+id/ReceiverNameVal"
-            app:layout_constraintStart_toStartOf="@+id/dateTitle"
-            />
-
-        <com.es.marocapp.widgets.MarocRegularTextView
-            android:id="@+id/ReceiverNameVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxWidth="@dimen/_90sdp"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:text="John Perucci"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ReceiverNameTitle"
-            app:layout_constraintBottom_toBottomOf="@+id/ReceiverNameTitle"
-            />
-
-
-        <com.es.marocapp.widgets.MarocLightTextView
-            android:id="@+id/ReceiverIdentityTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:text="@string/receiver_s_mobile_number"
-            android:layout_marginTop="@dimen/_16sdp"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintTop_toBottomOf="@+id/ReceiverNameTitle"
-            app:layout_constraintEnd_toStartOf="@+id/ReceiverIdentityVal"
-            app:layout_constraintStart_toStartOf="@+id/dateTitle"
-            />
-
-        <com.es.marocapp.widgets.MarocRegularTextView
-            android:id="@+id/ReceiverIdentityVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:text="227182728272"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ReceiverIdentityTitle"
-            app:layout_constraintBottom_toBottomOf="@+id/ReceiverIdentityTitle"
-            />
-
-        <ImageView
-            android:id="@+id/dottedLine1"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/profile_sending_receiving_container"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_10sdp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16sdp"
-            android:layerType="software"
-            android:src="@drawable/dotted"
-            app:layout_constraintTop_toBottomOf="@+id/ReceiverIdentityTitle" />
+            android:background="@color/colorWhite"
+            app:cardCornerRadius="@dimen/_12sdp"
+            app:cardElevation="@dimen/_12sdp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintTop_toBottomOf="@+id/topHeaderContainer">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/_38sdp">
+
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/statusTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_16sdp"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/statusVal"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tool:text="@string/status" />
+
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/statusVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintBottom_toBottomOf="@+id/statusTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/statusTitle"
+                    tool:text="Peding" />
+
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/dateTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_16sdp"
+                    android:text="@string/date"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/dateVal"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/statusTitle" />
+
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/dateVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:text="17/04/20"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintBottom_toBottomOf="@+id/dateTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/dateTitle" />
+
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/transactionIDTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/transaction_id"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/transactionIDVal"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="@+id/dateTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/dateTitle" />
+
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/transactionIDVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:text="77128373"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintBottom_toBottomOf="@+id/transactionIDTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/transactionIDTitle" />
+
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/SenderNameTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/sender_name"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/SenderNameVal"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="@+id/dateTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/transactionIDTitle" />
+
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/SenderNameVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:text="John Perucci"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintBottom_toBottomOf="@+id/SenderNameTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/SenderNameTitle" />
+
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/SenderIdentityTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/sender_identity"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/SenderIdentityVal"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="@+id/dateTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/SenderNameTitle" />
+
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/SenderIdentityVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:text="227182728272"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintBottom_toBottomOf="@+id/SenderIdentityTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/SenderIdentityTitle" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/receiverNameGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:constraint_referenced_ids="ReceiverNameTitle,ReceiverNameVal" />
+
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/ReceiverNameTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/receiver_s_name"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/ReceiverNameVal"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="@+id/dateTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/SenderIdentityTitle" />
+
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/ReceiverNameVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:maxWidth="@dimen/_90sdp"
+                    android:text="John Perucci"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+
+                    app:layout_constraintBottom_toBottomOf="@+id/ReceiverNameTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ReceiverNameTitle" />
 
 
-        <com.es.marocapp.widgets.MarocLightTextView
-            android:id="@+id/amountTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:text="@string/amount"
-            android:layout_marginTop="@dimen/_16sdp"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintTop_toBottomOf="@+id/dottedLine1"
-            app:layout_constraintEnd_toStartOf="@+id/amountVal"
-            app:layout_constraintStart_toStartOf="@+id/dateTitle"
-            />
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/ReceiverIdentityTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/receiver_s_mobile_number"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/ReceiverIdentityVal"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="@+id/dateTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/ReceiverNameTitle" />
 
-        <com.es.marocapp.widgets.MarocRegularTextView
-            android:id="@+id/amountVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:text="DH 2.800.00"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/amountTitle"
-            app:layout_constraintBottom_toBottomOf="@+id/amountTitle"
-            />
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/ReceiverIdentityVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:text="227182728272"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ReceiverIdentityTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ReceiverIdentityTitle" />
 
-        <com.es.marocapp.widgets.MarocLightTextView
-            android:id="@+id/feeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:text="@string/fee"
-            android:layout_marginTop="@dimen/_16sdp"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintTop_toBottomOf="@+id/amountTitle"
-            app:layout_constraintEnd_toStartOf="@+id/feeVal"
-            app:layout_constraintStart_toStartOf="@+id/dateTitle"
-            />
+                <ImageView
+                    android:id="@+id/dottedLine1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layerType="software"
+                    android:src="@drawable/dotted"
+                    app:layout_constraintTop_toBottomOf="@+id/ReceiverIdentityTitle" />
 
-        <com.es.marocapp.widgets.MarocRegularTextView
-            android:id="@+id/feeVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:text="DH 2.800.00"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/feeTitle"
-            app:layout_constraintBottom_toBottomOf="@+id/feeTitle"
-            />
 
-        <ImageView
-            android:id="@+id/dottedLine2"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:layerType="software"
-            android:src="@drawable/dotted"
-            app:layout_constraintTop_toBottomOf="@+id/feeTitle" />
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/amountTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/amount"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/amountVal"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="@+id/dateTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/dottedLine1" />
 
-        <com.es.marocapp.widgets.MarocLightTextView
-            android:id="@+id/totalAmountTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:text="@string/total_cost"
-            android:layout_marginTop="@dimen/_16sdp"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintTop_toBottomOf="@+id/dottedLine2"
-            app:layout_constraintEnd_toStartOf="@+id/totalAmountVal"
-            app:layout_constraintStart_toStartOf="@+id/dateTitle"
-            />
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/amountVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:text="DH 2.800.00"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintBottom_toBottomOf="@+id/amountTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/amountTitle" />
 
-        <com.es.marocapp.widgets.MarocRegularTextView
-            android:id="@+id/totalAmountVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/colorGreyDark"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:text="DH 2.800.00"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/totalAmountTitle"
-            app:layout_constraintBottom_toBottomOf="@+id/totalAmountTitle"
-            />
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/feeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/fee"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/feeVal"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="@+id/dateTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/amountTitle" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/feeVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:text="DH 2.800.00"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintBottom_toBottomOf="@+id/feeTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/feeTitle" />
+
+                <ImageView
+                    android:id="@+id/dottedLine2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layerType="software"
+                    android:src="@drawable/dotted"
+                    app:layout_constraintTop_toBottomOf="@+id/feeTitle" />
+
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/totalAmountTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="@string/total_cost"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintEnd_toStartOf="@+id/totalAmountVal"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="@+id/dateTitle"
+                    app:layout_constraintTop_toBottomOf="@+id/dottedLine2" />
+
+                <com.es.marocapp.widgets.MarocRegularTextView
+                    android:id="@+id/totalAmountVal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:text="DH 2.800.00"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintBottom_toBottomOf="@+id/totalAmountTitle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/totalAmountTitle" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDownloadPdf"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_37sdp"
+                    android:layout_margin="16dp"
+                    android:gravity="center"
+                    android:text="Download Pdf"
+                    android:theme="@style/Theme.MaterialComponents"
+                    app:cornerRadius="@dimen/_16sdp"
+                    app:icon="@drawable/pdf"
+                    app:iconGravity="textStart"
+                    app:iconPadding="10dp"
+                    android:textColor="@color/colorBtnBlue"
+                    app:iconTint="@color/colorRed"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/totalAmountVal"
+                    app:strokeColor="@color/colorTextOrange"
+                    app:strokeWidth="1dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

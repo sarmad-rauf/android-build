@@ -68,6 +68,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
             PrefUtils.PreKeywords.PREF_KEY_IS_SHOW_TUTORIALS,
             true
         )
+        Logger.debugLog("trxH","isTutorialShowing  ${Constants.isTutorialShowing}");
 
         loadNDKValues()
         setupPermissions()
@@ -130,6 +131,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 //                application.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
 //            Constants.CURRENT_DEVICE_ID = telephonyManager!!.deviceId
 
+         //   checkInternetOrMobileConnection()
             setDeviceIMEI()
 
             mActivityViewModel.requestForGetPreLoginDataApi(
@@ -167,7 +169,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 }
             }
         }
-
+        //checkInternetOrMobileConnection()
         mActivityViewModel.requestForGetPreLoginDataApi(
             this@SplashActivity,
             BuildConfig.VERSION_NAME
