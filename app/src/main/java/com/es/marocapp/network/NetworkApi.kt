@@ -168,6 +168,10 @@ interface NetworkApi {
     @POST(EndPoints.gettransactionhistory)
     fun getTrasactionHistoryCall(@Body request : TransactionHistoryRequest) : Observable<TransactionHistoryResponse>
 
+    //Request for getDownloadRecipTemplateApi
+    @POST(EndPoints.getdownloadreciptemplate)
+    fun getDownloadRecipTemplateCall(@Body request: GetReciptTemplateRequest) : Observable<GetReciptTemplateResponse>
+
     //Request for getspecifictransactionhistory
     @POST(EndPoints.gettransactionhistory)
     fun getSpecificTrasactionHistoryCall(@Body request : TransactionHistorySpecificPaymentRequest) : Observable<TransactionHistoryResponse>

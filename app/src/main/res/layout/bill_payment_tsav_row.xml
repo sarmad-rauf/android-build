@@ -19,7 +19,8 @@
         android:id="@+id/tsav1"
         android:layout_width="@dimen/_70sdp"
         android:layout_height="wrap_content"
-        android:maxLength="10">
+        android:maxLength="7"
+        android:inputType="number">
     </com.es.marocapp.widgets.MarocEditText>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -38,7 +39,8 @@
         android:id="@+id/tsav2"
         android:layout_width="@dimen/_70sdp"
         android:layout_height="wrap_content"
-        android:maxLength="10">
+        android:maxLength="3"
+        android:inputType="number">
     </com.es.marocapp.widgets.MarocEditText>
     </com.google.android.material.textfield.TextInputLayout>
 

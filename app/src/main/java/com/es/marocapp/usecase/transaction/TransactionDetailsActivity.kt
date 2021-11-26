@@ -1,16 +1,49 @@
 package com.es.marocapp.usecase.transaction
 
+import android.app.Activity
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.print.PDFPrint
 import android.view.View
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
 import com.es.marocapp.databinding.FragmentTransactionDetailsBinding
+
 import com.es.marocapp.locale.LanguageData
+import com.es.marocapp.model.CustomModelHistoryItem
 import com.es.marocapp.model.responses.History
+import com.es.marocapp.network.ApiConstant
+import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.usecase.BaseActivity
+import com.es.marocapp.usecase.MainActivity
+import com.es.marocapp.usecase.airtime.AirTimeActivity
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.Logger
+import com.google.android.material.snackbar.Snackbar
+import com.tejpratapsingh.pdfcreator.utils.FileManager
+import com.tejpratapsingh.pdfcreator.utils.PDFUtil
+import java.io.*
+import java.net.URI
+import java.util.jar.Manifest
+import okhttp3.ResponseBody
+import java.sql.Time
+import java.text.SimpleDateFormat
+import java.util.*
 
-class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBinding>(){
 
+class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBinding>(),TransactionDownloadRecipt{
+
+    lateinit var mActivityViewModel: TransactionViewModel
     private lateinit var mItemDetailsToShow : History
     private var amount = ""
     private var fee = ""
@@ -20,12 +53,22 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
     }
 
     override fun init(savedInstanceState: Bundle?) {
+        mActivityViewModel = ViewModelProvider(this@TransactionDetailsActivity)[TransactionViewModel::class.java]
+        mDataBinding.apply {
+            viewmodel = mActivityViewModel
+        }
+
         mItemDetailsToShow = Constants.currentTransactionItem
         mDataBinding.imgBackButton.setOnClickListener {
             this@TransactionDetailsActivity.finish()
         }
         setStrings()
         updateUI()
+        subscribeObservers()
+        mDataBinding.btnDownloadPdf.setOnClickListener {
+            mActivityViewModel.isLoading.set(true)
+            mActivityViewModel.requestForGetDownloadRecipTemplateApi(this,Constants.CURRENT_USER_MSISDN,mItemDetailsToShow.transactionid)
+        }
     }
 
     private fun setStrings() {
@@ -138,6 +181,158 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         }
     }
 
+    private  fun subscribeObservers(){
+        mActivityViewModel.getReciptTemplateListner.observe(this,
+            Observer {
+                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+                    if(!it.fileData.isNullOrEmpty()){
+                        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+                        val currentDate = sdf.format(Date())
+                        val fileName = "TransactionHistory$currentDate.pdf"
+                     val htmlTextPdf =  EncryptionUtils.decryptString(it.fileDataHtml)
+                        val savedPDFFile =
+                            FileManager.getInstance().createTempFileWithName(applicationContext, fileName, false)
+
+
+                        // Generate Pdf From Html
+                        PDFUtil.generatePDFFromHTML(
+                            applicationContext, savedPDFFile,  htmlTextPdf, object :
+                                PDFPrint.OnPDFPrintListener {
+                                override fun onSuccess(file: File) {
+                                    // Open Pdf Viewer
+                                    val pdfUri: Uri = Uri.fromFile(savedPDFFile)
+
+
+                                   mActivityViewModel.isLoading.set(false)
+
+                                    DialogUtils.showFileDialogue(this@TransactionDetailsActivity,LanguageData.getStringValue("FileSaveSuccessMessage"),0,object :DialogUtils.OnYesClickListner{
+                                        override fun onDialogYesClickListner() {
+                                            //savefile(pdfUri)
+                                            viewPdf(pdfUri)
+                                        }})
+
+                                }
+
+                                override fun onError(exception: Exception) {
+                                    exception.printStackTrace()
+                                    DialogUtils.showErrorDialoge(this@TransactionDetailsActivity,Constants.SHOW_DEFAULT_ERROR)
+                                }
+                            })
+                    }else{
+                        DialogUtils.showErrorDialoge(this,Constants.SHOW_DEFAULT_ERROR)
+                    }
+                }else{
+                    DialogUtils.showErrorDialoge(this,it.description)
+                }
+            })
+    }
+
+    fun isStoragePermissionGranted(activity: Activity):Boolean {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ContextCompat.checkSelfPermission(activity ,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED)
+            {    //Log.v(TAG, "Permission is granted");
+                return true}
+         else {
+            //Toast.makeText(getApplicationContext(), "Permission is revoked",Toast.LENGTH_SHORT).show();
+            //Log.v(TAG, "Permission is revoked");
+            ActivityCompat.requestPermissions(activity,  arrayOf(
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ), 1);
+            return false;
+        }
+    } else { //permission is automatically granted on sdk<23 upon installation
+        //Toast.makeText(getApplicationContext(), "Permission is revoked",Toast.LENGTH_SHORT).show();
+        //Log.v(TAG, "Permission is granted");
+        return true;
+    }
+}
+
+
+    private fun writeResponseBodyToDisk(body: ResponseBody): Boolean {
+        try {
+
+            val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+            val currentDate = sdf.format(Date())
+            var fileName = "TransactionHistory$currentDate.pdf"
+            //File futureStudioIconFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
+            val futureStudioIconFile = File(
+                Environment
+                    .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                    .toString() + "/" + fileName
+            )
+            var inputStream: InputStream? = null
+            var outputStream: OutputStream? = null
+            try {
+                val fileReader = ByteArray(4096)
+                val fileSize = body.contentLength()
+                var fileSizeDownloaded: Long = 0
+                inputStream = body.byteStream()
+                outputStream = FileOutputStream(futureStudioIconFile)
+                while (true) {
+                    val read = inputStream.read(fileReader)
+                    if (read == -1) {
+                        break
+                    }
+                    outputStream.write(fileReader, 0, read)
+                    fileSizeDownloaded += read.toLong()
+                    Logger.debugLog("ok", "file download: $fileSizeDownloaded of $fileSize")
+                }
+                outputStream.flush()
+                return true
+            } catch (e: IOException) {
+                return false
+            } finally {
+                inputStream?.close()
+                outputStream?.close()
+            }
+        } catch (e: IOException) {
+            return false
+        }
+    }
+
+
+
+    fun savefile(sourceuri: Uri) {
+        val sourceFilename: String? = sourceuri.path
+        val destinationFilename =
+            Environment.getExternalStorageDirectory().path + File.separatorChar + "transationHistory.pdf"
+        var bis: BufferedInputStream? = null
+        var bos: BufferedOutputStream? = null
+        try {
+            bis = BufferedInputStream(FileInputStream(sourceFilename))
+            bos = BufferedOutputStream(FileOutputStream(destinationFilename, false))
+            val buf = ByteArray(1024)
+            bis.read(buf)
+            do {
+                bos.write(buf)
+            } while (bis.read(buf) !== -1)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } finally {
+            try {
+                bis?.close()
+                bos?.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+
+    private fun viewPdf(uri : Uri) {
+
+        // Setting the intent for pdf reader
+        val pdfIntent = Intent(Intent.ACTION_VIEW)
+        pdfIntent.setDataAndType(uri, "application/pdf")
+        pdfIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        try {
+            startActivity(pdfIntent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(this, "Can't read pdf file", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun getFri(fri: String): String {
         var userFri = fri.substringAfter("212")
         userFri = userFri.subSequence(0,9).toString()
@@ -151,6 +346,10 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         userFri = userFri.substringBefore("@")
         userFri = userFri.substringBefore("/")
         return userFri
+    }
+
+    override fun onDownloadReciptClickListner(view: View) {
+        mActivityViewModel.requestForGetDownloadRecipTemplateApi(this,Constants.CURRENT_USER_MSISDN,mItemDetailsToShow.toname)
     }
 
 }

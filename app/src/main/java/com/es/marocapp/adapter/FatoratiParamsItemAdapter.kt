@@ -147,14 +147,14 @@ class FatoratiParamsItemAdapter(
             com.es.marocapp.utils.Logger.debugLog("billpayment","Tsav51 ${paramItems[position].firstValue}    ${paramItems[position].secondValue}  ")
             if(firstvalue.isEmpty())
             {
-                tsavHolder.tsav1.hint=LanguageData.getStringValue("MatriculePlaceholder1").toString()
+                //tsavHolder.tsav1.hint=LanguageData.getStringValue("MatriculePlaceholder1").toString()
             }
             else{
                 tsavHolder.tsav1.setText(firstvalue)
             }
             if(secondValue.isEmpty())
             {
-                tsavHolder.tsav2.hint=LanguageData.getStringValue("MatriculePlaceholder2").toString()
+               // tsavHolder.tsav2.hint=LanguageData.getStringValue("MatriculePlaceholder2").toString()
             }
             else{
                 com.es.marocapp.utils.Logger.debugLog("billpayment","Tsav51   ${paramItems[position].secondValue}  ")

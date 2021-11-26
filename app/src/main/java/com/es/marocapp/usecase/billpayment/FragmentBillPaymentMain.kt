@@ -728,6 +728,9 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                             }
                         }
                         Logger.debugLog("inwi", "inwi ${listDataChild.toString()}")
+//                        val lastItem =  listDataHeader.get(listDataHeader.size-1)
+//                        listDataHeader.removeAt(listDataHeader.size - 1)
+//                        listDataHeader.add(0,lastItem)
                         prepareDataForBillPayment()
                         populateTelecomBillsSubMenusList(Constants.KEY_FOR_POST_PAID_TELECOM_BILL)
                     }

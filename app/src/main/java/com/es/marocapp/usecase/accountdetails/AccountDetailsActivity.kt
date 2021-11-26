@@ -20,7 +20,7 @@ class AccountDetailsActivity : BaseActivity<LayoutAccountDetailsBinding>(){
     lateinit var mLimitListAdapter : AccountDetailLimitListAdapter
 
     override fun init(savedInstanceState: Bundle?) {
-        mActivityViewModel = ViewModelProvider(this@AccountDetailsActivity).get(AccoutDetailsViewModel::class.java)
+        mActivityViewModel = ViewModelProvider(this@AccountDetailsActivity)[AccoutDetailsViewModel::class.java]
         mDataBinding.apply {
             viewmodel = mActivityViewModel
         }

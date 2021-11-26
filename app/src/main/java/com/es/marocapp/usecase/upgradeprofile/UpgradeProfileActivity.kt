@@ -53,7 +53,7 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
     override fun init(savedInstanceState: Bundle?) {
 
 
-        mActivityViewModel = ViewModelProvider(this).get(UpgradeProfileViewModel::class.java)
+        mActivityViewModel = ViewModelProvider(this)[UpgradeProfileViewModel::class.java]
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel

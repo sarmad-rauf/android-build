@@ -1281,13 +1281,23 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                 .compose(applyIOSchedulers())
                 .subscribe(
                     { result ->
+
+                        var arraylistOfBills: ArrayList<Bill> = arrayListOf()
+                        arraylistOfBills.addAll(result.bills)
+                        val responseCode = result.responseCode
+                        val description = result.description
+                        val lastBill = arraylistOfBills[arraylistOfBills.size-1]
+                        arraylistOfBills.removeAt(arraylistOfBills.size-1)
+                        arraylistOfBills.add(0,lastBill)
+                        val newResponse = BillPaymentCompaniesResponse(arraylistOfBills,description,responseCode)
+
                         isLoading.set(false)
                         Logger.debugLog("billPayment", "isLoading ${isLoading}")
-                        if (result?.responseCode != null) {
-                            when (result?.responseCode) {
+                        if (newResponse?.responseCode != null) {
+                            when (newResponse?.responseCode) {
                                 ApiConstant.API_SUCCESS -> {
-                                    getBillPaymentCompaniesResponseListner.postValue(result)
-                                    getBillPaymentCompaniesResponseObserver.set(result)
+                                    getBillPaymentCompaniesResponseListner.postValue(newResponse)
+                                    getBillPaymentCompaniesResponseObserver.set(newResponse)
                                 }
                                 ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(
                                     context as BillPaymentActivity, LoginActivity::class.java,
@@ -1298,13 +1308,13 @@ class BillPaymentViewModel(application: Application) : AndroidViewModel(applicat
                                     LoginActivity.KEY_REDIRECT_USER_INVALID
                                 )
                                 else -> {
-                                    getBillPaymentCompaniesResponseListner.postValue(result)
-                                    getBillPaymentCompaniesResponseObserver.set(result)
+                                    getBillPaymentCompaniesResponseListner.postValue(newResponse)
+                                    getBillPaymentCompaniesResponseObserver.set(newResponse)
                                 }
                             }
                         } else {
-                            getBillPaymentCompaniesResponseListner.postValue(result)
-                            getBillPaymentCompaniesResponseObserver.set(result)
+                            getBillPaymentCompaniesResponseListner.postValue(newResponse)
+                            getBillPaymentCompaniesResponseObserver.set(newResponse)
                         }
 
 

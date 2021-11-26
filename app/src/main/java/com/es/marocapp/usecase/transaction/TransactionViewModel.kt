@@ -6,7 +6,9 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.es.marocapp.R
+import com.es.marocapp.model.requests.GetReciptTemplateRequest
 import com.es.marocapp.model.requests.TransactionHistoryRequest
+import com.es.marocapp.model.responses.GetReciptTemplateResponse
 import com.es.marocapp.model.responses.TransactionHistoryResponse
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
@@ -27,6 +29,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     var errorText = SingleLiveEvent<String>()
     var acountFri = MutableLiveData<String>()
     var getTransactionsResponseListner = SingleLiveEvent<TransactionHistoryResponse>()
+    var getReciptTemplateListner = SingleLiveEvent<GetReciptTemplateResponse>()
 
     //Request For Get Transactions
     fun requestForGetTransactionHistoryApi(context: Context?,
@@ -74,6 +77,80 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
 
                         } else {
                             getTransactionsResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+    //Request For Get pdf recipt template
+    fun requestForGetDownloadRecipTemplateApi(context: Context?,
+                                           identity : String,
+                                              companyName : String
+    )
+    {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            //this will show the loading screen
+            isLoading.set(true)
+
+            var number =""
+                number= Constants.getNumberMsisdn(identity)
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getDownloadRecipTemplateCall(
+                GetReciptTemplateRequest(ApiConstant.CONTEXT_AFTER_LOGIN,number,companyName)
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+
+
+
+                        if (result?.responseCode != null)
+                        {
+                            when(result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+                                    getReciptTemplateListner.postValue(result)
+                                }
+                                ApiConstant.API_SESSION_OUT ->
+                                {
+                                    isLoading.set(false)
+                                    (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT)}
+                                ApiConstant.API_INVALID ->{
+                                    isLoading.set(false)
+                                    (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(context as MainActivity, LoginActivity::class.java,
+                                        LoginActivity.KEY_REDIRECT_USER_INVALID)
+                                }
+                                else ->  {
+                                    isLoading.set(false)
+                                    getReciptTemplateListner.postValue(result)
+                                }
+                            }
+
+                        } else {
+                            isLoading.set(false)
+                            getReciptTemplateListner.postValue(result)
                         }
 
 

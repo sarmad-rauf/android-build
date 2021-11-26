@@ -119,6 +119,9 @@ object EndPoints {
     //gettransactionhistory
     const val gettransactionhistory = "gettransactionhistory"
 
+    //getDownloadRecipTemplate
+    const val getdownloadreciptemplate = "downloadpaymentreceipt"
+
     //getbalance
     const val getbalance = "getbalance_v12"
 

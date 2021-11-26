@@ -79,7 +79,7 @@ object Constants {
 
     //merchant agent profile name and array
     //var MERCHANT_AGENT_PROFILE_NAME = "MT Merchant Agent Account Profile"
-    lateinit var MERCHANT_AGENT_PROFILE_NAME: String
+     var MERCHANT_AGENT_PROFILE_NAME: String = ""
     var acountTypeList :ArrayList<String> = ArrayList()
      var CURRENT_ACOUNT_TYPE_SELECTED: String? = LanguageData.getStringValue("Wallet")
     lateinit var LAST_ACOUNT_TYPE_SELECTED:String
@@ -762,6 +762,33 @@ object Constants {
             cursor?.close()
         }
         return fileSize
+    }
+
+    fun ReplaceDelimetersWithData(mItemDetailsToShow: History, decryptedString: String):String {
+        var newHtmlString = decryptedString
+        val newAmount =  addTwoValues(mItemDetailsToShow.fromavailablebalance.toDouble(),mItemDetailsToShow.fromamount.toDouble())
+       val initiatingaccountholder = mItemDetailsToShow.initiatingaccountholder.toString().replace("ID:","").trim().replace("/MSISDN","").trim()
+       val fromfri = mItemDetailsToShow.fromfri.toString().replace("FRI:","").trim().replace("/MSISDN","").trim()
+        val date = getZoneFormattedDateAndTime(mItemDetailsToShow.date);
+        val realuser = mItemDetailsToShow.realuser.toString().replace("ID:","").trim().replace("/MM","").trim()
+
+        newHtmlString=newHtmlString.replace("{initiatingaccountholder}",initiatingaccountholder)
+        newHtmlString=newHtmlString.replace("{date}",date)
+        newHtmlString=newHtmlString.replace("{realuser}",realuser)
+        newHtmlString=newHtmlString.replace("{tofri}",mItemDetailsToShow.tofri.toString())
+        newHtmlString=newHtmlString.replace("{tofri}",mItemDetailsToShow.tofri.toString())
+        newHtmlString=newHtmlString.replace("{toname}",mItemDetailsToShow.toname.toString())
+        newHtmlString=newHtmlString.replace("{transactionid}",mItemDetailsToShow.transactionid.toString())
+        newHtmlString=newHtmlString.replace("{date}",date)
+        newHtmlString=newHtmlString.replace("{fromfri}",fromfri)
+        newHtmlString=newHtmlString.replace("{adresse}",mItemDetailsToShow.fromfri.toString())
+        newHtmlString=newHtmlString.replace("{newAmount}",newAmount.toString())
+        newHtmlString=newHtmlString.replace("{fromamount}",mItemDetailsToShow.fromamount.toString())
+        newHtmlString=newHtmlString.replace("{fromavailablebalance}",mItemDetailsToShow.fromavailablebalance.toString())
+        newHtmlString=newHtmlString.replace("{fromavailablebalance}",mItemDetailsToShow.fromavailablebalance.toString())
+        Logger.debugLog("ok",newHtmlString)
+        return newHtmlString
+
     }
 
 //    fun getItems(stringValidatedParams: String): List<ValidatedParam>? {

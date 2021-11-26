@@ -6,14 +6,14 @@ apply plugin: 'com.google.firebase.crashlytics'
 
 
 
-def baseUrlType = 2//1:Production,2:Staging,3:Development,4: DR Disaster Recovery
+def baseUrlType = 1//1:Production,2:Staging,3:Development,4: DR Disaster Recovery
 
 android {
     compileSdkVersion 31
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.es.marocapp"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 31
         versionCode 1
         versionName "1.0.0"
@@ -217,4 +217,7 @@ dependencies {
 
     //-------------------json converter--------------------------------
     implementation 'com.google.code.gson:gson:2.8.8'
+
+    //-------------------PDFCreatorAndroid--------------------------------
+    implementation 'com.github.tejpratap46:PDFCreatorAndroid:3.0.2'
 }

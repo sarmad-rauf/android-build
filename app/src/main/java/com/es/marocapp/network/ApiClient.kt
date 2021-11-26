@@ -78,7 +78,11 @@ import kotlin.collections.ArrayList
 
         headerParams.clear()
         headerParams["Accept"] = "application/json"
-        headerParams["X-Forwarded-For"] = Constants.APPLICATION_IP_ADDRESS
+        if(Constants.APPLICATION_IP_ADDRESS.isNullOrEmpty())
+        {
+            headerParams["X-Forwarded-For"] = "0.0.0.0"
+        }else{
+        headerParams["X-Forwarded-For"] = Constants.APPLICATION_IP_ADDRESS}
         headerParams["token"] = Constants.createUserToken()
         var lang=Constants.getSelectedLanguage()
         when(lang){
