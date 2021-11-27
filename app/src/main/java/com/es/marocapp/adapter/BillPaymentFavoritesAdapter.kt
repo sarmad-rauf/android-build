@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.es.marocapp.R
 import com.es.marocapp.model.responses.Contact
 import com.es.marocapp.model.responses.Creancier
+import com.es.marocapp.utils.Constants
+import com.squareup.picasso.Picasso
+import java.lang.Exception
 
 class BillPaymentFavoritesAdapter(private val favContacts: ArrayList<Contact>,
                                   var listner: BillPaymentFavoriteClickListner) : RecyclerView.Adapter<BillPaymentFavoritesAdapter.BillPaymentFirstLetterItemViewHolder>() {
@@ -25,6 +28,21 @@ class BillPaymentFavoritesAdapter(private val favContacts: ArrayList<Contact>,
         /*holder.paymentItem.text = paymentItems[position].nomCreancier
         var name = paymentItems[position].nomCreancier
         holder.paymentItemIcon.text = name[0].toString()*/
+        var withoutNameCommaSepratedString = favContacts[position].contactname.substringAfter(",")
+        var stringForValidateParams =
+            withoutNameCommaSepratedString.substringAfter("(")
+        stringForValidateParams =
+            stringForValidateParams.substringBefore(")")
+        withoutNameCommaSepratedString =
+            withoutNameCommaSepratedString.replace(
+                stringForValidateParams,
+                ""
+            )
+        val result: List<String> =
+            withoutNameCommaSepratedString.split(",").map { it.trim() }
+
+
+
         if(favContacts[position].contactname.contains("Telec_Internet@")){
             holder.fav_main_image.visibility = View.GONE
             holder.fav_main_image.setImageResource(R.drawable.internet_blue)
@@ -77,8 +95,23 @@ class BillPaymentFavoritesAdapter(private val favContacts: ArrayList<Contact>,
             nickName = nickName.substringBefore(",")
             holder.fav_name.text = nickName
         }else if(favContacts[position].contactname.contains("Util_")){
-            holder.fav_main_image.visibility = View.GONE
-            holder.fav_telecom_bill_img.visibility = View.VISIBLE
+
+            val logoPath = Constants.marocFatouratiLogoPath.trim().plus(result[0].trim())
+            Picasso.get().load(logoPath).into(holder.fav_main_image, object: com.squareup.picasso.Callback {
+                override fun onSuccess() {
+                    //set animations here
+
+                }
+
+                override fun onError(e: Exception?) {
+                       holder.fav_main_image.visibility = View.GONE
+                     holder.fav_telecom_bill_img.visibility = View.VISIBLE
+                }
+            })
+
+
+
+
 
             var name = favContacts[position].contactname
             name = name.substringBefore("@")

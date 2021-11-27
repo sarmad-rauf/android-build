@@ -362,9 +362,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     if (it.additionalinformation.isNullOrEmpty()) {
                         showPopUp()
-                        Logger.debugLog("Abro","show popup")
                     } else {
-                        if (it.additionalinformation[0].value.equals("FALSE", true)|| (it.additionalinformation[0].value.equals("FALSE", true)&&isProfileNameMatched)) {
+                      //  if (it.additionalinformation[0].value.equals("FALSE", true)|| (it.additionalinformation[0].value.equals("FALSE", true)&&isProfileNameMatched)) {
+                        if (it.additionalinformation[0].value.equals("FALSE", true)) {
                             showPopUp()
                             Constants.IS_DEFAULT_ACCOUNT_SET = false
                             (activity as MainActivity).setViewsVisibility()

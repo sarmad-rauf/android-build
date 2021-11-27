@@ -826,7 +826,9 @@ object DialogUtils {
         rbArabic.text = LanguageData.getStringValue("DropDown_Arabic")
 
         addDialog.findViewById<View>(R.id.language_dialog_yes_btn).setOnClickListener {
+           if(!selectedLanguage.isNullOrEmpty()){
             listner.onChangeLanguageDialogYesClickListner(selectedLanguage)
+           }
             addDialog.dismiss()
         }
     }

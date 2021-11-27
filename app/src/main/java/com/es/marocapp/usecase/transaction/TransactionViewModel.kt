@@ -109,6 +109,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
                                               companyName : String
     )
     {
+
         if (Tools.checkNetworkStatus(getApplication())) {
 
             //this will show the loading screen
@@ -123,8 +124,6 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
                 .compose(applyIOSchedulers())
                 .subscribe(
                     { result ->
-
-
 
                         if (result?.responseCode != null)
                         {

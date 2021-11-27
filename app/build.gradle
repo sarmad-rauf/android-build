@@ -46,6 +46,7 @@ android {
 
         debug {
             if (baseUrlType == 1) {//Production
+               // buildConfigField "String", "SERVER_URL", "\"https://mobapp.mtcash.ma/mobileapi/\""
                 buildConfigField "String", "SERVER_URL", "\"https://10.100.171.122/mobileapi/\""
             } else if (baseUrlType == 2) {// Staging
                 buildConfigField "String", "SERVER_URL", "\"https://10.100.170.122/mobileapi/\""

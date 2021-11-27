@@ -395,7 +395,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
                             langParam = LocaleManager.KEY_LANGUAGE_AR
                         }
 
-                        mActivityViewModel.requestForChangeLanguage(this@MainActivity, langParam)
+                        if(!langParam.isNullOrEmpty()){
+                        mActivityViewModel.requestForChangeLanguage(this@MainActivity, langParam)}
 
                     }
 

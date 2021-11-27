@@ -781,7 +781,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
                             if (selectedContact.contactname.contains("Util_")) {
                                 mActivityViewModel.isBillUseCaseSelected.set(false)
                                 mActivityViewModel.isFatoratiUseCaseSelected.set(true)
-
+//Util_Redal@home 2eme etage hach,/upload/logos/logo_redal_p.jpg,01,1007,(CIL:1282644)
                                 //TelecomBillPayment Fatourati Use Case
                                 var contactName = selectedContact.contactname
                                 val companyNameUtilString = contactName.substringBefore("@")

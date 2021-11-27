@@ -254,6 +254,8 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
     }
 
     private fun setViewsAvailability() {
+
+        if(!updateProfileViewModel.currentProfile.contains("1")){
         if (updateProfileViewModel.currentProfile.contains("2")) {
             mDataBinding.inputFirstName.isEnabled = false
             mDataBinding.inputLastName.isEnabled = false
@@ -270,6 +272,7 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
             mDataBinding.inputIdType.isEnabled = false
             mDataBinding.inputAddress.isEnabled = false
             mDataBinding.inputCity.isEnabled = false
+        }
         }
     }
 
