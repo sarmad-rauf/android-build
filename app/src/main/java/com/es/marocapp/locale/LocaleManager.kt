@@ -19,7 +19,7 @@ object LocaleManager {
     const val KEY_LANGUAGE_FR = "fr"
     const val KEY_LANGUAGE_AR = "ar"
 
-    var selectedLanguage= KEY_LANGUAGE_EN
+    var selectedLanguage= KEY_LANGUAGE_FR
     var languageToBeChangedAfterAPI="";
 
     /**
