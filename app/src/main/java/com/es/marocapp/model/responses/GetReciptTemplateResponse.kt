@@ -4,6 +4,6 @@ data class GetReciptTemplateResponse(
     val description: String,
     val responseCode: String,
     val fileDataHtml: String,
-    val fileData: String
+    //val fileData: String
 
 )

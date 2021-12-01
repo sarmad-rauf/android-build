@@ -3,6 +3,7 @@ package com.es.marocapp.security;
 import android.util.Base64;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -45,7 +46,7 @@ public class CryptoHandler {
             BadPaddingException, InvalidKeyException,
             UnsupportedEncodingException, InvalidAlgorithmParameterException {
 
-        byte[] srcBuff = message.getBytes("UTF-8");
+        byte[] srcBuff = message.getBytes(StandardCharsets.UTF_8);
 
         SecretKeySpec skeySpec = new SecretKeySpec(key, "AES");
         IvParameterSpec ivSpec = new IvParameterSpec(iv);
@@ -54,9 +55,7 @@ public class CryptoHandler {
 
         byte[] dstBuff = ecipher.doFinal(srcBuff);
 
-        String base64 = Base64.encodeToString(dstBuff, Base64.DEFAULT);
-
-        return base64;
+        return Base64.encodeToString(dstBuff, Base64.DEFAULT);
 
     }
 

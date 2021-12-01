@@ -1,5 +1,6 @@
 package com.es.marocapp.security
 
+import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.RootValues
 
 object EncryptionUtils{
@@ -32,6 +33,10 @@ object EncryptionUtils{
 
     public fun encryptStringAESCBC(value:String):String{
         //encrypt - result base64 encoded string
+        Logger.debugLog("ok","hexKeyAESCBC ${(hexKeyAESCBC)}  amount ${(
+            hexIVAESCBC)}")
+        Logger.debugLog("ok","hexKeyAESCBC ${AesGcm256.HexToByte(hexKeyAESCBC)}  amount ${AesGcm256.HexToByte(
+            hexIVAESCBC)}")
         val encryptedText =
             CryptoHandler.getInstance().encrypt(value, AesGcm256.HexToByte(hexKeyAESCBC), AesGcm256.HexToByte(
                 hexIVAESCBC))

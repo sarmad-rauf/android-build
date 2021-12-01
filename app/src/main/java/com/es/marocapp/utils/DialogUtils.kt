@@ -732,7 +732,7 @@ object DialogUtils {
 
         val btnOk = addDialog.findViewById<MarocButton>(R.id.dialog_ok_btn)
 
-        btnOk.text = LanguageData.getStringValue("FileView")
+        btnOk.text = LanguageData.getStringValue("ViewFile")
 
         val tvMessage = addDialog.findViewById<TextView>(R.id.dialog_description)
         tvMessage.text = description

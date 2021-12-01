@@ -67,7 +67,10 @@ JNICALL
 Java_com_es_marocapp_usecase_splash_SplashActivity_getAesCBCHexKey(
         JNIEnv *env,
         jobject /* this */) {
-    std::string key = "B67C1EA886E95E689A1BB3DBAD065C16";
+    std::string key = "04BC61DC6F1A98B3C86AC22D67ED3F1A";
+
+    //old key
+    //std::string key = "B67C1EA886E95E689A1BB3DBAD065C16";
     return env->NewStringUTF(key.c_str());
 }
 
@@ -77,6 +80,9 @@ JNICALL
 Java_com_es_marocapp_usecase_splash_SplashActivity_getAesCBCHexIV(
         JNIEnv *env,
         jobject /* this */) {
-    std::string key = "48E53E0639A76C5A5E0C5BC9E3A91538";
+    std::string key = "74B3A7A3FF0D3C3E6EBB485AE04E43BD";
+
+    //old IV
+    //std::string key = "48E53E0639A76C5A5E0C5BC9E3A91538";
     return env->NewStringUTF(key.c_str());
 }

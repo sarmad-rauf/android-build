@@ -2,10 +2,12 @@ package com.es.marocapp.usecase.transaction
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.es.marocapp.R
+import com.es.marocapp.model.History
 import com.es.marocapp.model.requests.GetReciptTemplateRequest
 import com.es.marocapp.model.requests.TransactionHistoryRequest
 import com.es.marocapp.model.responses.GetReciptTemplateResponse

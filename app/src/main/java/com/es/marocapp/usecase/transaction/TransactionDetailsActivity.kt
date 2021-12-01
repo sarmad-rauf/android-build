@@ -5,10 +5,12 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.print.PDFPrint
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -26,6 +28,7 @@ import com.es.marocapp.security.EncryptionUtils
 import com.es.marocapp.usecase.BaseActivity
 import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.airtime.AirTimeActivity
+import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
@@ -52,11 +55,18 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         return R.layout.fragment_transaction_details
     }
 
+    override fun onRestart() {
+        super.onRestart()
+      //  startNewActivityAndClear(Intent(this,MainActivity::class.java))
+       // startNewActivityAndClear(this, MainActivity::class.java)
+        finish()
+    }
     override fun init(savedInstanceState: Bundle?) {
         mActivityViewModel = ViewModelProvider(this@TransactionDetailsActivity)[TransactionViewModel::class.java]
         mDataBinding.apply {
             viewmodel = mActivityViewModel
         }
+
 
         mItemDetailsToShow = Constants.currentTransactionItem
         mDataBinding.imgBackButton.setOnClickListener {
@@ -89,7 +99,12 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         //status
         if(mItemDetailsToShow.transactionstatus.isNullOrEmpty()){
             mDataBinding.statusVal.text = "-"
+
         }else{
+            if(!mItemDetailsToShow.transactionstatus.equals("SUCCESSFUL"))
+            {
+                mDataBinding.btnDownloadPdf.visibility= View.GONE
+            }
             mDataBinding.statusVal.text = mItemDetailsToShow.transactionstatus
         }
 
@@ -159,8 +174,7 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
             fee = "0.00"
             mDataBinding.feeVal.text = "DH 0.00"
         }else{
-
-            var feeWithTax = Constants.converValueToTwoDecimalPlace(mItemDetailsToShow.fromfee.toDouble()+fromTax.toDouble())
+            val feeWithTax = Constants.converValueToTwoDecimalPlace(mItemDetailsToShow.fromfee.toDouble()+fromTax.toDouble())
             fee = mItemDetailsToShow.fromfee
             mDataBinding.feeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+feeWithTax
         }
@@ -185,14 +199,15 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         mActivityViewModel.getReciptTemplateListner.observe(this,
             Observer {
                 if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                    if(!it.fileData.isNullOrEmpty()){
-                        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-                        val currentDate = sdf.format(Date())
-                        val fileName = "TransactionHistory$currentDate.pdf"
-                     val htmlTextPdf =  EncryptionUtils.decryptString(it.fileDataHtml)
-                        val savedPDFFile =
-                            FileManager.getInstance().createTempFileWithName(applicationContext, fileName, false)
+                    if(!it.fileDataHtml.isNullOrEmpty()){
+//                        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+//                        val currentDate = sdf.format(Date())
 
+                        val fileName = "TransactionDetail${mItemDetailsToShow.transactionid}.pdf"
+                     val htmlTextPdf =  EncryptionUtils.decryptString(it.fileDataHtml)
+                          val savedPDFFile = FileManager.getInstance().createTempFileWithName(applicationContext, fileName, false)
+                     //   val destinationFilename = File(
+                       //     this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + fileName)
 
                         // Generate Pdf From Html
                         PDFUtil.generatePDFFromHTML(
@@ -201,27 +216,31 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
                                 override fun onSuccess(file: File) {
                                     // Open Pdf Viewer
                                     val pdfUri: Uri = Uri.fromFile(savedPDFFile)
-
-
                                    mActivityViewModel.isLoading.set(false)
 
-                                    DialogUtils.showFileDialogue(this@TransactionDetailsActivity,LanguageData.getStringValue("FileSaveSuccessMessage"),0,object :DialogUtils.OnYesClickListner{
+                                    DialogUtils.showFileDialogue(this@TransactionDetailsActivity,
+                                        LanguageData.getStringValue("FileSaveSuccessMessage"),
+                                        0,
+                                        object :DialogUtils.OnYesClickListner{
                                         override fun onDialogYesClickListner() {
-                                            //savefile(pdfUri)
+                                           //savefile(pdfUri)
                                             viewPdf(pdfUri)
                                         }})
-
                                 }
 
                                 override fun onError(exception: Exception) {
                                     exception.printStackTrace()
+                                    mActivityViewModel.isLoading.set(false)
                                     DialogUtils.showErrorDialoge(this@TransactionDetailsActivity,Constants.SHOW_DEFAULT_ERROR)
                                 }
                             })
+
                     }else{
-                        DialogUtils.showErrorDialoge(this,Constants.SHOW_DEFAULT_ERROR)
+                        mActivityViewModel.isLoading.set(false)
+                        DialogUtils.showErrorDialoge(this,it.description)
                     }
                 }else{
+                    mActivityViewModel.isLoading.set(false)
                     DialogUtils.showErrorDialoge(this,it.description)
                 }
             })
@@ -234,16 +253,12 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
             {    //Log.v(TAG, "Permission is granted");
                 return true}
          else {
-            //Toast.makeText(getApplicationContext(), "Permission is revoked",Toast.LENGTH_SHORT).show();
-            //Log.v(TAG, "Permission is revoked");
             ActivityCompat.requestPermissions(activity,  arrayOf(
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE
             ), 1);
             return false;
         }
     } else { //permission is automatically granted on sdk<23 upon installation
-        //Toast.makeText(getApplicationContext(), "Permission is revoked",Toast.LENGTH_SHORT).show();
-        //Log.v(TAG, "Permission is granted");
         return true;
     }
 }
@@ -294,9 +309,10 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
 
 
     fun savefile(sourceuri: Uri) {
+        var fileName = "TransactionDetail${mItemDetailsToShow.transactionid}.pdf"
         val sourceFilename: String? = sourceuri.path
         val destinationFilename =
-            Environment.getExternalStorageDirectory().path + File.separatorChar + "transationHistory.pdf"
+            this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + fileName
         var bis: BufferedInputStream? = null
         var bos: BufferedOutputStream? = null
         try {
@@ -349,7 +365,14 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
     }
 
     override fun onDownloadReciptClickListner(view: View) {
-        mActivityViewModel.requestForGetDownloadRecipTemplateApi(this,Constants.CURRENT_USER_MSISDN,mItemDetailsToShow.toname)
-    }
+        if(isStoragePermissionGranted(this)) {
+            mActivityViewModel.requestForGetDownloadRecipTemplateApi(
+                this,
+                Constants.CURRENT_USER_MSISDN,
+                mItemDetailsToShow.toname
+            )
+        }
+
+        }
 
 }

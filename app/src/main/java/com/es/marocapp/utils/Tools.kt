@@ -1,5 +1,6 @@
 package com.es.marocapp.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -86,6 +87,7 @@ object Tools {
         }
     }
 
+    @SuppressLint("Range")
     fun getFileName(context: Context, uri: Uri): String? {
         var result: String? = null
         if (uri.scheme == "content") {
@@ -109,6 +111,8 @@ object Tools {
     }
 
     fun generateEMVcoString(number: String, enteredAmount: String): String {
+       Logger.debugLog("ok","msisdn ${number}  amount ${enteredAmount}")
+
         var amount = enteredAmount
         var amountLength = ""
         var amountTag = ""
@@ -126,8 +130,9 @@ object Tools {
             purposeOfTransaction = Constants.EMVco.static
             pointOfInitiationMethod = Constants.EMVco.Point_Of_Initiation_Method_VALUE_STATIC
         }
-
+        Logger.debugLog("ok","pointOfInitiationMethod ${pointOfInitiationMethod}  amount ${enteredAmount}")
         var Paid_Entity_Reference_VALUE = EncryptionUtils.encryptStringAESCBC("+$number")
+        Logger.debugLog("ok","msisdnecrypted ${Paid_Entity_Reference_VALUE}  amount ${enteredAmount}")
         var Masked_Paid_Entity_Reference_VALUE = ""
 
         Masked_Paid_Entity_Reference_VALUE =
@@ -159,10 +164,11 @@ object Tools {
                     Constants.EMVco.QR_Version_ID + Constants.EMVco.QR_Version_SIZE + Constants.EMVco.QR_Version_VALUE +
                     Constants.EMVco.QR_Instance_ID + Constants.EMVco.QR_Instance_SIZE + Constants.EMVco.QR_Instance_VALUE + Constants.EMVco.CRC
 
+
         val generatedCRC = generateChecksumCRC16(qrString.toByteArray())
-
+        Logger.debugLog("ok","generatedCRC ${generatedCRC}  amount ${enteredAmount}")
         qrString += Integer.toHexString(generatedCRC).toUpperCase()
-
+        Logger.debugLog("ok","qrString ${qrString}  amount ${enteredAmount}")
         return qrString
     }
 
