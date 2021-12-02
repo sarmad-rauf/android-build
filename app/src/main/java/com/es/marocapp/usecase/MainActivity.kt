@@ -721,7 +721,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         mActivityViewModel.getBalanceInforAndLimitResponseListner.observe(this@MainActivity,
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-                    var userName = it?.firstname + " " + it?.surname
+                    val userName = it?.firstname + " " + it?.surname
                     Constants.CURRENT_USER_NAME = userName
                     Constants.UserProfileName=it.profilename.toString()
                     Constants.balanceInfoAndResponse = Constants.balanceInfoAndResponse?.copy(it)

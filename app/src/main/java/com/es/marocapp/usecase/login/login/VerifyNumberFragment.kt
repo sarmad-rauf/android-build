@@ -19,6 +19,7 @@ import com.es.marocapp.databinding.FragmentVerifyNumberBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.model.responses.GetAccountHolderInformationResponse
+import com.es.marocapp.model.responses.GetOptResponse
 import com.es.marocapp.model.responses.RegisterUserResponse
 import com.es.marocapp.model.responses.ValidateOtpAndUpdateAliasesResponse
 import com.es.marocapp.network.ApiConstant
@@ -181,6 +182,18 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
         }
     }
     private fun subscribeObserver() {
+
+
+        val mGetOtpResponseListner = Observer<GetOptResponse> {
+            if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+               // do nothing
+            } else {
+                DialogUtils.showErrorDialoge(activity as LoginActivity, it.description)
+            }
+        }
+
+        mActivityViewModel.getOTPResponseListner.observe(this, mGetOtpResponseListner)
+
         mActivityViewModel.errorText.observe(this@VerifyNumberFragment, Observer {
             DialogUtils.showErrorDialoge(activity as LoginActivity, it)
         })

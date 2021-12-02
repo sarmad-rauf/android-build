@@ -47,5 +47,7 @@ data class History(
     val transactionstatus: String,
     val transfertype: String,
     val transferTypeEwp: String,
-    val fromTax:String
+    val fromTax:String,
+    val toTax:String,
+    val showReceipt:Boolean
 )

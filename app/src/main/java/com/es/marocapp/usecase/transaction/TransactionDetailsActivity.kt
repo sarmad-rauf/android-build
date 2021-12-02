@@ -68,9 +68,13 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         }
 
 
+
         mItemDetailsToShow = Constants.currentTransactionItem
         mDataBinding.imgBackButton.setOnClickListener {
             this@TransactionDetailsActivity.finish()
+        }
+        if(!mItemDetailsToShow.showReceipt){
+        mDataBinding.btnDownloadPdf.visibility  = View.GONE
         }
         setStrings()
         updateUI()
@@ -155,6 +159,16 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         }
 
         //Amount
+        if(Constants.IS_MERCHANT_USER&&mItemDetailsToShow.fromTax.isNullOrEmpty())
+        {
+            if(mItemDetailsToShow.toavailablebalance.isNullOrEmpty()){
+                amount = "0.00"
+                mDataBinding.amountVal.text = "DH 0.00"
+            }else{
+                amount = mItemDetailsToShow.toavailablebalance
+                mDataBinding.amountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mItemDetailsToShow.toavailablebalance
+            }
+        }else{
         if(mItemDetailsToShow.toamount.isNullOrEmpty()){
             amount = "0.00"
             mDataBinding.amountVal.text = "DH 0.00"
@@ -162,14 +176,36 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
             amount = mItemDetailsToShow.toamount
             mDataBinding.amountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mItemDetailsToShow.toamount
         }
+        }
 
         //Fee
-        var fromTax=mItemDetailsToShow.fromTax
+
+        var fromTax="0"
+        if(Constants.IS_MERCHANT_USER&&mItemDetailsToShow.fromTax.isNullOrEmpty())
+        {
+            fromTax=mItemDetailsToShow.toTax
+        }
+        else{
+         fromTax=mItemDetailsToShow.fromTax
+        }
+
         if(fromTax.isNullOrEmpty())
         {
             fromTax="0"
         }
 
+
+
+        if(Constants.IS_MERCHANT_USER&&mItemDetailsToShow.fromTax.isNullOrEmpty()){
+            if(mItemDetailsToShow.toTax.isNullOrEmpty()){
+                fee = "0.00"
+                mDataBinding.feeVal.text = "DH 0.00"
+            }else{
+                val feeWithTax = Constants.converValueToTwoDecimalPlace(mItemDetailsToShow.tofee.toDouble()+fromTax.toDouble())
+                fee = mItemDetailsToShow.tofee
+                mDataBinding.feeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+feeWithTax
+            }
+        }else{
         if(mItemDetailsToShow.fromfee.isNullOrEmpty()){
             fee = "0.00"
             mDataBinding.feeVal.text = "DH 0.00"
@@ -177,6 +213,7 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
             val feeWithTax = Constants.converValueToTwoDecimalPlace(mItemDetailsToShow.fromfee.toDouble()+fromTax.toDouble())
             fee = mItemDetailsToShow.fromfee
             mDataBinding.feeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+feeWithTax
+        }
         }
 
         //TotalAmount
