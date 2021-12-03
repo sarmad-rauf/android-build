@@ -267,7 +267,8 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                 }
                 mActivityViewModel.requestForBalanceInfoAndLimtsAPI(activity)
                 mActivityViewModel.requestForGetFavouriteApi(activity)
-            }else if(it.responseCode == ApiConstant.API_ACCOUNT_BLOCKED){
+            }
+            else if(it.responseCode == ApiConstant.API_ACCOUNT_BLOCKED){
                 val btnTxt = LanguageData.getStringValue("BtnTitle_OK")
                 val titleTxt = LanguageData.getStringValue("AccountBlocked")
                 val descriptionTxt =it.description
@@ -276,17 +277,20 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                         (activity as LoginActivity).navController.popBackStack(R.id.loginFragment,false)
                     }
                 })
-            }  else if(it.responseCode.equals(ApiConstant.API_WRONG_ATTEMPT_BLOCKED)){
+            }
+            else if(it.responseCode.equals(ApiConstant.API_WRONG_ATTEMPT_BLOCKED)){
                 DialogUtils.showBlockedAccountDialog(activity,LanguageData.getStringValue("BtnTitle_ResetPassword"),LanguageData.getStringValue("BtnTitle_Cancel"),
                 LanguageData.getStringValue("BlockedAndResetAccount"),LanguageData.getStringValue("AccountBlocked"),object : DialogUtils.OnCustomDialogListner{
                         override fun onCustomDialogOkClickListner() {
                             mActivityViewModel.isFromLoginUserScreen.set(true)
                             mDataBinding.inputPin.setText("")
-                            (activity as LoginActivity).navController.navigate(R.id.action_signUpNumberFragment_to_resetPasswordFragment)
+                            mActivityViewModel.requestForGetProfileApi(activity as LoginActivity, mActivityViewModel.mUserMsisdn)
+                        //  (activity as LoginActivity).navController.navigate(R.id.action_signUpNumberFragment_to_resetPasswordFragment)
                         }
                     }
                 )
-            } else {
+            }
+            else {
                 Constants.HEADERS_AFTER_LOGINS = false
                 Constants.LOGGED_IN_USER = ""
                 DialogUtils.showErrorDialoge(activity as LoginActivity,it.description)

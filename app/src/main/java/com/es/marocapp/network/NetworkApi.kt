@@ -16,7 +16,10 @@ interface NetworkApi {
 
     //Request for GetProfile
     @POST(EndPoints.getProfile)
-    fun getProfile(@Body request : GetProfileRequest) : Observable<GetProfileResponse>
+    fun getProfile(@Body request : GetProfileRequest) : Observable<GetProfileResponse> //Request for GetProfile
+
+    @POST(EndPoints.getUpdatePinResetStatus)
+    fun getUpdatePinResetStatus(@Body request : GetProfileRequest) : Observable<UpgradeProfileResponse>
 
     //Request for GetAccountDetailCall
     @POST(EndPoints.getaccountDetail)

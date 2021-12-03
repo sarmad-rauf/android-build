@@ -14,6 +14,9 @@ object EndPoints {
     //GetProfile
     const val getProfile = "getprofile"
 
+    //GetUpdatePinResetStatus
+    const val getUpdatePinResetStatus = "updatepinresetstatus"
+
     //GetAccountDetail
     const val getaccountDetail = "getaccountdetails"
 

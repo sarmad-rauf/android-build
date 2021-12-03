@@ -65,10 +65,8 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
 
         if(mActivityViewModel.isForgotPasswordDialogToShow){
           //  mActivityViewModel.requestForGetProfileApi(activity,mActivityViewModel.currentUserMSISDN)
-            Logger.debugLog("userType"," dddddddd ${Constants.IS_AGENT_USER}")
             if(Constants.IS_AGENT_USER)
             {
-                Logger.debugLog("userType"," isAgentUserType ${Constants.IS_AGENT_USER}")
                 DialogUtils.showCustomDialogue(activity,LanguageData.getStringValue("BtnTitle_OK"),LanguageData.getStringValue("PleaseCallCallcenterForGeneratingOTPAgent"),
                     LanguageData.getStringValue("OTP"),object : DialogUtils.OnCustomDialogListner{
                         override fun onCustomDialogOkClickListner() {
@@ -77,7 +75,6 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
                 )
             }
             else{
-                Logger.debugLog("userType"," isConsumerUserType ${Constants.IS_AGENT_USER}")
                 DialogUtils.showCustomDialogue(activity,LanguageData.getStringValue("BtnTitle_OK"),LanguageData.getStringValue("PleaseCallCallcenterForGeneratingOTP"),
                     LanguageData.getStringValue("OTP"),object : DialogUtils.OnCustomDialogListner{
                         override fun onCustomDialogOkClickListner() {

@@ -67,6 +67,7 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
     var getAccountDetailResponseListner = SingleLiveEvent<GetAccountHolderInformationResponse>()
     var getProfileResponseListner = SingleLiveEvent<GetProfileResponse>()
+    var getPinResetStatusListner = SingleLiveEvent<UpgradeProfileResponse>()
     var getInitialAuthDetailsResponseListner = SingleLiveEvent<GetInitialAuthDetailsReponse>()
     var getOtpForRegistrationResponseListner = SingleLiveEvent<GetOtpForRegistrationResponse>()
     var getSimppleOtpForRegistrationResponseListner = SingleLiveEvent<GetOtpSimpleResponse>()
@@ -203,6 +204,52 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
     }
 
+    // API Called on reset password scree to update pin reset status
+    fun requestForupdatePinResetStatusApi(
+        context: Context?,
+        userMsisdn: String
+    ) {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+            mUserMsisdn = userMsisdn
+
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getUpdatePinResetStatus(
+                GetProfileRequest(ApiConstant.CONTEXT_BEFORE_LOGIN,Constants.getNumberMsisdn(userMsisdn))
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+
+                        isLoading.set(false)
+
+                        if (result?.responseCode != null )
+                         {
+                             getPinResetStatusListner.postValue(result)
+                        }else {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                    }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) {
+                            errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+                    })
+        } else {
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
+
+
     // API Called on Login Screen to get profile name
     fun requestForGetProfileApi(
         context: Context?,
@@ -223,22 +270,22 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
                         isLoading.set(false)
 
                         if (result?.responseCode != null )
-                         {
-                             Logger.debugLog("Abro"," userTypeResults ${result.userType}")
-                             if(result.responseCode.equals(ApiConstant.API_SUCCESS))
-                             {
-                                 if(result.userType.contains("agent"))
-                                 {
+                        {
+                            Logger.debugLog("Abro"," userTypeResults ${result.userType}")
+                            if(result.responseCode.equals(ApiConstant.API_SUCCESS))
+                            {
+                                if(result.userType.contains("agent"))
+                                {
 
-                                     Constants.IS_AGENT_USER=true
-                                     Logger.debugLog("userType"," isAgentUser ${Constants.IS_AGENT_USER}")
-                                 }
-                             }
+                                    Constants.IS_AGENT_USER=true
+                                    Logger.debugLog("userType"," isAgentUser ${Constants.IS_AGENT_USER}")
+                                }
+                            }
 
-                             getProfileResponseListner.postValue(result)
+                            getProfileResponseListner.postValue(result)
                         }else {
                             errorText.postValue(context!!.getString(R.string.error_msg_generic))
-                    }
+                        }
 
 
                     },

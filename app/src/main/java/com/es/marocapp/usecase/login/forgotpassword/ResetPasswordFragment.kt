@@ -105,6 +105,7 @@ class ResetPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), For
 
         val mForgotPasswordListener = Observer<ForgotPasswordResponse>{
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
+
                 if(mActivityViewModel.isFromLoginUserScreen.get()!!){
                     mActivityViewModel.isResetPassowrdFlow = true
                     (activity as LoginActivity).navController.navigateUp()
