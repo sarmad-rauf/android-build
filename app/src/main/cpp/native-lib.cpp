@@ -20,7 +20,7 @@ Java_com_es_marocapp_usecase_splash_SplashActivity_getServerPublicKeys(
 
     // Server Public Keys
     std::string key1 = "EbmVRuVFiv5FDIvVCnjqSiH+DLLIpku9/I024/54Oms=";
-    std::string key2 = "EbmVRuVFiv5FDIvVCnjqSiH+DLLIpku9/I024/54Oms=";
+    std::string key2 = "ap6P/PGyhNpdnyAQ3RPOEWaBQH+RU0MQnxQlXkVpdqo=";
 
     // A Separator is used for separation for the keys
     std::string separator = ":::::::"; //7 chars

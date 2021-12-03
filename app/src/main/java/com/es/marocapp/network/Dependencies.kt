@@ -80,7 +80,7 @@ abstract class Dependencies {
             builder.hostnameVerifier(object : HostnameVerifier {
                 override fun verify(hostname: String, session: SSLSession): Boolean {
                     try {
-                        var certs = session.getPeerCertificates()
+                        val certs = session.getPeerCertificates()
                         return checkIfCertificateMatch(hostname, certs)
 //                        return true
                     } catch (e: Exception) {
@@ -135,6 +135,7 @@ abstract class Dependencies {
             // Check if SSL Pinning Enabled
             if (!enableSSL()) {
                 isMatch = true
+                Logger.debugLog("ok","sslDisabled: ${isMatch}")
                 return isMatch
             }
 
@@ -148,6 +149,8 @@ abstract class Dependencies {
                         var certformatch = String(android.util.Base64.encode(digest, android.util.Base64.DEFAULT));
                         var serverPublicKey = certformatch.trim()
                         var localPublicKeys = setSslCertificate()
+                        Logger.debugLog("ok","Local Key: ${localPublicKeys.toString()}")
+                        Logger.debugLog("ok","serverPublicKey: ${serverPublicKey}")
                         if (localPublicKeys != null) {
                             for (j in 0 until localPublicKeys.size) {
                                 if (localPublicKeys.get(j).equals(serverPublicKey, true)) {
@@ -165,6 +168,7 @@ abstract class Dependencies {
         } catch (e: Exception) {
         }
 
+        Logger.debugLog("ok","last key: ${isMatch}")
         return isMatch
     }
 

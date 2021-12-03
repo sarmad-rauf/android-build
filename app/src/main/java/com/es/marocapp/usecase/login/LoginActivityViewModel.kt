@@ -271,7 +271,6 @@ class LoginActivityViewModel(application: Application) : AndroidViewModel(applic
 
                         if (result?.responseCode != null )
                         {
-                            Logger.debugLog("Abro"," userTypeResults ${result.userType}")
                             if(result.responseCode.equals(ApiConstant.API_SUCCESS))
                             {
                                 if(result.userType.contains("agent"))
