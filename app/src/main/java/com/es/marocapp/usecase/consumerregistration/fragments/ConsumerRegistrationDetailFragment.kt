@@ -318,7 +318,7 @@ class ConsumerRegistrationDetailFragment : BaseFragment<FragmentConsumerRegistra
                 mDataBinding.inputDateOfBirth.setText(selectedDate)
             }, year, month, dayOfMonth
         )
-
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis())
         datePickerDialog.show()
     }
 

@@ -43,8 +43,8 @@ class AccountDetailsActivity : BaseActivity<LayoutAccountDetailsBinding>(){
         else{
             mDataBinding.commisioningBalanceCardContainer.visibility=android.view.View.GONE
         }
-        mDataBinding.accountDetailName.text = respone?.firstname+" "+respone?.surname+"!"
-        mDataBinding.accountDetailAccountNum.text = Constants.CURRENT_USER_MSISDN
+        mDataBinding.accountDetailName.text = respone?.firstname+" "+respone?.surname
+        mDataBinding.accountDetailAccountNum.text = Constants.CURRENT_USER_MSISDN.replace("212","0").trim()
         mDataBinding.accountDetailCurrentBalance.text = respone?.currnecy+" "+respone?.balance
         mDataBinding.appNameTitleSenRevContainer.text = respone?.profilename
 

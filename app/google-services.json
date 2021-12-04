@@ -49,6 +49,42 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123544678825:android:ffb9e034b45a2a2fdbd4b8",
+        "android_client_info": {
+          "package_name": "ma.iam.mtcash"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123544678825-s8fsjmcg83ueamhkfe0q3mskukuar8p2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLESQWPqJobNSwV3wk4pMFXfiRFMf0v4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123544678825-s8fsjmcg83ueamhkfe0q3mskukuar8p2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "123544678825-o9n41f53hdno9uk60fvekmuvd94mcm70.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.es.marocapp"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

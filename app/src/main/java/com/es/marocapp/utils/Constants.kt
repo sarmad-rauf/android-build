@@ -675,7 +675,7 @@ object Constants {
                         false
                     )
 
-                    Toast.makeText(activityContext, "Tutorials Ended", Toast.LENGTH_LONG).show()
+                    Toast.makeText(activityContext, LanguageData.getStringValue("TutorialEnds"), Toast.LENGTH_LONG).show()
                 }
                 else -> {
                     isTutorialShowing = false

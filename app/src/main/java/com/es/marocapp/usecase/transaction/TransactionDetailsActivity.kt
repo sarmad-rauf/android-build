@@ -86,6 +86,7 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
     }
 
     private fun setStrings() {
+        mDataBinding.btnDownloadPdf.text = LanguageData.getStringValue("DownloadReceipt")
         mDataBinding.statusTitle.text = LanguageData.getStringValue("TransactionStatus")
         mDataBinding.tvTransactionHistoryTitle.text = LanguageData.getStringValue("TransactionDetails")
         mDataBinding.dateTitle.text = LanguageData.getStringValue("Date")
@@ -163,18 +164,18 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         {
             if(mItemDetailsToShow.toavailablebalance.isNullOrEmpty()){
                 amount = "0.00"
-                mDataBinding.amountVal.text = "DH 0.00"
+                mDataBinding.amountVal.text = "0.00 DH"
             }else{
                 amount = mItemDetailsToShow.toavailablebalance
-                mDataBinding.amountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mItemDetailsToShow.toavailablebalance
+                mDataBinding.amountVal.text = mItemDetailsToShow.toavailablebalance+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
             }
         }else{
         if(mItemDetailsToShow.toamount.isNullOrEmpty()){
             amount = "0.00"
-            mDataBinding.amountVal.text = "DH 0.00"
+            mDataBinding.amountVal.text = "0.00 DH"
         }else{
             amount = mItemDetailsToShow.toamount
-            mDataBinding.amountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mItemDetailsToShow.toamount
+            mDataBinding.amountVal.text = mItemDetailsToShow.toamount+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
         }
         }
 
@@ -199,27 +200,27 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         if(Constants.IS_MERCHANT_USER&&mItemDetailsToShow.fromTax.isNullOrEmpty()){
             if(mItemDetailsToShow.toTax.isNullOrEmpty()){
                 fee = "0.00"
-                mDataBinding.feeVal.text = "DH 0.00"
+                mDataBinding.feeVal.text = "0.00 DH"
             }else{
                 val feeWithTax = Constants.converValueToTwoDecimalPlace(mItemDetailsToShow.tofee.toDouble()+fromTax.toDouble())
                 fee = mItemDetailsToShow.tofee
-                mDataBinding.feeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+feeWithTax
+                mDataBinding.feeVal.text = feeWithTax+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
             }
         }else{
         if(mItemDetailsToShow.fromfee.isNullOrEmpty()){
             fee = "0.00"
-            mDataBinding.feeVal.text = "DH 0.00"
+            mDataBinding.feeVal.text = "0.00 DH"
         }else{
             val feeWithTax = Constants.converValueToTwoDecimalPlace(mItemDetailsToShow.fromfee.toDouble()+fromTax.toDouble())
             fee = mItemDetailsToShow.fromfee
-            mDataBinding.feeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+feeWithTax
+            mDataBinding.feeVal.text = feeWithTax+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
         }
         }
 
         //TotalAmount
         var totalAmount = Constants.addAmountAndFee(amount.toDouble(),fee.toDouble())
         totalAmount = Constants.converValueToTwoDecimalPlace(totalAmount.toDouble()+fromTax.toDouble())
-        mDataBinding.totalAmountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+totalAmount
+        mDataBinding.totalAmountVal.text = totalAmount+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
 
 
         if(mItemDetailsToShow.toaccount.contains(Constants.AIR_TIME_RECEIVER_ALIAS)

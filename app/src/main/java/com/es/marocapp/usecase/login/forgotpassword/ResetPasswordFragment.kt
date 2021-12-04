@@ -95,7 +95,7 @@ class ResetPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), For
         mDataBinding.inputLayoutSetYourPassword.hint = LanguageData.getStringValue("EnterPassword")
         mDataBinding.inputLayoutConfirmPassword.hint = LanguageData.getStringValue("ConfirmPassword")
 
-        mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Reset")
+        mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Validate")
     }
 
     private fun subsribeObserver() {
@@ -105,7 +105,6 @@ class ResetPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), For
 
         val mForgotPasswordListener = Observer<ForgotPasswordResponse>{
             if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                mActivityViewModel.requestForupdatePinResetStatusApi(activity,mActivityViewModel.currentUserMSISDN)
                 if(mActivityViewModel.isFromLoginUserScreen.get()!!){
                     mActivityViewModel.isResetPassowrdFlow = true
                     (activity as LoginActivity).navController.navigateUp()

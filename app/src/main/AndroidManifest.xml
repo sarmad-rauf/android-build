@@ -55,9 +55,9 @@
         <activity
             android:name=".usecase.MainActivity"
             android:label="@string/title_activity_main"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
         <activity android:name=".usecase.login.LoginActivity"
-            android:windowSoftInputMode="adjustResize"
+            android:windowSoftInputMode="adjustPan|adjustResize"
             />
         <activity android:name=".usecase.splash.SplashActivity"
             android:exported="true">

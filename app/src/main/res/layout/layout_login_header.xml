@@ -59,7 +59,7 @@
         android:gravity="center"
         tools:text="@string/login_into_your_account"
         android:textColor="@color/colorBlack"
-        android:textSize="@dimen/_24ssp"
+        android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/imgBackButton"
         app:layout_constraintEnd_toStartOf="@+id/languageSpinner"

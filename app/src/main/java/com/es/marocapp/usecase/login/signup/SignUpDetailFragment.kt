@@ -199,7 +199,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
         val datePickerDialog = DatePickerDialog(
             activity as LoginActivity,
             OnDateSetListener { datePicker, year, month, day ->
-                var monthVal = (month + 1).toString()
+                val monthVal = (month + 1).toString()
                 var selectedDate = "$year-$monthVal-$day"
                 val c = Calendar.getInstance()
                 c.set(Calendar.YEAR, year)
@@ -210,6 +210,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
                 mDataBinding.inputDateOfBirth.setText(selectedDate)
             }, year, month, dayOfMonth
         )
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis())
         datePickerDialog.show()
     }
 

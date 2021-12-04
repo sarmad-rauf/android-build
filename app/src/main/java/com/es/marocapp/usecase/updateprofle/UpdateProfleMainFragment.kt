@@ -607,6 +607,7 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
                 mDataBinding.inputDateOfBirth.setText(selectedDate)
             }, year, month - 1, dayOfMonth
         )
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis())
         datePickerDialog.show()
     }
 

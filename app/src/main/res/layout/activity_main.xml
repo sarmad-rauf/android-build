@@ -34,7 +34,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarContainer"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             android:background="@color/colorCerulean"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -120,6 +120,19 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
+
+                <com.es.marocapp.widgets.MarocLightTextView
+                    android:id="@+id/feedText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Alimenter"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/_8ssp"
+                    app:layout_constraintTop_toBottomOf="@+id/dashboard_cash_in_via_card"
+                    app:layout_constraintEnd_toEndOf="@+id/dashboard_cash_in_via_card"
+                    app:layout_constraintStart_toStartOf="@id/dashboard_cash_in_via_card"
+                    />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/call_icon_homeScreen"

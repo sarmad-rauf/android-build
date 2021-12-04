@@ -191,8 +191,8 @@ class UpgradeProfileActivity : BaseActivity<ActivityUpgradeProfileBinding>(),
     private fun setStrings() {
         mDataBinding.tvUpgradeProfileTitle.text=LanguageData.getStringValue("UpgradeProfile")
         mDataBinding.upgradeProfileDescription.text=LanguageData.getStringValue("UpgradeProfileDescription")
-        val attachFrontImageTitle=LanguageData.getStringValue("ClickToAttach")+"\n"+LanguageData.getStringValue("FrontSide")
-        val attachBackImageTitle=LanguageData.getStringValue("ClickToAttach")+"\n"+LanguageData.getStringValue("BackSide")
+        val attachFrontImageTitle=LanguageData.getStringValue("FrontSide")
+        val attachBackImageTitle=LanguageData.getStringValue("BackSide")
         mDataBinding.frontImagetitle.text=attachFrontImageTitle
         mDataBinding.backImageTitle.text=attachBackImageTitle
         mDataBinding.upgradeProfileBtnSubmit.text=LanguageData.getStringValue("BtnTitle_Submit")
