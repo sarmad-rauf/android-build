@@ -190,11 +190,11 @@ class AirTimeConfirmationFragment : BaseFragment<FragmentAirTimeConfirmationLayo
        val totalCost = Constants.converValueToTwoDecimalPlace(totalCostD)
 
         mDataBinding.tvReceiptCodeVal.text =
-            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.amountToTransfer
+             mActivityViewModel.amountToTransfer+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
         mDataBinding.tvDHVal.text =
-            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + fee
+            fee+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
         mDataBinding.tvAmountVal.text =
-            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + totalCost
+            totalCost+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
         mDataBinding.receiverNameGroup.visibility = View.GONE
 
         if(Constants.IS_AGENT_USER)

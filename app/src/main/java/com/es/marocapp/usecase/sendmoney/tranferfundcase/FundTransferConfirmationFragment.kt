@@ -242,14 +242,14 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
         mActivityViewModel.ReceiverName = ReceiverName
         mDataBinding.tvOwnerNameVal.text = ReceiverName
         mDataBinding.tvReceiptCodeVal.text =
-            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.amountToTransfer
+            mActivityViewModel.amountToTransfer+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
         if(mActivityViewModel.feeAmount.isEmpty())
         {
             mActivityViewModel.feeAmount="0"
         }
        val fee=mActivityViewModel.feeAmount.toDouble()+mActivityViewModel.totalTax
         val  stingFee= Constants.converValueToTwoDecimalPlace(fee)
-        mDataBinding.tvDHVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + stingFee
+        mDataBinding.tvDHVal.text = stingFee+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
         if(amountToTransfer.isEmpty())
         {
             amountToTransfer="0"
@@ -262,7 +262,7 @@ class FundTransferConfirmationFragment : BaseFragment<FragmentFundsTransferConfi
         val totalCostD=amountToTransfer.toDouble()+mActivityViewModel.totalTax
         val totalCost= Constants.converValueToTwoDecimalPlace(totalCostD)
         mDataBinding.tvAmountVal.text =
-            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + totalCost
+            totalCost+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
 
         if (mActivityViewModel.isUserRegistered!=null && mActivityViewModel.isUserRegistered.get()!=null && mActivityViewModel.isUserRegistered.get()!!) {
             mDataBinding.tvOwnerNameTitle.visibility = View.VISIBLE

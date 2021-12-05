@@ -504,10 +504,8 @@ import java.text.DecimalFormat
 
     private fun logDir(dir: File) {
         if (!DEBUG) return
-        Log.d(TAG, "Dir=$dir")
         val files = dir.listFiles()
         for (file: File in files) {
-            Log.d(TAG, "File=" + file.path)
         }
     }
 

@@ -221,7 +221,7 @@ class FragmentBillPaymentPostPaidConfirmation :
             mDataBinding.tvFatoratiFeeTitle.visibility = View.VISIBLE
             mDataBinding.tvFatoratiFeeVal.visibility = View.VISIBLE
             mDataBinding.tvFatoratiFeeVal.text =
-                Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + mActivityViewModel.fatoratiFeeAmountCalculated
+                 mActivityViewModel.fatoratiFeeAmountCalculated+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
         }
 
         mDataBinding.tvSenderNameVal.text =
@@ -277,7 +277,7 @@ class FragmentBillPaymentPostPaidConfirmation :
         var totalAmount =
             Constants.converValueToTwoDecimalPlace(mActivityViewModel.totalSelectedBillAmount.toDouble())
         mDataBinding.tvReceiptCodeVal.text =
-            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + totalAmount
+           totalAmount+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
         if(mActivityViewModel.feeAmount.isNullOrEmpty())
         {
             mActivityViewModel.feeAmount="0"
@@ -288,7 +288,7 @@ class FragmentBillPaymentPostPaidConfirmation :
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
 
             mDataBinding.tvDHVal.text =
-                Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + fee
+                fee+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
         } else if (mActivityViewModel.isFatoratiUseCaseSelected.get()!!) {
             if (mActivityViewModel.feeAmount.equals("0.00") || mActivityViewModel.feeAmount.equals("0")) {
                 mDataBinding.tvDHTitle.visibility = View.GONE
@@ -299,7 +299,7 @@ class FragmentBillPaymentPostPaidConfirmation :
             }
 
             mDataBinding.tvDHVal.text =
-                Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + fee
+                fee+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
         }
 
         if (mActivityViewModel.isBillUseCaseSelected.get()!!) {
@@ -327,7 +327,7 @@ class FragmentBillPaymentPostPaidConfirmation :
         }
         var totalCost = Constants.converValueToTwoDecimalPlace(amountToTransfer.toDouble()+mActivityViewModel.totalTax)
         mDataBinding.tvAmountVal.text =
-            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + totalCost
+            totalCost+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
 
         mDataBinding.receiverNameGroup.visibility = View.GONE
     }

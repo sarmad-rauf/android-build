@@ -15,7 +15,6 @@ object Logger {
      */
     public fun debugLog(tag: String, message: String) {
         if (BuildConfig.LOG_ENABLED) {
-            Log.d(tag, message)
         }
     }
 

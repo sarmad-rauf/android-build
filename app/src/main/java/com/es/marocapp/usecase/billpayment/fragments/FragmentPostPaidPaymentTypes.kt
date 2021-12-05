@@ -93,9 +93,7 @@ class FragmentPostPaidPaymentTypes : BaseFragment<LayoutBillPaymentTypeQuickRech
                                     stringForValidateParams.substringBefore(")")
                                 var result: List<String> =
                                     withoutNameCommaSepratedString.split(",").map { it.trim() }
-                                /*for(value in result){
-                                    Log.d("dataFromString",value)
-                                }*/
+
                                 val creancier =
                                     Creancier(result[1], result[2], "", companyName, result[3], "")
                                 mActivityViewModel.selectedCodeCreance = result[1]

@@ -46,7 +46,7 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
 
     lateinit var mActivityViewModel: LoginActivityViewModel
     var isPasswordVisible = false
-    var isRememberMeEnabled=false
+    var isRememberMeEnabled=true
 
     override fun setLayout(): Int {
         return R.layout.fragment_login_number_password
@@ -130,6 +130,7 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                 isRememberMeEnabled=isChecked
             }
         })
+        mDataBinding.rememberMeToggle.isChecked=true
 
         mActivityViewModel.isSimplePopUp = false
         subscribeObserver()
@@ -377,6 +378,9 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
     override fun onSignUpClick(view: View) {
     }
 
+    override fun onAreYouNewClick(view: View) {
+        (activity as LoginActivity).navController.navigate(R.id.loginFragment)
+    }
     override fun onTermsConditionsClick(view: View) {
     }
 

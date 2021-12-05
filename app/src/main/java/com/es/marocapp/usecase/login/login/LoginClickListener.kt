@@ -8,6 +8,8 @@ interface LoginClickListener {
 
     fun onForgotPinClick(view: View)
 
+    fun onAreYouNewClick(view: View)
+
     fun onSignUpClick(view: View)
 
     fun onTermsConditionsClick(view: View)
