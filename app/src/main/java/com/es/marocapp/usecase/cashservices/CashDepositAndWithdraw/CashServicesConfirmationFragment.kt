@@ -194,15 +194,15 @@ class CashServicesConfirmationFragment : BaseFragment<FragmentCashServiceConfirm
         mDataBinding.tvSenderNumberVal.text = Constants.CURRENT_USER_MSISDN
 
         mDataBinding.tvCompanyNameVal.text = mActivityViewModel.transferdAmountTo
-        mDataBinding.tvReceiptCodeVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+mActivityViewModel.amountToTransfer
+        mDataBinding.tvReceiptCodeVal.text = mActivityViewModel.amountToTransfer+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
         val feeD=mActivityViewModel.feeAmount.toDouble()+mActivityViewModel.totalTax
         val fee= Constants.converValueToTwoDecimalPlace(feeD)
-        mDataBinding.tvDHVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+fee
+        mDataBinding.tvDHVal.text = fee+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
 
         amountToTransfer = Constants.addAmountAndFee(mActivityViewModel.amountToTransfer.toDouble(),mActivityViewModel.feeAmount.toDouble())
         val totalCostD=amountToTransfer.toDouble()+mActivityViewModel.totalTax
         val totalCost= Constants.converValueToTwoDecimalPlace(totalCostD)
-        mDataBinding.tvAmountVal.text =Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+totalCost
+        mDataBinding.tvAmountVal.text =totalCost+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
 
         mDataBinding.receiverNameGroup.visibility = View.GONE
         if(Constants.IS_AGENT_USER)

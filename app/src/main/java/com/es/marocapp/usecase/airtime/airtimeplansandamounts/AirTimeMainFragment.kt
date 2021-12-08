@@ -26,6 +26,7 @@ import com.es.marocapp.usecase.airtime.AirTimeViewModel
 import com.es.marocapp.usecase.sendmoney.SendMoneyActivity
 import com.es.marocapp.utils.Constants
 import com.es.marocapp.utils.DialogUtils
+import com.es.marocapp.utils.Logger
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.util.regex.Pattern
 
@@ -453,6 +454,9 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
         }
 
         mDataBinding.btnNext.setOnClickListener {
+            if(mDataBinding.inputRechargeType.text.equals("Recharge Fixe")){
+                Constants.APP_AIR_TIME_FIXE_REGEX?.let { isRegexMached(it) }
+            }
             if (isValidForAll()) {
                 mActivityViewModel.requestForAirTimeQuoteApi(activity, msisdnEntered)
             }
@@ -524,13 +528,14 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
 
         mDataBinding.generateQrTv.text = LanguageData.getStringValue("ScanQr")
         mDataBinding.btnCancel.text = LanguageData.getStringValue("BtnTitle_Cancel")
-        mDataBinding.selectFavoriteTypeTitle.hint = LanguageData.getStringValue("SelectFavorite")
+        mDataBinding.selectFavoriteTypeTitle.text = LanguageData.getStringValue("SelectFavorite")
 
 
     }
 
     private fun isValidForAll(): Boolean {
         var isValidForAll = true
+        Logger.debugLog("ok","Fixe ${mDataBinding.inputRechargeType.text}")
 
         //todo NUmber Lenght is Pending
         if (mDataBinding.inputPhoneNumber.text.isNullOrEmpty() || mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_MSISDN_LENGTH.toInt() - 2) {
@@ -552,6 +557,7 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
                 var userMSISDNwithPrefix = userMsisdn.removePrefix("0")
                 userMSISDNwithPrefix = Constants.APP_MSISDN_PREFIX + userMSISDNwithPrefix
                 userMSISDNwithPrefix = userMSISDNwithPrefix.removePrefix("+")
+
 
                 if (isNumberRegexMatches) {
                     mDataBinding.inputLayoutPhoneNumber.error = ""
@@ -612,10 +618,17 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
     }
 
     override fun afterTextChanged(p0: Editable?) {
-        var msisdn = mDataBinding.inputPhoneNumber.text.toString().trim()
-        var msisdnLenght = msisdn.length
+        val msisdn = mDataBinding.inputPhoneNumber.text.toString().trim()
+        val msisdnLenght = msisdn.length
         isNumberRegexMatches =
-            !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_AIR_TIME_FIXE_REGEX, msisdn))
+            !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_MSISDN_REGEX, msisdn))
+    }
+
+    fun isRegexMached(regex:String){
+        val msisdn = mDataBinding.inputPhoneNumber.text.toString().trim()
+        val msisdnLenght = msisdn.length
+        isNumberRegexMatches =
+            !(msisdnLenght > 0 && !Pattern.matches(regex, msisdn))
     }
 
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

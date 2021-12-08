@@ -389,7 +389,7 @@ object Tools {
         val generatedCRC = generateChecksumCRC16(qrString.toByteArray())
 
 
-        qrString += Integer.toHexString(generatedCRC).toUpperCase()
+        qrString += Integer.toHexString(generatedCRC).uppercase()
 
         return qrString
     }

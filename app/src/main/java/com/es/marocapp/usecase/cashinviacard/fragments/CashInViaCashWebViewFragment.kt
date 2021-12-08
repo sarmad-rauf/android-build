@@ -13,9 +13,11 @@ import com.es.marocapp.databinding.FragmentCashInViaCardWebviewBinding
 import com.es.marocapp.locale.LanguageData
 import com.es.marocapp.locale.LocaleManager
 import com.es.marocapp.usecase.BaseFragment
+import com.es.marocapp.usecase.MainActivity
 import com.es.marocapp.usecase.cashinviacard.ActivityCashInViaCard
 import com.es.marocapp.usecase.cashinviacard.CashInViaCardViewModel
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.DialogUtils
 import com.es.marocapp.utils.Logger
 
 
@@ -64,13 +66,38 @@ class CashInViaCashWebViewFragment : BaseFragment<FragmentCashInViaCardWebviewBi
             override fun onPageFinished(view: WebView, url: String) {
                 mDataBinding.progressBar.visibility= View.GONE
             }
+
+            // do not override this funtion as google rejected it....
             override fun onReceivedSslError(
                 view: WebView?,
                 handler: SslErrorHandler,
                 error: SslError?
             ) {
+                var message = "SSL Certificate error."
+                when (error!!.primaryError) {
+                    SslError.SSL_UNTRUSTED -> message = "The certificate authority is not trusted."
+                    SslError.SSL_EXPIRED -> message = "The certificate has expired."
+                    SslError.SSL_IDMISMATCH -> message = "The certificate Hostname mismatch."
+                    SslError.SSL_NOTYETVALID -> message = "The certificate is not yet valid."
+                }
+                Logger.debugLog("CashInViaCashURL","${message}")
+
                 mDataBinding.progressBar.visibility= View.GONE
-                handler.proceed() // Ignore SSL certificate errors
+                DialogUtils.showConfirmationDialogue(
+                    LanguageData.getStringValue("SSLErrorNotifierText")!!,
+                    activity,
+                    object : DialogUtils.OnConfirmationDialogClickListner {
+                        override fun onDialogYesClickListner() {
+                            handler.proceed() // Ignore SSL certificate errors
+                        }
+
+                        override fun onDialogNoClickListner() {
+                            handler.cancel()
+                        }
+
+
+                    })
+
             }
         })
 

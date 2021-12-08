@@ -278,8 +278,8 @@ class CashServicesMsisdnAndAmountFragment : BaseFragment<FragmentCashServicesNum
     }
 
     override fun afterTextChanged(p0: Editable?) {
-        var msisdn = mDataBinding.inputPhoneNumber.text.toString().trim()
-        var msisdnLenght = msisdn.length
+        val msisdn = mDataBinding.inputPhoneNumber.text.toString().trim()
+        val msisdnLenght = msisdn.length
         isNumberRegexMatches =
             !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_MSISDN_REGEX, msisdn))
     }

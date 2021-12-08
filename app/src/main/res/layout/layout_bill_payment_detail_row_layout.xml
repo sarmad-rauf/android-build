@@ -185,6 +185,8 @@
                     android:textColor="@color/colorBlack"
                     android:layout_marginStart="@dimen/_8sdp"
                     android:layout_marginEnd="@dimen/_16sdp"
+                    android:maxLines="2"
+                    android:maxLength="60"
                     app:layout_constraintTop_toTopOf="@+id/billingAmountTitle"
                     app:layout_constraintBottom_toBottomOf="@+id/billingAmountTitle"
                     app:layout_constraintStart_toEndOf="@+id/billingAmountTitle"

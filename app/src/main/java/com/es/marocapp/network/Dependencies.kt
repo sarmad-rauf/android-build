@@ -135,7 +135,7 @@ abstract class Dependencies {
             // Check if SSL Pinning Enabled
             if (!enableSSL()) {
                 isMatch = true
-                Logger.debugLog("ok","sslDisabled: ${isMatch}")
+                Logger.debugLog("OkHttp","sslDisabled: ${isMatch}")
                 return isMatch
             }
 
@@ -149,8 +149,8 @@ abstract class Dependencies {
                         var certformatch = String(android.util.Base64.encode(digest, android.util.Base64.DEFAULT));
                         var serverPublicKey = certformatch.trim()
                         var localPublicKeys = setSslCertificate()
-                        Logger.debugLog("ok","Local Key: ${localPublicKeys.toString()}")
-                        Logger.debugLog("ok","serverPublicKey: ${serverPublicKey}")
+                        Logger.debugLog("OkHttp","Local Key: ${localPublicKeys.toString()}")
+                        Logger.debugLog("OkHttp","serverPublicKey: ${serverPublicKey}")
                         if (localPublicKeys != null) {
                             for (j in 0 until localPublicKeys.size) {
                                 if (localPublicKeys.get(j).equals(serverPublicKey, true)) {
@@ -168,7 +168,7 @@ abstract class Dependencies {
         } catch (e: Exception) {
         }
 
-        Logger.debugLog("ok","last key: ${isMatch}")
+        Logger.debugLog("OkHttp","last key: ${isMatch}")
         return isMatch
     }
 

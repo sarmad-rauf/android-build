@@ -214,6 +214,10 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
     override fun onForgotPinClick(view: View) {
     }
 
+    override fun onAreYouNewClick(view: View) {
+
+    }
+
     override fun onSignUpClick(view: View) {
 //        mActivityViewModel.isSignUpFlow.set(true)
 //        mActivity.navController.navigate(R.id.action_loginFragment_to_signUpNumberFragment)

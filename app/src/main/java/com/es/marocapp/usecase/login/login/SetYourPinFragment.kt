@@ -62,7 +62,7 @@ class SetYourPinFragment : BaseFragment<FragmentSetYourPinBinding>(),
             if(mActivityViewModel.activeUserWithoutPassword.get()!!){
                 mDataBinding.btnPinChange.text = LanguageData.getStringValue("ConfirmPassword")
             }else{
-                mDataBinding.btnPinChange.text = LanguageData.getStringValue("ChangePassword")
+                mDataBinding.btnPinChange.text = LanguageData.getStringValue("BtnTitle_Validate")
             }
         }
 

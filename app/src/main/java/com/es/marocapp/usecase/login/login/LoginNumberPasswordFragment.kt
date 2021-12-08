@@ -250,7 +250,11 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                 }
                 Constants.HEADERS_AFTER_LOGINS = true
                 Constants.HEADERS_FOR_PAYEMNTS=false
-                LocaleManager.languageToBeChangedAfterAPI = it.getAccountHolderInformationResponse.language
+              if(  it.getAccountHolderInformationResponse.language!=null){
+                LocaleManager.languageToBeChangedAfterAPI = it.getAccountHolderInformationResponse?.language
+              }else{
+
+              }
                 if(!LocaleManager.languageToBeChangedAfterAPI.isNullOrEmpty()){
                     LocaleManager.selectedLanguage=LocaleManager.languageToBeChangedAfterAPI
                     LocaleManager.languageToBeChangedAfterAPI=""
