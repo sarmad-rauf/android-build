@@ -304,7 +304,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                             mActivityViewModel.isFromLoginUserScreen.set(true)
                             mDataBinding.inputPin.setText("")
 
-                            //todo add flow here
+
                             mActivityViewModel.requestForGetBalanceAndGenerateOtpApi(activity as LoginActivity,mActivityViewModel.accountHolderInfoUserProfile.toString(),
                                 mActivityViewModel.mUserMsisdn)
 //                            (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_resetPasswordFragment)

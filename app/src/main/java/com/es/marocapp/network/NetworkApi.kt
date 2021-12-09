@@ -63,7 +63,7 @@ interface NetworkApi {
     fun getOTP(@Body request : GetOptRequest) : Observable<GetOptResponse>
 
     //Request for GetSimpleOtpForRegistration
-    @POST(EndPoints.getotp)
+    @POST(EndPoints.getotpforregistration)
     fun getSimpleOTPForRegistration(@Body request : GetOtpSimpleRequest) : Observable<GetOtpSimpleResponse>
 
     //Request for VerifyOtp
