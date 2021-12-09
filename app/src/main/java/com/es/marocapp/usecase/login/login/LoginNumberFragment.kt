@@ -450,6 +450,10 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                         mActivityViewModel.activeUserWithoutPassword.set(false)
 
                         (activity as LoginActivity).navController.navigate(R.id.action_loginFragment_to_setYourPinFragment)
+
+
+                        //showing generic error
+//                        DialogUtils.showErrorDialoge(activity,LanguageData.getStringValue("SomethingWentWrong"))
                     }
                 }
             } else {

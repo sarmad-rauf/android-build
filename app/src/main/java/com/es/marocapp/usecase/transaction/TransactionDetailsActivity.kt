@@ -162,14 +162,16 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         //Amount
         if(Constants.IS_MERCHANT_USER&&mItemDetailsToShow.fromTax.isNullOrEmpty())
         {
-            if(mItemDetailsToShow.toavailablebalance.isNullOrEmpty()){
+            if(mItemDetailsToShow.toamount.isNullOrEmpty()){
                 amount = "0.00"
                 mDataBinding.amountVal.text = "0.00 DH"
             }else{
-                amount = mItemDetailsToShow.toavailablebalance
-                mDataBinding.amountVal.text = mItemDetailsToShow.toavailablebalance+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
+                amount = mItemDetailsToShow.toamount
+                val feeWithTax = Constants.converValueToTwoDecimalPlace(mItemDetailsToShow.tofee.toDouble()+mItemDetailsToShow.toTax.toDouble())
+                amount = Constants.converValueToTwoDecimalPlace(amount.toDouble()-feeWithTax.toDouble())
+                mDataBinding.amountVal.text = amount+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
             }
-        }else{
+        } else{
         if(mItemDetailsToShow.toamount.isNullOrEmpty()){
             amount = "0.00"
             mDataBinding.amountVal.text = "0.00 DH"
@@ -180,7 +182,6 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         }
 
         //Fee
-
         var fromTax="0"
         if(Constants.IS_MERCHANT_USER&&mItemDetailsToShow.fromTax.isNullOrEmpty())
         {
