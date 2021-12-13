@@ -138,7 +138,7 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
                             LanguageData.getStringValue("BtnTitle_ResetPassword"),
                             LanguageData.getStringValue("BtnTitle_Cancel"),
                             LanguageData.getStringValue("BlockedAndResetAccount"),
-                            LanguageData.getStringValue("AccountBlocked"),
+                            "",
                             object : DialogUtils.OnCustomDialogListner {
                                 override fun onCustomDialogOkClickListner() {
                                     mActivityViewModel.isFromLoginUserScreen.set(false)
@@ -270,7 +270,7 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
                     mActivityViewModel.accountHolderInfoUserProfile = it.profileName
                 }
                 DialogUtils.showBlockedAccountDialog(activity,LanguageData.getStringValue("BtnTitle_ResetPassword"),LanguageData.getStringValue("BtnTitle_Cancel"),
-                    LanguageData.getStringValue("BlockedAndResetAccount"),LanguageData.getStringValue("AccountBlocked"),object : DialogUtils.OnCustomDialogListner{
+                    LanguageData.getStringValue("BlockedAndResetAccount"),"",object : DialogUtils.OnCustomDialogListner{
                         override fun onCustomDialogOkClickListner() {
                             mActivityViewModel.isFromLoginUserScreen.set(true)
                           //  mDataBinding.inputPin.setText("")
@@ -362,6 +362,7 @@ class VerifyNumberFragment : BaseFragment<FragmentVerifyNumberBinding>(),
 
         if(isOTPRegexMatches){
             if(mActivityViewModel.isDeviceChanged){
+
                 mActivityViewModel.requestForVerifyOtpAndUpdateAliaseAPI(
                     activity,
                     Constants.CURRENT_NUMBER_DEVICE_ID,

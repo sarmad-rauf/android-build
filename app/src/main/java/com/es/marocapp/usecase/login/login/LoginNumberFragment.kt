@@ -299,7 +299,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                     mActivityViewModel.accountHolderInfoUserProfile = it.profileName
                 }
                 DialogUtils.showBlockedAccountDialog(activity,LanguageData.getStringValue("BtnTitle_ResetPassword"),LanguageData.getStringValue("BtnTitle_Cancel"),
-                    LanguageData.getStringValue("BlockedAndResetAccount"),LanguageData.getStringValue("AccountBlocked"),object : DialogUtils.OnCustomDialogListner{
+                    LanguageData.getStringValue("BlockedAndResetAccount"),"",object : DialogUtils.OnCustomDialogListner{
                         override fun onCustomDialogOkClickListner() {
                             mActivityViewModel.isFromLoginUserScreen.set(true)
                             mDataBinding.inputPin.setText("")
@@ -429,7 +429,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                             LanguageData.getStringValue("BtnTitle_ResetPassword"),
                             LanguageData.getStringValue("BtnTitle_Cancel"),
                             LanguageData.getStringValue("BlockedAndResetAccount"),
-                            LanguageData.getStringValue("AccountBlocked"),
+                            "",
                             object : DialogUtils.OnCustomDialogListner {
                                 override fun onCustomDialogOkClickListner() {
                                     mActivityViewModel.isFromLoginUserScreen.set(false)
@@ -492,7 +492,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                         LanguageData.getStringValue("BtnTitle_ResetPassword"),
                         LanguageData.getStringValue("BtnTitle_Cancel"),
                         LanguageData.getStringValue("BlockedAndResetAccount"),
-                        LanguageData.getStringValue("AccountBlocked"),
+                        "",
                         object : DialogUtils.OnCustomDialogListner {
                             override fun onCustomDialogOkClickListner() {
                                 mActivityViewModel.isFromLoginUserScreen.set(false)

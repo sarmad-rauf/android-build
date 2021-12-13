@@ -95,7 +95,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
         mDataBinding.inputLayoutGender.hint = LanguageData.getStringValue("SelectGender")
         mDataBinding.inputLayoutEmail.hint = LanguageData.getStringValue("EnterEmail")
         mDataBinding.inputLayoutAddress.hint = LanguageData.getStringValue("EnterAddress")
-        mDataBinding.btnNextDetailFragment.text = LanguageData.getStringValue("BtnTitle_Next")
+        mDataBinding.btnNextDetailFragment.text = LanguageData.getStringValue("BtnTitle_Validate")
         mDataBinding.lawText.setText(LanguageData.getStringValue("SignUpDescrption"))
         mDataBinding.inputLayoutCity.hint = (LanguageData.getStringValue("EnterCity"))
         mDataBinding.levelOneButton.text = LanguageData.getStringValue("LevelOne")
