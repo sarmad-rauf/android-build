@@ -57,7 +57,7 @@ class ChangePasswordActivity : BaseActivity<FragmentChangepasswordBinding>(),
         mDataBinding.inputLayoutNewPassword.hint = LanguageData.getStringValue("EnterNewPassword")
         mDataBinding.inputLayoutConfirmPassword.hint = LanguageData.getStringValue("ConfirmNewPassword")
 
-        mDataBinding.btnChangePassword.text = LanguageData.getStringValue("BtnTitle_Validate")
+        mDataBinding.btnChangePassword.text = LanguageData.getStringValue("BtnTitle_OK")
     }
 
     private fun subscribeObserver() {

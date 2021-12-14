@@ -596,7 +596,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                                 intent.putExtra("isInitiatePaymenetToMerchantUseCase", false)
                                 intent.putExtra(
                                     "useCaseType",
-                                    LanguageData.getStringValue("FundsTransfer")
+                                    LanguageData.getStringValue("SendMoney")
                                 )
 
                                 startActivity(intent)

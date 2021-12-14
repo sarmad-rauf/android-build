@@ -15,6 +15,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.es.marocapp.R
@@ -254,7 +255,7 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
                                 PDFPrint.OnPDFPrintListener {
                                 override fun onSuccess(file: File) {
                                     // Open Pdf Viewer
-                                    val pdfUri: Uri = Uri.fromFile(savedPDFFile)
+                                    val pdfUri: Uri = FileProvider.getUriForFile(this@TransactionDetailsActivity, applicationContext.packageName + ".fileprovider", savedPDFFile)
                                    mActivityViewModel.isLoading.set(false)
 
                                     DialogUtils.showFileDialogue(this@TransactionDetailsActivity,
@@ -380,7 +381,9 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         // Setting the intent for pdf reader
         val pdfIntent = Intent(Intent.ACTION_VIEW)
         pdfIntent.setDataAndType(uri, "application/pdf")
+        pdfIntent.setDataAndType(uri, "application/pdf")
         pdfIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        pdfIntent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
         try {
             startActivity(pdfIntent)
         } catch (e: ActivityNotFoundException) {
