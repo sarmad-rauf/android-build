@@ -225,6 +225,7 @@
                 android:background="@color/colorWhite"
                 app:cardCornerRadius="@dimen/_12sdp"
                 app:cardElevation="@dimen/_12sdp"
+                android:visibility="gone"
                 app:cardUseCompatPadding="true"
                 app:layout_constraintTop_toBottomOf="@+id/commisioning_balance_card_container">
 

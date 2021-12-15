@@ -43,10 +43,11 @@ class TransactionHistoryAdapter(
         holder: ViewHolder,
         position: Int
     ) {
-       /* if (getItemViewType(position) == typeHeader) {
-            *//**
-             * UI Binding for Header
-             *//*
+        /* if (getItemViewType(position) == typeHeader) {
+             */
+        /**
+         * UI Binding for Header
+         *//*
             holder.headerTextViewLabel!!.visibility = View.VISIBLE
             if (models!![position].date.isEmpty()) {
                 holder.headerTextViewLabel!!.text = " "
@@ -55,62 +56,65 @@ class TransactionHistoryAdapter(
             }
             holder.dataContainer!!.visibility = View.GONE
         } else {*/
-            /**
-             * UI Binding for Data
-             */
-            holder.headerTextViewLabel!!.visibility = View.GONE
-            holder.dataContainer!!.visibility = View.VISIBLE
+        /**
+         * UI Binding for Data
+         */
+        holder.headerTextViewLabel!!.visibility = View.GONE
+        holder.dataContainer!!.visibility = View.VISIBLE
 
-            holder.tvBillType?.text = models!![position].transfertype
-            holder.tvCompanyName?.text = models!![position].toname
-            var dateToShow : String = Constants.getZoneFormattedDateAndTime(models!![position].date)
-            holder.tvBillDate?.text = dateToShow
+        holder.tvBillType?.text = models!![position].transfertype
+        holder.tvCompanyName?.text = models!![position].toname
+        var dateToShow: String = Constants.getZoneFormattedDateAndTime(models!![position].date)
+        holder.tvBillDate?.text = dateToShow
 
-            val sName: String = Constants.balanceInfoAndResponse?.firstname + " " + Constants.balanceInfoAndResponse?.surname
-        if(models!![position].transactionstatus.equals("FAILED",true)){
-            holder.tvBillAmount?.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + models!![position].toamount
-        }
-        else {
+        val sName: String =
+            Constants.balanceInfoAndResponse?.firstname + " " + Constants.balanceInfoAndResponse?.surname
+        if (models!![position].transactionstatus.equals("FAILED", true)) {
+            holder.tvBillAmount?.text =
+                models!![position].toamount + " " + Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
+        } else {
             if (sName.equals(models!![position].toname)) {
                 holder.tvBillAmount?.text =
-                    "+" + Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + models!![position].toamount
+                    "+" + models!![position].toamount + " " + Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
                 holder.tvBillAmount?.setTextColor(Color.parseColor("#008000"))
             } else {
                 holder.tvBillAmount?.text =
-                    "-" + Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + models!![position].toamount
+                    "-" + models!![position].toamount + " " + Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
                 holder.tvBillAmount?.setTextColor(Color.parseColor("#ff0000"))
             }
         }
 
-            when(models!![position].transferTypeEwp){
-                "TRANSFER"-> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
-                "INTEROP_TRANSFER"-> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
-                "ADJUSTMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
-                "CUSTOM_CASHIN_VIA_CARD"-> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
-                "CASH_IN"-> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
-                "CASH_OUT"-> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
-                "WITHDRAWAL"-> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
-                "DEPOSIT"-> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
-                "INTEROP_PAYMENT_SEND"-> holder.transferTypeIcon?.setImageResource(R.drawable.paement_marchand)
-                "PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.paement_marchand)
-                "EXTERNAL_PAYMENT"-> holder.transferTypeIcon?.setImageResource(R.drawable.paement_facture)
-                else-> holder.transferTypeIcon?.setImageResource(R.drawable.circle_generic_transaction)
-            }
-
-        Logger.debugLog("transactionHistory","transation type ${models!![position].transferTypeEwp}")
-        when(models!![position].transactionstatus){
-            "SUCCESSFUL"-> holder.statusImg?.setImageResource(R.drawable.approvals_active)
-            "PENDING"-> holder.statusImg?.setImageResource(R.drawable.ic_pending_svg)
-            "FAILED"-> holder.statusImg?.setImageResource(R.drawable.failed_2)
-            else-> holder.statusImg?.visibility=View.INVISIBLE
+        when (models!![position].transferTypeEwp) {
+            "TRANSFER" -> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
+            "INTEROP_TRANSFER" -> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
+            "ADJUSTMENT" -> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
+            "CUSTOM_CASHIN_VIA_CARD" -> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
+            "CASH_IN" -> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
+            "CASH_OUT" -> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
+            "WITHDRAWAL" -> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
+            "DEPOSIT" -> holder.transferTypeIcon?.setImageResource(R.drawable.transfer_argent)
+            "INTEROP_PAYMENT_SEND" -> holder.transferTypeIcon?.setImageResource(R.drawable.paement_marchand)
+            "PAYMENT" -> holder.transferTypeIcon?.setImageResource(R.drawable.paement_marchand)
+            "EXTERNAL_PAYMENT" -> holder.transferTypeIcon?.setImageResource(R.drawable.paement_facture)
+            else -> holder.transferTypeIcon?.setImageResource(R.drawable.circle_generic_transaction)
         }
 
-            holder.dataContainer!!.setOnClickListener {
-                listner.onHistoryDetailClickListner(models!![position])
-            }
+        Logger.debugLog(
+            "transactionHistory",
+            "transation type ${models!![position].transferTypeEwp}"
+        )
+        when (models!![position].transactionstatus) {
+            "SUCCESSFUL" -> holder.statusImg?.setImageResource(R.drawable.approvals_active)
+            "PENDING" -> holder.statusImg?.setImageResource(R.drawable.ic_pending_svg)
+            "FAILED" -> holder.statusImg?.setImageResource(R.drawable.failed_2)
+            else -> holder.statusImg?.visibility = View.INVISIBLE
+        }
+
+        holder.dataContainer!!.setOnClickListener {
+            listner.onHistoryDetailClickListner(models!![position])
+        }
         /*}*/
     }
-
 
 
     /*override fun getItemViewType(position: Int): Int {
@@ -121,12 +125,12 @@ class TransactionHistoryAdapter(
         }
     }*/
 
-    fun updateHistoryList(newList: List<History>){
+    fun updateHistoryList(newList: List<History>) {
         models?.addAll(newList)
         notifyDataSetChanged()
     }
 
-    fun updateHistoryList(){
+    fun updateHistoryList() {
         models?.clear()
         notifyDataSetChanged()
     }
@@ -144,7 +148,7 @@ class TransactionHistoryAdapter(
         var tvBillDate: TextView? = null
         var tvBillAmount: TextView? = null
         var transferTypeIcon: ImageView? = null
-        var statusImg:ImageView?=null
+        var statusImg: ImageView? = null
 
         init {
             // Lookup view for data population
@@ -155,7 +159,7 @@ class TransactionHistoryAdapter(
             tvBillDate = convertView.findViewById(R.id.row_bill_date)
             tvBillAmount = convertView.findViewById(R.id.row_bill_amount)
             transferTypeIcon = convertView.findViewById(R.id.row_company_icon)
-            statusImg= convertView.findViewById(R.id.statusImg)
+            statusImg = convertView.findViewById(R.id.statusImg)
         }
     }
 

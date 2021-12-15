@@ -46,10 +46,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var mCardAdapter: HomeCardAdapter
     private lateinit var mUseCasesAdapter: HomeUseCasesAdapter
-    private lateinit var mUseCaseGridLayoutManager : GridLayoutManager
+    private lateinit var mUseCaseGridLayoutManager: GridLayoutManager
     lateinit var mLanguageSpinnerAdapter: LanguageCustomSpinnerAdapter
     lateinit var acountTypeSpinnerAdapter: LanguageCustomSpinnerAdapter
-    private var mTransactionsList : ArrayList<History> = ArrayList()
+    private var mTransactionsList: ArrayList<History> = ArrayList()
     private lateinit var mTransactionHistoryAdapter: TransactionHistoryAdapter
     var referenceNumber = "";
     var quickRechargeSelectedAmount = ""
@@ -81,15 +81,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         populateHomeCardView(true, "")
         populateHomeUseCase()
 
-        homeViewModel.requestForGetAccountHolderPersonalInformationApi(requireContext(),Constants.CURRENT_USER_MSISDN)
+        homeViewModel.requestForGetAccountHolderPersonalInformationApi(
+            requireContext(),
+            Constants.CURRENT_USER_MSISDN
+        )
 
-        mTransactionHistoryAdapter = TransactionHistoryAdapter(mTransactionsList,object : TransactionHistoryAdapter.HistoryDetailListner{
-            override fun onHistoryDetailClickListner(customModelHistoryItem: History) {
-                Constants.currentTransactionItem = customModelHistoryItem
-                startActivity(Intent(activity as MainActivity, TransactionDetailsActivity::class.java))
-            }
+        mTransactionHistoryAdapter = TransactionHistoryAdapter(mTransactionsList,
+            object : TransactionHistoryAdapter.HistoryDetailListner {
+                override fun onHistoryDetailClickListner(customModelHistoryItem: History) {
+                    Constants.currentTransactionItem = customModelHistoryItem
+                    startActivity(
+                        Intent(
+                            activity as MainActivity,
+                            TransactionDetailsActivity::class.java
+                        )
+                    )
+                }
 
-        })
+            })
 
         mDataBinding.transactionsRecyclerView.apply {
             adapter = mTransactionHistoryAdapter
@@ -103,25 +112,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 subscribeForDefaultAccountStatus()
                 subscribeForSetDefaultAccountStatus()
                 subscribeForVerifyOTPForSetDefaultAccountStatus()
-            }else{
-                val currentProfile = Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
+            } else {
+                val currentProfile =
+                    Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
 
                 var isProfileNameMatched: Boolean = false
                 for (i in Constants.MERCHENTAGENTPROFILEARRAY.indices) {
                     isProfileNameMatched =
                         currentProfile.equals(Constants.MERCHENTAGENTPROFILEARRAY[i])
-                    if(isProfileNameMatched)
-                    {
+                    if (isProfileNameMatched) {
                         break
                     }
                 }
-                if(isProfileNameMatched){
+                if (isProfileNameMatched) {
                     homeViewModel.requestForAccountHolderAddtionalInformationApi(context)
                     Constants.IS_FIRST_TIME = false
                     subscribeForDefaultAccountStatus()
                     subscribeForSetDefaultAccountStatus()
                     subscribeForVerifyOTPForSetDefaultAccountStatus()
-                }else{
+                } else {
                     (activity as MainActivity).startTutorialsTrail()
                 }
             }
@@ -135,9 +144,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         subscribeForSpinnerListner()
         subscribeForGetBalanceAndGetAccountsResponse()
         subsribeForTransactionHistoryResponse()
-        if((activity as MainActivity).showTransactionsDetailsIndirectly){
-            setTransacitonScreenVisisble(true,(activity as MainActivity).isDirectCallForTransaction,
-                (activity as MainActivity).isTransactionFragmentNotVisible)
+        if ((activity as MainActivity).showTransactionsDetailsIndirectly) {
+            setTransacitonScreenVisisble(
+                true, (activity as MainActivity).isDirectCallForTransaction,
+                (activity as MainActivity).isTransactionFragmentNotVisible
+            )
             (activity as MainActivity).isTransactionDetailsShowing = true
 
             //----------for handling Backpress of activity----------
@@ -147,12 +158,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             (activity as MainActivity).isTranactionDetailsFragmentShowing = true
             (activity as MainActivity).isHomeFragmentShowing = false
             (activity as MainActivity).isTransacitonFragmentShowing = false
-        }else{
-            if(Constants.IS_AGENT_USER)
-            {
+        } else {
+            if (Constants.IS_AGENT_USER) {
                 homeViewModel.requestForGetAccountsAPI(activity)
-            }else{
-            homeViewModel.requestForGetBalanceApi(activity)}
+            } else {
+                homeViewModel.requestForGetBalanceApi(activity)
+            }
             (activity as MainActivity).isTransactionDetailsShowing = false
 
             //----------for handling Backpress of activity----------
@@ -233,10 +244,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         Constants.tutorialQuickRechargeContainer = mDataBinding.quickRechargeContainer
 
         mDataBinding.btnQuickRecharge4.setOnClickListener {
-            if(Constants.isTutorialShowing){
+            if (Constants.isTutorialShowing) {
                 /*Constants.displayTutorial(activity!!,mDataBinding.quickRechargeContainer,LanguageData.getStringValue("QuickRechargeTutorial").toString()
                     ,R.drawable.ic_tutorial_home_quick_recharge)*/
-            }else{
+            } else {
                 val itemPos = mDataBinding.quickRechargeSpinner.selectedItemPosition
                 var amount = Constants.quickRechargeAmountsList.get(itemPos)
                 amount = amount.removePrefix("DH")
@@ -256,10 +267,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     private fun setStrings() {
         mDataBinding.textTitleQuickRecharge.text = LanguageData.getStringValue("QuickRecharge")
         mDataBinding.btnQuickRecharge4.text = LanguageData.getStringValue("Recharge")
-        mDataBinding.transactionHistoryTitile.text = LanguageData.getStringValue("TransactionHistory")
+        mDataBinding.transactionHistoryTitile.text =
+            LanguageData.getStringValue("TransactionHistory")
         mDataBinding.tvNoDataFound.text = LanguageData.getStringValue("NoDataFound")
-        mDataBinding.textTitleMtCashQuickRecharge.text = LanguageData.getStringValue("MTCashQuickRecharge")
-        mDataBinding.selectAcountTitile.text=LanguageData.getStringValue("SelectAccountType")
+        mDataBinding.textTitleMtCashQuickRecharge.text =
+            LanguageData.getStringValue("MTCashQuickRecharge")
+        mDataBinding.selectAcountTitile.text = LanguageData.getStringValue("SelectAccountType")
 
 
         if (Constants.quickRechargeAmountsList.isNotEmpty()) {
@@ -268,7 +281,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 LanguageCustomSpinnerAdapter(
                     activity as MainActivity,
                     languageItems,
-                    (activity as MainActivity).resources.getColor(R.color.colorWhite),false
+                    (activity as MainActivity).resources.getColor(R.color.colorWhite), false
                 )
             mDataBinding.quickRechargeContainer
         }
@@ -281,36 +294,36 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
 
         if (Constants.IS_AGENT_USER) {
 
-            if(Constants.acountTypeList.isEmpty()) {
-              LanguageData.getStringValue("Wallet")?.let { Constants.acountTypeList.add(it) }
-              for (i in Constants.getAccountsResponseArray.indices) {
-                  if(Constants.getAccountsResponseArray.get(i).profileName.equals(Constants.MERCHANT_AGENT_PROFILE_NAME)&&
-                      Constants.getAccountsResponseArray.get(i).accountStatus.equals(Constants.ACTIVE)) {
-                      LanguageData.getStringValue("Merchant")
-                          ?.let { Constants.acountTypeList.add(it) }
-                  }
-                  if (Constants.getAccountsResponseArray[i].accountType.equals("COMMISSIONING")) {
-                      LanguageData.getStringValue("Commissioning")
-                          ?.let { Constants.acountTypeList.add(it) }
-                  }
-              }
+            if (Constants.acountTypeList.isEmpty()) {
+                LanguageData.getStringValue("Wallet")?.let { Constants.acountTypeList.add(it) }
+                for (i in Constants.getAccountsResponseArray.indices) {
+                    if (Constants.getAccountsResponseArray.get(i).profileName.equals(Constants.MERCHANT_AGENT_PROFILE_NAME) &&
+                        Constants.getAccountsResponseArray.get(i).accountStatus.equals(Constants.ACTIVE)
+                    ) {
+                        LanguageData.getStringValue("Merchant")
+                            ?.let { Constants.acountTypeList.add(it) }
+                    }
+                    if (Constants.getAccountsResponseArray[i].accountType.equals("COMMISSIONING")) {
+                        LanguageData.getStringValue("Commissioning")
+                            ?.let { Constants.acountTypeList.add(it) }
+                    }
+                }
 
-          }
+            }
             val acountTypeArray: Array<String> =
                 Constants.acountTypeList.toArray(arrayOfNulls<String>(Constants.acountTypeList.size))
             acountTypeSpinnerAdapter =
                 LanguageCustomSpinnerAdapter(
                     activity as MainActivity,
                     acountTypeArray,
-                    (activity as MainActivity).resources.getColor(R.color.colorBlack),true
+                    (activity as MainActivity).resources.getColor(R.color.colorBlack), true
                 )
-          //  mDataBinding.acountTypeSpinner
+            //  mDataBinding.acountTypeSpinner
             mDataBinding.acountTypeSpinner.apply {
                 adapter = acountTypeSpinnerAdapter
             }
-        }
-        else{
-            if(Constants.acountTypeList.isEmpty()) {
+        } else {
+            if (Constants.acountTypeList.isEmpty()) {
                 LanguageData.getStringValue("Wallet")?.let { Constants.acountTypeList.add(it) }
             }
             //Constants.acountTypeList.add("Wallet")
@@ -320,7 +333,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 LanguageCustomSpinnerAdapter(
                     activity as MainActivity,
                     acountTypeArray,
-                    (activity as MainActivity).resources.getColor(R.color.colorBlack),true
+                    (activity as MainActivity).resources.getColor(R.color.colorBlack), true
                 )
             //  mDataBinding.acountTypeSpinner
             mDataBinding.acountTypeSpinner.apply {
@@ -333,14 +346,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
 
     private fun subscribeForDefaultAccountStatus() {
 
-       val currentProfile = Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
+        val currentProfile =
+            Constants.loginWithCertResponse.getAccountHolderInformationResponse.profileName
 
         var isProfileNameMatched: Boolean = false
         for (i in Constants.MERCHENTAGENTPROFILEARRAY.indices) {
             isProfileNameMatched =
                 currentProfile.equals(Constants.MERCHENTAGENTPROFILEARRAY[i])
-            if(isProfileNameMatched)
-            {
+            if (isProfileNameMatched) {
                 break
             }
         }
@@ -348,12 +361,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         homeViewModel.getAccountHolderPersonalInformationApiResponseListner.observe(
             this@HomeFragment,
             Observer {
-                if(it.responseCode==ApiConstant.API_SUCCESS)
-                {
-                    Constants.CURRENT_USER_DATE_OF_BIRTH= it?.dob.toString()
-                    Constants.CURRENT_USER_CITY= it?.city.toString()
-                    Constants.CURRENT_USER_CIN= it?.cin.toString()
-                    Constants.CURRENT_USER_ADRESS= it?.address.toString()
+                if (it.responseCode == ApiConstant.API_SUCCESS) {
+                    Constants.CURRENT_USER_DATE_OF_BIRTH = it?.dob.toString()
+                    Constants.CURRENT_USER_CITY = it?.city.toString()
+                    Constants.CURRENT_USER_CIN = it?.cin.toString()
+                    Constants.CURRENT_USER_ADRESS = it?.address.toString()
                 }
             })
 
@@ -363,7 +375,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     if (it.additionalinformation.isNullOrEmpty()) {
                         showPopUp()
                     } else {
-                      //  if (it.additionalinformation[0].value.equals("FALSE", true)|| (it.additionalinformation[0].value.equals("FALSE", true)&&isProfileNameMatched)) {
+                        //  if (it.additionalinformation[0].value.equals("FALSE", true)|| (it.additionalinformation[0].value.equals("FALSE", true)&&isProfileNameMatched)) {
                         if (it.additionalinformation[0].value.equals("FALSE", true)) {
                             showPopUp()
                             Constants.IS_DEFAULT_ACCOUNT_SET = false
@@ -412,7 +424,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                 } else {
                     DialogUtils.successFailureDialogue(
                         context,
-                       it.description,
+                        it.description,
                         1
                     )
                     (activity as MainActivity).startTutorialsTrail()
@@ -441,22 +453,28 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     }
 
     private fun showOTPdialogue() {
-        DialogUtils.showDefaultAccountOTPDialogue(activity, object : DialogUtils.OnOTPDialogClickListner {
+        DialogUtils.showDefaultAccountOTPDialogue(
+            activity,
+            object : DialogUtils.OnOTPDialogClickListner {
 
-            override fun onOTPDialogYesClickListner(password: String) {
-                homeViewModel.requestForVerifyOTPForSetDefaultAccount(context, referenceNumber, password)
-            }
+                override fun onOTPDialogYesClickListner(password: String) {
+                    homeViewModel.requestForVerifyOTPForSetDefaultAccount(
+                        context,
+                        referenceNumber,
+                        password
+                    )
+                }
 
-            override fun onOTPDialogNoClickListner() {
-                (activity as MainActivity).startTutorialsTrail()
-            }
+                override fun onOTPDialogNoClickListner() {
+                    (activity as MainActivity).startTutorialsTrail()
+                }
 
-        })
+            })
     }
 
     private fun populateHomeUseCase() {
         val useCases = ArrayList<HomeUseCasesModel>().apply {
-            if(Constants.loginWithCertResponse.allowedMenu.MyApprovals != null){
+            if (Constants.loginWithCertResponse.allowedMenu.MyApprovals != null) {
                 this.add(
                     HomeUseCasesModel(
                         LanguageData.getStringValue("MyApprovals").toString(),
@@ -464,7 +482,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     )
                 )
             }
-            if(Constants.loginWithCertResponse.allowedMenu.TransferCommission != null){
+            if (Constants.loginWithCertResponse.allowedMenu.TransferCommission != null) {
                 this.add(
                     HomeUseCasesModel(
                         LanguageData.getStringValue("TransferCommission").toString(),
@@ -509,14 +527,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             }
 
 
-           /* if (Constants.loginWithCertResponse.allowedMenu.GenerateQR != null) {
-                this.add(
-                    HomeUseCasesModel(
-                        LanguageData.getStringValue("GenerateQR").toString(),
-                        R.drawable.home_qr
-                    )
-                )
-            }*/
+            /* if (Constants.loginWithCertResponse.allowedMenu.GenerateQR != null) {
+                 this.add(
+                     HomeUseCasesModel(
+                         LanguageData.getStringValue("GenerateQR").toString(),
+                         R.drawable.home_qr
+                     )
+                 )
+             }*/
             if (Constants.loginWithCertResponse.allowedMenu.CashService != null) {
                 this.add(
                     HomeUseCasesModel(
@@ -533,7 +551,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     )
                 )
             }
-
 
 
             /*if (Constants.loginWithCertResponse.allowedMenu.CashInViaCard != null) {
@@ -583,10 +600,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                         }
 
                         LanguageData.getStringValue("SendMoney").toString() -> {
-                            if(Constants.isTutorialShowing){
-                               /* Constants.displayTutorial(activity as MainActivity,mUseCaseGridLayoutManager.findViewByPosition(position)!!.findViewById(R.id.useCasesParentLayout),
-                                LanguageData.getStringValue("SendMoneyTutorial").toString())*/
-                            }else{
+                            if (Constants.isTutorialShowing) {
+                                /* Constants.displayTutorial(activity as MainActivity,mUseCaseGridLayoutManager.findViewByPosition(position)!!.findViewById(R.id.useCasesParentLayout),
+                                 LanguageData.getStringValue("SendMoneyTutorial").toString())*/
+                            } else {
                                 val intent = Intent(
                                     activity as MainActivity,
                                     SendMoneyActivity::class.java
@@ -671,13 +688,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
             layoutManager = mUseCaseGridLayoutManager
         }
 
-        if((activity as MainActivity).isHomeFragmentShowing){
+        if ((activity as MainActivity).isHomeFragmentShowing) {
             mDataBinding.useCasesRecyclerView.postDelayed(Runnable {
-                for(i in 0 until useCases.size){
-                        if(useCases[i].useCaseTitle == LanguageData.getStringValue("SendMoney").toString()){
+                for (i in 0 until useCases.size) {
+                    if (useCases[i].useCaseTitle == LanguageData.getStringValue("SendMoney")
+                            .toString()
+                    ) {
                         val holder =
                             mDataBinding.useCasesRecyclerView.findViewHolderForAdapterPosition(i) as? RecyclerView.ViewHolder
-                        Constants.tutorialSendMoney = holder?.itemView?.findViewById<ConstraintLayout>(R.id.useCasesParentLayout)
+                        Constants.tutorialSendMoney =
+                            holder?.itemView?.findViewById<ConstraintLayout>(R.id.useCasesParentLayout)
                         break
                     }
                 }
@@ -689,22 +709,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         var mbalanceInfoAndResonse = Constants.balanceInfoAndResponse
         var maxUserBalance = "0"
 
-        if(!mbalanceInfoAndResonse?.limitsList.isNullOrEmpty()){
-            for(index in mbalanceInfoAndResonse?.limitsList!!.indices){
-              for(i in Constants.KEY_FOR_WALLET_BALANCE_MAX.indices)
-              {
-                  if(mbalanceInfoAndResonse.limitsList!![index].name.equals(Constants.KEY_FOR_WALLET_BALANCE_MAX[i])){
-                      maxUserBalance = mbalanceInfoAndResonse.limitsList!![index].threshhold!!
-                      maxUserBalance = maxUserBalance.removePrefix("DH").trim()
+        if (!mbalanceInfoAndResonse?.limitsList.isNullOrEmpty()) {
+            for (index in mbalanceInfoAndResonse?.limitsList!!.indices) {
+                for (i in Constants.KEY_FOR_WALLET_BALANCE_MAX.indices) {
+                    if (mbalanceInfoAndResonse.limitsList!![index].name.equals(Constants.KEY_FOR_WALLET_BALANCE_MAX[i])) {
+                        maxUserBalance = mbalanceInfoAndResonse.limitsList!![index].threshhold!!
+                        maxUserBalance = maxUserBalance.removePrefix("DH").trim()
 
-                      break
-                  }
-              }
+                        break
+                    }
+                }
 
             }
         }
-        var listOfFragment : ArrayList<HomeBalanceFragment> = arrayListOf()
-        if(!updateBalance) {
+        var listOfFragment: ArrayList<HomeBalanceFragment> = arrayListOf()
+        if (!updateBalance) {
             listOfFragment.add(
                 HomeBalanceFragment(
                     0, CardModel(
@@ -716,9 +735,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     ), -1
                 )
             )
-            Constants.WALLETACCOUNTBALANCE= mbalanceInfoAndResonse.balance!!
-        }
-        else{
+            Constants.WALLETACCOUNTBALANCE = mbalanceInfoAndResonse.balance!!
+        } else {
             listOfFragment.add(
                 HomeBalanceFragment(
                     0, CardModel(
@@ -730,11 +748,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     ), -1
                 )
             )
-            Constants.WALLETACCOUNTBALANCE=amount
+            Constants.WALLETACCOUNTBALANCE = amount
         }
         addAgentBalanceCard(listOfFragment)
         populateBanners(listOfFragment)
-        mCardAdapter = HomeCardAdapter(this@HomeFragment.childFragmentManager,listOfFragment)
+        mCardAdapter = HomeCardAdapter(this@HomeFragment.childFragmentManager, listOfFragment)
         mDataBinding.viewpager.apply {
             adapter = mCardAdapter
             pageMargin = 16
@@ -747,15 +765,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
     }
 
     private fun populateBanners(listOfFragment: ArrayList<HomeBalanceFragment>) {
-        listOfFragment.add(HomeBalanceFragment(
-            1, CardModel(-1, "", "","",""),R.drawable.dummy_adver_2
-        ))
-        listOfFragment.add(HomeBalanceFragment(
-            1, CardModel(-1, "", "","",""),R.drawable.dummy_adv_1
-        ))
-        listOfFragment.add(HomeBalanceFragment(
-            1, CardModel(-1, "", "","",""),R.drawable.sample
-        ))
+        listOfFragment.add(
+            HomeBalanceFragment(
+                1, CardModel(-1, "", "", "", ""), R.drawable.banner1
+            )
+        )
+        listOfFragment.add(
+            HomeBalanceFragment(
+                1, CardModel(-1, "", "", "", ""), R.drawable.banner2
+            )
+        )
+        listOfFragment.add(
+            HomeBalanceFragment(
+                1, CardModel(-1, "", "", "", ""), R.drawable.banner3
+            )
+        )
     }
 
     private fun addAgentBalanceCard(listOfFragment: ArrayList<HomeBalanceFragment>) {
@@ -769,51 +793,65 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     )
                 ) {
                     Constants.getAccountsResponse = Constants.getAccountsResponseArray[i]
-                    listOfFragment.add(HomeBalanceFragment(
-                        0, CardModel(
-                            R.drawable.ic_wallet_balance,
-                            LanguageData.getStringValue("Commission").toString(),
-                            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + Constants.getAccountsResponse!!.balance,"0","0"
-                        ),-1)
+                    listOfFragment.add(
+                        HomeBalanceFragment(
+                            0, CardModel(
+                                R.drawable.ic_wallet_balance,
+                                LanguageData.getStringValue("Commission").toString(),
+                                Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + Constants.getAccountsResponse!!.balance,
+                                "0",
+                                "0"
+                            ), -1
+                        )
                     )
-                    Constants.COMMISIONACCOUNTBALANCE=Constants.getAccountsResponse!!.balance
-                    val fri = Constants.getAccountsResponse!!.accountFri.replace("FRI:","").trim()
-                    Constants.COMMISIONACCOUNTFRI=fri
+                    Constants.COMMISIONACCOUNTBALANCE = Constants.getAccountsResponse!!.balance
+                    val fri = Constants.getAccountsResponse!!.accountFri.replace("FRI:", "").trim()
+                    Constants.COMMISIONACCOUNTFRI = fri
                 }
 
                 if (Constants.getAccountsResponseArray[i].profileName.equals(
-                        Constants.MERCHANT_AGENT_PROFILE_NAME) && Constants.getAccountsResponseArray[i].accountStatus.equals(
-                            Constants.ACTIVE
+                        Constants.MERCHANT_AGENT_PROFILE_NAME
+                    ) && Constants.getAccountsResponseArray[i].accountStatus.equals(
+                        Constants.ACTIVE
                     )
                 ) {
-                    var acountName =LanguageData.getStringValue("Merchant")
+                    var acountName = LanguageData.getStringValue("Merchant")
                     Constants.getAccountsResponse = Constants.getAccountsResponseArray[i]
-                    listOfFragment.add(HomeBalanceFragment(
-                        0, CardModel(
-                            R.drawable.ic_wallet_balance,
-                            acountName!!,
-                            Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + Constants.getAccountsResponse!!.balance,"0","0"
-                        ),-1)
+                    listOfFragment.add(
+                        HomeBalanceFragment(
+                            0, CardModel(
+                                R.drawable.ic_wallet_balance,
+                                acountName!!,
+                                Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + Constants.getAccountsResponse!!.balance,
+                                "0",
+                                "0"
+                            ), -1
+                        )
                     )
 
 
                 }
             }
-            if(Constants.COMMISIONACCOUNTBALANCE.isNullOrEmpty())
-            {
-                Constants.COMMISIONACCOUNTBALANCE="0"
+            if (Constants.COMMISIONACCOUNTBALANCE.isNullOrEmpty()) {
+                Constants.COMMISIONACCOUNTBALANCE = "0"
             }
-            if(Constants.WALLETACCOUNTBALANCE.isNullOrEmpty())
-            {
-                Constants.WALLETACCOUNTBALANCE="0"
+            if (Constants.WALLETACCOUNTBALANCE.isNullOrEmpty()) {
+                Constants.WALLETACCOUNTBALANCE = "0"
             }
-            val totalBalance = Constants.converValueToTwoDecimalPlace(Constants.addTwoValues(Constants.COMMISIONACCOUNTBALANCE.toDouble(),Constants.WALLETACCOUNTBALANCE.toDouble()))
-            listOfFragment.add(0,HomeBalanceFragment(
-                0, CardModel(
-                    R.drawable.ic_wallet_balance,
-                    LanguageData.getStringValue("TotalBalance").toString(),
-                    Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + totalBalance,"0","0"
-                ),-1)
+            val totalBalance = Constants.converValueToTwoDecimalPlace(
+                Constants.addTwoValues(
+                    Constants.COMMISIONACCOUNTBALANCE.toDouble(),
+                    Constants.WALLETACCOUNTBALANCE.toDouble()
+                )
+            )
+            listOfFragment.add(
+                0, HomeBalanceFragment(
+                    0, CardModel(
+                        R.drawable.ic_wallet_balance,
+                        LanguageData.getStringValue("TotalBalance").toString(),
+                        Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + " " + totalBalance, "0", "0"
+                    ), -1
+                )
             )
         }
     }
@@ -870,22 +908,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
 
     private fun subscribeForGetBalanceAndGetAccountsResponse() {
         homeViewModel.getBalanceResponseListner.observe(this, Observer {
-            if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                 populateHomeCardView(true,it?.amount)
-            }else{
-                DialogUtils.showErrorDialoge(activity,it.description)
+            if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                populateHomeCardView(true, it?.amount)
+            } else {
+                DialogUtils.showErrorDialoge(activity, it.description)
             }
         })
 
         homeViewModel.getAccountsResponseListner.observe(this@HomeFragment,
             Observer {
-                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                    for(i in it.accounts.indices){
-                        Constants.getAccountsResponseArray=it.accounts as ArrayList<Account>
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    for (i in it.accounts.indices) {
+                        Constants.getAccountsResponseArray = it.accounts as ArrayList<Account>
                         homeViewModel.requestForGetBalanceApi(activity)
                     }
-                }else{
-                    DialogUtils.showErrorDialoge(activity,it.description)
+                } else {
+                    DialogUtils.showErrorDialoge(activity, it.description)
                 }
             }
         )
@@ -896,11 +934,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
         isTransactionDetailsVisible: Boolean,
         directCallForTransaction: Boolean,
         transactionFragmentNotVisible: Boolean
-    ){
-        if(isTransactionDetailsVisible){
+    ) {
+        if (isTransactionDetailsVisible) {
 
-            homeViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN,false)
-            if(transactionFragmentNotVisible){
+            homeViewModel.requestForGetTransactionHistoryApi(
+                activity,
+                Constants.CURRENT_USER_MSISDN,
+                false
+            )
+            if (transactionFragmentNotVisible) {
                 if (directCallForTransaction) {
                     //setTransactionViewVisible
                     mDataBinding.transactionViewGroup.visibility = View.VISIBLE
@@ -911,80 +953,95 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ViewPager.OnPageChange
                     mDataBinding.useCasesRecyclerView.visibility = View.GONE
                 }
             }
-        }else{
+        } else {
             mDataBinding.transactionViewGroup.visibility = View.GONE
             mDataBinding.useCasesRecyclerView.visibility = View.VISIBLE
         }
     }
 
-    fun subsribeForTransactionHistoryResponse(){
+    fun subsribeForTransactionHistoryResponse() {
         homeViewModel.getTransactionsResponseListner.observe(this@HomeFragment,
             Observer {
-                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                    if(!it.historyResponse.isNullOrEmpty()){
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    if (!it.historyResponse.isNullOrEmpty()) {
                         mDataBinding.tvNoDataFound.visibility = View.GONE
 
                         //Clearing Past Data if Any
                         mTransactionHistoryAdapter.updateHistoryList()
                         mTransactionHistoryAdapter.updateHistoryList(it.historyResponse)
-                    }else{
+                    } else {
                         mTransactionHistoryAdapter.updateHistoryList()
                         mDataBinding.tvNoDataFound.visibility = View.VISIBLE
                     }
-                }else{
-                    DialogUtils.showErrorDialoge(activity,it.description)
+                } else {
+                    DialogUtils.showErrorDialoge(activity, it.description)
                 }
             })
     }
 
     private fun subscribeForSpinnerListner() {
 
-       // homeViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN)
-        mDataBinding.acountTypeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
+        // homeViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN)
+        mDataBinding.acountTypeSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                }
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val lastSelection = Constants.CURRENT_ACOUNT_TYPE_SELECTED
-                val currentSelection = Constants.acountTypeList.get(position)
-                if(!lastSelection.equals(currentSelection)) {
-                    Constants.CURRENT_ACOUNT_TYPE_SELECTED = currentSelection
-                    if (lastSelection != null) {
-                        Constants.LAST_ACOUNT_TYPE_SELECTED = lastSelection
-                    }
-                    if(currentSelection.equals(LanguageData.getStringValue("Merchant")))
-                    {
-                        for(i in Constants.getAccountsResponseArray.indices)
-                        {
-                            if(Constants.getAccountsResponseArray.get(i).profileName.equals(Constants.MERCHANT_AGENT_PROFILE_NAME)&&
-                                Constants.getAccountsResponseArray.get(i).accountStatus.equals(Constants.ACTIVE))
-                            {
-                                homeViewModel.passNewFri(Constants.getAccountsResponseArray.get(i).accountFri)
-                            }
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val lastSelection = Constants.CURRENT_ACOUNT_TYPE_SELECTED
+                    val currentSelection = Constants.acountTypeList.get(position)
+                    if (!lastSelection.equals(currentSelection)) {
+                        Constants.CURRENT_ACOUNT_TYPE_SELECTED = currentSelection
+                        if (lastSelection != null) {
+                            Constants.LAST_ACOUNT_TYPE_SELECTED = lastSelection
                         }
-                    }
-                    else if(currentSelection.equals(LanguageData.getStringValue("Commissioning")))
-                    {
-                        for(i in Constants.getAccountsResponseArray.indices)
-                        {
-                            if(Constants.getAccountsResponseArray.get(i).accountType.equals("COMMISSIONING"))
-                            {
-                                homeViewModel.passNewFri(Constants.getAccountsResponseArray.get(i).accountFri)
+                        if (currentSelection.equals(LanguageData.getStringValue("Merchant"))) {
+                            for (i in Constants.getAccountsResponseArray.indices) {
+                                if (Constants.getAccountsResponseArray.get(i).profileName.equals(
+                                        Constants.MERCHANT_AGENT_PROFILE_NAME
+                                    ) &&
+                                    Constants.getAccountsResponseArray.get(i).accountStatus.equals(
+                                        Constants.ACTIVE
+                                    )
+                                ) {
+                                    homeViewModel.passNewFri(
+                                        Constants.getAccountsResponseArray.get(
+                                            i
+                                        ).accountFri
+                                    )
+                                }
                             }
+                        } else if (currentSelection.equals(LanguageData.getStringValue("Commissioning"))) {
+                            for (i in Constants.getAccountsResponseArray.indices) {
+                                if (Constants.getAccountsResponseArray.get(i).accountType.equals("COMMISSIONING")) {
+                                    homeViewModel.passNewFri(
+                                        Constants.getAccountsResponseArray.get(
+                                            i
+                                        ).accountFri
+                                    )
+                                }
+                            }
+                        } else {
+                            homeViewModel.requestForGetTransactionHistoryApi(
+                                activity,
+                                Constants.CURRENT_USER_MSISDN,
+                                false
+                            )
                         }
-                    }
-                    else{
-                        homeViewModel.requestForGetTransactionHistoryApi(activity,Constants.CURRENT_USER_MSISDN,false)
                     }
                 }
             }
-        }
 
         homeViewModel.acountFri.observe(this, Observer {
 
             //excluding String Fri:
-            var fri = it.substring(4,it.length)
-            homeViewModel.requestForGetTransactionHistoryApi(activity,fri,true)
+            var fri = it.substring(4, it.length)
+            homeViewModel.requestForGetTransactionHistoryApi(activity, fri, true)
         })
     }
 }

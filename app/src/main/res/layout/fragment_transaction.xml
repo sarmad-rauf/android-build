@@ -31,7 +31,7 @@
             android:background="@color/colorWhite"
             />
 
-        <com.es.marocapp.widgets.MarocRegularTextView
+        <com.es.marocapp.widgets.MarocBoldTextView
             android:id="@+id/tvTransactionHistoryTitle"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -45,7 +45,7 @@
             app:layout_constraintStart_toEndOf="@+id/imgBackButton"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/topHeaderContainer"
-            app:textAllCaps="true" />
+            />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgBackButton"

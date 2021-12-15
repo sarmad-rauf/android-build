@@ -13,70 +13,66 @@
 
 
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
-        >
+        android:background="@color/colorWhite">
 
         <ImageView
             android:id="@+id/topHeaderContainer"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            app:layout_constraintTop_toTopOf="parent"
             android:background="@color/colorWhite"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.es.marocapp.widgets.MarocRegularTextView
+        <com.es.marocapp.widgets.MarocBoldTextView
             android:id="@+id/tvTransactionHistoryTitle"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center"
-            tools:text="@string/my_approvals"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_18ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/topHeaderContainer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/imgBackButton"
-            app:layout_constraintBottom_toBottomOf="@+id/topHeaderContainer"
             app:layout_constraintTop_toTopOf="parent"
-            app:textAllCaps="true" />
+            tools:text="@string/my_approvals" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgBackButton"
             android:layout_width="@dimen/_32sdp"
             android:layout_height="@dimen/_32sdp"
             android:layout_marginStart="@dimen/_12sdp"
-            app:srcCompat="@drawable/ic_back_black_svg"
+            app:layout_constraintBottom_toTopOf="@+id/tvTransactionHistoryTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTransactionHistoryTitle"
-            app:layout_constraintBottom_toTopOf="@+id/tvTransactionHistoryTitle"
-            />
+            app:srcCompat="@drawable/ic_back_black_svg" />
 
         <com.es.marocapp.widgets.MarocMediumTextView
             android:id="@+id/allApprovalTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="@string/all_approvals"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/_14ssp"
-            android:text="@string/all_approvals"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:layout_marginStart="@dimen/_8sdp"
-            app:layout_constraintTop_toBottomOf="@+id/topHeaderContainer"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/topHeaderContainer" />
 
         <com.es.marocapp.widgets.MarocMediumTextView
             android:id="@+id/tvNoDataFound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_16ssp"
             android:textColor="@color/colorTextGreyMedium"
-            tools:text="No Data Found"
-            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/_16ssp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="No Data Found" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mApprovalsRecycler"
@@ -84,15 +80,13 @@
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/_10sdp"
             android:paddingBottom="@dimen/_16sdp"
-            app:layout_constraintTop_toBottomOf="@+id/allApprovalTitle"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/allApprovalTitle" />
 
-        <include android:id="@+id/Gif_Loader"
+        <include
+            android:id="@+id/Gif_Loader"
             layout="@layout/layout_dialog"
-            android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
-            />
-
+            android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

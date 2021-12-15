@@ -67,7 +67,7 @@ class BillDetailFatoratiItemAdapter(private val bills : ArrayList<FatoratiCustom
 //        holder.billingAmountVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW+" "+bills[position].prixTTC
 
 
-        holder.billingMonthVal.text = Constants.CURRENT_CURRENCY_TYPE_TO_SHOW + bills[position].prixTTC
+        holder.billingMonthVal.text = bills[position].prixTTC + " " + Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
 //        holder.billDueDateVal.text = bills[position].description
         holder.billDueDateVal.text = bills[position].idArticle //-------------------------> Changed From Address TO bill Number
 

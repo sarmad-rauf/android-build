@@ -45,10 +45,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBinding>(),TransactionDownloadRecipt{
+class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBinding>(),
+    TransactionDownloadRecipt {
 
     lateinit var mActivityViewModel: TransactionViewModel
-    private lateinit var mItemDetailsToShow : History
+    private lateinit var mItemDetailsToShow: History
     private var amount = ""
     private var fee = ""
 
@@ -58,12 +59,14 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
 
     override fun onRestart() {
         super.onRestart()
-      //  startNewActivityAndClear(Intent(this,MainActivity::class.java))
-       // startNewActivityAndClear(this, MainActivity::class.java)
+        //  startNewActivityAndClear(Intent(this,MainActivity::class.java))
+        // startNewActivityAndClear(this, MainActivity::class.java)
         finish()
     }
+
     override fun init(savedInstanceState: Bundle?) {
-        mActivityViewModel = ViewModelProvider(this@TransactionDetailsActivity)[TransactionViewModel::class.java]
+        mActivityViewModel =
+            ViewModelProvider(this@TransactionDetailsActivity)[TransactionViewModel::class.java]
         mDataBinding.apply {
             viewmodel = mActivityViewModel
         }
@@ -74,22 +77,27 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         mDataBinding.imgBackButton.setOnClickListener {
             this@TransactionDetailsActivity.finish()
         }
-        if(!mItemDetailsToShow.showReceipt){
-        mDataBinding.btnDownloadPdf.visibility  = View.GONE
+        if (!mItemDetailsToShow.showReceipt) {
+            mDataBinding.btnDownloadPdf.visibility = View.GONE
         }
         setStrings()
         updateUI()
         subscribeObservers()
         mDataBinding.btnDownloadPdf.setOnClickListener {
             mActivityViewModel.isLoading.set(true)
-            mActivityViewModel.requestForGetDownloadRecipTemplateApi(this,Constants.CURRENT_USER_MSISDN,mItemDetailsToShow.transactionid)
+            mActivityViewModel.requestForGetDownloadRecipTemplateApi(
+                this,
+                Constants.CURRENT_USER_MSISDN,
+                mItemDetailsToShow.transactionid
+            )
         }
     }
 
     private fun setStrings() {
         mDataBinding.btnDownloadPdf.text = LanguageData.getStringValue("DownloadReceipt")
         mDataBinding.statusTitle.text = LanguageData.getStringValue("TransactionStatus")
-        mDataBinding.tvTransactionHistoryTitle.text = LanguageData.getStringValue("TransactionDetails")
+        mDataBinding.tvTransactionHistoryTitle.text =
+            LanguageData.getStringValue("TransactionDetails")
         mDataBinding.dateTitle.text = LanguageData.getStringValue("Date")
         mDataBinding.transactionIDTitle.text = LanguageData.getStringValue("TransactionID")
         mDataBinding.ReceiverNameTitle.text = LanguageData.getStringValue("ReceiverIdentity")
@@ -101,207 +109,227 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         mDataBinding.totalAmountTitle.text = LanguageData.getStringValue("Total")
     }
 
-    private fun updateUI(){
+    private fun updateUI() {
         //status
-        if(mItemDetailsToShow.transactionstatus.isNullOrEmpty()){
+        if (mItemDetailsToShow.transactionstatus.isNullOrEmpty()) {
             mDataBinding.statusVal.text = "-"
 
-        }else{
-            if(!mItemDetailsToShow.transactionstatus.equals("SUCCESSFUL"))
-            {
-                mDataBinding.btnDownloadPdf.visibility= View.GONE
+        } else {
+            if (!mItemDetailsToShow.transactionstatus.equals("Success", ignoreCase = true)) {
+                mDataBinding.btnDownloadPdf.visibility = View.GONE
             }
             mDataBinding.statusVal.text = mItemDetailsToShow.transactionstatus
         }
 
         //Date
-        if(mItemDetailsToShow.date.isNullOrEmpty()){
+        if (mItemDetailsToShow.date.isNullOrEmpty()) {
             mDataBinding.dateVal.text = "-"
-        }else{
-            mDataBinding.dateVal.text = Constants.getZoneFormattedDateAndTime(mItemDetailsToShow.date)
+        } else {
+            mDataBinding.dateVal.text =
+                Constants.getZoneFormattedDateAndTime(mItemDetailsToShow.date)
         }
 
         //TransactionID
-        if(mItemDetailsToShow.transactionid.isNullOrEmpty()){
+        if (mItemDetailsToShow.transactionid.isNullOrEmpty()) {
             mDataBinding.transactionIDVal.text = "-"
-        }else{
+        } else {
 
             mDataBinding.transactionIDVal.text = mItemDetailsToShow.transactionid
         }
 
         //ReceiverName
-        if(mItemDetailsToShow.toname.isNullOrEmpty()){
+        if (mItemDetailsToShow.toname.isNullOrEmpty()) {
             mDataBinding.ReceiverNameVal.text = "-"
-        }else{
+        } else {
             mDataBinding.ReceiverNameVal.text = mItemDetailsToShow.toname
         }
 
         //ReceiverNumber
-        if(mItemDetailsToShow.tofri.isNullOrEmpty()){
+        if (mItemDetailsToShow.tofri.isNullOrEmpty()) {
             mDataBinding.ReceiverIdentityVal.text = "-"
-        }else{
+        } else {
 
             mDataBinding.ReceiverIdentityVal.text = getUpdateFri(mItemDetailsToShow.tofri)
         }
 
         //SenderName
-        if(mItemDetailsToShow.fromname.isNullOrEmpty()){
+        if (mItemDetailsToShow.fromname.isNullOrEmpty()) {
             mDataBinding.SenderNameVal.text = "-"
-        }else{
+        } else {
 
             mDataBinding.SenderNameVal.text = mItemDetailsToShow.fromname
         }
 
         //SenderNumber
-        if(mItemDetailsToShow.fromfri.isNullOrEmpty()){
+        if (mItemDetailsToShow.fromfri.isNullOrEmpty()) {
             mDataBinding.SenderIdentityVal.text = "-"
-        }else{
+        } else {
 
             mDataBinding.SenderIdentityVal.text = getUpdateFri(mItemDetailsToShow.fromfri)
         }
 
         //Amount
-        if(Constants.IS_MERCHANT_USER&&mItemDetailsToShow.fromTax.isNullOrEmpty())
-        {
-            if(mItemDetailsToShow.toamount.isNullOrEmpty()){
+        if (Constants.IS_MERCHANT_USER && mItemDetailsToShow.fromTax.isNullOrEmpty()) {
+            if (mItemDetailsToShow.toamount.isNullOrEmpty()) {
                 amount = "0.00"
                 mDataBinding.amountVal.text = "0.00 DH"
-            }else{
+            } else {
                 amount = mItemDetailsToShow.toamount
-                val feeWithTax = Constants.converValueToTwoDecimalPlace(mItemDetailsToShow.tofee.toDouble()+mItemDetailsToShow.toTax.toDouble())
-                amount = Constants.converValueToTwoDecimalPlace(amount.toDouble()-feeWithTax.toDouble())
-                mDataBinding.amountVal.text = amount+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
+                val feeWithTax =
+                    Constants.converValueToTwoDecimalPlace(mItemDetailsToShow.tofee.toDouble() + mItemDetailsToShow.toTax.toDouble())
+                amount =
+                    Constants.converValueToTwoDecimalPlace(amount.toDouble() - feeWithTax.toDouble())
+                mDataBinding.amountVal.text = amount + " " + Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
             }
-        } else{
-        if(mItemDetailsToShow.toamount.isNullOrEmpty()){
-            amount = "0.00"
-            mDataBinding.amountVal.text = "0.00 DH"
-        }else{
-            amount = mItemDetailsToShow.toamount
-            mDataBinding.amountVal.text = mItemDetailsToShow.toamount+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
-        }
+        } else {
+            if (mItemDetailsToShow.toamount.isNullOrEmpty()) {
+                amount = "0.00"
+                mDataBinding.amountVal.text = "0.00 DH"
+            } else {
+                amount = mItemDetailsToShow.toamount
+                mDataBinding.amountVal.text =
+                    mItemDetailsToShow.toamount + " " + Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
+            }
         }
 
         //Fee
-        var fromTax="0"
-        if(Constants.IS_MERCHANT_USER&&mItemDetailsToShow.fromTax.isNullOrEmpty())
-        {
-            fromTax=mItemDetailsToShow.toTax
-        }
-        else{
-         fromTax=mItemDetailsToShow.fromTax
+        var fromTax = "0"
+        if (Constants.IS_MERCHANT_USER && mItemDetailsToShow.fromTax.isNullOrEmpty()) {
+            fromTax = mItemDetailsToShow.toTax
+        } else {
+            fromTax = mItemDetailsToShow.fromTax
         }
 
-        if(fromTax.isNullOrEmpty())
-        {
-            fromTax="0"
+        if (fromTax.isNullOrEmpty()) {
+            fromTax = "0"
         }
 
 
 
-        if(Constants.IS_MERCHANT_USER&&mItemDetailsToShow.fromTax.isNullOrEmpty()){
-            if(mItemDetailsToShow.toTax.isNullOrEmpty()){
+        if (Constants.IS_MERCHANT_USER && mItemDetailsToShow.fromTax.isNullOrEmpty()) {
+            if (mItemDetailsToShow.toTax.isNullOrEmpty()) {
                 fee = "0.00"
                 mDataBinding.feeVal.text = "0.00 DH"
-            }else{
-                val feeWithTax = Constants.converValueToTwoDecimalPlace(mItemDetailsToShow.tofee.toDouble()+fromTax.toDouble())
+            } else {
+                val feeWithTax =
+                    Constants.converValueToTwoDecimalPlace(mItemDetailsToShow.tofee.toDouble() + fromTax.toDouble())
                 fee = mItemDetailsToShow.tofee
-                mDataBinding.feeVal.text = feeWithTax+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
+                mDataBinding.feeVal.text =
+                    feeWithTax + " " + Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
             }
-        }else{
-        if(mItemDetailsToShow.fromfee.isNullOrEmpty()){
-            fee = "0.00"
-            mDataBinding.feeVal.text = "0.00 DH"
-        }else{
-            val feeWithTax = Constants.converValueToTwoDecimalPlace(mItemDetailsToShow.fromfee.toDouble()+fromTax.toDouble())
-            fee = mItemDetailsToShow.fromfee
-            mDataBinding.feeVal.text = feeWithTax+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
-        }
+        } else {
+            if (mItemDetailsToShow.fromfee.isNullOrEmpty()) {
+                fee = "0.00"
+                mDataBinding.feeVal.text = "0.00 DH"
+            } else {
+                val feeWithTax =
+                    Constants.converValueToTwoDecimalPlace(mItemDetailsToShow.fromfee.toDouble() + fromTax.toDouble())
+                fee = mItemDetailsToShow.fromfee
+                mDataBinding.feeVal.text =
+                    feeWithTax + " " + Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
+            }
         }
 
         //TotalAmount
-        var totalAmount = Constants.addAmountAndFee(amount.toDouble(),fee.toDouble())
-        totalAmount = Constants.converValueToTwoDecimalPlace(totalAmount.toDouble()+fromTax.toDouble())
-        mDataBinding.totalAmountVal.text = totalAmount+" "+Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
+        var totalAmount = Constants.addAmountAndFee(amount.toDouble(), fee.toDouble())
+        totalAmount =
+            Constants.converValueToTwoDecimalPlace(totalAmount.toDouble() + fromTax.toDouble())
+        mDataBinding.totalAmountVal.text =
+            totalAmount + " " + Constants.CURRENT_CURRENCY_TYPE_TO_SHOW
 
 
-        if(mItemDetailsToShow.toaccount.contains(Constants.AIR_TIME_RECEIVER_ALIAS)
+        if (mItemDetailsToShow.toaccount.contains(Constants.AIR_TIME_RECEIVER_ALIAS)
             || mItemDetailsToShow.toaccount.contains(Constants.POST_PAID_MOBILE_ALIAS)
             || mItemDetailsToShow.toaccount.contains(Constants.POST_PAID_FIXED_ALIAS)
-            || mItemDetailsToShow.toaccount.contains(Constants.POST_PAID_INTERNET_ALIAS)){
+            || mItemDetailsToShow.toaccount.contains(Constants.POST_PAID_INTERNET_ALIAS)
+        ) {
             mDataBinding.receiverNameGroup.visibility = View.GONE
-        }else{
+        } else {
             mDataBinding.receiverNameGroup.visibility = View.VISIBLE
         }
     }
 
-    private  fun subscribeObservers(){
+    private fun subscribeObservers() {
         mActivityViewModel.getReciptTemplateListner.observe(this,
             Observer {
-                if(it.responseCode.equals(ApiConstant.API_SUCCESS)){
-                    if(!it.fileDataHtml.isNullOrEmpty()){
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    if (!it.fileDataHtml.isNullOrEmpty()) {
 //                        val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
 //                        val currentDate = sdf.format(Date())
 
                         val fileName = "TransactionDetail${mItemDetailsToShow.transactionid}.pdf"
-                     val htmlTextPdf =  EncryptionUtils.decryptString(it.fileDataHtml)
-                          val savedPDFFile = FileManager.getInstance().createTempFileWithName(applicationContext, fileName, false)
-                     //   val destinationFilename = File(
-                       //     this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + fileName)
+                        val htmlTextPdf = EncryptionUtils.decryptString(it.fileDataHtml)
+                        val savedPDFFile = FileManager.getInstance()
+                            .createTempFileWithName(applicationContext, fileName, false)
+                        //   val destinationFilename = File(
+                        //     this.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).toString() + "/" + fileName)
 
                         // Generate Pdf From Html
                         PDFUtil.generatePDFFromHTML(
-                            applicationContext, savedPDFFile,  htmlTextPdf, object :
+                            applicationContext, savedPDFFile, htmlTextPdf, object :
                                 PDFPrint.OnPDFPrintListener {
                                 override fun onSuccess(file: File) {
                                     // Open Pdf Viewer
-                                    val pdfUri: Uri = FileProvider.getUriForFile(this@TransactionDetailsActivity, applicationContext.packageName + ".fileprovider", savedPDFFile)
-                                   mActivityViewModel.isLoading.set(false)
+                                    val pdfUri: Uri = FileProvider.getUriForFile(
+                                        this@TransactionDetailsActivity,
+                                        applicationContext.packageName + ".fileprovider",
+                                        savedPDFFile
+                                    )
+                                    mActivityViewModel.isLoading.set(false)
 
                                     DialogUtils.showFileDialogue(this@TransactionDetailsActivity,
                                         LanguageData.getStringValue("FileSaveSuccessMessage"),
                                         0,
-                                        object :DialogUtils.OnYesClickListner{
-                                        override fun onDialogYesClickListner() {
-                                           //savefile(pdfUri)
-                                            viewPdf(pdfUri)
-                                        }})
+                                        object : DialogUtils.OnYesClickListner {
+                                            override fun onDialogYesClickListner() {
+                                                //savefile(pdfUri)
+                                                viewPdf(pdfUri)
+                                            }
+                                        })
                                 }
 
                                 override fun onError(exception: Exception) {
                                     exception.printStackTrace()
                                     mActivityViewModel.isLoading.set(false)
-                                    DialogUtils.showErrorDialoge(this@TransactionDetailsActivity,Constants.SHOW_DEFAULT_ERROR)
+                                    DialogUtils.showErrorDialoge(
+                                        this@TransactionDetailsActivity,
+                                        Constants.SHOW_DEFAULT_ERROR
+                                    )
                                 }
                             })
 
-                    }else{
+                    } else {
                         mActivityViewModel.isLoading.set(false)
-                        DialogUtils.showErrorDialoge(this,it.description)
+                        DialogUtils.showErrorDialoge(this, it.description)
                     }
-                }else{
+                } else {
                     mActivityViewModel.isLoading.set(false)
-                    DialogUtils.showErrorDialoge(this,it.description)
+                    DialogUtils.showErrorDialoge(this, it.description)
                 }
             })
     }
 
-    fun isStoragePermissionGranted(activity: Activity):Boolean {
+    fun isStoragePermissionGranted(activity: Activity): Boolean {
         if (Build.VERSION.SDK_INT >= 23) {
-            if (ContextCompat.checkSelfPermission(activity ,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED)
-            {    //Log.v(TAG, "Permission is granted");
-                return true}
-         else {
-            ActivityCompat.requestPermissions(activity,  arrayOf(
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ), 1);
-            return false;
+            if (ContextCompat.checkSelfPermission(
+                    activity,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+                == PackageManager.PERMISSION_GRANTED
+            ) {    //Log.v(TAG, "Permission is granted");
+                return true
+            } else {
+                ActivityCompat.requestPermissions(
+                    activity, arrayOf(
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ), 1
+                );
+                return false;
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            return true;
         }
-    } else { //permission is automatically granted on sdk<23 upon installation
-        return true;
     }
-}
 
 
     private fun writeResponseBodyToDisk(body: ResponseBody): Boolean {
@@ -347,7 +375,6 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
     }
 
 
-
     fun savefile(sourceuri: Uri) {
         var fileName = "TransactionDetail${mItemDetailsToShow.transactionid}.pdf"
         val sourceFilename: String? = sourceuri.path
@@ -376,7 +403,7 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
     }
 
 
-    private fun viewPdf(uri : Uri) {
+    private fun viewPdf(uri: Uri) {
 
         // Setting the intent for pdf reader
         val pdfIntent = Intent(Intent.ACTION_VIEW)
@@ -393,7 +420,7 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
 
     private fun getFri(fri: String): String {
         var userFri = fri.substringAfter("212")
-        userFri = userFri.subSequence(0,9).toString()
+        userFri = userFri.subSequence(0, 9).toString()
         userFri = "${Constants.APP_MSISDN_PREFIX}$userFri"
         userFri = userFri.removePrefix("+")
         return userFri
@@ -407,7 +434,7 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
     }
 
     override fun onDownloadReciptClickListner(view: View) {
-        if(isStoragePermissionGranted(this)) {
+        if (isStoragePermissionGranted(this)) {
             mActivityViewModel.requestForGetDownloadRecipTemplateApi(
                 this,
                 Constants.CURRENT_USER_MSISDN,
@@ -415,6 +442,6 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
             )
         }
 
-        }
+    }
 
 }

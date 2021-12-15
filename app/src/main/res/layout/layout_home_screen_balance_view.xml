@@ -2,19 +2,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
 
         <variable
             name="viewmodel"
-            type="com.es.marocapp.usecase.home.HomeViewModel"/>
+            type="com.es.marocapp.usecase.home.HomeViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_173sdp"
-        android:background="@color/colorCerulean"
-        >
-
-
+        android:background="@color/colorCerulean">
 
         <ImageView
             android:id="@+id/inner_semi_circle"
@@ -49,88 +48,82 @@
             android:id="@+id/progress_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_22sdp"
-            android:textColor="@color/colorWhite"
-            tools:text="DH 2000000000"
+            android:gravity="center_horizontal"
             android:paddingStart="@dimen/_20sdp"
             android:paddingEnd="@dimen/_20sdp"
             android:paddingBottom="@dimen/_20sdp"
-            android:gravity="center_horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/progress_value_title"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_22sdp"
+            app:layout_constraintEnd_toEndOf="@id/inner_semi_circle"
             app:layout_constraintStart_toStartOf="@+id/inner_semi_circle"
-            app:layout_constraintEnd_toEndOf="@id/inner_semi_circle" />
+            app:layout_constraintTop_toBottomOf="@+id/progress_value_title"
+            tools:text="DH 2000000000" />
 
         <androidx.constraintlayout.widget.Group
+            android:id="@+id/progress_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:id="@+id/progress_group"
-            app:constraint_referenced_ids="arcSeekBar,inner_semi_circle,progress_value,progress_value_title"/>
+            app:constraint_referenced_ids="arcSeekBar,inner_semi_circle,progress_value,progress_value_title" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_16sdp"
-            app:cardCornerRadius="@dimen/_12ssp"
             android:elevation="0dp"
-            android:background="@color/colorCerulean"
+            app:cardBackgroundColor="@color/colorCerulean"
+            app:cardCornerRadius="@dimen/_12ssp"
             app:cardPreventCornerOverlap="false"
-            app:cardUseCompatPadding="true"
-
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            >
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/colorCerulean"
-                android:elevation="0dp"
-                >
+                android:layout_height="match_parent">
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/img_adv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="fitXY"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/sample"
                     android:elevation="@dimen/_8sdp"
-                    app:riv_corner_radius_top_left="@dimen/_12sdp"
-                    app:riv_corner_radius_top_right="@dimen/_12sdp"
-                    app:riv_corner_radius_bottom_right="@dimen/_12sdp"
-                    app:riv_corner_radius_bottom_left="@dimen/_12sdp"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/banner1"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:riv_corner_radius_bottom_left="@dimen/_12sdp"
+                    app:riv_corner_radius_bottom_right="@dimen/_12sdp"
+                    app:riv_corner_radius_top_left="@dimen/_12sdp"
+                    app:riv_corner_radius_top_right="@dimen/_12sdp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.cardview.widget.CardView>
 
         <com.marcinmoskala.arcseekbar.ArcSeekBar
             android:id="@+id/arcSeekBar"
             android:layout_width="@dimen/_300sdp"
             android:layout_height="@dimen/_135sdp"
+            android:layout_marginStart="@dimen/_33sdp"
             android:layout_marginTop="@dimen/_12sdp"
-            app:progressWidth="6dp"
-            app:progressBackgroundWidth="5dp"
-            app:progressColor="@color/colorWhite"
-            app:progressBackgroundColor="@color/colorLightBlue"
-            app:thumb="@drawable/progress_thumb"
+            android:layout_marginEnd="@dimen/_33sdp"
+            android:layout_marginBottom="@dimen/_18sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:maxProgress="100"
             app:progress="50"
+            app:progressBackgroundColor="@color/colorLightBlue"
+            app:progressBackgroundWidth="5dp"
+            app:progressColor="@color/colorWhite"
+            app:progressWidth="6dp"
             app:roundEdges="false"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginBottom="@dimen/_18sdp"
-            android:layout_marginStart="@dimen/_33sdp"
-            android:layout_marginEnd="@dimen/_33sdp"
-            />
+            app:thumb="@drawable/progress_thumb" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

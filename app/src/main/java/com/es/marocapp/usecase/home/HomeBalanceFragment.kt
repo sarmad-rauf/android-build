@@ -17,10 +17,11 @@ import java.util.*
 
 
 //viewType value 0 for Progress Balance View && 1 for Banner Advertisement View
-class HomeBalanceFragment(var viewType: Int, cardDataModel: CardModel, var imageURL: Int) : BaseFragment<LayoutHomeScreenBalanceViewBinding>() {
+class HomeBalanceFragment(var viewType: Int, cardDataModel: CardModel, var imageURL: Int) :
+    BaseFragment<LayoutHomeScreenBalanceViewBinding>() {
 
     private lateinit var homeViewModel: HomeViewModel
-    private  var mCardModel: CardModel = cardDataModel
+    private var mCardModel: CardModel = cardDataModel
 
     private fun updateBalance() {
         //viewType value 0 for Progress Balance View && 1 for Banner Advertisement View
@@ -31,8 +32,8 @@ class HomeBalanceFragment(var viewType: Int, cardDataModel: CardModel, var image
 //        context!!.resources.updateConfiguration(
 //            conf,
 //            context!!.resources.displayMetrics
-    //    )
-        if(viewType==0){
+        //    )
+        if (viewType == 0) {
             mDataBinding.progressGroup.visibility = android.view.View.VISIBLE
             mDataBinding.imgAdv.visibility = android.view.View.GONE
             mDataBinding.progressValueTitle.text = mCardModel.cardName
@@ -43,22 +44,30 @@ class HomeBalanceFragment(var viewType: Int, cardDataModel: CardModel, var image
 
                 if (!mCardModel.userMax.isNullOrEmpty()) {
                     mDataBinding.arcSeekBar.maxProgress = mCardModel.userMax.toInt()
-                Logger.debugLog("Abro","arckSeekbar max progress ${mCardModel.userMax.toInt()}")
-                Logger.debugLog("Abro","arckSeekbar max progress ${LanguageData.getStringValue("Balance").toString()}")
+                    Logger.debugLog(
+                        "Abro",
+                        "arckSeekbar max progress ${mCardModel.userMax.toInt()}"
+                    )
+                    Logger.debugLog(
+                        "Abro",
+                        "arckSeekbar max progress ${
+                            LanguageData.getStringValue("Balance").toString()
+                        }"
+                    )
                 } else {
                     mDataBinding.arcSeekBar.maxProgress = 0
-                    Logger.debugLog("Abro","arckSeekbar max progress 0 ${0}")
+                    Logger.debugLog("Abro", "arckSeekbar max progress 0 ${0}")
                 }
 
                 if (!mCardModel.userCurrent.isNullOrEmpty()) {
                     var doubleVal = mCardModel.userCurrent.toDouble()
                     mDataBinding.arcSeekBar.progress = doubleVal.toInt()
-                    Logger.debugLog("Abro","arckSeekbar  progress ${doubleVal.toInt()}")
+                    Logger.debugLog("Abro", "arckSeekbar  progress ${doubleVal.toInt()}")
                 } else {
                     mDataBinding.arcSeekBar.progress = 0
-                    Logger.debugLog("Abro","arckSeekbar  progress 0 ${0}")
+                    Logger.debugLog("Abro", "arckSeekbar  progress 0 ${0}")
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
 
             }
 
@@ -73,7 +82,7 @@ class HomeBalanceFragment(var viewType: Int, cardDataModel: CardModel, var image
             mDataBinding.arcSeekBar.isFocusable = false
 
 
-        }else if(viewType==1){
+        } else if (viewType == 1) {
             mDataBinding.progressGroup.visibility = android.view.View.GONE
             mDataBinding.imgAdv.visibility = android.view.View.VISIBLE
             mDataBinding.imgAdv.setImageResource(imageURL)
