@@ -298,7 +298,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                 if(!it.profileName.isNullOrEmpty()){
                     mActivityViewModel.accountHolderInfoUserProfile = it.profileName
                 }
-                DialogUtils.showBlockedAccountDialog(activity,LanguageData.getStringValue("BtnTitle_ResetPassword"),LanguageData.getStringValue("BtnTitle_Cancel"),
+                DialogUtils.showBlockedAccountDialog(activity,LanguageData.getStringValue("BtnTitle_Okay"),LanguageData.getStringValue("BtnTitle_Cancel"),
                     LanguageData.getStringValue("BlockedAndResetAccount"),"",object : DialogUtils.OnCustomDialogListner{
                         override fun onCustomDialogOkClickListner() {
                             mActivityViewModel.isFromLoginUserScreen.set(true)
@@ -426,7 +426,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                         )
                     ) {
                         DialogUtils.showBlockedAccountDialog(activity,
-                            LanguageData.getStringValue("BtnTitle_ResetPassword"),
+                            LanguageData.getStringValue("BtnTitle_Okay"),
                             LanguageData.getStringValue("BtnTitle_Cancel"),
                             LanguageData.getStringValue("BlockedAndResetAccount"),
                             "",
@@ -489,7 +489,7 @@ class LoginNumberFragment : BaseFragment<FragmentLoginBinding>(),
                     )
                 ) {
                     DialogUtils.showBlockedAccountDialog(activity,
-                        LanguageData.getStringValue("BtnTitle_ResetPassword"),
+                        LanguageData.getStringValue("BtnTitle_Okay"),
                         LanguageData.getStringValue("BtnTitle_Cancel"),
                         LanguageData.getStringValue("BlockedAndResetAccount"),
                         "",

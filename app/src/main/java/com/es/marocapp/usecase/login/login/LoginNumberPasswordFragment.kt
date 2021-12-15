@@ -284,7 +284,7 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                 })
             }
             else if(it.responseCode.equals(ApiConstant.API_WRONG_ATTEMPT_BLOCKED)){
-                DialogUtils.showBlockedAccountDialog(activity,LanguageData.getStringValue("BtnTitle_ResetPassword"),LanguageData.getStringValue("BtnTitle_Cancel"),
+                DialogUtils.showBlockedAccountDialog(activity,LanguageData.getStringValue("BtnTitle_Okay"),LanguageData.getStringValue("BtnTitle_Cancel"),
                 LanguageData.getStringValue("BlockedAndResetAccount"),"",object : DialogUtils.OnCustomDialogListner{
                         override fun onCustomDialogOkClickListner() {
                             mActivityViewModel.isFromLoginUserScreen.set(true)
