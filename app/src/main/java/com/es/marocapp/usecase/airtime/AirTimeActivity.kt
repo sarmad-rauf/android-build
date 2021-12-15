@@ -310,17 +310,51 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
                     startActivityForResult(Intent(this, ScanQRActivity::class.java),SCAN_QR)
                 }
             }
+            PICK_CONTACT -> {
+
+                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+
+                    Logger.debugLog("CameraPermission", "Permission to access contact denied")
+                } else {
+                    openPhoneBook()
+                }
+            }
         }
     }
 
     fun openPhoneBook(   inputPhoneNumber: MarocEditText,
                          inputLayoutPhoneNumber: TextInputLayout,
                          inputPhoneNumberHint: MarocMediumTextView) {
-        mInputFieldLayout = inputLayoutPhoneNumber
-        mInputField = inputPhoneNumber
-        mInputHint = inputPhoneNumberHint
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
-        startActivityForResult(intent, PICK_CONTACT)
+        if(checkContactPermission()) {
+            mInputFieldLayout = inputLayoutPhoneNumber
+            mInputField = inputPhoneNumber
+            mInputHint = inputPhoneNumberHint
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+            startActivityForResult(intent, PICK_CONTACT)
+        }else{requestContactPermission() }
     }
+    fun openPhoneBook( ) {
+        if(checkContactPermission()) {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+            startActivityForResult(intent, PICK_CONTACT)
+        }else{requestContactPermission() }
+    }
+
+    private fun checkContactPermission(): Boolean {
+        //check if permission was granted/allowed or not, returns true if granted/allowed, false if not
+        return ContextCompat.checkSelfPermission(
+            this,
+            android.Manifest.permission.READ_CONTACTS
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestContactPermission() {
+        //request the READ_CONTACTS permission
+        val permission = arrayOf(android.Manifest.permission.READ_CONTACTS)
+        ActivityCompat.requestPermissions(this, permission, PICK_CONTACT)
+    }
+
+
 }
