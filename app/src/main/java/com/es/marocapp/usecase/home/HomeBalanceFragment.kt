@@ -43,29 +43,17 @@ class HomeBalanceFragment(var viewType: Int, cardDataModel: CardModel, var image
 
 
                 if (!mCardModel.userMax.isNullOrEmpty()) {
-                    mDataBinding.arcSeekBar.maxProgress = mCardModel.userMax.toInt()
-                    Logger.debugLog(
-                        "Abro",
-                        "arckSeekbar max progress ${mCardModel.userMax.toInt()}"
-                    )
-                    Logger.debugLog(
-                        "Abro",
-                        "arckSeekbar max progress ${
-                            LanguageData.getStringValue("Balance").toString()
-                        }"
-                    )
+                    mDataBinding.arcSeekBar.maxProgress =
+                        mCardModel.userMax.toString().replace(" DH", "").toInt()
                 } else {
                     mDataBinding.arcSeekBar.maxProgress = 0
-                    Logger.debugLog("Abro", "arckSeekbar max progress 0 ${0}")
                 }
 
                 if (!mCardModel.userCurrent.isNullOrEmpty()) {
                     var doubleVal = mCardModel.userCurrent.toDouble()
                     mDataBinding.arcSeekBar.progress = doubleVal.toInt()
-                    Logger.debugLog("Abro", "arckSeekbar  progress ${doubleVal.toInt()}")
                 } else {
                     mDataBinding.arcSeekBar.progress = 0
-                    Logger.debugLog("Abro", "arckSeekbar  progress 0 ${0}")
                 }
             } catch (e: Exception) {
 
