@@ -64,8 +64,8 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
             viewmodel = mActivityViewModel
         }
 
-        isQuickRechargeUseCase = intent.getBooleanExtra("isQuickRechargeCase",false)
-        if(isQuickRechargeUseCase){
+        isQuickRechargeUseCase = intent.getBooleanExtra("isQuickRechargeCase", false)
+        if (isQuickRechargeUseCase) {
             quickRechargeAmount = intent.getStringExtra("quickRechargeAmount").toString()
         }
 
@@ -88,16 +88,17 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
         setCompanyIconToolbarVisibility(false)
         setFragmentToShow()
     }
-    fun setFragmentToShow(){
-        if(isQuickRechargeUseCase){
+
+    fun setFragmentToShow() {
+        if (isQuickRechargeUseCase) {
             mActivityViewModel.isQuickRechargeUseCase.set(true)
             mActivityViewModel.isRechargeFixeUseCase.set(false)
             mActivityViewModel.isRechargeMobileUseCase.set(false)
             mActivityViewModel.airTimeSelected.set(LanguageData.getStringValue("QuickRecharge"))
             mActivityViewModel.airTimeAmountSelected.set(quickRechargeAmount)
-            mActivityViewModel.amountToTransfer=(quickRechargeAmount)
+            mActivityViewModel.amountToTransfer = (quickRechargeAmount)
             navGraph.startDestination = R.id.airTimeConfirmationFragment
-        }else{
+        } else {
             navGraph.startDestination = R.id.airTimeMainFragment
         }
 
@@ -105,15 +106,14 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
     }
 
     fun setHeaderTitle(title: String) {
-        mDataBinding.headerAirTime .activityHeaderTitle.text = title
+        mDataBinding.headerAirTime.activityHeaderTitle.text = title
     }
 
-    fun setCompanyIconToolbarVisibility(isVisible : Boolean){
-        if(isVisible){
-            mDataBinding.headerAirTime .headerCompanyIconContainer.visibility = View.VISIBLE
-        }
-        else{
-            mDataBinding.headerAirTime .headerCompanyIconContainer.visibility = View.GONE
+    fun setCompanyIconToolbarVisibility(isVisible: Boolean) {
+        if (isVisible) {
+            mDataBinding.headerAirTime.headerCompanyIconContainer.visibility = View.VISIBLE
+        } else {
+            mDataBinding.headerAirTime.headerCompanyIconContainer.visibility = View.GONE
         }
     }
 
@@ -125,7 +125,7 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
         }
     }
 
-    fun setVisibilityAndTextToImage(amount : String){
+    fun setVisibilityAndTextToImage(amount: String) {
         mDataBinding.headerAirTime.imgCompanyIcons.visibility = View.GONE
         mDataBinding.headerAirTime.firstLetterIcons.visibility = View.VISIBLE
 
@@ -150,7 +150,7 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
             Logger.debugLog("CameraPermission", "Permission to access camera denied")
             makeRequestPermission()
         } else {
-            startActivityForResult(Intent(this, ScanQRActivity::class.java),SCAN_QR)
+            startActivityForResult(Intent(this, ScanQRActivity::class.java), SCAN_QR)
         }
 
     }
@@ -182,12 +182,13 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
 
                 verifyAndSetMsisdn(sResult, true)
             }
-        }
-        else if (requestCode == SCAN_QR) {
+        } else if (requestCode == SCAN_QR) {
             val result = data
-            val scannedString=result?.getStringExtra(KEY_SCANNED_DATA)
+            val scannedString = result?.getStringExtra(KEY_SCANNED_DATA)
             if (result != null) {
-                if (scannedString.isNullOrEmpty() || Tools.extractNumberFromEMVcoQR(scannedString).isNullOrEmpty()) {
+                if (scannedString.isNullOrEmpty() || Tools.extractNumberFromEMVcoQR(scannedString)
+                        .isNullOrEmpty()
+                ) {
 //                DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
                     mInputFieldLayout.isErrorEnabled = true
                     mInputFieldLayout.error = LanguageData.getStringValue("PleaseScanValidQRDot")
@@ -276,11 +277,13 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
         msisdn = msisdn.trim()
 
 
-
         var msisdnLenght = msisdn.length
         isNumberRegexMatches =
             (msisdnLenght > 0 && msisdnLenght == Constants.APP_MSISDN_LENGTH.toInt() - 2 && Pattern.matches(
                 Constants.APP_MSISDN_REGEX,
+                msisdn
+            )) || (msisdnLenght > 0 && msisdnLenght == Constants.APP_MSISDN_LENGTH.toInt() - 2 && Pattern.matches(
+                Constants.APP_AIR_TIME_FIXE_REGEX!!,
                 msisdn
             ))
         return isNumberRegexMatches
@@ -293,6 +296,7 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
             CAMERA_REQUEST_CODE
         )
     }
+
     @SuppressLint("MissingPermission")
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -307,7 +311,7 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
 
                     Logger.debugLog("CameraPermission", "Permission to access camera denied")
                 } else {
-                    startActivityForResult(Intent(this, ScanQRActivity::class.java),SCAN_QR)
+                    startActivityForResult(Intent(this, ScanQRActivity::class.java), SCAN_QR)
                 }
             }
             PICK_CONTACT -> {
@@ -322,24 +326,31 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
         }
     }
 
-    fun openPhoneBook(   inputPhoneNumber: MarocEditText,
-                         inputLayoutPhoneNumber: TextInputLayout,
-                         inputPhoneNumberHint: MarocMediumTextView) {
-        if(checkContactPermission()) {
+    fun openPhoneBook(
+        inputPhoneNumber: MarocEditText,
+        inputLayoutPhoneNumber: TextInputLayout,
+        inputPhoneNumberHint: MarocMediumTextView
+    ) {
+        if (checkContactPermission()) {
             mInputFieldLayout = inputLayoutPhoneNumber
             mInputField = inputPhoneNumber
             mInputHint = inputPhoneNumberHint
             val intent = Intent(Intent.ACTION_PICK)
             intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
             startActivityForResult(intent, PICK_CONTACT)
-        }else{requestContactPermission() }
+        } else {
+            requestContactPermission()
+        }
     }
-    fun openPhoneBook( ) {
-        if(checkContactPermission()) {
+
+    fun openPhoneBook() {
+        if (checkContactPermission()) {
             val intent = Intent(Intent.ACTION_PICK)
             intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
             startActivityForResult(intent, PICK_CONTACT)
-        }else{requestContactPermission() }
+        } else {
+            requestContactPermission()
+        }
     }
 
     private fun checkContactPermission(): Boolean {

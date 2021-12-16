@@ -93,13 +93,15 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
                 val DRAWABLE_RIGHT = 2
                 val DRAWABLE_BOTTOM = 3
                 if (event.getAction() === MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >=  mDataBinding.inputPhoneNumber.getRight() -  mDataBinding.inputPhoneNumber.getCompoundDrawables()
+                    if (event.getRawX() >= mDataBinding.inputPhoneNumber.getRight() - mDataBinding.inputPhoneNumber.getCompoundDrawables()
                             .get(DRAWABLE_RIGHT).getBounds().width()
                     ) {
                         // your action here
-                        (activity as AirTimeActivity).openPhoneBook(  mDataBinding.inputPhoneNumber,
+                        (activity as AirTimeActivity).openPhoneBook(
+                            mDataBinding.inputPhoneNumber,
                             mDataBinding.inputLayoutPhoneNumber,
-                            mDataBinding.inputPhoneNumberHint)
+                            mDataBinding.inputPhoneNumberHint
+                        )
                         return true
                     }
                 }
@@ -263,7 +265,9 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
                 override fun onSelectedAirTimeData(airTimeAmount: String, position1: Int) {
                     airTimeResponse = mActivityViewModel.mAirTimeUseCaseResponse.get()!!
                     sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                    mActivityViewModel.airTimeAmountSelected.set(airTimeAmount.removeSuffix("DH").trim())
+                    mActivityViewModel.airTimeAmountSelected.set(
+                        airTimeAmount.removeSuffix("DH").trim()
+                    )
                     mDataBinding.inputRechargeAmount.setText(airTimeAmount)
 
                     mDataBinding.inputLayoutRechargeAmount.error = ""
@@ -289,10 +293,12 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
             layoutManager = LinearLayoutManager(activity as AirTimeActivity)
         }
 
-        mDataBinding.phonebook.setOnClickListener{
-            (activity as AirTimeActivity).openPhoneBook(  mDataBinding.inputPhoneNumber,
+        mDataBinding.phonebook.setOnClickListener {
+            (activity as AirTimeActivity).openPhoneBook(
+                mDataBinding.inputPhoneNumber,
                 mDataBinding.inputLayoutPhoneNumber,
-                mDataBinding.inputPhoneNumberHint)
+                mDataBinding.inputPhoneNumberHint
+            )
         }
 
         list_of_favorites.clear()
@@ -457,7 +463,8 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
         }
 
         mDataBinding.btnNext.setOnClickListener {
-            if(mDataBinding.inputRechargeType.text.equals("Recharge Fixe")){
+            Logger.debugLog("Hasnain", mDataBinding.inputRechargeType.text.toString())
+            if (mDataBinding.inputRechargeType.text.toString() == "Recharge Fixe") {
                 Constants.APP_AIR_TIME_FIXE_REGEX?.let { isRegexMached(it) }
             }
             if (isValidForAll()) {
@@ -494,10 +501,11 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
             Observer {
                 if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
                     if (it.quoteList.isNotEmpty()) {
-                        mActivityViewModel.totalTax=0.0
-                        for(taxes in it.taxList.indices)
-                        {
-                            mActivityViewModel.totalTax=mActivityViewModel.totalTax+it.taxList[taxes].amount.amount.toString().toDouble()
+                        mActivityViewModel.totalTax = 0.0
+                        for (taxes in it.taxList.indices) {
+                            mActivityViewModel.totalTax =
+                                mActivityViewModel.totalTax + it.taxList[taxes].amount.amount.toString()
+                                    .toDouble()
                         }
                         mActivityViewModel.feeAmount = it.quoteList[0].fee.amount.toString()
                         mActivityViewModel.qouteId = it.quoteList[0].quoteid
@@ -538,7 +546,7 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
 
     private fun isValidForAll(): Boolean {
         var isValidForAll = true
-        Logger.debugLog("ok","Fixe ${mDataBinding.inputRechargeType.text}")
+        Logger.debugLog("ok", "Fixe ${mDataBinding.inputRechargeType.text}")
 
         //todo NUmber Lenght is Pending
         if (mDataBinding.inputPhoneNumber.text.isNullOrEmpty() || mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_MSISDN_LENGTH.toInt() - 2) {
@@ -601,7 +609,7 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
                 mDataBinding.inputLayoutRechargePlan.error =
                     LanguageData.getStringValue("PleaseSelectPlan")
                 mDataBinding.inputLayoutRechargePlan.isErrorEnabled = true
-            }else{
+            } else {
                 mDataBinding.inputLayoutRechargePlan.error = ""
                 mDataBinding.inputLayoutRechargePlan.isErrorEnabled = false
             }
@@ -627,7 +635,7 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
             !(msisdnLenght > 0 && !Pattern.matches(Constants.APP_MSISDN_REGEX, msisdn))
     }
 
-    fun isRegexMached(regex:String){
+    fun isRegexMached(regex: String) {
         val msisdn = mDataBinding.inputPhoneNumber.text.toString().trim()
         val msisdnLenght = msisdn.length
         isNumberRegexMatches =
