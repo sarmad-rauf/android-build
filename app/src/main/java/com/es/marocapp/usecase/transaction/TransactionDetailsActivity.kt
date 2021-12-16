@@ -79,6 +79,8 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
         }
         if (!mItemDetailsToShow.showReceipt) {
             mDataBinding.btnDownloadPdf.visibility = View.GONE
+        }else{
+            mDataBinding.btnDownloadPdf.visibility = View.VISIBLE
         }
         setStrings()
         updateUI()
@@ -115,9 +117,6 @@ class TransactionDetailsActivity : BaseActivity<FragmentTransactionDetailsBindin
             mDataBinding.statusVal.text = "-"
 
         } else {
-            if (!mItemDetailsToShow.transactionstatus.equals("Success", ignoreCase = true)) {
-                mDataBinding.btnDownloadPdf.visibility = View.GONE
-            }
             mDataBinding.statusVal.text = mItemDetailsToShow.transactionstatus
         }
 
