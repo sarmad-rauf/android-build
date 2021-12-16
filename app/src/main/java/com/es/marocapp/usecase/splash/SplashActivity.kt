@@ -68,7 +68,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
             PrefUtils.PreKeywords.PREF_KEY_IS_SHOW_TUTORIALS,
             true
         )
-        Logger.debugLog("trxH","isTutorialShowing  ${Constants.isTutorialShowing}");
+        Logger.debugLog("trxH", "isTutorialShowing  ${Constants.isTutorialShowing}");
 
         loadNDKValues()
         setupPermissions()
@@ -131,7 +131,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 //                application.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
 //            Constants.CURRENT_DEVICE_ID = telephonyManager!!.deviceId
 
-         //   checkInternetOrMobileConnection()
+            //   checkInternetOrMobileConnection()
             setDeviceIMEI()
 
             mActivityViewModel.requestForGetPreLoginDataApi(
@@ -197,22 +197,24 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.APP_OTP_LENGTH = it.androidOtpLength
                 Constants.MERCHANT_AGENT_PROFILE_NAME = it.agentMerchantAccountProfile
                 Constants.upgradeSupportedProfiles = it.upgradeSupportedProfiles
-                Constants.reasonUpgradeToLevelTwo=it.reasonUpgradeToLevelTwo
-                Constants.reasonUpgradeToLevelThree=it.reasonUpgradeToLevelThree
-                Constants.fatouratiSeperateMenuBillNames=it.fatouratiSeperateMenuBillNames
-                Constants.fatouratiTsavMatriculeDdVals=it.fatouratiTsavMatriculeDdVals
-                Constants.registrationProfiles=it.registrationProfiles
-                Constants.airtimeMaxNumOfRetries=it.airtimeMaxNumOfRetries
-                Constants.maxFileSizeUploadLimitInMBs=it.maxFileSizeUploadLimitInMBs.toInt()
+                Constants.reasonUpgradeToLevelTwo = it.reasonUpgradeToLevelTwo
+                Constants.reasonUpgradeToLevelThree = it.reasonUpgradeToLevelThree
+                Constants.fatouratiSeperateMenuBillNames = it.fatouratiSeperateMenuBillNames
+                Constants.fatouratiTsavMatriculeDdVals = it.fatouratiTsavMatriculeDdVals
+                Constants.registrationProfiles = it.registrationProfiles
+                Constants.airtimeMaxNumOfRetries = it.airtimeMaxNumOfRetries
+                Constants.maxFileSizeUploadLimitInMBs = it.maxFileSizeUploadLimitInMBs.toInt()
                 if (it.marocFatouratiLogoPath != null) {
-                Constants.marocFatouratiLogoPath=it.marocFatouratiLogoPath}
+                    Constants.marocFatouratiLogoPath = it.marocFatouratiLogoPath
+                }
                 if (it.iamBillsTriggerFatouratiFlow != null) {
-                    Constants.iamBillsTriggerFatouratiFlow=it.iamBillsTriggerFatouratiFlow
+                    Constants.iamBillsTriggerFatouratiFlow = it.iamBillsTriggerFatouratiFlow
                 }
 
-               Constants.CityNameRegex=it.cityNameRegex
+                Constants.CityNameRegex = it.cityNameRegex
                 if (it.defaultAccountOtpLength != null) {
-                    Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH = it?.defaultAccountOtpLength?.toInt()!!
+                    Constants.APP_DEFAULT_ACCOUNT_OTP_LENGTH =
+                        it?.defaultAccountOtpLength?.toInt()!!
                 }
                 Constants.APP_DEFAULT_ACCOUNT_OTP_REGEX = it?.defaultAccountOtpRegex
                 Constants.APP_AIR_TIME_FIXE_REGEX = it?.msisdnFixedLineRegex
@@ -232,7 +234,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.KEY_FOR_WALLET_BALANCE_MAX = it.walletBalanceLimitKey
                 Constants.KEY_FOR_POST_PAID_TELECOM_BILL = it.billTypePostPaid
                 Constants.PREVIOUS_DAYS_TRANSACTION_COUNT = it.numberOfTransactions
-                Constants.MERCHENTAGENTPROFILEARRAY=it.agentMerchantProfile
+                Constants.MERCHENTAGENTPROFILEARRAY = it.agentMerchantProfile
 
                 //Adding Aliases Value from API to Contants
                 Constants.NUMBER_MSISDN_ALIAS = it.numberAlias
@@ -267,7 +269,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 if (Tools.isFirstTime(this)) {
                     if (!it.defaultLanguage.isNullOrEmpty()) {
                         LocaleManager.selectedLanguage = it.defaultLanguage
-                        LocaleManager.setAppLanguage(this,it.defaultLanguage)
+                        LocaleManager.setAppLanguage(this, it.defaultLanguage)
                     }
                 }
                 if (it.quickAmounts.isNotEmpty()) {
@@ -288,8 +290,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                     }
                 }
                 mActivityViewModel.requestForTranslationsApi(this)
-            }
-            else if (it.responseCode.equals(ApiConstant.API_INVALID_VERSION)) {
+            } else if (it.responseCode.equals(ApiConstant.API_INVALID_VERSION)) {
                 DialogUtils.showUpdateAPPDailog(
                     this@SplashActivity,
                     it.description,
@@ -368,7 +369,11 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
             val info = manager.connectionInfo
             myuniqueID = info.macAddress*/
             val mngr = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.READ_PHONE_STATE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
                 return
             }
             myuniqueID = mngr.deviceId

@@ -102,6 +102,7 @@ object DialogUtils {
 
         addDialog.show()
         btnOK.setOnClickListener {
+            listner.onCustomDialogOkClickListner()
             addDialog.dismiss()
         }
     }
