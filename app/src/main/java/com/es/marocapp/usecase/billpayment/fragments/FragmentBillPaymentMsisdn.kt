@@ -488,7 +488,7 @@ class FragmentBillPaymentMsisdn : BaseFragment<FragmentBillPaymentMsisdnBinding>
                                         mActivityViewModel.recievedParams[position].nomChamp
                                     val listVals =
                                         mActivityViewModel.recievedParams[position].listVals
-                                    var convertesSpinnerValue =
+                                    val convertesSpinnerValue =
                                         Constants.convertSpinnerArabicValue(spinnerVal)
                                     val valChamp =
                                         firstVal.plus(convertesSpinnerValue.plus(secondVal))

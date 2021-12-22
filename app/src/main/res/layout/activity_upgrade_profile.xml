@@ -31,14 +31,14 @@
             android:layout_marginTop="@dimen/_12sdp"
             android:text="@string/upgrade_profile"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/_19ssp"
+            android:textSize="@dimen/_13ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:paddingStart="@dimen/_8sdp"
             android:paddingEnd="@dimen/_8sdp"
-            app:textAllCaps="true" />
+            app:textAllCaps="false" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgBackButton"

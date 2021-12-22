@@ -32,7 +32,7 @@ class MyFirebaseInstanceService : FirebaseMessagingService() {
     private var notificationUtils: NotificationUtils? = null
 
     override fun onMessageReceived(remoteMessage : RemoteMessage) {
-        Log.e(TAG, "From: " + remoteMessage.from)
+        Logger.debugLog(TAG, "From: " + (remoteMessage.notification?.title ?: "noTitle"))
 
         if (remoteMessage == null) return
 
@@ -72,6 +72,15 @@ class MyFirebaseInstanceService : FirebaseMessagingService() {
             val notificationUtils = NotificationUtils(applicationContext)
             notificationUtils.playNotificationSound()
         } else {
+            val resultIntent = Intent(applicationContext, MainActivity::class.java)
+            resultIntent.putExtra("message", message)
+            showNotificationMessage(
+                applicationContext,
+                "title",
+                "message",
+                "timestamp",
+                resultIntent
+            )
             // If the app is in background, firebase itself handles the notification
         }
     }

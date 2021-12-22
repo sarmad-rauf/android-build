@@ -333,7 +333,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
         mDataBinding.navigationItem.mtCashDefaulGroup.setOnClickListener {
             mDataBinding.drawerLayout.closeDrawers()
             if (Constants.IS_DEFAULT_ACCOUNT_SET) {
-                DialogUtils.showUpdateAPPDailog(
+                DialogUtils.showUpdateAPDailog(
                     this@MainActivity,
                     LanguageData.getStringValue("defaultAccountEnabledMsg"),
                     object : DialogUtils.OnCustomDialogListner {

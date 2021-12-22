@@ -5,7 +5,7 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 
-def baseUrlType = 2//1:Production,2:Staging,3:Development,4: DR Disaster Recovery
+def baseUrlType = 1//1:Production,2:Staging,3:Development,4: DR Disaster Recovery
 
 android {
     compileSdkVersion 31
@@ -17,7 +17,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 18
-        versionName "3.5.0"
+        versionName "3.4.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -74,10 +74,10 @@ android {
         release {
             if (baseUrlType == 1) {//Production
                 // with FQDN
-                buildConfigField "String", "SERVER_URL", "\"https://mobapp.mtcash.ma/mobileapi/\""
+                //buildConfigField "String", "SERVER_URL", "\"https://mobapp.mtcash.ma/mobileapi/\""
 
                 // without FQDN
-                // buildConfigField "String", "SERVER_URL", "\"https://10.100.171.122/mobileapi/\""
+                 buildConfigField "String", "SERVER_URL", "\"https://10.100.171.122/mobileapi/\""
             } else if (baseUrlType == 2) {// Staging
                 buildConfigField "String", "SERVER_URL", "\"https://10.100.170.122/mobileapi/\""
             } else if (baseUrlType == 3) {// Development

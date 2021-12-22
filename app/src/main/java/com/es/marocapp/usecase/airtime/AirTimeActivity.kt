@@ -214,44 +214,48 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
     }
 
     private fun verifyAndSetMsisdn(sResult: String?, isFromPhonebook: Boolean) {
-        if (isValidNumber(sResult!!)) {
-            mInputFieldLayout.isErrorEnabled = false
-            mInputFieldLayout.error = ""
-            var msisdn = sResult
-            if (msisdn.contains("212")) {
-                msisdn = msisdn.substringAfter("212")
-                msisdn = msisdn.substringAfter("+212")
+        if (this::mInputFieldLayout.isInitialized && this::mInputField.isInitialized && this::mInputHint.isInitialized) {
+            if (isValidNumber(sResult!!)) {
+                mInputFieldLayout.isErrorEnabled = false
+                mInputFieldLayout.error = ""
+                var msisdn = sResult
+                if (msisdn.contains("212")) {
+                    msisdn = msisdn.substringAfter("212")
+                    msisdn = msisdn.substringAfter("+212")
+                    msisdn = msisdn.replace("-", "")
+                    msisdn = msisdn.trim()
+                    msisdn = "0$msisdn"
+                }
+                if (msisdn.contains("(")) {
+                    msisdn = msisdn.replace("(", "")
+                    msisdn = msisdn.replace(")", "")
+                    msisdn = msisdn.trim()
+                }
+
                 msisdn = msisdn.replace("-", "")
+                msisdn = msisdn.replace(" ", "")
                 msisdn = msisdn.trim()
-                msisdn = "0$msisdn"
-            }
-            if (msisdn.contains("(")) {
-                msisdn = msisdn.replace("(", "")
-                msisdn = msisdn.replace(")", "")
-                msisdn = msisdn.trim()
-            }
 
-            msisdn = msisdn.replace("-", "")
-            msisdn = msisdn.replace(" ", "")
-            msisdn = msisdn.trim()
-
-            mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
-            mInputHint.visibility = View.GONE
-            mInputField.setText(msisdn)
-        } else {
-            mInputField.setText("")
-//                    DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
-            mInputFieldLayout.isErrorEnabled = true
-            if (isFromPhonebook) {
-                mInputFieldLayout.error =
-                    LanguageData.getStringValue("PleaseEnterValidMobileNumber")
                 mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
                 mInputHint.visibility = View.GONE
+                mInputField.setText(msisdn)
             } else {
-                mInputFieldLayout.error =
-                    LanguageData.getStringValue("PleaseScanValidQRDot")
-                mInputFieldLayout.hint = LanguageData.getStringValue("EnterReceiversMobileNumber")
-                mInputHint.visibility = View.GONE
+                mInputField.setText("")
+//                    DialogUtils.showErrorDialoge(this@SendMoneyActivity, LanguageData.getStringValue("PleaseScanValidQRDot"))
+                mInputFieldLayout.isErrorEnabled = true
+                if (isFromPhonebook) {
+                    mInputFieldLayout.error =
+                        LanguageData.getStringValue("PleaseEnterValidMobileNumber")
+                    mInputFieldLayout.hint =
+                        LanguageData.getStringValue("EnterReceiversMobileNumber")
+                    mInputHint.visibility = View.GONE
+                } else {
+                    mInputFieldLayout.error =
+                        LanguageData.getStringValue("PleaseScanValidQRDot")
+                    mInputFieldLayout.hint =
+                        LanguageData.getStringValue("EnterReceiversMobileNumber")
+                    mInputHint.visibility = View.GONE
+                }
             }
         }
     }
@@ -277,7 +281,8 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
         msisdn = msisdn.trim()
 
 
-        var msisdnLenght = msisdn.length
+        val msisdnLenght = msisdn.length
+
         isNumberRegexMatches =
             (msisdnLenght > 0 && msisdnLenght == Constants.APP_MSISDN_LENGTH.toInt() - 2 && Pattern.matches(
                 Constants.APP_MSISDN_REGEX,
@@ -331,10 +336,10 @@ class AirTimeActivity : BaseActivity<ActivityAirTimeBinding>() {
         inputLayoutPhoneNumber: TextInputLayout,
         inputPhoneNumberHint: MarocMediumTextView
     ) {
+        mInputFieldLayout = inputLayoutPhoneNumber
+        mInputField = inputPhoneNumber
+        mInputHint = inputPhoneNumberHint
         if (checkContactPermission()) {
-            mInputFieldLayout = inputLayoutPhoneNumber
-            mInputField = inputPhoneNumber
-            mInputHint = inputPhoneNumberHint
             val intent = Intent(Intent.ACTION_PICK)
             intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
             startActivityForResult(intent, PICK_CONTACT)

@@ -107,6 +107,45 @@ object DialogUtils {
         }
     }
 
+    fun showUpdateAPDailog(
+        mContext: Context?,
+        description: String?,
+        listner: DialogUtils.OnCustomDialogListner,
+        icon: Int,
+        okBtnText: String = "BtnTitle_Okay"
+    ) {
+        val addDialog = Dialog(mContext!!)
+        addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        addDialog.setContentView(R.layout.dialog_udpate_app_layout)
+
+        val dialogWindow = addDialog.window
+        val layoutParams = dialogWindow!!.attributes
+        layoutParams.x = Gravity.CENTER_HORIZONTAL
+        layoutParams.y = Gravity.CENTER_VERTICAL
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+        dialogWindow.attributes = layoutParams
+
+        val tvMessage = addDialog.findViewById<TextView>(R.id.updateDialogDescription)
+        val btnOK = addDialog.findViewById<Button>(R.id.updateDialogBtn)
+        val iconToShow = addDialog.findViewById<ImageView>(R.id.updateAppIcon)
+
+        iconToShow.setImageResource(icon)
+
+        if (okBtnText.equals("BtnTitle_Okay")) {
+            btnOK.text = LanguageData.getStringValue(okBtnText)
+        } else {
+            btnOK.text = okBtnText
+        }
+        tvMessage.text = description
+
+        addDialog.show()
+        btnOK.setOnClickListener {
+            listner.onCustomDialogOkClickListner()
+            addDialog.dismiss()
+        }
+    }
+
     fun showPasswordDialoge(
         mContext: Context?,
         listner: OnPasswordDialogClickListner
@@ -139,7 +178,7 @@ object DialogUtils {
         val tvDescription = addDialog.findViewById<TextView>(R.id.password_dialog_description)
         var tvTitle = addDialog.findViewById<TextView>(R.id.password_dialog_title)
 
-        tvDescription.text = LanguageData.getStringValue("EnterPasswordToProceed")
+        tvDescription.text = LanguageData.getStringValue("PleaseEnterYourPasswordToProceedFurther")
         tvTitle.text = LanguageData.getStringValue("DearCustomer")
 
         val passwordField =

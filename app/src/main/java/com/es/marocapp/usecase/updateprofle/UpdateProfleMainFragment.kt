@@ -257,23 +257,23 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
 
         if(!updateProfileViewModel.currentProfile.contains("1")){
         if (updateProfileViewModel.currentProfile.contains("2")) {
-            mDataBinding.inputFirstName.isEnabled = false
-            mDataBinding.inputLastName.isEnabled = false
-            mDataBinding.imgShowCalender.isEnabled = false
-            mDataBinding.inputDateOfBirth.isEnabled = false
-            mDataBinding.inputNationalID.isEnabled = false
-            mDataBinding.inputIdType.isEnabled = false
+
+            disableViews()
         } else if (updateProfileViewModel.currentProfile.contains("3")) {
-            mDataBinding.inputFirstName.isEnabled = false
-            mDataBinding.inputLastName.isEnabled = false
-            mDataBinding.imgShowCalender.isEnabled = false
-            mDataBinding.inputDateOfBirth.isEnabled = false
-            mDataBinding.inputNationalID.isEnabled = false
-            mDataBinding.inputIdType.isEnabled = false
-            mDataBinding.inputAddress.isEnabled = false
-            mDataBinding.inputCity.isEnabled = false
+            disableViews()
         }
         }
+    }
+
+    private fun disableViews() {
+        mDataBinding.inputFirstName.isEnabled = false
+        mDataBinding.inputLastName.isEnabled = false
+        mDataBinding.imgShowCalender.isEnabled = false
+        mDataBinding.inputDateOfBirth.isEnabled = false
+        mDataBinding.inputNationalID.isEnabled = false
+        mDataBinding.inputIdType.isEnabled = false
+        mDataBinding.inputAddress.isEnabled = false
+        mDataBinding.inputCity.isEnabled = false
     }
 
     private fun setStrings() {

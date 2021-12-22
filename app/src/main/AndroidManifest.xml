@@ -57,7 +57,7 @@
             android:label="@string/title_activity_main"
             android:windowSoftInputMode="stateHidden|adjustPan|adjustResize" />
         <activity android:name=".usecase.login.LoginActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize"
+            android:windowSoftInputMode="adjustResize"
             />
         <activity android:name=".usecase.splash.SplashActivity"
             android:exported="true">

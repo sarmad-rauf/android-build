@@ -60,6 +60,7 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
             viewmodel = mActivityViewModel
             listener = this@LoginNumberPasswordFragment
         }
+        (activity as LoginActivity).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         var numberToShow = mActivityViewModel.mUserMsisdn
         numberToShow = numberToShow.substringAfter(Constants.APP_MSISDN_PREFIX)
