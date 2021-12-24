@@ -204,6 +204,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
                 Constants.registrationProfiles = it.registrationProfiles
                 Constants.airtimeMaxNumOfRetries = it.airtimeMaxNumOfRetries
                 Constants.maxFileSizeUploadLimitInMBs = it.maxFileSizeUploadLimitInMBs.toInt()
+                Constants.fatouratiTsavMatriculeDdValsMap = it.fatouratiTsavMatriculeDdValsMap
                 if (it.marocFatouratiLogoPath != null) {
                     Constants.marocFatouratiLogoPath = it.marocFatouratiLogoPath
                 }

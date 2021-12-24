@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -13,6 +15,7 @@ import com.es.marocapp.usecase.login.LoginActivity.Companion.KEY_REDIRECT_USER
 import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.PrefUtils
 import java.util.*
+import javax.security.auth.callback.Callback
 
 abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
 {
@@ -28,6 +31,41 @@ abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
 
         mDataBinding= DataBindingUtil.setContentView(this, setLayout())
     }
+//    private val DISCONNECT_TIMEOUT: Long = 300000 // 5 min = 5 * 60 * 1000 ms
+
+
+//    private val disconnectHandler = object : Handler() {
+//
+//        override fun handleMessage(msg: Message) {
+//            // Your logic code here.
+//        }
+//    }
+//    private val disconnectCallback = Runnable {
+//        // Perform any required operation on disconnect
+//    }
+//
+//    open fun resetDisconnectTimer() {
+//        disconnectHandler.removeCallbacks(disconnectCallback)
+//        disconnectHandler.postDelayed(disconnectCallback, DISCONNECT_TIMEOUT)
+//    }
+//
+//    open fun stopDisconnectTimer() {
+//        disconnectHandler.removeCallbacks(disconnectCallback)
+//    }
+//
+//    override fun onUserInteraction() {
+//        resetDisconnectTimer()
+//    }
+//
+//    override fun onResume() {
+//        super.onResume()
+//        resetDisconnectTimer()
+//    }
+//
+//    override fun onStop() {
+//        super.onStop()
+//        stopDisconnectTimer()
+//    }
 
     private fun setLocale() {
         LocaleManager.setAppLanguage(this, LocaleManager.selectedLanguage)
@@ -45,6 +83,8 @@ abstract class BaseActivity<T: ViewDataBinding>: AppCompatActivity()
     abstract fun init(savedInstanceState: Bundle?)
 
     abstract fun setLayout():Int
+
+
 
     /**`
      * Start new activity with having previous activity

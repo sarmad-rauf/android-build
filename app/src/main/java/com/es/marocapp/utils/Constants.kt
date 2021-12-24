@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.FragmentActivity
@@ -37,6 +38,7 @@ import kotlin.properties.Delegates
 object Constants {
 
 
+    lateinit var fatouratiTsavMatriculeDdValsMap: Map<String, String>
     var airtimeMaxNumOfRetries: String="0"
     var maxFileSizeUploadLimitInMBs: Int = 0
     lateinit var registrationProfiles: Array<String>
@@ -690,15 +692,21 @@ object Constants {
         }
     }
 
+
+
     fun convertSpinnerArabicValue(spinnerVal: String): String {
-       when(spinnerVal){
-           "أ" ->{return "A"}
-           "ب" ->{return "B"}
-           "د" ->{return "D"}
-           "ه" ->{return "H"}
-           "و" ->{return "E"}
-           else ->{return spinnerVal}
-       }
+        val arabicToEngVal = fatouratiTsavMatriculeDdValsMap[spinnerVal]
+        return if(arabicToEngVal.isNullOrEmpty()) {
+            spinnerVal
+        }else arabicToEngVal
+//        when(spinnerVal){
+//           "أ" ->{return "A"}
+//           "ب" ->{return "B"}
+//           "د" ->{return "D"}
+//           "ه" ->{return "H"}
+//           "و" ->{return "E"}
+//           else ->{return spinnerVal}
+//       }
     }
 
     fun convertListToJson(validatedParams: ArrayList<ValidatedParam>): String {

@@ -311,9 +311,10 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
 
     override fun onNextButtonClick(view: View) {
         Logger.debugLog("updateProfile", "nextCliskListner")
+        val isLevel2OR3= !updateProfileViewModel.currentProfile.contains("1")
         if (isValidForAll()) {
             Logger.debugLog("updateProfile", "validFor All")
-            if (updateProfileViewModel.currentProfile.contains("3")) {
+            if (isLevel2OR3) {
                 Logger.debugLog("updateProfile", "level3")
                 if (updateProfileViewModel.isEmailChanged) {
                     Logger.debugLog("updateProfile", "emailchanged")
@@ -322,44 +323,36 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
                         mDataBinding.inputEmail.text.toString()
                     )
                 }
-            } else if (updateProfileViewModel.currentProfile.contains("2")) {
-                if (updateProfileViewModel.isAdressChanged) {
-                    updateProfileViewModel.requestForUpdateAdressAPI(
-                        requireContext(),
-                        mDataBinding.inputAddress.text.toString(),
-                        mDataBinding.inputCity.text.toString()
-                    )
-                } else if (updateProfileViewModel.isEmailChanged) {
-                    updateProfileViewModel.requestForUpdateEmailAPI(
-                        requireContext(),
-                        mDataBinding.inputEmail.text.toString()
-                    )
-                }
-            } else {
-                if (updateProfileViewModel.isPersonalDataChanged) {
-                    updateProfileViewModel.requestForUpdatePersonalInformationAPI(
-                        requireContext(),
-                        mDataBinding.inputFirstName.text.toString(),
-                        mDataBinding.inputLastName.text.toString(),
-                        mDataBinding.inputDateOfBirth.text.toString()
-                    )
+            }  else {
+                when {
+                    updateProfileViewModel.isPersonalDataChanged -> {
+                        updateProfileViewModel.requestForUpdatePersonalInformationAPI(
+                            requireContext(),
+                            mDataBinding.inputFirstName.text.toString(),
+                            mDataBinding.inputLastName.text.toString(),
+                            mDataBinding.inputDateOfBirth.text.toString()
+                        )
 
-                } else if (updateProfileViewModel.isCINChanged) {
-                    updateProfileViewModel.requestForUpdateCINAPI(
-                        requireContext(),
-                        mDataBinding.inputNationalID.text.toString()
-                    )
-                } else if (updateProfileViewModel.isAdressChanged) {
-                    updateProfileViewModel.requestForUpdateAdressAPI(
-                        requireContext(),
-                        mDataBinding.inputAddress.text.toString(),
-                        mDataBinding.inputCity.text.toString()
-                    )
-                } else if (updateProfileViewModel.isEmailChanged) {
-                    updateProfileViewModel.requestForUpdateEmailAPI(
-                        requireContext(),
-                        mDataBinding.inputEmail.text.toString()
-                    )
+                    }
+                    updateProfileViewModel.isCINChanged -> {
+                        updateProfileViewModel.requestForUpdateCINAPI(
+                            requireContext(),
+                            mDataBinding.inputNationalID.text.toString()
+                        )
+                    }
+                    updateProfileViewModel.isAdressChanged -> {
+                        updateProfileViewModel.requestForUpdateAdressAPI(
+                            requireContext(),
+                            mDataBinding.inputAddress.text.toString(),
+                            mDataBinding.inputCity.text.toString()
+                        )
+                    }
+                    updateProfileViewModel.isEmailChanged -> {
+                        updateProfileViewModel.requestForUpdateEmailAPI(
+                            requireContext(),
+                            mDataBinding.inputEmail.text.toString()
+                        )
+                    }
                 }
             }
         }
@@ -521,9 +514,7 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
             mDataBinding.inputLayoutEmail.error = ""
             mDataBinding.inputLayoutEmail.isErrorEnabled = false
         }
-        if ((updateProfileViewModel.currentProfile.contains("1") || updateProfileViewModel.currentProfile.contains(
-                "2"
-            ))
+        if ((updateProfileViewModel.currentProfile.contains("1"))
         ) {
             if (mDataBinding.inputAddress.text.isNullOrEmpty()) {
                 isValidForAll = false
@@ -536,9 +527,7 @@ class UpdateProfleMainFragment : BaseFragment<FragmentUpdateProfleMainBinding>()
             }
         }
 
-        if ((updateProfileViewModel.currentProfile.contains("1") || updateProfileViewModel.currentProfile.contains(
-                "2"
-            ))
+        if ((updateProfileViewModel.currentProfile.contains("1"))
         ) {
             if (mDataBinding.inputCity.text.isNullOrEmpty()) {
                 isValidForAll = false
