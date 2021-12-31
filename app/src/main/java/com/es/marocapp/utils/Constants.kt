@@ -27,6 +27,7 @@ import org.apache.http.conn.util.InetAddressUtils
 import java.io.File
 import java.net.InetAddress
 import java.net.NetworkInterface
+import java.security.SecureRandom
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -214,17 +215,7 @@ object Constants {
 
 
     fun getCurrentDate(): String {
-        /*val calendar = Calendar.getInstance(TimeZone.getDefault())
-
-        val currentYear = calendar[Calendar.YEAR].toString()
-        val currentMonth = (calendar[Calendar.MONTH] + 1).toString()
-        val currentDay = calendar[Calendar.DAY_OF_MONTH].toString()
-        var formattedDate = "$currentYear-$currentMonth-$currentDay"
-        return formattedDate*/
         val c = Calendar.getInstance().time
-        Log.i("CurrentTime", c.toString())
-
-//        val df = SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault())
         val df = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val formattedDate = df.format(c)
         Log.i("CurrentTime", formattedDate)
@@ -248,21 +239,14 @@ object Constants {
     }
 
     fun createUserToken(): String {
-        var token = SimpleDateFormat("yyyyMMddHHmmssSS", Locale.ENGLISH)
-            .format(Date()) + Random()
+        val token = SimpleDateFormat("yyyyMMddHHmmssSS", Locale.ENGLISH)
+            .format(Date()) + SecureRandom()
             .nextInt(999998) + "($CURRENT_USER_MSISDN)"
         return token
     }
 
     fun getSelectedLanguage(): String {
         return LocaleManager.selectedLanguage
-    }
-
-    fun createUserLoggedInToken(): String {
-        var token = SimpleDateFormat("yyyyMMddHHmmssSS")
-            .format(Date()) + Random()
-            .nextInt(999998) + "($CURRENT_USER_MSISDN)"
-        return token
     }
 
     fun getIPAddress(application: Application) {
@@ -280,7 +264,7 @@ object Constants {
                     Collections.list(networkInterface.getInetAddresses())
                 for (inetAddress in inetAddresses) {
                     if (!inetAddress.isLoopbackAddress()) {
-                        val sAddr: String = inetAddress.getHostAddress().toUpperCase()
+                        val sAddr: String = inetAddress.getHostAddress().uppercase()
                         val isIPv4: Boolean = InetAddressUtils.isIPv4Address(sAddr)
                         if (useIPv4) {
                             if (isIPv4) return sAddr
@@ -423,13 +407,6 @@ object Constants {
         return myDate
     }
 
-    fun getMonthFromParsedDate(date: String): String {
-        val d = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse(date)
-        val cal = Calendar.getInstance()
-        cal.time = d
-        return SimpleDateFormat("MMMM").format(cal.time)
-    }
-
     fun converValueToTwoDecimalPlace(value: Double): String {
         val result = String.format(Locale.ENGLISH, "%.2f", value)
         return result
@@ -454,147 +431,7 @@ object Constants {
         return formatted
     }
 
-    fun getMerchantName(name: String) : String {
-        if (name.length > 22) {
-            return name.substring(0, 22)
-        } else {
-            return name.padEnd(22, ' ')
-        }
-    }
 
-    fun showTutorial(
-        activityContext: Activity,
-        viewForShowignTutorial: View,
-        tutorialDescrption: String,
-        drawableIcon: Int = -1
-    ) {
-        /*
-
-            .focusOn(viewForShowignTutorial)
-            .focusShape(FocusShape.ROUNDED_RECTANGLE)
-            .roundRectRadius(10)
-            .disableFocusAnimation()
-            .
-            .enableTouchOnFocusedView(true)
-            */
-
-        //Get screen size
-        /*val location = IntArray(2)
-
-        viewForShowignTutorial.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                viewForShowignTutorial.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                viewHegiht = viewForShowignTutorial.height //height is ready
-                viewWidth = viewForShowignTutorial.width //width is ready
-            }
-        })*/
-
-        /* val location = IntArray(2)
-         viewForShowignTutorial.getLocationOnScreen(location)
-         val viewPosX = location[0] + 330
-         val viewPosY = location[1] + 160
-
-         var viewWidth = -1
-         var viewHegiht = -1
-
-
-         viewHegiht = viewForShowignTutorial.height
-         viewWidth = viewForShowignTutorial.width
-
-         Log.d("viewPositionX",viewPosX.toString())
-         Log.d("viewPositionY",viewPosY.toString())
-         Log.d("viewPositionWidth",viewWidth.toString())
-         Log.d("viewPositionHeight",viewHegiht.toString())
-
-         val rootLayout: View = viewForShowignTutorial.rootView.findViewById(android.R.id.content)
-
-         val viewLocation = IntArray(2)
-         viewForShowignTutorial.getLocationInWindow(viewLocation)
-
-         val rootLocation = IntArray(2)
-         rootLayout.getLocationInWindow(rootLocation)
-
-         val relativeLeft = viewLocation[0] - rootLocation[0]
-         val relativeTop = viewLocation[1] - rootLocation[1]
-
-
-         mFancyShowCaseView = FancyShowCaseView.Builder(activityContext)
-             .focusRectAtPosition(relativeLeft,relativeTop,viewWidth,viewHegiht)
-             .roundRectRadius(60)
-             .customView(R.layout.tutorial_custom_view, object :
-                 OnViewInflateListener {
-                 override fun onViewInflated(view: View) {
-                     val image = (view as RelativeLayout).findViewById<ImageView>(R.id.iv_tutorial_custom_view)
-                     val tutorialText = (view as RelativeLayout).findViewById<TextView>(R.id.tv_tutorial_custom_view)
-
-                     tutorialText.text = tutorialDescrption
-                     val params = image.layoutParams as RelativeLayout.LayoutParams
-
-                     if(drawableIcon==-1){
-                         image.visibility = View.GONE
-
-                         tutorialText.post {
-                             params.leftMargin = mFancyShowCaseView!!.focusCenterX - image.width / 2
-                             params.topMargin = mFancyShowCaseView!!.focusCenterY - mFancyShowCaseView!!.focusHeight - image.height
-                             image.layoutParams = params
-                         }
-                     }else{
-                         image.visibility = View.VISIBLE
-
-                         image.setImageResource(drawableIcon)
-
-                         image.post {
-                             params.leftMargin = mFancyShowCaseView!!.focusCenterX - image.width / 2
-                             params.topMargin = mFancyShowCaseView!!.focusCenterY - mFancyShowCaseView!!.focusHeight - image.height
-                             image.layoutParams = params
-                         }
-                     }
-
-                 }
-             })
-             .closeOnTouch(true)
-             .build()
- */
-        /* mFancyShowCaseView = FancyShowCaseView.Builder(activityContext)
-             .focusOn(viewForShowignTutorial)
-             .focusShape(FocusShape.ROUNDED_RECTANGLE)
-             .roundRectRadius(10)
-             .enableTouchOnFocusedView(true)
-             .customView(R.layout.tutorial_custom_view, object :
-                 OnViewInflateListener {
-                 override fun onViewInflated(view: View) {
-                     val image = (view as RelativeLayout).findViewById<ImageView>(R.id.iv_tutorial_custom_view)
-                     val tutorialText = (view as RelativeLayout).findViewById<TextView>(R.id.tv_tutorial_custom_view)
-
-                     tutorialText.text = tutorialDescrption
-                     val params = image.layoutParams as RelativeLayout.LayoutParams
-
-                     if(drawableIcon==-1){
-                         image.visibility = View.GONE
-
-                         tutorialText.post {
-                             params.leftMargin = mFancyShowCaseView!!.focusCenterX - image.width / 2
-                             params.topMargin = mFancyShowCaseView!!.focusCenterY - mFancyShowCaseView!!.focusHeight - image.height
-                             image.layoutParams = params
-                         }
-                     }else{
-                         image.visibility = View.VISIBLE
-
-                         image.setImageResource(drawableIcon)
-
-                         image.post {
-                             params.leftMargin = mFancyShowCaseView!!.focusCenterX - image.width / 2
-                             params.topMargin = mFancyShowCaseView!!.focusCenterY - mFancyShowCaseView!!.focusHeight - image.height
-                             image.layoutParams = params
-                         }
-                     }
-
-                 }
-             })
-             .closeOnTouch(true)
-             .build()*/
-//        mFancyShowCaseView?.show()
-    }
 
     fun displayTutorial(
         activityContext: Activity,
@@ -603,15 +440,15 @@ object Constants {
         drawableIcon: Int = -1
     ) {
         isFirstTimeTutorialShowing++
-        var tutShowCase = TutoShowcase.from(activityContext)
+        val tutShowCase = TutoShowcase.from(activityContext)
             .setContentView(R.layout.tutorial_custom_view)
             .setFitsSystemWindows(true)
             .on(viewForShowignTutorial)
             .addRoundRect()
             .onClick(View.OnClickListener { })
             .show()
-        var x = viewForShowignTutorial.x
-        var y = viewForShowignTutorial.y
+        val x = viewForShowignTutorial.x
+        val y = viewForShowignTutorial.y
         tutShowCase.setTextView(R.id.tv_tutorial_custom_view, tutorialDescrption)
 
         tutShowCase.setPosition(R.id.mainView, x, y)
@@ -677,7 +514,7 @@ object Constants {
                         false
                     )
 
-                    Toast.makeText(activityContext, LanguageData.getStringValue("TutorialEnds"), Toast.LENGTH_LONG).show()
+                  //  Toast.makeText(activityContext, LanguageData.getStringValue("TutorialEnds"), Toast.LENGTH_LONG).show()
                 }
                 else -> {
                     isTutorialShowing = false
@@ -686,7 +523,6 @@ object Constants {
                         PrefUtils.PreKeywords.PREF_KEY_IS_SHOW_TUTORIALS,
                         false
                     )
-
                 }
             }
         }
@@ -699,14 +535,6 @@ object Constants {
         return if(arabicToEngVal.isNullOrEmpty()) {
             spinnerVal
         }else arabicToEngVal
-//        when(spinnerVal){
-//           "أ" ->{return "A"}
-//           "ب" ->{return "B"}
-//           "د" ->{return "D"}
-//           "ه" ->{return "H"}
-//           "و" ->{return "E"}
-//           else ->{return spinnerVal}
-//       }
     }
 
     fun convertListToJson(validatedParams: ArrayList<ValidatedParam>): String {
@@ -736,15 +564,14 @@ object Constants {
     }
 
     fun isFileSizeVerified(uri: Uri, activity: Context?,isCamera: Boolean): Boolean {
-        var file = File(uri.path)
+        val file = File(uri.path)
         var sizeInMbs = 0
-            if(isCamera)
-            {
-                sizeInMbs = file.length().toInt().div((1024*1024).toString().substringBefore('.').toInt())
-            }else{
-         sizeInMbs = getSize(activity!!,uri)?.toInt()
-             ?.div((1024*1024).toString().substringBefore('.').toInt())!!
-            }
+        sizeInMbs = if(isCamera) {
+            file.length().toInt().div((1024*1024).toString().substringBefore('.').toInt())
+        }else{
+            getSize(activity!!,uri)?.toInt()
+                ?.div((1024*1024).toString().substringBefore('.').toInt())!!
+        }
         if (sizeInMbs != null) {
             return sizeInMbs<=maxFileSizeUploadLimitInMBs
         }else{
@@ -755,7 +582,7 @@ object Constants {
 
     fun getSize(context: Context, uri: Uri?): String? {
         var fileSize: String? = null
-        val cursor: Cursor? = context.getContentResolver()
+        val cursor: Cursor? = context.contentResolver
             .query(uri!!, null, null, null, null, null)
         try {
             if (cursor != null && cursor.moveToFirst()) {
@@ -772,32 +599,7 @@ object Constants {
         return fileSize
     }
 
-    fun ReplaceDelimetersWithData(mItemDetailsToShow: History, decryptedString: String):String {
-        var newHtmlString = decryptedString
-        val newAmount =  addTwoValues(mItemDetailsToShow.fromavailablebalance.toDouble(),mItemDetailsToShow.fromamount.toDouble())
-       val initiatingaccountholder = mItemDetailsToShow.initiatingaccountholder.toString().replace("ID:","").trim().replace("/MSISDN","").trim()
-       val fromfri = mItemDetailsToShow.fromfri.toString().replace("FRI:","").trim().replace("/MSISDN","").trim()
-        val date = getZoneFormattedDateAndTime(mItemDetailsToShow.date);
-        val realuser = mItemDetailsToShow.realuser.toString().replace("ID:","").trim().replace("/MM","").trim()
 
-        newHtmlString=newHtmlString.replace("{initiatingaccountholder}",initiatingaccountholder)
-        newHtmlString=newHtmlString.replace("{date}",date)
-        newHtmlString=newHtmlString.replace("{realuser}",realuser)
-        newHtmlString=newHtmlString.replace("{tofri}",mItemDetailsToShow.tofri.toString())
-        newHtmlString=newHtmlString.replace("{tofri}",mItemDetailsToShow.tofri.toString())
-        newHtmlString=newHtmlString.replace("{toname}",mItemDetailsToShow.toname.toString())
-        newHtmlString=newHtmlString.replace("{transactionid}",mItemDetailsToShow.transactionid.toString())
-        newHtmlString=newHtmlString.replace("{date}",date)
-        newHtmlString=newHtmlString.replace("{fromfri}",fromfri)
-        newHtmlString=newHtmlString.replace("{adresse}",mItemDetailsToShow.fromfri.toString())
-        newHtmlString=newHtmlString.replace("{newAmount}",newAmount.toString())
-        newHtmlString=newHtmlString.replace("{fromamount}",mItemDetailsToShow.fromamount.toString())
-        newHtmlString=newHtmlString.replace("{fromavailablebalance}",mItemDetailsToShow.fromavailablebalance.toString())
-        newHtmlString=newHtmlString.replace("{fromavailablebalance}",mItemDetailsToShow.fromavailablebalance.toString())
-        Logger.debugLog("ok",newHtmlString)
-        return newHtmlString
-
-    }
 
 //    fun getItems(stringValidatedParams: String): List<ValidatedParam>? {
 //        if (stringValidatedParams.isEmpty(json)) return Collections.emptyList()

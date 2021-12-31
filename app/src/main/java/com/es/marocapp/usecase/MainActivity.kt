@@ -379,6 +379,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), MainActivityClickListe
             mDataBinding.drawerLayout.closeDrawers()
 
             DialogUtils.showChangeLanguageDialogue(this,
+                true,
                 object : DialogUtils.OnChangeLanguageClickListner {
 
                     override fun onChangeLanguageDialogYesClickListner(selectedLanguage: String) {

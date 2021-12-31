@@ -279,7 +279,7 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>(),
     }
 
     override fun onChangeLanguageClick(view: View) {
-        DialogUtils.showChangeLanguageDialogue(this,object : DialogUtils.OnChangeLanguageClickListner{
+        DialogUtils.showChangeLanguageDialogue(this,false,object : DialogUtils.OnChangeLanguageClickListner{
 
             override fun onChangeLanguageDialogYesClickListner(selectedLanguage: String) {
                 //Toast.makeText(this@SettingsActivity,selectedLanguage,Toast.LENGTH_LONG).show()

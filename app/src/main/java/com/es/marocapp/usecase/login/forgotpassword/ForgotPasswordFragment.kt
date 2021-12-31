@@ -105,7 +105,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>(), Fo
         mDataBinding.inputLayoutSetYourPassword.hint = LanguageData.getStringValue("EnterPassword")
         mDataBinding.inputLayoutConfirmPassword.hint = LanguageData.getStringValue("ConfirmPassword")
 
-        mDataBinding.btnNext.text = LanguageData.getStringValue("ChangePassword")
+        mDataBinding.btnNext.text = LanguageData.getStringValue("BtnTitle_Validate")
     }
 
     private fun subsribeObserver() {

@@ -275,7 +275,7 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                 mActivityViewModel.requestForGetFavouriteApi(activity)
             }
             else if(it.responseCode == ApiConstant.API_ACCOUNT_BLOCKED){
-                val btnTxt = LanguageData.getStringValue("BtnTitle_OK")
+                val btnTxt = LanguageData.getStringValue("BtnTitle_Okay")
                 val titleTxt = LanguageData.getStringValue("AccountBlocked")
                 val descriptionTxt =it.description
                 DialogUtils.showCustomDialogue(activity,btnTxt,descriptionTxt,titleTxt,object : DialogUtils.OnCustomDialogListner{
@@ -283,9 +283,18 @@ class LoginNumberPasswordFragment : BaseFragment<FragmentLoginNumberPasswordBind
                         (activity as LoginActivity).navController.popBackStack(R.id.loginFragment,false)
                     }
                 })
+
+//                DialogUtils.showBlockedAccountDialog(activity,btnTxt,LanguageData.getStringValue("BtnTitle_Cancel"),
+//                    descriptionTxt,titleTxt,object : DialogUtils.OnCustomDialogListner{
+//                        override fun onCustomDialogOkClickListner() {
+//                            (activity as LoginActivity).navController.popBackStack(R.id.loginFragment,false)
+//                        }
+//                    }
+//                )
             }
             else if(it.responseCode.equals(ApiConstant.API_WRONG_ATTEMPT_BLOCKED)){
-                DialogUtils.showBlockedAccountDialog(activity,LanguageData.getStringValue("BtnTitle_Okay"),LanguageData.getStringValue("BtnTitle_Cancel"),
+                // BtnTitle_Okay
+                DialogUtils.showBlockedAccountDialog(activity,LanguageData.getStringValue("BtnTitle_Reset"),LanguageData.getStringValue("BtnTitle_Cancel"),
                 LanguageData.getStringValue("BlockedAndResetAccount"),"",object : DialogUtils.OnCustomDialogListner{
                         override fun onCustomDialogOkClickListner() {
                             mActivityViewModel.isFromLoginUserScreen.set(true)

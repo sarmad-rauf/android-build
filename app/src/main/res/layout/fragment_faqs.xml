@@ -159,17 +159,20 @@
         <ImageView
             android:id="@+id/faqHeaderImg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/faq_header_img"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.2"
+            android:src="@drawable/faqbanner"
             android:scaleType="fitXY"
             app:layout_constraintTop_toBottomOf="@+id/topHeaderContainer"
             />
+<!--        android:src="@drawable/faq_header_img"-->
 
         <ImageView
             android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_80sdp"
             android:src="@drawable/m_tcash_logo_white_copy"
             android:layout_marginStart="@dimen/_16sdp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/faqHeaderImg"
             app:layout_constraintTop_toTopOf="@+id/faqHeaderImg"
             app:layout_constraintBottom_toBottomOf="@+id/faqHeaderImg"

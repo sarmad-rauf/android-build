@@ -77,7 +77,7 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
     }
 
     private fun setStrings() {
-        mDataBinding.tvPaymentType.text = LanguageData.getStringValue("PaymentType")
+        mDataBinding.tvPaymentType.text = LanguageData.getStringValue("ListOfBillers")
         (activity as BillPaymentActivity).setHeaderTitle(
             LanguageData.getStringValue("BillPayment").toString()
         )

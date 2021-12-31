@@ -26,34 +26,47 @@ object DialogUtils {
         description: String?,
         okBtnText: String = "BtnTitle_OK"
     ) {
-        val addDialog = Dialog(mContext!!)
-        addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        addDialog.setContentView(R.layout.layout_error_dialog)
 
-        val dialogWindow = addDialog.window
-        val layoutParams = dialogWindow!!.attributes
-        layoutParams.x = Gravity.CENTER_HORIZONTAL
-        layoutParams.y = Gravity.CENTER_VERTICAL
-        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
-        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
-        dialogWindow.attributes = layoutParams
+        showUpdateAPDailog(
+            mContext,
+           description,
+            object : DialogUtils.OnCustomDialogListner {
+                override fun onCustomDialogOkClickListner() {
+                }
+            },
+            R.drawable.update_blue
+        )
 
-        val tvMessage = addDialog.findViewById<TextView>(R.id.error_dialog_description)
-        val tvTitle = addDialog.findViewById<TextView>(R.id.error_dialog_title)
-        val btnOK = addDialog.findViewById<Button>(R.id.error_dialog_ok_btn)
 
-        if (okBtnText.equals("BtnTitle_OK")) {
-            btnOK.text = LanguageData.getStringValue(okBtnText)
-        } else {
-            btnOK.text = okBtnText
-        }
-        tvTitle.text = LanguageData.getStringValue("Alert")
-        tvMessage.text = description
 
-        addDialog.show()
-        btnOK.setOnClickListener {
-            addDialog.dismiss()
-        }
+//        val addDialog = Dialog(mContext!!)
+//        addDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        addDialog.setContentView(R.layout.layout_error_dialog)
+//
+//        val dialogWindow = addDialog.window
+//        val layoutParams = dialogWindow!!.attributes
+//        layoutParams.x = Gravity.CENTER_HORIZONTAL
+//        layoutParams.y = Gravity.CENTER_VERTICAL
+//        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+//        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT
+//        dialogWindow.attributes = layoutParams
+//
+//        val tvMessage = addDialog.findViewById<TextView>(R.id.error_dialog_description)
+//        val tvTitle = addDialog.findViewById<TextView>(R.id.error_dialog_title)
+//        val btnOK = addDialog.findViewById<Button>(R.id.error_dialog_ok_btn)
+//
+//        if (okBtnText.equals("BtnTitle_OK")) {
+//            btnOK.text = LanguageData.getStringValue(okBtnText)
+//        } else {
+//            btnOK.text = okBtnText
+//        }
+//        tvTitle.text = LanguageData.getStringValue("Alert")
+//        tvMessage.text = description
+//
+//        addDialog.show()
+//        btnOK.setOnClickListener {
+//            addDialog.dismiss()
+//        }
 
 //        val handler = Handler()
 //        val runnable = Runnable {
@@ -670,7 +683,7 @@ object DialogUtils {
         dialogWindow.attributes = layoutParams
 
         val btnOk = addDialog.findViewById<MarocButton>(R.id.dialog_ok_btn)
-        btnOk.text = LanguageData.getStringValue("BtnTitle_OK")
+        btnOk.text = LanguageData.getStringValue("BtnTitle_Okay")
 
         val tvMessage = addDialog.findViewById<TextView>(R.id.dialog_description)
         tvMessage.text = description
@@ -772,7 +785,7 @@ object DialogUtils {
 
         val btnOk = addDialog.findViewById<MarocButton>(R.id.dialog_ok_btn)
 
-        btnOk.text = LanguageData.getStringValue("ViewFile")
+        btnOk.text = LanguageData.getStringValue("BtnTitle_Okay")
 
         val tvMessage = addDialog.findViewById<TextView>(R.id.dialog_description)
         tvMessage.text = description
@@ -811,6 +824,7 @@ object DialogUtils {
 
     fun showChangeLanguageDialogue(
         mContext: Context?,
+        shouldHideEnglishLanguage:Boolean = false,
         listner: OnChangeLanguageClickListner
     ) {
         val addDialog = Dialog(mContext!!)
@@ -826,15 +840,17 @@ object DialogUtils {
         dialogWindow.attributes = layoutParams
 
         addDialog.show()
-        var tvMsg = addDialog.findViewById<TextView>(R.id.language_dialog_description)
-        var tvDialogTitle = addDialog.findViewById<TextView>(R.id.language_dialog_title)
+        val tvMsg = addDialog.findViewById<TextView>(R.id.language_dialog_description)
+        val tvDialogTitle = addDialog.findViewById<TextView>(R.id.language_dialog_title)
 
-        var btnYes = addDialog.findViewById<Button>(R.id.language_dialog_yes_btn)
-        var rbEnglish = addDialog.findViewById<RadioButton>(R.id.rb_English)
-        var rbFrench = addDialog.findViewById<RadioButton>(R.id.rb_French)
-        var rbArabic = addDialog.findViewById<RadioButton>(R.id.rb_Arabic)
+        val btnYes = addDialog.findViewById<Button>(R.id.language_dialog_yes_btn)
+        val rbEnglish = addDialog.findViewById<RadioButton>(R.id.rb_English)
+        val rbFrench = addDialog.findViewById<RadioButton>(R.id.rb_French)
+        val rbArabic = addDialog.findViewById<RadioButton>(R.id.rb_Arabic)
 
-        var radioGrp = addDialog.findViewById<RadioGroup>(R.id.language_dialog_radiogroup)
+        if(shouldHideEnglishLanguage) {
+        rbEnglish.visibility=View.GONE}
+        val radioGrp = addDialog.findViewById<RadioGroup>(R.id.language_dialog_radiogroup)
         var selectedLanguage = ""
         if (LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_EN)) {
             radioGrp.check(R.id.rb_English)
@@ -858,7 +874,7 @@ object DialogUtils {
         })
 
 
-        btnYes.text = LanguageData.getStringValue("BtnTitle_OK")
+        btnYes.text = LanguageData.getStringValue("BtnTitle_Okay")
         tvDialogTitle.text = LanguageData.getStringValue("ChangeLanguage")
         tvMsg.text = LanguageData.getStringValue("PleaseChooseyourLanguage")
         rbEnglish.text = LanguageData.getStringValue("DropDown_English")

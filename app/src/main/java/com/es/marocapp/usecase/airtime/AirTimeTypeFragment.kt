@@ -36,7 +36,7 @@ class AirTimeTypeFragment : BaseFragment<FragmentBillPaymentTypeBinding>() {
         mDataBinding.apply {
         }
 
-        mDataBinding.tvPaymentType.text = activity!!.resources.getString(R.string.payment_type)
+        mDataBinding.tvPaymentType.text = requireActivity().getString(R.string.payment_type)
         (activity as AirTimeActivity).setHeaderTitle(
             (activity as AirTimeActivity).resources.getString(
                 R.string.air_time

@@ -32,6 +32,10 @@ import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.*
 import java.lang.reflect.Method
 import java.util.*
+import com.scottyab.rootbeer.RootBeer
+
+
+
 
 
 class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
@@ -57,7 +61,7 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
 
     override fun init(savedInstanceState: Bundle?) {
 
-        mActivityViewModel = ViewModelProvider(this).get(SplashActivityViewModel::class.java)
+        mActivityViewModel = ViewModelProvider(this)[SplashActivityViewModel::class.java]
 
         mDataBinding.apply {
             viewmodel = mActivityViewModel
@@ -70,15 +74,29 @@ class SplashActivity : BaseActivity<AcitivtySplashBinding>() {
         )
         Logger.debugLog("trxH", "isTutorialShowing  ${Constants.isTutorialShowing}");
 
-        loadNDKValues()
-        setupPermissions()
-        checkInternetOrMobileConnection()
-        subscribe()
+        if(checkRootDetection(this@SplashActivity)) {
+            loadNDKValues()
+            setupPermissions()
+            checkInternetOrMobileConnection()
+            subscribe()
 
-        subscribeForTranslationsApiResponse()
+            subscribeForTranslationsApiResponse()
+        }
         /*val decrptedNumber = EncryptionUtils.decryptStringAESCBC("iIk0fEvEpOB5fuJ2n3mpMQ==")
         Logger.debugLog("AESCBCNumber",decrptedNumber)*/
 
+    }
+
+    private fun checkRootDetection(splashActivity: SplashActivity): Boolean {
+
+        //if root detection is enabled
+        if(BuildConfig.ROOT_DETECTION_ENABLED)
+        {
+            val rootBeer = RootBeer(splashActivity)
+            return !rootBeer.isRooted
+        }
+        //else return true
+        return true
     }
 
     private fun checkInternetOrMobileConnection() {
