@@ -5,17 +5,17 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="@dimen/_16sdp"
+    android:paddingBottom="@dimen/_10sdp"
     android:background="@color/colorWhite">
 
     <com.es.marocapp.widgets.MarocRegularTextView
         android:id="@+id/faqAnswerTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_42sdp"
+        android:layout_marginStart="@dimen/_22sdp"
         android:layout_marginEnd="@dimen/_16sdp"
         android:textColor="@color/colorGreyDark"
-        android:textSize="@dimen/_10ssp"
+        android:textSize="@dimen/_9ssp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

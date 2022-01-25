@@ -348,8 +348,7 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
             isLoading.set(true)
 
             disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getAddContact(
-                    AddContactRequest(Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN), contactName, ApiConstant.CONTEXT_AFTER_LOGIN, billProviderFri, userFri.substringBefore("@"))
-            )
+                    AddContactRequest(Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN), contactName, ApiConstant.CONTEXT_AFTER_LOGIN, billProviderFri, userFri.substringBefore("@")))
                     .compose(applyIOSchedulers())
                     .subscribe(
                             { result ->

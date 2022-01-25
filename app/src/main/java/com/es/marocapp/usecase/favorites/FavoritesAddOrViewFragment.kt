@@ -62,6 +62,7 @@ class FavoritesAddOrViewFragment : BaseFragment<FragmentFavoritesTypeBinding>(){
                             }
                         }else{
                             (activity as FavoritesActivity).navController.navigate(R.id.action_favoritesAddOrViewFragment_to_favoriteEnterContactFragment)
+                            mActivityViewModel.isFatoratiUsecaseSelected.set(false)
                         }
                     }else if(itemType.equals(LanguageData.getStringValue("View"),true)){
                         (activity as FavoritesActivity).navController.navigate(R.id.action_favoritesAddOrViewFragment_to_viewFavoritesFragment)

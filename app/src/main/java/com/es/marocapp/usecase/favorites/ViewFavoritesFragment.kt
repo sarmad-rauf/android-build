@@ -107,10 +107,7 @@ class ViewFavoritesFragment : BaseFragment<FragmentFavoritesViewBinding>(),
         if(mActivitViewModel.isPaymentSelected.get()!!){
             if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!){
                 for(contact in mContact){
-//                    if(!contact.billproviderfri.trim().contains(internetAlias)&&!contact.billproviderfri.trim().contains(postPaidFixeAlias)
-//                        && !contact.billproviderfri.trim().contains(postPaidMobileAlias)){
-//                        mList.add(contact)
-//                    }
+//
                     if(contact.contactname.contains("Util_")){
                         mList.add(contact)
                     }
@@ -121,16 +118,7 @@ class ViewFavoritesFragment : BaseFragment<FragmentFavoritesViewBinding>(),
                     if(contact.contactname.contains("Telec_")){
                         mList.add(contact)
                     }
-//                    if(contact.billproviderfri.trim().contains(internetAlias)){
-//                        mList.add(contact)
-//                    }
-
-//                    if(contact.billproviderfri.trim().contains(postPaidFixeAlias)){
-//                        mList.add(contact)
-//                    }
-//                    if(contact.billproviderfri.trim().contains(postPaidMobileAlias)){
-//                        mList.add(contact)
-//                    }
+//
                 }
             }
         }else{

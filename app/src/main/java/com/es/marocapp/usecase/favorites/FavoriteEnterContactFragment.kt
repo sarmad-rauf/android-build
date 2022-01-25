@@ -408,10 +408,11 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
         mDataBinding.selectBillTypeTypeTitle.hint = LanguageData.getStringValue("SelectBillType")
         mDataBinding.inputLayoutCode.hint = LanguageData.getStringValue("EnterCode")
 
+        if(mActivitViewModel.isFatoratiUsecaseSelected!=null){
         if(mActivitViewModel.isFatoratiUsecaseSelected.get()!!)
         {
             setInputHint()
-        }
+        }}
     }
 
     override fun onNextButtonClick(view: View) {
@@ -798,7 +799,7 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
             }
         }else{
             
-            if (!mDataBinding.inputPhoneNumber.text.isNullOrEmpty() || mDataBinding.inputPhoneNumber.text.toString().length > Constants.APP_MSISDN_LENGTH.toInt() - 2) {
+            if (!mDataBinding.inputPhoneNumber.text.isNullOrEmpty() || mDataBinding.inputPhoneNumber.text.toString().length >= Constants.APP_MSISDN_LENGTH.toInt() - 2) {
                 isValidForAll = false
                 mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidContactNumber")
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true

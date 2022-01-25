@@ -45,7 +45,7 @@ class AccountDetailsActivity : BaseActivity<LayoutAccountDetailsBinding>(){
         }
         mDataBinding.accountDetailName.text = respone?.firstname+" "+respone?.surname
         mDataBinding.accountDetailAccountNum.text = Constants.CURRENT_USER_MSISDN.replace("212","0").trim()
-        mDataBinding.accountDetailCurrentBalance.text = respone?.currnecy+" "+respone?.balance
+        mDataBinding.accountDetailCurrentBalance.text = respone?.balance+" "+respone?.currnecy
         mDataBinding.appNameTitleSenRevContainer.text = respone?.profilename
 
         if(respone?.limitsList!=null) {

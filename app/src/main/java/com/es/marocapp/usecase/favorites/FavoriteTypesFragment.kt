@@ -42,8 +42,9 @@ class FavoriteTypesFragment : BaseFragment<FragmentFavoritesTypeBinding>(){
             add(LanguageData.getStringValue("FavoritesPayments").toString())
 //            add(LanguageData.getStringValue("SendMoney").toString())
  //            add(LanguageData.getStringValue("MerchantPayment").toString())
-//            add(LanguageData.getStringValue("AirTime").toString())
+            add(LanguageData.getStringValue("FavoritesAirtime").toString())
         }
+       // LanguageData.getStringValue("FavoritesAirtime")
 
         mFavoritesTypesIcon.clear()
         mFavoritesTypesIcon.apply {

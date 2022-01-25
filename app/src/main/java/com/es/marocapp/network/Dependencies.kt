@@ -94,7 +94,7 @@ abstract class Dependencies {
             builder.addInterceptor { chain ->
                 val request = chain.request()
                 val builder = request.newBuilder()
-
+             request.body()
                 try {
                     val headers = setHeaders()
                     if (headers != null && headers.size > 0 &&

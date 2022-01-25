@@ -24,15 +24,6 @@ class HomeBalanceFragment(var viewType: Int, cardDataModel: CardModel, var image
     private var mCardModel: CardModel = cardDataModel
 
     private fun updateBalance() {
-        //viewType value 0 for Progress Balance View && 1 for Banner Advertisement View
-//        val conf: Configuration = context!!.resources.configuration
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-//            conf.setLayoutDirection(Locale("en"))
-//        }
-//        context!!.resources.updateConfiguration(
-//            conf,
-//            context!!.resources.displayMetrics
-        //    )
         if (viewType == 0) {
             mDataBinding.progressGroup.visibility = android.view.View.VISIBLE
             mDataBinding.imgAdv.visibility = android.view.View.GONE
