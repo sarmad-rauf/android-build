@@ -7,20 +7,16 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import com.es.marocapp.R
 import com.es.marocapp.locale.LocaleManager
-import com.es.marocapp.model.requests.AddContactRequest
-import com.es.marocapp.model.requests.AirTimeQuoteRequest
-import com.es.marocapp.model.requests.AirTimeRequest
-import com.es.marocapp.model.requests.GetAirTimeUseCasesRequest
-import com.es.marocapp.model.responses.AddContactResponse
-import com.es.marocapp.model.responses.AirTimeQuoteResponse
-import com.es.marocapp.model.responses.AirTimeResponse
-import com.es.marocapp.model.responses.GetAirTimeUseCasesResponse
+import com.es.marocapp.model.requests.*
+import com.es.marocapp.model.responses.*
 import com.es.marocapp.network.ApiClient
 import com.es.marocapp.network.ApiConstant
 import com.es.marocapp.network.applyIOSchedulers
 import com.es.marocapp.usecase.BaseActivity
+import com.es.marocapp.usecase.billpayment.BillPaymentActivity
 import com.es.marocapp.usecase.login.LoginActivity
 import com.es.marocapp.utils.Constants
+import com.es.marocapp.utils.Logger
 import com.es.marocapp.utils.SingleLiveEvent
 import com.es.marocapp.utils.Tools
 import io.reactivex.disposables.Disposable
@@ -65,7 +61,73 @@ class AirTimeViewModel(application: Application) : AndroidViewModel(application)
     var getAirTimeUseCasesResponseListner = SingleLiveEvent<GetAirTimeUseCasesResponse>()
     var getAirTimeQuoteResponseListner = SingleLiveEvent<AirTimeQuoteResponse>()
     var getAirTimeResponseListner = SingleLiveEvent<AirTimeResponse>()
+    var getContactResponseListner = SingleLiveEvent<AddBillProviderContactResponse>()
     var getAddFavoritesResponseListner = SingleLiveEvent<AddContactResponse>()
+
+    //Request For Favourites
+    fun requestForGetFavouriteApi(
+        context: Context?
+    ) {
+        if (Tools.checkNetworkStatus(getApplication())) {
+
+            isLoading.set(true)
+            Logger.debugLog("billPayment", "isLoading ${isLoading}")
+            disposable = ApiClient.newApiClientInstance?.getServerAPI()?.getContact(
+                GetContactRequest(
+                    ApiConstant.CONTEXT_AFTER_LOGIN,
+                    Constants.getNumberMsisdn(Constants.CURRENT_USER_MSISDN)
+                )
+            )
+                .compose(applyIOSchedulers())
+                .subscribe(
+                    { result ->
+                        Logger.debugLog("billPayment", "isLoading ${isLoading}")
+                        if (result?.responseCode != null) {
+                            when (result?.responseCode) {
+                                ApiConstant.API_SUCCESS -> {
+
+                                    getContactResponseListner.postValue(result)
+
+                                }
+                                ApiConstant.API_SESSION_OUT -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(
+                                    context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_SESSION_OUT
+                                )
+                                ApiConstant.API_INVALID -> (context as BaseActivity<*>).logoutAndRedirectUserToLoginScreen(
+                                    context as BillPaymentActivity, LoginActivity::class.java,
+                                    LoginActivity.KEY_REDIRECT_USER_INVALID
+                                )
+                                else -> {
+                                    getContactResponseListner.postValue(result)
+
+                                }
+                            }
+                        } else {
+                            getContactResponseListner.postValue(result)
+                        }
+
+
+                    },
+                    { error ->
+                        isLoading.set(false)
+
+                        //Display Error Result Code with with Configure Message
+                        try {
+                            if (context != null && error != null) {
+                                errorText.postValue(context.getString(R.string.error_msg_generic) + (error as HttpException).code())
+                            }
+                        } catch (e: Exception) { errorText.postValue(context!!.getString(R.string.error_msg_generic))
+                        }
+
+                    })
+
+
+        } else {
+
+            errorText.postValue(Constants.SHOW_INTERNET_ERROR)
+        }
+
+    }
 
 
     //Request For AirTimeUseCase

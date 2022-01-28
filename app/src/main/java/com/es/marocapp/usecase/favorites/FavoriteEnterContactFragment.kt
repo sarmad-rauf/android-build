@@ -453,6 +453,8 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
                     mActivitViewModel.requestForAddFavoritesApi(activity,nickName,msisdnEntered)
                 }
             }else{
+                msisdnEntered = Constants.getAirTimeReceiverAlias(msisdnEntered)
+                mActivitViewModel.selectedCompanySPName=Constants.getAirTimeReceiverAlias("")
                 mActivitViewModel.requestForAddFavoritesApi(activity,nickName,Constants.getNumberMsisdn(msisdnEntered))
             }
         }
@@ -799,7 +801,7 @@ class FavoriteEnterContactFragment : BaseFragment<FragmentFavoritesEnterNumberBi
             }
         }else{
             
-            if (!mDataBinding.inputPhoneNumber.text.isNullOrEmpty() || mDataBinding.inputPhoneNumber.text.toString().length >= Constants.APP_MSISDN_LENGTH.toInt() - 2) {
+            if (mDataBinding.inputPhoneNumber.text.isNullOrEmpty() || mDataBinding.inputPhoneNumber.text.toString().length < Constants.APP_MSISDN_LENGTH.toInt() - 2) {
                 isValidForAll = false
                 mDataBinding.inputLayoutPhoneNumber.error = LanguageData.getStringValue("PleaseEnterValidContactNumber")
                 mDataBinding.inputLayoutPhoneNumber.isErrorEnabled = true

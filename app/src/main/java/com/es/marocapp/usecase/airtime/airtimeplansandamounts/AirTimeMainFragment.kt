@@ -302,29 +302,7 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
         }
 
         list_of_favorites.clear()
-        for (contacts in Constants.mContactListArray) {
-            var contactNumber = contacts.customerreference
-            var contactName = contacts.contactname
-            contactNumber = contactNumber.substringBefore("@")
-            contactNumber = contactNumber.substringBefore("/")
-            contactNumber = contactNumber.removePrefix(Constants.APP_MSISDN_PREFIX)
-            contactNumber = "0$contactNumber"
-            //todo also here remove lenght-2 check in max line
-            if (contactNumber.length.equals(Constants.APP_MSISDN_LENGTH.toInt() - 2)) {
-                var name_number_favorite = "$contactName-$contactNumber"
-                list_of_favorites.add(name_number_favorite)
-            }
-        }
-        list_of_favorites.add(0, LanguageData.getStringValue("SelectFavorite").toString())
-
-        val adapterFavoriteType = ArrayAdapter<CharSequence>(
-            activity as AirTimeActivity, R.layout.layout_favorites_spinner_text,
-            list_of_favorites as List<CharSequence>
-        )
-        mDataBinding.spinnerSelectFavorites.apply {
-            adapter = adapterFavoriteType
-        }
-        mDataBinding.spinnerSelectFavorites.onItemSelectedListener = this@AirTimeMainFragment
+        mActivityViewModel.requestForGetFavouriteApi(activity)
 
 
         setStrings()
@@ -495,6 +473,42 @@ class AirTimeMainFragment : BaseFragment<FragmentAirTimeMainBinding>(), TextWatc
                 } else {
                     DialogUtils.showErrorDialoge(activity, it.description)
                 }
+            })
+
+        mActivityViewModel.getContactResponseListner.observe(
+            this@AirTimeMainFragment,
+            Observer {
+                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
+                    Constants.mContactListArray.clear()
+                    if (!it.contactsList.isNullOrEmpty()) {
+                        Constants.mContactListArray.addAll(it.contactsList)
+                    }
+                }
+                for (contacts in Constants.mContactListArray) {
+                    if(!contacts.contactname.contains("Util_") && !contacts.contactname.contains("Telec_")){
+                    var contactNumber = contacts.customerreference
+                    var contactName = contacts.contactname
+                    contactNumber = contactNumber.substringBefore("@")
+                    contactNumber = contactNumber.substringBefore("/")
+                    contactNumber = contactNumber.removePrefix(Constants.APP_MSISDN_PREFIX)
+                    contactNumber = "0$contactNumber"
+                    //todo also here remove lenght-2 check in max line
+                    if (contactNumber.length.equals(Constants.APP_MSISDN_LENGTH.toInt() - 2)) {
+                        var name_number_favorite = "$contactName-$contactNumber"
+                        list_of_favorites.add(name_number_favorite)
+                    }
+                    }
+                }
+                list_of_favorites.add(0, LanguageData.getStringValue("SelectFavorite").toString())
+
+                val adapterFavoriteType = ArrayAdapter<CharSequence>(
+                    activity as AirTimeActivity, R.layout.layout_favorites_spinner_text,
+                    list_of_favorites as List<CharSequence>
+                )
+                mDataBinding.spinnerSelectFavorites.apply {
+                    adapter = adapterFavoriteType
+                }
+                mDataBinding.spinnerSelectFavorites.onItemSelectedListener = this@AirTimeMainFragment
             })
 
         mActivityViewModel.getAirTimeQuoteResponseListner.observe(this@AirTimeMainFragment,

@@ -123,13 +123,14 @@ class ViewFavoritesFragment : BaseFragment<FragmentFavoritesViewBinding>(),
             }
         }else{
             for(contact in mContact){
-                if(!contact.billproviderfri.replace("USER","SP").trim().contains(Constants.getFatoratiAlias(""))){
+                if(!contact.contactname.contains("Util_") && !contact.contactname.contains("Telec_")){
                     mList.add(contact)
                 }
             }
         }
         return mList
     }
+
 
     private fun populateFavoritesList(mContacts : ArrayList<Contact>) {
         mContactList.clear()

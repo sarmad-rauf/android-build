@@ -543,24 +543,8 @@ class FragmentBillPaymentMain : BaseFragment<FragmentBillPaymentMainTypeLayoutBi
 
         mActivityViewModel.getDeleteFavoritesResponseListner.observe(this@FragmentBillPaymentMain,
             Observer {
-                if (it.responseCode.equals(ApiConstant.API_SUCCESS)) {
-//                    if(!it.contactList.isNullOrEmpty()){
-//                        Constants.mContactListArray.clear()
-//                        Constants.mContactListArray.addAll(it.contactList)
-//                        mDataBinding.billPaymentMangeFavGroup.visibility = View.VISIBLE
-//
-//
-//
-//                        if(mFavoritesList.isEmpty()){
-//                            mDataBinding.billPaymentMangeFavGroup.visibility = View.GONE
-//                        }else{
-//                            mDataBinding.billPaymentMangeFavGroup.visibility = View.VISIBLE
-//                            mBillPaymentFavouritesAdapter.notifyDataSetChanged()
-//                        }
-//                    }else{
-//                        Constants.mContactListArray.clear()
-//                        mDataBinding.billPaymentMangeFavGroup.visibility = View.GONE
-//                    }
+                if (it.responseCode == ApiConstant.API_SUCCESS) {
+
                     mFavoritesList.clear()
                     mActivityViewModel.requestForGetFavouriteApi(activity)
                 } else {
