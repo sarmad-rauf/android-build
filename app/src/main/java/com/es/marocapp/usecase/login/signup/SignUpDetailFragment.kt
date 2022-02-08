@@ -11,6 +11,7 @@ import android.text.InputFilter
 import android.text.TextWatcher
 import android.text.format.DateFormat
 import android.view.View
+import android.view.WindowManager
 import android.widget.AdapterView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -60,6 +61,7 @@ class SignUpDetailFragment : BaseFragment<FragmentSignUpDetailBinding>(), SignUp
             viewmodel = mActivityViewModel
             listener = this@SignUpDetailFragment
         }
+        (activity as LoginActivity).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
         mDataBinding.signUpDetailHeader.groupBack.visibility = View.VISIBLE
 

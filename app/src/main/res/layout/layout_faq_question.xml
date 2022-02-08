@@ -29,7 +29,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/infoFaqIcon"
         app:layout_constraintStart_toEndOf="@+id/infoFaqIcon"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="@dimen/_11ssp"
+        android:textSize="@dimen/_9ssp"
         android:textColor="@color/colorBlack"
         tools:text="‏ ؟MT Cash  كيف تجد نقطة بيع"
         />

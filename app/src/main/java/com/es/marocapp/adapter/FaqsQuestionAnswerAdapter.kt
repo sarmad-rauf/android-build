@@ -62,7 +62,7 @@ class FaqsQuestionAnswerAdapter(val context : Context,groups : List<ExpandableGr
             faqAnswer.text = faqQuestionAnswers.answer
             if (LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_AR)){
 
-                faqAnswer.text = faqQuestionAnswers.answer?.replace("MT Cash","\u200EMT Cash")
+                faqAnswer.text = faqQuestionAnswers.answer
                 faqAnswer.gravity = Gravity.END
             }else{
                 faqAnswer.text = faqQuestionAnswers.answer
@@ -88,36 +88,9 @@ class FaqsQuestionAnswerAdapter(val context : Context,groups : List<ExpandableGr
 
             if (LocaleManager.selectedLanguage.equals(LocaleManager.KEY_LANGUAGE_AR)){
                 //  val text ="\u200E"+ continent.question?.replace("MT Cash","\u200EMT Cash")
-                // faqQuestion.text =  text
-//                val param: ConstraintLayout.LayoutParams = ConstraintLayout.LayoutParams(
-//                    ConstraintLayout.LayoutParams.MATCH_PARENT,
-//                    ConstraintLayout.LayoutParams.MATCH_PARENT)
+
                faqQuestion.text =  continent.question?.trim()
-//                quesLayout.layoutParams=param
-
-
                   faqQuestion.gravity = Gravity.END
-
-
-
-//              var newMixed = ""
-//
-//                val array: Array<String> = continent.question?.split(" ")?.toTypedArray() ?: arrayOf<String>()
-//                for (i in array.indices) {
-//                    if (textContainsArabic(array[i])) {
-//                        array[i] = '\u202C' + array[i] + '\u202B'
-//                    } else {
-//                        array[i] = '\u202C' + array[i] + '\u202A'
-//                    }
-//                    if (i == 0) {
-//                        newMixed += array[i]
-//                    } else {
-//                        newMixed += ' ' + array[i]
-//                    }
-//                }
-//                faqQuestion.text =  continent.question?.trim()
-//                Logger.debugLog("FAQ","${continent.question}")
-//                Logger.debugLog("FAQ","${newMixed}")
 
             }else{
                  faqQuestion.text = continent.question?.trim()
